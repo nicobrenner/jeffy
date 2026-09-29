@@ -1,0 +1,27 @@
+{
+  "dataset": "sst2",
+  "description": "Movie review sentiment (positive/negative)",
+  "n_classes": 2,
+  "task_type": "noul",
+  "encoder": "BAAI/bge-large-en-v1.5",
+  "encoder_dim": 1024,
+  "labels": {
+    "0": "negative",
+    "1": "positive"
+  },
+  "class_order": [
+    "0",
+    "1"
+  ],
+  "hf_source": "stanfordnlp/sst2",
+  "hf_config": null,
+  "hf_revision": null,
+  "license": "Stanford academic license",
+  "train_examples": 10000,
+  "train_accuracy": 0.9453,
+  "test_examples": 872,
+  "test_accuracy": 0.901376,
+  "scaler_mean_hash": "f8dfbfd9",
+  "classifier_coef_hash": "db153536",
+  "schema_version": 1
+}

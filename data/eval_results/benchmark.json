@@ -1,0 +1,727 @@
+{
+  "results": [
+    {
+      "task_id": "ag_news",
+      "name": "News article topic classification",
+      "n_classes": 4,
+      "task_type": "choice",
+      "hf_source": "fancyzhx/ag_news",
+      "hf_config": null,
+      "eval_split": "test",
+      "test_examples": 2000,
+      "train_examples": 10000,
+      "max_test": 2000,
+      "sampling_seed": 42,
+      "filter_label": null,
+      "accuracy": 0.9055,
+      "accuracy_ci_lo": 0.8925,
+      "accuracy_ci_hi": 0.917512,
+      "macro_f1": 0.904781,
+      "train_accuracy": 0.9413,
+      "build_test_accuracy": 0.9055,
+      "encoder": "BAAI/bge-large-en-v1.5",
+      "license": "Academic / non-commercial",
+      "notes": [],
+      "baselines": {
+        "majority": {
+          "accuracy": 0.252,
+          "macro_f1": 0.100639
+        },
+        "tfidf_lr": {
+          "accuracy": 0.8905,
+          "macro_f1": 0.889597,
+          "best_params": {
+            "clf__C": 10.0,
+            "tfidf__analyzer": "word",
+            "tfidf__max_features": 30000,
+            "tfidf__ngram_range": [
+              1,
+              1
+            ]
+          },
+          "cv_best_score": 0.8902
+        }
+      },
+      "latency": {
+        "total_p50_ms": 79.47,
+        "total_p95_ms": 102.1,
+        "embed_p50_ms": 79.2,
+        "embed_p95_ms": 101.79,
+        "clf_p50_ms": 0.2212,
+        "clf_p95_ms": 0.3022,
+        "n_measured": 50
+      },
+      "clinc_detail": null
+    },
+    {
+      "task_id": "banking77",
+      "name": "Banking customer service intent detection",
+      "n_classes": 77,
+      "task_type": "choice",
+      "hf_source": "legacy-datasets/banking77",
+      "hf_config": null,
+      "eval_split": "test",
+      "test_examples": 2000,
+      "train_examples": 10000,
+      "max_test": 2000,
+      "sampling_seed": 42,
+      "filter_label": null,
+      "accuracy": 0.943,
+      "accuracy_ci_lo": 0.9335,
+      "accuracy_ci_hi": 0.953,
+      "macro_f1": 0.942904,
+      "train_accuracy": 0.9836,
+      "build_test_accuracy": 0.943,
+      "encoder": "BAAI/bge-large-en-v1.5",
+      "license": "CC BY 4.0",
+      "notes": [],
+      "baselines": {
+        "majority": {
+          "accuracy": 0.014,
+          "macro_f1": 0.000359
+        },
+        "tfidf_lr": {
+          "accuracy": 0.9,
+          "macro_f1": 0.899457,
+          "best_params": {
+            "clf__C": 10.0,
+            "tfidf__analyzer": "word",
+            "tfidf__max_features": 10000,
+            "tfidf__ngram_range": [
+              1,
+              1
+            ]
+          },
+          "cv_best_score": 0.881199
+        }
+      },
+      "latency": {
+        "total_p50_ms": 118.34,
+        "total_p95_ms": 147.42,
+        "embed_p50_ms": 113.73,
+        "embed_p95_ms": 144.99,
+        "clf_p50_ms": 2.2522,
+        "clf_p95_ms": 15.2824,
+        "n_measured": 50
+      },
+      "clinc_detail": null
+    },
+    {
+      "task_id": "clinc_oos",
+      "name": "Intent detection with out-of-scope",
+      "n_classes": 151,
+      "task_type": "choice",
+      "hf_source": "clinc_oos",
+      "hf_config": "plus",
+      "eval_split": "test",
+      "test_examples": 2000,
+      "train_examples": 10000,
+      "max_test": 2000,
+      "sampling_seed": 42,
+      "filter_label": null,
+      "accuracy": 0.8845,
+      "accuracy_ci_lo": 0.871,
+      "accuracy_ci_hi": 0.8985,
+      "macro_f1": 0.920653,
+      "train_accuracy": 0.9983,
+      "build_test_accuracy": 0.8845,
+      "encoder": "BAAI/bge-large-en-v1.5",
+      "license": "CC BY 3.0",
+      "notes": [
+        "151 classes including out-of-scope. Config: 'plus'"
+      ],
+      "baselines": {
+        "majority": {
+          "accuracy": 0.179,
+          "macro_f1": 0.002011
+        },
+        "tfidf_lr": {
+          "accuracy": 0.7865,
+          "macro_f1": 0.835196,
+          "best_params": {
+            "clf__C": 10.0,
+            "tfidf__analyzer": "word",
+            "tfidf__max_features": 30000,
+            "tfidf__ngram_range": [
+              1,
+              2
+            ]
+          },
+          "cv_best_score": 0.911101
+        }
+      },
+      "latency": {
+        "total_p50_ms": 117.86,
+        "total_p95_ms": 135.91,
+        "embed_p50_ms": 115.55,
+        "embed_p95_ms": 129.45,
+        "clf_p50_ms": 2.0839,
+        "clf_p95_ms": 9.9749,
+        "n_measured": 50
+      },
+      "clinc_detail": {
+        "in_scope_acc": 0.9647,
+        "oos_acc": 0.5168,
+        "in_scope_n": 1642,
+        "oos_n": 358
+      }
+    },
+    {
+      "task_id": "dbpedia",
+      "name": "Wikipedia article ontology classification",
+      "n_classes": 14,
+      "task_type": "choice",
+      "hf_source": "fancyzhx/dbpedia_14",
+      "hf_config": null,
+      "eval_split": "test",
+      "test_examples": 2000,
+      "train_examples": 10000,
+      "max_test": 2000,
+      "sampling_seed": 42,
+      "filter_label": null,
+      "accuracy": 0.9595,
+      "accuracy_ci_lo": 0.951,
+      "accuracy_ci_hi": 0.968,
+      "macro_f1": 0.958924,
+      "train_accuracy": 0.998,
+      "build_test_accuracy": 0.9595,
+      "encoder": "BAAI/bge-large-en-v1.5",
+      "license": "CC BY-SA 3.0",
+      "notes": [],
+      "baselines": {
+        "majority": {
+          "accuracy": 0.0765,
+          "macro_f1": 0.010152
+        },
+        "tfidf_lr": {
+          "accuracy": 0.9655,
+          "macro_f1": 0.96532,
+          "best_params": {
+            "clf__C": 10.0,
+            "tfidf__analyzer": "word",
+            "tfidf__max_features": 30000,
+            "tfidf__ngram_range": [
+              1,
+              2
+            ]
+          },
+          "cv_best_score": 0.9653
+        }
+      },
+      "latency": {
+        "total_p50_ms": 114.31,
+        "total_p95_ms": 179.68,
+        "embed_p50_ms": 114.08,
+        "embed_p95_ms": 179.46,
+        "clf_p50_ms": 0.2193,
+        "clf_p95_ms": 0.268,
+        "n_measured": 50
+      },
+      "clinc_detail": null
+    },
+    {
+      "task_id": "emotion",
+      "name": "Text emotion detection",
+      "n_classes": 6,
+      "task_type": "choice",
+      "hf_source": "dair-ai/emotion",
+      "hf_config": null,
+      "eval_split": "test",
+      "test_examples": 2000,
+      "train_examples": 10000,
+      "max_test": 2000,
+      "sampling_seed": 42,
+      "filter_label": null,
+      "accuracy": 0.755,
+      "accuracy_ci_lo": 0.736,
+      "accuracy_ci_hi": 0.7745,
+      "macro_f1": 0.677764,
+      "train_accuracy": 0.8339,
+      "build_test_accuracy": 0.755,
+      "encoder": "BAAI/bge-large-en-v1.5",
+      "license": "Academic",
+      "notes": [],
+      "baselines": {
+        "majority": {
+          "accuracy": 0.3475,
+          "macro_f1": 0.085962
+        },
+        "tfidf_lr": {
+          "accuracy": 0.872,
+          "macro_f1": 0.818343,
+          "best_params": {
+            "clf__C": 10.0,
+            "tfidf__analyzer": "word",
+            "tfidf__max_features": 10000,
+            "tfidf__ngram_range": [
+              1,
+              1
+            ]
+          },
+          "cv_best_score": 0.8565
+        }
+      },
+      "latency": {
+        "total_p50_ms": 101.73,
+        "total_p95_ms": 118.23,
+        "embed_p50_ms": 101.53,
+        "embed_p95_ms": 118.01,
+        "clf_p50_ms": 0.2198,
+        "clf_p95_ms": 0.2504,
+        "n_measured": 50
+      },
+      "clinc_detail": null
+    },
+    {
+      "task_id": "imdb",
+      "name": "Movie review sentiment (positive/negative)",
+      "n_classes": 2,
+      "task_type": "noul",
+      "hf_source": "stanfordnlp/imdb",
+      "hf_config": null,
+      "eval_split": "test",
+      "test_examples": 2000,
+      "train_examples": 10000,
+      "max_test": 2000,
+      "sampling_seed": 42,
+      "filter_label": null,
+      "accuracy": 0.948,
+      "accuracy_ci_lo": 0.9385,
+      "accuracy_ci_hi": 0.957,
+      "macro_f1": 0.947912,
+      "train_accuracy": 0.9559,
+      "build_test_accuracy": 0.948,
+      "encoder": "BAAI/bge-large-en-v1.5",
+      "license": "Academic / non-commercial",
+      "notes": [],
+      "baselines": {
+        "majority": {
+          "accuracy": 0.52,
+          "macro_f1": 0.342105
+        },
+        "tfidf_lr": {
+          "accuracy": 0.8835,
+          "macro_f1": 0.883377,
+          "best_params": {
+            "clf__C": 10.0,
+            "tfidf__analyzer": "word",
+            "tfidf__max_features": 30000,
+            "tfidf__ngram_range": [
+              1,
+              2
+            ]
+          },
+          "cv_best_score": 0.887799
+        }
+      },
+      "latency": {
+        "total_p50_ms": 252.03,
+        "total_p95_ms": 535.92,
+        "embed_p50_ms": 251.81,
+        "embed_p95_ms": 535.71,
+        "clf_p50_ms": 0.2171,
+        "clf_p95_ms": 0.2635,
+        "n_measured": 50
+      },
+      "clinc_detail": null
+    },
+    {
+      "task_id": "massive_intent",
+      "name": "Amazon MASSIVE voice command intents",
+      "n_classes": 60,
+      "task_type": "choice",
+      "hf_source": "mteb/amazon_massive_intent",
+      "hf_config": "en",
+      "eval_split": "test",
+      "test_examples": 2000,
+      "train_examples": 10000,
+      "max_test": 2000,
+      "sampling_seed": 42,
+      "filter_label": null,
+      "accuracy": 0.881,
+      "accuracy_ci_lo": 0.867,
+      "accuracy_ci_hi": 0.8955,
+      "macro_f1": 0.864387,
+      "train_accuracy": 0.977,
+      "build_test_accuracy": 0.881,
+      "encoder": "BAAI/bge-large-en-v1.5",
+      "license": "CC BY 4.0",
+      "notes": [
+        "English subset only. Config: 'en'. String labels used directly"
+      ],
+      "baselines": {
+        "majority": {
+          "accuracy": 0.0705,
+          "macro_f1": 0.002232
+        },
+        "tfidf_lr": {
+          "accuracy": 0.83,
+          "macro_f1": 0.803856,
+          "best_params": {
+            "clf__C": 10.0,
+            "tfidf__analyzer": "word",
+            "tfidf__max_features": 10000,
+            "tfidf__ngram_range": [
+              1,
+              1
+            ]
+          },
+          "cv_best_score": 0.8178
+        }
+      },
+      "latency": {
+        "total_p50_ms": 114.04,
+        "total_p95_ms": 128.49,
+        "embed_p50_ms": 113.1,
+        "embed_p95_ms": 125.96,
+        "clf_p50_ms": 0.4042,
+        "clf_p95_ms": 4.7765,
+        "n_measured": 50
+      },
+      "clinc_detail": null
+    },
+    {
+      "task_id": "sms_spam",
+      "name": "SMS spam detection",
+      "n_classes": 2,
+      "task_type": "noul",
+      "hf_source": "ucirvine/sms_spam",
+      "hf_config": null,
+      "eval_split": "test",
+      "test_examples": 1115,
+      "train_examples": 4459,
+      "max_test": 2000,
+      "sampling_seed": 42,
+      "filter_label": null,
+      "accuracy": 0.991031,
+      "accuracy_ci_lo": 0.98565,
+      "accuracy_ci_hi": 0.995516,
+      "macro_f1": 0.980297,
+      "train_accuracy": 0.997085,
+      "build_test_accuracy": 0.991031,
+      "encoder": "BAAI/bge-large-en-v1.5",
+      "license": "CC BY 4.0",
+      "notes": [
+        "Single random split (test_size=0.2, seed=42) \u2014 no standard train/test"
+      ],
+      "baselines": {
+        "majority": {
+          "accuracy": 0.866368,
+          "macro_f1": 0.4642
+        },
+        "tfidf_lr": {
+          "accuracy": 0.987444,
+          "macro_f1": 0.971924,
+          "best_params": {
+            "clf__C": 10.0,
+            "tfidf__analyzer": "char_wb",
+            "tfidf__max_features": 10000,
+            "tfidf__ngram_range": [
+              1,
+              2
+            ]
+          },
+          "cv_best_score": 0.987665
+        }
+      },
+      "latency": {
+        "total_p50_ms": 108.62,
+        "total_p95_ms": 124.42,
+        "embed_p50_ms": 108.39,
+        "embed_p95_ms": 124.22,
+        "clf_p50_ms": 0.2222,
+        "clf_p95_ms": 0.2595,
+        "n_measured": 50
+      },
+      "clinc_detail": null
+    },
+    {
+      "task_id": "snli",
+      "name": "Natural language inference",
+      "n_classes": 3,
+      "task_type": "choice",
+      "hf_source": "stanfordnlp/snli",
+      "hf_config": null,
+      "eval_split": "test",
+      "test_examples": 2000,
+      "train_examples": 10000,
+      "max_test": 2000,
+      "sampling_seed": 42,
+      "filter_label": -1,
+      "accuracy": 0.656,
+      "accuracy_ci_lo": 0.634487,
+      "accuracy_ci_hi": 0.6755,
+      "macro_f1": 0.651981,
+      "train_accuracy": 0.7271,
+      "build_test_accuracy": 0.656,
+      "encoder": "BAAI/bge-large-en-v1.5",
+      "license": "CC BY-SA 4.0",
+      "notes": [
+        "Labels -1 (unlabeled) filtered. Input: 'premise [SEP] hypothesis'"
+      ],
+      "baselines": {
+        "majority": {
+          "accuracy": 0.3365,
+          "macro_f1": 0.167851
+        },
+        "tfidf_lr": {
+          "accuracy": 0.489,
+          "macro_f1": 0.488823,
+          "best_params": {
+            "clf__C": 1.0,
+            "tfidf__analyzer": "word",
+            "tfidf__max_features": 30000,
+            "tfidf__ngram_range": [
+              1,
+              2
+            ]
+          },
+          "cv_best_score": 0.477299
+        }
+      },
+      "latency": {
+        "total_p50_ms": 101.59,
+        "total_p95_ms": 119.91,
+        "embed_p50_ms": 101.38,
+        "embed_p95_ms": 119.66,
+        "clf_p50_ms": 0.217,
+        "clf_p95_ms": 0.2463,
+        "n_measured": 50
+      },
+      "clinc_detail": null
+    },
+    {
+      "task_id": "sst2",
+      "name": "Movie review sentiment (positive/negative)",
+      "n_classes": 2,
+      "task_type": "noul",
+      "hf_source": "stanfordnlp/sst2",
+      "hf_config": null,
+      "eval_split": "validation",
+      "test_examples": 872,
+      "train_examples": 10000,
+      "max_test": 2000,
+      "sampling_seed": 42,
+      "filter_label": null,
+      "accuracy": 0.901376,
+      "accuracy_ci_lo": 0.881881,
+      "accuracy_ci_hi": 0.9209,
+      "macro_f1": 0.901188,
+      "train_accuracy": 0.9453,
+      "build_test_accuracy": 0.901376,
+      "encoder": "BAAI/bge-large-en-v1.5",
+      "license": "Stanford academic license",
+      "notes": [
+        "Evaluation uses 'validation' split (official test set labels are not public)"
+      ],
+      "baselines": {
+        "majority": {
+          "accuracy": 0.509174,
+          "macro_f1": 0.337386
+        },
+        "tfidf_lr": {
+          "accuracy": 0.794725,
+          "macro_f1": 0.793781,
+          "best_params": {
+            "clf__C": 10.0,
+            "tfidf__analyzer": "word",
+            "tfidf__max_features": 30000,
+            "tfidf__ngram_range": [
+              1,
+              2
+            ]
+          },
+          "cv_best_score": 0.8253
+        }
+      },
+      "latency": {
+        "total_p50_ms": 104.15,
+        "total_p95_ms": 117.64,
+        "embed_p50_ms": 103.94,
+        "embed_p95_ms": 117.41,
+        "clf_p50_ms": 0.2204,
+        "clf_p95_ms": 0.2602,
+        "n_measured": 50
+      },
+      "clinc_detail": null
+    },
+    {
+      "task_id": "tweet_eval_emotion",
+      "name": "Tweet emotion detection",
+      "n_classes": 4,
+      "task_type": "choice",
+      "hf_source": "cardiffnlp/tweet_eval",
+      "hf_config": "emotion",
+      "eval_split": "test",
+      "test_examples": 1421,
+      "train_examples": 3257,
+      "max_test": 2000,
+      "sampling_seed": 42,
+      "filter_label": null,
+      "accuracy": 0.78114,
+      "accuracy_ci_lo": 0.760028,
+      "accuracy_ci_hi": 0.803659,
+      "macro_f1": 0.747001,
+      "train_accuracy": 0.902364,
+      "build_test_accuracy": 0.78114,
+      "encoder": "BAAI/bge-large-en-v1.5",
+      "license": "Twitter TOS / academic",
+      "notes": [],
+      "baselines": {
+        "majority": {
+          "accuracy": 0.392681,
+          "macro_f1": 0.14098
+        },
+        "tfidf_lr": {
+          "accuracy": 0.667136,
+          "macro_f1": 0.59704,
+          "best_params": {
+            "clf__C": 10.0,
+            "tfidf__analyzer": "word",
+            "tfidf__max_features": 10000,
+            "tfidf__ngram_range": [
+              1,
+              1
+            ]
+          },
+          "cv_best_score": 0.687445
+        }
+      },
+      "latency": {
+        "total_p50_ms": 105.0,
+        "total_p95_ms": 121.83,
+        "embed_p50_ms": 104.77,
+        "embed_p95_ms": 121.6,
+        "clf_p50_ms": 0.2238,
+        "clf_p95_ms": 0.2561,
+        "n_measured": 50
+      },
+      "clinc_detail": null
+    },
+    {
+      "task_id": "tweet_eval_offensive",
+      "name": "Offensive language detection",
+      "n_classes": 2,
+      "task_type": "noul",
+      "hf_source": "cardiffnlp/tweet_eval",
+      "hf_config": "offensive",
+      "eval_split": "test",
+      "test_examples": 860,
+      "train_examples": 10000,
+      "max_test": 2000,
+      "sampling_seed": 42,
+      "filter_label": null,
+      "accuracy": 0.810465,
+      "accuracy_ci_lo": 0.784855,
+      "accuracy_ci_hi": 0.836047,
+      "macro_f1": 0.748453,
+      "train_accuracy": 0.8077,
+      "build_test_accuracy": 0.810465,
+      "encoder": "BAAI/bge-large-en-v1.5",
+      "license": "Twitter TOS / academic",
+      "notes": [],
+      "baselines": {
+        "majority": {
+          "accuracy": 0.72093,
+          "macro_f1": 0.418919
+        },
+        "tfidf_lr": {
+          "accuracy": 0.789535,
+          "macro_f1": 0.719814,
+          "best_params": {
+            "clf__C": 10.0,
+            "tfidf__analyzer": "word",
+            "tfidf__max_features": 30000,
+            "tfidf__ngram_range": [
+              1,
+              1
+            ]
+          },
+          "cv_best_score": 0.7518
+        }
+      },
+      "latency": {
+        "total_p50_ms": 104.81,
+        "total_p95_ms": 135.58,
+        "embed_p50_ms": 104.59,
+        "embed_p95_ms": 135.33,
+        "clf_p50_ms": 0.2288,
+        "clf_p95_ms": 0.2839,
+        "n_measured": 50
+      },
+      "clinc_detail": null
+    },
+    {
+      "task_id": "tweet_eval_sentiment",
+      "name": "Tweet sentiment analysis",
+      "n_classes": 3,
+      "task_type": "choice",
+      "hf_source": "cardiffnlp/tweet_eval",
+      "hf_config": "sentiment",
+      "eval_split": "test",
+      "test_examples": 2000,
+      "train_examples": 10000,
+      "max_test": 2000,
+      "sampling_seed": 42,
+      "filter_label": null,
+      "accuracy": 0.6625,
+      "accuracy_ci_lo": 0.6405,
+      "accuracy_ci_hi": 0.6835,
+      "macro_f1": 0.656556,
+      "train_accuracy": 0.7571,
+      "build_test_accuracy": 0.6625,
+      "encoder": "BAAI/bge-large-en-v1.5",
+      "license": "Twitter TOS / academic",
+      "notes": [],
+      "baselines": {
+        "majority": {
+          "accuracy": 0.4755,
+          "macro_f1": 0.214842
+        },
+        "tfidf_lr": {
+          "accuracy": 0.5425,
+          "macro_f1": 0.492054,
+          "best_params": {
+            "clf__C": 1.0,
+            "tfidf__analyzer": "word",
+            "tfidf__max_features": 10000,
+            "tfidf__ngram_range": [
+              1,
+              1
+            ]
+          },
+          "cv_best_score": 0.6157
+        }
+      },
+      "latency": {
+        "total_p50_ms": 88.54,
+        "total_p95_ms": 103.51,
+        "embed_p50_ms": 88.31,
+        "embed_p95_ms": 103.28,
+        "clf_p50_ms": 0.2334,
+        "clf_p95_ms": 0.2745,
+        "n_measured": 50
+      },
+      "clinc_detail": null
+    }
+  ],
+  "encoder": "BAAI/bge-large-en-v1.5",
+  "pack_dir": "data/model_pack",
+  "pack_total_bytes": 1705693,
+  "encoder_size": "~1.2 GB on disk (BAAI/bge-large-en-v1.5)",
+  "encoder_load_time_s": 2.15,
+  "hardware": {
+    "platform": "macOS-15.6.1-arm64-arm-64bit",
+    "processor": "arm",
+    "cpu_count": 16,
+    "ram_gb": 68.7,
+    "python": "3.12.11",
+    "torch_version": "2.11.0",
+    "device": "cpu",
+    "torch_threads": 1,
+    "torch_interop_threads": 1,
+    "omp_threads": "1"
+  },
+  "evaluation_date": "2026-09-29 08:47:59",
+  "note": "Independent evaluation of frozen model pack artifacts. No retraining. Same random seed (42) for test set sampling. TF-IDF+LR baseline tuned via 3-fold CV on training data."
+}

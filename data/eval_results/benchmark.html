@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QuickClassify Benchmark</title>
+<style>
+:root{--mono:ui-monospace,SFMono-Regular,Consolas,monospace;--accent:#2563eb}
+*{box-sizing:border-box}
+body{margin:0;font:14px/1.6 var(--mono);color:#111;background:#fff;padding:32px}
+.container{max-width:1400px;margin:auto}
+h1{font-size:28px;font-weight:700;margin:0 0 4px}
+.sub{color:#555;font-size:13px;margin-bottom:24px}
+h2{font-size:18px;margin:32px 0 12px;border-bottom:1px solid #e5e5e5;padding-bottom:8px}
+table{border-collapse:collapse;width:100%;font-size:12px}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid #eee}
+th{background:#f8f8f8;font-weight:600;position:sticky;top:0}
+tr:hover{background:#f0f7ff}
+small{color:#777}
+strong{font-weight:600}
+.meta{font-size:12px;color:#555;margin:16px 0;line-height:1.8}
+.meta dt{font-weight:600;display:inline}
+.meta dd{display:inline;margin:0 16px 0 0}
+.note{background:#fffbeb;border:1px solid #fde68a;border-radius:6px;padding:12px;font-size:12px;margin:16px 0}
+.arch{background:#f0f7ff;border:1px solid #bfdbfe;border-radius:6px;padding:16px;font-size:13px;margin:16px 0}
+code{background:#f5f5f5;padding:2px 5px;border-radius:3px;font-size:12px}
+a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>QuickClassify Benchmark</h1>
+<p class="sub">Frozen pretrained embeddings + task-specific logistic heads. Evaluated 2026-09-29 08:47:59.</p>
+
+<div class="arch">
+<strong>Architecture:</strong> BAAI/bge-large-en-v1.5 (1024d frozen encoder, ~1.2 GB) → StandardScaler → LogisticRegression (C=0.01, newton-cg)<br>
+<strong>Each head:</strong> 1 scaler + 1 linear classifier. No fine-tuning, no MLP, no generation.<br>
+<strong>Training regime:</strong> Each head trained on up to 10,000 examples from the dataset's training split (seed=42 for subsampling).<br>
+<strong>Comparison context:</strong> QuickClassify heads are task-trained; Jeff and similar zero-shot models are not. This is a deployment comparison, not an equal-supervision experiment.<br>
+<strong>Baselines:</strong> TF-IDF+LR tuned via 3-fold CV over C in {0.01, 0.1, 1, 10}, analyzer in {word, char_wb}, ngram_range in {(1,1), (1,2)}, max_features in {10000, 30000}. Vectorizer fit inside each fold.
+</div>
+
+<h2>Results</h2>
+<table>
+<thead>
+<tr>
+<th>Task</th><th>Classes</th><th>Test N</th><th>Split</th>
+<th>Accuracy</th><th>Macro F1</th>
+<th>Majority</th><th>TF-IDF+LR</th><th>Jeff</th>
+<th>Latency (p50)</th><th>Head Size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>sms_spam</strong><br><small>SMS spam detection</small></td>
+<td>2</td>
+<td>1115</td>
+<td>test</td>
+<td><strong>99.1%</strong><br><small>[0.986, 0.996]</small></td>
+<td>98.0%</td>
+<td>86.6%</td>
+<td>98.7%</td>
+<td>not evaluated</td>
+<td>109ms<br><small>emb 108 + clf 0.22</small></td>
+<td>29 KB</td>
+</tr>
+<tr>
+<td><strong>dbpedia</strong><br><small>Wikipedia article ontology classification</small></td>
+<td>14</td>
+<td>2000</td>
+<td>test</td>
+<td><strong>96.0%</strong><br><small>[0.951, 0.968]</small></td>
+<td>95.9%</td>
+<td>7.6%</td>
+<td>96.5%</td>
+<td>not evaluated</td>
+<td>114ms<br><small>emb 114 + clf 0.22</small></td>
+<td>81 KB</td>
+</tr>
+<tr>
+<td><strong>imdb</strong><br><small>Movie review sentiment (positive/negative)</small></td>
+<td>2</td>
+<td>2000</td>
+<td>test</td>
+<td><strong>94.8%</strong><br><small>[0.939, 0.957]</small></td>
+<td>94.8%</td>
+<td>52.0%</td>
+<td>88.3%</td>
+<td>not evaluated</td>
+<td>252ms<br><small>emb 252 + clf 0.22</small></td>
+<td>29 KB</td>
+</tr>
+<tr>
+<td><strong>banking77</strong><br><small>Banking customer service intent detection</small></td>
+<td>77</td>
+<td>2000</td>
+<td>test</td>
+<td><strong>94.3%</strong><br><small>[0.933, 0.953]</small></td>
+<td>94.3%</td>
+<td>1.4%</td>
+<td>90.0%</td>
+<td>19.5%</td>
+<td>118ms<br><small>emb 114 + clf 2.25</small></td>
+<td>334 KB</td>
+</tr>
+<tr>
+<td><strong>ag_news</strong><br><small>News article topic classification</small></td>
+<td>4</td>
+<td>2000</td>
+<td>test</td>
+<td><strong>90.5%</strong><br><small>[0.892, 0.918]</small></td>
+<td>90.5%</td>
+<td>25.2%</td>
+<td>89.0%</td>
+<td>89.5%</td>
+<td>79ms<br><small>emb 79 + clf 0.22</small></td>
+<td>41 KB</td>
+</tr>
+<tr>
+<td><strong>sst2</strong><br><small>Movie review sentiment (positive/negative)</small></td>
+<td>2</td>
+<td>872</td>
+<td>validation</td>
+<td><strong>90.1%</strong><br><small>[0.882, 0.921]</small></td>
+<td>90.1%</td>
+<td>50.9%</td>
+<td>79.5%</td>
+<td>84.5%</td>
+<td>104ms<br><small>emb 104 + clf 0.22</small></td>
+<td>29 KB</td>
+</tr>
+<tr>
+<td><strong>clinc_oos</strong><br><small>Intent detection with out-of-scope</small></td>
+<td>151</td>
+<td>2000</td>
+<td>test</td>
+<td><strong>88.4%</strong><br><small>[0.871, 0.898]</small></td>
+<td>92.1%</td>
+<td>17.9%</td>
+<td>78.6%</td>
+<td>not evaluated</td>
+<td>118ms<br><small>emb 116 + clf 2.08</small></td>
+<td>632 KB</td>
+</tr>
+<tr>
+<td><strong>massive_intent</strong><br><small>Amazon MASSIVE voice command intents</small></td>
+<td>60</td>
+<td>2000</td>
+<td>test</td>
+<td><strong>88.1%</strong><br><small>[0.867, 0.895]</small></td>
+<td>86.4%</td>
+<td>7.0%</td>
+<td>83.0%</td>
+<td>not evaluated</td>
+<td>114ms<br><small>emb 113 + clf 0.40</small></td>
+<td>271 KB</td>
+</tr>
+<tr>
+<td><strong>tweet_eval_offensive</strong><br><small>Offensive language detection</small></td>
+<td>2</td>
+<td>860</td>
+<td>test</td>
+<td><strong>81.0%</strong><br><small>[0.785, 0.836]</small></td>
+<td>74.8%</td>
+<td>72.1%</td>
+<td>79.0%</td>
+<td>not evaluated</td>
+<td>105ms<br><small>emb 105 + clf 0.23</small></td>
+<td>29 KB</td>
+</tr>
+<tr>
+<td><strong>tweet_eval_emotion</strong><br><small>Tweet emotion detection</small></td>
+<td>4</td>
+<td>1421</td>
+<td>test</td>
+<td><strong>78.1%</strong><br><small>[0.760, 0.804]</small></td>
+<td>74.7%</td>
+<td>39.3%</td>
+<td>66.7%</td>
+<td>not evaluated</td>
+<td>105ms<br><small>emb 105 + clf 0.22</small></td>
+<td>41 KB</td>
+</tr>
+<tr>
+<td><strong>emotion</strong><br><small>Text emotion detection</small></td>
+<td>6</td>
+<td>2000</td>
+<td>test</td>
+<td><strong>75.5%</strong><br><small>[0.736, 0.774]</small></td>
+<td>67.8%</td>
+<td>34.8%</td>
+<td>87.2%</td>
+<td>not evaluated</td>
+<td>102ms<br><small>emb 102 + clf 0.22</small></td>
+<td>49 KB</td>
+</tr>
+<tr>
+<td><strong>tweet_eval_sentiment</strong><br><small>Tweet sentiment analysis</small></td>
+<td>3</td>
+<td>2000</td>
+<td>test</td>
+<td><strong>66.2%</strong><br><small>[0.640, 0.683]</small></td>
+<td>65.7%</td>
+<td>47.5%</td>
+<td>54.2%</td>
+<td>not evaluated</td>
+<td>89ms<br><small>emb 88 + clf 0.23</small></td>
+<td>37 KB</td>
+</tr>
+<tr>
+<td><strong>snli</strong><br><small>Natural language inference</small></td>
+<td>3</td>
+<td>2000</td>
+<td>test</td>
+<td><strong>65.6%</strong><br><small>[0.634, 0.675]</small></td>
+<td>65.2%</td>
+<td>33.7%</td>
+<td>48.9%</td>
+<td>not evaluated</td>
+<td>102ms<br><small>emb 101 + clf 0.22</small></td>
+<td>37 KB</td>
+</tr>
+
+<tr style="font-weight:600;border-top:2px solid #333">
+<td>Average (13 tasks)</td><td></td><td></td><td></td>
+<td>85.2%</td><td>83.9%</td>
+<td></td><td></td><td></td><td></td><td></td>
+</tr>
+</tbody>
+</table>
+
+<div class="note">
+<strong>Jeff comparison:</strong> Not yet evaluated locally. Jeff is a zero-shot decision model (no per-task training).
+A fair comparison requires running Jeff on identical evaluation examples with the same label meanings.
+QuickClassify's advantage comes from task-specific training; Jeff's advantage is generalization without training data.
+</div>
+
+<h2>Task-Specific Notes</h2>
+<dl class="meta">
+<dt>SST-2:</dt><dd>Evaluated on validation split; official test labels are not public.</dd>
+<dt>SMS Spam:</dt><dd>Random train/test split (test_size=0.2, seed=42); no standard benchmark split.</dd>
+<dt>SNLI:</dt><dd>Input encoded as "premise [SEP] hypothesis". Label -1 (unlabeled) filtered.</dd>
+<dt>CLINC-OOS:</dt><dd>151 classes including out-of-scope. In-scope accuracy 96.5%, OOS detection 51.7%.</dd>
+<dt>MASSIVE:</dt><dd>English subset only (config='en'). String labels used directly.</dd>
+</dl>
+
+<h2>Infrastructure</h2>
+<dl class="meta">
+<dt>Hardware:</dt><dd>macOS-15.6.1-arm64-arm-64bit, 16 cores, 68.7 GB RAM</dd>
+<dt>Encoder:</dt><dd>BAAI/bge-large-en-v1.5, ~1.2 GB on disk, 2.15s load time</dd>
+<dt>Total pack:</dt><dd>1666 KB (13 heads, no encoder)</dd>
+<dt>Threads:</dt><dd>Default (sentence-transformers manages threading)</dd>
+<dt>Batch size:</dt><dd>1 (single-example inference measured)</dd>
+<dt>Caching:</dt><dd>No embedding cache; each request embeds fresh</dd>
+<dt>Truncation:</dt><dd>Default sentence-transformers truncation (512 tokens)</dd>
+</dl>
+
+<h2>Reproduce</h2>
+<pre><code># Install
+pip install sentence-transformers scikit-learn fastapi uvicorn
+
+# Build model pack from source datasets
+python -m quickclassify.serve.build_pack --out data/model_pack
+
+# Run evaluation
+python -m quickclassify.serve.evaluate --baselines --latency
+
+# Start server with playground
+python -m quickclassify.serve.server
+# Open http://localhost:8400
+</code></pre>
+
+<h2>API</h2>
+<pre><code># Predict with a pretrained head
+curl -X POST http://localhost:8400/v1/predict \
+  -H "Content-Type: application/json" \
+  -d '{"text": "I was charged twice", "task": "banking77"}'
+
+# List capabilities
+curl http://localhost:8400/v1/capabilities
+
+# Jeff-compatible endpoint (matches criteria to pretrained heads)
+curl -X POST http://localhost:8400/v1/systemone \
+  -H "Content-Type: application/json" \
+  -d '{"model":"quickclassify","state":"I was charged twice",
+       "questions":{"intent":{"type":"choice","criteria":{
+         "transaction_charged_twice":null,"request_refund":null,
+         "cancel_transfer":null}}}}'
+</code></pre>
+
+</div>
+</body>
+</html>

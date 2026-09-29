@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Large model files (encoder weights - not tracked)
+models/encoder/
+*.safetensors
+*.bin
+*.onnx
+
+# Dataset downloads and caches
+data/downloads/
+data/cache/
+.cache/
+
+# Sensitive
+.env
+*.credentials
+*.token
+
+# ViZDoom artifacts (not part of Jeffy)
+_vizdoom.ini
+*.wad
+
+# Large per-example prediction files (reproduce with scripts)
+# Keep summaries and comparison JSON in git
+data/eval_results/*_predictions.jsonl

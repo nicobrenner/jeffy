@@ -4,6 +4,8 @@ Loads verified model pack artifacts and serves predictions
 with capability metadata in every response.
 """
 
+import importlib.resources
+import logging
 import time
 from pathlib import Path
 
@@ -13,11 +15,48 @@ from sentence_transformers import SentenceTransformer
 from .catalog import ENCODER, Capability
 from .model_pack import load_artifact
 
+logger = logging.getLogger(__name__)
+
+
+def _bundled_pack_dir() -> Path | None:
+    """Return the path to the model pack bundled inside the installed package."""
+    try:
+        ref = importlib.resources.files("jeffy") / "pack"
+        # Traverse to get a real filesystem path
+        p = Path(str(ref))
+        if p.is_dir():
+            return p
+    except Exception:
+        pass
+    return None
+
+
+def default_pack_dir() -> str:
+    """Resolve the default model pack directory.
+
+    Priority:
+    1. JEFFY_PACK_DIR environment variable
+    2. Bundled pack inside the installed jeffy package
+    3. data/model_pack in the current working directory (development fallback)
+    """
+    import os
+    env = os.environ.get("JEFFY_PACK_DIR")
+    if env:
+        return env
+
+    bundled = _bundled_pack_dir()
+    if bundled is not None:
+        return str(bundled)
+
+    return "data/model_pack"
+
 
 class Engine:
     """Loads pretrained classifiers from a model pack and serves predictions."""
 
-    def __init__(self, pack_dir: str = "data/model_pack", device: str = "cpu"):
+    def __init__(self, pack_dir: str | None = None, device: str = "cpu"):
+        if pack_dir is None:
+            pack_dir = default_pack_dir()
         self.pack_dir = Path(pack_dir)
         self.device = device
         self._encoder: SentenceTransformer | None = None
@@ -27,13 +66,20 @@ class Engine:
         self._encoder_load_time: float = 0.0
 
     def load(self):
-        """Load encoder and all pretrained classifiers from the model pack."""
+        """Load encoder and all pretrained classifiers from the model pack.
+
+        Raises FileNotFoundError if the pack directory does not exist.
+        """
+        if not self.pack_dir.exists():
+            raise FileNotFoundError(
+                f"Model pack not found at '{self.pack_dir}'. "
+                f"Set JEFFY_PACK_DIR to the model pack location, or run "
+                f"'jeffy-build' to create one from source datasets."
+            )
+
         t0 = time.perf_counter()
         self._encoder = SentenceTransformer(ENCODER, device=self.device)
         self._encoder_load_time = time.perf_counter() - t0
-
-        if not self.pack_dir.exists():
-            return
 
         quarantined = []
 
@@ -52,7 +98,6 @@ class Engine:
 
             ds_name = manifest.dataset
 
-            # Verify encoder matches
             if manifest.encoder != ENCODER:
                 quarantined.append((ds_name, f"encoder mismatch: {manifest.encoder} vs {ENCODER}"))
                 continue
@@ -79,10 +124,11 @@ class Engine:
             self._capabilities[ds_name] = cap
 
         if quarantined:
-            import logging
-            logger = logging.getLogger(__name__)
             for name, reason in quarantined:
                 logger.warning(f"Quarantined artifact '{name}': {reason}")
+
+        if not self._capabilities:
+            logger.warning(f"No capabilities loaded from '{self.pack_dir}'")
 
     @property
     def capabilities(self) -> dict[str, Capability]:
@@ -120,7 +166,6 @@ class Engine:
 
         total_ms = (time.perf_counter() - t0) * 1000
 
-        # Map probabilities using classifier's class order and manifest labels
         prob_dict = {}
         for cls, prob in zip(classes, probs):
             human = cap.labels.get(str(cls), str(cls))

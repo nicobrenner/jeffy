@@ -23,19 +23,17 @@ import os
 app = FastAPI(
     title="Jeffy",
     description="Pretrained decision engine with reusable embeddings and tiny classifiers.",
-    version="0.1.0a1",
+    version="0.1.0a2",
 )
 
 _engine: Engine | None = None
-
-PACK_DIR = os.environ.get("JEFFY_PACK_DIR", "data/model_pack")
-DEVICE = os.environ.get("JEFFY_DEVICE", "cpu")
 
 
 def get_engine() -> Engine:
     global _engine
     if _engine is None:
-        _engine = Engine(PACK_DIR, device=DEVICE)
+        device = os.environ.get("JEFFY_DEVICE", "cpu")
+        _engine = Engine(device=device)  # uses default_pack_dir()
         _engine.load()
     return _engine
 

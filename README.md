@@ -192,7 +192,7 @@ Runtime memory: ~2 GB (encoder loaded once, shared across all heads).
 
 ## Model security
 
-Classifier artifacts use pickle/joblib. **Only load artifacts from trusted sources.** Each artifact's `manifest.json` includes integrity hashes verified on load.
+Bundled pretrained artifacts use numpy `.npz` format (portable, no pickle). Custom-trained models also save a joblib pickle backup. **Only load custom pickle artifacts from trusted sources.** Each artifact's `manifest.json` includes integrity hashes verified on load.
 
 ## Provenance and licensing
 
@@ -213,8 +213,18 @@ The encoder ([bge-large-en-v1.5](https://huggingface.co/BAAI/bge-large-en-v1.5))
 
 ## Tested
 
-- Python 3.11, 3.12 on macOS arm64 (Apple M3 Max)
-- Clean-environment wheel install verified
+Verified with clean-environment wheel install:
+
+| Component | Version |
+|-----------|---------|
+| Python | 3.12.11 |
+| Platform | macOS 15.6.1, arm64 (Apple M3 Max) |
+| scikit-learn | 1.9.1 |
+| sentence-transformers | 6.1.0 |
+| torch | 2.14.0 |
+| numpy | 2.5.3 |
+
+Pretrained artifacts use numpy `.npz` format, avoiding sklearn version coupling. Tested loading artifacts built with sklearn 1.7.2 on sklearn 1.9.1 without warnings.
 
 ## What's not included
 

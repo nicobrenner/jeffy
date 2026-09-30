@@ -30,29 +30,36 @@ Each artifact's `manifest.json` records the source dataset and its stated licens
 Users should verify that their use of these artifacts complies with the original
 dataset terms.
 
-| Dataset | Stated License | Redistribution Verified |
-|---------|---------------|------------------------|
-| banking77 | CC BY 4.0 | No |
-| clinc_oos | CC BY 3.0 | No |
-| massive_intent | CC BY 4.0 | No |
-| ag_news | Academic / non-commercial | No |
-| dbpedia | CC BY-SA 3.0 | No |
-| sst2 | Stanford academic license | No |
-| emotion | Academic | No |
-| imdb | Academic / non-commercial | No |
-| sms_spam | CC BY 4.0 | No |
-| snli | CC BY-SA 4.0 | No |
-| tweet_eval_sentiment | Twitter TOS / academic | No |
-| tweet_eval_emotion | Twitter TOS / academic | No |
-| tweet_eval_offensive | Twitter TOS / academic | No |
+| Dataset | Stated License | Artifact Type | Distribution Basis |
+|---------|---------------|---------------|-------------------|
+| banking77 | CC BY 4.0 | derived weights | CC BY permits derivative works |
+| clinc_oos | CC BY 3.0 | derived weights | CC BY permits derivative works |
+| massive_intent | CC BY 4.0 | derived weights | CC BY permits derivative works |
+| sms_spam | CC BY 4.0 | derived weights | CC BY permits derivative works |
+| snli | CC BY-SA 4.0 | derived weights | CC BY-SA permits derivative works (share-alike) |
+| dbpedia | CC BY-SA 3.0 | derived weights | CC BY-SA permits derivative works (share-alike) |
+| ag_news | Academic / non-commercial | derived weights | **Unresolved**: license may restrict commercial redistribution |
+| imdb | Academic / non-commercial | derived weights | **Unresolved**: license may restrict commercial redistribution |
+| sst2 | Stanford academic license | derived weights | **Unresolved**: terms not reviewed for derived works |
+| emotion | Academic | derived weights | **Unresolved**: specific terms not documented on HF page |
+| tweet_eval_sentiment | Twitter TOS / academic | derived weights | **Unresolved**: Twitter-derived data may have redistribution limits |
+| tweet_eval_emotion | Twitter TOS / academic | derived weights | **Unresolved**: Twitter-derived data may have redistribution limits |
+| tweet_eval_offensive | Twitter TOS / academic | derived weights | **Unresolved**: Twitter-derived data may have redistribution limits |
 
-"No" means the license terms have been noted from the dataset's HuggingFace page
-but have not been reviewed by a lawyer for redistribution of derived model weights.
+Artifacts are logistic regression coefficients and scaler parameters trained on the
+datasets. They do not contain copies of training text. "Derived weights" means the
+artifacts are a mathematical transformation of the training data, not a subset of it.
+
+For CC BY and CC BY-SA datasets, derivative works are explicitly permitted.
+For datasets marked **Unresolved**, the license terms have not been independently
+verified to permit redistribution of derived model weights. Users should review
+the source terms before commercial deployment.
 
 ## scikit-learn
 
-Model artifacts are saved using joblib/pickle and require scikit-learn to load.
-scikit-learn is BSD-3-Clause licensed.
+Bundled pretrained artifacts use numpy's .npz format for portability.
+Custom-trained models also save a joblib/pickle backup.
+scikit-learn (BSD-3-Clause) is required at runtime to reconstruct classifiers.
 
 ## sentence-transformers
 

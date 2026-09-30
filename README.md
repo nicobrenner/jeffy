@@ -1,14 +1,14 @@
 # Jeffy
 
-Pretrained text classifiers: 13 ready-to-use heads, train your own in seconds.
+Pretrained text classifiers you can run and retrain on CPU.
 
 ```
-pip install jeffy-classify-classify
+pip install jeffy-classify
 ```
 
 ## What you get
 
-13 classifiers for common text tasks — intent detection, sentiment, topic routing, spam, emotion, and more. Each is a logistic regression head over a shared frozen encoder ([bge-large-en-v1.5](https://huggingface.co/BAAI/bge-large-en-v1.5), 1024d).
+6 classifiers bundled and ready to use, plus 7 more you can build from public datasets in minutes. Each is a logistic regression head over a shared frozen encoder ([bge-large-en-v1.5](https://huggingface.co/BAAI/bge-large-en-v1.5), 1024d, ~1.2 GB downloaded on first use).
 
 ```
 text → encoder (1024d) → scaler → logistic regression → label + probabilities
@@ -118,25 +118,41 @@ JEFFY_PACK_DIR=my_pack jeffy-serve
 
 ## Pretrained capabilities
 
-| Task | What it does | Classes | Test Acc | Test F1 | Head size |
-|------|-------------|---------|----------|---------|-----------|
-| banking77 | Banking customer intent | 77 | 94.3% | 94.3% | 334 KB |
-| clinc_oos | Voice assistant intent + out-of-scope | 151 | 88.4% | 92.1% | 632 KB |
-| massive_intent | Smart home voice commands | 60 | 88.1% | 86.4% | 271 KB |
-| ag_news | News topic (world/sports/business/tech) | 4 | 90.5% | 90.5% | 41 KB |
-| dbpedia | Wikipedia article category | 14 | 96.0% | 95.9% | 81 KB |
-| sst2 | Movie review sentiment | 2 | 90.1% | 90.1% | 29 KB |
-| imdb | Movie review sentiment (long text) | 2 | 94.8% | 94.8% | 29 KB |
-| emotion | Text emotion (6 emotions) | 6 | 75.5% | 67.8% | 49 KB |
-| sms_spam | SMS spam detection | 2 | 99.1% | 98.0% | 29 KB |
-| snli | Natural language inference | 3 | 65.6% | 65.2% | 37 KB |
-| tweet_eval_sentiment | Tweet sentiment (3-way) | 3 | 66.2% | 65.7% | 37 KB |
-| tweet_eval_emotion | Tweet emotion | 4 | 78.1% | 74.7% | 41 KB |
-| tweet_eval_offensive | Offensive language | 2 | 81.0% | 74.8% | 29 KB |
+### Bundled (included in the package)
+
+These heads are derived from CC BY or CC BY-SA licensed datasets and ship with the wheel.
+
+| Task | What it does | Classes | Test Acc | Test F1 |
+|------|-------------|---------|----------|---------|
+| banking77 | Banking customer intent | 77 | 94.3% | 94.3% |
+| clinc_oos | Voice assistant intent + out-of-scope | 151 | 88.4% | 92.1% |
+| massive_intent | Smart home voice commands | 60 | 88.1% | 86.4% |
+| dbpedia | Wikipedia article category | 14 | 96.0% | 95.9% |
+| sms_spam | SMS spam detection | 2 | 99.1% | 98.0% |
+| snli | Natural language inference | 3 | 65.6% | 65.2% |
+
+### Available via rebuild
+
+These heads can be trained locally from their source datasets. Their source licenses have not been verified for redistribution of derived weights, so they are not bundled.
+
+```bash
+pip install jeffy-classify[build]
+jeffy-build --datasets ag_news sst2 imdb emotion tweet_eval_sentiment tweet_eval_emotion tweet_eval_offensive
+```
+
+| Task | What it does | Classes | Test Acc | Source license |
+|------|-------------|---------|----------|---------------|
+| ag_news | News topic classification | 4 | 90.5% | Academic |
+| sst2 | Movie review sentiment | 2 | 90.1% | Stanford academic |
+| imdb | Movie review sentiment (long text) | 2 | 94.8% | Academic |
+| emotion | Text emotion (6 emotions) | 6 | 75.5% | Not specified |
+| tweet_eval_sentiment | Tweet sentiment (3-way) | 3 | 66.2% | Twitter TOS |
+| tweet_eval_emotion | Tweet emotion | 4 | 78.1% | Twitter TOS |
+| tweet_eval_offensive | Offensive language | 2 | 81.0% | Twitter TOS |
 
 Test accuracy measured on held-out splits with 95% bootstrap CIs. Details in `data/eval_results/benchmark.json`.
 
-**Weaknesses:** SNLI (65.6%) and tweet_eval_sentiment (66.2%) are below what task-specific models achieve. Emotion detection (75.5%) has limited class coverage. Probabilities are uncalibrated.
+**Weaknesses:** SNLI (65.6%) is below what task-specific models achieve. Probabilities are uncalibrated.
 
 ### Per-capability details
 
@@ -176,7 +192,7 @@ jeffy-evaluate --baselines --latency --device cpu
 
 | Component | Size | Required for |
 |-----------|------|-------------|
-| Jeffy package | ~1.7 MB | Always |
+| Jeffy package (wheel) | 1.5 MB | Always (includes 6 bundled heads) |
 | Encoder (bge-large-en-v1.5) | ~1.2 GB | Inference (downloaded on first use) |
 | `datasets` package | ~100 MB | Retraining from HuggingFace only |
 

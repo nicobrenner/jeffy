@@ -1,6 +1,6 @@
 # Show HN: Jeffy – pretrained classifiers you can run and retrain on CPU
 
-Jeffy ships 13 text classifiers (intent detection, sentiment, spam, topic routing, etc.) that work out of the box and can be retrained with your own data in seconds on CPU.
+Jeffy ships 6 pretrained text classifiers (intent detection, spam, topic routing) with 7 more available via a rebuild command. Train your own from a CSV in seconds on CPU.
 
 It uses one shared frozen encoder (bge-large-en-v1.5) with tiny logistic regression heads (~30-600 KB each). Install, pick a classifier, and run predictions. Or train your own from a CSV:
 
@@ -31,10 +31,10 @@ clf.save('my_models')
 
 Benchmarks: https://github.com/[REPO]/blob/main/data/eval_results/benchmark.json
 
-- 94.3% on Banking77 (77 intents), 99.1% on SMS spam, 90.5% on AG News
+- 94.3% on Banking77 (77 intents), 99.1% on SMS spam, 96.0% on DBpedia
 - ~100ms per prediction on CPU (embedding dominates, classifier <1ms)
-- 1.7 MB for all 13 heads; encoder is ~1.2 GB (downloaded once)
-- MIT licensed code; dataset licenses documented per head
+- 1.5 MB wheel with 6 bundled heads; encoder is ~1.2 GB (downloaded once)
+- MIT licensed code; per-head dataset licenses documented in ATTRIBUTION.md
 
 What Jeffy doesn't do:
 - No zero-shot classification (you need a trained head per task)

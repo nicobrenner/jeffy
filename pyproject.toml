@@ -38,4 +38,4 @@ packages = ["src/jeffy"]
 artifacts = ["src/jeffy/pack/**"]
 
 [tool.hatch.build.targets.sdist]
-include = ["src/", "data/", "tests/", "LICENSE", "README.md"]
+include = ["src/", "data/eval_results/", "tests/", "examples/", "LICENSE", "README.md", "ATTRIBUTION.md"]

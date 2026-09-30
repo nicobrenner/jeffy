@@ -6,6 +6,8 @@ Pretrained text classifiers you can run and retrain on CPU.
 pip install jeffy-classify
 ```
 
+![Jeffy demo](examples/demo.gif)
+
 ## What you get
 
 13 classifiers bundled and ready to use — intent detection, sentiment, topic routing, spam, emotion, and more. Each is a logistic regression head over a shared frozen encoder ([bge-large-en-v1.5](https://huggingface.co/BAAI/bge-large-en-v1.5), 1024d, ~1.2 GB downloaded on first use).
@@ -178,19 +180,19 @@ jeffy-evaluate --baselines --latency --device cpu
 
 | Component | Size | Required for |
 |-----------|------|-------------|
-| Jeffy package (wheel) | 1.5 MB | Always (includes 6 bundled heads) |
+| Jeffy package (wheel) | 1.5 MB | Always (includes all 13 heads) |
 | Encoder (bge-large-en-v1.5) | ~1.2 GB | Inference (downloaded on first use) |
 | `datasets` package | ~100 MB | Retraining from HuggingFace only |
 
 Runtime memory: ~2 GB (encoder loaded once, shared across all heads).
 
-**Latency** (Apple M3 Max, CPU, batch 1):
+**Latency** (CPU, single example, batch 1):
 
 | Stage | p50 | Notes |
 |-------|-----|-------|
-| Embedding | 80–250 ms | Dominates; varies with input length |
+| Embedding | 50–80 ms | Dominates; varies with input length |
 | Classifier | <1 ms | Negligible |
-| Total | 88–252 ms | End-to-end, single example |
+| Total | 50–80 ms | End-to-end, Linux aarch64 |
 
 ## Model security
 
@@ -215,16 +217,15 @@ The encoder ([bge-large-en-v1.5](https://huggingface.co/BAAI/bge-large-en-v1.5))
 
 ## Tested
 
-Verified with clean-environment wheel install:
+Verified with clean-environment wheel and sdist install:
 
 | Component | Version |
 |-----------|---------|
-| Python | 3.12.11 |
-| Platform | macOS 15.6.1, arm64 (Apple M3 Max) |
-| scikit-learn | 1.9.1 |
-| sentence-transformers | 6.1.0 |
-| torch | 2.14.0 |
-| numpy | 2.5.3 |
+| Python | 3.12 |
+| Platform | Linux aarch64 |
+| scikit-learn | 1.9+ |
+| sentence-transformers | 6.1+ |
+| numpy | 2.5+ |
 
 Pretrained artifacts use numpy `.npz` format, avoiding sklearn version coupling. Tested loading artifacts built with sklearn 1.7.2 on sklearn 1.9.1 without warnings.
 
@@ -239,7 +240,7 @@ Pretrained artifacts use numpy `.npz` format, avoiding sklearn version coupling.
 | Status | Milestone |
 |--------|-----------|
 | **Available** | Pretrained classifier library, SDK/API, playground, custom training from CSV/JSONL |
-| **Next** | Public repository, downloadable release, landing page |
+| **Next** | Landing page, PyPI release |
 | **Planned** | Broader classifier catalog, released in verified batches |
 | **Planned** | Automatic routing among supported classifiers |
 | **Planned** | Optional local/API LLM fallback for unsupported tasks |

@@ -46,3 +46,7 @@ _vizdoom.ini
 # Large per-example prediction files (reproduce with scripts)
 # Keep summaries and comparison JSON in git
 data/eval_results/*_predictions.jsonl
+
+# Handoff and conversation artifacts (private)
+JEFFY_HANDOFF.md
+snapshot.json

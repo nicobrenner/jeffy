@@ -29,10 +29,10 @@ clf.predict('the quality exceeded expectations')  # positive (91%)
 clf.save('my_models')
 ```
 
-Benchmarks: https://github.com/[REPO]/blob/main/data/eval_results/benchmark.json
+Benchmarks: https://github.com/nicobrenner/jeffy/blob/main/data/eval_results/benchmark.json
 
 - 94.3% on Banking77 (77 intents), 99.1% on SMS spam, 96.0% on DBpedia
-- ~100ms per prediction on CPU (embedding dominates, classifier <1ms)
+- ~50–80ms per prediction on CPU (embedding dominates, classifier <1ms)
 - 1.5 MB wheel with all 13 heads; encoder is ~1.2 GB (downloaded once)
 - MIT licensed code; per-head dataset licenses documented in ATTRIBUTION.md
 
@@ -42,7 +42,7 @@ What Jeffy doesn't do:
 - No automatic routing between classifiers (planned)
 - Probabilities are uncalibrated
 
-GitHub: [REPO URL]
+GitHub: https://github.com/nicobrenner/jeffy
 
 ---
 
@@ -57,7 +57,7 @@ Training a new classifier takes seconds — you provide texts and labels, Jeffy 
 Current limitations:
 - Each task needs its own head. You can't ask an arbitrary question — you pick a classifier.
 - Embedding quality limits accuracy. We're at 90%+ on intent/topic/spam tasks, weaker on NLI (65.6%) and nuanced sentiment.
-- The ~100ms latency is dominated by the encoder; the classifier itself is <1ms.
+- The ~50–80ms latency is dominated by the encoder; the classifier itself is <1ms.
 - No calibration yet — the probabilities are raw logistic regression outputs.
 
 We're exploring a general scorer that handles arbitrary questions with changing options, but haven't solved question conditioning yet (the scorer can't distinguish "what is the sentiment about delivery?" from "what is the sentiment about product quality?" on the same text). That's the research direction; this release is the working library.

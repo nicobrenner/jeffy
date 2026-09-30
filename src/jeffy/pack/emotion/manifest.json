@@ -1,0 +1,35 @@
+{
+  "dataset": "emotion",
+  "description": "Text emotion detection",
+  "n_classes": 6,
+  "task_type": "choice",
+  "encoder": "BAAI/bge-large-en-v1.5",
+  "encoder_dim": 1024,
+  "labels": {
+    "0": "sadness",
+    "1": "joy",
+    "2": "love",
+    "3": "anger",
+    "4": "fear",
+    "5": "surprise"
+  },
+  "class_order": [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5"
+  ],
+  "hf_source": "dair-ai/emotion",
+  "hf_config": null,
+  "hf_revision": null,
+  "license": "Academic",
+  "train_examples": 10000,
+  "train_accuracy": 0.8339,
+  "test_examples": 2000,
+  "test_accuracy": 0.755,
+  "scaler_mean_hash": "f40858c5",
+  "classifier_coef_hash": "5106bea0",
+  "schema_version": 1
+}

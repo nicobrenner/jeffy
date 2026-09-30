@@ -1,0 +1,27 @@
+{
+  "dataset": "imdb",
+  "description": "Movie review sentiment (positive/negative)",
+  "n_classes": 2,
+  "task_type": "noul",
+  "encoder": "BAAI/bge-large-en-v1.5",
+  "encoder_dim": 1024,
+  "labels": {
+    "0": "negative",
+    "1": "positive"
+  },
+  "class_order": [
+    "0",
+    "1"
+  ],
+  "hf_source": "stanfordnlp/imdb",
+  "hf_config": null,
+  "hf_revision": null,
+  "license": "Academic / non-commercial",
+  "train_examples": 10000,
+  "train_accuracy": 0.9559,
+  "test_examples": 2000,
+  "test_accuracy": 0.948,
+  "scaler_mean_hash": "2cd044b5",
+  "classifier_coef_hash": "dcc3eab1",
+  "schema_version": 1
+}

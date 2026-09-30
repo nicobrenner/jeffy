@@ -1,0 +1,31 @@
+{
+  "dataset": "ag_news",
+  "description": "News article topic classification",
+  "n_classes": 4,
+  "task_type": "choice",
+  "encoder": "BAAI/bge-large-en-v1.5",
+  "encoder_dim": 1024,
+  "labels": {
+    "0": "World",
+    "1": "Sports",
+    "2": "Business",
+    "3": "Sci/Tech"
+  },
+  "class_order": [
+    "0",
+    "1",
+    "2",
+    "3"
+  ],
+  "hf_source": "fancyzhx/ag_news",
+  "hf_config": null,
+  "hf_revision": null,
+  "license": "Academic / non-commercial",
+  "train_examples": 10000,
+  "train_accuracy": 0.9413,
+  "test_examples": 2000,
+  "test_accuracy": 0.9055,
+  "scaler_mean_hash": "35cc139e",
+  "classifier_coef_hash": "d800f4b6",
+  "schema_version": 1
+}

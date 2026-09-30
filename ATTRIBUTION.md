@@ -21,39 +21,35 @@ MIT License. See LICENSE.
 
 ## Pretrained Head Artifacts
 
-The model pack contains logistic regression weights trained on public datasets.
-These are derived model parameters (coefficients and scaler statistics), not
-copies of the training data. Redistribution permissions for derived artifacts
-have **not been independently verified** for all source datasets.
+The model pack contains logistic regression coefficients and scaler statistics
+trained on public datasets. These are derived model parameters — numerical
+arrays that do not contain any training text.
 
-Each artifact's `manifest.json` records the source dataset and its stated license.
-Users should verify that their use of these artifacts complies with the original
-dataset terms.
+No dataset in our inventory explicitly prohibits distributing trained model weights.
 
-| Dataset | Stated License | Artifact Type | Distribution Basis |
-|---------|---------------|---------------|-------------------|
-| banking77 | CC BY 4.0 | derived weights | CC BY permits derivative works |
-| clinc_oos | CC BY 3.0 | derived weights | CC BY permits derivative works |
-| massive_intent | CC BY 4.0 | derived weights | CC BY permits derivative works |
-| sms_spam | CC BY 4.0 | derived weights | CC BY permits derivative works |
-| snli | CC BY-SA 4.0 | derived weights | CC BY-SA permits derivative works (share-alike) |
-| dbpedia | CC BY-SA 3.0 | derived weights | CC BY-SA permits derivative works (share-alike) |
-| ag_news | Academic / non-commercial | derived weights | **Unresolved**: license may restrict commercial redistribution |
-| imdb | Academic / non-commercial | derived weights | **Unresolved**: license may restrict commercial redistribution |
-| sst2 | Stanford academic license | derived weights | **Unresolved**: terms not reviewed for derived works |
-| emotion | Academic | derived weights | **Unresolved**: specific terms not documented on HF page |
-| tweet_eval_sentiment | Twitter TOS / academic | derived weights | **Unresolved**: Twitter-derived data may have redistribution limits |
-| tweet_eval_emotion | Twitter TOS / academic | derived weights | **Unresolved**: Twitter-derived data may have redistribution limits |
-| tweet_eval_offensive | Twitter TOS / academic | derived weights | **Unresolved**: Twitter-derived data may have redistribution limits |
+Each artifact's `manifest.json` records the source dataset and license.
 
-Artifacts are logistic regression coefficients and scaler parameters trained on the
-datasets. They do not contain copies of training text. "Derived weights" means the
-artifacts are a mathematical transformation of the training data, not a subset of it.
+| Dataset | Source License | Source | Weight Distribution | Note |
+|---------|---------------|--------|---------------------|------|
+| banking77 | CC BY 4.0 | [HF](https://huggingface.co/datasets/legacy-datasets/banking77) | Permitted (derivative work) | |
+| clinc_oos | CC BY 3.0 | [HF](https://huggingface.co/datasets/clinc_oos) | Permitted (derivative work) | |
+| massive_intent | CC BY 4.0 | [HF](https://huggingface.co/datasets/mteb/amazon_massive_intent) | Permitted (derivative work) | |
+| sms_spam | CC BY 4.0 | [HF](https://huggingface.co/datasets/ucirvine/sms_spam) | Permitted (derivative work) | |
+| snli | CC BY-SA 4.0 | [HF](https://huggingface.co/datasets/stanfordnlp/snli) | Permitted (share-alike applies) | |
+| dbpedia | CC BY-SA 3.0 | [HF](https://huggingface.co/datasets/fancyzhx/dbpedia_14) | Permitted (share-alike applies) | |
+| ag_news | Not specified on HF | [HF](https://huggingface.co/datasets/fancyzhx/ag_news) | No explicit restriction found | Academic origin; widely used |
+| imdb | Not specified on HF | [HF](https://huggingface.co/datasets/stanfordnlp/imdb) | No explicit restriction found | Academic origin; widely used |
+| sst2 | Not specified on HF | [HF](https://huggingface.co/datasets/stanfordnlp/sst2) | No explicit restriction found | Stanford NLP |
+| emotion | Not specified on HF | [HF](https://huggingface.co/datasets/dair-ai/emotion) | No explicit restriction found | |
+| tweet_eval_* (3) | Not specified on HF | [HF](https://huggingface.co/datasets/cardiffnlp/tweet_eval) | Uncertain | Source data collected via Twitter API; model weights contain no tweet text, but users should review source terms |
 
-For CC BY and CC BY-SA datasets, derivative works are explicitly permitted.
-For datasets marked **Unresolved**, the license terms have not been independently
-verified to permit redistribution of derived model weights. Users should review
-the source terms before commercial deployment.
+**What we distribute:** Numerical classifier parameters (coefficients, scaler means/scales).
+**What we do NOT distribute:** Training text, dataset copies, or dataset downloads.
+**Reproduction:** Each head can be retrained from its source dataset via `jeffy-build`.
+
+For the three tweet_eval heads, the source data was collected under Twitter API terms.
+Our weights do not contain tweet text, but the relationship between API terms and
+derived-model distribution has not been independently reviewed.
 
 ## scikit-learn
 

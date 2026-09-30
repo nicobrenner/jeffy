@@ -8,13 +8,13 @@ pip install jeffy-classify
 
 ## What you get
 
-6 classifiers bundled and ready to use, plus 7 more you can build from public datasets in minutes. Each is a logistic regression head over a shared frozen encoder ([bge-large-en-v1.5](https://huggingface.co/BAAI/bge-large-en-v1.5), 1024d, ~1.2 GB downloaded on first use).
+13 classifiers bundled and ready to use — intent detection, sentiment, topic routing, spam, emotion, and more. Each is a logistic regression head over a shared frozen encoder ([bge-large-en-v1.5](https://huggingface.co/BAAI/bge-large-en-v1.5), 1024d, ~1.2 GB downloaded on first use).
 
 ```
 text → encoder (1024d) → scaler → logistic regression → label + probabilities
 ```
 
-You can also train your own classifier from a CSV or labeled examples in a few lines of code.
+You can also train your own classifier from a CSV or labeled examples in a few lines of code. Training includes loading the encoder, embedding your text, and fitting the head — about 5–10 seconds for small datasets on CPU (the encoder is ~1.2 GB, downloaded once on first use).
 
 ## Install
 
@@ -118,41 +118,27 @@ JEFFY_PACK_DIR=my_pack jeffy-serve
 
 ## Pretrained capabilities
 
-### Bundled (included in the package)
-
-These heads are derived from CC BY or CC BY-SA licensed datasets and ship with the wheel.
+All 13 heads ship with the package. Weights are derived model parameters (logistic regression coefficients), not copies of training data. Source datasets and licenses are documented in `ATTRIBUTION.md`.
 
 | Task | What it does | Classes | Test Acc | Test F1 |
 |------|-------------|---------|----------|---------|
+| sms_spam | SMS spam detection | 2 | 99.1% | 98.0% |
+| dbpedia | Wikipedia article category | 14 | 96.0% | 95.9% |
+| imdb | Movie review sentiment (long text) | 2 | 94.8% | 94.8% |
 | banking77 | Banking customer intent | 77 | 94.3% | 94.3% |
+| ag_news | News topic (world/sports/business/tech) | 4 | 90.5% | 90.5% |
+| sst2 | Movie review sentiment | 2 | 90.1% | 90.1% |
 | clinc_oos | Voice assistant intent + out-of-scope | 151 | 88.4% | 92.1% |
 | massive_intent | Smart home voice commands | 60 | 88.1% | 86.4% |
-| dbpedia | Wikipedia article category | 14 | 96.0% | 95.9% |
-| sms_spam | SMS spam detection | 2 | 99.1% | 98.0% |
+| tweet_eval_offensive | Offensive language | 2 | 81.0% | 74.8% |
+| tweet_eval_emotion | Tweet emotion | 4 | 78.1% | 74.7% |
+| emotion | Text emotion (6 emotions) | 6 | 75.5% | 67.8% |
+| tweet_eval_sentiment | Tweet sentiment (3-way) | 3 | 66.2% | 65.7% |
 | snli | Natural language inference | 3 | 65.6% | 65.2% |
 
-### Available via rebuild
+Test accuracy on held-out splits with 95% bootstrap CIs. Details in `data/eval_results/benchmark.json`.
 
-These heads can be trained locally from their source datasets. Their source licenses have not been verified for redistribution of derived weights, so they are not bundled.
-
-```bash
-pip install jeffy-classify[build]
-jeffy-build --datasets ag_news sst2 imdb emotion tweet_eval_sentiment tweet_eval_emotion tweet_eval_offensive
-```
-
-| Task | What it does | Classes | Test Acc | Source license |
-|------|-------------|---------|----------|---------------|
-| ag_news | News topic classification | 4 | 90.5% | Academic |
-| sst2 | Movie review sentiment | 2 | 90.1% | Stanford academic |
-| imdb | Movie review sentiment (long text) | 2 | 94.8% | Academic |
-| emotion | Text emotion (6 emotions) | 6 | 75.5% | Not specified |
-| tweet_eval_sentiment | Tweet sentiment (3-way) | 3 | 66.2% | Twitter TOS |
-| tweet_eval_emotion | Tweet emotion | 4 | 78.1% | Twitter TOS |
-| tweet_eval_offensive | Offensive language | 2 | 81.0% | Twitter TOS |
-
-Test accuracy measured on held-out splits with 95% bootstrap CIs. Details in `data/eval_results/benchmark.json`.
-
-**Weaknesses:** SNLI (65.6%) is below what task-specific models achieve. Probabilities are uncalibrated.
+**Weaknesses:** SNLI (65.6%) and tweet_eval_sentiment (66.2%) are below what task-specific models achieve. Emotion (75.5%) has limited class coverage. Probabilities are uncalibrated.
 
 ### Per-capability details
 

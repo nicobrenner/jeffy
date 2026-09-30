@@ -4,8 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "jeffy"
-version = "0.1.0a2"
-description = "Pretrained local decision engine: reusable embeddings + small classifiers"
+version = "0.1.0a3"
+description = "Pretrained text classifiers: 13 ready-to-use heads, train your own in seconds"
 requires-python = ">=3.11"
 license = "MIT"
 dependencies = [
@@ -26,6 +26,7 @@ dev = ["httpx>=0.24.0"]
 jeffy-serve = "jeffy.server:main"
 jeffy-build = "jeffy.build_pack:main"
 jeffy-evaluate = "jeffy.evaluate:main"
+jeffy-train = "jeffy.train:main"
 jeffy-benchmark = "jeffy.benchmark_page:generate_html"
 
 [tool.hatch.metadata]

@@ -16,8 +16,6 @@ import time
 from pathlib import Path
 
 import numpy as np
-from datasets import load_dataset
-from sentence_transformers import SentenceTransformer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, f1_score
 from sklearn.preprocessing import LabelEncoder, StandardScaler
@@ -154,6 +152,7 @@ def recover_labels(ds, config) -> dict[str, str]:
 
 def load_and_split(ds_name, config, max_train=10000, max_test=2000):
     """Load dataset, extract texts and string labels."""
+    from datasets import load_dataset
     hf_config = config.get("hf_config")
     ds = load_dataset(config["hf"], hf_config) if hf_config else load_dataset(config["hf"])
 
@@ -221,6 +220,7 @@ def main():
     print(f"Encoder: {ENCODER}")
     print()
 
+    from sentence_transformers import SentenceTransformer
     encoder = SentenceTransformer(ENCODER)
     results = []
 

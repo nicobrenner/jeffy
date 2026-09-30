@@ -3,7 +3,7 @@
 Pretrained text classifiers: 13 ready-to-use heads, train your own in seconds.
 
 ```
-pip install jeffy
+pip install jeffy-classify-classify
 ```
 
 ## What you get
@@ -19,10 +19,10 @@ You can also train your own classifier from a CSV or labeled examples in a few l
 ## Install
 
 ```bash
-pip install jeffy
+pip install jeffy-classify
 ```
 
-The first prediction downloads the encoder (~1.2 GB, cached afterward). Inference requires only `sentence-transformers` and `scikit-learn`. Training from public datasets additionally requires `datasets` (`pip install jeffy[build]`).
+The first prediction downloads the encoder (~1.2 GB, cached afterward). Inference requires only `sentence-transformers` and `scikit-learn`. Training from public datasets additionally requires `datasets` (`pip install jeffy-classify[build]`).
 
 ## Use a pretrained classifier
 
@@ -155,7 +155,7 @@ curl -s http://localhost:8400/v1/capabilities/banking77 | python3 -m json.tool
 ## Reproduce the evaluation
 
 ```bash
-pip install jeffy[build]
+pip install jeffy-classify[build]
 
 # Retrain all 13 heads from source datasets (~40 min, downloads ~5 GB)
 jeffy-build --out data/model_pack
@@ -222,7 +222,18 @@ The encoder ([bge-large-en-v1.5](https://huggingface.co/BAAI/bge-large-en-v1.5))
 - **No LLM fallback.** This release is pure embedding + classifier.
 - **No automatic task routing.** You must specify which classifier to use.
 
-These are planned for future releases; the design supports adding them without breaking the current API.
+## Roadmap
+
+| Status | Milestone |
+|--------|-----------|
+| **Available** | Pretrained classifier library, SDK/API, playground, custom training from CSV/JSONL |
+| **Next** | Public repository, downloadable release, landing page |
+| **Planned** | Broader classifier catalog, released in verified batches |
+| **Planned** | Automatic routing among supported classifiers |
+| **Planned** | Optional local/API LLM fallback for unsupported tasks |
+| **Exploring** | Assisted labeling, retraining from corrections, classifier sharing |
+
+Suggestions for datasets, capabilities, or workflows are welcome as issues.
 
 ## Acknowledgments
 

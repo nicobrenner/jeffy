@@ -1,0 +1,37 @@
+$ pip install jeffy-classify
+$ python
+
+>>> from jeffy.engine import Engine
+>>> engine = Engine()
+>>> engine.load()
+
+>>> # 13 pretrained classifiers ready
+
+>>> engine.predict("banking77", "I was charged twice for the same transaction")
+{"label": "transaction_charged_twice", "confidence": 0.999}
+
+>>> engine.predict("sms_spam", "WINNER! Call now to claim your 1000 dollar prize!")
+{"label": "spam", "confidence": 0.983}
+
+>>> engine.predict("ag_news", "Apple stock surges 5% after record iPhone sales")
+{"label": "Business", "confidence": 0.933}
+
+# ── Train a custom classifier from 12 examples ──
+
+>>> # Predictions on NEW messages (not in training data)
+
+>>> clf.predict("Can you send me the Q4 projections?")
+{"label": "work", "confidence": 0.48}
+
+>>> clf.predict("Dad wants to know about the cookout")
+{"label": "family", "confidence": 0.55}
+
+>>> clf.predict("Buy 2 get 1 free — today only!")
+{"label": "promo", "confidence": 0.70}
+
+>>> clf.predict("Your credit card statement is ready")
+{"label": "notification", "confidence": 0.56}
+
+# 12 examples → working classifier. All on CPU, no API keys.
+# Custom training confidence is illustrative (12 examples, 4 classes).
+# See data/eval_results/benchmark.json for formal evaluation results.

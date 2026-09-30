@@ -25,31 +25,45 @@ The model pack contains logistic regression coefficients and scaler statistics
 trained on public datasets. These are derived model parameters — numerical
 arrays that do not contain any training text.
 
-No dataset in our inventory explicitly prohibits distributing trained model weights.
-
-Each artifact's `manifest.json` records the source dataset and license.
-
-| Dataset | Source License | Source | Weight Distribution | Note |
-|---------|---------------|--------|---------------------|------|
-| banking77 | CC BY 4.0 | [HF](https://huggingface.co/datasets/legacy-datasets/banking77) | Permitted (derivative work) | |
-| clinc_oos | CC BY 3.0 | [HF](https://huggingface.co/datasets/clinc_oos) | Permitted (derivative work) | |
-| massive_intent | CC BY 4.0 | [HF](https://huggingface.co/datasets/mteb/amazon_massive_intent) | Permitted (derivative work) | |
-| sms_spam | CC BY 4.0 | [HF](https://huggingface.co/datasets/ucirvine/sms_spam) | Permitted (derivative work) | |
-| snli | CC BY-SA 4.0 | [HF](https://huggingface.co/datasets/stanfordnlp/snli) | Permitted (share-alike applies) | |
-| dbpedia | CC BY-SA 3.0 | [HF](https://huggingface.co/datasets/fancyzhx/dbpedia_14) | Permitted (share-alike applies) | |
-| ag_news | Not specified on HF | [HF](https://huggingface.co/datasets/fancyzhx/ag_news) | No explicit restriction found | Academic origin; widely used |
-| imdb | Not specified on HF | [HF](https://huggingface.co/datasets/stanfordnlp/imdb) | No explicit restriction found | Academic origin; widely used |
-| sst2 | Not specified on HF | [HF](https://huggingface.co/datasets/stanfordnlp/sst2) | No explicit restriction found | Stanford NLP |
-| emotion | Not specified on HF | [HF](https://huggingface.co/datasets/dair-ai/emotion) | No explicit restriction found | |
-| tweet_eval_* (3) | Not specified on HF | [HF](https://huggingface.co/datasets/cardiffnlp/tweet_eval) | Uncertain | Source data collected via Twitter API; model weights contain no tweet text, but users should review source terms |
+Each artifact's `manifest.json` records the source dataset. Source terms were
+checked on HuggingFace and original project sites (Sep 2026).
 
 **What we distribute:** Numerical classifier parameters (coefficients, scaler means/scales).
 **What we do NOT distribute:** Training text, dataset copies, or dataset downloads.
 **Reproduction:** Each head can be retrained from its source dataset via `jeffy-build`.
 
-For the three tweet_eval heads, the source data was collected under Twitter API terms.
-Our weights do not contain tweet text, but the relationship between API terms and
-derived-model distribution has not been independently reviewed.
+### Verified: explicit license permitting derivative works
+
+| Dataset | License | Source | Checked |
+|---------|---------|--------|---------|
+| banking77 | CC BY 4.0 | [HF](https://huggingface.co/datasets/legacy-datasets/banking77) | HF metadata |
+| clinc_oos | CC BY 3.0 | [HF](https://huggingface.co/datasets/clinc_oos) | HF metadata |
+| massive_intent | CC BY 4.0 | [HF](https://huggingface.co/datasets/mteb/amazon_massive_intent) | HF metadata |
+| sms_spam | CC BY 4.0 | [HF](https://huggingface.co/datasets/ucirvine/sms_spam) | HF metadata |
+| snli | CC BY-SA 4.0 | [HF](https://huggingface.co/datasets/stanfordnlp/snli) | HF metadata |
+| dbpedia | CC BY-SA 3.0 | [HF](https://huggingface.co/datasets/fancyzhx/dbpedia_14) | HF metadata |
+| tweet_eval_sentiment | CC BY 3.0 | [HF](https://huggingface.co/datasets/cardiffnlp/tweet_eval) | Listed per-subset on HF card |
+
+### No explicit license on HF; no restriction on trained weights found
+
+| Dataset | HF License Field | Original Source | Finding |
+|---------|-----------------|-----------------|---------|
+| ag_news | "unknown" | AG corpus (original site unreachable) | No terms found. Academic paper origin, widely redistributed. |
+| imdb | "other" | [Stanford](https://ai.stanford.edu/~amaas/data/sentiment/) | Original site requests citation only. No use restrictions stated. |
+| sst2 | "unknown" | Stanford NLP | No terms on HF or original page beyond citation. |
+| emotion | "other" | [HF](https://huggingface.co/datasets/dair-ai/emotion) | HF card states "educational and research purposes only." |
+
+### Unresolved: source terms require further review
+
+| Dataset | Issue | Detail |
+|---------|-------|--------|
+| emotion | HF card says "educational and research purposes only" | This may restrict commercial use of the dataset. Whether it applies to derived model weights (which contain no text) is not established. |
+| tweet_eval_emotion | Twitter API TOS required; per-subset license undefined | All tweet_eval subsets require Twitter TOS compliance. Our weights contain no tweet text. The sentiment subset is CC BY 3.0; the emotion and offensive subsets have undefined per-subset licenses. |
+| tweet_eval_offensive | Twitter API TOS required; per-subset license undefined | Same as above. |
+
+No dataset in this inventory explicitly prohibits distributing trained model
+weights. The three unresolved cases involve ambiguous or restrictive dataset-use
+terms whose applicability to derived numerical parameters has not been reviewed.
 
 ## scikit-learn
 

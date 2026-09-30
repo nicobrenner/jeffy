@@ -23,7 +23,7 @@ import os
 app = FastAPI(
     title="Jeffy",
     description="Pretrained decision engine with reusable embeddings and tiny classifiers.",
-    version="0.1.0a4",
+    version="0.1.0a5",
 )
 
 _engine: Engine | None = None

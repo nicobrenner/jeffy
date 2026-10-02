@@ -2,33 +2,97 @@
 
 Pretrained text classifiers you can run and retrain on CPU.
 
-```
-pip install jeffy-classify
-```
+<p align="center">
+  <img src="examples/inbox_demo.gif" width="100%" alt="Inbox Router">
+</p>
+<p align="center">
+  <img src="examples/doom_battle.gif" width="49%" alt="Doom Battle">
+  <img src="examples/doom_defend.gif" width="49%" alt="Defend the Center">
+</p>
 
-![Jeffy demo](examples/demo.gif)
+## Try it
 
-## What you get
-
-13 classifiers bundled and ready to use — intent detection, sentiment, topic routing, spam, emotion, and more. Each is a logistic regression head over a shared frozen encoder ([bge-large-en-v1.5](https://huggingface.co/BAAI/bge-large-en-v1.5), 1024d, ~1.2 GB downloaded on first use).
-
-```
-text → encoder (1024d) → scaler → logistic regression → label + probabilities
-```
-
-You can also train your own classifier from a CSV or labeled examples in a few lines of code. Training includes loading the encoder, embedding your text, and fitting the head — about 5–10 seconds for small datasets on CPU (the encoder is ~1.2 GB, downloaded once on first use).
-
-## Install
+[Install uv](https://docs.astral.sh/uv/getting-started/installation/), then:
 
 ```bash
-pip install jeffy-classify
+uvx --python 3.12 \
+  --from "jeffy-classify @ git+https://github.com/nicobrenner/jeffy.git@v0.1.0-alpha.7" \
+  jeffy-serve
 ```
 
-The first prediction downloads the encoder (~1.2 GB, cached afterward). Inference requires only `sentence-transformers` and `scikit-learn`. Training from public datasets additionally requires `datasets` (`pip install jeffy-classify[build]`).
+Open http://localhost:8400, pick a classifier, and paste one of these:
 
-## Use a pretrained classifier
+| Classifier | Try this text |
+|------------|---------------|
+| banking77 | I was charged twice for the same transaction |
+| sms_spam | WINNER! You have been selected for a free cruise. Reply YES to claim. |
+| ag_news | The Federal Reserve raised interest rates by 25 basis points on Wednesday |
 
-### Python SDK
+<p align="center">
+  <img src="examples/playground.png" width="100%" alt="Jeffy Playground">
+</p>
+
+## Train a custom classifier
+
+```bash
+uvx --python 3.12 \
+  --from "jeffy-classify @ git+https://github.com/nicobrenner/jeffy.git@v0.1.0-alpha.7" \
+  jeffy-train --example --save-dir my_models
+```
+
+```
+Loaded 24 examples from reviews.csv
+Training 'reviews': 24 examples, 2 classes
+  Split: 19 train, 5 test
+  Test accuracy: 100.0%
+Saved to my_models/reviews/
+```
+
+`--example` uses a bundled 24-row product review CSV. To bring your own:
+
+```bash
+uvx --python 3.12 \
+  --from "jeffy-classify @ git+https://github.com/nicobrenner/jeffy.git@v0.1.0-alpha.7" \
+  jeffy-train --input your_data.csv --text-col text --label-col label \
+  --task-id your_task --save-dir my_models
+```
+
+Supports `.csv`, `.tsv`, and `.jsonl`.
+
+## Serve a custom model
+
+```bash
+JEFFY_PACK_DIR=my_models uvx --python 3.12 \
+  --from "jeffy-classify @ git+https://github.com/nicobrenner/jeffy.git@v0.1.0-alpha.7" \
+  jeffy-serve
+```
+
+```bash
+curl -s -X POST http://localhost:8400/v1/predict \
+  -H "Content-Type: application/json" \
+  -d '{"text": "The battery life is amazing", "task": "reviews"}'
+# → {"label": "positive", "confidence": 0.87, ...}
+```
+
+## Install from source
+
+```bash
+git clone https://github.com/nicobrenner/jeffy.git
+cd jeffy
+
+# With uv (recommended)
+uv venv && uv pip install -e .
+
+# Or with pip
+python -m venv .venv && source .venv/bin/activate
+pip install -e .
+```
+
+The first prediction downloads the shared encoder ([bge-large-en-v1.5](https://huggingface.co/BAAI/bge-large-en-v1.5), ~1.2 GB, cached afterward).
+
+## API
+
+### Python
 
 ```python
 from jeffy.engine import Engine
@@ -42,85 +106,76 @@ for name, cap in engine.capabilities.items():
 
 # Classify text
 result = engine.predict("banking77", "I was charged twice for the same transaction")
-print(result["label"])        # "transaction_charged_twice"
-print(result["confidence"])   # 0.9986
-print(result["probabilities"])  # {"transaction_charged_twice": 0.9986, ...}
+print(result["label"])          # "transaction_charged_twice"
+print(result["confidence"])     # 0.999
+print(result["probabilities"])  # {"transaction_charged_twice": 0.999, ...}
 ```
 
-### HTTP API
+### SDK walkthrough
+
+![SDK walkthrough](examples/demo.gif)
+
+### HTTP
 
 ```bash
-# Start server
-jeffy-serve
-# Open http://localhost:8400 for interactive playground
-
-# Predict
+# Banking intent
 curl -s -X POST http://localhost:8400/v1/predict \
   -H "Content-Type: application/json" \
-  -d '{"text": "I was charged twice", "task": "banking77"}' | python3 -m json.tool
+  -d '{"text": "I was charged twice for the same transaction", "task": "banking77"}'
+# → {"label": "transaction_charged_twice", "confidence": 0.999, ...}
+
+# Spam detection
+curl -s -X POST http://localhost:8400/v1/predict \
+  -H "Content-Type: application/json" \
+  -d '{"text": "WINNER! You have been selected for a free cruise. Reply YES to claim.", "task": "sms_spam"}'
+# → {"label": "spam", "confidence": 0.91, ...}
+
+# News topic
+curl -s -X POST http://localhost:8400/v1/predict \
+  -H "Content-Type: application/json" \
+  -d '{"text": "The Federal Reserve raised interest rates by 25 basis points on Wednesday", "task": "ag_news"}'
+# → {"label": "Business", "confidence": 0.86, ...}
 ```
 
-### CLI
+### List capabilities
 
 ```bash
-# List capabilities
 curl -s http://localhost:8400/v1/capabilities | python3 -c "
 import json, sys
 for c in json.load(sys.stdin)['capabilities']:
     print(f\"{c['task_id']:25s} {c['n_classes']:3d} classes  {c['test_accuracy']:.1%}  {c['name']}\")"
 ```
 
-## Train your own classifier
-
-### From Python
+## Train from Python
 
 ```python
 from jeffy.train import train_classifier
 
 clf = train_classifier(
-    texts=["great product!", "terrible service", "fast shipping", "broken on arrival", ...],
-    labels=["positive", "negative", "positive", "negative", ...],
+    texts=["great product!", "terrible service", "fast shipping", "broken on arrival"],
+    labels=["positive", "negative", "positive", "negative"],
     task_id="my_reviews",
 )
 
-# Use immediately
 result = clf.predict("the quality exceeded my expectations")
 print(result["label"])  # "positive"
 
-# Save for later / deployment
 clf.save("my_models")
-```
-
-### From a CSV file
-
-```bash
-jeffy-train --input reviews.csv --text-col review_text --label-col sentiment --task-id reviews
-# Also supports .jsonl and .tsv
 ```
 
 ### Tuning options
 
 | Parameter | Default | Description |
 |-----------|---------|-------------|
-| `C` | 0.01 | Regularization strength. Lower = more regularization, less overfitting. Try 0.001–1.0. |
+| `C` | 0.01 | Regularization strength. Lower = more regularization. Try 0.001–1.0. |
 | `test_size` | 0.2 | Fraction held out for evaluation. Set 0 to use all data for training. |
 | `cv_folds` | 3 | Cross-validation folds for accuracy estimate. Set 0 to skip. |
 
-**Validation guidance:** Start with the defaults. If training accuracy is much higher than CV accuracy, try lower C. If both are low, you may need more examples or better text preprocessing. With <50 examples per class, expect noisy estimates.
-
-### Deploy a custom model
-
-```bash
-# Save during training
-jeffy-train --input data.csv --text-col text --label-col label --task-id my_task --save-dir my_pack
-
-# Serve with custom models alongside pretrained ones
-JEFFY_PACK_DIR=my_pack jeffy-serve
-```
+Start with the defaults. If training accuracy is much higher than CV accuracy, try lower C. With <50 examples per class, expect noisy estimates.
 
 ## Pretrained capabilities
 
-All 13 heads ship with the package. Weights are derived model parameters (logistic regression coefficients), not copies of training data. Source datasets and licenses are documented in `ATTRIBUTION.md`.
+13 classifiers ship with the package. Weights are logistic regression coefficients (derived model parameters, not copies of training data). Source datasets and licenses are documented in `ATTRIBUTION.md`.
 
 | Task | What it does | Classes | Test Acc | Test F1 |
 |------|-------------|---------|----------|---------|
@@ -138,20 +193,14 @@ All 13 heads ship with the package. Weights are derived model parameters (logist
 | tweet_eval_sentiment | Tweet sentiment (3-way) | 3 | 66.2% | 65.7% |
 | snli | Natural language inference | 3 | 65.6% | 65.2% |
 
-Test accuracy on held-out splits with 95% bootstrap CIs. Details in `data/eval_results/benchmark.json`.
+Test accuracy on held-out splits. Details in `data/eval_results/benchmark.json`.
 
 **Weaknesses:** SNLI (65.6%) and tweet_eval_sentiment (66.2%) are below what task-specific models achieve. Emotion (75.5%) has limited class coverage. Probabilities are uncalibrated.
 
-### Per-capability details
+### Per-capability metadata
 
-Each shipped classifier has a `manifest.json` with:
-- Label names and their IDs
-- Source dataset, HuggingFace path, and stated license
-- Encoder identity and version
-- Training and test example counts
-- Integrity hashes (scaler and classifier coefficients)
+Each shipped classifier has a `manifest.json` with label names, source dataset, HuggingFace path, stated license, encoder identity, training/test counts, and integrity hashes.
 
-View any capability's full metadata:
 ```bash
 curl -s http://localhost:8400/v1/capabilities/banking77 | python3 -m json.tool
 ```
@@ -159,7 +208,9 @@ curl -s http://localhost:8400/v1/capabilities/banking77 | python3 -m json.tool
 ## Reproduce the evaluation
 
 ```bash
-pip install jeffy-classify[build]
+# Install with build dependencies
+uv pip install -e ".[build]"
+# or: pip install -e ".[build]"
 
 # Retrain all 13 heads from source datasets (~40 min, downloads ~5 GB)
 jeffy-build --out data/model_pack
@@ -176,7 +227,7 @@ jeffy-evaluate --baselines --latency --device cpu
 - **CLINC-OOS**: 151 classes including out-of-scope. In-scope accuracy 96.5%, OOS detection 51.7%.
 - **MASSIVE**: English only (config `en`).
 
-## Deployment requirements
+## Deployment
 
 | Component | Size | Required for |
 |-----------|------|-------------|
@@ -186,13 +237,13 @@ jeffy-evaluate --baselines --latency --device cpu
 
 Runtime memory: ~2 GB (encoder loaded once, shared across all heads).
 
-**Latency** (CPU, single example, batch 1):
+**Latency** (CPU, single example, Linux aarch64):
 
 | Stage | p50 | Notes |
 |-------|-----|-------|
 | Embedding | 50–80 ms | Dominates; varies with input length |
 | Classifier | <1 ms | Negligible |
-| Total | 50–80 ms | End-to-end, Linux aarch64 |
+| Total | 50–80 ms | End-to-end |
 
 ## Model security
 
@@ -217,17 +268,7 @@ The encoder ([bge-large-en-v1.5](https://huggingface.co/BAAI/bge-large-en-v1.5))
 
 ## Tested
 
-Verified with clean-environment wheel and sdist install:
-
-| Component | Version |
-|-----------|---------|
-| Python | 3.12 |
-| Platform | Linux aarch64 |
-| scikit-learn | 1.9+ |
-| sentence-transformers | 6.1+ |
-| numpy | 2.5+ |
-
-Pretrained artifacts use numpy `.npz` format, avoiding sklearn version coupling. Tested loading artifacts built with sklearn 1.7.2 on sklearn 1.9.1 without warnings.
+Verified with clean-environment wheel and sdist install on Linux aarch64, Python 3.12, scikit-learn 1.9+, sentence-transformers 6.1+, numpy 2.5+. Pretrained artifacts use numpy `.npz` format, avoiding sklearn version coupling.
 
 ## What's not included
 
@@ -247,7 +288,3 @@ Pretrained artifacts use numpy `.npz` format, avoiding sklearn version coupling.
 | **Exploring** | Assisted labeling, retraining from corrections, classifier sharing |
 
 Suggestions for datasets, capabilities, or workflows are welcome as issues.
-
-## Acknowledgments
-
-Inspired by [Jeff](https://github.com/firelex/jeff) (Mathias Strasser).

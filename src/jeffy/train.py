@@ -204,7 +204,9 @@ def main():
     parser = argparse.ArgumentParser(
         description="Train a Jeffy classifier from a data file",
         epilog="Example: jeffy-train --input emails.csv --text-col body --label-col category --task-id email_routing")
-    parser.add_argument("--input", required=True, help="CSV or JSONL file with text and labels")
+    parser.add_argument("--input", help="CSV or JSONL file with text and labels")
+    parser.add_argument("--example", action="store_true",
+                        help="Train from the bundled reviews.csv (no --input needed)")
     parser.add_argument("--text-col", "--text-key", default="text", help="Column/key for text (default: text)")
     parser.add_argument("--label-col", "--label-key", default="label", help="Column/key for labels (default: label)")
     parser.add_argument("--task-id", default="custom", help="Name for this classifier")
@@ -213,7 +215,18 @@ def main():
     parser.add_argument("--test-size", type=float, default=0.2, help="Test split fraction (default: 0.2)")
     args = parser.parse_args()
 
-    input_path = Path(args.input)
+    if args.example:
+        from .examples import REVIEWS_CSV
+        import importlib.resources
+        input_path = Path(str(REVIEWS_CSV))
+        if not args.task_id or args.task_id == "custom":
+            args.task_id = "reviews"
+    elif args.input:
+        input_path = Path(args.input)
+    else:
+        parser.error("--input or --example is required")
+        return
+
     if not input_path.exists():
         print(f"Error: {input_path} not found")
         return

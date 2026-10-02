@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "jeffy-classify"
-version = "0.1.0a6"
+version = "0.1.0a7"
 description = "Pretrained text classifiers: 13 ready-to-use heads, train your own in seconds"
 requires-python = ">=3.11"
 license = "MIT"
@@ -39,7 +39,7 @@ allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/jeffy"]
-artifacts = ["src/jeffy/pack/**"]
+artifacts = ["src/jeffy/pack/**", "src/jeffy/examples/*.csv"]
 
 [tool.hatch.build.targets.sdist]
 include = ["src/", "data/eval_results/", "tests/", "examples/", "LICENSE", "README.md", "ATTRIBUTION.md"]

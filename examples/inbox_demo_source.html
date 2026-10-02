@@ -1,0 +1,599 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Jeffy</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --bg: #E4E7EE;
+  --fg: #1A1D23;
+  --fg-muted: #6E7280;
+  --detail-border: #D8DCE4;
+  --font-ui: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Menlo', monospace;
+  --r: 10px;
+  --r-sm: 5px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { color-scheme: dark; --bg: #0C0E13; --fg: #DDE0E8; --fg-muted: #7B7F8E; --detail-border: #2A2D38; }
+}
+:root[data-theme="dark"] { color-scheme: dark; --bg: #0C0E13; --fg: #DDE0E8; --fg-muted: #7B7F8E; --detail-border: #2A2D38; }
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-ui);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding-block: 24px; min-height: 100vh;
+}
+
+.page-head { text-align: center; margin-bottom: 18px; }
+.page-head h1 { font-size: 19px; font-weight: 700; margin: 0; letter-spacing: -0.02em; }
+.page-head .tagline { margin: 5px 0 0; font-size: 12px; color: var(--fg-muted); letter-spacing: 0.01em; }
+
+.demo {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 14px;
+  width: min(860px, 100% - 32px);
+  height: 440px;
+  overflow: visible;
+}
+
+.left-panel {
+  --ib-surface: #FFFFFF;
+  --ib-text: #1A1D23;
+  --ib-muted: #6E7280;
+  --ib-border: #D8DCE4;
+  --ib-work: #3B6FC2;
+  --ib-family: #B85A3A;
+  --ib-promo: #A87D28;
+  --ib-notif: #4E8A68;
+  --ib-work-bg: #E6EEF8;
+  --ib-family-bg: #F5EBE6;
+  --ib-promo-bg: #F3EDE0;
+  --ib-notif-bg: #E6F0EA;
+
+  grid-column: 1; grid-row: 1;
+  background: var(--ib-surface);
+  color: var(--ib-text);
+  border-radius: var(--r);
+  border: 1px solid var(--ib-border);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 1px 5px rgba(0,0,0,.06);
+  transition: opacity .35s;
+}
+.panel-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--ib-border);
+  flex-shrink: 0;
+}
+.panel-head h2 { font-size: 13px; font-weight: 600; margin: 0; color: var(--ib-text); }
+.panel-head .meta { font-size: 10.5px; font-weight: 500; color: var(--ib-muted); font-variant-numeric: tabular-nums; }
+
+.panel-body {
+  flex: 1; overflow-y: auto; padding: 10px 12px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+
+.train-list { display: flex; flex-direction: column; gap: 0; }
+.train-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 8px;
+  font-size: 12px; line-height: 1.4;
+  border-bottom: 1px solid rgba(0,0,0,.04);
+}
+.train-text { flex: 1; min-width: 0; color: var(--ib-text); }
+.train-arrow { color: var(--ib-muted); font-size: 10px; flex-shrink: 0; }
+.train-label {
+  font-size: 9.5px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .04em;
+  padding: 2px 7px; border-radius: 3px; flex-shrink: 0;
+}
+.train-label.work { background: var(--ib-work-bg); color: var(--ib-work); }
+.train-label.family { background: var(--ib-family-bg); color: var(--ib-family); }
+.train-label.promo { background: var(--ib-promo-bg); color: var(--ib-promo); }
+.train-label.notif { background: var(--ib-notif-bg); color: var(--ib-notif); }
+.train-more {
+  padding: 8px 8px 4px;
+  font-size: 11px; color: var(--ib-muted); text-align: center;
+}
+
+.section-label {
+  font-size: 9.5px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .06em; color: var(--ib-muted);
+  margin: 0 0 5px; display: flex; align-items: center; gap: 5px;
+}
+.cat-dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+.cat-dot.work { background: var(--ib-work); }
+.cat-dot.family { background: var(--ib-family); }
+.cat-dot.promo { background: var(--ib-promo); }
+.cat-dot.notif { background: var(--ib-notif); }
+.cat-n { font-variant-numeric: tabular-nums; opacity: .5; }
+
+.incoming-list, .bucket { display: flex; flex-direction: column; gap: 4px; min-height: 2px; }
+.categories { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.msg {
+  padding: 6px 10px; border-radius: var(--r-sm);
+  font-size: 11.5px; line-height: 1.4;
+  border: 1px solid var(--ib-border);
+  background: var(--ib-surface);
+  color: var(--ib-text);
+  display: flex; align-items: center; gap: 7px;
+}
+.msg.pending { visibility: hidden; }
+.msg.show { visibility: visible; }
+
+.ghost-msg {
+  position: absolute; z-index: 15;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+.msg.leaving {
+  opacity: 0; transform: translateX(-14px) scale(.97);
+  transition: opacity .2s, transform .2s;
+}
+.msg-text { flex: 1; min-width: 0; }
+.msg-lat {
+  font-family: var(--font-mono); font-size: 9.5px; color: var(--ib-muted);
+  font-variant-numeric: tabular-nums; white-space: nowrap; flex-shrink: 0;
+}
+
+.msg.sorted { border-color: transparent; }
+.msg.sorted.work { background: var(--ib-work-bg); }
+.msg.sorted.family { background: var(--ib-family-bg); }
+.msg.sorted.promo { background: var(--ib-promo-bg); }
+.msg.sorted.notif { background: var(--ib-notif-bg); }
+
+.typing { display: inline-flex; gap: 3px; padding: 2px 3px; flex-shrink: 0; }
+.typing span {
+  width: 3.5px; height: 3.5px; border-radius: 50%;
+  background: var(--ib-muted);
+  animation: bounce 1.4s infinite ease-in-out;
+}
+.typing span:nth-child(2) { animation-delay: .16s; }
+.typing span:nth-child(3) { animation-delay: .32s; }
+@keyframes bounce {
+  0%, 60%, 100% { opacity: .15; transform: translateY(0); }
+  30% { opacity: .8; transform: translateY(-3px); }
+}
+
+.msg.flash { box-shadow: 0 0 0 2px var(--flash-c, var(--ib-work)); transition: box-shadow .1s; }
+.msg.flash-fade { box-shadow: 0 0 0 2px transparent; transition: box-shadow .35s; }
+
+.signal-line {
+  position: absolute; height: 2px; z-index: 20; pointer-events: none;
+  background: var(--lc);
+}
+.signal-line::after {
+  content: ''; position: absolute; top: -4px;
+  border-top: 5px solid transparent; border-bottom: 5px solid transparent;
+}
+.signal-line.to-right::after { right: -8px; border-left: 8px solid var(--lc); }
+.signal-line.to-left::after { left: -8px; border-right: 8px solid var(--lc); }
+
+.log {
+  --lg-bg: #191B22;
+  --lg-text: #969BAA;
+  --lg-bright: #CDD1DC;
+  --lg-method: #6BA3C7;
+  --lg-ok: #5FB882;
+  --lg-dim: #3E4250;
+
+  grid-column: 2; grid-row: 1;
+  background: var(--lg-bg);
+  border-radius: var(--r);
+  display: flex; flex-direction: column; overflow: hidden;
+  border: 1px solid rgba(255,255,255,.04);
+  box-shadow: 0 1px 5px rgba(0,0,0,.18);
+}
+.log-chrome {
+  display: flex; align-items: center; gap: 6px;
+  padding: 9px 12px;
+  border-bottom: 1px solid rgba(255,255,255,.05);
+  flex-shrink: 0;
+}
+.dots { display: flex; gap: 5px; }
+.dots span { width: 8px; height: 8px; border-radius: 50%; }
+.dots span:nth-child(1) { background: #E5534B; }
+.dots span:nth-child(2) { background: #D4A03C; }
+.dots span:nth-child(3) { background: #4CAF6A; }
+.log-chrome .title { font-family: var(--font-mono); font-size: 10.5px; color: var(--lg-dim); margin-left: 3px; }
+
+.log-body {
+  flex: 1; overflow-y: auto; padding: 8px 12px;
+  font-family: var(--font-mono); font-size: 10.5px; line-height: 1.7;
+}
+.log-body::-webkit-scrollbar { width: 3px; }
+.log-body::-webkit-scrollbar-track { background: transparent; }
+.log-body::-webkit-scrollbar-thumb { background: var(--lg-dim); border-radius: 2px; }
+
+.log-line {
+  color: var(--lg-text); white-space: pre-wrap; word-break: break-all;
+  opacity: 0; transform: translateY(-5px);
+  animation: fadeDown .18s forwards;
+}
+@keyframes fadeDown {
+  to { opacity: 1; transform: translateY(0); }
+}
+.log-line.spacer { height: 5px; animation: none; }
+.log-line .method { color: var(--lg-method); font-weight: 500; }
+.log-line .bright { color: var(--lg-bright); }
+.log-line .ok { color: var(--lg-ok); font-weight: 500; }
+.log-line .dim { color: var(--lg-dim); }
+.log-line .lbl-work { color: #6B9CE2; }
+.log-line .lbl-family { color: #D47E5C; }
+.log-line .lbl-promo { color: #CDA24A; }
+.log-line .lbl-notif { color: #5EAA7E; }
+
+.foot {
+  margin-top: 14px;
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+}
+.foot code { font-family: var(--font-mono); font-size: 11px; color: var(--fg-muted); }
+.replay-btn {
+  font-family: var(--font-ui); font-size: 11px; font-weight: 600;
+  background: #FFFFFF; border: 1px solid var(--detail-border); border-radius: var(--r-sm);
+  padding: 4px 12px; color: var(--fg); cursor: pointer; transition: border-color .15s;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .replay-btn { background: #1A1C23; }
+}
+:root[data-theme="dark"] .replay-btn { background: #1A1C23; }
+.replay-btn:hover { border-color: #999; }
+.replay-btn:focus-visible { outline: 2px solid #3B6FC2; outline-offset: 2px; }
+
+@media (max-width: 680px) {
+  .demo { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; gap: 10px; height: auto; min-height: 70vh; }
+  .left-panel { grid-column: 1; grid-row: 1; min-height: 260px; }
+  .log { grid-column: 1; grid-row: 2; min-height: 180px; }
+  .categories { grid-template-columns: 1fr; }
+  .signal-line, .ghost-msg { display: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .msg, .log-line, .train-row { animation: none !important; transition: none !important; }
+  .typing span { animation: none !important; opacity: .5 !important; }
+  .signal-line, .ghost-msg { display: none !important; }
+}
+</style>
+
+<div class="page-head">
+  <h1>Jeffy &mdash; Train your own inbox classifier</h1>
+  <p class="tagline">Local inference &middot; CPU &middot; 24 training examples</p>
+</div>
+
+<div class="demo" id="demo">
+  <div class="left-panel" id="trainPanel">
+    <div class="panel-head">
+      <h2>Training Data</h2>
+      <span class="meta">24 labeled examples</span>
+    </div>
+    <div class="panel-body">
+      <div class="train-list" id="trainList"></div>
+    </div>
+  </div>
+
+  <div class="left-panel" id="inboxPanel" hidden>
+    <div class="panel-head">
+      <h2>Inbox</h2>
+      <span class="meta" id="counter">0 / 8 sorted</span>
+    </div>
+    <div class="panel-body">
+      <div>
+        <div class="section-label">Incoming</div>
+        <div class="incoming-list" id="incoming"></div>
+      </div>
+      <div class="categories">
+        <div>
+          <div class="section-label"><span class="cat-dot work"></span>Work <span class="cat-n" id="n-work">0</span></div>
+          <div class="bucket" id="b-work"></div>
+        </div>
+        <div>
+          <div class="section-label"><span class="cat-dot family"></span>Family <span class="cat-n" id="n-family">0</span></div>
+          <div class="bucket" id="b-family"></div>
+        </div>
+        <div>
+          <div class="section-label"><span class="cat-dot promo"></span>Promo <span class="cat-n" id="n-promo">0</span></div>
+          <div class="bucket" id="b-promo"></div>
+        </div>
+        <div>
+          <div class="section-label"><span class="cat-dot notif"></span>Notifications <span class="cat-n" id="n-notif">0</span></div>
+          <div class="bucket" id="b-notif"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="log" id="logPanel">
+    <div class="log-chrome">
+      <div class="dots"><span></span><span></span><span></span></div>
+      <span class="title">terminal</span>
+    </div>
+    <div class="log-body" id="logBody"></div>
+  </div>
+</div>
+
+<div class="foot">
+  <code>uvx --from jeffy-classify jeffy-serve</code>
+  <button class="replay-btn" id="replayBtn" hidden>Replay</button>
+</div>
+
+<script>
+const TRAIN = [
+  { text: "Please review the Q3 budget draft", cat: "work" },
+  { text: "Mom's birthday is next Saturday", cat: "family" },
+  { text: "Flash sale — 70% off all items", cat: "promo" },
+  { text: "Your flight has been rescheduled", cat: "notif" },
+  { text: "Team standup moved to 10am", cat: "work" },
+  { text: "Uncle Joe is coming to visit", cat: "family" },
+];
+
+const MSGS = [
+  { text: "Can you send me the Q4 projections?", cat: "work", conf: .59, ms: 48 },
+  { text: "Aunt Clara is hosting Thanksgiving", cat: "family", conf: .78, ms: 52 },
+  { text: "Buy 2 get 1 free — today only!", cat: "promo", conf: .76, ms: 45 },
+  { text: "Your order #7832 has shipped", cat: "notif", conf: .59, ms: 51 },
+  { text: "Sprint planning at 3pm in room B", cat: "work", conf: .53, ms: 49 },
+  { text: "Dad wants to know about the cookout", cat: "family", conf: .64, ms: 47 },
+  { text: "Limited time: upgrade for $5/mo", cat: "promo", conf: .43, ms: 53 },
+  { text: "Your credit card statement is ready", cat: "notif", conf: .75, ms: 50 },
+];
+
+const $ = id => document.getElementById(id);
+const demo = $('demo');
+const logBody = $('logBody');
+const incoming = $('incoming');
+const trainPanel = $('trainPanel');
+const inboxPanel = $('inboxPanel');
+const trainList = $('trainList');
+const replayBtn = $('replayBtn');
+let sortedN = 0;
+let stopped = false;
+
+const wait = ms => new Promise(r => setTimeout(r, ms));
+const CAT_COLORS = { work: '#3B6FC2', family: '#B85A3A', promo: '#A87D28', notif: '#4E8A68' };
+
+function log(html) {
+  const el = document.createElement('div');
+  el.className = 'log-line';
+  el.innerHTML = html;
+  logBody.prepend(el);
+}
+function logSp() {
+  const el = document.createElement('div');
+  el.className = 'log-line spacer';
+  logBody.prepend(el);
+}
+
+async function showTraining() {
+  log('<span class="dim">$ jeffy-train --task inbox_router --input examples.csv</span>');
+  await wait(600);
+
+  for (const ex of TRAIN) {
+    if (stopped) return;
+    const row = document.createElement('div');
+    row.className = 'train-row';
+    row.style.opacity = '0';
+    row.innerHTML = `<span class="train-text">"${ex.text}"</span><span class="train-arrow">→</span><span class="train-label ${ex.cat}">${ex.cat}</span>`;
+    trainList.appendChild(row);
+    try {
+      await row.animate([
+        { opacity: 0, transform: 'translateX(-10px)' },
+        { opacity: 1, transform: 'translateX(0)' },
+      ], { duration: 260, fill: 'forwards', easing: 'ease-out' }).finished;
+    } catch(e) {}
+    await wait(220);
+  }
+
+  const more = document.createElement('div');
+  more.className = 'train-more';
+  more.textContent = '⋯ +18 more labeled examples';
+  more.style.opacity = '0';
+  trainList.appendChild(more);
+  try {
+    await more.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 300, fill: 'forwards' }).finished;
+  } catch(e) {}
+
+  await wait(500);
+  if (stopped) return;
+
+  log('<span class="dim">[info]</span> Encoding 24 examples…');
+  await wait(500);
+  log('<span class="dim">[info]</span> Fitting classifier (4 classes)…');
+  await wait(600);
+  log('<span class="dim">[info]</span> CV accuracy: <span class="ok">92%</span> (3-fold)');
+  await wait(350);
+  log('<span class="dim">[info]</span> Saved <span class="bright">inbox_router</span> (1.8s)');
+  logSp();
+  await wait(900);
+}
+
+async function switchToInbox() {
+  trainPanel.style.opacity = '0';
+  await wait(350);
+  trainPanel.hidden = true;
+  inboxPanel.hidden = false;
+  inboxPanel.style.opacity = '0';
+  requestAnimationFrame(() => { inboxPanel.style.opacity = '1'; });
+  await wait(350);
+
+  log('<span class="dim">$ jeffy-serve --task inbox_router</span>');
+  await wait(400);
+  log('<span class="dim">[info]</span> <span class="bright">inbox_router</span> ready (24 examples, 4 classes)');
+  await wait(300);
+  log('<span class="dim">[info]</span> Listening on <span class="bright">http://localhost:8400</span>');
+  logSp();
+  await wait(800);
+}
+
+async function arriveMessage(msg) {
+  const card = document.createElement('div');
+  card.className = 'msg pending';
+  card.innerHTML = `<span class="msg-text">${msg.text}</span><span class="typing"><span></span><span></span><span></span></span>`;
+  incoming.appendChild(card);
+
+  const dr = demo.getBoundingClientRect();
+  const cr = card.getBoundingClientRect();
+  const ip = inboxPanel.getBoundingClientRect();
+
+  const ghost = document.createElement('div');
+  ghost.className = 'msg ghost-msg';
+  ghost.innerHTML = card.innerHTML;
+  ghost.style.width = cr.width + 'px';
+  ghost.style.top = (cr.top - dr.top) + 'px';
+
+  const targetX = cr.left - dr.left;
+  const startX = ip.left - dr.left - cr.width - 20;
+  ghost.style.left = startX + 'px';
+  demo.appendChild(ghost);
+
+  try {
+    await ghost.animate([
+      { transform: 'translateX(0)', opacity: .8 },
+      { transform: `translateX(${targetX - startX}px)`, opacity: 1 },
+    ], { duration: 480, easing: 'cubic-bezier(.15,.75,.3,1)', fill: 'forwards' }).finished;
+  } catch(e) {}
+
+  card.classList.remove('pending');
+  card.classList.add('show');
+  ghost.remove();
+  return card;
+}
+
+async function drawLine(card, color, direction) {
+  const dr = demo.getBoundingClientRect();
+  const cr = card.getBoundingClientRect();
+  const lp = $('logPanel').getBoundingClientRect();
+  const ip = inboxPanel.getBoundingClientRect();
+
+  const y = cr.top + cr.height / 2 - dr.top;
+  const x = ip.right - dr.left + 1;
+  const w = lp.left - ip.right - 2;
+
+  const line = document.createElement('div');
+  line.className = `signal-line ${direction === 'req' ? 'to-right' : 'to-left'}`;
+  line.style.setProperty('--lc', color);
+  line.style.left = x + 'px';
+  line.style.top = (y - 1) + 'px';
+  line.style.width = w + 'px';
+  demo.appendChild(line);
+
+  const clip = direction === 'req'
+    ? ['inset(-10px 100% -10px 0)', 'inset(-10px -10px -10px 0)']
+    : ['inset(-10px 0 -10px 100%)', 'inset(-10px 0 -10px -10px)'];
+
+  try {
+    await line.animate([{ clipPath: clip[0] }, { clipPath: clip[1] }],
+      { duration: 340, easing: 'ease-out', fill: 'forwards' }).finished;
+  } catch(e) {}
+  await wait(180);
+  try {
+    await line.animate([{ opacity: 1 }, { opacity: 0 }],
+      { duration: 250, fill: 'forwards' }).finished;
+  } catch(e) {}
+  line.remove();
+}
+
+async function processMessage(msg) {
+  if (stopped) return;
+
+  const card = await arriveMessage(msg);
+  await wait(400);
+  if (stopped) return;
+
+  await drawLine(card, '#6BA3C7', 'req');
+  if (stopped) return;
+
+  const trunc = msg.text.length > 34 ? msg.text.slice(0, 34) + '…' : msg.text;
+  log(`<span class="method">POST</span> <span class="bright">/v1/predict</span>  <span class="dim">"${trunc}"</span>`);
+  await wait(250 + msg.ms * 2.5);
+  if (stopped) return;
+
+  log(`<span class="ok">← 200</span>  <span class="lbl-${msg.cat}">${msg.cat}</span>  <span class="dim">${msg.ms}ms</span>`);
+  logSp();
+
+  const cc = CAT_COLORS[msg.cat];
+  await drawLine(card, cc, 'res');
+  if (stopped) return;
+
+  card.style.setProperty('--flash-c', cc);
+  card.classList.add('flash');
+  const dots = card.querySelector('.typing');
+  if (dots) dots.remove();
+  card.classList.add(msg.cat);
+  const lat = document.createElement('span');
+  lat.className = 'msg-lat';
+  lat.textContent = msg.ms + 'ms';
+  card.appendChild(lat);
+  await wait(320);
+  card.classList.remove('flash');
+  card.classList.add('flash-fade');
+  await wait(280);
+  if (stopped) return;
+
+  card.classList.add('leaving');
+  await wait(220);
+  card.remove();
+
+  const sc = document.createElement('div');
+  sc.className = `msg sorted ${msg.cat}`;
+  sc.style.opacity = '0'; sc.style.transform = 'translateY(5px)';
+  sc.innerHTML = `<span class="msg-text">${msg.text}</span><span class="msg-lat">${msg.ms}ms</span>`;
+  $(`b-${msg.cat}`).appendChild(sc);
+  requestAnimationFrame(() => {
+    sc.style.transition = 'opacity .25s, transform .25s';
+    sc.style.opacity = '1'; sc.style.transform = 'translateY(0)';
+  });
+  $(`n-${msg.cat}`).textContent = $(`b-${msg.cat}`).children.length;
+  sortedN++;
+  $('counter').textContent = `${sortedN} / 8 sorted`;
+  await wait(300);
+}
+
+async function run() {
+  stopped = false;
+  sortedN = 0;
+  $('counter').textContent = '0 / 8 sorted';
+  replayBtn.hidden = true;
+  incoming.innerHTML = '';
+  logBody.innerHTML = '';
+  trainList.innerHTML = '';
+  demo.querySelectorAll('.ghost-msg, .signal-line').forEach(e => e.remove());
+  ['work','family','promo','notif'].forEach(c => {
+    $(`b-${c}`).innerHTML = '';
+    $(`n-${c}`).textContent = '0';
+  });
+
+  trainPanel.hidden = false;
+  trainPanel.style.opacity = '1';
+  inboxPanel.hidden = true;
+
+  await showTraining();
+  if (stopped) return;
+
+  await switchToInbox();
+  if (stopped) return;
+
+  for (const msg of MSGS) {
+    await processMessage(msg);
+    if (stopped) return;
+  }
+
+  await wait(500);
+  const total = MSGS.reduce((s, m) => s + m.ms, 0);
+  log('<span class="dim">────────────────────────────</span>');
+  log(`<span class="bright">8 sorted · avg ${Math.round(total / 8)}ms · no API keys</span>`);
+
+  await wait(400);
+  replayBtn.hidden = false;
+}
+
+replayBtn.addEventListener('click', () => { stopped = true; setTimeout(run, 100); });
+run();
+</script>
+
+</body></html>

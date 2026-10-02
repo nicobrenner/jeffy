@@ -1,0 +1,19 @@
+{
+  "model": "S",
+  "n_features": 50,
+  "classes": [
+    "fire",
+    "hold"
+  ],
+  "train_accuracy": 0.9103492063492064,
+  "feature_layout": {
+    "0-22": "measurements (23d): game variables",
+    "23-26": "teacher_action components [0,1,3,4] (4d)",
+    "27-36": "primary enemy: cx, cy, size, width, offset, abs_offset, centered_5pct, centered_10pct, score, present (10d)",
+    "37-39": "secondary enemy: cx, size, offset (3d)",
+    "40-49": "history: 5 steps \u00d7 (fired, reward) (10d)"
+  },
+  "scaler": "StandardScaler",
+  "classifier": "LogisticRegression",
+  "provenance": "fire_eval_fresh experiment, 15 train seeds, 7875 steps, 50 eval seeds"
+}

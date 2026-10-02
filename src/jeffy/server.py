@@ -420,6 +420,13 @@ a{color:var(--muted)}
 <span id="latency" style="font-size:11px;color:var(--muted)"></span>
 <button class="run" id="run" type="submit">Classify →</button>
 </div>
+<div id="curl-section" style="margin-top:16px;border-top:1px solid var(--line);padding-top:12px">
+<div style="display:flex;align-items:center;justify-content:space-between">
+<span style="color:var(--muted);font-size:12px">or use curl</span>
+<button id="copy-curl" style="font-size:11px;padding:4px 10px">Copy</button>
+</div>
+<pre id="curl-cmd" style="background:#f5f7f5;border-radius:6px;padding:10px;margin-top:6px;font-size:11px"></pre>
+</div>
 </form>
 </section>
 <section class="panel">
@@ -442,7 +449,7 @@ a{color:var(--muted)}
 </main>
 <footer>
 <span><a href="/docs" target="_blank">API docs ↗</a></span>
-<span><a href="/v1/capabilities" target="_blank">Capabilities ↗</a></span>
+<span><a href="https://github.com/nicobrenner/jeffy" target="_blank">GitHub ↗</a></span>
 </footer>
 <script>
 const $=id=>document.getElementById(id);
@@ -462,10 +469,17 @@ fetch("/v1/capabilities").then(r=>r.json()).then(d=>{
     o.textContent=c.task_id+" — "+c.name;
     sel.appendChild(o);
   });
-  if(d.capabilities.length)updateTaskInfo();
+  if(d.capabilities.length){updateTaskInfo()}
 });
 
-$("task").onchange=updateTaskInfo;
+$("task").onchange=()=>{updateTaskInfo()};
+$("text").oninput=updateCurl;
+
+function updateCurl(){
+  const payload=JSON.stringify({text:$("text").value||"your text here",task:$("task").value});
+  const escaped=payload.replace(/'/g,"'\\''");
+  $("curl-cmd").textContent="curl -s -X POST "+location.origin+"/v1/predict \\\n  -H 'Content-Type: application/json' \\\n  -d '"+escaped+"' | python3 -m json.tool";
+}
 
 function updateTaskInfo(){
   const c=caps[$("task").value];
@@ -477,6 +491,7 @@ function updateTaskInfo(){
   // Load example text
   fetch("/v1/capabilities/"+c.task_id).then(r=>r.json()).then(d=>{
     if(d.example_request)$("text").value=d.example_request.text;
+    updateCurl();
   });
 }
 
@@ -516,6 +531,16 @@ $("form").onsubmit=async e=>{
   }finally{
     $("run").disabled=false;$("run").textContent="Classify →";
   }
+};
+$("copy-curl").onclick=()=>{
+  const cmd=$("curl-cmd").textContent;
+  navigator.clipboard.writeText(cmd).then(()=>{
+    $("copy-curl").textContent="Copied!";
+    setTimeout(()=>$("copy-curl").textContent="Copy",1500);
+  }).catch(()=>{
+    const s=window.getSelection(),r=document.createRange();
+    r.selectNodeContents($("curl-cmd"));s.removeAllRanges();s.addRange(r);
+  });
 };
 </script>
 </body>

@@ -4,10 +4,26 @@ build-backend = "hatchling.build"
 
 [project]
 name = "jeffy-classify"
-version = "0.1.0a7"
+version = "0.1.0a8"
 description = "Pretrained text classifiers: 13 ready-to-use heads, train your own in seconds"
+readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT"
+authors = [
+    { name = "Nico Brenner" },
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Text Processing :: Linguistic",
+]
+keywords = ["nlp", "text-classification", "machine-learning", "embeddings", "pretrained"]
 dependencies = [
     "sentence-transformers>=2.2.0",
     "scikit-learn>=1.3.0",

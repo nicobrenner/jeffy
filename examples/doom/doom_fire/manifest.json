@@ -1,0 +1,34 @@
+{
+  "dataset": "doom_fire",
+  "description": "Doom fire/hold decision from game state features",
+  "n_classes": 2,
+  "task_type": "choice",
+  "encoder": "features",
+  "encoder_dim": 50,
+  "labels": {
+    "fire": "fire",
+    "hold": "hold"
+  },
+  "class_order": [
+    "fire",
+    "hold"
+  ],
+  "hf_source": "doom-vizdoom-experiment",
+  "hf_config": null,
+  "hf_revision": null,
+  "license": "MIT",
+  "train_examples": 7875,
+  "train_accuracy": 0.9103492063492064,
+  "test_examples": 0,
+  "test_accuracy": 0,
+  "scaler_mean_hash": "f4db276d",
+  "classifier_coef_hash": "6a0797d2",
+  "n_features": 50,
+  "feature_layout": {
+    "0-22": "measurements (23d): game variables",
+    "23-26": "teacher_action components [0,1,3,4] (4d)",
+    "27-36": "primary enemy: cx, cy, size, width, offset, abs_offset, centered_5pct, centered_10pct, score, present (10d)",
+    "37-39": "secondary enemy: cx, size, offset (3d)",
+    "40-49": "history: 5 steps \u00d7 (fired, reward) (10d)"
+  }
+}

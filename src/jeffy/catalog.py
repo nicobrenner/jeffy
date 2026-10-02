@@ -28,9 +28,16 @@ class Capability:
     test_macro_f1: float | None = None
     test_examples: int | None = None
     train_accuracy: float | None = None
+    # Feature-based classifiers
+    n_features: int | None = None
+    feature_layout: dict[str, str] | None = None
     # Artifact linkage
-    task_signature: str | None = None  # hash for learning store lookup
+    task_signature: str | None = None
     artifact_path: str | None = None
+
+    @property
+    def is_feature_based(self) -> bool:
+        return self.encoder == FEATURES_ENCODER
 
 
 # Label mappings for each dataset.
@@ -146,3 +153,4 @@ DATASET_CONFIGS = {
 
 ENCODER = "BAAI/bge-large-en-v1.5"
 ENCODER_DIM = 1024
+FEATURES_ENCODER = "features"

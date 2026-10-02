@@ -23,7 +23,7 @@ import os
 app = FastAPI(
     title="Jeffy",
     description="Pretrained decision engine with reusable embeddings and tiny classifiers.",
-    version="0.1.0a7",
+    version="0.1.0a10",
 )
 
 _engine: Engine | None = None
@@ -41,7 +41,8 @@ def get_engine() -> Engine:
 # --- Request/Response models ---
 
 class PredictRequest(BaseModel):
-    text: str = Field(..., description="Input text to classify")
+    text: str | None = Field(None, description="Input text to classify")
+    features: list[float] | None = Field(None, description="Input feature vector (for feature-based classifiers)")
     task: str = Field(..., description="Pretrained capability task ID")
 
 class PredictResponse(BaseModel):
@@ -107,6 +108,8 @@ def list_capabilities():
             "train_accuracy": cap.train_accuracy,
             "test_accuracy": cap.test_accuracy,
             "license": cap.license,
+            **({"n_features": cap.n_features, "feature_layout": cap.feature_layout}
+               if cap.is_feature_based else {}),
         })
     return {"capabilities": result, "count": len(result)}
 
@@ -129,17 +132,25 @@ def get_capability(task_id: str):
         "train_accuracy": cap.train_accuracy,
         "test_accuracy": cap.test_accuracy,
         "license": cap.license,
-        "example_request": {
-            "text": _example_text(task_id),
-            "task": task_id,
-        },
+        **({"n_features": cap.n_features, "feature_layout": cap.feature_layout}
+           if cap.is_feature_based else {}),
+        "example_request": (
+            {"features": [0.0] * (cap.n_features or 1), "task": task_id}
+            if cap.is_feature_based else
+            {"text": _example_text(task_id), "task": task_id}
+        ),
     }
 
 
 @app.post("/v1/predict")
 def predict(req: PredictRequest):
     engine = get_engine()
-    result = engine.predict(req.task, req.text)
+    if req.features is not None:
+        result = engine.predict_features(req.task, req.features)
+    elif req.text is not None:
+        result = engine.predict(req.task, req.text)
+    else:
+        raise HTTPException(400, "Provide either 'text' or 'features'")
     if "error" in result:
         raise HTTPException(400, result["error"])
     return result
@@ -188,7 +199,6 @@ def systemone(req: SystemOneRequest):
     import json as _json
 
     engine = get_engine()
-    state_text = req.state if isinstance(req.state, str) else _json.dumps(req.state)
 
     # Validate capability exists
     if req.capability not in engine.capabilities:
@@ -197,6 +207,16 @@ def systemone(req: SystemOneRequest):
             f"Available: {sorted(engine.capabilities.keys())}")
 
     cap = engine.capabilities[req.capability]
+
+    def _predict():
+        if cap.is_feature_based:
+            if not isinstance(req.state, list):
+                raise HTTPException(400,
+                    f"Capability '{req.capability}' is feature-based. "
+                    f"'state' must be a list of {cap.n_features} numeric features.")
+            return engine.predict_features(req.capability, req.state)
+        state_text = req.state if isinstance(req.state, str) else _json.dumps(req.state)
+        return engine.predict(req.capability, state_text)
 
     # Build reverse label map: head_label -> request_key
     head_to_request = {}
@@ -244,7 +264,7 @@ def systemone(req: SystemOneRequest):
                     }
                     continue
 
-            result = engine.predict(req.capability, state_text)
+            result = _predict()
 
             # Map probabilities to request option IDs
             probs = {}
@@ -277,7 +297,7 @@ def systemone(req: SystemOneRequest):
                 continue
 
             # Determine positive/negative from criteria or label_map
-            result = engine.predict(req.capability, state_text)
+            result = _predict()
             all_labels = sorted(cap.labels.values())
 
             if question.criteria and isinstance(question.criteria, dict):
@@ -462,7 +482,7 @@ fetch("/health").then(r=>r.json()).then(d=>{
 
 fetch("/v1/capabilities").then(r=>r.json()).then(d=>{
   const sel=$("task");
-  d.capabilities.forEach(c=>{
+  d.capabilities.filter(c=>c.encoder!=="features").forEach(c=>{
     caps[c.task_id]=c;
     const o=document.createElement("option");
     o.value=c.task_id;

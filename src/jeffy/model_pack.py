@@ -41,6 +41,8 @@ class ArtifactManifest:
     test_accuracy: float
     scaler_mean_hash: str
     classifier_coef_hash: str
+    n_features: int | None = None
+    feature_layout: dict[str, str] | None = None
     schema_version: int = 1
 
 
@@ -84,8 +86,8 @@ def _reconstruct_from_npz(npz_path: Path):
     scaler = StandardScaler()
     scaler.mean_ = data["scaler_mean"]
     scaler.scale_ = data["scaler_scale"]
-    scaler.var_ = data["scaler_var"]
-    scaler.n_samples_seen_ = int(data["scaler_n_samples_seen"][0])
+    scaler.var_ = data["scaler_var"] if "scaler_var" in data else scaler.scale_ ** 2
+    scaler.n_samples_seen_ = int(data["scaler_n_samples_seen"][0]) if "scaler_n_samples_seen" in data else 1
     scaler.n_features_in_ = len(scaler.mean_)
 
     return clf, scaler

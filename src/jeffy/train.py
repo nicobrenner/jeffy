@@ -28,7 +28,7 @@ from sklearn.metrics import accuracy_score, f1_score
 from sklearn.model_selection import StratifiedShuffleSplit, cross_val_score
 from sklearn.preprocessing import StandardScaler
 
-from .catalog import ENCODER, ENCODER_DIM
+from .catalog import ENCODER, ENCODER_DIM, FEATURES_ENCODER
 from .model_pack import ArtifactManifest, coef_hash, save_artifact, scaler_hash
 
 
@@ -196,6 +196,149 @@ def train_classifier(
     result = TrainedClassifier(clf, scaler, encoder, label_map, task_id)
     if verbose:
         print(f"  Ready. Use .predict(text) or .save(dir)")
+    return result
+
+
+class TrainedFeatureClassifier:
+    """A trained classifier for numeric feature vectors."""
+
+    def __init__(self, clf, scaler, labels, task_id, n_features, feature_layout=None):
+        self.clf = clf
+        self.scaler = scaler
+        self.labels = labels
+        self.task_id = task_id
+        self.n_features = n_features
+        self.feature_layout = feature_layout
+
+    def predict(self, features: list[float]) -> dict:
+        t0 = time.perf_counter()
+        X = np.array(features, dtype=np.float64).reshape(1, -1)
+        X_scaled = self.scaler.transform(X)
+        probs = self.clf.predict_proba(X_scaled)[0]
+        pred_idx = np.argmax(probs)
+        pred_id = self.clf.classes_[pred_idx]
+        t_clf = time.perf_counter() - t0
+
+        prob_dict = {}
+        for cls, prob in zip(self.clf.classes_, probs):
+            human = self.labels.get(str(cls), str(cls))
+            prob_dict[human] = round(float(prob), 4)
+        prob_dict = dict(sorted(prob_dict.items(), key=lambda x: -x[1]))
+
+        return {
+            "label": self.labels.get(str(pred_id), str(pred_id)),
+            "confidence": round(float(probs[pred_idx]), 4),
+            "probabilities": prob_dict,
+            "latency_ms": round(t_clf * 1000, 2),
+        }
+
+    def save(self, out_dir: str):
+        out_path = Path(out_dir) / self.task_id
+        manifest = ArtifactManifest(
+            dataset=self.task_id,
+            description=f"Custom feature classifier: {self.task_id}",
+            n_classes=len(self.labels),
+            task_type="choice" if len(self.labels) > 2 else "noul",
+            encoder=FEATURES_ENCODER,
+            encoder_dim=self.n_features,
+            labels=self.labels,
+            class_order=list(self.clf.classes_),
+            hf_source="user-provided",
+            hf_config=None,
+            hf_revision=None,
+            license="user-provided",
+            train_examples=0,
+            train_accuracy=0,
+            test_examples=0,
+            test_accuracy=0,
+            scaler_mean_hash=scaler_hash(self.scaler),
+            classifier_coef_hash=coef_hash(self.clf),
+            n_features=self.n_features,
+            feature_layout=self.feature_layout,
+        )
+        save_artifact(out_path.parent, self.task_id, self.clf, self.scaler, manifest)
+        return str(out_path)
+
+
+def train_feature_classifier(
+    features: np.ndarray | list[list[float]],
+    labels: list[str],
+    task_id: str = "custom",
+    feature_layout: dict[str, str] | None = None,
+    C: float = 0.01,
+    test_size: float = 0.2,
+    cv_folds: int = 3,
+    verbose: bool = True,
+) -> TrainedFeatureClassifier:
+    """Train a classifier from numeric feature vectors.
+
+    Args:
+        features: 2D array of shape (n_samples, n_features).
+        labels: Corresponding labels (strings).
+        task_id: Name for this classifier.
+        feature_layout: Optional mapping of feature index to name.
+        C: Regularization strength.
+        test_size: Fraction held out for evaluation.
+        cv_folds: Cross-validation folds.
+        verbose: Print training progress.
+    """
+    X = np.asarray(features, dtype=np.float64)
+    if X.ndim != 2:
+        raise ValueError(f"features must be 2D, got {X.ndim}D")
+    if len(X) != len(labels):
+        raise ValueError(f"features ({len(X)}) and labels ({len(labels)}) must have same length")
+    if len(X) < 2:
+        raise ValueError("Need at least 2 examples")
+
+    n_features = X.shape[1]
+    unique_labels = sorted(set(labels))
+    n_classes = len(unique_labels)
+    label_map = {label: label for label in unique_labels}
+
+    if verbose:
+        print(f"Training '{task_id}': {len(X)} examples, {n_features} features, {n_classes} classes")
+
+    train_X, train_labels = X, labels
+    test_X, test_labels = None, None
+
+    if test_size > 0 and len(X) >= 10:
+        sss = StratifiedShuffleSplit(n_splits=1, test_size=test_size, random_state=42)
+        train_idx, test_idx = next(sss.split(X, labels))
+        train_X = X[train_idx]
+        train_labels = [labels[i] for i in train_idx]
+        test_X = X[test_idx]
+        test_labels = [labels[i] for i in test_idx]
+        if verbose:
+            print(f"  Split: {len(train_X)} train, {len(test_X)} test")
+
+    t0 = time.perf_counter()
+    scaler = StandardScaler()
+    X_train_scaled = scaler.fit_transform(train_X)
+    clf = LogisticRegression(C=C, max_iter=3000, solver="newton-cg", random_state=42)
+    clf.fit(X_train_scaled, train_labels)
+    t_train = time.perf_counter() - t0
+
+    train_acc = accuracy_score(train_labels, clf.predict(X_train_scaled))
+    if verbose:
+        print(f"  Train accuracy: {train_acc:.1%} ({t_train:.1f}s)")
+
+    if cv_folds > 0 and len(train_X) >= cv_folds * 2:
+        cv_scores = cross_val_score(
+            LogisticRegression(C=C, max_iter=3000, solver="newton-cg", random_state=42),
+            X_train_scaled, train_labels, cv=cv_folds, scoring="accuracy")
+        if verbose:
+            print(f"  {cv_folds}-fold CV: {cv_scores.mean():.1%} ± {cv_scores.std():.1%}")
+
+    if test_X is not None:
+        X_test_scaled = scaler.transform(test_X)
+        test_preds = clf.predict(X_test_scaled)
+        test_acc = accuracy_score(test_labels, test_preds)
+        if verbose:
+            print(f"  Test accuracy: {test_acc:.1%}")
+
+    result = TrainedFeatureClassifier(clf, scaler, label_map, task_id, n_features, feature_layout)
+    if verbose:
+        print(f"  Ready. Use .predict(features) or .save(dir)")
     return result
 
 

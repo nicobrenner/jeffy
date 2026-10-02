@@ -12,7 +12,7 @@ from pathlib import Path
 import numpy as np
 from sentence_transformers import SentenceTransformer
 
-from .catalog import ENCODER, Capability
+from .catalog import ENCODER, FEATURES_ENCODER, Capability
 from .model_pack import load_artifact
 
 logger = logging.getLogger(__name__)
@@ -98,7 +98,7 @@ class Engine:
 
             ds_name = manifest.dataset
 
-            if manifest.encoder != ENCODER:
+            if manifest.encoder not in (ENCODER, FEATURES_ENCODER):
                 quarantined.append((ds_name, f"encoder mismatch: {manifest.encoder} vs {ENCODER}"))
                 continue
 
@@ -119,6 +119,8 @@ class Engine:
                 train_examples=manifest.train_examples,
                 train_accuracy=manifest.train_accuracy,
                 test_accuracy=manifest.test_accuracy,
+                n_features=getattr(manifest, 'n_features', None),
+                feature_layout=getattr(manifest, 'feature_layout', None),
                 task_signature=None,
             )
             self._capabilities[ds_name] = cap
@@ -142,23 +144,15 @@ class Engine:
     def encoder_load_time(self) -> float:
         return self._encoder_load_time
 
-    def predict(self, task_id: str, text: str) -> dict:
-        """Run prediction for a specific pretrained capability."""
-        if task_id not in self._classifiers:
-            return {"error": f"No pretrained capability '{task_id}'. "
-                    f"Available: {list(self._capabilities.keys())}"}
-
+    def _classify(self, task_id: str, X: np.ndarray, t0: float, t_embed: float) -> dict:
+        """Shared classification logic for both text and feature inputs."""
         cap = self._capabilities[task_id]
         clf = self._classifiers[task_id]
         scaler = self._scalers[task_id]
 
-        t0 = time.perf_counter()
-        embedding = self._encoder.encode([text], show_progress_bar=False)
-        t_embed = time.perf_counter() - t0
-
         t1 = time.perf_counter()
-        X = scaler.transform(embedding)
-        probs = clf.predict_proba(X)[0]
+        X_scaled = scaler.transform(X)
+        probs = clf.predict_proba(X_scaled)[0]
         classes = clf.classes_
         pred_idx = np.argmax(probs)
         pred_label = classes[pred_idx]
@@ -174,7 +168,7 @@ class Engine:
 
         human_label = cap.labels.get(str(pred_label), str(pred_label))
 
-        return {
+        result = {
             "label": human_label,
             "label_id": str(pred_label),
             "confidence": round(float(probs[pred_idx]), 4),
@@ -192,3 +186,42 @@ class Engine:
                 "test_accuracy": cap.test_accuracy,
             },
         }
+        if cap.is_feature_based:
+            result["capability"]["n_features"] = cap.n_features
+        return result
+
+    def predict(self, task_id: str, text: str) -> dict:
+        """Run prediction for a text-based pretrained capability."""
+        if task_id not in self._classifiers:
+            return {"error": f"No pretrained capability '{task_id}'. "
+                    f"Available: {list(self._capabilities.keys())}"}
+
+        cap = self._capabilities[task_id]
+        if cap.is_feature_based:
+            return {"error": f"Capability '{task_id}' is feature-based. "
+                    f"Use predict_features() with a numeric vector instead of text."}
+
+        t0 = time.perf_counter()
+        embedding = self._encoder.encode([text], show_progress_bar=False)
+        t_embed = time.perf_counter() - t0
+
+        return self._classify(task_id, embedding, t0, t_embed)
+
+    def predict_features(self, task_id: str, features: list[float]) -> dict:
+        """Run prediction for a feature-based pretrained capability."""
+        if task_id not in self._classifiers:
+            return {"error": f"No pretrained capability '{task_id}'. "
+                    f"Available: {list(self._capabilities.keys())}"}
+
+        cap = self._capabilities[task_id]
+        if not cap.is_feature_based:
+            return {"error": f"Capability '{task_id}' is text-based. "
+                    f"Use predict() with text instead of features."}
+
+        if cap.n_features and len(features) != cap.n_features:
+            return {"error": f"Expected {cap.n_features} features, got {len(features)}"}
+
+        t0 = time.perf_counter()
+        X = np.array(features, dtype=np.float64).reshape(1, -1)
+
+        return self._classify(task_id, X, t0, 0.0)

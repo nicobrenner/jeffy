@@ -9,6 +9,7 @@ Pretrained text classifiers you can run and retrain on CPU.
   <img src="examples/doom_battle.gif" width="49%" alt="Doom Battle">
   <img src="examples/doom_defend.gif" width="49%" alt="Defend the Center">
 </p>
+<p align="center"><em>Doom agents use logistic regression classifiers on game state features (see <a href="examples/doom/">examples/doom/</a>).</em></p>
 
 ## Try it
 
@@ -285,6 +286,7 @@ Verified with clean-environment wheel and sdist install on Linux aarch64, Python
 | **Planned** | Broader classifier catalog, released in verified batches |
 | **Planned** | Automatic routing among supported classifiers |
 | **Planned** | Optional local/API LLM fallback for unsupported tasks |
+| **Planned** | Non-text classifiers (game state, sensor data, structured features) |
 | **Exploring** | Assisted labeling, retraining from corrections, classifier sharing |
 
 Suggestions for datasets, capabilities, or workflows are welcome as issues.

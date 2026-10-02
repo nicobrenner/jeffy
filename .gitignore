@@ -47,6 +47,10 @@ _vizdoom.ini
 # Keep summaries and comparison JSON in git
 data/eval_results/*_predictions.jsonl
 
-# Handoff and conversation artifacts (private)
+# Build output (regenerate with jeffy-build)
+data/model_pack/
+
+# Drafts and conversation artifacts (private)
+SHOW_HN_DRAFT.md
 JEFFY_HANDOFF.md
 snapshot.json

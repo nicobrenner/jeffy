@@ -9,7 +9,6 @@ Pretrained text classifiers you can run and retrain on CPU.
   <img src="examples/doom_battle.gif" width="49%" alt="Doom Battle">
   <img src="examples/doom_defend.gif" width="49%" alt="Defend the Center">
 </p>
-<p align="center"><em>Doom agents use logistic regression classifiers on game state features (see <a href="examples/doom/">examples/doom/</a>).</em></p>
 
 ## Try it
 
@@ -32,6 +31,30 @@ Open http://localhost:8400, pick a classifier, and paste one of these:
 <p align="center">
   <img src="examples/playground.png" width="100%" alt="Jeffy Playground">
 </p>
+
+## Pretrained capabilities
+
+13 classifiers ship with the package. Weights are logistic regression coefficients (derived model parameters, not copies of training data). Source datasets and licenses are documented in `ATTRIBUTION.md`.
+
+| Task | What it does | Classes | Test Acc | Test F1 |
+|------|-------------|---------|----------|---------|
+| sms_spam | SMS spam detection | 2 | 99.1% | 98.0% |
+| dbpedia | Wikipedia article category | 14 | 96.0% | 95.9% |
+| imdb | Movie review sentiment (long text) | 2 | 94.8% | 94.8% |
+| banking77 | Banking customer intent | 77 | 94.3% | 94.3% |
+| ag_news | News topic (world/sports/business/tech) | 4 | 90.5% | 90.5% |
+| sst2 | Movie review sentiment | 2 | 90.1% | 90.1% |
+| clinc_oos | Voice assistant intent + out-of-scope | 151 | 88.4% | 92.1% |
+| massive_intent | Smart home voice commands | 60 | 88.1% | 86.4% |
+| tweet_eval_offensive | Offensive language | 2 | 81.0% | 74.8% |
+| tweet_eval_emotion | Tweet emotion | 4 | 78.1% | 74.7% |
+| emotion | Text emotion (6 emotions) | 6 | 75.5% | 67.8% |
+| tweet_eval_sentiment | Tweet sentiment (3-way) | 3 | 66.2% | 65.7% |
+| snli | Natural language inference | 3 | 65.6% | 65.2% |
+
+Test accuracy on held-out splits. Details in `data/eval_results/benchmark.json`.
+
+**Weaknesses:** SNLI (65.6%) and tweet_eval_sentiment (66.2%) are below what task-specific models achieve. Emotion (75.5%) has limited class coverage. Probabilities are uncalibrated.
 
 ## Train a custom classifier
 
@@ -147,6 +170,14 @@ for c in json.load(sys.stdin)['capabilities']:
     print(f\"{c['task_id']:25s} {c['n_classes']:3d} classes  {c['test_accuracy']:.1%}  {c['name']}\")"
 ```
 
+### Per-capability metadata
+
+Each shipped classifier has a `manifest.json` with label names, source dataset, HuggingFace path, stated license, encoder identity, training/test counts, and integrity hashes.
+
+```bash
+curl -s http://localhost:8400/v1/capabilities/banking77 | python3 -m json.tool
+```
+
 ## Train from Python
 
 ```python
@@ -168,43 +199,11 @@ clf.save("my_models")
 
 | Parameter | Default | Description |
 |-----------|---------|-------------|
-| `C` | 0.01 | Regularization strength. Lower = more regularization. Try 0.001–1.0. |
-| `test_size` | 0.2 | Fraction held out for evaluation. Set 0 to use all data for training. |
-| `cv_folds` | 3 | Cross-validation folds for accuracy estimate. Set 0 to skip. |
+| `C` | 0.01 | How aggressively the model fits your data. Low (0.001) = conservative, keeps predictions closer to "I'm not sure." High (1.0) = trusts individual training examples more. If the model is great on training data but bad on new data (overfitting), lower C. |
+| `test_size` | 0.2 | What fraction of your data to hold back for testing. With 100 examples at 0.2, it trains on 80 and tests on 20. Set to 0 to train on everything (useful when you have very little data and will test manually). |
+| `cv_folds` | 3 | Cross-validation: splits your training data into 3 parts, trains on 2 and tests on 1, rotates three times, averages the scores. Gives a more reliable accuracy estimate than a single split. Set to 0 to skip (faster, less reliable estimate). |
 
-Start with the defaults. If training accuracy is much higher than CV accuracy, try lower C. With <50 examples per class, expect noisy estimates.
-
-## Pretrained capabilities
-
-13 classifiers ship with the package. Weights are logistic regression coefficients (derived model parameters, not copies of training data). Source datasets and licenses are documented in `ATTRIBUTION.md`.
-
-| Task | What it does | Classes | Test Acc | Test F1 |
-|------|-------------|---------|----------|---------|
-| sms_spam | SMS spam detection | 2 | 99.1% | 98.0% |
-| dbpedia | Wikipedia article category | 14 | 96.0% | 95.9% |
-| imdb | Movie review sentiment (long text) | 2 | 94.8% | 94.8% |
-| banking77 | Banking customer intent | 77 | 94.3% | 94.3% |
-| ag_news | News topic (world/sports/business/tech) | 4 | 90.5% | 90.5% |
-| sst2 | Movie review sentiment | 2 | 90.1% | 90.1% |
-| clinc_oos | Voice assistant intent + out-of-scope | 151 | 88.4% | 92.1% |
-| massive_intent | Smart home voice commands | 60 | 88.1% | 86.4% |
-| tweet_eval_offensive | Offensive language | 2 | 81.0% | 74.8% |
-| tweet_eval_emotion | Tweet emotion | 4 | 78.1% | 74.7% |
-| emotion | Text emotion (6 emotions) | 6 | 75.5% | 67.8% |
-| tweet_eval_sentiment | Tweet sentiment (3-way) | 3 | 66.2% | 65.7% |
-| snli | Natural language inference | 3 | 65.6% | 65.2% |
-
-Test accuracy on held-out splits. Details in `data/eval_results/benchmark.json`.
-
-**Weaknesses:** SNLI (65.6%) and tweet_eval_sentiment (66.2%) are below what task-specific models achieve. Emotion (75.5%) has limited class coverage. Probabilities are uncalibrated.
-
-### Per-capability metadata
-
-Each shipped classifier has a `manifest.json` with label names, source dataset, HuggingFace path, stated license, encoder identity, training/test counts, and integrity hashes.
-
-```bash
-curl -s http://localhost:8400/v1/capabilities/banking77 | python3 -m json.tool
-```
+Start with the defaults. With <50 examples per class, expect noisy estimates.
 
 ## Reproduce the evaluation
 

@@ -1,6 +1,6 @@
 # Jeffy
 
-Pretrained text classifiers you can run and retrain on CPU.
+Pretrained classifiers you can run and retrain on CPU — text, game state, or any numeric features.
 
 <p align="center">
   <img src="examples/inbox_demo.gif" width="100%" alt="Inbox Router">
@@ -16,7 +16,7 @@ Pretrained text classifiers you can run and retrain on CPU.
 
 ```bash
 uvx --python 3.12 \
-  --from "jeffy-classify @ git+https://github.com/nicobrenner/jeffy.git@v0.1.0-alpha.7" \
+  --from "jeffy-classify @ git+https://github.com/nicobrenner/jeffy.git@v0.1.0-alpha.11" \
   jeffy-serve
 ```
 
@@ -34,7 +34,7 @@ Open http://localhost:8400, pick a classifier, and paste one of these:
 
 ## Pretrained capabilities
 
-13 classifiers ship with the package. Weights are logistic regression coefficients (derived model parameters, not copies of training data). Source datasets and licenses are documented in `ATTRIBUTION.md`.
+14 classifiers ship with the package, including a real-time Doom game-state classifier. Weights are logistic regression coefficients (derived model parameters, not copies of training data). Source datasets and licenses are documented in `ATTRIBUTION.md`.
 
 | Task | What it does | Classes | Test Acc | Test F1 |
 |------|-------------|---------|----------|---------|
@@ -51,8 +51,9 @@ Open http://localhost:8400, pick a classifier, and paste one of these:
 | emotion | Text emotion (6 emotions) | 6 | 75.5% | 67.8% |
 | tweet_eval_sentiment | Tweet sentiment (3-way) | 3 | 66.2% | 65.7% |
 | snli | Natural language inference | 3 | 65.6% | 65.2% |
+| doom_fire | Doom game-state decisions (fire/turn) | 3 | 100.0% | 100.0% |
 
-Test accuracy on held-out splits. Details in `data/eval_results/benchmark.json`.
+Test accuracy on held-out splits. Details in `data/eval_results/benchmark.json`. doom_fire operates on numeric feature vectors (24 game-state features) instead of text — see `examples/doom/`.
 
 **Weaknesses:** SNLI (65.6%) and tweet_eval_sentiment (66.2%) are below what task-specific models achieve. Emotion (75.5%) has limited class coverage. Probabilities are uncalibrated.
 
@@ -60,7 +61,7 @@ Test accuracy on held-out splits. Details in `data/eval_results/benchmark.json`.
 
 ```bash
 uvx --python 3.12 \
-  --from "jeffy-classify @ git+https://github.com/nicobrenner/jeffy.git@v0.1.0-alpha.7" \
+  --from "jeffy-classify @ git+https://github.com/nicobrenner/jeffy.git@v0.1.0-alpha.11" \
   jeffy-train --example --save-dir my_models
 ```
 
@@ -76,7 +77,7 @@ Saved to my_models/reviews/
 
 ```bash
 uvx --python 3.12 \
-  --from "jeffy-classify @ git+https://github.com/nicobrenner/jeffy.git@v0.1.0-alpha.7" \
+  --from "jeffy-classify @ git+https://github.com/nicobrenner/jeffy.git@v0.1.0-alpha.11" \
   jeffy-train --input your_data.csv --text-col text --label-col label \
   --task-id your_task --save-dir my_models
 ```
@@ -87,7 +88,7 @@ Supports `.csv`, `.tsv`, and `.jsonl`.
 
 ```bash
 JEFFY_PACK_DIR=my_models uvx --python 3.12 \
-  --from "jeffy-classify @ git+https://github.com/nicobrenner/jeffy.git@v0.1.0-alpha.7" \
+  --from "jeffy-classify @ git+https://github.com/nicobrenner/jeffy.git@v0.1.0-alpha.11" \
   jeffy-serve
 ```
 
@@ -275,17 +276,19 @@ Verified with clean-environment wheel and sdist install on Linux aarch64, Python
 - **No zero-shot / general classification.** Each task needs a trained head. Unknown tasks return an error.
 - **No LLM fallback.** This release is pure embedding + classifier.
 - **No automatic task routing.** You must specify which classifier to use.
+- **No hosted service.** Runs locally only for now.
 
 ## Roadmap
 
 | Status | Milestone |
 |--------|-----------|
-| **Available** | Pretrained classifier library, SDK/API, playground, custom training from CSV/JSONL |
-| **Next** | Landing page, PyPI release |
-| **Planned** | Broader classifier catalog, released in verified batches |
+| **Available** | Pretrained classifier library (13 text + 1 game-state), SDK/API, playground, custom training from CSV/JSONL |
+| **Available** | PyPI package (`pip install jeffy-classify`), non-text classifiers (numeric feature vectors) |
+| **Available** | Live Doom demo — real-time VizDoom classifier streaming in the playground |
+| **Next** | Landing page, broader classifier catalog released in verified batches |
 | **Planned** | Automatic routing among supported classifiers |
 | **Planned** | Optional local/API LLM fallback for unsupported tasks |
-| **Planned** | Non-text classifiers (game state, sensor data, structured features) |
+| **Planned** | Hosted classifier catalog and decision-routing service |
 | **Exploring** | Assisted labeling, retraining from corrections, classifier sharing |
 
 Suggestions for datasets, capabilities, or workflows are welcome as issues.

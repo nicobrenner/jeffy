@@ -2,6 +2,8 @@
 
 Pretrained classifiers you can run and retrain on CPU — text, game state, or any numeric features.
 
+**[jeffyclassify.com](https://jeffyclassify.com)** · **[Live Playground](https://playground.jeffyclassify.com)** · **[GitHub](https://github.com/nicobrenner/jeffy)**
+
 <p align="center">
   <img src="examples/inbox_demo.gif" width="100%" alt="Inbox Router">
 </p>
@@ -34,7 +36,7 @@ Open http://localhost:8400, pick a classifier, and paste one of these:
 
 ## Pretrained capabilities
 
-15 classifiers ship with the package, including a real-time Doom game-state classifier and an inbox router. Weights are logistic regression coefficients (derived model parameters, not copies of training data). Source datasets and licenses are documented in `ATTRIBUTION.md`.
+16 classifiers ship with the package, including a real-time Doom game-state classifier, a poker AI, and an inbox router. Weights are logistic regression coefficients (derived model parameters, not copies of training data). Source datasets and licenses are documented in `ATTRIBUTION.md`.
 
 | Task | What it does | Classes | Test Acc | Test F1 |
 |------|-------------|---------|----------|---------|
@@ -277,7 +279,7 @@ Verified with clean-environment wheel and sdist install on Linux aarch64, Python
 - **No zero-shot / general classification.** Each task needs a trained head. Unknown tasks return an error.
 - **No LLM fallback.** This release is pure embedding + classifier.
 - **No automatic task routing.** You must specify which classifier to use.
-- **No hosted service.** Runs locally only for now.
+- **No hosted service.** Runs locally; [playground.jeffyclassify.com](https://playground.jeffyclassify.com) is a demo, not a production API.
 
 ## Roadmap
 
@@ -288,8 +290,9 @@ Verified with clean-environment wheel and sdist install on Linux aarch64, Python
 | **Available** | Classifier catalog UI with model detail pages, live try-it forms, and usage snippets |
 | **Available** | Live Doom demo — real-time VizDoom classifier streaming in the playground |
 | **Available** | Inbox classifier demo — animated training + classification workflow |
+| **Available** | Poker AI demo — 4 AI players streaming Texas Hold'em decisions live |
+| **Available** | Landing page at [jeffyclassify.com](https://jeffyclassify.com), live playground at [playground.jeffyclassify.com](https://playground.jeffyclassify.com) |
 | **Next** | Live demos for more classifiers, broader catalog released in verified batches |
-| **Next** | Landing page |
 | **Planned** | Automatic routing among supported classifiers |
 | **Planned** | Optional local/API LLM fallback for unsupported tasks |
 | **Planned** | Hosted classifier catalog and decision-routing service |

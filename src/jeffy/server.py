@@ -723,7 +723,7 @@ footer{max-width:1200px;margin:auto;padding:16px 24px;font-size:10px;color:#555;
 </head>
 <body>
 <header>
-<div class="brand"><a href="https://github.com/nicobrenner/jeffy" target="_blank">Jeffy</a><span>Classifier Catalog</span></div>
+<div class="brand"><a href="https://jeffyclassify.com" target="_blank">Jeffy</a><span>Classifier Catalog</span></div>
 <div style="display:flex;align-items:center;gap:14px">
 <a href="https://github.com/nicobrenner/jeffy" target="_blank" style="font-size:11px;color:var(--muted)">GitHub &#8599;</a>
 <div id="status" class="status">Connecting</div>
@@ -936,6 +936,7 @@ Each player is a logistic regression classifier trained on 21K simulated poker d
 
 </main>
 <footer>
+<span><a href="https://jeffyclassify.com" target="_blank">jeffyclassify.com</a></span>
 <span><a href="/docs" target="_blank">API docs</a></span>
 <span>pip install jeffy-classify</span>
 <span><a href="https://github.com/nicobrenner/jeffy" target="_blank">GitHub</a></span>

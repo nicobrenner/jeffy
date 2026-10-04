@@ -33,15 +33,42 @@ import os
 app = FastAPI(
     title="Jeffy",
     description="Pretrained decision engine with reusable embeddings and tiny classifiers.",
-    version="0.1.0a11",
+    version="0.1.0a12",
 )
 
 _engine: Engine | None = None
 
-# --- Visitor analytics ---
+# --- Visitor analytics (persisted to disk) ---
 
+_ANALYTICS_FILE = Path(os.environ.get("JEFFY_ANALYTICS_FILE", "~/.jeffy-analytics.jsonl")).expanduser()
 _analytics_log: list[dict] = []
 _analytics_summary: dict = defaultdict(int)
+
+
+def _load_analytics():
+    if not _ANALYTICS_FILE.exists():
+        return
+    try:
+        for line in _ANALYTICS_FILE.read_text().splitlines():
+            if line.strip():
+                entry = _json_module.loads(line)
+                _analytics_log.append(entry)
+                _analytics_summary[f"{entry['method']} {entry['path']}"] += 1
+                if not entry.get("local", False):
+                    _analytics_summary["external_requests"] += 1
+        _analytics_summary["unique_ips"] = len({e["ip"] for e in _analytics_log if not e.get("local", False)})
+    except Exception:
+        pass
+
+_load_analytics()
+
+
+def _append_analytics(entry: dict):
+    try:
+        with _ANALYTICS_FILE.open("a") as f:
+            f.write(_json_module.dumps(entry) + "\n")
+    except Exception:
+        pass
 
 
 class AnalyticsMiddleware(BaseHTTPMiddleware):
@@ -69,6 +96,7 @@ class AnalyticsMiddleware(BaseHTTPMiddleware):
             "local": is_local,
         }
         _analytics_log.append(entry)
+        _append_analytics(entry)
         if len(_analytics_log) > 10000:
             _analytics_log.pop(0)
 
@@ -476,24 +504,74 @@ PLAYGROUND_HTML = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Jeffy · Playground</title>
+<title>Jeffy · Classifier Catalog</title>
 <style>
-:root{color-scheme:light;--bg:#0c0c0c;--panel:#161616;--line:#2a2a2a;--text:#e8e8e8;--muted:#888;--accent:#ff4444;--accent2:#44ff44;--mono:ui-monospace,SFMono-Regular,Consolas,monospace}
+:root{color-scheme:light;--bg:#0c0c0c;--panel:#161616;--line:#2a2a2a;--text:#e8e8e8;--muted:#888;--accent:#ff4444;--accent2:#44ff44;--blue:#44aaff;--orange:#ffaa44;--mono:ui-monospace,SFMono-Regular,Consolas,monospace}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 var(--mono)}
 header{max-width:1200px;margin:auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
 main{max-width:1200px;margin:auto;padding:20px 24px}
+a{color:var(--muted)}
 .brand a{font-size:20px;font-weight:700;letter-spacing:-0.5px;color:#fff;text-decoration:none}
 .brand a:hover{color:var(--accent)}
 .brand span{font-weight:400;color:var(--muted);font-size:13px;margin-left:10px}
-.tabs{display:flex;gap:0;border-bottom:1px solid var(--line);margin-bottom:20px}
-.tab{padding:10px 20px;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;font:13px var(--mono);transition:color .15s}
-.tab:hover{color:var(--text)}
-.tab.active{color:#fff;border-bottom-color:var(--accent)}
-.tab-content{display:none}
-.tab-content.active{display:block}
-.status{font-size:11px;color:var(--muted)}.status::before{content:"●";color:#555;margin-right:5px}
+.status{font-size:11px;color:var(--muted)}.status::before{content:"\\25cf";color:#555;margin-right:5px}
 .status[data-state="ready"]::before{color:#22c55e}
+.view{display:none}.view.active{display:block}
+
+.catalog-head{margin-bottom:20px}
+.catalog-head h2{font-size:15px;color:#fff;margin:0 0 4px}
+.catalog-head p{margin:0;font-size:12px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px;cursor:pointer;transition:border-color .15s}
+.card:hover{border-color:var(--accent)}
+.card.feat{border-left:3px solid var(--orange)}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
+.card-id{font-size:13px;font-weight:700;color:#fff}
+.card-acc{font-size:12px;font-weight:600;color:var(--accent2)}
+.card-name{font-size:11px;color:var(--muted);margin-bottom:10px;line-height:1.4}
+.card-tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:10px;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:1px 6px}
+.card-bar{height:4px;border-radius:2px;background:#222;margin-top:10px;overflow:hidden}
+.card-bar-fill{height:100%;border-radius:2px;background:var(--accent2)}
+.demo-badge{font-size:9px;color:var(--accent);border:1px solid var(--accent);border-radius:3px;padding:1px 5px;text-transform:uppercase;letter-spacing:.5px}
+
+.back{font-size:12px;color:var(--muted);cursor:pointer;margin-bottom:16px;display:inline-block}
+.back:hover{color:var(--text)}
+.d-header{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:20px;margin-bottom:16px}
+.d-title{font-size:18px;font-weight:700;color:#fff;margin:0 0 4px}
+.d-desc{font-size:12px;color:var(--muted);margin:0 0 14px}
+.d-stats{display:flex;gap:20px;flex-wrap:wrap}
+.d-stat{text-align:center}
+.d-stat .v{font-size:20px;font-weight:700;color:#fff;display:block}
+.d-stat .l{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.d-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.d-section{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px}
+.d-section h3{margin:0 0 10px;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.d-section.full{grid-column:1/-1}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:10px;color:var(--text);background:#222;border-radius:4px;padding:2px 8px}
+textarea{width:100%;background:#1a1a1a;color:var(--text);border:1px solid var(--line);border-radius:6px;padding:10px;font:12px/1.5 var(--mono);resize:vertical;min-height:80px}
+textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
+button{border:1px solid var(--line);background:transparent;color:var(--text);border-radius:6px;padding:7px 12px;cursor:pointer;font:11px var(--mono)}
+button:hover{border-color:var(--accent)}
+button:disabled{opacity:.5;cursor:wait}
+.run-btn{background:var(--accent);color:#fff;border:0;font-weight:650;padding:10px 18px;margin-top:10px}
+.try-row{display:flex;align-items:center;justify-content:space-between;margin-top:10px}
+.result-label{font-size:22px;font-weight:650;letter-spacing:-.5px;margin:10px 0;color:#fff}
+.bar-row{display:grid;grid-template-columns:minmax(80px,1.2fr) 2fr 50px;gap:8px;align-items:center;font-size:11px;margin:6px 0}
+.bar-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted)}
+.track{height:7px;background:#222;border-radius:6px;overflow:hidden}
+.fill{height:100%;background:var(--accent);border-radius:6px}
+.pct{text-align:right;color:var(--muted)}
+.rmeta{font-size:10px;color:var(--muted);margin-top:10px;line-height:1.7}
+.err-msg{color:#ff6b6b;background:#1a0000;border:1px solid #4a0000;border-radius:6px;padding:10px;font-size:11px;margin-top:10px;display:none}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;font:10px/1.6 var(--mono);max-height:300px;overflow:auto;color:var(--muted);background:#1a1a1a;border-radius:5px;padding:10px;margin:8px 0 0}
+.codeblk{position:relative}
+.cpbtn{position:absolute;top:6px;right:6px;font-size:10px;padding:3px 8px}
+details{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+summary{color:var(--muted);font-size:11px;cursor:pointer}
+
 .doom-layout{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start}
 .doom-left{display:flex;flex-direction:column;gap:12px;width:480px}
 .game-container{position:relative;background:#000;border-radius:8px;overflow:hidden;aspect-ratio:4/3}
@@ -510,65 +588,61 @@ main{max-width:1200px;margin:auto;padding:20px 24px}
 .stat-row{display:flex;justify-content:space-between;font-size:12px;padding:3px 0;border-bottom:1px solid var(--line)}
 .stat-row:last-child{border-bottom:0}
 .stat-row .label{color:var(--muted)}
-.prob-bar{height:6px;border-radius:3px;background:#222;margin-top:6px;overflow:hidden}
-.prob-fill{height:100%;border-radius:3px;transition:width .15s}
-.prob-fill.fire{background:var(--accent)}
-.prob-fill.hold{background:var(--accent2)}
 .restart-btn{padding:6px 14px;border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:6px;font:11px var(--mono);cursor:pointer}
 .restart-btn:hover{border-color:var(--accent);color:var(--text)}
 .log{max-height:180px;overflow-y:auto;font-size:10px;color:var(--muted);line-height:1.6;padding:0;margin:0;list-style:none}
 .log li.fire{color:var(--accent)}
-.log li.hold{color:var(--accent2)}
-.text-layout{display:grid;grid-template-columns:1.05fr 1fr;gap:20px}
-.panel{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--panel)}
-.panel-head{padding:12px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
-.panel-body{padding:16px}
-h2{font-size:14px;margin:0;color:#fff}
-label{display:block;color:var(--muted);font-size:11px;margin-bottom:5px}
-textarea,select{width:100%;background:#1a1a1a;color:var(--text);border:1px solid var(--line);border-radius:6px;padding:10px;font:12px/1.5 var(--mono)}
-textarea{resize:vertical;min-height:100px}
-textarea:focus,select:focus{outline:2px solid var(--accent);outline-offset:1px}
-select{padding:8px}
-.field{margin-top:14px}
-button{border:1px solid var(--line);background:transparent;color:var(--text);border-radius:6px;padding:7px 12px;cursor:pointer;font:11px var(--mono)}
-button:hover{border-color:var(--accent)}
-button:disabled{opacity:.5;cursor:wait}
-.run{background:var(--accent);color:#fff;border:0;font-weight:650;padding:10px 18px}
-.actions{display:flex;align-items:center;justify-content:flex-end;margin-top:14px;gap:10px}
-.result-value{font-size:22px;font-weight:650;letter-spacing:-0.5px;margin:6px 0 10px;color:#fff}
-.bar-row{display:grid;grid-template-columns:minmax(80px,1.2fr) 2fr 50px;gap:8px;align-items:center;font-size:11px;margin:6px 0}
-.bar-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted)}
-.track{height:7px;background:#222;border-radius:6px;overflow:hidden}
-.fill{height:100%;background:var(--accent);border-radius:6px}
-.percentage{text-align:right;color:var(--muted)}
-.badge{font-size:10px;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:2px 6px}
-.meta{font-size:10px;color:var(--muted);margin-top:10px;line-height:1.7}
-.empty{padding:40px 16px;text-align:center;color:var(--muted);font-size:13px}
-.error{color:#ff6b6b;background:#1a0000;border:1px solid #4a0000;border-radius:6px;padding:10px;font-size:11px}
-details{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
-summary{color:var(--muted);font-size:11px;cursor:pointer}
-pre{white-space:pre-wrap;overflow-wrap:anywhere;font:10px/1.6 var(--mono);max-height:300px;overflow:auto;color:var(--muted)}
-.hidden{display:none!important}
-footer{max-width:1200px;margin:auto;padding:16px 24px;font-size:10px;color:#555;display:flex;justify-content:space-between}
-a{color:var(--muted)}
-@media(max-width:800px){.doom-layout,.text-layout{grid-template-columns:1fr}.doom-left{width:auto}}
+.log li.turn_left{color:var(--blue)}
+.log li.turn_right{color:var(--orange)}
+footer{max-width:1200px;margin:auto;padding:16px 24px;font-size:10px;color:#555;display:flex;justify-content:space-between;gap:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}.d-grid{grid-template-columns:1fr}.doom-layout{grid-template-columns:1fr}.doom-left{width:auto}}
 </style>
 </head>
 <body>
 <header>
-<div class="brand"><a href="https://github.com/nicobrenner/jeffy" target="_blank">Jeffy</a><span>Playground</span></div>
+<div class="brand"><a href="https://github.com/nicobrenner/jeffy" target="_blank">Jeffy</a><span>Classifier Catalog</span></div>
 <div style="display:flex;align-items:center;gap:14px">
-<a href="https://github.com/nicobrenner/jeffy" target="_blank" style="font-size:11px;color:var(--muted)">GitHub ↗</a>
+<a href="https://github.com/nicobrenner/jeffy" target="_blank" style="font-size:11px;color:var(--muted)">GitHub &#8599;</a>
 <div id="status" class="status">Connecting</div>
 </div>
 </header>
 <main>
-<div class="tabs">
-<div class="tab active" data-tab="doom">Doom Demo</div>
-<div class="tab" data-tab="text">Text Classifier</div>
+
+<!-- Catalog -->
+<div id="v-catalog" class="view active">
+<div class="catalog-head">
+<h2>Pretrained Classifiers</h2>
+<p>14 classifiers ready to use. Click a model to try it.</p>
 </div>
-<div id="tab-doom" class="tab-content active">
-<div class="doom-layout">
+<div id="grid" class="grid"></div>
+</div>
+
+<!-- Model Detail -->
+<div id="v-detail" class="view">
+<span class="back" onclick="go('')">&#8592; Back to catalog</span>
+<div id="dh" class="d-header"></div>
+<div class="d-grid">
+<div class="d-section"><h3>Labels</h3><div id="d-labels" class="chips"></div></div>
+<div class="d-section"><h3>Info</h3><div id="d-info"></div></div>
+<div class="d-section"><h3>Try it</h3><div id="d-try"></div></div>
+<div class="d-section"><h3>Usage</h3><div id="d-usage"></div></div>
+</div>
+</div>
+
+<!-- Doom -->
+<div id="v-doom" class="view">
+<span class="back" onclick="go('')">&#8592; Back to catalog</span>
+<div class="d-header">
+<div class="d-title">doom_fire</div>
+<div class="d-desc">Real-time Doom gameplay classifier. Extracts 24 game-state features and decides: FIRE, TURN LEFT, or TURN RIGHT. Logistic regression, no neural network, no GPU.</div>
+<div class="d-stats">
+<div class="d-stat"><span class="v">3</span><span class="l">Classes</span></div>
+<div class="d-stat"><span class="v">24</span><span class="l">Features</span></div>
+<div class="d-stat"><span class="v">&lt;1ms</span><span class="l">Latency</span></div>
+<div class="d-stat"><span class="v">CPU</span><span class="l">Runtime</span></div>
+</div>
+</div>
+<div class="doom-layout" style="margin-top:16px">
 <div class="doom-left">
 <div class="game-container" id="game-container">
 <img id="game-frame" src="" alt="Doom frame">
@@ -596,94 +670,188 @@ a{color:var(--muted)}
 <div class="info-card">
 <h3>Classifier Decision</h3>
 <div style="display:flex;justify-content:space-between;align-items:baseline">
-<span id="decision-label" style="font-size:20px;font-weight:700;color:var(--accent)">—</span>
-<span id="decision-conf" style="font-size:13px;color:var(--muted)">—</span>
+<span id="decision-label" style="font-size:20px;font-weight:700;color:var(--accent)">&mdash;</span>
+<span id="decision-conf" style="font-size:13px;color:var(--muted)">&mdash;</span>
 </div>
 <div id="prob-bars" style="margin-top:8px"></div>
 </div>
 <div class="info-card">
 <h3>Stats</h3>
-<div class="stat-row"><span class="label">Classify latency</span><span id="stat-ms">—</span></div>
+<div class="stat-row"><span class="label">Classify latency</span><span id="stat-ms">&mdash;</span></div>
 <div class="stat-row"><span class="label">Total kills</span><span id="stat-total-kills">0</span></div>
 <div class="stat-row"><span class="label">Step</span><span id="stat-step">0</span></div>
-<div class="stat-row"><span class="label">FPS</span><span id="stat-fps">—</span></div>
+<div class="stat-row"><span class="label">FPS</span><span id="stat-fps">&mdash;</span></div>
 </div>
 <div class="info-card">
 <h3>How it works</h3>
 <div style="font-size:11px;color:var(--muted);line-height:1.6">
-Jeffy extracts 24 game-state features (enemy positions, health, ammo, action history) and runs them through a logistic regression classifier to decide: <span style="color:var(--accent)">FIRE</span>, <span style="color:#44aaff">TURN LEFT</span>, or <span style="color:#ffaa44">TURN RIGHT</span>. No neural network, no GPU.
+Jeffy extracts 24 game-state features (enemy positions, health, ammo, action history) and runs them through a logistic regression classifier to decide: <span style="color:var(--accent)">FIRE</span>, <span style="color:var(--blue)">TURN LEFT</span>, or <span style="color:var(--orange)">TURN RIGHT</span>. No neural network, no GPU.
 </div>
 </div>
 </div>
 </div>
 </div>
-<div id="tab-text" class="tab-content">
-<div class="text-layout">
-<section class="panel">
-<div class="panel-head"><h2>Input</h2></div>
-<form id="form" class="panel-body">
-<label for="task">Pretrained capability</label>
-<select id="task"></select>
-<div id="task-info" class="meta"></div>
-<div class="field">
-<label for="text">Text</label>
-<textarea id="text" rows="5" spellcheck="false"></textarea>
-</div>
-<div class="actions">
-<span id="latency" style="font-size:11px;color:var(--muted)"></span>
-<button class="run" id="run" type="submit">Classify →</button>
-</div>
-<div id="curl-section" style="margin-top:14px;border-top:1px solid var(--line);padding-top:10px">
-<div style="display:flex;align-items:center;justify-content:space-between">
-<span style="color:var(--muted);font-size:11px">or use curl</span>
-<button id="copy-curl" style="font-size:10px;padding:4px 8px">Copy</button>
-</div>
-<pre id="curl-cmd" style="background:#1a1a1a;border-radius:5px;padding:8px;margin-top:5px;font-size:10px"></pre>
-</div>
-</form>
-</section>
-<section class="panel">
-<div class="panel-head"><h2>Result</h2><span id="result-badge" class="badge hidden"></span></div>
-<div class="panel-body">
-<div id="empty" class="empty">Select a capability and enter text to classify.</div>
-<div id="error" class="error hidden"></div>
-<div id="result" class="hidden">
-<div id="result-label" class="result-value"></div>
-<div id="bars"></div>
-<div id="meta" class="meta"></div>
-</div>
-<details id="raw-section" class="hidden">
-<summary>Response JSON</summary>
-<pre id="raw"></pre>
-</details>
-</div>
-</section>
-</div>
-</div>
+
 </main>
 <footer>
 <span><a href="/docs" target="_blank">API docs</a></span>
+<span>pip install jeffy-classify</span>
 <span><a href="https://github.com/nicobrenner/jeffy" target="_blank">GitHub</a></span>
 </footer>
 <script>
 const $=id=>document.getElementById(id);
-let caps={},ws=null,frameCount=0,fpsStart=0;
+let allCaps=[],capMap={},ws=null,frameCount=0,fpsStart=0,doomActive=false;
 
-// Tabs
-document.querySelectorAll(".tab").forEach(t=>{
-  t.onclick=()=>{
-    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
-    document.querySelectorAll(".tab-content").forEach(x=>x.classList.remove("active"));
-    t.classList.add("active");
-    $("tab-"+t.dataset.tab).classList.add("active");
-  };
-});
-
-// Health check
 fetch("/health").then(r=>r.json()).then(d=>{
   $("status").dataset.state=d.status;
-  $("status").textContent=d.capabilities+" capabilities ready";
+  $("status").textContent=d.capabilities+" classifiers ready";
 }).catch(()=>{$("status").textContent="Server unavailable"});
+
+fetch("/v1/capabilities").then(r=>r.json()).then(d=>{
+  allCaps=d.capabilities;
+  allCaps.forEach(c=>capMap[c.task_id]=c);
+  buildGrid();
+  route();
+});
+
+function buildGrid(){
+  const g=$("grid");g.innerHTML="";
+  const sorted=[...allCaps].sort((a,b)=>{
+    if(a.task_id==="doom_fire")return -1;
+    if(b.task_id==="doom_fire")return 1;
+    return(b.test_accuracy||0)-(a.test_accuracy||0);
+  });
+  sorted.forEach(c=>{
+    const isFeat=c.encoder==="features";
+    const acc=c.test_accuracy?Math.round(c.test_accuracy*1000)/10:null;
+    const d=document.createElement("div");
+    d.className="card"+(isFeat?" feat":"");
+    d.onclick=()=>go("model/"+c.task_id);
+    d.innerHTML=
+      '<div class="card-top"><span class="card-id">'+c.task_id+'</span>'+
+      (c.task_id==="doom_fire"?'<span class="demo-badge">Live Demo</span>':
+       acc!==null?'<span class="card-acc">'+acc+'%</span>':'')+
+      '</div>'+
+      '<div class="card-name">'+c.name+'</div>'+
+      '<div class="card-tags">'+
+        '<span class="tag">'+c.n_classes+' classes</span>'+
+        '<span class="tag">'+(isFeat?(c.n_features||"?")+' features':'text')+'</span>'+
+        '<span class="tag">'+c.license+'</span>'+
+      '</div>'+
+      (acc!==null?'<div class="card-bar"><div class="card-bar-fill" style="width:'+acc+'%"></div></div>':'');
+    g.appendChild(d);
+  });
+}
+
+function showDetail(tid){
+  const c=capMap[tid];if(!c)return;
+  const isFeat=c.encoder==="features";
+  const acc=c.test_accuracy?Math.round(c.test_accuracy*1000)/10:null;
+
+  $("dh").innerHTML=
+    '<div class="d-title">'+c.task_id+'</div>'+
+    '<div class="d-desc">'+c.name+'</div>'+
+    '<div class="d-stats">'+
+      (acc!==null?'<div class="d-stat"><span class="v">'+acc+'%</span><span class="l">Accuracy</span></div>':'')+
+      '<div class="d-stat"><span class="v">'+c.n_classes+'</span><span class="l">Classes</span></div>'+
+      (c.train_examples?'<div class="d-stat"><span class="v">'+c.train_examples.toLocaleString()+'</span><span class="l">Train examples</span></div>':'')+
+      '<div class="d-stat"><span class="v">'+(isFeat?"features":"bge-large")+'</span><span class="l">Encoder</span></div>'+
+    '</div>';
+
+  const lb=$("d-labels");lb.innerHTML="";
+  if(c.labels)Object.values(c.labels).forEach(l=>{lb.innerHTML+='<span class="chip">'+l+'</span>';});
+
+  $("d-info").innerHTML=
+    '<div style="font-size:12px;line-height:2">'+
+    '<div><span style="color:var(--muted)">License:</span> '+c.license+'</div>'+
+    '<div><span style="color:var(--muted)">Encoder:</span> '+c.encoder+'</div>'+
+    '<div><span style="color:var(--muted)">Type:</span> '+(isFeat?"Feature-based (numeric vectors)":"Text classifier")+'</div>'+
+    (c.train_accuracy?'<div><span style="color:var(--muted)">Train accuracy:</span> '+Math.round(c.train_accuracy*1000)/10+'%</div>':'')+
+    '</div>';
+
+  if(isFeat){
+    $("d-try").innerHTML=
+      '<div style="font-size:12px;color:var(--muted);line-height:1.6">'+
+      'This classifier operates on numeric feature vectors'+(c.n_features?' ('+c.n_features+' features)':'')+', not text.'+
+      (tid==="doom_fire"?'<br><br><a href="#doom" style="color:var(--accent)" onclick="go(&apos;doom&apos;);return false">Watch the live Doom demo &#8594;</a>':'')+
+      '</div>';
+  } else {
+    $("d-try").innerHTML=
+      '<textarea id="try-text" rows="3" spellcheck="false" placeholder="Enter text to classify..."></textarea>'+
+      '<div class="try-row"><span id="try-lat" style="font-size:11px;color:var(--muted)"></span>'+
+      '<button class="run-btn" id="try-run">Classify &#8594;</button></div>'+
+      '<div id="try-err" class="err-msg"></div>'+
+      '<div id="try-res" style="display:none"><div id="try-lbl" class="result-label"></div><div id="try-bars"></div><div id="try-meta" class="rmeta"></div></div>'+
+      '<details id="try-raw-s" style="display:none"><summary>Response JSON</summary><pre id="try-raw"></pre></details>';
+    $("try-run").onclick=()=>runPredict(tid);
+    fetch("/v1/capabilities/"+tid).then(r=>r.json()).then(d=>{
+      const ta=$("try-text");
+      if(ta&&d.example_request&&d.example_request.text)ta.value=d.example_request.text;
+    });
+  }
+
+  var curlData=isFeat
+    ?JSON.stringify({features:[0.0],task:tid})
+    :JSON.stringify({text:"your text here",task:tid});
+  var NL=String.fromCharCode(10),BS=String.fromCharCode(92),DQ=String.fromCharCode(34);
+  var curl="curl -s -X POST "+location.origin+"/v1/predict "+BS+NL+"  -H "+DQ+"Content-Type: application/json"+DQ+" "+BS+NL+"  -d "+JSON.stringify(curlData)+" | python3 -m json.tool";
+  var py=["from jeffy.engine import Engine","",
+    "engine = Engine()","engine.load()",
+    isFeat?"result = engine.predict_features("+DQ+tid+DQ+", [0.0] * "+(c.n_features||24)+")":"result = engine.predict("+DQ+tid+DQ+", "+DQ+"your text here"+DQ+")",
+    "print(result["+DQ+"label"+DQ+"])"].join(NL);
+  $("d-usage").innerHTML=
+    '<div style="font-size:11px;color:var(--muted);margin-bottom:6px">curl</div>'+
+    '<div class="codeblk"><pre>'+curl+'</pre><button class="cpbtn" onclick="cpCode(this)">Copy</button></div>'+
+    '<div style="font-size:11px;color:var(--muted);margin:12px 0 6px">Python</div>'+
+    '<div class="codeblk"><pre>'+py+'</pre><button class="cpbtn" onclick="cpCode(this)">Copy</button></div>'+
+    '<div style="font-size:11px;color:var(--muted);margin-top:12px">pip install jeffy-classify</div>';
+}
+
+async function runPredict(tid){
+  const ta=$("try-text");if(!ta)return;
+  const btn=$("try-run");
+  btn.disabled=true;btn.textContent="Classifying\\u2026";
+  const errEl=$("try-err");errEl.style.display="none";
+  const resEl=$("try-res");resEl.style.display="none";
+  const rawS=$("try-raw-s");rawS.style.display="none";
+  const t0=performance.now();
+  try{
+    const r=await fetch("/v1/predict",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({text:ta.value,task:tid})});
+    const d=await r.json();
+    if(!r.ok)throw Error(d.detail||JSON.stringify(d));
+    $("try-lbl").textContent=d.label;
+    const bars=$("try-bars");bars.innerHTML="";
+    Object.entries(d.probabilities).forEach(([label,prob])=>{
+      const row=document.createElement("div");row.className="bar-row";
+      row.innerHTML='<span class="bar-label" title="'+label+'">'+label+'</span>'+
+        '<div class="track"><div class="fill" style="width:'+Math.round(prob*100)+'%"></div></div>'+
+        '<span class="pct">'+(prob*100).toFixed(1)+'%</span>';
+      bars.appendChild(row);
+    });
+    $("try-meta").innerHTML="Confidence: "+(d.confidence*100).toFixed(1)+"%"+
+      " \\u00b7 Embedding: "+d.embedding_ms+"ms \\u00b7 Classifier: "+d.classifier_ms+"ms"+
+      " \\u00b7 Total: "+d.latency_ms+"ms";
+    resEl.style.display="block";
+    $("try-raw").textContent=JSON.stringify(d,null,2);
+    rawS.style.display="block";
+    $("try-lat").textContent=Math.round(performance.now()-t0)+"ms round-trip";
+  }catch(err){
+    errEl.textContent=err.message;errEl.style.display="block";
+  }finally{
+    btn.disabled=false;btn.textContent="Classify \\u2192";
+  }
+}
+
+function cpCode(btn){
+  const pre=btn.parentElement.querySelector("pre");
+  navigator.clipboard.writeText(pre.textContent).then(()=>{
+    btn.textContent="Copied!";setTimeout(()=>btn.textContent="Copy",1500);
+  }).catch(()=>{
+    const s=window.getSelection(),r=document.createRange();
+    r.selectNodeContents(pre);s.removeAllRanges();s.addRange(r);
+  });
+}
 
 // --- Doom Stream ---
 function startDoom(){
@@ -693,6 +861,7 @@ function startDoom(){
   $("stream-status").textContent="Connecting...";
   $("decision-log").innerHTML="";
   frameCount=0;fpsStart=performance.now();
+  doomActive=true;
 
   ws.onopen=()=>{$("stream-status").textContent="Live";};
   ws.binaryType="blob";
@@ -725,7 +894,7 @@ function startDoom(){
     const colors={fire:"#ff4444",turn_left:"#44aaff",turn_right:"#ffaa44"};
     Object.entries(d.probabilities).forEach(([lbl,p])=>{
       const pct=Math.round(p*100);
-      pb.innerHTML+=`<div style="display:flex;align-items:center;gap:6px;font-size:10px;margin:3px 0;color:var(--muted)"><span style="width:70px;text-align:right">${lbl.replace("_"," ")}</span><div style="flex:1;height:5px;background:#222;border-radius:3px;overflow:hidden"><div style="width:${pct}%;height:100%;background:${colors[lbl]||'#888'};border-radius:3px"></div></div><span style="width:30px">${pct}%</span></div>`;
+      pb.innerHTML+='<div style="display:flex;align-items:center;gap:6px;font-size:10px;margin:3px 0;color:var(--muted)"><span style="width:70px;text-align:right">'+lbl.replace("_"," ")+'</span><div style="flex:1;height:5px;background:#222;border-radius:3px;overflow:hidden"><div style="width:'+pct+'%;height:100%;background:'+(colors[lbl]||"#888")+';border-radius:3px"></div></div><span style="width:30px">'+pct+'%</span></div>';
     });
     $("stat-ms").textContent=d.classify_ms+"ms";
     $("stat-total-kills").textContent=d.total_kills;
@@ -742,95 +911,39 @@ function startDoom(){
   };
   ws.onclose=()=>{
     $("stream-status").textContent="Disconnected";
-    ws=null;
+    ws=null;doomActive=false;
   };
   ws.onerror=()=>{$("stream-status").textContent="Connection error";};
 }
-$("restart-btn").onclick=()=>startDoom();
-startDoom();
 
-// --- Text Classifier ---
-fetch("/v1/capabilities").then(r=>r.json()).then(d=>{
-  const sel=$("task");
-  d.capabilities.filter(c=>c.encoder!=="features").forEach(c=>{
-    caps[c.task_id]=c;
-    const o=document.createElement("option");
-    o.value=c.task_id;
-    o.textContent=c.task_id+" — "+c.name;
-    sel.appendChild(o);
-  });
-  if(d.capabilities.length){updateTaskInfo()}
-});
-
-$("task").onchange=()=>{updateTaskInfo()};
-$("text").oninput=updateCurl;
-
-function updateCurl(){
-  const payload=JSON.stringify({text:$("text").value||"your text here",task:$("task").value});
-  const escaped=payload.replace(/'/g,"'\\''");
-  $("curl-cmd").textContent="curl -s -X POST "+location.origin+"/v1/predict \\\n  -H 'Content-Type: application/json' \\\n  -d '"+escaped+"' | python3 -m json.tool";
+function stopDoom(){
+  if(ws&&ws.readyState===WebSocket.OPEN)ws.close();
+  doomActive=false;
 }
 
-function updateTaskInfo(){
-  const c=caps[$("task").value];
-  if(!c)return;
-  $("task-info").innerHTML=
-    c.n_classes+" classes · "+c.train_examples+" training examples"+
-    (c.train_accuracy?" · train acc "+Math.round(c.train_accuracy*1000)/10+"%":"")+
-    "<br>Encoder: "+c.encoder+"<br>License: "+c.license;
-  fetch("/v1/capabilities/"+c.task_id).then(r=>r.json()).then(d=>{
-    if(d.example_request&&d.example_request.text)$("text").value=d.example_request.text;
-    updateCurl();
-  });
-}
+// --- Routing ---
+function go(h){location.hash=h;}
 
-$("form").onsubmit=async e=>{
-  e.preventDefault();
-  $("run").disabled=true;$("run").textContent="Classifying…";
-  $("error").classList.add("hidden");$("empty").classList.add("hidden");
-  $("result").classList.add("hidden");$("raw-section").classList.add("hidden");
-  const t0=performance.now();
-  try{
-    const r=await fetch("/v1/predict",{method:"POST",headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({text:$("text").value,task:$("task").value})});
-    const d=await r.json();
-    if(!r.ok)throw Error(d.detail||JSON.stringify(d));
-    $("result-label").textContent=d.label;
-    $("result-badge").textContent=d.capability.task_id;
-    $("result-badge").classList.remove("hidden");
-    const bars=$("bars");bars.innerHTML="";
-    Object.entries(d.probabilities).forEach(([label,prob])=>{
-      const row=document.createElement("div");row.className="bar-row";
-      row.innerHTML='<span class="bar-label" title="'+label+'">'+label+'</span>'+
-        '<div class="track"><div class="fill" style="width:'+Math.round(prob*100)+'%"></div></div>'+
-        '<span class="percentage">'+(prob*100).toFixed(1)+'%</span>';
-      bars.appendChild(row);
-    });
-    $("meta").innerHTML="Confidence: "+(d.confidence*100).toFixed(1)+"%"+
-      " · Embedding: "+d.embedding_ms+"ms · Classifier: "+d.classifier_ms+"ms"+
-      " · Total: "+d.latency_ms+"ms"+
-      "<br>Encoder: "+d.capability.encoder+
-      " · Head: "+d.capability.n_classes+" classes, "+d.capability.train_examples+" train examples";
-    $("result").classList.remove("hidden");
-    $("raw").textContent=JSON.stringify(d,null,2);
-    $("raw-section").classList.remove("hidden");
-    $("latency").textContent=Math.round(performance.now()-t0)+"ms round-trip";
-  }catch(err){
-    $("error").textContent=err.message;$("error").classList.remove("hidden");
-  }finally{
-    $("run").disabled=false;$("run").textContent="Classify →";
+function route(){
+  const h=location.hash.replace(/^#/,"");
+  document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+  if(h==="doom"){
+    $("v-doom").classList.add("active");
+    if(!doomActive)startDoom();
+  } else if(h.startsWith("model/")){
+    const tid=h.split("/")[1];
+    if(tid==="doom_fire"){go("doom");return;}
+    $("v-detail").classList.add("active");
+    showDetail(tid);
+    stopDoom();
+  } else {
+    $("v-catalog").classList.add("active");
+    stopDoom();
   }
-};
-$("copy-curl").onclick=()=>{
-  const cmd=$("curl-cmd").textContent;
-  navigator.clipboard.writeText(cmd).then(()=>{
-    $("copy-curl").textContent="Copied!";
-    setTimeout(()=>$("copy-curl").textContent="Copy",1500);
-  }).catch(()=>{
-    const s=window.getSelection(),r=document.createRange();
-    r.selectNodeContents($("curl-cmd"));s.removeAllRanges();s.addRange(r);
-  });
-};
+}
+
+window.addEventListener("hashchange",route);
+$("restart-btn").onclick=()=>startDoom();
 </script>
 </body>
 </html>"""

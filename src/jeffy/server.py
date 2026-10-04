@@ -1470,10 +1470,12 @@ async function mlClassify(){
     if(!r.ok)throw Error(d.detail||JSON.stringify(d));
     $("ml-label").textContent=d.label;
     var bars=$("ml-bars");bars.innerHTML="";
-    var entries=Object.entries(d.probabilities).slice(0,10);
+    var allEntries=Object.entries(d.probabilities);
+    var entries=allEntries.slice(0,10);
     entries.forEach(([label,prob])=>{
       bars.innerHTML+='<div class="bar-row"><span class="bar-label" title="'+label+'">'+label+'</span><div class="track"><div class="fill" style="width:'+Math.round(prob*100)+'%"></div></div><span class="pct">'+(prob*100).toFixed(1)+'%</span></div>';
     });
+    if(allEntries.length>10)bars.innerHTML+='<div style="font-size:10px;color:var(--muted);margin-top:4px">Showing top 10 of '+allEntries.length+' intents</div>';
     $("ml-meta").innerHTML="Language: "+info.name+" \\u00b7 Confidence: "+(d.confidence*100).toFixed(1)+"% \\u00b7 Embedding: "+d.embedding_ms+"ms \\u00b7 Total: "+d.latency_ms+"ms";
     $("ml-result").style.display="block";
     $("ml-lat").textContent=Math.round(performance.now()-t0)+"ms round-trip";
@@ -1603,13 +1605,15 @@ async function runPredict(tid){
     if(!r.ok)throw Error(d.detail||JSON.stringify(d));
     $("try-lbl").textContent=d.label;
     const bars=$("try-bars");bars.innerHTML="";
-    Object.entries(d.probabilities).forEach(([label,prob])=>{
+    const allProbs=Object.entries(d.probabilities);
+    allProbs.slice(0,10).forEach(([label,prob])=>{
       const row=document.createElement("div");row.className="bar-row";
       row.innerHTML='<span class="bar-label" title="'+label+'">'+label+'</span>'+
         '<div class="track"><div class="fill" style="width:'+Math.round(prob*100)+'%"></div></div>'+
         '<span class="pct">'+(prob*100).toFixed(1)+'%</span>';
       bars.appendChild(row);
     });
+    if(allProbs.length>10)bars.innerHTML+='<div style="font-size:10px;color:var(--muted);margin-top:4px">Showing top 10 of '+allProbs.length+' classes</div>';
     $("try-meta").innerHTML="Confidence: "+(d.confidence*100).toFixed(1)+"%"+
       " \\u00b7 Embedding: "+d.embedding_ms+"ms \\u00b7 Classifier: "+d.classifier_ms+"ms"+
       " \\u00b7 Total: "+d.latency_ms+"ms";

@@ -495,6 +495,7 @@ def _example_text(task_id: str) -> str:
         "tweet_eval_sentiment": "Best day ever! Finally got my dream job! #blessed",
         "tweet_eval_emotion": "I am so frustrated with this company's customer service.",
         "tweet_eval_offensive": "Great work on the project team, really proud of everyone.",
+        "inbox_router": "Can you send me the Q4 projections?",
     }
     return examples.get(task_id, "Enter text here")
 
@@ -595,7 +596,66 @@ summary{color:var(--muted);font-size:11px;cursor:pointer}
 .log li.turn_left{color:var(--blue)}
 .log li.turn_right{color:var(--orange)}
 footer{max-width:1200px;margin:auto;padding:16px 24px;font-size:10px;color:#555;display:flex;justify-content:space-between;gap:12px}
-@media(max-width:800px){.grid{grid-template-columns:1fr}.d-grid{grid-template-columns:1fr}.doom-layout{grid-template-columns:1fr}.doom-left{width:auto}}
+
+.ib-layout{display:grid;grid-template-columns:1fr 1fr;gap:14px;height:460px}
+.ib-panel{background:var(--panel);border:1px solid var(--line);border-radius:8px;display:flex;flex-direction:column;overflow:hidden;transition:opacity .35s}
+.ib-panel[hidden]{display:none!important}
+#ib-trainPanel,#ib-inboxPanel{grid-column:1;grid-row:1}
+#ib-logPanel{grid-column:2;grid-row:1}
+.ib-panel-head{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;border-bottom:1px solid var(--line);flex-shrink:0}
+.ib-panel-head h3{font-size:13px;font-weight:600;margin:0;color:#fff}
+.ib-panel-head .meta{font-size:10px;color:var(--muted);font-variant-numeric:tabular-nums}
+.ib-panel-body{flex:1;overflow-y:auto;padding:10px 12px;display:flex;flex-direction:column;gap:10px}
+.ib-train-row{display:flex;align-items:center;gap:8px;padding:6px 8px;font-size:12px;line-height:1.4;border-bottom:1px solid rgba(255,255,255,.04)}
+.ib-train-text{flex:1;min-width:0;color:var(--text)}
+.ib-train-arrow{color:var(--muted);font-size:10px;flex-shrink:0}
+.ib-train-label{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding:2px 7px;border-radius:3px;flex-shrink:0}
+.ib-train-label.work{background:#1e3358;color:#6ba3d8}
+.ib-train-label.family{background:#3a2218;color:#d47e5c}
+.ib-train-label.promo{background:#3a2e10;color:#cda24a}
+.ib-train-label.notif{background:#1a3528;color:#5eaa7e}
+.ib-train-more{padding:8px;font-size:11px;color:var(--muted);text-align:center}
+.ib-section-label{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 5px;display:flex;align-items:center;gap:5px}
+.ib-cat-dot{width:6px;height:6px;border-radius:50%;display:inline-block}
+.ib-cat-dot.work{background:#6ba3d8}.ib-cat-dot.family{background:#d47e5c}.ib-cat-dot.promo{background:#cda24a}.ib-cat-dot.notif{background:#5eaa7e}
+.ib-cat-n{font-variant-numeric:tabular-nums;opacity:.5}
+.ib-categories{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ib-bucket{display:flex;flex-direction:column;gap:4px;min-height:2px}
+.ib-incoming{display:flex;flex-direction:column;gap:4px}
+.ib-msg{padding:6px 10px;border-radius:5px;font-size:11px;line-height:1.4;border:1px solid var(--line);background:var(--panel);color:var(--text);display:flex;align-items:center;gap:7px}
+.ib-msg.pending{visibility:hidden}.ib-msg.show{visibility:visible}
+.ib-msg-text{flex:1;min-width:0}
+.ib-msg-lat{font:9px var(--mono);color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap;flex-shrink:0}
+.ib-msg.sorted{border-color:transparent}
+.ib-msg.sorted.work{background:#1e3358}.ib-msg.sorted.family{background:#3a2218}.ib-msg.sorted.promo{background:#3a2e10}.ib-msg.sorted.notif{background:#1a3528}
+.ib-msg.leaving{opacity:0;transform:translateX(-14px) scale(.97);transition:opacity .2s,transform .2s}
+.ib-msg.flash{transition:box-shadow .1s}.ib-msg.flash-fade{transition:box-shadow .35s}
+.ib-typing{display:inline-flex;gap:3px;padding:2px 3px;flex-shrink:0}
+.ib-typing span{width:3px;height:3px;border-radius:50%;background:var(--muted);animation:ib-bounce 1.4s infinite ease-in-out}
+.ib-typing span:nth-child(2){animation-delay:.16s}
+.ib-typing span:nth-child(3){animation-delay:.32s}
+@keyframes ib-bounce{0%,60%,100%{opacity:.15;transform:translateY(0)}30%{opacity:.8;transform:translateY(-3px)}}
+.ib-ghost{position:absolute;z-index:15;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.ib-signal{position:absolute;height:2px;z-index:20;pointer-events:none;background:var(--lc)}
+.ib-signal::after{content:"";position:absolute;top:-4px;border-top:5px solid transparent;border-bottom:5px solid transparent}
+.ib-signal.to-right::after{right:-8px;border-left:8px solid var(--lc)}
+.ib-signal.to-left::after{left:-8px;border-right:8px solid var(--lc)}
+.ib-log-chrome{display:flex;align-items:center;gap:6px;padding:9px 12px;border-bottom:1px solid rgba(255,255,255,.05);flex-shrink:0}
+.ib-dots{display:flex;gap:5px}.ib-dots span{width:8px;height:8px;border-radius:50%}
+.ib-dots span:nth-child(1){background:#E5534B}.ib-dots span:nth-child(2){background:#D4A03C}.ib-dots span:nth-child(3){background:#4CAF6A}
+.ib-log-chrome .title{font:10px var(--mono);color:#444;margin-left:3px}
+.ib-log-body{flex:1;overflow-y:auto;padding:8px 12px;font:10px/1.7 var(--mono)}
+.ib-log-body::-webkit-scrollbar{width:3px}.ib-log-body::-webkit-scrollbar-thumb{background:#333;border-radius:2px}
+.ib-log-line{color:var(--muted);white-space:pre-wrap;word-break:break-all;opacity:0;transform:translateY(-5px);animation:ib-fadeDown .18s forwards}
+@keyframes ib-fadeDown{to{opacity:1;transform:translateY(0)}}
+.ib-log-line.spacer{height:5px;animation:none}
+.ib-log-line .method{color:#6BA3C7;font-weight:500}
+.ib-log-line .bright{color:#CDD1DC}
+.ib-log-line .ok{color:#5FB882;font-weight:500}
+.ib-log-line .dim{color:#3E4250}
+.ib-log-line .lbl-work{color:#6ba3d8}.ib-log-line .lbl-family{color:#d47e5c}.ib-log-line .lbl-promo{color:#cda24a}.ib-log-line .lbl-notif{color:#5eaa7e}
+
+@media(max-width:800px){.grid{grid-template-columns:1fr}.d-grid{grid-template-columns:1fr}.doom-layout{grid-template-columns:1fr}.doom-left{width:auto}.ib-layout{grid-template-columns:1fr;height:auto;min-height:70vh}.ib-categories{grid-template-columns:1fr}.ib-signal,.ib-ghost{display:none!important}}
 </style>
 </head>
 <body>
@@ -612,7 +672,7 @@ footer{max-width:1200px;margin:auto;padding:16px 24px;font-size:10px;color:#555;
 <div id="v-catalog" class="view active">
 <div class="catalog-head">
 <h2>Pretrained Classifiers</h2>
-<p>14 classifiers ready to use. Click a model to try it.</p>
+<p id="grid-count">14 classifiers ready to use. Click a model to try it.</p>
 </div>
 <div id="grid" class="grid"></div>
 </div>
@@ -692,6 +752,60 @@ Jeffy extracts 24 game-state features (enemy positions, health, ammo, action his
 </div>
 </div>
 
+<!-- Inbox Demo -->
+<div id="v-inbox" class="view">
+<span class="back" onclick="go('')">&#8592; Back to catalog</span>
+<div class="d-header">
+<div class="d-title">Inbox Classifier Demo</div>
+<div class="d-desc">Train an inbox router from 24 labeled examples, then watch it classify new messages in real time. CPU only, no API keys.</div>
+<div class="d-stats">
+<div class="d-stat"><span class="v">4</span><span class="l">Classes</span></div>
+<div class="d-stat"><span class="v">24</span><span class="l">Train examples</span></div>
+<div class="d-stat"><span class="v">~50ms</span><span class="l">Latency</span></div>
+<div class="d-stat"><span class="v">CPU</span><span class="l">Runtime</span></div>
+</div>
+</div>
+<div class="ib-layout" id="ib-demo" style="margin-top:16px;position:relative">
+<div class="ib-panel" id="ib-trainPanel">
+<div class="ib-panel-head"><h3>Training Data</h3><span class="meta">24 labeled examples</span></div>
+<div class="ib-panel-body"><div id="ib-trainList"></div></div>
+</div>
+<div class="ib-panel" id="ib-inboxPanel" hidden>
+<div class="ib-panel-head"><h3>Inbox</h3><span class="meta" id="ib-counter">0 / 8 sorted</span></div>
+<div class="ib-panel-body">
+<div>
+<div class="ib-section-label">Incoming</div>
+<div class="ib-incoming" id="ib-incoming"></div>
+</div>
+<div class="ib-categories">
+<div><div class="ib-section-label"><span class="ib-cat-dot work"></span>Work <span class="ib-cat-n" id="ib-n-work">0</span></div><div class="ib-bucket" id="ib-b-work"></div></div>
+<div><div class="ib-section-label"><span class="ib-cat-dot family"></span>Family <span class="ib-cat-n" id="ib-n-family">0</span></div><div class="ib-bucket" id="ib-b-family"></div></div>
+<div><div class="ib-section-label"><span class="ib-cat-dot promo"></span>Promo <span class="ib-cat-n" id="ib-n-promo">0</span></div><div class="ib-bucket" id="ib-b-promo"></div></div>
+<div><div class="ib-section-label"><span class="ib-cat-dot notif"></span>Notifications <span class="ib-cat-n" id="ib-n-notif">0</span></div><div class="ib-bucket" id="ib-b-notif"></div></div>
+</div>
+</div>
+</div>
+<div class="ib-panel" id="ib-logPanel">
+<div class="ib-log-chrome"><div class="ib-dots"><span></span><span></span><span></span></div><span class="title">terminal</span></div>
+<div class="ib-log-body" id="ib-logBody"></div>
+</div>
+</div>
+<div style="margin-top:14px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+<code style="font:11px var(--mono);color:var(--muted)">pip install jeffy-classify</code>
+<button id="ib-replayBtn" class="restart-btn" hidden>Replay</button>
+</div>
+<div class="d-grid" style="margin-top:20px">
+<div class="d-section"><h3>Try it</h3>
+<textarea id="ib-try-text" rows="2" spellcheck="false" placeholder="Enter an email subject or message...">Can you send me the Q4 projections?</textarea>
+<div class="try-row"><span id="ib-try-lat" style="font-size:11px;color:var(--muted)"></span>
+<button class="run-btn" id="ib-try-run">Classify &#8594;</button></div>
+<div id="ib-try-err" class="err-msg"></div>
+<div id="ib-try-res" style="display:none"><div id="ib-try-lbl" class="result-label"></div><div id="ib-try-bars"></div><div id="ib-try-meta" class="rmeta"></div></div>
+</div>
+<div class="d-section"><h3>Usage</h3><div id="ib-usage"></div></div>
+</div>
+</div>
+
 </main>
 <footer>
 <span><a href="/docs" target="_blank">API docs</a></span>
@@ -740,6 +854,17 @@ function buildGrid(){
       '</div>'+
       (acc!==null?'<div class="card-bar"><div class="card-bar-fill" style="width:'+acc+'%"></div></div>':'');
     g.appendChild(d);
+    if(c.task_id==="doom_fire"){
+      const ib=document.createElement("div");
+      ib.className="card";
+      ib.onclick=()=>go("inbox");
+      ib.innerHTML=
+        '<div class="card-top"><span class="card-id">inbox_router</span><span class="demo-badge">Live Demo</span></div>'+
+        '<div class="card-name">Train and classify emails into Work, Family, Promo, Notifications</div>'+
+        '<div class="card-tags"><span class="tag">4 classes</span><span class="tag">text</span><span class="tag">custom</span></div>'+
+        '<div class="card-bar"><div class="card-bar-fill" style="width:92%"></div></div>';
+      g.appendChild(ib);
+    }
   });
 }
 
@@ -942,8 +1067,268 @@ function route(){
   }
 }
 
+// --- Inbox Demo ---
+var ibTRAIN=[
+  {text:"Please review the Q3 budget draft",cat:"work"},
+  {text:"Mom\\u2019s birthday is next Saturday",cat:"family"},
+  {text:"Flash sale \\u2014 70% off all items",cat:"promo"},
+  {text:"Your flight has been rescheduled",cat:"notif"},
+  {text:"Team standup moved to 10am",cat:"work"},
+  {text:"Uncle Joe is coming to visit",cat:"family"},
+];
+var ibMSGS=[
+  {text:"Can you send me the Q4 projections?",cat:"work",conf:.59,ms:48},
+  {text:"Aunt Clara is hosting Thanksgiving",cat:"family",conf:.78,ms:52},
+  {text:"Buy 2 get 1 free \\u2014 today only!",cat:"promo",conf:.76,ms:45},
+  {text:"Your order #7832 has shipped",cat:"notif",conf:.59,ms:51},
+  {text:"Sprint planning at 3pm in room B",cat:"work",conf:.53,ms:49},
+  {text:"Dad wants to know about the cookout",cat:"family",conf:.64,ms:47},
+  {text:"Limited time: upgrade for $5/mo",cat:"promo",conf:.43,ms:53},
+  {text:"Your credit card statement is ready",cat:"notif",conf:.75,ms:50},
+];
+var ibStopped=false,ibSorted=0,ibActive=false;
+var ibWait=ms=>new Promise(r=>setTimeout(r,ms));
+var ibColors={work:"#6ba3d8",family:"#d47e5c",promo:"#cda24a",notif:"#5eaa7e"};
+
+function ibLog(html){
+  var el=document.createElement("div");
+  el.className="ib-log-line";el.innerHTML=html;
+  $("ib-logBody").prepend(el);
+}
+function ibLogSp(){
+  var el=document.createElement("div");
+  el.className="ib-log-line spacer";
+  $("ib-logBody").prepend(el);
+}
+
+async function ibShowTraining(){
+  ibLog('<span class="dim">$ jeffy-train --task inbox_router --input examples.csv</span>');
+  await ibWait(600);
+  for(var i=0;i<ibTRAIN.length;i++){
+    if(ibStopped)return;
+    var ex=ibTRAIN[i];
+    var row=document.createElement("div");
+    row.className="ib-train-row";row.style.opacity="0";
+    row.innerHTML='<span class="ib-train-text">\\u201c'+ex.text+'\\u201d</span><span class="ib-train-arrow">\\u2192</span><span class="ib-train-label '+ex.cat+'">'+ex.cat+'</span>';
+    $("ib-trainList").appendChild(row);
+    try{await row.animate([{opacity:0,transform:"translateX(-10px)"},{opacity:1,transform:"translateX(0)"}],{duration:260,fill:"forwards",easing:"ease-out"}).finished;}catch(e){}
+    await ibWait(220);
+  }
+  var more=document.createElement("div");
+  more.className="ib-train-more";more.textContent="\\u22ef +18 more labeled examples";
+  more.style.opacity="0";$("ib-trainList").appendChild(more);
+  try{await more.animate([{opacity:0},{opacity:1}],{duration:300,fill:"forwards"}).finished;}catch(e){}
+  await ibWait(500);
+  if(ibStopped)return;
+  ibLog('<span class="dim">[info]</span> Encoding 24 examples\\u2026');
+  await ibWait(500);
+  ibLog('<span class="dim">[info]</span> Fitting classifier (4 classes)\\u2026');
+  await ibWait(600);
+  ibLog('<span class="dim">[info]</span> CV accuracy: <span class="ok">92%</span> (3-fold)');
+  await ibWait(350);
+  ibLog('<span class="dim">[info]</span> Saved <span class="bright">inbox_router</span> (1.8s)');
+  ibLogSp();
+  await ibWait(900);
+}
+
+async function ibSwitchToInbox(){
+  $("ib-trainPanel").style.opacity="0";
+  await ibWait(350);
+  $("ib-trainPanel").hidden=true;
+  $("ib-inboxPanel").hidden=false;
+  $("ib-inboxPanel").style.opacity="0";
+  requestAnimationFrame(function(){$("ib-inboxPanel").style.opacity="1";});
+  $("ib-inboxPanel").style.transition="opacity .35s";
+  await ibWait(350);
+  ibLog('<span class="dim">$ jeffy-serve --task inbox_router</span>');
+  await ibWait(400);
+  ibLog('<span class="dim">[info]</span> <span class="bright">inbox_router</span> ready (24 examples, 4 classes)');
+  await ibWait(300);
+  ibLog('<span class="dim">[info]</span> Listening on <span class="bright">http://localhost:8400</span>');
+  ibLogSp();
+  await ibWait(800);
+}
+
+async function ibArriveMsg(msg){
+  var card=document.createElement("div");
+  card.className="ib-msg pending";
+  card.innerHTML='<span class="ib-msg-text">'+msg.text+'</span><span class="ib-typing"><span></span><span></span><span></span></span>';
+  $("ib-incoming").appendChild(card);
+
+  var demo=$("ib-demo"),dr=demo.getBoundingClientRect(),cr=card.getBoundingClientRect();
+  var ip=$("ib-inboxPanel").getBoundingClientRect();
+  var ghost=document.createElement("div");
+  ghost.className="ib-msg ib-ghost";ghost.innerHTML=card.innerHTML;
+  ghost.style.width=cr.width+"px";ghost.style.top=(cr.top-dr.top)+"px";
+  var targetX=cr.left-dr.left,startX=ip.left-dr.left-cr.width-20;
+  ghost.style.left=startX+"px";
+  demo.appendChild(ghost);
+  try{await ghost.animate([{transform:"translateX(0)",opacity:.8},{transform:"translateX("+(targetX-startX)+"px)",opacity:1}],{duration:480,easing:"cubic-bezier(.15,.75,.3,1)",fill:"forwards"}).finished;}catch(e){}
+  card.classList.remove("pending");card.classList.add("show");
+  ghost.remove();
+  return card;
+}
+
+async function ibDrawLine(card,color,direction){
+  var demo=$("ib-demo"),dr=demo.getBoundingClientRect(),cr=card.getBoundingClientRect();
+  var lp=$("ib-logPanel").getBoundingClientRect(),ip=$("ib-inboxPanel").getBoundingClientRect();
+  var y=cr.top+cr.height/2-dr.top,x=ip.right-dr.left+1,w=lp.left-ip.right-2;
+  if(w<2)return;
+  var line=document.createElement("div");
+  line.className="ib-signal "+(direction==="req"?"to-right":"to-left");
+  line.style.setProperty("--lc",color);
+  line.style.left=x+"px";line.style.top=(y-1)+"px";line.style.width=w+"px";
+  demo.appendChild(line);
+  var clip=direction==="req"?["inset(-10px 100% -10px 0)","inset(-10px -10px -10px 0)"]:["inset(-10px 0 -10px 100%)","inset(-10px 0 -10px -10px)"];
+  try{await line.animate([{clipPath:clip[0]},{clipPath:clip[1]}],{duration:340,easing:"ease-out",fill:"forwards"}).finished;}catch(e){}
+  await ibWait(180);
+  try{await line.animate([{opacity:1},{opacity:0}],{duration:250,fill:"forwards"}).finished;}catch(e){}
+  line.remove();
+}
+
+async function ibProcessMsg(msg){
+  if(ibStopped)return;
+  var card=await ibArriveMsg(msg);
+  await ibWait(400);
+  if(ibStopped)return;
+  await ibDrawLine(card,"#6BA3C7","req");
+  if(ibStopped)return;
+  var trunc=msg.text.length>34?msg.text.slice(0,34)+"\\u2026":msg.text;
+  ibLog('<span class="method">POST</span> <span class="bright">/v1/predict</span>  <span class="dim">"'+trunc+'"</span>');
+  await ibWait(250+msg.ms*2.5);
+  if(ibStopped)return;
+  ibLog('<span class="ok">\\u2190 200</span>  <span class="lbl-'+msg.cat+'">'+msg.cat+'</span>  <span class="dim">'+msg.ms+'ms</span>');
+  ibLogSp();
+  var cc=ibColors[msg.cat];
+  await ibDrawLine(card,cc,"res");
+  if(ibStopped)return;
+  card.style.boxShadow="0 0 0 2px "+cc;
+  var dots=card.querySelector(".ib-typing");if(dots)dots.remove();
+  card.classList.add(msg.cat);
+  var lat=document.createElement("span");lat.className="ib-msg-lat";lat.textContent=msg.ms+"ms";
+  card.appendChild(lat);
+  await ibWait(320);
+  card.style.boxShadow="0 0 0 2px transparent";card.style.transition="box-shadow .35s";
+  await ibWait(280);
+  if(ibStopped)return;
+  card.classList.add("leaving");
+  await ibWait(220);
+  card.remove();
+  var sc=document.createElement("div");
+  sc.className="ib-msg sorted "+msg.cat;
+  sc.style.opacity="0";sc.style.transform="translateY(5px)";
+  sc.innerHTML='<span class="ib-msg-text">'+msg.text+'</span><span class="ib-msg-lat">'+msg.ms+'ms</span>';
+  $("ib-b-"+msg.cat).appendChild(sc);
+  requestAnimationFrame(function(){sc.style.transition="opacity .25s, transform .25s";sc.style.opacity="1";sc.style.transform="translateY(0)";});
+  $("ib-n-"+msg.cat).textContent=$("ib-b-"+msg.cat).children.length;
+  ibSorted++;
+  $("ib-counter").textContent=ibSorted+" / 8 sorted";
+  await ibWait(300);
+}
+
+async function ibRun(){
+  ibStopped=false;ibSorted=0;ibActive=true;
+  $("ib-counter").textContent="0 / 8 sorted";
+  $("ib-replayBtn").hidden=true;
+  $("ib-incoming").innerHTML="";$("ib-logBody").innerHTML="";$("ib-trainList").innerHTML="";
+  $("ib-demo").querySelectorAll(".ib-ghost,.ib-signal").forEach(function(e){e.remove();});
+  ["work","family","promo","notif"].forEach(function(c){$("ib-b-"+c).innerHTML="";$("ib-n-"+c).textContent="0";});
+  $("ib-trainPanel").hidden=false;$("ib-trainPanel").style.opacity="1";
+  $("ib-inboxPanel").hidden=true;
+  await ibShowTraining();
+  if(ibStopped)return;
+  await ibSwitchToInbox();
+  if(ibStopped)return;
+  for(var i=0;i<ibMSGS.length;i++){
+    await ibProcessMsg(ibMSGS[i]);
+    if(ibStopped)return;
+  }
+  await ibWait(500);
+  ibLog('<span class="dim">\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500\\u2500</span>');
+  var total=ibMSGS.reduce(function(s,m){return s+m.ms;},0);
+  ibLog('<span class="bright">8 sorted \\u00b7 avg '+Math.round(total/8)+'ms \\u00b7 no API keys</span>');
+  await ibWait(400);
+  $("ib-replayBtn").hidden=false;
+  ibActive=false;
+}
+
+function ibStop(){ibStopped=true;ibActive=false;}
+
+$("ib-replayBtn").addEventListener("click",function(){ibStopped=true;setTimeout(ibRun,100);});
+
+// Inbox Try-it + Usage
+$("ib-try-run").onclick=function(){
+  var ta=$("ib-try-text");if(!ta||!ta.value.trim())return;
+  var btn=$("ib-try-run");
+  btn.disabled=true;btn.textContent="Classifying…";
+  $("ib-try-err").style.display="none";
+  $("ib-try-res").style.display="none";
+  var t0=performance.now();
+  fetch("/v1/predict",{method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({text:ta.value,task:"inbox_router"})})
+  .then(function(r){return r.json().then(function(d){if(!r.ok)throw Error(d.detail||JSON.stringify(d));return d;});})
+  .then(function(d){
+    $("ib-try-lbl").textContent=d.label;
+    var bars=$("ib-try-bars");bars.innerHTML="";
+    Object.entries(d.probabilities).forEach(function(e){
+      var label=e[0],prob=e[1];
+      var row=document.createElement("div");row.className="bar-row";
+      row.innerHTML='<span class="bar-label" title="'+label+'">'+label+'</span>'+
+        '<div class="track"><div class="fill" style="width:'+Math.round(prob*100)+'%"></div></div>'+
+        '<span class="pct">'+(prob*100).toFixed(1)+'%</span>';
+      bars.appendChild(row);
+    });
+    $("ib-try-meta").innerHTML="Confidence: "+(d.confidence*100).toFixed(1)+"%"+
+      " · Embedding: "+d.embedding_ms+"ms · Classifier: "+d.classifier_ms+"ms"+
+      " · Total: "+d.latency_ms+"ms";
+    $("ib-try-res").style.display="block";
+    $("ib-try-lat").textContent=Math.round(performance.now()-t0)+"ms round-trip";
+  })
+  .catch(function(err){$("ib-try-err").textContent=err.message;$("ib-try-err").style.display="block";})
+  .finally(function(){btn.disabled=false;btn.textContent="Classify →";});
+};
+
+(function(){
+  var NL=String.fromCharCode(10),BS=String.fromCharCode(92),DQ=String.fromCharCode(34);
+  var curlData=JSON.stringify({text:"Can you send me the Q4 projections?",task:"inbox_router"});
+  var curl="curl -s -X POST "+location.origin+"/v1/predict "+BS+NL+"  -H "+DQ+"Content-Type: application/json"+DQ+" "+BS+NL+"  -d "+JSON.stringify(curlData)+" | python3 -m json.tool";
+  var py=["from jeffy.engine import Engine","","engine = Engine()","engine.load()","result = engine.predict("+DQ+"inbox_router"+DQ+", "+DQ+"Can you send me the Q4 projections?"+DQ+")","print(result["+DQ+"label"+DQ+"])"].join(NL);
+  $("ib-usage").innerHTML=
+    '<div style="font-size:11px;color:var(--muted);margin-bottom:6px">curl</div>'+
+    '<div class="codeblk"><pre>'+curl+'</pre><button class="cpbtn" onclick="cpCode(this)">Copy</button></div>'+
+    '<div style="font-size:11px;color:var(--muted);margin:12px 0 6px">Python</div>'+
+    '<div class="codeblk"><pre>'+py+'</pre><button class="cpbtn" onclick="cpCode(this)">Copy</button></div>'+
+    '<div style="font-size:11px;color:var(--muted);margin-top:12px">pip install jeffy-classify</div>';
+})();
+
+// --- Routing ---
+function go(h){location.hash=h;}
+
+function route(){
+  var h=location.hash.replace(/^#/,"");
+  document.querySelectorAll(".view").forEach(function(v){v.classList.remove("active");});
+  if(h==="doom"){
+    $("v-doom").classList.add("active");
+    if(!doomActive)startDoom();
+    ibStop();
+  } else if(h==="inbox"){
+    $("v-inbox").classList.add("active");
+    if(!ibActive)ibRun();
+    stopDoom();
+  } else if(h.startsWith("model/")){
+    var tid=h.split("/")[1];
+    if(tid==="doom_fire"){go("doom");return;}
+    $("v-detail").classList.add("active");
+    showDetail(tid);
+    stopDoom();ibStop();
+  } else {
+    $("v-catalog").classList.add("active");
+    stopDoom();ibStop();
+  }
+}
+
 window.addEventListener("hashchange",route);
-$("restart-btn").onclick=()=>startDoom();
+$("restart-btn").onclick=function(){startDoom();};
 </script>
 </body>
 </html>"""

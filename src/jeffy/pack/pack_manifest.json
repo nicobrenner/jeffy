@@ -145,6 +145,17 @@
       "test_f1": 0.748453,
       "embed_time": 150.0,
       "train_time": 1.1
+    },
+    {
+      "dataset": "inbox_router",
+      "n_classes": 4,
+      "train_size": 24,
+      "test_size": 0,
+      "train_acc": 1.0,
+      "test_acc": 0.708,
+      "test_f1": 0.708,
+      "embed_time": 3.0,
+      "train_time": 0.0
     }
   ],
   "build_time": "2026-09-28 17:53:38",

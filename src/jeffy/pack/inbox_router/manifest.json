@@ -1,0 +1,33 @@
+{
+  "dataset": "inbox_router",
+  "description": "Email inbox classifier: route messages to work, family, promo, or notification",
+  "n_classes": 4,
+  "task_type": "choice",
+  "encoder": "BAAI/bge-large-en-v1.5",
+  "encoder_dim": 1024,
+  "labels": {
+    "family": "family",
+    "notification": "notification",
+    "promo": "promo",
+    "work": "work"
+  },
+  "class_order": [
+    "family",
+    "notification",
+    "promo",
+    "work"
+  ],
+  "hf_source": "user-provided",
+  "hf_config": null,
+  "hf_revision": null,
+  "license": "MIT",
+  "train_examples": 24,
+  "train_accuracy": 1.0,
+  "test_examples": 0,
+  "test_accuracy": 0.708,
+  "scaler_mean_hash": "259b1f66",
+  "classifier_coef_hash": "b92ba618",
+  "n_features": null,
+  "feature_layout": null,
+  "schema_version": 1
+}

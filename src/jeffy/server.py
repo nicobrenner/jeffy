@@ -461,6 +461,38 @@ async def doom_stream(ws: WebSocket):
             session.close()
 
 
+@app.websocket("/v1/poker/stream")
+async def poker_stream(ws: WebSocket):
+    await ws.accept()
+    try:
+        from .poker_runner import PokerSession
+        engine = get_engine()
+        session = PokerSession(engine=engine, task_id="poker_decision")
+        session.start()
+        tick_interval = 0.15
+
+        while True:
+            t0 = time.perf_counter()
+            result = session.tick()
+            if result is None:
+                break
+
+            await ws.send_text(_json_module.dumps(result))
+
+            elapsed = time.perf_counter() - t0
+            sleep_time = tick_interval - elapsed
+            if sleep_time > 0:
+                await asyncio.sleep(sleep_time)
+
+    except WebSocketDisconnect:
+        pass
+    except Exception as e:
+        logger.warning(f"Poker stream error: {e}")
+    finally:
+        if 'session' in locals():
+            session.close()
+
+
 @app.get("/v1/analytics")
 def analytics(last: int = 50, external_only: bool = False):
     entries = _analytics_log
@@ -655,7 +687,38 @@ footer{max-width:1200px;margin:auto;padding:16px 24px;font-size:10px;color:#555;
 .ib-log-line .dim{color:#3E4250}
 .ib-log-line .lbl-work{color:#6ba3d8}.ib-log-line .lbl-family{color:#d47e5c}.ib-log-line .lbl-promo{color:#cda24a}.ib-log-line .lbl-notif{color:#5eaa7e}
 
-@media(max-width:800px){.grid{grid-template-columns:1fr}.d-grid{grid-template-columns:1fr}.doom-layout{grid-template-columns:1fr}.doom-left{width:auto}.ib-layout{grid-template-columns:1fr;height:auto;min-height:70vh}.ib-categories{grid-template-columns:1fr}.ib-signal,.ib-ghost{display:none!important}}
+.pk-layout{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start}
+.pk-table{position:relative;width:520px;height:380px;background:radial-gradient(ellipse at center,#1a5c2a 0%,#0e3d1a 70%,#0a2e13 100%);border-radius:180px;border:8px solid #2a1a0a;box-shadow:0 0 40px rgba(0,0,0,.5),inset 0 0 60px rgba(0,0,0,.3)}
+.pk-pot{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;color:#dda;font-size:11px;font-weight:600}
+.pk-pot .amt{font-size:20px;color:#ffd700;display:block;text-shadow:0 1px 3px rgba(0,0,0,.5)}
+.pk-community{position:absolute;top:38%;left:50%;transform:translate(-50%,-50%);display:flex;gap:4px}
+.pk-card{width:38px;height:54px;background:#fff;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;box-shadow:0 1px 4px rgba(0,0,0,.3);color:#1a1a1a;line-height:1}
+.pk-card.red{color:#cc2222}
+.pk-card.back{background:linear-gradient(135deg,#1a3a8a,#2a4aaa);color:transparent}
+.pk-card.empty{background:rgba(255,255,255,.08);box-shadow:none;border:1px dashed rgba(255,255,255,.15)}
+.pk-seat{position:absolute;display:flex;flex-direction:column;align-items:center;gap:3px;width:110px}
+.pk-seat[data-pos="0"]{top:-20px;left:50%;transform:translateX(-50%)}
+.pk-seat[data-pos="1"]{right:-30px;top:50%;transform:translateY(-50%)}
+.pk-seat[data-pos="2"]{bottom:-20px;left:50%;transform:translateX(-50%)}
+.pk-seat[data-pos="3"]{left:-30px;top:50%;transform:translateY(-50%)}
+.pk-name{font-size:10px;font-weight:600;color:#ccc;background:rgba(0,0,0,.5);padding:1px 8px;border-radius:3px}
+.pk-name .chips{font-weight:400;color:#aaa;margin-left:4px}
+.pk-hole{display:flex;gap:2px}
+.pk-hole .pk-card{width:32px;height:45px;font-size:11px}
+.pk-action-badge{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:2px 8px;border-radius:3px;background:rgba(0,0,0,.6);color:var(--muted);min-height:16px}
+.pk-action-badge.fold{color:#888}.pk-action-badge.check{color:#6baa6b}.pk-action-badge.call{color:#6ba3d8}.pk-action-badge.raise{color:#d4a04a}.pk-action-badge.all_in{color:#ff4444}
+.pk-seat.folded{opacity:.4}
+.pk-seat.active-turn .pk-name{box-shadow:0 0 8px rgba(255,215,0,.6)}
+.pk-dealer-chip{position:absolute;width:16px;height:16px;border-radius:50%;background:#fff;color:#000;font-size:8px;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,.4)}
+.pk-sidebar{display:flex;flex-direction:column;gap:14px}
+.pk-hand-label{font-size:11px;color:var(--muted);margin-top:2px}
+.pk-decision-row{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:11px;border-bottom:1px solid var(--line)}
+.pk-decision-row .pname{width:45px;color:var(--muted)}.pk-decision-row .pact{font-weight:600}
+.pk-decision-row .pact.fold{color:#888}.pk-decision-row .pact.check{color:#6baa6b}.pk-decision-row .pact.call{color:#6ba3d8}.pk-decision-row .pact.raise{color:#d4a04a}
+.pk-history-row{font-size:10px;color:var(--muted);padding:2px 0;border-bottom:1px solid rgba(255,255,255,.03)}
+.pk-round-badge{font-size:9px;text-transform:uppercase;letter-spacing:.5px;padding:1px 6px;border-radius:3px;background:rgba(255,255,255,.06);color:var(--muted);display:inline-block}
+
+@media(max-width:800px){.grid{grid-template-columns:1fr}.d-grid{grid-template-columns:1fr}.doom-layout{grid-template-columns:1fr}.doom-left{width:auto}.ib-layout{grid-template-columns:1fr;height:auto;min-height:70vh}.ib-categories{grid-template-columns:1fr}.ib-signal,.ib-ghost{display:none!important}.pk-layout{grid-template-columns:1fr}.pk-table{width:100%;height:300px}}
 </style>
 </head>
 <body>
@@ -806,6 +869,71 @@ Jeffy extracts 24 game-state features (enemy positions, health, ammo, action his
 </div>
 </div>
 
+<!-- Poker Demo -->
+<div id="v-poker" class="view">
+<span class="back" onclick="go('')">&#8592; Back to catalog</span>
+<div class="d-header">
+<div class="d-title">Poker AI Demo</div>
+<div class="d-desc">Four AI players play Texas Hold'em. Each decision is a Jeffy classifier running on 18 game-state features. No neural network, no GPU.</div>
+<div class="d-stats">
+<div class="d-stat"><span class="v">4</span><span class="l">Players</span></div>
+<div class="d-stat"><span class="v">4</span><span class="l">Actions</span></div>
+<div class="d-stat"><span class="v">18</span><span class="l">Features</span></div>
+<div class="d-stat"><span class="v">&lt;1ms</span><span class="l">Classify</span></div>
+</div>
+</div>
+<div class="pk-layout" style="margin-top:16px">
+<div>
+<div class="pk-table" id="pk-table">
+<div class="pk-community" id="pk-community"></div>
+<div class="pk-pot" id="pk-pot"><span class="amt">0</span>pot</div>
+<div class="pk-seat" data-pos="0" id="pk-s0">
+<div class="pk-name">Alice <span class="chips" id="pk-stack0">1000</span></div>
+<div class="pk-hole" id="pk-hole0"></div>
+<div class="pk-action-badge" id="pk-act0"></div>
+</div>
+<div class="pk-seat" data-pos="1" id="pk-s1">
+<div class="pk-action-badge" id="pk-act1"></div>
+<div class="pk-hole" id="pk-hole1"></div>
+<div class="pk-name">Bob <span class="chips" id="pk-stack1">1000</span></div>
+</div>
+<div class="pk-seat" data-pos="2" id="pk-s2">
+<div class="pk-action-badge" id="pk-act2"></div>
+<div class="pk-hole" id="pk-hole2"></div>
+<div class="pk-name">Carol <span class="chips" id="pk-stack2">1000</span></div>
+</div>
+<div class="pk-seat" data-pos="3" id="pk-s3">
+<div class="pk-name">Dave <span class="chips" id="pk-stack3">1000</span></div>
+<div class="pk-hole" id="pk-hole3"></div>
+<div class="pk-action-badge" id="pk-act3"></div>
+</div>
+</div>
+<div style="margin-top:12px;display:flex;align-items:center;gap:12px">
+<span class="pk-round-badge" id="pk-round">preflop</span>
+<span style="font-size:11px;color:var(--muted)" id="pk-hand-num">Hand #1</span>
+<span style="font-size:10px;color:var(--muted)" id="pk-status"></span>
+<button class="restart-btn" id="pk-restart">Restart</button>
+</div>
+</div>
+<div class="pk-sidebar">
+<div class="info-card">
+<h3>Current Hand</h3>
+<div id="pk-decisions" style="max-height:200px;overflow-y:auto"></div>
+</div>
+<div class="info-card">
+<h3>Hand History</h3>
+<div id="pk-history" style="max-height:180px;overflow-y:auto"></div>
+</div>
+<div class="info-card">
+<h3>How it works</h3>
+<div style="font-size:11px;color:var(--muted);line-height:1.6">
+Each player is a logistic regression classifier trained on 21K simulated poker decisions. Features include hand strength, pot odds, position, stack ratios, and betting patterns. The classifier outputs: <span style="color:#888">FOLD</span>, <span style="color:#6baa6b">CHECK</span>, <span style="color:#6ba3d8">CALL</span>, or <span style="color:#d4a04a">RAISE</span>.
+</div>
+</div>
+</div>
+</div>
+</div>
+
 </main>
 <footer>
 <span><a href="/docs" target="_blank">API docs</a></span>
@@ -864,6 +992,15 @@ function buildGrid(){
         '<div class="card-tags"><span class="tag">4 classes</span><span class="tag">text</span><span class="tag">custom</span></div>'+
         '<div class="card-bar"><div class="card-bar-fill" style="width:92%"></div></div>';
       g.appendChild(ib);
+      var pk=document.createElement("div");
+      pk.className="card feat";
+      pk.onclick=function(){go("poker");};
+      pk.innerHTML=
+        '<div class="card-top"><span class="card-id">poker_decision</span><span class="demo-badge">Live Demo</span></div>'+
+        '<div class="card-name">4 AI players play Texas Hold\\u2019em using game-state classifiers</div>'+
+        '<div class="card-tags"><span class="tag">4 classes</span><span class="tag">18 features</span><span class="tag">MIT</span></div>'+
+        '<div class="card-bar"><div class="card-bar-fill" style="width:88%"></div></div>';
+      g.appendChild(pk);
     }
   });
 }
@@ -1044,27 +1181,6 @@ function startDoom(){
 function stopDoom(){
   if(ws&&ws.readyState===WebSocket.OPEN)ws.close();
   doomActive=false;
-}
-
-// --- Routing ---
-function go(h){location.hash=h;}
-
-function route(){
-  const h=location.hash.replace(/^#/,"");
-  document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
-  if(h==="doom"){
-    $("v-doom").classList.add("active");
-    if(!doomActive)startDoom();
-  } else if(h.startsWith("model/")){
-    const tid=h.split("/")[1];
-    if(tid==="doom_fire"){go("doom");return;}
-    $("v-detail").classList.add("active");
-    showDetail(tid);
-    stopDoom();
-  } else {
-    $("v-catalog").classList.add("active");
-    stopDoom();
-  }
 }
 
 // --- Inbox Demo ---
@@ -1301,6 +1417,100 @@ $("ib-try-run").onclick=function(){
     '<div style="font-size:11px;color:var(--muted);margin-top:12px">pip install jeffy-classify</div>';
 })();
 
+// --- Poker Demo ---
+var pkWs=null,pkActive=false;
+var pkSuitColor={"s":"","h":"red","d":"red","c":""};
+
+function renderCard(code){
+  if(!code)return '<div class="pk-card empty"></div>';
+  var rank=code[0]==="T"?"10":code[0];
+  var suit=code[1];
+  var sym={"s":"\\u2660","h":"\\u2665","d":"\\u2666","c":"\\u2663"}[suit]||"";
+  var cls=pkSuitColor[suit]||"";
+  return '<div class="pk-card '+cls+'">'+rank+sym+'</div>';
+}
+
+function pkUpdate(d){
+  var cc=$("pk-community");
+  var html="";
+  for(var i=0;i<5;i++){
+    if(d.community&&i<d.community.length){
+      html+=renderCard(d.community[i]);
+    } else {
+      html+='<div class="pk-card empty"></div>';
+    }
+  }
+  cc.innerHTML=html;
+  $("pk-pot").innerHTML='<span class="amt">'+d.pot+'</span>pot';
+  for(var i=0;i<4;i++){
+    var p=d.players[i];
+    var seat=$("pk-s"+i);
+    seat.className="pk-seat"+(p.folded?" folded":"");
+    seat.setAttribute("data-pos",i);
+    $("pk-stack"+i).textContent=p.stack;
+    var holeHtml="";
+    if(p.hole&&p.hole.length===2&&!p.folded){
+      holeHtml=renderCard(p.hole[0])+renderCard(p.hole[1]);
+    } else if(p.folded){
+      holeHtml='<div class="pk-card back"></div><div class="pk-card back"></div>';
+    }
+    $("pk-hole"+i).innerHTML=holeHtml;
+    var actEl=$("pk-act"+i);
+    actEl.textContent=p.last_action?p.last_action.toUpperCase():"";
+    actEl.className="pk-action-badge "+(p.last_action||"");
+  }
+  $("pk-round").textContent=d.round;
+  $("pk-hand-num").textContent="Hand #"+d.hand_number;
+  if(d.detail&&d.event==="action"){
+    var dd=d.detail;
+    var row=document.createElement("div");
+    row.className="pk-decision-row";
+    row.innerHTML='<span class="pname">'+dd.name+'</span><span class="pact '+dd.action+'">'+dd.action.toUpperCase()+'</span><span style="color:var(--muted);font-size:10px">'+(dd.confidence*100).toFixed(0)+'%</span>';
+    $("pk-decisions").prepend(row);
+    while($("pk-decisions").children.length>20)$("pk-decisions").lastChild.remove();
+  }
+  if(d.event==="showdown"&&d.detail){
+    var sd=d.detail;
+    var row=document.createElement("div");
+    row.className="pk-decision-row";
+    row.style.borderColor="var(--accent2)";
+    row.innerHTML='<span style="color:var(--accent2);font-weight:700">\\u2605 '+sd.winner_name+' wins '+sd.pot+'</span><span style="color:var(--muted);font-size:10px">'+sd.win_reason+'</span>';
+    $("pk-decisions").prepend(row);
+  }
+  if(d.event==="new_hand"){$("pk-decisions").innerHTML="";}
+  if(d.hand_history){
+    var hh=$("pk-history");hh.innerHTML="";
+    for(var i=d.hand_history.length-1;i>=0;i--){
+      var h=d.hand_history[i];
+      var r=document.createElement("div");
+      r.className="pk-history-row";
+      r.textContent="#"+h.hand+" "+h.winner+" wins "+h.pot+" ("+h.reason+")";
+      hh.appendChild(r);
+    }
+  }
+}
+
+function startPoker(){
+  if(pkWs&&pkWs.readyState===WebSocket.OPEN)pkWs.close();
+  var proto=location.protocol==="https:"?"wss:":"ws:";
+  pkWs=new WebSocket(proto+"//"+location.host+"/v1/poker/stream");
+  $("pk-status").textContent="Connecting...";
+  $("pk-decisions").innerHTML="";
+  $("pk-history").innerHTML="";
+  pkActive=true;
+  pkWs.onopen=function(){$("pk-status").textContent="Live";};
+  pkWs.onmessage=function(e){pkUpdate(JSON.parse(e.data));};
+  pkWs.onclose=function(){$("pk-status").textContent="Disconnected";pkWs=null;pkActive=false;};
+  pkWs.onerror=function(){$("pk-status").textContent="Error";};
+}
+
+function stopPoker(){
+  if(pkWs&&pkWs.readyState===WebSocket.OPEN)pkWs.close();
+  pkActive=false;
+}
+
+$("pk-restart").onclick=function(){startPoker();};
+
 // --- Routing ---
 function go(h){location.hash=h;}
 
@@ -1310,20 +1520,25 @@ function route(){
   if(h==="doom"){
     $("v-doom").classList.add("active");
     if(!doomActive)startDoom();
-    ibStop();
+    ibStop();stopPoker();
   } else if(h==="inbox"){
     $("v-inbox").classList.add("active");
     if(!ibActive)ibRun();
-    stopDoom();
+    stopDoom();stopPoker();
+  } else if(h==="poker"){
+    $("v-poker").classList.add("active");
+    if(!pkActive)startPoker();
+    stopDoom();ibStop();
   } else if(h.startsWith("model/")){
     var tid=h.split("/")[1];
     if(tid==="doom_fire"){go("doom");return;}
+    if(tid==="poker_decision"){go("poker");return;}
     $("v-detail").classList.add("active");
     showDetail(tid);
-    stopDoom();ibStop();
+    stopDoom();ibStop();stopPoker();
   } else {
     $("v-catalog").classList.add("active");
-    stopDoom();ibStop();
+    stopDoom();ibStop();stopPoker();
   }
 }
 

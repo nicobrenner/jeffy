@@ -156,6 +156,17 @@
       "test_f1": 0.708,
       "embed_time": 3.0,
       "train_time": 0.0
+    },
+    {
+      "dataset": "poker_decision",
+      "n_classes": 4,
+      "train_size": 16799,
+      "test_size": 4200,
+      "train_acc": 0.876,
+      "test_acc": 0.88,
+      "test_f1": 0.82,
+      "embed_time": 0.0,
+      "train_time": 0.5
     }
   ],
   "build_time": "2026-09-28 17:53:38",

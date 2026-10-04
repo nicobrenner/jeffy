@@ -1,0 +1,52 @@
+{
+  "dataset": "poker_decision",
+  "description": "Texas Hold-em poker decisions: fold, check, call, or raise",
+  "n_classes": 4,
+  "task_type": "choice",
+  "encoder": "features",
+  "encoder_dim": 18,
+  "labels": {
+    "call": "call",
+    "check": "check",
+    "fold": "fold",
+    "raise": "raise"
+  },
+  "class_order": [
+    "call",
+    "check",
+    "fold",
+    "raise"
+  ],
+  "hf_source": "generated",
+  "hf_config": null,
+  "hf_revision": null,
+  "license": "MIT",
+  "train_examples": 16799,
+  "train_accuracy": 0.8764,
+  "test_examples": 4200,
+  "test_accuracy": 0.8802,
+  "scaler_mean_hash": "3c8570c8",
+  "classifier_coef_hash": "c8e01075",
+  "n_features": 18,
+  "feature_layout": [
+    "hand_strength",
+    "made_hand_rank",
+    "round",
+    "pot_odds",
+    "stack_to_pot",
+    "stack_to_blind",
+    "position",
+    "active_opponents",
+    "n_raises",
+    "to_call",
+    "is_pair",
+    "is_suited",
+    "high_card",
+    "card_gap",
+    "is_preflop",
+    "pot_normalized",
+    "stack_normalized",
+    "bet_ratio"
+  ],
+  "schema_version": 1
+}

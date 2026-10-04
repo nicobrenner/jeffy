@@ -676,6 +676,16 @@ PLAYGROUND_HTML = """<!DOCTYPE html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Jeffy · Playground</title>
+<meta name="description" content="Interactive playground for Jeffy's 68 pretrained classifiers. Classify text, play live demos, and explore the catalog. No GPU needed.">
+<meta property="og:title" content="Jeffy Playground — Try 68 Pretrained Classifiers">
+<meta property="og:description" content="Interactive playground with live demos for Doom, Poker, Email routing, and more. 68 classifiers, under 80ms, CPU-only.">
+<meta property="og:image" content="https://raw.githubusercontent.com/nicobrenner/jeffy/main/examples/og-image.png">
+<meta property="og:url" content="https://playground.jeffyclassify.com">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Jeffy Playground — Try 68 Pretrained Classifiers">
+<meta name="twitter:description" content="Interactive playground with live demos for Doom, Poker, Email routing, and more. 68 classifiers, under 80ms, CPU-only.">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/nicobrenner/jeffy/main/examples/og-image.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <style>
 :root{color-scheme:dark;--bg:#111015;--panel:#1C1A22;--line:#2E2A28;--text:#E4E0DB;--muted:#8A857F;--accent:#E86B35;--accent2:#3DA87A;--blue:#7AADE8;--orange:#E89840;--mono:'JetBrains Mono','Fira Code','Cascadia Code',monospace;--display:'Manrope',system-ui,sans-serif;--fg-dim:#5E5952;--code-bg:#0A090D;--border:#2E2A28}

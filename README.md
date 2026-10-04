@@ -5,12 +5,12 @@ Pretrained classifiers you can run and retrain on CPU — text, game state, or a
 **[jeffyclassify.com](https://jeffyclassify.com)** · **[Live Playground](https://playground.jeffyclassify.com)** · **[GitHub](https://github.com/nicobrenner/jeffy)**
 
 <p align="center">
-  <img src="examples/doom_battle.gif" width="49%" alt="Doom Battle">
-  <img src="examples/poker_demo.gif" width="49%" alt="Poker AI">
+  <a href="https://playground.jeffyclassify.com/#doom"><img src="examples/doom_battle.gif" width="49%" alt="Doom Battle" style="vertical-align:top"></a>
+  <a href="https://playground.jeffyclassify.com/#poker"><img src="examples/poker_demo.gif" width="49%" alt="Poker AI" style="vertical-align:top"></a>
 </p>
 <p align="center">
-  <img src="examples/inbox_demo.gif" width="49%" alt="Inbox Router">
-  <img src="examples/fly_demo.gif" width="49%" alt="Fly Navigation">
+  <a href="https://playground.jeffyclassify.com/#inbox"><img src="examples/inbox_demo.gif" width="49%" alt="Inbox Router" style="vertical-align:top"></a>
+  <a href="https://playground.jeffyclassify.com/#fly"><img src="examples/fly_demo.gif" width="49%" alt="Fly Navigation" style="vertical-align:top"></a>
 </p>
 
 ## Try it
@@ -308,11 +308,11 @@ Verified with clean-environment wheel and sdist install on Linux aarch64, Python
 | **Available** | Poker AI demo — 4 AI players streaming Texas Hold'em decisions live |
 | **Available** | Landing page at [jeffyclassify.com](https://jeffyclassify.com), live playground at [playground.jeffyclassify.com](https://playground.jeffyclassify.com) |
 | **Available** | Multilingual classifiers — 51 languages via frozen multilingual embeddings + per-language logistic regression ([research](https://github.com/nicobrenner/jeffy-massive-multi-language-paper)) |
-| **Next** | Live demos for more classifiers, broader catalog released in verified batches |
-| **Planned** | Automatic routing among supported classifiers |
-| **Planned** | Optional local/API LLM fallback for unsupported tasks |
-| **Planned** | Hosted classifier catalog and decision-routing service |
-| **Planned** | Embeddable preference recorder — a drop-in integration for web platforms that trains classifiers from live human decisions and contextual data, capturing expertise as reusable models |
-| **Exploring** | Assisted labeling, retraining from corrections, classifier sharing |
+| **Next** | [Live demos for more classifiers, broader catalog released in verified batches](https://github.com/nicobrenner/jeffy/issues/2) |
+| **Planned** | [Automatic routing among supported classifiers](https://github.com/nicobrenner/jeffy/issues/3) |
+| **Planned** | [Optional local/API LLM fallback for unsupported tasks](https://github.com/nicobrenner/jeffy/issues/4) |
+| **Planned** | [Hosted classifier catalog and decision-routing service](https://github.com/nicobrenner/jeffy/issues/5) |
+| **Planned** | [Embeddable preference recorder](https://github.com/nicobrenner/jeffy/issues/6) — a drop-in integration for web platforms that trains classifiers from live human decisions and contextual data, capturing expertise as reusable models |
+| **Exploring** | [Assisted labeling, retraining from corrections, classifier sharing](https://github.com/nicobrenner/jeffy/issues/7) |
 
-Suggestions for datasets, capabilities, or workflows are welcome as issues.
+[Vote on what you want to see next →](https://github.com/nicobrenner/jeffy/issues) Comment on an issue or open a new one with your use case.

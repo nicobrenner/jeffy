@@ -296,6 +296,7 @@ Verified with clean-environment wheel and sdist install on Linux aarch64, Python
 | **Planned** | Automatic routing among supported classifiers |
 | **Planned** | Optional local/API LLM fallback for unsupported tasks |
 | **Planned** | Hosted classifier catalog and decision-routing service |
+| **Planned** | Embeddable preference recorder — a drop-in integration for web platforms that trains classifiers from live human decisions and contextual data, capturing expertise as reusable models |
 | **Exploring** | Assisted labeling, retraining from corrections, classifier sharing |
 
 Suggestions for datasets, capabilities, or workflows are welcome as issues.

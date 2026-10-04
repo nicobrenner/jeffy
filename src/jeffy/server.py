@@ -735,7 +735,7 @@ footer{max-width:1200px;margin:auto;padding:16px 24px;font-size:10px;color:#555;
 <div id="v-catalog" class="view active">
 <div class="catalog-head">
 <h2>Pretrained Classifiers</h2>
-<p id="grid-count">14 classifiers ready to use. Click a model to try it.</p>
+<p id="grid-count">16 classifiers ready to use. Click a model to try it.</p>
 </div>
 <div id="grid" class="grid"></div>
 </div>

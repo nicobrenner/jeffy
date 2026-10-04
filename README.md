@@ -5,11 +5,12 @@ Pretrained classifiers you can run and retrain on CPU — text, game state, or a
 **[jeffyclassify.com](https://jeffyclassify.com)** · **[Live Playground](https://playground.jeffyclassify.com)** · **[GitHub](https://github.com/nicobrenner/jeffy)**
 
 <p align="center">
-  <img src="examples/inbox_demo.gif" width="100%" alt="Inbox Router">
+  <img src="examples/doom_battle.gif" width="49%" alt="Doom Battle">
+  <img src="examples/poker_demo.gif" width="49%" alt="Poker AI">
 </p>
 <p align="center">
-  <img src="examples/doom_battle.gif" width="49%" alt="Doom Battle">
-  <img src="examples/doom_defend.gif" width="49%" alt="Defend the Center">
+  <img src="examples/inbox_demo.gif" width="49%" alt="Inbox Router">
+  <img src="examples/fly_demo.gif" width="49%" alt="Fly Navigation">
 </p>
 
 ## Try it
@@ -129,7 +130,7 @@ python -m venv .venv && source .venv/bin/activate
 pip install -e .
 ```
 
-The first prediction downloads the shared encoder ([bge-large-en-v1.5](https://huggingface.co/BAAI/bge-large-en-v1.5), ~1.2 GB, cached afterward).
+The first prediction downloads the required encoder(s) — [bge-large-en-v1.5](https://huggingface.co/BAAI/bge-large-en-v1.5) (~1.2 GB) for English tasks, [paraphrase-multilingual-MiniLM-L12-v2](https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2) (~470 MB) for multilingual — cached afterward.
 
 ## API
 
@@ -249,10 +250,11 @@ jeffy-evaluate --baselines --latency --device cpu
 | Component | Size | Required for |
 |-----------|------|-------------|
 | Jeffy package (wheel) | ~6 MB | Always (includes all 68 classifiers) |
-| Encoder (bge-large-en-v1.5) | ~1.2 GB | Inference (downloaded on first use) |
+| Encoder (bge-large-en-v1.5) | ~1.2 GB | English tasks (downloaded on first use) |
+| Encoder (paraphrase-multilingual-MiniLM-L12-v2) | ~470 MB | Multilingual tasks (downloaded on first use) |
 | `datasets` package | ~100 MB | Retraining from HuggingFace only |
 
-Runtime memory: ~2 GB (encoder loaded once, shared across all heads).
+Runtime memory: ~2 GB with English encoder, ~2.5 GB with both loaded. Encoders shared across all heads.
 
 **Latency** (CPU, single example, Linux aarch64):
 

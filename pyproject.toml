@@ -55,7 +55,7 @@ allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/jeffy"]
-artifacts = ["src/jeffy/pack/**", "src/jeffy/examples/*.csv"]
+artifacts = ["src/jeffy/pack/**", "src/jeffy/examples/*.csv", "src/jeffy/replays/*.json"]
 
 [tool.hatch.build.targets.sdist]
 include = ["src/", "data/eval_results/", "tests/", "examples/", "LICENSE", "README.md", "ATTRIBUTION.md"]

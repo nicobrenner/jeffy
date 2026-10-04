@@ -26,17 +26,41 @@ from starlette.middleware.base import BaseHTTPMiddleware
 
 logger = logging.getLogger(__name__)
 
+from contextlib import asynccontextmanager
+
 from .engine import Engine
+from .catalog import MULTILINGUAL_ENCODER
 
 import os
+
+_engine: Engine | None = None
+
+
+def get_engine() -> Engine:
+    global _engine
+    if _engine is None:
+        device = os.environ.get("JEFFY_DEVICE", "cpu")
+        _engine = Engine(device=device)
+        _engine.load()
+    return _engine
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    loop = asyncio.get_event_loop()
+    await loop.run_in_executor(None, get_engine)
+    engine = _engine
+    if engine and MULTILINGUAL_ENCODER not in engine._encoders:
+        await loop.run_in_executor(None, engine._get_encoder, MULTILINGUAL_ENCODER)
+    yield
+
 
 app = FastAPI(
     title="Jeffy",
     description="Pretrained decision engine with reusable embeddings and tiny classifiers.",
     version="0.1.0a12",
+    lifespan=lifespan,
 )
-
-_engine: Engine | None = None
 
 # --- Visitor analytics (persisted to disk) ---
 
@@ -111,13 +135,7 @@ class AnalyticsMiddleware(BaseHTTPMiddleware):
 app.add_middleware(AnalyticsMiddleware)
 
 
-def get_engine() -> Engine:
-    global _engine
-    if _engine is None:
-        device = os.environ.get("JEFFY_DEVICE", "cpu")
-        _engine = Engine(device=device)  # uses default_pack_dir()
-        _engine.load()
-    return _engine
+
 
 
 # --- Request/Response models ---
@@ -442,6 +460,34 @@ def _track_ws(request, demo, event, **extra):
     _analytics_log.append(entry)
     _append_analytics(entry)
 
+async def _run_simulated(ws: WebSocket, demo_name: str, fps: float = 10):
+    from .sim_runners import SimDoomSession, SimFlySession
+    engine = get_engine()
+    if demo_name == "doom":
+        session = SimDoomSession(engine=engine, task_id="doom_fire")
+    elif demo_name == "fly":
+        session = SimFlySession(engine=engine, task_id="fly_navigation")
+    else:
+        await ws.send_text(_json_module.dumps({"error": f"No simulated demo for {demo_name}"}))
+        return
+    frame_interval = 1.0 / fps
+    try:
+        while True:
+            t0 = time.perf_counter()
+            result = session.tick()
+            if result is None:
+                break
+            jpeg_bytes, meta = result
+            await ws.send_text(_json_module.dumps(meta))
+            await ws.send_bytes(jpeg_bytes)
+            elapsed = time.perf_counter() - t0
+            sleep_time = frame_interval - elapsed
+            if sleep_time > 0:
+                await asyncio.sleep(sleep_time)
+    finally:
+        session.close()
+
+
 @app.websocket("/v1/doom/stream")
 async def doom_stream(ws: WebSocket):
     await ws.accept()
@@ -469,6 +515,11 @@ async def doom_stream(ws: WebSocket):
             if sleep_time > 0:
                 await asyncio.sleep(sleep_time)
 
+    except (ImportError, OSError) as e:
+        logger.info(f"Doom engine unavailable ({e}), using simulated demo")
+        if 'session' in locals():
+            session.close()
+        await _run_simulated(ws, "doom", fps=10)
     except WebSocketDisconnect:
         pass
     except Exception as e:
@@ -533,6 +584,12 @@ async def fly_stream(ws: WebSocket):
             await ws.send_text(_json_module.dumps(meta))
             await ws.send_bytes(jpeg_bytes)
 
+    except (ImportError, OSError) as e:
+        logger.info(f"Fly engine unavailable ({e}), using simulated demo")
+        if 'session' in locals():
+            session.close()
+        await ws.send_text(_json_module.dumps({"status": "ready"}))
+        await _run_simulated(ws, "fly", fps=5)
     except WebSocketDisconnect:
         pass
     except Exception as e:
@@ -697,6 +754,8 @@ summary{color:var(--muted);font-size:11px;cursor:pointer;font-family:var(--displ
 .decision-overlay{position:absolute;top:12px;left:50%;transform:translateX(-50%);padding:6px 16px;border-radius:6px;font-size:15px;font-weight:700;letter-spacing:1px;text-transform:uppercase;pointer-events:none;transition:all .1s}
 .decision-overlay.fire{background:rgba(255,60,60,.9);color:#fff}
 .decision-overlay.turn_left,.decision-overlay.turn_right{background:rgba(40,40,40,.8);color:#aaa}
+.sim-banner{position:absolute;top:0;left:0;right:0;z-index:10;padding:6px 12px;background:rgba(255,170,0,.9);color:#000;font-size:12px;font-weight:600;text-align:center;letter-spacing:.3px}
+.sim-banner code{background:rgba(0,0,0,.15);padding:2px 6px;border-radius:3px;font-size:11px}
 .sidebar{display:flex;flex-direction:column;gap:16px}
 .info-card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px}
 .info-card h3{margin:0 0 10px;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-family:var(--display)}
@@ -1649,10 +1708,12 @@ function startDoom(){
   $("decision-log").innerHTML="";
   frameCount=0;fpsStart=performance.now();
   doomActive=true;
+  var oldBan=$("game-container").querySelector(".sim-banner");if(oldBan)oldBan.remove();
 
   ws.onopen=()=>{$("stream-status").textContent="Live";};
   ws.binaryType="blob";
   let pendingMeta=null;
+  let doomSimBannerShown=false;
   ws.onmessage=e=>{
     if(typeof e.data==="string"){
       pendingMeta=JSON.parse(e.data);
@@ -1660,6 +1721,14 @@ function startDoom(){
     }
     if(!pendingMeta)return;
     const d=pendingMeta;pendingMeta=null;
+    if(d.simulated&&!doomSimBannerShown){
+      doomSimBannerShown=true;
+      $("stream-status").textContent="Simulated";
+      var ban=document.createElement("div");
+      ban.className="sim-banner";
+      ban.innerHTML="Simulated demo &mdash; <code>pip install jeffy-classify vizdoom && jeffy-serve</code> for live";
+      $("game-container").prepend(ban);
+    }
     const url=URL.createObjectURL(e.data);
     const img=$("game-frame");
     const old=img.src;
@@ -1748,6 +1817,8 @@ function startFly(){
   $("fly-log").innerHTML="";
   flyTrail=[];
   flyActive=true;
+  var flySimBannerShown=false;
+  var oldBan=$("fly-container").querySelector(".sim-banner");if(oldBan)oldBan.remove();
 
   flyWs.onopen=function(){$("fly-status").textContent="Connecting...";};
   flyWs.binaryType="blob";
@@ -1763,8 +1834,15 @@ function startFly(){
       return;
     }
     if(!pendingMeta)return;
-    $("fly-status").textContent="Live";
     var d=pendingMeta;pendingMeta=null;
+    if(d.simulated&&!flySimBannerShown){
+      flySimBannerShown=true;
+      $("fly-status").textContent="Simulated";
+      var ban=document.createElement("div");
+      ban.className="sim-banner";
+      ban.innerHTML="Simulated demo &mdash; <code>pip install jeffy-classify flygym mujoco && jeffy-serve</code> for live";
+      $("fly-container").prepend(ban);
+    } else if(!d.simulated){$("fly-status").textContent="Live";}
     var url=URL.createObjectURL(e.data);
     var img=$("fly-frame");
     var old=img.src;

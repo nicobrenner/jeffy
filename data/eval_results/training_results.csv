@@ -1,0 +1,52 @@
+language,name,family,test_accuracy,xlmr_full,xlmr_zero,encoder,train_examples,training_time_sec,model_size_kb,tier
+en,English,Germanic,0.864,88.3,,BAAI/bge-large-en-v1.5,10000,26,100,1
+fr,French,Romance,0.825,86.3,80.8,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,1
+pt,Portuguese,Romance,0.825,86.7,79.5,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,1
+zh_cn,Chinese (Simplified),East Asian,0.822,84.9,61.9,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,1
+id,Indonesian,SE Asian,0.820,87.1,83.1,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,1
+pl,Polish,Slavic,0.817,85.8,80.7,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,1
+ru,Russian,Slavic,0.815,87.2,81.3,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,1
+es,Spanish,Romance,0.815,86.9,78.8,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,1
+fa,Persian,Indo-Iranian,0.811,87.0,81.1,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,1
+sv,Swedish,Germanic,0.811,87.9,85.2,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,1
+nl,Dutch,Germanic,0.810,86.8,82.1,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,1
+ja,Japanese,East Asian,0.808,83.9,44.8,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,1
+it,Italian,Romance,0.806,86.6,76.4,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,1
+tr,Turkish,Turkic,0.803,86.3,78.4,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,1
+el,Greek,Hellenic,0.803,86.2,74.0,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,1
+hi,Hindi,Indo-Iranian,0.802,85.8,74.8,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,1
+hu,Hungarian,Uralic,0.802,86.2,77.1,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,1
+lv,Latvian,Baltic,0.800,86.1,69.2,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,1
+da,Danish,Germanic,0.800,86.9,83.1,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,1
+th,Thai,SE Asian,0.798,84.7,77.4,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,2
+ro,Romanian,Romance,0.796,86.9,80.8,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,2
+sq,Albanian,Other,0.792,86.4,67.6,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,2
+sl,Slovenian,Slavic,0.791,86.3,69.5,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,2
+ms,Malay,SE Asian,0.790,86.1,76.7,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,2
+vi,Vietnamese,SE Asian,0.790,86.3,79.2,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,2
+zh_tw,Chinese (Traditional),East Asian,0.785,83.0,60.4,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,2
+nb,Norwegian,Germanic,0.785,87.3,83.6,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,2
+fi,Finnish,Uralic,0.781,85.5,80.2,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,2
+ur,Urdu,Indo-Iranian,0.780,83.2,65.6,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,2
+he,Hebrew,Semitic,0.770,85.9,73.2,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,2
+hy,Armenian,Other,0.765,84.4,71.6,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,2
+mn,Mongolian,East Asian,0.765,84.3,64.4,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,2
+my,Burmese,SE Asian,0.750,83.6,67.6,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,2
+de,German,Germanic,0.745,85.7,77.6,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,2
+ko,Korean,East Asian,0.741,86.5,77.0,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,2
+ml,Malayalam,Dravidian,0.731,85.1,70.1,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,2
+az,Azerbaijani,Turkic,0.720,86.2,70.9,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,2
+te,Telugu,Dravidian,0.714,84.5,68.2,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,2
+af,Afrikaans,Germanic,0.710,85.6,71.7,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,2
+kn,Kannada,Dravidian,0.709,84.0,63.5,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,2
+ta,Tamil,Dravidian,0.693,83.5,68.1,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,3
+ar,Arabic,Semitic,0.690,80.7,62.8,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,3
+ka,Georgian,Other,0.688,80.3,61.2,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,3
+bn,Bengali,Indo-Iranian,0.675,84.1,66.0,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,3
+km,Khmer,SE Asian,0.668,77.2,61.3,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,3
+am,Amharic,Semitic,0.650,81.7,51.9,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,3
+is,Icelandic,Germanic,0.634,85.3,66.7,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,3
+cy,Welsh,Celtic,0.612,82.6,46.9,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,3
+sw,Swahili,Other,0.602,83.1,46.6,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,3
+tl,Filipino,SE Asian,0.597,84.6,63.7,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,3
+jv,Javanese,SE Asian,0.597,82.9,46.5,paraphrase-multilingual-MiniLM-L12-v2,10000,26,100,3

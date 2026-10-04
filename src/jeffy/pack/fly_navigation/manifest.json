@@ -1,0 +1,48 @@
+{
+  "dataset": "fly_navigation",
+  "description": "Drosophila navigation: walk, turn_left, turn_right",
+  "n_classes": 3,
+  "task_type": "choice",
+  "encoder": "features",
+  "encoder_dim": 16,
+  "labels": {
+    "turn_left": "turn_left",
+    "turn_right": "turn_right",
+    "walk": "walk"
+  },
+  "class_order": [
+    "turn_left",
+    "turn_right",
+    "walk"
+  ],
+  "hf_source": "user-provided",
+  "hf_config": null,
+  "hf_revision": null,
+  "license": "MPL-2.0",
+  "train_examples": 800,
+  "train_accuracy": 0.979,
+  "test_examples": 200,
+  "test_accuracy": 0.98,
+  "scaler_mean_hash": "4aa0ac45",
+  "classifier_coef_hash": "f7e45bbc",
+  "n_features": 16,
+  "feature_layout": {
+    "0": "food_distance",
+    "1": "food_angle",
+    "2": "food_angle_sin",
+    "3": "food_angle_cos",
+    "4": "forward_velocity",
+    "5": "lateral_velocity",
+    "6": "angular_velocity",
+    "7": "heading_sin",
+    "8": "heading_cos",
+    "9": "pos_x",
+    "10": "pos_y",
+    "11": "height",
+    "12": "action_t1",
+    "13": "action_t2",
+    "14": "action_t3",
+    "15": "action_t4"
+  },
+  "schema_version": 1
+}

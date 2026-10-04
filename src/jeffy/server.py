@@ -493,6 +493,34 @@ async def poker_stream(ws: WebSocket):
             session.close()
 
 
+@app.websocket("/v1/fly/stream")
+async def fly_stream(ws: WebSocket):
+    await ws.accept()
+    try:
+        await ws.send_text(_json_module.dumps({"status": "loading"}))
+        from .fly_runner import FlySession
+        session = FlySession(engine=get_engine(), task_id="fly_navigation")
+        await asyncio.to_thread(session.start)
+        await ws.send_text(_json_module.dumps({"status": "ready"}))
+
+        while True:
+            result = await asyncio.to_thread(session.tick)
+            if result is None:
+                break
+
+            jpeg_bytes, meta = result
+            await ws.send_text(_json_module.dumps(meta))
+            await ws.send_bytes(jpeg_bytes)
+
+    except WebSocketDisconnect:
+        pass
+    except Exception as e:
+        logger.warning(f"Fly stream error: {e}")
+    finally:
+        if 'session' in locals():
+            session.close()
+
+
 @app.get("/v1/analytics")
 def analytics(last: int = 50, external_only: bool = False):
     entries = _analytics_log
@@ -719,7 +747,22 @@ footer{max-width:1200px;margin:auto;padding:16px 24px;font-size:10px;color:var(-
 .pk-history-row{font-size:10px;color:var(--muted);padding:2px 0;border-bottom:1px solid rgba(255,255,255,.03)}
 .pk-round-badge{font-size:9px;text-transform:uppercase;letter-spacing:.5px;padding:1px 6px;border-radius:3px;background:rgba(255,255,255,.06);color:var(--muted);display:inline-block}
 
-@media(max-width:800px){.grid{grid-template-columns:1fr}.d-grid{grid-template-columns:1fr}.doom-layout{grid-template-columns:1fr}.doom-left{width:auto}.ib-layout{grid-template-columns:1fr;height:auto;min-height:70vh}.ib-categories{grid-template-columns:1fr}.ib-signal,.ib-ghost{display:none!important}.pk-layout{grid-template-columns:1fr}.pk-table{width:100%;height:300px}}
+.fly-layout{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start}
+.fly-left{display:flex;flex-direction:column;gap:12px;width:480px}
+.fly-game{position:relative;background:#111;border-radius:8px;overflow:hidden;aspect-ratio:4/3}
+.fly-game img{width:100%;height:100%;object-fit:contain;display:block}
+.fly-overlay{position:absolute;top:12px;left:50%;transform:translateX(-50%);padding:6px 16px;border-radius:6px;font-size:15px;font-weight:700;letter-spacing:1px;text-transform:uppercase;pointer-events:none;transition:all .15s}
+.fly-overlay.walk{background:rgba(61,168,122,.9);color:#fff}
+.fly-overlay.turn_left{background:rgba(122,173,232,.85);color:#fff}
+.fly-overlay.turn_right{background:rgba(232,152,64,.85);color:#fff}
+.fly-hud{position:absolute;bottom:0;left:0;right:0;padding:10px 14px;background:linear-gradient(transparent,rgba(0,0,0,.85));display:flex;justify-content:space-between;align-items:flex-end}
+.fly-hud-stat{text-align:center;font-size:10px;color:#aaa;line-height:1.3}
+.fly-hud-stat .val{font-size:18px;font-weight:700;color:#fff;display:block}
+.log li.walk{color:var(--accent2)}
+.log li.turn_left{color:var(--blue)}
+.log li.turn_right{color:var(--orange)}
+
+@media(max-width:800px){.grid{grid-template-columns:1fr}.d-grid{grid-template-columns:1fr}.doom-layout{grid-template-columns:1fr}.doom-left{width:auto}.fly-layout{grid-template-columns:1fr}.fly-left{width:auto}.ib-layout{grid-template-columns:1fr;height:auto;min-height:70vh}.ib-categories{grid-template-columns:1fr}.ib-signal,.ib-ghost{display:none!important}.pk-layout{grid-template-columns:1fr}.pk-table{width:100%;height:300px}}
 </style>
 </head>
 <body>
@@ -755,6 +798,12 @@ footer{max-width:1200px;margin:auto;padding:16px 24px;font-size:10px;color:var(-
 <div class="card-name">4 AI players play Texas Hold’em using game-state classifiers</div>
 <div class="card-tags"><span class="tag">4 classes</span><span class="tag">18 features</span><span class="tag">MIT</span></div>
 <div class="card-bar"><div class="card-bar-fill" style="width:88%"></div></div>
+</div>
+<div class="card feat" onclick="go('fly')">
+<div class="card-top"><span class="card-id">fly_navigation</span><span class="demo-badge">Live Demo</span></div>
+<div class="card-name">Biomechanical fruit fly forages for food via chemotaxis</div>
+<div class="card-tags"><span class="tag">3 classes</span><span class="tag">16 features</span><span class="tag">MPL 2.0</span></div>
+<div class="card-bar"><div class="card-bar-fill" style="width:98%"></div></div>
 </div>
 <div class="card" onclick="go('model/sms_spam')">
 <div class="card-top"><span class="card-id">sms_spam</span><span class="card-acc">99.1%</span></div>
@@ -912,6 +961,73 @@ Jeffy extracts 24 game-state features (enemy positions, health, ammo, action his
 </div>
 </div>
 
+<!-- Fly Demo -->
+<div id="v-fly" class="view">
+<span class="back" onclick="go('')">&#8592; Back to catalog</span>
+<div class="d-header">
+<div class="d-title">fly_navigation</div>
+<div class="d-desc">A biomechanical fruit fly (NeuroMechFly) searches for food in a virtual arena. At each decision step, Jeffy reads 16 features &mdash; food distance, food angle, velocity, heading, and recent action history &mdash; and classifies the next move. The fly spirals toward food using chemotaxis, a navigation strategy common in real insects. When food is reached, a new source spawns elsewhere. The classifier was trained on 1,000 simulated foraging episodes.</div>
+<div class="d-stats">
+<div class="d-stat"><span class="v">3</span><span class="l">Classes</span></div>
+<div class="d-stat"><span class="v">16</span><span class="l">Features</span></div>
+<div class="d-stat"><span class="v">&lt;1ms</span><span class="l">Classify</span></div>
+<div class="d-stat"><span class="v">MuJoCo</span><span class="l">Physics</span></div>
+</div>
+</div>
+<div class="fly-layout" style="margin-top:16px">
+<div class="fly-left">
+<div class="fly-game" id="fly-container">
+<img id="fly-frame" src="" alt="Fly simulation">
+<div id="fly-overlay" class="fly-overlay walk">WALK</div>
+<div class="fly-hud">
+<div class="fly-hud-stat"><span class="val" id="fly-dist">&mdash;</span>Food dist</div>
+<div class="fly-hud-stat"><span class="val" id="fly-angle">&mdash;</span>Food angle</div>
+<div class="fly-hud-stat"><span class="val" id="fly-speed">&mdash;</span>Speed</div>
+<div class="fly-hud-stat"><span class="val" id="fly-foods">0</span>Foods</div>
+<div class="fly-hud-stat"><span class="val" id="fly-step2">0</span>Step</div>
+</div>
+</div>
+<div class="info-card">
+<h3>Stats</h3>
+<div class="stat-row"><span class="label">Classify latency</span><span id="fly-ms">&mdash;</span></div>
+<div class="stat-row"><span class="label">Foods reached</span><span id="fly-foods2">0</span></div>
+<div class="stat-row"><span class="label">Step</span><span id="fly-step3">0</span></div>
+<div class="stat-row"><span class="label">Heading</span><span id="fly-heading">&mdash;</span></div>
+</div>
+<div class="info-card">
+<div style="display:flex;justify-content:space-between;align-items:center">
+<h3 style="margin:0">Decision Log</h3>
+<div style="display:flex;gap:8px;align-items:center">
+<span id="fly-status" style="font-size:10px;color:var(--muted)"></span>
+<button id="fly-restart" class="restart-btn">Restart</button>
+</div>
+</div>
+<ul id="fly-log" class="log" style="margin-top:8px"></ul>
+</div>
+</div>
+<div class="sidebar">
+<div class="info-card">
+<h3>Classifier Decision</h3>
+<div style="display:flex;justify-content:space-between;align-items:baseline">
+<span id="fly-decision" style="font-size:20px;font-weight:700;color:var(--accent2)">&mdash;</span>
+<span id="fly-conf" style="font-size:13px;color:var(--muted)">&mdash;</span>
+</div>
+<div id="fly-prob-bars" style="margin-top:8px"></div>
+</div>
+<div class="info-card">
+<h3>How it works</h3>
+<div style="font-size:11px;color:var(--muted);line-height:1.6">
+Built on <a href="https://neuromechfly.org" target="_blank" style="color:var(--blue)">NeuroMechFly</a> (EPFL), a biomechanical Drosophila model with 6 legs and adhesion. The classifier was trained on 1,000 simulated foraging runs: a simple angle-to-food heuristic generated labeled (features, action) pairs, then Jeffy learned the mapping as a logistic regression. The fly spirals toward food &mdash; a realistic chemotaxis pattern. Features: food distance &amp; angle, forward/lateral/angular velocity, heading, position, and 4-step action history. No neural network, no GPU &mdash; just a 3-class logistic regression running at &lt;1ms per decision.
+</div>
+</div>
+<div class="info-card">
+<h3>Navigation</h3>
+<canvas id="fly-map" width="260" height="150" style="width:100%;border-radius:6px;background:#0a090d"></canvas>
+</div>
+</div>
+</div>
+</div>
+
 <!-- Inbox Demo -->
 <div id="v-inbox" class="view">
 <span class="back" onclick="go('')">&#8592; Back to catalog</span>
@@ -1041,11 +1157,12 @@ Each player is a logistic regression classifier trained on 21K simulated poker d
 <script>
 const $=id=>document.getElementById(id);
 let ws=null,frameCount=0,fpsStart=0,doomActive=false;
+let flyWs=null,flyActive=false,flyTrail=[];
 
 const CAPS={"ag_news":{"name":"News article topic classification","n_classes":4,"encoder":"BAAI/bge-large-en-v1.5","license":"Academic / non-commercial","train_examples":10000,"test_accuracy":0.9055,"train_accuracy":0.9413,"labels":{"0":"World","1":"Sports","2":"Business","3":"Sci/Tech"},"example":"The Federal Reserve raised interest rates by 0.25% today."},"banking77":{"name":"Banking customer service intent detection","n_classes":77,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY 4.0","train_examples":10000,"test_accuracy":0.943,"train_accuracy":0.9836,"labels":{"0":"activate_my_card","1":"age_limit","2":"apple_pay_or_google_pay","3":"atm_support","4":"automatic_top_up","5":"balance_not_updated_after_bank_transfer","6":"balance_not_updated_after_cheque_or_cash_deposit","7":"beneficiary_not_allowed","8":"cancel_transfer","9":"card_about_to_expire","10":"card_acceptance","11":"card_arrival","12":"card_delivery_estimate","13":"card_linking","14":"card_not_working","15":"card_payment_fee_charged","16":"card_payment_not_recognised","17":"card_payment_wrong_exchange_rate","18":"card_swallowed","19":"cash_withdrawal_charge","20":"cash_withdrawal_not_recognised","21":"change_pin","22":"compromised_card","23":"contactless_not_working","24":"country_support","25":"declined_card_payment","26":"declined_cash_withdrawal","27":"declined_transfer","28":"direct_debit_payment_not_recognised","29":"disposable_card_limits","30":"edit_personal_details","31":"exchange_charge","32":"exchange_rate","33":"exchange_via_app","34":"extra_charge_on_statement","35":"failed_transfer","36":"fiat_currency_support","37":"get_disposable_virtual_card","38":"get_physical_card","39":"getting_spare_card","40":"getting_virtual_card","41":"lost_or_stolen_card","42":"lost_or_stolen_phone","43":"order_physical_card","44":"passcode_forgotten","45":"pending_card_payment","46":"pending_cash_withdrawal","47":"pending_top_up","48":"pending_transfer","49":"pin_blocked","50":"receiving_money","51":"Refund_not_showing_up","52":"request_refund","53":"reverted_card_payment?","54":"supported_cards_and_currencies","55":"terminate_account","56":"top_up_by_bank_transfer_charge","57":"top_up_by_card_charge","58":"top_up_by_cash_or_cheque","59":"top_up_failed","60":"top_up_limits","61":"top_up_reverted","62":"topping_up_by_card","63":"transaction_charged_twice","64":"transfer_fee_charged","65":"transfer_into_account","66":"transfer_not_received_by_recipient","67":"transfer_timing","68":"unable_to_verify_identity","69":"verify_my_identity","70":"verify_source_of_funds","71":"verify_top_up","72":"virtual_card_not_working","73":"visa_or_mastercard","74":"why_verify_identity","75":"wrong_amount_of_cash_received","76":"wrong_exchange_rate_for_cash_withdrawal"},"example":"I\\u2019ve been charged twice for the same transaction, can I get a refund?"},"clinc_oos":{"name":"Intent detection with out-of-scope","n_classes":151,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY 3.0","train_examples":10000,"test_accuracy":0.8845,"train_accuracy":0.9983,"labels":{"0":"restaurant_reviews","1":"nutrition_info","2":"account_blocked","3":"oil_change_how","4":"time","5":"weather","6":"redeem_rewards","7":"interest_rate","8":"gas_type","9":"accept_reservations","10":"smart_home","11":"user_name","12":"report_lost_card","13":"repeat","14":"whisper_mode","15":"what_are_your_hobbies","16":"order","17":"jump_start","18":"schedule_meeting","19":"meeting_schedule","20":"freeze_account","21":"what_song","22":"meaning_of_life","23":"restaurant_reservation","24":"traffic","25":"make_call","26":"text","27":"bill_balance","28":"improve_credit_score","29":"change_language","30":"no","31":"measurement_conversion","32":"timer","33":"flip_coin","34":"do_you_have_pets","35":"balance","36":"tell_joke","37":"last_maintenance","38":"exchange_rate","39":"uber","40":"car_rental","41":"credit_limit","42":"oos","43":"shopping_list","44":"expiration_date","45":"routing","46":"meal_suggestion","47":"tire_change","48":"todo_list","49":"card_declined","50":"rewards_balance","51":"change_accent","52":"vaccines","53":"reminder_update","54":"food_last","55":"change_ai_name","56":"bill_due","57":"who_do_you_work_for","58":"share_location","59":"international_visa","60":"calendar","61":"translate","62":"carry_on","63":"book_flight","64":"insurance_change","65":"todo_list_update","66":"timezone","67":"cancel_reservation","68":"transactions","69":"credit_score","70":"report_fraud","71":"spending_history","72":"directions","73":"spelling","74":"insurance","75":"what_is_your_name","76":"reminder","77":"where_are_you_from","78":"distance","79":"payday","80":"flight_status","81":"find_phone","82":"greeting","83":"alarm","84":"order_status","85":"confirm_reservation","86":"cook_time","87":"damaged_card","88":"reset_settings","89":"pin_change","90":"replacement_card_duration","91":"new_card","92":"roll_dice","93":"income","94":"taxes","95":"date","96":"who_made_you","97":"pto_request","98":"tire_pressure","99":"how_old_are_you","100":"rollover_401k","101":"pto_request_status","102":"how_busy","103":"application_status","104":"recipe","105":"calendar_update","106":"play_music","107":"yes","108":"direct_deposit","109":"credit_limit_change","110":"gas","111":"pay_bill","112":"ingredients_list","113":"lost_luggage","114":"goodbye","115":"what_can_i_ask_you","116":"book_hotel","117":"are_you_a_bot","118":"next_song","119":"change_speed","120":"plug_type","121":"maybe","122":"w2","123":"oil_change_when","124":"thank_you","125":"shopping_list_update","126":"pto_balance","127":"order_checks","128":"travel_alert","129":"fun_fact","130":"sync_device","131":"schedule_maintenance","132":"apr","133":"transfer","134":"ingredient_substitution","135":"calories","136":"current_location","137":"international_fees","138":"calculator","139":"definition","140":"next_holiday","141":"update_playlist","142":"mpg","143":"min_payment","144":"change_user_name","145":"restaurant_suggestion","146":"travel_notification","147":"cancel","148":"pto_used","149":"travel_suggestion","150":"change_volume"},"example":"What\\u2019s the weather like in San Francisco?"},"dbpedia":{"name":"Wikipedia article ontology classification","n_classes":14,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY-SA 3.0","train_examples":10000,"test_accuracy":0.9595,"train_accuracy":0.998,"labels":{"0":"Company","1":"EducationalInstitution","2":"Artist","3":"Athlete","4":"OfficeHolder","5":"MeanOfTransportation","6":"Building","7":"NaturalPlace","8":"Village","9":"Animal","10":"Plant","11":"Album","12":"Film","13":"WrittenWork"},"example":"Harvard University is a private Ivy League research university in Cambridge, Massachusetts."},"emotion":{"name":"Text emotion detection","n_classes":6,"encoder":"BAAI/bge-large-en-v1.5","license":"Academic","train_examples":10000,"test_accuracy":0.755,"train_accuracy":0.8339,"labels":{"0":"sadness","1":"joy","2":"love","3":"anger","4":"fear","5":"surprise"},"example":"I just got accepted into my dream school! I can\\u2019t believe it!"},"imdb":{"name":"Movie review sentiment (positive/negative)","n_classes":2,"encoder":"BAAI/bge-large-en-v1.5","license":"Academic / non-commercial","train_examples":10000,"test_accuracy":0.948,"train_accuracy":0.9559,"labels":{"0":"negative","1":"positive"},"example":"A beautifully crafted film with stunning performances throughout."},"inbox_router":{"name":"Email inbox classifier: route messages to work, family, promo, or notification","n_classes":4,"encoder":"BAAI/bge-large-en-v1.5","license":"MIT","train_examples":24,"test_accuracy":0.708,"train_accuracy":1.0,"labels":{"family":"family","notification":"notification","promo":"promo","work":"work"},"example":"Can you send me the Q4 projections?"},"massive_intent":{"name":"Amazon MASSIVE voice command intents","n_classes":60,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY 4.0","train_examples":10000,"test_accuracy":0.881,"train_accuracy":0.977,"labels":{"alarm_query":"alarm_query","alarm_remove":"alarm_remove","alarm_set":"alarm_set","audio_volume_down":"audio_volume_down","audio_volume_mute":"audio_volume_mute","audio_volume_other":"audio_volume_other","audio_volume_up":"audio_volume_up","calendar_query":"calendar_query","calendar_remove":"calendar_remove","calendar_set":"calendar_set","cooking_query":"cooking_query","cooking_recipe":"cooking_recipe","datetime_convert":"datetime_convert","datetime_query":"datetime_query","email_addcontact":"email_addcontact","email_query":"email_query","email_querycontact":"email_querycontact","email_sendemail":"email_sendemail","general_greet":"general_greet","general_joke":"general_joke","general_quirky":"general_quirky","iot_cleaning":"iot_cleaning","iot_coffee":"iot_coffee","iot_hue_lightchange":"iot_hue_lightchange","iot_hue_lightdim":"iot_hue_lightdim","iot_hue_lightoff":"iot_hue_lightoff","iot_hue_lighton":"iot_hue_lighton","iot_hue_lightup":"iot_hue_lightup","iot_wemo_off":"iot_wemo_off","iot_wemo_on":"iot_wemo_on","lists_createoradd":"lists_createoradd","lists_query":"lists_query","lists_remove":"lists_remove","music_dislikeness":"music_dislikeness","music_likeness":"music_likeness","music_query":"music_query","music_settings":"music_settings","news_query":"news_query","play_audiobook":"play_audiobook","play_game":"play_game","play_music":"play_music","play_podcasts":"play_podcasts","play_radio":"play_radio","qa_currency":"qa_currency","qa_definition":"qa_definition","qa_factoid":"qa_factoid","qa_maths":"qa_maths","qa_stock":"qa_stock","recommendation_events":"recommendation_events","recommendation_locations":"recommendation_locations","recommendation_movies":"recommendation_movies","social_post":"social_post","social_query":"social_query","takeaway_order":"takeaway_order","takeaway_query":"takeaway_query","transport_query":"transport_query","transport_taxi":"transport_taxi","transport_ticket":"transport_ticket","transport_traffic":"transport_traffic","weather_query":"weather_query"},"example":"Turn on the living room lights"},"sms_spam":{"name":"SMS spam detection","n_classes":2,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY 4.0","train_examples":4459,"test_accuracy":0.991,"train_accuracy":0.997,"labels":{"0":"ham","1":"spam"},"example":"WINNER!! You have been selected for a 900 prize reward! Call now!"},"snli":{"name":"Natural language inference","n_classes":3,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY-SA 4.0","train_examples":10000,"test_accuracy":0.656,"train_accuracy":0.7271,"labels":{"0":"entailment","1":"neutral","2":"contradiction"},"example":"A man is playing guitar on a street corner. [SEP] A musician performs outdoors."},"sst2":{"name":"Movie review sentiment (positive/negative)","n_classes":2,"encoder":"BAAI/bge-large-en-v1.5","license":"Stanford academic license","train_examples":10000,"test_accuracy":0.901,"train_accuracy":0.9453,"labels":{"0":"negative","1":"positive"},"example":"This movie was absolutely terrible, a waste of time."},"tweet_eval_emotion":{"name":"Tweet emotion detection","n_classes":4,"encoder":"BAAI/bge-large-en-v1.5","license":"Twitter TOS / academic","train_examples":3257,"test_accuracy":0.781,"train_accuracy":0.902,"labels":{"0":"anger","1":"joy","2":"optimism","3":"sadness"},"example":"I am so frustrated with this company\\u2019s customer service."},"tweet_eval_offensive":{"name":"Offensive language detection","n_classes":2,"encoder":"BAAI/bge-large-en-v1.5","license":"Twitter TOS / academic","train_examples":10000,"test_accuracy":0.81,"train_accuracy":0.808,"labels":{"0":"not_offensive","1":"offensive"},"example":"Great work on the project team, really proud of everyone."},"tweet_eval_sentiment":{"name":"Tweet sentiment analysis","n_classes":3,"encoder":"BAAI/bge-large-en-v1.5","license":"Twitter TOS / academic","train_examples":10000,"test_accuracy":0.662,"train_accuracy":0.757,"labels":{"0":"negative","1":"neutral","2":"positive"},"example":"Best day ever! Finally got my dream job! #blessed"}};
 
 $("status").dataset.state="ready";
-$("status").textContent="16 classifiers ready";
+$("status").textContent="17 classifiers ready";
 route();
 
 function showDetail(tid){
@@ -1222,6 +1339,119 @@ function stopDoom(){
   if(ws&&ws.readyState===WebSocket.OPEN)ws.close();
   doomActive=false;
 }
+
+// --- Fly Demo ---
+function drawFlyMap(d){
+  var c=$("fly-map"),ctx=c.getContext("2d"),w=c.width,h=c.height;
+  ctx.clearRect(0,0,w,h);
+  var scale=3,cx=w/2,cy=h/2;
+  function tx(x){return cx+(x-d.fly_x)*scale;}
+  function ty(y){return cy-(y-d.fly_y)*scale;}
+  // Trail
+  if(flyTrail.length>1){
+    ctx.beginPath();ctx.strokeStyle="rgba(61,168,122,0.25)";ctx.lineWidth=1.5;
+    for(var i=0;i<flyTrail.length;i++){
+      var p=flyTrail[i];
+      if(i===0)ctx.moveTo(tx(p[0]),ty(p[1]));else ctx.lineTo(tx(p[0]),ty(p[1]));
+    }
+    ctx.stroke();
+  }
+  // All foods
+  var foods=d.all_foods||[];
+  for(var i=0;i<foods.length;i++){
+    var fx=tx(foods[i][0]),fy=ty(foods[i][1]);
+    ctx.beginPath();ctx.arc(fx,fy,4,0,Math.PI*2);ctx.fillStyle="#3DA87A";ctx.fill();
+    ctx.beginPath();ctx.arc(fx,fy,7,0,Math.PI*2);ctx.strokeStyle="rgba(61,168,122,0.4)";ctx.lineWidth=1;ctx.stroke();
+  }
+  // Fly (center)
+  ctx.beginPath();ctx.arc(cx,cy,5,0,Math.PI*2);ctx.fillStyle="#E86B35";ctx.fill();
+  // Heading indicator
+  var ha=(d.heading_deg||0)*Math.PI/180;
+  ctx.beginPath();ctx.moveTo(cx,cy);
+  ctx.lineTo(cx+Math.cos(ha)*14,cy-Math.sin(ha)*14);
+  ctx.strokeStyle="#E86B35";ctx.lineWidth=2;ctx.stroke();
+}
+
+function startFly(){
+  if(flyWs&&flyWs.readyState===WebSocket.OPEN)flyWs.close();
+  var proto=location.protocol==="https:"?"wss:":"ws:";
+  flyWs=new WebSocket(proto+"//"+location.host+"/v1/fly/stream");
+  $("fly-status").textContent="Loading model...";
+  $("fly-log").innerHTML="";
+  flyTrail=[];
+  flyActive=true;
+
+  flyWs.onopen=function(){$("fly-status").textContent="Connecting...";};
+  flyWs.binaryType="blob";
+  var pendingMeta=null;
+  flyWs.onmessage=function(e){
+    if(typeof e.data==="string"){
+      var parsed=JSON.parse(e.data);
+      if(parsed.status){
+        $("fly-status").textContent=parsed.status==="loading"?"Loading simulation...":"Live";
+        return;
+      }
+      pendingMeta=parsed;
+      return;
+    }
+    if(!pendingMeta)return;
+    $("fly-status").textContent="Live";
+    var d=pendingMeta;pendingMeta=null;
+    var url=URL.createObjectURL(e.data);
+    var img=$("fly-frame");
+    var old=img.src;
+    img.src=url;
+    if(old&&old.startsWith("blob:"))URL.revokeObjectURL(old);
+    // Overlay
+    var ov=$("fly-overlay");
+    ov.textContent=d.decision.replace("_"," ").toUpperCase();
+    ov.className="fly-overlay "+d.decision;
+    // HUD
+    $("fly-dist").textContent=d.food_distance+"mm";
+    $("fly-angle").textContent=d.food_angle_deg+"\\u00b0";
+    $("fly-speed").textContent=d.speed;
+    $("fly-foods").textContent=d.foods_reached;
+    $("fly-step2").textContent=d.step;
+    // Sidebar
+    var dLabel=d.decision.replace("_"," ").toUpperCase();
+    $("fly-decision").textContent=dLabel;
+    var dColors={walk:"var(--accent2)",turn_left:"var(--blue)",turn_right:"var(--orange)"};
+    $("fly-decision").style.color=dColors[d.decision]||"var(--text)";
+    $("fly-conf").textContent=(d.confidence*100).toFixed(1)+"%";
+    var pb=$("fly-prob-bars");pb.innerHTML="";
+    var colors={walk:"#3DA87A",turn_left:"#7AADE8",turn_right:"#E89840"};
+    if(d.probabilities){
+      Object.entries(d.probabilities).forEach(function(kv){
+        var lbl=kv[0],p=kv[1],pct=Math.round(p*100);
+        pb.innerHTML+='<div style="display:flex;align-items:center;gap:6px;font-size:10px;margin:3px 0;color:var(--muted)"><span style="width:70px;text-align:right">'+lbl.replace("_"," ")+'</span><div style="flex:1;height:5px;background:#222;border-radius:3px;overflow:hidden"><div style="width:'+pct+'%;height:100%;background:'+(colors[lbl]||"#888")+';border-radius:3px"></div></div><span style="width:30px">'+pct+'%</span></div>';
+      });
+    }
+    $("fly-ms").textContent=d.classify_ms+"ms";
+    $("fly-foods2").textContent=d.foods_reached;
+    $("fly-step3").textContent=d.step;
+    $("fly-heading").textContent=d.heading_deg+"\\u00b0";
+    // Map
+    flyTrail.push([d.fly_x,d.fly_y]);
+    if(flyTrail.length>200)flyTrail.shift();
+    drawFlyMap(d);
+    // Log
+    var log=$("fly-log");
+    var li=document.createElement("li");
+    li.className=d.decision;
+    li.textContent="["+d.step+"] "+dLabel+" "+(d.confidence*100).toFixed(0)+"% | "+d.food_distance+"mm"+(d.food_reached?" \\u2605 FOOD":"");
+    log.prepend(li);
+    while(log.children.length>50)log.lastChild.remove();
+  };
+  flyWs.onclose=function(){$("fly-status").textContent="Disconnected";flyWs=null;flyActive=false;};
+  flyWs.onerror=function(){$("fly-status").textContent="Connection error";};
+}
+
+function stopFly(){
+  if(flyWs&&flyWs.readyState===WebSocket.OPEN)flyWs.close();
+  flyActive=false;
+}
+
+$("fly-restart").onclick=function(){startFly();};
 
 // --- Inbox Demo ---
 var ibTRAIN=[
@@ -1560,25 +1790,30 @@ function route(){
   if(h==="doom"){
     $("v-doom").classList.add("active");
     if(!doomActive)startDoom();
-    ibStop();stopPoker();
+    stopFly();ibStop();stopPoker();
+  } else if(h==="fly"){
+    $("v-fly").classList.add("active");
+    if(!flyActive)startFly();
+    stopDoom();ibStop();stopPoker();
   } else if(h==="inbox"){
     $("v-inbox").classList.add("active");
     if(!ibActive)ibRun();
-    stopDoom();stopPoker();
+    stopDoom();stopFly();stopPoker();
   } else if(h==="poker"){
     $("v-poker").classList.add("active");
     if(!pkActive)startPoker();
-    stopDoom();ibStop();
+    stopDoom();stopFly();ibStop();
   } else if(h.startsWith("model/")){
     var tid=h.split("/")[1];
     if(tid==="doom_fire"){go("doom");return;}
     if(tid==="poker_decision"){go("poker");return;}
+    if(tid==="fly_navigation"){go("fly");return;}
     $("v-detail").classList.add("active");
     showDetail(tid);
-    stopDoom();ibStop();stopPoker();
+    stopDoom();stopFly();ibStop();stopPoker();
   } else {
     $("v-catalog").classList.add("active");
-    stopDoom();ibStop();stopPoker();
+    stopDoom();stopFly();ibStop();stopPoker();
   }
 }
 

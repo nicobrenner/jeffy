@@ -537,73 +537,74 @@ PLAYGROUND_HTML = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Jeffy · Classifier Catalog</title>
+<title>Jeffy · Playground</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <style>
-:root{color-scheme:light;--bg:#0c0c0c;--panel:#161616;--line:#2a2a2a;--text:#e8e8e8;--muted:#888;--accent:#ff4444;--accent2:#44ff44;--blue:#44aaff;--orange:#ffaa44;--mono:ui-monospace,SFMono-Regular,Consolas,monospace}
+:root{color-scheme:dark;--bg:#111015;--panel:#1C1A22;--line:#2E2A28;--text:#E4E0DB;--muted:#8A857F;--accent:#E86B35;--accent2:#3DA87A;--blue:#7AADE8;--orange:#E89840;--mono:'JetBrains Mono','Fira Code','Cascadia Code',monospace;--display:'Manrope',system-ui,sans-serif;--fg-dim:#5E5952;--code-bg:#0A090D;--border:#2E2A28}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 var(--mono)}
+body{margin:0;background:var(--bg);color:var(--text);font:14px/1.55 var(--display);-webkit-font-smoothing:antialiased}
 header{max-width:1200px;margin:auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
 main{max-width:1200px;margin:auto;padding:20px 24px}
 a{color:var(--muted)}
-.brand a{font-size:20px;font-weight:700;letter-spacing:-0.5px;color:#fff;text-decoration:none}
+.brand a{font-size:20px;font-weight:700;letter-spacing:-0.5px;color:var(--text);text-decoration:none;font-family:var(--mono)}
 .brand a:hover{color:var(--accent)}
-.brand span{font-weight:400;color:var(--muted);font-size:13px;margin-left:10px}
-.status{font-size:11px;color:var(--muted)}.status::before{content:"\\25cf";color:#555;margin-right:5px}
-.status[data-state="ready"]::before{color:#22c55e}
+.brand span{font-weight:400;color:var(--muted);font-size:13px;margin-left:10px;font-family:var(--display)}
+.status{font-size:11px;color:var(--muted);font-family:var(--mono)}.status::before{content:"\\25cf";color:var(--fg-dim);margin-right:5px}
+.status[data-state="ready"]::before{color:var(--accent2)}
 .view{display:none}.view.active{display:block}
 
 .catalog-head{margin-bottom:20px}
-.catalog-head h2{font-size:15px;color:#fff;margin:0 0 4px}
-.catalog-head p{margin:0;font-size:12px;color:var(--muted)}
+.catalog-head h2{font-size:15px;color:var(--text);margin:0 0 4px;font-family:var(--display);font-weight:700}
+.catalog-head p{margin:0;font-size:12px;color:var(--muted);font-family:var(--display)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px;cursor:pointer;transition:border-color .15s}
 .card:hover{border-color:var(--accent)}
 .card.feat{border-left:3px solid var(--orange)}
 .card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
-.card-id{font-size:13px;font-weight:700;color:#fff}
-.card-acc{font-size:12px;font-weight:600;color:var(--accent2)}
-.card-name{font-size:11px;color:var(--muted);margin-bottom:10px;line-height:1.4}
+.card-id{font-size:13px;font-weight:700;color:var(--text);font-family:var(--mono)}
+.card-acc{font-size:12px;font-weight:600;color:var(--accent2);font-variant-numeric:tabular-nums;font-family:var(--mono)}
+.card-name{font-size:11px;color:var(--muted);margin-bottom:10px;line-height:1.4;font-family:var(--display)}
 .card-tags{display:flex;gap:6px;flex-wrap:wrap}
-.tag{font-size:10px;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:1px 6px}
-.card-bar{height:4px;border-radius:2px;background:#222;margin-top:10px;overflow:hidden}
+.tag{font-size:10px;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-family:var(--mono)}
+.card-bar{height:4px;border-radius:2px;background:var(--line);margin-top:10px;overflow:hidden}
 .card-bar-fill{height:100%;border-radius:2px;background:var(--accent2)}
-.demo-badge{font-size:9px;color:var(--accent);border:1px solid var(--accent);border-radius:3px;padding:1px 5px;text-transform:uppercase;letter-spacing:.5px}
+.demo-badge{font-size:9px;color:var(--accent);border:1px solid var(--accent);border-radius:3px;padding:1px 5px;text-transform:uppercase;letter-spacing:.5px;font-family:var(--mono)}
 
-.back{font-size:12px;color:var(--muted);cursor:pointer;margin-bottom:16px;display:inline-block}
+.back{font-size:12px;color:var(--muted);cursor:pointer;margin-bottom:16px;display:inline-block;font-family:var(--display)}
 .back:hover{color:var(--text)}
 .d-header{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:20px;margin-bottom:16px}
-.d-title{font-size:18px;font-weight:700;color:#fff;margin:0 0 4px}
-.d-desc{font-size:12px;color:var(--muted);margin:0 0 14px}
+.d-title{font-size:18px;font-weight:700;color:var(--text);margin:0 0 4px;font-family:var(--mono);letter-spacing:-0.03em}
+.d-desc{font-size:12px;color:var(--muted);margin:0 0 14px;font-family:var(--display);line-height:1.55}
 .d-stats{display:flex;gap:20px;flex-wrap:wrap}
 .d-stat{text-align:center}
-.d-stat .v{font-size:20px;font-weight:700;color:#fff;display:block}
-.d-stat .l{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.d-stat .v{font-size:20px;font-weight:700;color:var(--accent);display:block;font-variant-numeric:tabular-nums;font-family:var(--mono)}
+.d-stat .l{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-family:var(--display)}
 .d-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .d-section{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px}
-.d-section h3{margin:0 0 10px;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.d-section h3{margin:0 0 10px;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-family:var(--display)}
 .d-section.full{grid-column:1/-1}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
-.chip{font-size:10px;color:var(--text);background:#222;border-radius:4px;padding:2px 8px}
-textarea{width:100%;background:#1a1a1a;color:var(--text);border:1px solid var(--line);border-radius:6px;padding:10px;font:12px/1.5 var(--mono);resize:vertical;min-height:80px}
+.chip{font-size:10px;color:var(--text);background:var(--line);border-radius:4px;padding:2px 8px;font-family:var(--mono)}
+textarea{width:100%;background:var(--code-bg);color:var(--text);border:1px solid var(--line);border-radius:6px;padding:10px;font:12px/1.5 var(--mono);resize:vertical;min-height:80px}
 textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
 button{border:1px solid var(--line);background:transparent;color:var(--text);border-radius:6px;padding:7px 12px;cursor:pointer;font:11px var(--mono)}
 button:hover{border-color:var(--accent)}
 button:disabled{opacity:.5;cursor:wait}
-.run-btn{background:var(--accent);color:#fff;border:0;font-weight:650;padding:10px 18px;margin-top:10px}
+.run-btn{background:var(--accent);color:#fff;border:0;font-weight:650;padding:10px 18px;margin-top:10px;font-family:var(--display)}
 .try-row{display:flex;align-items:center;justify-content:space-between;margin-top:10px}
-.result-label{font-size:22px;font-weight:650;letter-spacing:-.5px;margin:10px 0;color:#fff}
+.result-label{font-size:22px;font-weight:650;letter-spacing:-.5px;margin:10px 0;color:var(--text);font-family:var(--display)}
 .bar-row{display:grid;grid-template-columns:minmax(80px,1.2fr) 2fr 50px;gap:8px;align-items:center;font-size:11px;margin:6px 0}
 .bar-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted)}
-.track{height:7px;background:#222;border-radius:6px;overflow:hidden}
+.track{height:7px;background:var(--line);border-radius:6px;overflow:hidden}
 .fill{height:100%;background:var(--accent);border-radius:6px}
-.pct{text-align:right;color:var(--muted)}
-.rmeta{font-size:10px;color:var(--muted);margin-top:10px;line-height:1.7}
-.err-msg{color:#ff6b6b;background:#1a0000;border:1px solid #4a0000;border-radius:6px;padding:10px;font-size:11px;margin-top:10px;display:none}
-pre{white-space:pre-wrap;overflow-wrap:anywhere;font:10px/1.6 var(--mono);max-height:300px;overflow:auto;color:var(--muted);background:#1a1a1a;border-radius:5px;padding:10px;margin:8px 0 0}
+.pct{text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}
+.rmeta{font-size:10px;color:var(--muted);margin-top:10px;line-height:1.7;font-family:var(--display)}
+.err-msg{color:#E86B35;background:#1C1410;border:1px solid #3A2218;border-radius:6px;padding:10px;font-size:11px;margin-top:10px;display:none}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;font:10px/1.6 var(--mono);max-height:300px;overflow:auto;color:var(--muted);background:var(--code-bg);border-radius:5px;padding:10px;margin:8px 0 0}
 .codeblk{position:relative}
 .cpbtn{position:absolute;top:6px;right:6px;font-size:10px;padding:3px 8px}
 details{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
-summary{color:var(--muted);font-size:11px;cursor:pointer}
+summary{color:var(--muted);font-size:11px;cursor:pointer;font-family:var(--display)}
 
 .doom-layout{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start}
 .doom-left{display:flex;flex-direction:column;gap:12px;width:480px}
@@ -617,17 +618,17 @@ summary{color:var(--muted);font-size:11px;cursor:pointer}
 .decision-overlay.turn_left,.decision-overlay.turn_right{background:rgba(40,40,40,.8);color:#aaa}
 .sidebar{display:flex;flex-direction:column;gap:16px}
 .info-card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px}
-.info-card h3{margin:0 0 10px;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
-.stat-row{display:flex;justify-content:space-between;font-size:12px;padding:3px 0;border-bottom:1px solid var(--line)}
+.info-card h3{margin:0 0 10px;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-family:var(--display)}
+.stat-row{display:flex;justify-content:space-between;font-size:12px;padding:3px 0;border-bottom:1px solid var(--line);font-family:var(--mono)}
 .stat-row:last-child{border-bottom:0}
 .stat-row .label{color:var(--muted)}
 .restart-btn{padding:6px 14px;border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:6px;font:11px var(--mono);cursor:pointer}
 .restart-btn:hover{border-color:var(--accent);color:var(--text)}
-.log{max-height:180px;overflow-y:auto;font-size:10px;color:var(--muted);line-height:1.6;padding:0;margin:0;list-style:none}
+.log{max-height:180px;overflow-y:auto;font-size:10px;color:var(--muted);line-height:1.6;padding:0;margin:0;list-style:none;font-family:var(--mono)}
 .log li.fire{color:var(--accent)}
 .log li.turn_left{color:var(--blue)}
 .log li.turn_right{color:var(--orange)}
-footer{max-width:1200px;margin:auto;padding:16px 24px;font-size:10px;color:#555;display:flex;justify-content:space-between;gap:12px}
+footer{max-width:1200px;margin:auto;padding:16px 24px;font-size:10px;color:var(--fg-dim);display:flex;justify-content:space-between;gap:12px;font-family:var(--display)}
 
 .ib-layout{display:grid;grid-template-columns:1fr 1fr;gap:14px;height:460px}
 .ib-panel{background:var(--panel);border:1px solid var(--line);border-radius:8px;display:flex;flex-direction:column;overflow:hidden;transition:opacity .35s}
@@ -635,7 +636,7 @@ footer{max-width:1200px;margin:auto;padding:16px 24px;font-size:10px;color:#555;
 #ib-trainPanel,#ib-inboxPanel{grid-column:1;grid-row:1}
 #ib-logPanel{grid-column:2;grid-row:1}
 .ib-panel-head{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;border-bottom:1px solid var(--line);flex-shrink:0}
-.ib-panel-head h3{font-size:13px;font-weight:600;margin:0;color:#fff}
+.ib-panel-head h3{font-size:13px;font-weight:600;margin:0;color:var(--text);font-family:var(--display)}
 .ib-panel-head .meta{font-size:10px;color:var(--muted);font-variant-numeric:tabular-nums}
 .ib-panel-body{flex:1;overflow-y:auto;padding:10px 12px;display:flex;flex-direction:column;gap:10px}
 .ib-train-row{display:flex;align-items:center;gap:8px;padding:6px 8px;font-size:12px;line-height:1.4;border-bottom:1px solid rgba(255,255,255,.04)}
@@ -701,7 +702,7 @@ footer{max-width:1200px;margin:auto;padding:16px 24px;font-size:10px;color:#555;
 .pk-seat[data-pos="1"]{right:-30px;top:50%;transform:translateY(-50%)}
 .pk-seat[data-pos="2"]{bottom:-20px;left:50%;transform:translateX(-50%)}
 .pk-seat[data-pos="3"]{left:-30px;top:50%;transform:translateY(-50%)}
-.pk-name{font-size:10px;font-weight:600;color:#ccc;background:rgba(0,0,0,.5);padding:1px 8px;border-radius:3px}
+.pk-name{font-size:10px;font-weight:600;color:var(--text);background:rgba(0,0,0,.5);padding:1px 8px;border-radius:3px}
 .pk-name .chips{font-weight:400;color:#aaa;margin-left:4px}
 .pk-hole{display:flex;gap:2px}
 .pk-hole .pk-card{width:32px;height:45px;font-size:11px}
@@ -723,7 +724,7 @@ footer{max-width:1200px;margin:auto;padding:16px 24px;font-size:10px;color:#555;
 </head>
 <body>
 <header>
-<div class="brand"><a href="https://jeffyclassify.com" target="_blank">Jeffy</a><span>Classifier Catalog</span></div>
+<div class="brand"><a href="https://jeffyclassify.com" target="_blank">Jeffy</a><span>Playground</span></div>
 <div style="display:flex;align-items:center;gap:14px">
 <a href="https://github.com/nicobrenner/jeffy" target="_blank" style="font-size:11px;color:var(--muted)">GitHub &#8599;</a>
 <div id="status" class="status">Connecting</div>
@@ -737,7 +738,103 @@ footer{max-width:1200px;margin:auto;padding:16px 24px;font-size:10px;color:#555;
 <h2>Pretrained Classifiers</h2>
 <p id="grid-count">16 classifiers ready to use. Click a model to try it.</p>
 </div>
-<div id="grid" class="grid"></div>
+<div id="grid" class="grid">
+<div class="card feat" onclick="go('doom')">
+<div class="card-top"><span class="card-id">doom_fire</span><span class="demo-badge">Live Demo</span></div>
+<div class="card-name">Real-time Doom gameplay classifier (24 game-state features)</div>
+<div class="card-tags"><span class="tag">3 classes</span><span class="tag">24 features</span><span class="tag">user-provided</span></div>
+</div>
+<div class="card" onclick="go('inbox')">
+<div class="card-top"><span class="card-id">inbox_router</span><span class="demo-badge">Live Demo</span></div>
+<div class="card-name">Train and classify emails into Work, Family, Promo, Notifications</div>
+<div class="card-tags"><span class="tag">4 classes</span><span class="tag">text</span><span class="tag">MIT</span></div>
+<div class="card-bar"><div class="card-bar-fill" style="width:70.8%"></div></div>
+</div>
+<div class="card feat" onclick="go('poker')">
+<div class="card-top"><span class="card-id">poker_decision</span><span class="demo-badge">Live Demo</span></div>
+<div class="card-name">4 AI players play Texas Hold’em using game-state classifiers</div>
+<div class="card-tags"><span class="tag">4 classes</span><span class="tag">18 features</span><span class="tag">MIT</span></div>
+<div class="card-bar"><div class="card-bar-fill" style="width:88%"></div></div>
+</div>
+<div class="card" onclick="go('model/sms_spam')">
+<div class="card-top"><span class="card-id">sms_spam</span><span class="card-acc">99.1%</span></div>
+<div class="card-name">SMS spam detection</div>
+<div class="card-tags"><span class="tag">2 classes</span><span class="tag">text</span><span class="tag">CC BY 4.0</span></div>
+<div class="card-bar"><div class="card-bar-fill" style="width:99.1%"></div></div>
+</div>
+<div class="card" onclick="go('model/dbpedia')">
+<div class="card-top"><span class="card-id">dbpedia</span><span class="card-acc">96.0%</span></div>
+<div class="card-name">Wikipedia article ontology classification</div>
+<div class="card-tags"><span class="tag">14 classes</span><span class="tag">text</span><span class="tag">CC BY-SA 3.0</span></div>
+<div class="card-bar"><div class="card-bar-fill" style="width:96%"></div></div>
+</div>
+<div class="card" onclick="go('model/imdb')">
+<div class="card-top"><span class="card-id">imdb</span><span class="card-acc">94.8%</span></div>
+<div class="card-name">Movie review sentiment (positive/negative)</div>
+<div class="card-tags"><span class="tag">2 classes</span><span class="tag">text</span><span class="tag">Academic / non-commercial</span></div>
+<div class="card-bar"><div class="card-bar-fill" style="width:94.8%"></div></div>
+</div>
+<div class="card" onclick="go('model/banking77')">
+<div class="card-top"><span class="card-id">banking77</span><span class="card-acc">94.3%</span></div>
+<div class="card-name">Banking customer service intent detection</div>
+<div class="card-tags"><span class="tag">77 classes</span><span class="tag">text</span><span class="tag">CC BY 4.0</span></div>
+<div class="card-bar"><div class="card-bar-fill" style="width:94.3%"></div></div>
+</div>
+<div class="card" onclick="go('model/ag_news')">
+<div class="card-top"><span class="card-id">ag_news</span><span class="card-acc">90.6%</span></div>
+<div class="card-name">News article topic classification</div>
+<div class="card-tags"><span class="tag">4 classes</span><span class="tag">text</span><span class="tag">Academic / non-commercial</span></div>
+<div class="card-bar"><div class="card-bar-fill" style="width:90.6%"></div></div>
+</div>
+<div class="card" onclick="go('model/sst2')">
+<div class="card-top"><span class="card-id">sst2</span><span class="card-acc">90.1%</span></div>
+<div class="card-name">Movie review sentiment (positive/negative)</div>
+<div class="card-tags"><span class="tag">2 classes</span><span class="tag">text</span><span class="tag">Stanford academic license</span></div>
+<div class="card-bar"><div class="card-bar-fill" style="width:90.1%"></div></div>
+</div>
+<div class="card" onclick="go('model/clinc_oos')">
+<div class="card-top"><span class="card-id">clinc_oos</span><span class="card-acc">88.4%</span></div>
+<div class="card-name">Intent detection with out-of-scope</div>
+<div class="card-tags"><span class="tag">151 classes</span><span class="tag">text</span><span class="tag">CC BY 3.0</span></div>
+<div class="card-bar"><div class="card-bar-fill" style="width:88.4%"></div></div>
+</div>
+<div class="card" onclick="go('model/massive_intent')">
+<div class="card-top"><span class="card-id">massive_intent</span><span class="card-acc">88.1%</span></div>
+<div class="card-name">Amazon MASSIVE voice command intents</div>
+<div class="card-tags"><span class="tag">60 classes</span><span class="tag">text</span><span class="tag">CC BY 4.0</span></div>
+<div class="card-bar"><div class="card-bar-fill" style="width:88.1%"></div></div>
+</div>
+<div class="card" onclick="go('model/tweet_eval_offensive')">
+<div class="card-top"><span class="card-id">tweet_eval_offensive</span><span class="card-acc">81.0%</span></div>
+<div class="card-name">Offensive language detection</div>
+<div class="card-tags"><span class="tag">2 classes</span><span class="tag">text</span><span class="tag">Twitter TOS / academic</span></div>
+<div class="card-bar"><div class="card-bar-fill" style="width:81%"></div></div>
+</div>
+<div class="card" onclick="go('model/tweet_eval_emotion')">
+<div class="card-top"><span class="card-id">tweet_eval_emotion</span><span class="card-acc">78.1%</span></div>
+<div class="card-name">Tweet emotion detection</div>
+<div class="card-tags"><span class="tag">4 classes</span><span class="tag">text</span><span class="tag">Twitter TOS / academic</span></div>
+<div class="card-bar"><div class="card-bar-fill" style="width:78.1%"></div></div>
+</div>
+<div class="card" onclick="go('model/emotion')">
+<div class="card-top"><span class="card-id">emotion</span><span class="card-acc">75.5%</span></div>
+<div class="card-name">Text emotion detection</div>
+<div class="card-tags"><span class="tag">6 classes</span><span class="tag">text</span><span class="tag">Academic</span></div>
+<div class="card-bar"><div class="card-bar-fill" style="width:75.5%"></div></div>
+</div>
+<div class="card" onclick="go('model/tweet_eval_sentiment')">
+<div class="card-top"><span class="card-id">tweet_eval_sentiment</span><span class="card-acc">66.2%</span></div>
+<div class="card-name">Tweet sentiment analysis</div>
+<div class="card-tags"><span class="tag">3 classes</span><span class="tag">text</span><span class="tag">Twitter TOS / academic</span></div>
+<div class="card-bar"><div class="card-bar-fill" style="width:66.2%"></div></div>
+</div>
+<div class="card" onclick="go('model/snli')">
+<div class="card-top"><span class="card-id">snli</span><span class="card-acc">65.6%</span></div>
+<div class="card-name">Natural language inference</div>
+<div class="card-tags"><span class="tag">3 classes</span><span class="tag">text</span><span class="tag">CC BY-SA 4.0</span></div>
+<div class="card-bar"><div class="card-bar-fill" style="width:65.6%"></div></div>
+</div>
+</div>
 </div>
 
 <!-- Model Detail -->
@@ -943,76 +1040,21 @@ Each player is a logistic regression classifier trained on 21K simulated poker d
 </footer>
 <script>
 const $=id=>document.getElementById(id);
-let allCaps=[],capMap={},ws=null,frameCount=0,fpsStart=0,doomActive=false;
+let ws=null,frameCount=0,fpsStart=0,doomActive=false;
 
-fetch("/health").then(r=>r.json()).then(d=>{
-  $("status").dataset.state=d.status;
-  $("status").textContent=d.capabilities+" classifiers ready";
-}).catch(()=>{$("status").textContent="Server unavailable"});
+const CAPS={"ag_news":{"name":"News article topic classification","n_classes":4,"encoder":"BAAI/bge-large-en-v1.5","license":"Academic / non-commercial","train_examples":10000,"test_accuracy":0.9055,"train_accuracy":0.9413,"labels":{"0":"World","1":"Sports","2":"Business","3":"Sci/Tech"},"example":"The Federal Reserve raised interest rates by 0.25% today."},"banking77":{"name":"Banking customer service intent detection","n_classes":77,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY 4.0","train_examples":10000,"test_accuracy":0.943,"train_accuracy":0.9836,"labels":{"0":"activate_my_card","1":"age_limit","2":"apple_pay_or_google_pay","3":"atm_support","4":"automatic_top_up","5":"balance_not_updated_after_bank_transfer","6":"balance_not_updated_after_cheque_or_cash_deposit","7":"beneficiary_not_allowed","8":"cancel_transfer","9":"card_about_to_expire","10":"card_acceptance","11":"card_arrival","12":"card_delivery_estimate","13":"card_linking","14":"card_not_working","15":"card_payment_fee_charged","16":"card_payment_not_recognised","17":"card_payment_wrong_exchange_rate","18":"card_swallowed","19":"cash_withdrawal_charge","20":"cash_withdrawal_not_recognised","21":"change_pin","22":"compromised_card","23":"contactless_not_working","24":"country_support","25":"declined_card_payment","26":"declined_cash_withdrawal","27":"declined_transfer","28":"direct_debit_payment_not_recognised","29":"disposable_card_limits","30":"edit_personal_details","31":"exchange_charge","32":"exchange_rate","33":"exchange_via_app","34":"extra_charge_on_statement","35":"failed_transfer","36":"fiat_currency_support","37":"get_disposable_virtual_card","38":"get_physical_card","39":"getting_spare_card","40":"getting_virtual_card","41":"lost_or_stolen_card","42":"lost_or_stolen_phone","43":"order_physical_card","44":"passcode_forgotten","45":"pending_card_payment","46":"pending_cash_withdrawal","47":"pending_top_up","48":"pending_transfer","49":"pin_blocked","50":"receiving_money","51":"Refund_not_showing_up","52":"request_refund","53":"reverted_card_payment?","54":"supported_cards_and_currencies","55":"terminate_account","56":"top_up_by_bank_transfer_charge","57":"top_up_by_card_charge","58":"top_up_by_cash_or_cheque","59":"top_up_failed","60":"top_up_limits","61":"top_up_reverted","62":"topping_up_by_card","63":"transaction_charged_twice","64":"transfer_fee_charged","65":"transfer_into_account","66":"transfer_not_received_by_recipient","67":"transfer_timing","68":"unable_to_verify_identity","69":"verify_my_identity","70":"verify_source_of_funds","71":"verify_top_up","72":"virtual_card_not_working","73":"visa_or_mastercard","74":"why_verify_identity","75":"wrong_amount_of_cash_received","76":"wrong_exchange_rate_for_cash_withdrawal"},"example":"I\\u2019ve been charged twice for the same transaction, can I get a refund?"},"clinc_oos":{"name":"Intent detection with out-of-scope","n_classes":151,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY 3.0","train_examples":10000,"test_accuracy":0.8845,"train_accuracy":0.9983,"labels":{"0":"restaurant_reviews","1":"nutrition_info","2":"account_blocked","3":"oil_change_how","4":"time","5":"weather","6":"redeem_rewards","7":"interest_rate","8":"gas_type","9":"accept_reservations","10":"smart_home","11":"user_name","12":"report_lost_card","13":"repeat","14":"whisper_mode","15":"what_are_your_hobbies","16":"order","17":"jump_start","18":"schedule_meeting","19":"meeting_schedule","20":"freeze_account","21":"what_song","22":"meaning_of_life","23":"restaurant_reservation","24":"traffic","25":"make_call","26":"text","27":"bill_balance","28":"improve_credit_score","29":"change_language","30":"no","31":"measurement_conversion","32":"timer","33":"flip_coin","34":"do_you_have_pets","35":"balance","36":"tell_joke","37":"last_maintenance","38":"exchange_rate","39":"uber","40":"car_rental","41":"credit_limit","42":"oos","43":"shopping_list","44":"expiration_date","45":"routing","46":"meal_suggestion","47":"tire_change","48":"todo_list","49":"card_declined","50":"rewards_balance","51":"change_accent","52":"vaccines","53":"reminder_update","54":"food_last","55":"change_ai_name","56":"bill_due","57":"who_do_you_work_for","58":"share_location","59":"international_visa","60":"calendar","61":"translate","62":"carry_on","63":"book_flight","64":"insurance_change","65":"todo_list_update","66":"timezone","67":"cancel_reservation","68":"transactions","69":"credit_score","70":"report_fraud","71":"spending_history","72":"directions","73":"spelling","74":"insurance","75":"what_is_your_name","76":"reminder","77":"where_are_you_from","78":"distance","79":"payday","80":"flight_status","81":"find_phone","82":"greeting","83":"alarm","84":"order_status","85":"confirm_reservation","86":"cook_time","87":"damaged_card","88":"reset_settings","89":"pin_change","90":"replacement_card_duration","91":"new_card","92":"roll_dice","93":"income","94":"taxes","95":"date","96":"who_made_you","97":"pto_request","98":"tire_pressure","99":"how_old_are_you","100":"rollover_401k","101":"pto_request_status","102":"how_busy","103":"application_status","104":"recipe","105":"calendar_update","106":"play_music","107":"yes","108":"direct_deposit","109":"credit_limit_change","110":"gas","111":"pay_bill","112":"ingredients_list","113":"lost_luggage","114":"goodbye","115":"what_can_i_ask_you","116":"book_hotel","117":"are_you_a_bot","118":"next_song","119":"change_speed","120":"plug_type","121":"maybe","122":"w2","123":"oil_change_when","124":"thank_you","125":"shopping_list_update","126":"pto_balance","127":"order_checks","128":"travel_alert","129":"fun_fact","130":"sync_device","131":"schedule_maintenance","132":"apr","133":"transfer","134":"ingredient_substitution","135":"calories","136":"current_location","137":"international_fees","138":"calculator","139":"definition","140":"next_holiday","141":"update_playlist","142":"mpg","143":"min_payment","144":"change_user_name","145":"restaurant_suggestion","146":"travel_notification","147":"cancel","148":"pto_used","149":"travel_suggestion","150":"change_volume"},"example":"What\\u2019s the weather like in San Francisco?"},"dbpedia":{"name":"Wikipedia article ontology classification","n_classes":14,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY-SA 3.0","train_examples":10000,"test_accuracy":0.9595,"train_accuracy":0.998,"labels":{"0":"Company","1":"EducationalInstitution","2":"Artist","3":"Athlete","4":"OfficeHolder","5":"MeanOfTransportation","6":"Building","7":"NaturalPlace","8":"Village","9":"Animal","10":"Plant","11":"Album","12":"Film","13":"WrittenWork"},"example":"Harvard University is a private Ivy League research university in Cambridge, Massachusetts."},"emotion":{"name":"Text emotion detection","n_classes":6,"encoder":"BAAI/bge-large-en-v1.5","license":"Academic","train_examples":10000,"test_accuracy":0.755,"train_accuracy":0.8339,"labels":{"0":"sadness","1":"joy","2":"love","3":"anger","4":"fear","5":"surprise"},"example":"I just got accepted into my dream school! I can\\u2019t believe it!"},"imdb":{"name":"Movie review sentiment (positive/negative)","n_classes":2,"encoder":"BAAI/bge-large-en-v1.5","license":"Academic / non-commercial","train_examples":10000,"test_accuracy":0.948,"train_accuracy":0.9559,"labels":{"0":"negative","1":"positive"},"example":"A beautifully crafted film with stunning performances throughout."},"inbox_router":{"name":"Email inbox classifier: route messages to work, family, promo, or notification","n_classes":4,"encoder":"BAAI/bge-large-en-v1.5","license":"MIT","train_examples":24,"test_accuracy":0.708,"train_accuracy":1.0,"labels":{"family":"family","notification":"notification","promo":"promo","work":"work"},"example":"Can you send me the Q4 projections?"},"massive_intent":{"name":"Amazon MASSIVE voice command intents","n_classes":60,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY 4.0","train_examples":10000,"test_accuracy":0.881,"train_accuracy":0.977,"labels":{"alarm_query":"alarm_query","alarm_remove":"alarm_remove","alarm_set":"alarm_set","audio_volume_down":"audio_volume_down","audio_volume_mute":"audio_volume_mute","audio_volume_other":"audio_volume_other","audio_volume_up":"audio_volume_up","calendar_query":"calendar_query","calendar_remove":"calendar_remove","calendar_set":"calendar_set","cooking_query":"cooking_query","cooking_recipe":"cooking_recipe","datetime_convert":"datetime_convert","datetime_query":"datetime_query","email_addcontact":"email_addcontact","email_query":"email_query","email_querycontact":"email_querycontact","email_sendemail":"email_sendemail","general_greet":"general_greet","general_joke":"general_joke","general_quirky":"general_quirky","iot_cleaning":"iot_cleaning","iot_coffee":"iot_coffee","iot_hue_lightchange":"iot_hue_lightchange","iot_hue_lightdim":"iot_hue_lightdim","iot_hue_lightoff":"iot_hue_lightoff","iot_hue_lighton":"iot_hue_lighton","iot_hue_lightup":"iot_hue_lightup","iot_wemo_off":"iot_wemo_off","iot_wemo_on":"iot_wemo_on","lists_createoradd":"lists_createoradd","lists_query":"lists_query","lists_remove":"lists_remove","music_dislikeness":"music_dislikeness","music_likeness":"music_likeness","music_query":"music_query","music_settings":"music_settings","news_query":"news_query","play_audiobook":"play_audiobook","play_game":"play_game","play_music":"play_music","play_podcasts":"play_podcasts","play_radio":"play_radio","qa_currency":"qa_currency","qa_definition":"qa_definition","qa_factoid":"qa_factoid","qa_maths":"qa_maths","qa_stock":"qa_stock","recommendation_events":"recommendation_events","recommendation_locations":"recommendation_locations","recommendation_movies":"recommendation_movies","social_post":"social_post","social_query":"social_query","takeaway_order":"takeaway_order","takeaway_query":"takeaway_query","transport_query":"transport_query","transport_taxi":"transport_taxi","transport_ticket":"transport_ticket","transport_traffic":"transport_traffic","weather_query":"weather_query"},"example":"Turn on the living room lights"},"sms_spam":{"name":"SMS spam detection","n_classes":2,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY 4.0","train_examples":4459,"test_accuracy":0.991,"train_accuracy":0.997,"labels":{"0":"ham","1":"spam"},"example":"WINNER!! You have been selected for a 900 prize reward! Call now!"},"snli":{"name":"Natural language inference","n_classes":3,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY-SA 4.0","train_examples":10000,"test_accuracy":0.656,"train_accuracy":0.7271,"labels":{"0":"entailment","1":"neutral","2":"contradiction"},"example":"A man is playing guitar on a street corner. [SEP] A musician performs outdoors."},"sst2":{"name":"Movie review sentiment (positive/negative)","n_classes":2,"encoder":"BAAI/bge-large-en-v1.5","license":"Stanford academic license","train_examples":10000,"test_accuracy":0.901,"train_accuracy":0.9453,"labels":{"0":"negative","1":"positive"},"example":"This movie was absolutely terrible, a waste of time."},"tweet_eval_emotion":{"name":"Tweet emotion detection","n_classes":4,"encoder":"BAAI/bge-large-en-v1.5","license":"Twitter TOS / academic","train_examples":3257,"test_accuracy":0.781,"train_accuracy":0.902,"labels":{"0":"anger","1":"joy","2":"optimism","3":"sadness"},"example":"I am so frustrated with this company\\u2019s customer service."},"tweet_eval_offensive":{"name":"Offensive language detection","n_classes":2,"encoder":"BAAI/bge-large-en-v1.5","license":"Twitter TOS / academic","train_examples":10000,"test_accuracy":0.81,"train_accuracy":0.808,"labels":{"0":"not_offensive","1":"offensive"},"example":"Great work on the project team, really proud of everyone."},"tweet_eval_sentiment":{"name":"Tweet sentiment analysis","n_classes":3,"encoder":"BAAI/bge-large-en-v1.5","license":"Twitter TOS / academic","train_examples":10000,"test_accuracy":0.662,"train_accuracy":0.757,"labels":{"0":"negative","1":"neutral","2":"positive"},"example":"Best day ever! Finally got my dream job! #blessed"}};
 
-fetch("/v1/capabilities").then(r=>r.json()).then(d=>{
-  allCaps=d.capabilities;
-  allCaps.forEach(c=>capMap[c.task_id]=c);
-  buildGrid();
-  route();
-});
-
-function buildGrid(){
-  const g=$("grid");g.innerHTML="";
-  const sorted=[...allCaps].sort((a,b)=>{
-    if(a.task_id==="doom_fire")return -1;
-    if(b.task_id==="doom_fire")return 1;
-    return(b.test_accuracy||0)-(a.test_accuracy||0);
-  });
-  sorted.forEach(c=>{
-    const isFeat=c.encoder==="features";
-    const acc=c.test_accuracy?Math.round(c.test_accuracy*1000)/10:null;
-    const d=document.createElement("div");
-    d.className="card"+(isFeat?" feat":"");
-    d.onclick=()=>go("model/"+c.task_id);
-    d.innerHTML=
-      '<div class="card-top"><span class="card-id">'+c.task_id+'</span>'+
-      (c.task_id==="doom_fire"?'<span class="demo-badge">Live Demo</span>':
-       acc!==null?'<span class="card-acc">'+acc+'%</span>':'')+
-      '</div>'+
-      '<div class="card-name">'+c.name+'</div>'+
-      '<div class="card-tags">'+
-        '<span class="tag">'+c.n_classes+' classes</span>'+
-        '<span class="tag">'+(isFeat?(c.n_features||"?")+' features':'text')+'</span>'+
-        '<span class="tag">'+c.license+'</span>'+
-      '</div>'+
-      (acc!==null?'<div class="card-bar"><div class="card-bar-fill" style="width:'+acc+'%"></div></div>':'');
-    g.appendChild(d);
-    if(c.task_id==="doom_fire"){
-      const ib=document.createElement("div");
-      ib.className="card";
-      ib.onclick=()=>go("inbox");
-      ib.innerHTML=
-        '<div class="card-top"><span class="card-id">inbox_router</span><span class="demo-badge">Live Demo</span></div>'+
-        '<div class="card-name">Train and classify emails into Work, Family, Promo, Notifications</div>'+
-        '<div class="card-tags"><span class="tag">4 classes</span><span class="tag">text</span><span class="tag">custom</span></div>'+
-        '<div class="card-bar"><div class="card-bar-fill" style="width:92%"></div></div>';
-      g.appendChild(ib);
-      var pk=document.createElement("div");
-      pk.className="card feat";
-      pk.onclick=function(){go("poker");};
-      pk.innerHTML=
-        '<div class="card-top"><span class="card-id">poker_decision</span><span class="demo-badge">Live Demo</span></div>'+
-        '<div class="card-name">4 AI players play Texas Hold\\u2019em using game-state classifiers</div>'+
-        '<div class="card-tags"><span class="tag">4 classes</span><span class="tag">18 features</span><span class="tag">MIT</span></div>'+
-        '<div class="card-bar"><div class="card-bar-fill" style="width:88%"></div></div>';
-      g.appendChild(pk);
-    }
-  });
-}
+$("status").dataset.state="ready";
+$("status").textContent="16 classifiers ready";
+route();
 
 function showDetail(tid){
-  const c=capMap[tid];if(!c)return;
+  const c=CAPS[tid];if(!c)return;
   const isFeat=c.encoder==="features";
   const acc=c.test_accuracy?Math.round(c.test_accuracy*1000)/10:null;
 
   $("dh").innerHTML=
-    '<div class="d-title">'+c.task_id+'</div>'+
+    '<div class="d-title">'+tid+'</div>'+
     '<div class="d-desc">'+c.name+'</div>'+
     '<div class="d-stats">'+
       (acc!==null?'<div class="d-stat"><span class="v">'+acc+'%</span><span class="l">Accuracy</span></div>':'')+
@@ -1025,7 +1067,7 @@ function showDetail(tid){
   if(c.labels)Object.values(c.labels).forEach(l=>{lb.innerHTML+='<span class="chip">'+l+'</span>';});
 
   $("d-info").innerHTML=
-    '<div style="font-size:12px;line-height:2">'+
+    '<div style="font-size:12px;line-height:2;font-family:var(--display)">'+
     '<div><span style="color:var(--muted)">License:</span> '+c.license+'</div>'+
     '<div><span style="color:var(--muted)">Encoder:</span> '+c.encoder+'</div>'+
     '<div><span style="color:var(--muted)">Type:</span> '+(isFeat?"Feature-based (numeric vectors)":"Text classifier")+'</div>'+
@@ -1034,23 +1076,20 @@ function showDetail(tid){
 
   if(isFeat){
     $("d-try").innerHTML=
-      '<div style="font-size:12px;color:var(--muted);line-height:1.6">'+
+      '<div style="font-size:12px;color:var(--muted);line-height:1.6;font-family:var(--display)">'+
       'This classifier operates on numeric feature vectors'+(c.n_features?' ('+c.n_features+' features)':'')+', not text.'+
       (tid==="doom_fire"?'<br><br><a href="#doom" style="color:var(--accent)" onclick="go(&apos;doom&apos;);return false">Watch the live Doom demo &#8594;</a>':'')+
       '</div>';
   } else {
+    var example=c.example||"Enter text to classify...";
     $("d-try").innerHTML=
-      '<textarea id="try-text" rows="3" spellcheck="false" placeholder="Enter text to classify..."></textarea>'+
+      '<textarea id="try-text" rows="3" spellcheck="false" placeholder="Enter text to classify...">'+example+'</textarea>'+
       '<div class="try-row"><span id="try-lat" style="font-size:11px;color:var(--muted)"></span>'+
       '<button class="run-btn" id="try-run">Classify &#8594;</button></div>'+
       '<div id="try-err" class="err-msg"></div>'+
       '<div id="try-res" style="display:none"><div id="try-lbl" class="result-label"></div><div id="try-bars"></div><div id="try-meta" class="rmeta"></div></div>'+
       '<details id="try-raw-s" style="display:none"><summary>Response JSON</summary><pre id="try-raw"></pre></details>';
     $("try-run").onclick=()=>runPredict(tid);
-    fetch("/v1/capabilities/"+tid).then(r=>r.json()).then(d=>{
-      const ta=$("try-text");
-      if(ta&&d.example_request&&d.example_request.text)ta.value=d.example_request.text;
-    });
   }
 
   var curlData=isFeat

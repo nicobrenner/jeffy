@@ -4,14 +4,16 @@ Pretrained classifiers you can run and retrain on CPU — text, game state, or a
 
 **[jeffyclassify.com](https://jeffyclassify.com)** · **[Live Playground](https://playground.jeffyclassify.com)** · **[GitHub](https://github.com/nicobrenner/jeffy)**
 
-<p align="center">
-  <a href="https://playground.jeffyclassify.com/#doom"><img src="examples/doom_battle.gif" width="49%" alt="Doom Battle" style="vertical-align:top"></a>
-  <a href="https://playground.jeffyclassify.com/#poker"><img src="examples/poker_demo.gif" width="49%" alt="Poker AI" style="vertical-align:top"></a>
-</p>
-<p align="center">
-  <a href="https://playground.jeffyclassify.com/#inbox"><img src="examples/inbox_demo.gif" width="49%" alt="Inbox Router" style="vertical-align:top"></a>
-  <a href="https://playground.jeffyclassify.com/#fly"><img src="examples/fly_demo.gif" width="49%" alt="Fly Navigation" style="vertical-align:top"></a>
-</p>
+<table align="center">
+  <tr>
+    <td valign="top" width="50%"><a href="https://playground.jeffyclassify.com/#doom"><img src="examples/doom_battle.gif" width="100%" alt="Doom Battle"></a></td>
+    <td valign="top" width="50%"><a href="https://playground.jeffyclassify.com/#poker"><img src="examples/poker_demo.gif" width="100%" alt="Poker AI"></a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="50%"><a href="https://playground.jeffyclassify.com/#inbox"><img src="examples/inbox_demo.gif" width="100%" alt="Inbox Router"></a></td>
+    <td valign="top" width="50%"><a href="https://playground.jeffyclassify.com/#fly"><img src="examples/fly_demo.gif" width="100%" alt="Fly Navigation"></a></td>
+  </tr>
+</table>
 
 ## Try it
 

@@ -1478,6 +1478,7 @@ async function mlClassify(){
     if(allEntries.length>10)bars.innerHTML+='<div style="font-size:10px;color:var(--muted);margin-top:4px">Showing top 10 of '+allEntries.length+' intents</div>';
     $("ml-meta").innerHTML="Language: "+info.name+" \\u00b7 Confidence: "+(d.confidence*100).toFixed(1)+"% \\u00b7 Embedding: "+d.embedding_ms+"ms \\u00b7 Total: "+d.latency_ms+"ms";
     $("ml-result").style.display="block";
+    _ev("predict",info.task,{label:d.label,confidence:d.confidence,lang:mlLang});
     $("ml-lat").textContent=Math.round(performance.now()-t0)+"ms round-trip";
   }catch(err){
     $("ml-err").textContent=err.message;$("ml-err").style.display="block";

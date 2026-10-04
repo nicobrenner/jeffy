@@ -426,9 +426,26 @@ def systemone(req: SystemOneRequest):
         "usage": {"input_tokens": 0, "output_tokens": 0},
     }
 
+def _track_ws(request, demo, event, **extra):
+    ip = request.headers.get("cf-connecting-ip") or request.headers.get("x-forwarded-for", "").split(",")[0].strip() or request.client.host
+    entry = {
+        "ts": datetime.now(timezone.utc).isoformat(),
+        "ip": ip,
+        "type": "event",
+        "event": event,
+        "view": demo,
+        "ua": request.headers.get("user-agent", "")[:200],
+        "country": request.headers.get("cf-ipcountry", ""),
+        "local": ip in ("127.0.0.1", "::1", "localhost"),
+        **extra,
+    }
+    _analytics_log.append(entry)
+    _append_analytics(entry)
+
 @app.websocket("/v1/doom/stream")
 async def doom_stream(ws: WebSocket):
     await ws.accept()
+    _track_ws(ws, "doom", "demo_start")
     try:
         from .doom_runner import DoomSession
         engine = get_engine()
@@ -457,6 +474,7 @@ async def doom_stream(ws: WebSocket):
     except Exception as e:
         logger.warning(f"Doom stream error: {e}")
     finally:
+        _track_ws(ws, "doom", "demo_end")
         if 'session' in locals():
             session.close()
 
@@ -464,6 +482,7 @@ async def doom_stream(ws: WebSocket):
 @app.websocket("/v1/poker/stream")
 async def poker_stream(ws: WebSocket):
     await ws.accept()
+    _track_ws(ws, "poker", "demo_start")
     try:
         from .poker_runner import PokerSession
         engine = get_engine()
@@ -489,6 +508,7 @@ async def poker_stream(ws: WebSocket):
     except Exception as e:
         logger.warning(f"Poker stream error: {e}")
     finally:
+        _track_ws(ws, "poker", "demo_end")
         if 'session' in locals():
             session.close()
 
@@ -496,6 +516,7 @@ async def poker_stream(ws: WebSocket):
 @app.websocket("/v1/fly/stream")
 async def fly_stream(ws: WebSocket):
     await ws.accept()
+    _track_ws(ws, "fly", "demo_start")
     try:
         await ws.send_text(_json_module.dumps({"status": "loading"}))
         from .fly_runner import FlySession
@@ -517,8 +538,40 @@ async def fly_stream(ws: WebSocket):
     except Exception as e:
         logger.warning(f"Fly stream error: {e}")
     finally:
+        _track_ws(ws, "fly", "demo_end")
         if 'session' in locals():
             session.close()
+
+
+@app.post("/v1/event", status_code=204)
+async def track_event(request: Request):
+    try:
+        body = _json_module.loads(await request.body())
+    except Exception:
+        return
+    event = str(body.get("event", ""))[:50]
+    view = str(body.get("view", ""))[:50]
+    meta = body.get("meta", {})
+    if not isinstance(meta, dict):
+        meta = {}
+    if not event:
+        return
+    ip = request.headers.get("cf-connecting-ip") or request.headers.get("x-forwarded-for", "").split(",")[0].strip() or request.client.host
+    entry = {
+        "ts": datetime.now(timezone.utc).isoformat(),
+        "ip": ip,
+        "type": "event",
+        "event": event,
+        "view": view,
+        "meta": {k[:30]: str(v)[:100] for k, v in list(meta.items())[:10]},
+        "ua": request.headers.get("user-agent", "")[:200],
+        "country": request.headers.get("cf-ipcountry", ""),
+        "local": ip in ("127.0.0.1", "::1", "localhost"),
+    }
+    _analytics_log.append(entry)
+    _append_analytics(entry)
+    if len(_analytics_log) > 10000:
+        _analytics_log.pop(0)
 
 
 @app.get("/v1/analytics")
@@ -656,6 +709,28 @@ summary{color:var(--muted);font-size:11px;cursor:pointer;font-family:var(--displ
 .log li.fire{color:var(--accent)}
 .log li.turn_left{color:var(--blue)}
 .log li.turn_right{color:var(--orange)}
+.ml-layout{display:grid;grid-template-columns:1fr 340px;gap:20px;align-items:start}
+.ml-left{display:flex;flex-direction:column;gap:14px}
+.ml-lang-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.ml-lang-btn{font-size:11px;padding:5px 10px;border:1px solid var(--line);border-radius:5px;background:transparent;color:var(--muted);cursor:pointer;font-family:var(--display);transition:all .15s}
+.ml-lang-btn:hover{border-color:var(--accent);color:var(--text)}
+.ml-lang-btn.active{border-color:var(--accent);background:var(--accent);color:#fff}
+.ml-examples{display:flex;flex-direction:column;gap:8px}
+.ml-ex-group{border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.ml-ex-intent{font-size:10px;color:var(--muted);padding:6px 10px;background:rgba(255,255,255,.02);border-bottom:1px solid var(--line);font-family:var(--mono);text-transform:uppercase;letter-spacing:.5px}
+.ml-ex-phrases{display:flex;flex-wrap:wrap;gap:0}
+.ml-ex-phrase{font-size:11px;color:var(--text);padding:5px 10px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.03);width:100%;transition:background .1s}
+.ml-ex-phrase:hover{background:rgba(232,107,53,.08)}
+.ml-ex-phrase:last-child{border-bottom:0}
+.ml-ex-flag{font-size:9px;color:var(--muted);margin-right:6px;font-family:var(--mono)}
+.ml-cmp-row{display:grid;grid-template-columns:70px 1fr 50px;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line);font-size:12px}
+.ml-cmp-row:last-child{border-bottom:0}
+.ml-cmp-lang{color:var(--muted);font-family:var(--mono);font-size:11px}
+.ml-cmp-label{color:var(--text);font-weight:600;font-family:var(--mono)}
+.ml-cmp-conf{color:var(--accent2);font-variant-numeric:tabular-nums;text-align:right;font-family:var(--mono);font-size:11px}
+.ml-cmp-row.match .ml-cmp-label{color:var(--accent2)}
+.ml-cmp-row.diff .ml-cmp-label{color:var(--orange)}
+@media(max-width:768px){.ml-layout{grid-template-columns:1fr}}
 footer{max-width:1200px;margin:auto;padding:16px 24px;font-size:10px;color:var(--fg-dim);display:flex;justify-content:space-between;gap:12px;font-family:var(--display)}
 
 .ib-layout{display:grid;grid-template-columns:1fr 1fr;gap:14px;height:460px}
@@ -779,7 +854,7 @@ footer{max-width:1200px;margin:auto;padding:16px 24px;font-size:10px;color:var(-
 <div id="v-catalog" class="view active">
 <div class="catalog-head">
 <h2>Pretrained Classifiers</h2>
-<p id="grid-count">16 classifiers ready to use. Click a model to try it.</p>
+<p id="grid-count">68 classifiers ready to use. Click a model to try it.</p>
 </div>
 <div id="grid" class="grid">
 <div class="card feat" onclick="go('doom')">
@@ -804,6 +879,12 @@ footer{max-width:1200px;margin:auto;padding:16px 24px;font-size:10px;color:var(-
 <div class="card-name">Biomechanical fruit fly forages for food via chemotaxis</div>
 <div class="card-tags"><span class="tag">3 classes</span><span class="tag">16 features</span><span class="tag">MPL 2.0</span></div>
 <div class="card-bar"><div class="card-bar-fill" style="width:98%"></div></div>
+</div>
+<div class="card feat" onclick="go('multilingual')">
+<div class="card-top"><span class="card-id">multilingual</span><span class="demo-badge">Live Demo</span></div>
+<div class="card-name">Voice command intents in 51 languages (MASSIVE dataset, multilingual encoder)</div>
+<div class="card-tags"><span class="tag">60 classes</span><span class="tag">51 languages</span><span class="tag">CC BY 4.0</span></div>
+<div class="card-bar"><div class="card-bar-fill" style="width:82%"></div></div>
 </div>
 <div class="card" onclick="go('model/sms_spam')">
 <div class="card-top"><span class="card-id">sms_spam</span><span class="card-acc">99.1%</span></div>
@@ -1028,6 +1109,73 @@ Built on <a href="https://neuromechfly.org" target="_blank" style="color:var(--b
 </div>
 </div>
 
+<!-- Multilingual Demo -->
+<div id="v-multilingual" class="view">
+<span class="back" onclick="go('')">&#8592; Back to catalog</span>
+<div class="d-header">
+<div class="d-title">Multilingual Classifiers</div>
+<div class="d-desc">51 per-language voice command classifiers (60 intents each), trained on Amazon MASSIVE in 22 minutes on a CPU. All share a multilingual sentence encoder (paraphrase-multilingual-MiniLM-L12-v2, 384-dim, 50+ languages) &mdash; the same architecture, trained on each language&rsquo;s native data. Each classifier is ~100KB; the 470MB encoder is shared. Because the encoder maps all languages into the same embedding space, you can even pass text in one language to another language&rsquo;s classifier and it mostly works.</div>
+<div class="d-stats">
+<div class="d-stat"><span class="v">51</span><span class="l">Languages</span></div>
+<div class="d-stat"><span class="v">60</span><span class="l">Intents</span></div>
+<div class="d-stat"><span class="v">~100KB</span><span class="l">Per classifier</span></div>
+<div class="d-stat"><span class="v">22min</span><span class="l">Total training</span></div>
+</div>
+</div>
+<div class="ml-layout" style="margin-top:16px">
+<div class="ml-left">
+<div class="info-card">
+<h3>Try it</h3>
+<div class="ml-lang-row" id="ml-lang-primary"></div>
+<div class="ml-lang-row" id="ml-lang-more" style="display:none"></div>
+<div style="margin-bottom:8px"><button id="ml-show-more" onclick="var m=$('ml-lang-more');var showing=m.style.display!=='none';m.style.display=showing?'none':'flex';this.textContent=showing?'Show all 51 languages ▼':'Show fewer ▲'" style="background:none;border:none;color:var(--accent);cursor:pointer;font-size:11px;font-family:var(--display);padding:0">Show all 51 languages &#9660;</button></div>
+<textarea id="ml-input" rows="2" spellcheck="false" placeholder="Type a voice command in any language...">enciende las luces del sal&#243;n</textarea>
+<div class="try-row">
+<span id="ml-lat" style="font-size:11px;color:var(--muted)"></span>
+<div style="display:flex;gap:8px">
+<button class="run-btn" id="ml-run" onclick="mlClassify()">Classify &#8594;</button>
+<button class="run-btn" id="ml-compare" onclick="mlCompareAll()" style="background:var(--accent2)">Compare all 51 &#8594;</button>
+</div>
+</div>
+<div id="ml-err" class="err-msg"></div>
+<div id="ml-result" style="display:none">
+<div id="ml-label" class="result-label"></div>
+<div id="ml-bars"></div>
+<div id="ml-meta" class="rmeta"></div>
+</div>
+<div id="ml-compare-result" style="display:none;margin-top:14px;border-top:1px solid var(--line);padding-top:14px">
+<div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:10px">Cross-language comparison</div>
+<div id="ml-compare-rows"></div>
+<div id="ml-compare-meta" class="rmeta"></div>
+</div>
+</div>
+<div class="info-card">
+<h3>Example phrases</h3>
+<div style="font-size:11px;color:var(--muted);margin-bottom:10px;line-height:1.5">Same intent, different languages. Click a phrase to classify it.</div>
+<div class="ml-examples" id="ml-examples"></div>
+</div>
+</div>
+<div class="sidebar">
+<div class="info-card">
+<h3>Accuracy by Language</h3>
+<div id="ml-acc-table"></div>
+</div>
+<div class="info-card">
+<h3>How it works</h3>
+<div style="font-size:11px;color:var(--muted);line-height:1.6">
+The key insight: a <strong style="color:var(--text)">multilingual sentence encoder</strong> maps the same intent to nearby points in embedding space regardless of language. &ldquo;Turn on the lights&rdquo; (English) and &ldquo;Enciende las luces&rdquo; (Spanish) get cosine similarity 0.89. A single logistic regression learns the boundary, no translation needed. Each classifier is a few KB &mdash; the 470MB encoder is shared.
+</div>
+</div>
+<div class="info-card">
+<h3>Dataset</h3>
+<div style="font-size:11px;color:var(--muted);line-height:1.6">
+<a href="https://huggingface.co/datasets/mteb/amazon_massive_intent" target="_blank" style="color:var(--blue)">Amazon MASSIVE</a> &mdash; Multilingual Amazon Slate Simplified for Slot-filling, Intent, and Entity. 60 voice-command intents across 51 languages. Each language trained on 10,000 examples, tested on 2,000. License: CC BY 4.0.
+</div>
+</div>
+</div>
+</div>
+</div>
+
 <!-- Inbox Demo -->
 <div id="v-inbox" class="view">
 <span class="back" onclick="go('')">&#8592; Back to catalog</span>
@@ -1161,8 +1309,221 @@ let flyWs=null,flyActive=false,flyTrail=[];
 
 const CAPS={"ag_news":{"name":"News article topic classification","n_classes":4,"encoder":"BAAI/bge-large-en-v1.5","license":"Academic / non-commercial","train_examples":10000,"test_accuracy":0.9055,"train_accuracy":0.9413,"labels":{"0":"World","1":"Sports","2":"Business","3":"Sci/Tech"},"example":"The Federal Reserve raised interest rates by 0.25% today."},"banking77":{"name":"Banking customer service intent detection","n_classes":77,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY 4.0","train_examples":10000,"test_accuracy":0.943,"train_accuracy":0.9836,"labels":{"0":"activate_my_card","1":"age_limit","2":"apple_pay_or_google_pay","3":"atm_support","4":"automatic_top_up","5":"balance_not_updated_after_bank_transfer","6":"balance_not_updated_after_cheque_or_cash_deposit","7":"beneficiary_not_allowed","8":"cancel_transfer","9":"card_about_to_expire","10":"card_acceptance","11":"card_arrival","12":"card_delivery_estimate","13":"card_linking","14":"card_not_working","15":"card_payment_fee_charged","16":"card_payment_not_recognised","17":"card_payment_wrong_exchange_rate","18":"card_swallowed","19":"cash_withdrawal_charge","20":"cash_withdrawal_not_recognised","21":"change_pin","22":"compromised_card","23":"contactless_not_working","24":"country_support","25":"declined_card_payment","26":"declined_cash_withdrawal","27":"declined_transfer","28":"direct_debit_payment_not_recognised","29":"disposable_card_limits","30":"edit_personal_details","31":"exchange_charge","32":"exchange_rate","33":"exchange_via_app","34":"extra_charge_on_statement","35":"failed_transfer","36":"fiat_currency_support","37":"get_disposable_virtual_card","38":"get_physical_card","39":"getting_spare_card","40":"getting_virtual_card","41":"lost_or_stolen_card","42":"lost_or_stolen_phone","43":"order_physical_card","44":"passcode_forgotten","45":"pending_card_payment","46":"pending_cash_withdrawal","47":"pending_top_up","48":"pending_transfer","49":"pin_blocked","50":"receiving_money","51":"Refund_not_showing_up","52":"request_refund","53":"reverted_card_payment?","54":"supported_cards_and_currencies","55":"terminate_account","56":"top_up_by_bank_transfer_charge","57":"top_up_by_card_charge","58":"top_up_by_cash_or_cheque","59":"top_up_failed","60":"top_up_limits","61":"top_up_reverted","62":"topping_up_by_card","63":"transaction_charged_twice","64":"transfer_fee_charged","65":"transfer_into_account","66":"transfer_not_received_by_recipient","67":"transfer_timing","68":"unable_to_verify_identity","69":"verify_my_identity","70":"verify_source_of_funds","71":"verify_top_up","72":"virtual_card_not_working","73":"visa_or_mastercard","74":"why_verify_identity","75":"wrong_amount_of_cash_received","76":"wrong_exchange_rate_for_cash_withdrawal"},"example":"I\\u2019ve been charged twice for the same transaction, can I get a refund?"},"clinc_oos":{"name":"Intent detection with out-of-scope","n_classes":151,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY 3.0","train_examples":10000,"test_accuracy":0.8845,"train_accuracy":0.9983,"labels":{"0":"restaurant_reviews","1":"nutrition_info","2":"account_blocked","3":"oil_change_how","4":"time","5":"weather","6":"redeem_rewards","7":"interest_rate","8":"gas_type","9":"accept_reservations","10":"smart_home","11":"user_name","12":"report_lost_card","13":"repeat","14":"whisper_mode","15":"what_are_your_hobbies","16":"order","17":"jump_start","18":"schedule_meeting","19":"meeting_schedule","20":"freeze_account","21":"what_song","22":"meaning_of_life","23":"restaurant_reservation","24":"traffic","25":"make_call","26":"text","27":"bill_balance","28":"improve_credit_score","29":"change_language","30":"no","31":"measurement_conversion","32":"timer","33":"flip_coin","34":"do_you_have_pets","35":"balance","36":"tell_joke","37":"last_maintenance","38":"exchange_rate","39":"uber","40":"car_rental","41":"credit_limit","42":"oos","43":"shopping_list","44":"expiration_date","45":"routing","46":"meal_suggestion","47":"tire_change","48":"todo_list","49":"card_declined","50":"rewards_balance","51":"change_accent","52":"vaccines","53":"reminder_update","54":"food_last","55":"change_ai_name","56":"bill_due","57":"who_do_you_work_for","58":"share_location","59":"international_visa","60":"calendar","61":"translate","62":"carry_on","63":"book_flight","64":"insurance_change","65":"todo_list_update","66":"timezone","67":"cancel_reservation","68":"transactions","69":"credit_score","70":"report_fraud","71":"spending_history","72":"directions","73":"spelling","74":"insurance","75":"what_is_your_name","76":"reminder","77":"where_are_you_from","78":"distance","79":"payday","80":"flight_status","81":"find_phone","82":"greeting","83":"alarm","84":"order_status","85":"confirm_reservation","86":"cook_time","87":"damaged_card","88":"reset_settings","89":"pin_change","90":"replacement_card_duration","91":"new_card","92":"roll_dice","93":"income","94":"taxes","95":"date","96":"who_made_you","97":"pto_request","98":"tire_pressure","99":"how_old_are_you","100":"rollover_401k","101":"pto_request_status","102":"how_busy","103":"application_status","104":"recipe","105":"calendar_update","106":"play_music","107":"yes","108":"direct_deposit","109":"credit_limit_change","110":"gas","111":"pay_bill","112":"ingredients_list","113":"lost_luggage","114":"goodbye","115":"what_can_i_ask_you","116":"book_hotel","117":"are_you_a_bot","118":"next_song","119":"change_speed","120":"plug_type","121":"maybe","122":"w2","123":"oil_change_when","124":"thank_you","125":"shopping_list_update","126":"pto_balance","127":"order_checks","128":"travel_alert","129":"fun_fact","130":"sync_device","131":"schedule_maintenance","132":"apr","133":"transfer","134":"ingredient_substitution","135":"calories","136":"current_location","137":"international_fees","138":"calculator","139":"definition","140":"next_holiday","141":"update_playlist","142":"mpg","143":"min_payment","144":"change_user_name","145":"restaurant_suggestion","146":"travel_notification","147":"cancel","148":"pto_used","149":"travel_suggestion","150":"change_volume"},"example":"What\\u2019s the weather like in San Francisco?"},"dbpedia":{"name":"Wikipedia article ontology classification","n_classes":14,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY-SA 3.0","train_examples":10000,"test_accuracy":0.9595,"train_accuracy":0.998,"labels":{"0":"Company","1":"EducationalInstitution","2":"Artist","3":"Athlete","4":"OfficeHolder","5":"MeanOfTransportation","6":"Building","7":"NaturalPlace","8":"Village","9":"Animal","10":"Plant","11":"Album","12":"Film","13":"WrittenWork"},"example":"Harvard University is a private Ivy League research university in Cambridge, Massachusetts."},"emotion":{"name":"Text emotion detection","n_classes":6,"encoder":"BAAI/bge-large-en-v1.5","license":"Academic","train_examples":10000,"test_accuracy":0.755,"train_accuracy":0.8339,"labels":{"0":"sadness","1":"joy","2":"love","3":"anger","4":"fear","5":"surprise"},"example":"I just got accepted into my dream school! I can\\u2019t believe it!"},"imdb":{"name":"Movie review sentiment (positive/negative)","n_classes":2,"encoder":"BAAI/bge-large-en-v1.5","license":"Academic / non-commercial","train_examples":10000,"test_accuracy":0.948,"train_accuracy":0.9559,"labels":{"0":"negative","1":"positive"},"example":"A beautifully crafted film with stunning performances throughout."},"inbox_router":{"name":"Email inbox classifier: route messages to work, family, promo, or notification","n_classes":4,"encoder":"BAAI/bge-large-en-v1.5","license":"MIT","train_examples":24,"test_accuracy":0.708,"train_accuracy":1.0,"labels":{"family":"family","notification":"notification","promo":"promo","work":"work"},"example":"Can you send me the Q4 projections?"},"massive_intent":{"name":"Amazon MASSIVE voice command intents","n_classes":60,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY 4.0","train_examples":10000,"test_accuracy":0.881,"train_accuracy":0.977,"labels":{"alarm_query":"alarm_query","alarm_remove":"alarm_remove","alarm_set":"alarm_set","audio_volume_down":"audio_volume_down","audio_volume_mute":"audio_volume_mute","audio_volume_other":"audio_volume_other","audio_volume_up":"audio_volume_up","calendar_query":"calendar_query","calendar_remove":"calendar_remove","calendar_set":"calendar_set","cooking_query":"cooking_query","cooking_recipe":"cooking_recipe","datetime_convert":"datetime_convert","datetime_query":"datetime_query","email_addcontact":"email_addcontact","email_query":"email_query","email_querycontact":"email_querycontact","email_sendemail":"email_sendemail","general_greet":"general_greet","general_joke":"general_joke","general_quirky":"general_quirky","iot_cleaning":"iot_cleaning","iot_coffee":"iot_coffee","iot_hue_lightchange":"iot_hue_lightchange","iot_hue_lightdim":"iot_hue_lightdim","iot_hue_lightoff":"iot_hue_lightoff","iot_hue_lighton":"iot_hue_lighton","iot_hue_lightup":"iot_hue_lightup","iot_wemo_off":"iot_wemo_off","iot_wemo_on":"iot_wemo_on","lists_createoradd":"lists_createoradd","lists_query":"lists_query","lists_remove":"lists_remove","music_dislikeness":"music_dislikeness","music_likeness":"music_likeness","music_query":"music_query","music_settings":"music_settings","news_query":"news_query","play_audiobook":"play_audiobook","play_game":"play_game","play_music":"play_music","play_podcasts":"play_podcasts","play_radio":"play_radio","qa_currency":"qa_currency","qa_definition":"qa_definition","qa_factoid":"qa_factoid","qa_maths":"qa_maths","qa_stock":"qa_stock","recommendation_events":"recommendation_events","recommendation_locations":"recommendation_locations","recommendation_movies":"recommendation_movies","social_post":"social_post","social_query":"social_query","takeaway_order":"takeaway_order","takeaway_query":"takeaway_query","transport_query":"transport_query","transport_taxi":"transport_taxi","transport_ticket":"transport_ticket","transport_traffic":"transport_traffic","weather_query":"weather_query"},"example":"Turn on the living room lights"},"sms_spam":{"name":"SMS spam detection","n_classes":2,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY 4.0","train_examples":4459,"test_accuracy":0.991,"train_accuracy":0.997,"labels":{"0":"ham","1":"spam"},"example":"WINNER!! You have been selected for a 900 prize reward! Call now!"},"snli":{"name":"Natural language inference","n_classes":3,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY-SA 4.0","train_examples":10000,"test_accuracy":0.656,"train_accuracy":0.7271,"labels":{"0":"entailment","1":"neutral","2":"contradiction"},"example":"A man is playing guitar on a street corner. [SEP] A musician performs outdoors."},"sst2":{"name":"Movie review sentiment (positive/negative)","n_classes":2,"encoder":"BAAI/bge-large-en-v1.5","license":"Stanford academic license","train_examples":10000,"test_accuracy":0.901,"train_accuracy":0.9453,"labels":{"0":"negative","1":"positive"},"example":"This movie was absolutely terrible, a waste of time."},"tweet_eval_emotion":{"name":"Tweet emotion detection","n_classes":4,"encoder":"BAAI/bge-large-en-v1.5","license":"Twitter TOS / academic","train_examples":3257,"test_accuracy":0.781,"train_accuracy":0.902,"labels":{"0":"anger","1":"joy","2":"optimism","3":"sadness"},"example":"I am so frustrated with this company\\u2019s customer service."},"tweet_eval_offensive":{"name":"Offensive language detection","n_classes":2,"encoder":"BAAI/bge-large-en-v1.5","license":"Twitter TOS / academic","train_examples":10000,"test_accuracy":0.81,"train_accuracy":0.808,"labels":{"0":"not_offensive","1":"offensive"},"example":"Great work on the project team, really proud of everyone."},"tweet_eval_sentiment":{"name":"Tweet sentiment analysis","n_classes":3,"encoder":"BAAI/bge-large-en-v1.5","license":"Twitter TOS / academic","train_examples":10000,"test_accuracy":0.662,"train_accuracy":0.757,"labels":{"0":"negative","1":"neutral","2":"positive"},"example":"Best day ever! Finally got my dream job! #blessed"}};
 
+// --- Multilingual ---
+const ML_LANGS={
+  en:{name:"English",flag:"US",task:"massive_intent_en",acc:0.864,tier:1},
+  fr:{name:"French",flag:"FR",task:"massive_intent_fr",acc:0.825,tier:1},
+  pt:{name:"Portuguese",flag:"BR",task:"massive_intent_pt",acc:0.825,tier:1},
+  zh_cn:{name:"Chinese (Simplified)",flag:"CN",task:"massive_intent_zh_cn",acc:0.822,tier:1},
+  id:{name:"Indonesian",flag:"ID",task:"massive_intent_id",acc:0.820,tier:1},
+  pl:{name:"Polish",flag:"PL",task:"massive_intent_pl",acc:0.817,tier:1},
+  ru:{name:"Russian",flag:"RU",task:"massive_intent_ru",acc:0.815,tier:1},
+  es:{name:"Spanish",flag:"ES",task:"massive_intent_es",acc:0.815,tier:1},
+  fa:{name:"Persian",flag:"IR",task:"massive_intent_fa",acc:0.811,tier:1},
+  sv:{name:"Swedish",flag:"SE",task:"massive_intent_sv",acc:0.811,tier:1},
+  nl:{name:"Dutch",flag:"NL",task:"massive_intent_nl",acc:0.810,tier:1},
+  ja:{name:"Japanese",flag:"JP",task:"massive_intent_ja",acc:0.808,tier:1},
+  it:{name:"Italian",flag:"IT",task:"massive_intent_it",acc:0.806,tier:1},
+  tr:{name:"Turkish",flag:"TR",task:"massive_intent_tr",acc:0.803,tier:1},
+  el:{name:"Greek",flag:"GR",task:"massive_intent_el",acc:0.803,tier:1},
+  hi:{name:"Hindi",flag:"IN",task:"massive_intent_hi",acc:0.802,tier:1},
+  hu:{name:"Hungarian",flag:"HU",task:"massive_intent_hu",acc:0.802,tier:1},
+  lv:{name:"Latvian",flag:"LV",task:"massive_intent_lv",acc:0.800,tier:1},
+  da:{name:"Danish",flag:"DK",task:"massive_intent_da",acc:0.800,tier:1},
+  th:{name:"Thai",flag:"TH",task:"massive_intent_th",acc:0.798,tier:2},
+  ro:{name:"Romanian",flag:"RO",task:"massive_intent_ro",acc:0.796,tier:2},
+  sq:{name:"Albanian",flag:"AL",task:"massive_intent_sq",acc:0.792,tier:2},
+  sl:{name:"Slovenian",flag:"SI",task:"massive_intent_sl",acc:0.791,tier:2},
+  ms:{name:"Malay",flag:"MY",task:"massive_intent_ms",acc:0.790,tier:2},
+  vi:{name:"Vietnamese",flag:"VN",task:"massive_intent_vi",acc:0.790,tier:2},
+  zh_tw:{name:"Chinese (Traditional)",flag:"TW",task:"massive_intent_zh_tw",acc:0.785,tier:2},
+  nb:{name:"Norwegian",flag:"NO",task:"massive_intent_nb",acc:0.785,tier:2},
+  fi:{name:"Finnish",flag:"FI",task:"massive_intent_fi",acc:0.781,tier:2},
+  ur:{name:"Urdu",flag:"PK",task:"massive_intent_ur",acc:0.780,tier:2},
+  he:{name:"Hebrew",flag:"IL",task:"massive_intent_he",acc:0.770,tier:2},
+  hy:{name:"Armenian",flag:"AM",task:"massive_intent_hy",acc:0.765,tier:2},
+  mn:{name:"Mongolian",flag:"MN",task:"massive_intent_mn",acc:0.765,tier:2},
+  my:{name:"Burmese",flag:"MM",task:"massive_intent_my",acc:0.750,tier:2},
+  de:{name:"German",flag:"DE",task:"massive_intent_de",acc:0.745,tier:2},
+  ko:{name:"Korean",flag:"KR",task:"massive_intent_ko",acc:0.741,tier:2},
+  ml:{name:"Malayalam",flag:"IN",task:"massive_intent_ml",acc:0.731,tier:2},
+  az:{name:"Azerbaijani",flag:"AZ",task:"massive_intent_az",acc:0.720,tier:2},
+  te:{name:"Telugu",flag:"IN",task:"massive_intent_te",acc:0.714,tier:2},
+  af:{name:"Afrikaans",flag:"ZA",task:"massive_intent_af",acc:0.710,tier:2},
+  kn:{name:"Kannada",flag:"IN",task:"massive_intent_kn",acc:0.709,tier:2},
+  ta:{name:"Tamil",flag:"IN",task:"massive_intent_ta",acc:0.693,tier:3},
+  ar:{name:"Arabic",flag:"SA",task:"massive_intent_ar",acc:0.690,tier:3},
+  ka:{name:"Georgian",flag:"GE",task:"massive_intent_ka",acc:0.688,tier:3},
+  bn:{name:"Bengali",flag:"BD",task:"massive_intent_bn",acc:0.675,tier:3},
+  km:{name:"Khmer",flag:"KH",task:"massive_intent_km",acc:0.668,tier:3},
+  am:{name:"Amharic",flag:"ET",task:"massive_intent_am",acc:0.650,tier:3},
+  is:{name:"Icelandic",flag:"IS",task:"massive_intent_is",acc:0.634,tier:3},
+  cy:{name:"Welsh",flag:"GB",task:"massive_intent_cy",acc:0.612,tier:3},
+  sw:{name:"Swahili",flag:"KE",task:"massive_intent_sw",acc:0.602,tier:3},
+  tl:{name:"Filipino",flag:"PH",task:"massive_intent_tl",acc:0.597,tier:3},
+  jv:{name:"Javanese",flag:"ID",task:"massive_intent_jv",acc:0.597,tier:3}
+};
+const ML_EXAMPLES=[
+  {intent:"weather_query",phrases:{es:"cu\\u00e1l es el pron\\u00f3stico de la semana",pl:"jaka jest pogoda na ten tydzie\\u0144",pt:"qual a previs\\u00e3o do tempo da semana",zh_cn:"\\u8fd9\\u5468\\u7684\\u9884\\u62a5\\u5565\\u60c5\\u51b5",de:"wie ist die diesw\\u00f6chige wettervorhersage",ja:"\\u305d\\u306e\\u9031\\u306e\\u4e88\\u5831\\u306f\\u3069\\u3046\\u3067\\u3059\\u304b",fr:"quel est le temps pr\\u00e9vu cette semaine",ru:"\\u043a\\u0430\\u043a\\u043e\\u0439 \\u043f\\u0440\\u043e\\u0433\\u043d\\u043e\\u0437 \\u043d\\u0430 \\u044d\\u0442\\u0443 \\u043d\\u0435\\u0434\\u0435\\u043b\\u044e",it:"che tempo far\\u00e0 questa settimana",ko:"\\uc774\\ubc88 \\uc8fc \\ub0a0\\uc528 \\uc5b4\\ub54c",hi:"\\u0907\\u0938 \\u0939\\u092b\\u094d\\u0924\\u0947 \\u092e\\u094c\\u0938\\u092e \\u0915\\u0948\\u0938\\u093e \\u0930\\u0939\\u0947\\u0917\\u093e",ar:"\\u0645\\u0627 \\u0647\\u064a \\u062a\\u0648\\u0642\\u0639\\u0627\\u062a \\u0627\\u0644\\u0637\\u0642\\u0633 \\u0647\\u0630\\u0627 \\u0627\\u0644\\u0623\\u0633\\u0628\\u0648\\u0639"}},
+  {intent:"alarm_set",phrases:{es:"despi\\u00e9rtame a las cinco de la ma\\u00f1ana",pl:"obudz\\u0301 mnie o pia\\u0328tej rano",zh_cn:"\\u4eca\\u5468\\u4e94\\u70b9\\u53eb\\u6211\\u8d77\\u5e8a",pt:"acorda-me \\u00e0s cinco da manh\\u00e3",de:"wecke mich um f\\u00fcnf uhr auf",ja:"\\u4eca\\u9031\\u306f\\u5348\\u524d\\u4e94\\u6642\\u306b\\u8d77\\u3053\\u3057\\u3066",fr:"r\\u00e9veille-moi \\u00e0 cinq heures du matin",ru:"\\u0440\\u0430\\u0437\\u0431\\u0443\\u0434\\u0438 \\u043c\\u0435\\u043d\\u044f \\u0432 \\u043f\\u044f\\u0442\\u044c \\u0443\\u0442\\u0440\\u0430",it:"svegliami alle cinque di mattina"}},
+  {intent:"play_music",phrases:{es:"juega de nuevo por favor",pl:"graj to ponownie prosz\\u0119",pt:"toca a novamente por favor",zh_cn:"\\u8bf7\\u518d\\u64ad\\u653e\\u5b83\\u4e00\\u6b21",de:"spiel es nochmal ab bitte",ja:"\\u305d\\u308c\\u3082\\u3046\\u4e00\\u5ea6\\u518d\\u751f\\u3057\\u3066\\u3061\\u3087\\u3046\\u3060\\u3044",fr:"rejoue-le s'il te pla\\u00eet",ru:"\\u0441\\u044b\\u0433\\u0440\\u0430\\u0439 \\u044d\\u0442\\u043e \\u0435\\u0449\\u0451 \\u0440\\u0430\\u0437",ko:"\\ub2e4\\uc2dc \\ud55c\\ubc88 \\ud2c0\\uc5b4\\uc918"}}
+];
+const ML_DEFAULTS={
+  en:"turn on the living room lights",
+  fr:"allume les lumi\\u00e8res du salon",
+  pt:"qual a previs\\u00e3o do tempo da semana",
+  zh_cn:"\\u8fd9\\u5468\\u7684\\u9884\\u62a5\\u5565\\u60c5\\u51b5",
+  id:"nyalakan lampu ruang tamu",
+  pl:"jaka jest pogoda na ten tydzie\\u0144",
+  ru:"\\u0432\\u043a\\u043b\\u044e\\u0447\\u0438 \\u0441\\u0432\\u0435\\u0442 \\u0432 \\u0433\\u043e\\u0441\\u0442\\u0438\\u043d\\u043e\\u0439",
+  es:"enciende las luces del sal\\u00f3n",
+  fa:"\\u0686\\u0631\\u0627\\u063a \\u0627\\u062a\\u0627\\u0642 \\u0646\\u0634\\u06cc\\u0645\\u0646 \\u0631\\u0627 \\u0631\\u0648\\u0634\\u0646 \\u06a9\\u0646",
+  sv:"t\\u00e4nd lamporna i vardagsrummet",
+  nl:"zet het licht in de woonkamer aan",
+  ja:"\\u4eca\\u9031\\u306f\\u5348\\u524d\\u4e94\\u6642\\u306b\\u8d77\\u3053\\u3057\\u3066",
+  it:"accendi le luci del soggiorno",
+  tr:"oturma odas\\u0131n\\u0131n \\u0131\\u015f\\u0131klar\\u0131n\\u0131 a\\u00e7",
+  el:"\\u03ac\\u03bd\\u03b1\\u03c8\\u03b5 \\u03c4\\u03b1 \\u03c6\\u03ce\\u03c4\\u03b1 \\u03c3\\u03c4\\u03bf \\u03c3\\u03b1\\u03bb\\u03cc\\u03bd\\u03b9",
+  hi:"\\u0932\\u093f\\u0935\\u093f\\u0902\\u0917 \\u0930\\u0942\\u092e \\u0915\\u0940 \\u0932\\u093e\\u0907\\u091f\\u094d\\u0938 \\u091c\\u0932\\u093e\\u0913",
+  hu:"kapcsold fel a nappali l\\u00e1mp\\u00e1t",
+  da:"t\\u00e6nd lyset i stuen",
+  de:"spiel es nochmal ab bitte",
+  ko:"\\uac70\\uc2e4 \\uc870\\uba85\\uc744 \\ucf1c \\uc918",
+  ar:"\\u0634\\u063a\\u0644 \\u0623\\u0636\\u0648\\u0627\\u0621 \\u063a\\u0631\\u0641\\u0629 \\u0627\\u0644\\u0645\\u0639\\u064a\\u0634\\u0629",
+  th:"\\u0e40\\u0e1b\\u0e34\\u0e14\\u0e44\\u0e1f\\u0e2b\\u0e49\\u0e2d\\u0e07\\u0e19\\u0e31\\u0e48\\u0e07\\u0e40\\u0e25\\u0e48\\u0e19",
+  vi:"b\\u1eadt \\u0111\\u00e8n ph\\u00f2ng kh\\u00e1ch",
+  zh_tw:"\\u958b\\u5ba2\\u5ef3\\u7684\\u71c8"
+};
+let mlLang="es";
+
+function mlSelectLang(lang){
+  mlLang=lang;
+  document.querySelectorAll(".ml-lang-btn").forEach(b=>{
+    b.classList.toggle("active",b.dataset.lang===lang);
+  });
+  var info=ML_LANGS[lang];
+  if(info)$("ml-input").placeholder="Type a voice command in "+info.name+"...";
+  if(ML_DEFAULTS[lang])$("ml-input").value=ML_DEFAULTS[lang];
+}
+
+function mlInit(){
+  var primary=$("ml-lang-primary"),more=$("ml-lang-more");
+  var primaryLangs=["es","fr","pt","zh_cn","ja","ko","ru","de","it","hi","ar","tr"];
+  primary.innerHTML="";more.innerHTML="";
+  Object.entries(ML_LANGS).forEach(([k,v])=>{
+    var cls="ml-lang-btn"+(k==="es"?" active":"");
+    var btn='<button class="'+cls+'" data-lang="'+k+'" onclick="mlSelectLang(\''+k+'\')">'+v.flag+" "+v.name+'</button>';
+    if(primaryLangs.indexOf(k)>=0)primary.innerHTML+=btn;
+    else more.innerHTML+=btn;
+  });
+
+  var tiers=[{label:"80%+ accuracy",t:1},{label:"70\\u201379%",t:2},{label:"<70%",t:3}];
+  var accHtml="";
+  tiers.forEach(tier=>{
+    accHtml+='<div style="font-size:10px;color:var(--muted);margin:8px 0 4px;text-transform:uppercase;letter-spacing:0.5px">'+tier.label+'</div>';
+    Object.entries(ML_LANGS).forEach(([k,v])=>{
+      if(v.tier!==tier.t)return;
+      var pct=Math.round(v.acc*1000)/10+"\\u0025";
+      accHtml+='<div class="stat-row"><span class="label">'+v.flag+" "+v.name+'</span><span style="color:var(--accent2)">'+pct+"</span></div>";
+    });
+  });
+  $("ml-acc-table").innerHTML=accHtml;
+
+  var exHtml="";
+  ML_EXAMPLES.forEach(ex=>{
+    var ei=ML_EXAMPLES.indexOf(ex);
+    exHtml+='<div class="ml-ex-group"><div class="ml-ex-intent">'+ex.intent+'</div><div class="ml-ex-phrases">';
+    Object.keys(ex.phrases).forEach(function(lang){
+      var info=ML_LANGS[lang];
+      exHtml+='<div class="ml-ex-phrase" data-ei="'+ei+'" data-lang="'+lang+'"><span class="ml-ex-flag">'+info.flag+'</span>'+ex.phrases[lang]+'</div>';
+    });
+    exHtml+='</div></div>';
+  });
+  $("ml-examples").innerHTML=exHtml;
+  $("ml-examples").onclick=function(e){
+    var ph=e.target.closest(".ml-ex-phrase");
+    if(!ph)return;
+    var lang=ph.dataset.lang,ei=parseInt(ph.dataset.ei);
+    mlTryPhrase(lang,ML_EXAMPLES[ei].phrases[lang]);
+  };
+}
+
+function mlTryPhrase(lang,text){
+  mlSelectLang(lang);
+  $("ml-input").value=text;
+  mlClassify();
+}
+
+async function mlClassify(){
+  var info=ML_LANGS[mlLang];
+  if(!info){$("ml-err").textContent="Unknown language";$("ml-err").style.display="block";return;}
+  var text=$("ml-input").value.trim();
+  if(!text)return;
+  var btn=$("ml-run");btn.disabled=true;btn.textContent="Classifying\\u2026";
+  $("ml-err").style.display="none";$("ml-result").style.display="none";
+  var t0=performance.now();
+  try{
+    var r=await fetch("/v1/predict",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({text:text,task:info.task})});
+    var d=await r.json();
+    if(!r.ok)throw Error(d.detail||JSON.stringify(d));
+    $("ml-label").textContent=d.label;
+    var bars=$("ml-bars");bars.innerHTML="";
+    var entries=Object.entries(d.probabilities).slice(0,10);
+    entries.forEach(([label,prob])=>{
+      bars.innerHTML+='<div class="bar-row"><span class="bar-label" title="'+label+'">'+label+'</span><div class="track"><div class="fill" style="width:'+Math.round(prob*100)+'%"></div></div><span class="pct">'+(prob*100).toFixed(1)+'%</span></div>';
+    });
+    $("ml-meta").innerHTML="Language: "+info.name+" \\u00b7 Confidence: "+(d.confidence*100).toFixed(1)+"% \\u00b7 Embedding: "+d.embedding_ms+"ms \\u00b7 Total: "+d.latency_ms+"ms";
+    $("ml-result").style.display="block";
+    $("ml-lat").textContent=Math.round(performance.now()-t0)+"ms round-trip";
+  }catch(err){
+    $("ml-err").textContent=err.message;$("ml-err").style.display="block";
+  }finally{
+    btn.disabled=false;btn.textContent="Classify \\u2192";
+  }
+}
+
+async function mlCompareAll(){
+  var text=$("ml-input").value.trim();
+  if(!text)return;
+  var btn=$("ml-compare");btn.disabled=true;btn.textContent="0/51\\u2026";
+  $("ml-err").style.display="none";$("ml-compare-result").style.display="none";
+  var rows=$("ml-compare-rows");rows.innerHTML="";
+  $("ml-compare-result").style.display="block";
+  var t0=performance.now();
+  try{
+    var langs=Object.entries(ML_LANGS);
+    var results=[];
+    var batchSize=10;
+    for(var i=0;i<langs.length;i+=batchSize){
+      var batch=langs.slice(i,i+batchSize);
+      var batchResults=await Promise.all(batch.map(([k,v])=>
+        fetch("/v1/predict",{method:"POST",headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({text:text,task:v.task})}).then(r=>r.json()).then(d=>({lang:k,info:v,result:d}))
+      ));
+      results=results.concat(batchResults);
+      btn.textContent=results.length+"/51\\u2026";
+    }
+    var majority={};
+    results.forEach(r=>{var l=r.result.label;majority[l]=(majority[l]||0)+1});
+    var topLabel=Object.entries(majority).sort((a,b)=>b[1]-a[1])[0][0];
+    rows.innerHTML="";
+    results.forEach(r=>{
+      var d=r.result;
+      var match=d.label===topLabel?"match":"diff";
+      rows.innerHTML+='<div class="ml-cmp-row '+match+'"><span class="ml-cmp-lang">'+r.info.flag+" "+r.info.name+'</span><span class="ml-cmp-label">'+d.label+'</span><span class="ml-cmp-conf">'+(d.confidence*100).toFixed(1)+'%</span></div>';
+    });
+    var agree=results.filter(r=>r.result.label===topLabel).length;
+    $("ml-compare-meta").innerHTML=agree+"/"+results.length+" classifiers agree \\u00b7 "+Math.round(performance.now()-t0)+"ms total";
+  }catch(err){
+    $("ml-err").textContent=err.message;$("ml-err").style.display="block";
+  }finally{
+    btn.disabled=false;btn.textContent="Compare all 51 \\u2192";
+  }
+}
+
 $("status").dataset.state="ready";
-$("status").textContent="17 classifiers ready";
+$("status").textContent="68 classifiers ready";
 route();
 
 function showDetail(tid){
@@ -1252,6 +1613,7 @@ async function runPredict(tid){
       " \\u00b7 Embedding: "+d.embedding_ms+"ms \\u00b7 Classifier: "+d.classifier_ms+"ms"+
       " \\u00b7 Total: "+d.latency_ms+"ms";
     resEl.style.display="block";
+    _ev("predict",tid,{label:d.label,confidence:d.confidence});
     $("try-raw").textContent=JSON.stringify(d,null,2);
     rawS.style.display="block";
     $("try-lat").textContent=Math.round(performance.now()-t0)+"ms round-trip";
@@ -1783,10 +2145,12 @@ $("pk-restart").onclick=function(){startPoker();};
 
 // --- Routing ---
 function go(h){location.hash=h;}
+function _ev(event,view,meta){try{navigator.sendBeacon("/v1/event",JSON.stringify({event:event,view:view||"",meta:meta||{}}))}catch(e){}}
 
 function route(){
   var h=location.hash.replace(/^#/,"");
   document.querySelectorAll(".view").forEach(function(v){v.classList.remove("active");});
+  if(h)_ev("view",h);
   if(h==="doom"){
     $("v-doom").classList.add("active");
     if(!doomActive)startDoom();
@@ -1795,6 +2159,10 @@ function route(){
     $("v-fly").classList.add("active");
     if(!flyActive)startFly();
     stopDoom();ibStop();stopPoker();
+  } else if(h==="multilingual"){
+    $("v-multilingual").classList.add("active");
+    mlInit();
+    stopDoom();stopFly();ibStop();stopPoker();
   } else if(h==="inbox"){
     $("v-inbox").classList.add("active");
     if(!ibActive)ibRun();
@@ -1808,6 +2176,7 @@ function route(){
     if(tid==="doom_fire"){go("doom");return;}
     if(tid==="poker_decision"){go("poker");return;}
     if(tid==="fly_navigation"){go("fly");return;}
+    if(tid.startsWith("massive_intent_")){go("multilingual");return;}
     $("v-detail").classList.add("active");
     showDetail(tid);
     stopDoom();stopFly();ibStop();stopPoker();

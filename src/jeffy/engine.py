@@ -12,7 +12,7 @@ from pathlib import Path
 import numpy as np
 from sentence_transformers import SentenceTransformer
 
-from .catalog import ENCODER, FEATURES_ENCODER, Capability
+from .catalog import ENCODER, FEATURES_ENCODER, KNOWN_ENCODERS, Capability
 from .model_pack import load_artifact
 
 logger = logging.getLogger(__name__)
@@ -59,7 +59,7 @@ class Engine:
             pack_dir = default_pack_dir()
         self.pack_dir = Path(pack_dir)
         self.device = device
-        self._encoder: SentenceTransformer | None = None
+        self._encoders: dict[str, SentenceTransformer] = {}
         self._capabilities: dict[str, Capability] = {}
         self._classifiers: dict[str, object] = {}
         self._scalers: dict[str, object] = {}
@@ -78,7 +78,7 @@ class Engine:
             )
 
         t0 = time.perf_counter()
-        self._encoder = SentenceTransformer(ENCODER, device=self.device)
+        self._encoders[ENCODER] = SentenceTransformer(ENCODER, device=self.device)
         self._encoder_load_time = time.perf_counter() - t0
 
         quarantined = []
@@ -98,8 +98,8 @@ class Engine:
 
             ds_name = manifest.dataset
 
-            if manifest.encoder not in (ENCODER, FEATURES_ENCODER):
-                quarantined.append((ds_name, f"encoder mismatch: {manifest.encoder} vs {ENCODER}"))
+            if manifest.encoder not in KNOWN_ENCODERS:
+                quarantined.append((ds_name, f"unknown encoder: {manifest.encoder}"))
                 continue
 
             self._classifiers[ds_name] = clf
@@ -202,10 +202,17 @@ class Engine:
                     f"Use predict_features() with a numeric vector instead of text."}
 
         t0 = time.perf_counter()
-        embedding = self._encoder.encode([text], show_progress_bar=False)
+        encoder = self._get_encoder(cap.encoder)
+        embedding = encoder.encode([text], show_progress_bar=False)
         t_embed = time.perf_counter() - t0
 
         return self._classify(task_id, embedding, t0, t_embed)
+
+    def _get_encoder(self, encoder_name: str) -> SentenceTransformer:
+        if encoder_name not in self._encoders:
+            logger.info(f"Loading encoder '{encoder_name}'...")
+            self._encoders[encoder_name] = SentenceTransformer(encoder_name, device=self.device)
+        return self._encoders[encoder_name]
 
     def predict_features(self, task_id: str, features: list[float]) -> dict:
         """Run prediction for a feature-based pretrained capability."""

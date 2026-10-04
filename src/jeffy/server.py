@@ -2152,6 +2152,7 @@ $("pk-restart").onclick=function(){startPoker();};
 // --- Routing ---
 function go(h){location.hash=h;}
 function _ev(event,view,meta){try{navigator.sendBeacon("/v1/event",JSON.stringify({event:event,view:view||"",meta:meta||{}}))}catch(e){}}
+document.addEventListener("click",function(e){var a=e.target.closest("a[href^='http']");if(a)_ev("outbound",a.href);});
 
 function route(){
   var h=location.hash.replace(/^#/,"");

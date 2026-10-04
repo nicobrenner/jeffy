@@ -1412,10 +1412,11 @@ function mlInit(){
   primary.innerHTML="";more.innerHTML="";
   Object.entries(ML_LANGS).forEach(([k,v])=>{
     var cls="ml-lang-btn"+(k==="es"?" active":"");
-    var btn='<button class="'+cls+'" data-lang="'+k+'" onclick="mlSelectLang(\''+k+'\')">'+v.flag+" "+v.name+'</button>';
+    var btn='<button class="'+cls+'" data-lang="'+k+'">'+v.flag+" "+v.name+'</button>';
     if(primaryLangs.indexOf(k)>=0)primary.innerHTML+=btn;
     else more.innerHTML+=btn;
   });
+  [primary,more].forEach(function(el){el.onclick=function(e){var b=e.target.closest(".ml-lang-btn");if(b)mlSelectLang(b.dataset.lang);}});
 
   var tiers=[{label:"80%+ accuracy",t:1},{label:"70\\u201379%",t:2},{label:"<70%",t:3}];
   var accHtml="";

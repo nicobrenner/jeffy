@@ -39,27 +39,43 @@ Open http://localhost:8400, pick a classifier, and paste one of these:
 
 ## Pretrained capabilities
 
-16 classifiers ship with the package, including a real-time Doom game-state classifier, a poker AI, and an inbox router. Weights are logistic regression coefficients (derived model parameters, not copies of training data). Source datasets and licenses are documented in `ATTRIBUTION.md`.
+68 classifiers ship with the package — 17 English/general-purpose and 51 multilingual intent classifiers covering languages from Afrikaans to Vietnamese. Weights are logistic regression coefficients (derived model parameters, not copies of training data). Source datasets and licenses are documented in `ATTRIBUTION.md`.
+
+### English / general-purpose
 
 | Task | What it does | Classes | Test Acc | Test F1 |
 |------|-------------|---------|----------|---------|
 | sms_spam | SMS spam detection | 2 | 99.1% | 98.0% |
+| doom_fire | Doom game-state decisions (fire/turn) | 3 | 100.0% | 100.0% |
+| fly_navigation | Drosophila connectome navigation | 3 | 98.0% | — |
 | dbpedia | Wikipedia article category | 14 | 96.0% | 95.9% |
 | imdb | Movie review sentiment (long text) | 2 | 94.8% | 94.8% |
 | banking77 | Banking customer intent | 77 | 94.3% | 94.3% |
 | ag_news | News topic (world/sports/business/tech) | 4 | 90.5% | 90.5% |
 | sst2 | Movie review sentiment | 2 | 90.1% | 90.1% |
+| poker_decision | Texas Hold'em poker decisions | 4 | 88.0% | — |
 | clinc_oos | Voice assistant intent + out-of-scope | 151 | 88.4% | 92.1% |
-| massive_intent | Smart home voice commands | 60 | 88.1% | 86.4% |
+| massive_intent | Smart home voice commands (English) | 60 | 88.1% | 86.4% |
 | tweet_eval_offensive | Offensive language | 2 | 81.0% | 74.8% |
 | tweet_eval_emotion | Tweet emotion | 4 | 78.1% | 74.7% |
 | emotion | Text emotion (6 emotions) | 6 | 75.5% | 67.8% |
+| inbox_router | Email inbox routing | 4 | 70.8% | 70.8% |
 | tweet_eval_sentiment | Tweet sentiment (3-way) | 3 | 66.2% | 65.7% |
 | snli | Natural language inference | 3 | 65.6% | 65.2% |
-| doom_fire | Doom game-state decisions (fire/turn) | 3 | 100.0% | 100.0% |
-| inbox_router | Email inbox routing (work/family/promo/notification) | 4 | 70.8% | 70.8% |
 
-Test accuracy on held-out splits. Details in `data/eval_results/benchmark.json`. doom_fire operates on numeric feature vectors (24 game-state features) instead of text — see `examples/doom/`. inbox_router is a demo classifier trained on 24 examples — see the live demo in the playground.
+### Multilingual (51 languages)
+
+51 intent classifiers trained on [Amazon MASSIVE](https://huggingface.co/datasets/mteb/amazon_massive_intent) — 60 voice-command intents per language, using frozen multilingual embeddings (`paraphrase-multilingual-MiniLM-L12-v2`, 384-dim) + per-language logistic regression. ~100 KB per classifier, no GPU needed.
+
+| Tier | Languages | Accuracy range |
+|------|-----------|---------------|
+| Tier 1 (≥80%) | en, fr, pt, zh_cn, id, pl, ru, es, fa, sv, nl, ja, it, tr, el, hi, hu, lv, da | 80.0–86.4% |
+| Tier 2 (70–80%) | th, ro, sq, sl, ms, vi, zh_tw, nb, fi, ur, he, hy, mn, my, de, ko, ml, az, te, af, kn | 70.9–79.8% |
+| Tier 3 (<70%) | ta, ar, ka, bn, km, am, is, cy, sw, tl, jv | 59.7–69.3% |
+
+Mean accuracy: 75.6% across all 51 languages. Beats XLM-R zero-shot (~70.6%) while being 10,000× smaller per task. See [research](https://github.com/nicobrenner/jeffy-massive-multi-language-paper) for full results.
+
+Test accuracy on held-out splits. Details in `data/eval_results/benchmark.json`. doom_fire and fly_navigation operate on numeric feature vectors instead of text — see `examples/doom/` and `examples/fly/`. inbox_router is a demo classifier trained on 24 examples — see the live demo in the playground.
 
 **Weaknesses:** SNLI (65.6%) and tweet_eval_sentiment (66.2%) are below what task-specific models achieve. Emotion (75.5%) has limited class coverage. Probabilities are uncalibrated.
 
@@ -213,7 +229,7 @@ Start with the defaults. With <50 examples per class, expect noisy estimates.
 uv pip install -e ".[build]"
 # or: pip install -e ".[build]"
 
-# Retrain all 13 heads from source datasets (~40 min, downloads ~5 GB)
+# Retrain all heads from source datasets (~40 min, downloads ~5 GB)
 jeffy-build --out data/model_pack
 
 # Evaluate on held-out test sets with tuned baselines
@@ -226,13 +242,13 @@ jeffy-evaluate --baselines --latency --device cpu
 - **SMS Spam**: Random split (test_size=0.2, seed=42); no standard benchmark split.
 - **SNLI**: Input encoded as `premise [SEP] hypothesis`. Label -1 filtered.
 - **CLINC-OOS**: 151 classes including out-of-scope. In-scope accuracy 96.5%, OOS detection 51.7%.
-- **MASSIVE**: English only (config `en`).
+- **MASSIVE**: English head uses config `en`. Multilingual heads cover 51 languages — see the multilingual table above.
 
 ## Deployment
 
 | Component | Size | Required for |
 |-----------|------|-------------|
-| Jeffy package (wheel) | 1.5 MB | Always (includes all 13 heads) |
+| Jeffy package (wheel) | ~6 MB | Always (includes all 68 classifiers) |
 | Encoder (bge-large-en-v1.5) | ~1.2 GB | Inference (downloaded on first use) |
 | `datasets` package | ~100 MB | Retraining from HuggingFace only |
 
@@ -282,7 +298,7 @@ Verified with clean-environment wheel and sdist install on Linux aarch64, Python
 
 | Status | Milestone |
 |--------|-----------|
-| **Available** | Pretrained classifier library (14 text + 1 game-state), SDK/API, custom training from CSV/JSONL |
+| **Available** | Pretrained classifier library (68 classifiers across 51 languages), SDK/API, custom training from CSV/JSONL |
 | **Available** | PyPI package (`pip install jeffy-classify`), non-text classifiers (numeric feature vectors) |
 | **Available** | Classifier catalog UI with model detail pages, live try-it forms, and usage snippets |
 | **Available** | Live Doom demo — real-time VizDoom classifier streaming in the playground |

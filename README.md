@@ -14,12 +14,15 @@ Pretrained classifiers you can run and retrain on CPU — text, game state, or a
 
 ## Try it
 
-[Install uv](https://docs.astral.sh/uv/getting-started/installation/), then:
+```bash
+pip install jeffy-classify
+jeffy-serve
+```
+
+Or try without installing (requires [uv](https://docs.astral.sh/uv/getting-started/installation/)):
 
 ```bash
-uvx --python 3.12 \
-  --from "jeffy-classify @ git+https://github.com/nicobrenner/jeffy.git@v0.1.0-alpha.12" \
-  jeffy-serve
+uvx --python 3.12 --from jeffy-classify jeffy-serve
 ```
 
 Open http://localhost:8400, pick a classifier, and paste one of these:
@@ -63,9 +66,7 @@ Test accuracy on held-out splits. Details in `data/eval_results/benchmark.json`.
 ## Train a custom classifier
 
 ```bash
-uvx --python 3.12 \
-  --from "jeffy-classify @ git+https://github.com/nicobrenner/jeffy.git@v0.1.0-alpha.12" \
-  jeffy-train --example --save-dir my_models
+jeffy-train --example --save-dir my_models
 ```
 
 ```
@@ -79,9 +80,7 @@ Saved to my_models/reviews/
 `--example` uses a bundled 24-row product review CSV. To bring your own:
 
 ```bash
-uvx --python 3.12 \
-  --from "jeffy-classify @ git+https://github.com/nicobrenner/jeffy.git@v0.1.0-alpha.12" \
-  jeffy-train --input your_data.csv --text-col text --label-col label \
+jeffy-train --input your_data.csv --text-col text --label-col label \
   --task-id your_task --save-dir my_models
 ```
 
@@ -90,9 +89,7 @@ Supports `.csv`, `.tsv`, and `.jsonl`.
 ## Serve a custom model
 
 ```bash
-JEFFY_PACK_DIR=my_models uvx --python 3.12 \
-  --from "jeffy-classify @ git+https://github.com/nicobrenner/jeffy.git@v0.1.0-alpha.12" \
-  jeffy-serve
+JEFFY_PACK_DIR=my_models jeffy-serve
 ```
 
 ```bash
@@ -292,6 +289,7 @@ Verified with clean-environment wheel and sdist install on Linux aarch64, Python
 | **Available** | Inbox classifier demo — animated training + classification workflow |
 | **Available** | Poker AI demo — 4 AI players streaming Texas Hold'em decisions live |
 | **Available** | Landing page at [jeffyclassify.com](https://jeffyclassify.com), live playground at [playground.jeffyclassify.com](https://playground.jeffyclassify.com) |
+| **Available** | Multilingual classifiers — 51 languages via frozen multilingual embeddings + per-language logistic regression ([research](https://github.com/nicobrenner/jeffy-massive-multi-language-paper)) |
 | **Next** | Live demos for more classifiers, broader catalog released in verified batches |
 | **Planned** | Automatic routing among supported classifiers |
 | **Planned** | Optional local/API LLM fallback for unsupported tasks |

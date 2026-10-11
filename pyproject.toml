@@ -4,8 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "jeffy-classify"
-version = "0.1.0a14"
-description = "Pretrained text classifiers: 68 ready-to-use heads across 51 languages, train your own in seconds"
+version = "0.1.0a15"
+description = "Pretrained text classifiers: 70 ready-to-use heads across 51 languages, train your own in seconds"
 readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT"

@@ -9,6 +9,20 @@ Run:
 """
 
 import json as _json_module
+import numpy as _np
+
+class _NumpyEncoder(_json_module.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, _np.integer):
+            return int(obj)
+        if isinstance(obj, _np.floating):
+            return float(obj)
+        if isinstance(obj, _np.ndarray):
+            return obj.tolist()
+        return super().default(obj)
+
+def _json_safe(obj):
+    return _json_module.dumps(obj, cls=_NumpyEncoder)
 import time
 from collections import defaultdict
 from datetime import datetime, timezone
@@ -478,7 +492,7 @@ async def _run_simulated(ws: WebSocket, demo_name: str, fps: float = 10):
             if result is None:
                 break
             jpeg_bytes, meta = result
-            await ws.send_text(_json_module.dumps(meta))
+            await ws.send_text(_json_safe(meta))
             await ws.send_bytes(jpeg_bytes)
             elapsed = time.perf_counter() - t0
             sleep_time = frame_interval - elapsed
@@ -507,7 +521,7 @@ async def doom_stream(ws: WebSocket):
                 break
 
             jpeg_bytes, meta = result
-            await ws.send_text(_json_module.dumps(meta))
+            await ws.send_text(_json_safe(meta))
             await ws.send_bytes(jpeg_bytes)
 
             elapsed = time.perf_counter() - t0
@@ -547,7 +561,7 @@ async def poker_stream(ws: WebSocket):
             if result is None:
                 break
 
-            await ws.send_text(_json_module.dumps(result))
+            await ws.send_text(_json_safe(result))
 
             elapsed = time.perf_counter() - t0
             sleep_time = tick_interval - elapsed
@@ -581,7 +595,7 @@ async def fly_stream(ws: WebSocket):
                 break
 
             jpeg_bytes, meta = result
-            await ws.send_text(_json_module.dumps(meta))
+            await ws.send_text(_json_safe(meta))
             await ws.send_bytes(jpeg_bytes)
 
     except (ImportError, OSError) as e:
@@ -2239,7 +2253,7 @@ $("pk-restart").onclick=function(){startPoker();};
 
 // --- Routing ---
 function go(h){location.hash=h;}
-function _ev(event,view,meta){try{navigator.sendBeacon("/v1/event",JSON.stringify({event:event,view:view||"",meta:meta||{}}))}catch(e){}}
+function _ev(event,view,meta){try{navigator.sendBeacon("/v1/event",JSON.stringify({event:event,view:view||"",meta:meta||{}}))}catch(e){};try{if(typeof umami!=="undefined")umami.track(event,{view:view||"",meta:meta||{}})}catch(e){}}
 document.addEventListener("click",function(e){var a=e.target.closest("a[href^='http']");if(a)_ev("outbound",a.href);});
 
 function route(){
@@ -2284,6 +2298,7 @@ function route(){
 window.addEventListener("hashchange",route);
 $("restart-btn").onclick=function(){startDoom();};
 </script>
+<script defer src="https://stats.jeffyclassify.com/script.js" data-website-id="4b3259e2-aac9-42a4-b34b-e89a4fb3a1e8" data-hash="true" data-do-not-track="false"></script>
 </body>
 </html>"""
 

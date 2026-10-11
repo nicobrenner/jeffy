@@ -1,0 +1,18 @@
+{
+  "ood_intents": [
+    "alarm_query",
+    "audio_volume_other",
+    "datetime_query",
+    "music_settings",
+    "qa_factoid"
+  ],
+  "n_id_classes": 55,
+  "classifier_id_accuracy": 0.8403,
+  "detector_size_kb": 1234.5,
+  "mahalanobis_auroc": 0.7373,
+  "entropy_auroc": 0.7205,
+  "combined_auroc": 0.7821,
+  "mahalanobis_fpr95": 0.7436,
+  "entropy_fpr95": 0.7473,
+  "combined_fpr95": 0.6936
+}

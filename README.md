@@ -66,15 +66,17 @@ Open http://localhost:8400, pick a classifier, and paste one of these:
 
 ### Multilingual (51 languages)
 
-51 intent classifiers trained on [Amazon MASSIVE](https://huggingface.co/datasets/mteb/amazon_massive_intent) — 60 voice-command intents per language, using frozen multilingual embeddings (`paraphrase-multilingual-MiniLM-L12-v2`, 384-dim) + per-language logistic regression. ~100 KB per classifier, no GPU needed.
+51 intent classifiers trained on [Amazon MASSIVE](https://huggingface.co/datasets/mteb/amazon_massive_intent) — 60 voice-command intents per language, using frozen multilingual embeddings + per-language logistic regression. ~100 KB per classifier, no GPU needed.
+
+With LaBSE embeddings (768-dim), mean accuracy is **83.3%** across all 51 languages — only 1.8pp below fine-tuned XLM-R (85.1%). All languages above 70%, 47/51 above 80%.
 
 | Tier | Languages | Accuracy range |
 |------|-----------|---------------|
-| Tier 1 (≥80%) | en, fr, pt, zh_cn, id, pl, ru, es, fa, sv, nl, ja, it, tr, el, hi, hu, lv, da | 80.0–86.4% |
-| Tier 2 (70–80%) | th, ro, sq, sl, ms, vi, zh_tw, nb, fi, ur, he, hy, mn, my, de, ko, ml, az, te, af, kn | 70.9–79.8% |
-| Tier 3 (<70%) | ta, ar, ka, bn, km, am, is, cy, sw, tl, jv | 59.7–69.3% |
+| Tier 1 (≥85%) | fr, en, ru, pl, fa, hu, sv, ja, hi | 85.1–86.5% |
+| Tier 2 (80–85%) | pt, id, az, nl, ms, tr, da, es, ko, ro, fi, sl, zh_cn, sq, nb, it, lv, mn, af, de, el, vi, te, ml, he, bn, tl, is, ur, hy, kn, th, ta, am, my, zh_tw, cy, sw | 80.5–85.0% |
+| Tier 3 (<80%) | jv, ka, ar, km | 76.4–78.8% |
 
-Mean accuracy: 75.6% across all 51 languages. Beats XLM-R zero-shot (~70.6%) while being 10,000× smaller per task. See [research](https://github.com/nicobrenner/jeffy-massive-multi-language-paper) for full results.
+Our encoder comparison found that **mE5-small** (118M params, 82.1% mean on 6 languages) outperforms MiniLM-L12 (118M params, 76.9%) at identical parameter count — training objective matters more than model size. See [research](https://github.com/nicobrenner/jeffy-massive-multi-language-paper) for full results.
 
 Test accuracy on held-out splits. Details in `data/eval_results/benchmark.json`. doom_fire and fly_navigation operate on numeric feature vectors instead of text — see `examples/doom/` and `examples/fly/`. inbox_router is a demo classifier trained on 24 examples — see the live demo in the playground.
 

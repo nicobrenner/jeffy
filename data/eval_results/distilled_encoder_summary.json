@@ -1,0 +1,9 @@
+{
+  "teacher_mean": 0.7104,
+  "lda_mean": 0.6866,
+  "student_mean": 0.3696,
+  "student_params": 217819,
+  "student_mb": 0.9,
+  "best_C": 0.1,
+  "epochs_trained": 13
+}

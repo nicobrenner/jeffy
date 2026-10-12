@@ -1,0 +1,50 @@
+{
+  "benchmark": "ollama_llm_vs_jeffy",
+  "date": "2026-10-12",
+  "description": "Local LLM classification accuracy vs Jeffy (embedding+LR) on 3 standard benchmarks",
+  "tasks": {
+    "sst2": {
+      "n_classes": 2,
+      "task_type": "sentiment",
+      "results": [
+        {"model": "phi4 (14B)", "accuracy": 0.95, "latency_p50_ms": 286},
+        {"model": "llama3.1 (8B)", "accuracy": 0.90, "latency_p50_ms": 15500},
+        {"model": "Jeffy", "accuracy": 0.901, "latency_p50_ms": 104},
+        {"model": "mistral (7B)", "accuracy": 0.86, "latency_p50_ms": 8400},
+        {"model": "gemma4 (9.6B)", "accuracy": 0.79, "latency_p50_ms": 623},
+        {"model": "qwen3 (32B)", "accuracy": 0.59, "latency_p50_ms": 16700}
+      ]
+    },
+    "ag_news": {
+      "n_classes": 4,
+      "task_type": "topic",
+      "results": [
+        {"model": "Jeffy", "accuracy": 0.905, "latency_p50_ms": 80},
+        {"model": "phi4 (14B)", "accuracy": 0.83, "latency_p50_ms": 493},
+        {"model": "gemma4 (9.6B)", "accuracy": 0.82, "latency_p50_ms": 969},
+        {"model": "mistral (7B)", "accuracy": 0.81, "latency_p50_ms": 9000},
+        {"model": "llama3.1 (8B)", "accuracy": 0.76, "latency_p50_ms": 8400},
+        {"model": "qwen3 (32B)", "accuracy": 0.21, "latency_p50_ms": 9900}
+      ]
+    },
+    "banking77": {
+      "n_classes": 77,
+      "task_type": "intent",
+      "results": [
+        {"model": "Jeffy", "accuracy": 0.943, "latency_p50_ms": 118},
+        {"model": "phi4 (14B)", "accuracy": 0.68, "latency_p50_ms": 15400},
+        {"model": "gemma4 (9.6B)", "accuracy": 0.68, "latency_p50_ms": 696},
+        {"model": "llama3.1 (8B)", "accuracy": 0.62, "latency_p50_ms": 8900},
+        {"model": "mistral (7B)", "accuracy": 0.39, "latency_p50_ms": 17000},
+        {"model": "qwen3 (32B)", "accuracy": 0.03, "latency_p50_ms": 9500}
+      ]
+    }
+  },
+  "key_findings": {
+    "jeffy_wins_accuracy": ["ag_news", "banking77"],
+    "jeffy_wins_speed": ["sst2", "ag_news", "banking77"],
+    "jeffy_advantage_grows_with_classes": true,
+    "best_llm_overall": "phi4 (14B)",
+    "worst_llm_overall": "qwen3 (32B) — reasoning model likely outputs thinking tokens"
+  }
+}

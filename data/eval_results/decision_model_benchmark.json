@@ -1,0 +1,32 @@
+{
+  "sst2": {
+    "laya": {
+      "accuracy": 0.83,
+      "latency_p50_ms": 219.8
+    },
+    "gliner": {
+      "accuracy": 0.93,
+      "latency_p50_ms": 335.5
+    }
+  },
+  "ag_news": {
+    "laya": {
+      "accuracy": 0.94,
+      "latency_p50_ms": 273.2
+    },
+    "gliner": {
+      "accuracy": 0.65,
+      "latency_p50_ms": 365.7
+    }
+  },
+  "banking77": {
+    "laya": {
+      "accuracy": 0.38,
+      "latency_p50_ms": 815.4
+    },
+    "gliner": {
+      "accuracy": 0.56,
+      "latency_p50_ms": 1672.5
+    }
+  }
+}

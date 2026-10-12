@@ -1,0 +1,35 @@
+{
+  "benchmark": "jeffybench_small_llm",
+  "date": "2026-10-12",
+  "description": "Small LLM classification benchmark via Ollama on host machine",
+  "n_samples": 100,
+  "tasks": {
+    "sst2": {
+      "n_classes": 2,
+      "category": "sentiment",
+      "results": [
+        {"model": "phi (2.7B)", "accuracy": 0.83, "latency_p50_ms": 255},
+        {"model": "gemma3 (4B)", "accuracy": 0.89, "latency_p50_ms": 500},
+        {"model": "qwen2.5 (0.5B)", "accuracy": 0.50, "latency_p50_ms": 51}
+      ]
+    },
+    "ag_news": {
+      "n_classes": 4,
+      "category": "topic",
+      "results": [
+        {"model": "phi (2.7B)", "accuracy": 0.64, "latency_p50_ms": 229},
+        {"model": "gemma3 (4B)", "accuracy": 0.79, "latency_p50_ms": 496},
+        {"model": "qwen2.5 (0.5B)", "accuracy": 0.57, "latency_p50_ms": 50}
+      ]
+    },
+    "banking77": {
+      "n_classes": 77,
+      "category": "intent",
+      "results": [
+        {"model": "phi (2.7B)", "accuracy": 0.30, "latency_p50_ms": 231},
+        {"model": "gemma3 (4B)", "accuracy": 0.64, "latency_p50_ms": 956},
+        {"model": "qwen2.5 (0.5B)", "accuracy": 0.15, "latency_p50_ms": 55}
+      ]
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "benchmark": "jeffybench_new_small",
+  "date": "2026-10-12",
+  "n_samples": 100,
+  "tasks": {
+    "sst2": [
+      {
+        "model": "phi4-mini",
+        "accuracy": 0.79,
+        "latency_p50_ms": 138.0
+      },
+      {
+        "model": "llama3.2:3b",
+        "accuracy": 0.89,
+        "latency_p50_ms": 114.5
+      }
+    ],
+    "ag_news": [
+      {
+        "model": "phi4-mini",
+        "accuracy": 0.81,
+        "latency_p50_ms": 176.3
+      },
+      {
+        "model": "llama3.2:3b",
+        "accuracy": 0.72,
+        "latency_p50_ms": 142.3
+      }
+    ],
+    "banking77": [
+      {
+        "model": "phi4-mini",
+        "accuracy": 0.52,
+        "latency_p50_ms": 181.1
+      },
+      {
+        "model": "llama3.2:3b",
+        "accuracy": 0.46,
+        "latency_p50_ms": 142.9
+      }
+    ]
+  }
+}

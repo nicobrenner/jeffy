@@ -37,6 +37,7 @@ from fastapi import FastAPI, HTTPException, Request, WebSocket, WebSocketDisconn
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field
 from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.middleware.cors import CORSMiddleware
 
 logger = logging.getLogger(__name__)
 
@@ -150,6 +151,12 @@ class AnalyticsMiddleware(BaseHTTPMiddleware):
 
 
 app.add_middleware(AnalyticsMiddleware)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://jeffyclassify.com", "https://www.jeffyclassify.com"],
+    allow_methods=["POST"],
+    allow_headers=["Content-Type"],
+)
 
 
 
@@ -773,6 +780,12 @@ button:disabled{opacity:.5;cursor:wait}
 .fill{height:100%;background:var(--accent);border-radius:6px}
 .pct{text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}
 .rmeta{font-size:10px;color:var(--muted);margin-top:10px;line-height:1.7;font-family:var(--display)}
+.feedback-row{display:flex;align-items:center;gap:10px;margin-top:10px;font-size:11px;color:var(--muted);font-family:var(--display)}
+.fb-btn{background:none;border:1px solid var(--line);border-radius:6px;padding:4px 10px;cursor:pointer;font-size:13px;color:var(--muted);transition:all .15s}
+.fb-btn:hover{border-color:var(--accent);color:var(--text)}
+.fb-btn.voted{border-color:var(--accent);color:var(--accent);font-weight:600}
+.fb-btn:disabled{opacity:.4;cursor:default}
+.fb-msg{font-size:11px;color:var(--accent);margin-left:4px}
 .err-msg{color:#E86B35;background:#1C1410;border:1px solid #3A2218;border-radius:6px;padding:10px;font-size:11px;margin-top:10px;display:none}
 pre{white-space:pre-wrap;overflow-wrap:anywhere;font:10px/1.6 var(--mono);max-height:300px;overflow:auto;color:var(--muted);background:var(--code-bg);border-radius:5px;padding:10px;margin:8px 0 0}
 .codeblk{position:relative}
@@ -1237,6 +1250,7 @@ Built on <a href="https://neuromechfly.org" target="_blank" style="color:var(--b
 <div id="ml-label" class="result-label"></div>
 <div id="ml-bars"></div>
 <div id="ml-meta" class="rmeta"></div>
+<div class="feedback-row"><span>Was this correct?</span><button class="fb-btn" id="ml-fb-up" onclick="sendMlFeedback(1)">&#128077;</button><button class="fb-btn" id="ml-fb-down" onclick="sendMlFeedback(0)">&#128078;</button><span id="ml-fb-msg" class="fb-msg"></span></div>
 </div>
 <div id="ml-compare-result" style="display:none;margin-top:14px;border-top:1px solid var(--line);padding-top:14px">
 <div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:10px">Cross-language comparison</div>
@@ -1319,7 +1333,8 @@ The key insight: a <strong style="color:var(--text)">multilingual sentence encod
 <div class="try-row"><span id="ib-try-lat" style="font-size:11px;color:var(--muted)"></span>
 <button class="run-btn" id="ib-try-run">Classify &#8594;</button></div>
 <div id="ib-try-err" class="err-msg"></div>
-<div id="ib-try-res" style="display:none"><div id="ib-try-lbl" class="result-label"></div><div id="ib-try-bars"></div><div id="ib-try-meta" class="rmeta"></div></div>
+<div id="ib-try-res" style="display:none"><div id="ib-try-lbl" class="result-label"></div><div id="ib-try-bars"></div><div id="ib-try-meta" class="rmeta"></div>
+<div class="feedback-row"><span>Was this correct?</span><button class="fb-btn" id="ib-fb-up" onclick="sendIbFeedback(1)">&#128077;</button><button class="fb-btn" id="ib-fb-down" onclick="sendIbFeedback(0)">&#128078;</button><span id="ib-fb-msg" class="fb-msg"></span></div></div>
 </div>
 <div class="d-section"><h3>Usage</h3><div id="ib-usage"></div></div>
 </div>
@@ -1574,6 +1589,10 @@ async function mlClassify(){
     $("ml-meta").innerHTML="Language: "+info.name+" \\u00b7 Confidence: "+(d.confidence*100).toFixed(1)+"% \\u00b7 Embedding: "+d.embedding_ms+"ms \\u00b7 Total: "+d.latency_ms+"ms";
     $("ml-result").style.display="block";
     _ev("predict",info.task,{label:d.label,confidence:d.confidence,lang:mlLang});
+    _lastMlPred={task:info.task,label:d.label,confidence:d.confidence,lang:mlLang};
+    $("ml-fb-up").disabled=false;$("ml-fb-down").disabled=false;
+    $("ml-fb-up").classList.remove("voted");$("ml-fb-down").classList.remove("voted");
+    $("ml-fb-msg").textContent="";
     $("ml-lat").textContent=Math.round(performance.now()-t0)+"ms round-trip";
   }catch(err){
     $("ml-err").textContent=err.message;$("ml-err").style.display="block";
@@ -1664,7 +1683,8 @@ function showDetail(tid){
       '<div class="try-row"><span id="try-lat" style="font-size:11px;color:var(--muted)"></span>'+
       '<button class="run-btn" id="try-run">Classify &#8594;</button></div>'+
       '<div id="try-err" class="err-msg"></div>'+
-      '<div id="try-res" style="display:none"><div id="try-lbl" class="result-label"></div><div id="try-bars"></div><div id="try-meta" class="rmeta"></div></div>'+
+      '<div id="try-res" style="display:none"><div id="try-lbl" class="result-label"></div><div id="try-bars"></div><div id="try-meta" class="rmeta"></div>'+
+      '<div class="feedback-row"><span>Was this correct?</span><button class="fb-btn" id="fb-up" onclick="sendFeedback(1)">&#128077;</button><button class="fb-btn" id="fb-down" onclick="sendFeedback(0)">&#128078;</button><span id="fb-msg" class="fb-msg"></span></div></div>'+
       '<details id="try-raw-s" style="display:none"><summary>Response JSON</summary><pre id="try-raw"></pre></details>';
     $("try-run").onclick=()=>runPredict(tid);
   }
@@ -1684,6 +1704,36 @@ function showDetail(tid){
     '<div style="font-size:11px;color:var(--muted);margin:12px 0 6px">Python</div>'+
     '<div class="codeblk"><pre>'+py+'</pre><button class="cpbtn" onclick="cpCode(this)">Copy</button></div>'+
     '<div style="font-size:11px;color:var(--muted);margin-top:12px">pip install jeffy-classify</div>';
+}
+
+var _lastPred=null,_lastMlPred=null;
+function sendFeedback(up){
+  if(!_lastPred)return;
+  var btn=up?$("fb-up"):$("fb-down");
+  $("fb-up").disabled=true;$("fb-down").disabled=true;
+  btn.classList.add("voted");
+  _ev("feedback",_lastPred.task,{predicted:_lastPred.label,vote:up?"up":"down",confidence:_lastPred.confidence});
+  $("fb-msg").textContent=up?"Thanks!":"Thanks for the feedback";
+  _lastPred=null;
+}
+function sendMlFeedback(up){
+  if(!_lastMlPred)return;
+  var btn=up?$("ml-fb-up"):$("ml-fb-down");
+  $("ml-fb-up").disabled=true;$("ml-fb-down").disabled=true;
+  btn.classList.add("voted");
+  _ev("feedback",_lastMlPred.task,{predicted:_lastMlPred.label,vote:up?"up":"down",confidence:_lastMlPred.confidence,lang:_lastMlPred.lang});
+  $("ml-fb-msg").textContent=up?"Thanks!":"Thanks for the feedback";
+  _lastMlPred=null;
+}
+var _lastIbPred=null;
+function sendIbFeedback(up){
+  if(!_lastIbPred)return;
+  var btn=up?$("ib-fb-up"):$("ib-fb-down");
+  $("ib-fb-up").disabled=true;$("ib-fb-down").disabled=true;
+  btn.classList.add("voted");
+  _ev("feedback","inbox_router",{predicted:_lastIbPred.label,vote:up?"up":"down",confidence:_lastIbPred.confidence});
+  $("ib-fb-msg").textContent=up?"Thanks!":"Thanks for the feedback";
+  _lastIbPred=null;
 }
 
 async function runPredict(tid){
@@ -1715,6 +1765,10 @@ async function runPredict(tid){
       " \\u00b7 Total: "+d.latency_ms+"ms";
     resEl.style.display="block";
     _ev("predict",tid,{label:d.label,confidence:d.confidence});
+    _lastPred={task:tid,label:d.label,confidence:d.confidence};
+    $("fb-up").disabled=false;$("fb-down").disabled=false;
+    $("fb-up").classList.remove("voted");$("fb-down").classList.remove("voted");
+    $("fb-msg").textContent="";
     $("try-raw").textContent=JSON.stringify(d,null,2);
     rawS.style.display="block";
     $("try-lat").textContent=Math.round(performance.now()-t0)+"ms round-trip";
@@ -2150,6 +2204,10 @@ $("ib-try-run").onclick=function(){
       " · Embedding: "+d.embedding_ms+"ms · Classifier: "+d.classifier_ms+"ms"+
       " · Total: "+d.latency_ms+"ms";
     $("ib-try-res").style.display="block";
+    _lastIbPred={label:d.label,confidence:d.confidence};
+    $("ib-fb-up").disabled=false;$("ib-fb-down").disabled=false;
+    $("ib-fb-up").classList.remove("voted");$("ib-fb-down").classList.remove("voted");
+    $("ib-fb-msg").textContent="";
     $("ib-try-lat").textContent=Math.round(performance.now()-t0)+"ms round-trip";
   })
   .catch(function(err){$("ib-try-err").textContent=err.message;$("ib-try-err").style.display="block";})
@@ -2313,9 +2371,13 @@ $("restart-btn").onclick=function(){startDoom();};
 <script defer src="https://stats.jeffyclassify.com/script.js" data-website-id="4b3259e2-aac9-42a4-b34b-e89a4fb3a1e8" data-hash="true" data-do-not-track="false"></script>
 <script>
 (function(){
+var idle=0,active=true;
 function t(n,d){if(typeof umami!=="undefined")umami.track(n,d)}
-setInterval(function(){t("heartbeat")},10000);
-document.addEventListener("pointerdown",function(){t("first-interaction")},{once:true});
+function reset(){idle=0;if(!active){active=true}}
+document.addEventListener("pointermove",reset);
+document.addEventListener("keydown",reset);
+document.addEventListener("pointerdown",function(){reset();t("first-interaction")},{once:true});
+setInterval(function(){idle+=30;if(idle>300)active=false;if(active)t("heartbeat")},30000);
 })();
 </script>
 </body>

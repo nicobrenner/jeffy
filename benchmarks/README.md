@@ -4,9 +4,17 @@ Jeffy vs 16 models on text classification: 10 local LLMs, 2 decision models, 2 t
 
 **[Interactive results](https://jeffyclassify.com/benchmark/)** · **[Blog post](https://jeffyclassify.com/blog/when-llms-fail-at-classification/)**
 
-## Results
+## The key chart
 
-### banking77 — 77 classes (customer intent)
+As class count grows, LLMs and decision models collapse while Jeffy stays accurate. No model other than Jeffy reaches 70% on banking77 (77 classes). The crossover happens between 2 and 4 classes.
+
+![Accuracy vs number of classes](scaling_chart.png)
+
+## banking77 — 77 classes (customer intent)
+
+This is where the gap is widest. Jeffy at 94.3%, the next best model (Jev) at 80%, and the best LLM (phi4 14B) at 68%.
+
+![banking77 benchmark results](banking77_chart.png)
 
 | Model | Type | Accuracy | Latency p50 |
 |-------|------|----------|-------------|
@@ -51,10 +59,6 @@ Jeffy vs 16 models on text classification: 10 local LLMs, 2 decision models, 2 t
 | llama3.1 (8B) | LLM | 90.0% | 15.5s |
 | gemma3 (4B) | LLM | 89.0% | 500ms |
 | llama3.2 (3B) | LLM | 89.0% | 115ms |
-
-## Key finding
-
-As class count grows, LLMs and decision models collapse while Jeffy stays accurate. No model other than Jeffy reaches 70% on banking77 (77 classes). The crossover happens between 2 and 4 classes.
 
 ## Run it yourself
 

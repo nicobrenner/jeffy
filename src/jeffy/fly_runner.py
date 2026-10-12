@@ -10,6 +10,10 @@ import time
 
 os.environ.setdefault("MUJOCO_GL", "egl")
 
+import importlib
+if importlib.util.find_spec("mujoco") is None:
+    raise ImportError("mujoco not installed")
+
 import numpy as np
 from PIL import Image
 from scipy.spatial.transform import Rotation as R

@@ -4,8 +4,12 @@ Runs defend_the_center headless, extracts features each frame,
 runs the Jeffy classifier, and yields (frame_jpeg, decision_metadata).
 """
 
+import importlib
 import io
 import time
+
+if importlib.util.find_spec("vizdoom") is None:
+    raise ImportError("vizdoom not installed")
 
 import numpy as np
 from PIL import Image

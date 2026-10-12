@@ -610,8 +610,15 @@ async def fly_stream(ws: WebSocket):
     await ws.accept()
     _track_ws(ws, "fly", "demo_start")
     try:
+        try:
+            from .fly_runner import FlySession
+        except (ImportError, OSError) as e:
+            logger.info(f"Fly engine unavailable ({e}), using simulated demo")
+            await ws.send_text(_json_module.dumps({"status": "ready"}))
+            await _run_simulated(ws, "fly", fps=5)
+            return
+
         await ws.send_text(_json_module.dumps({"status": "loading"}))
-        from .fly_runner import FlySession
         session = FlySession(engine=get_engine(), task_id="fly_navigation")
         await asyncio.to_thread(session.start)
         await ws.send_text(_json_module.dumps({"status": "ready"}))

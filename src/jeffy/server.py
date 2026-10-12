@@ -2655,7 +2655,7 @@ function route(){
 window.addEventListener("hashchange",route);
 $("restart-btn").onclick=function(){startDoom();};
 </script>
-<script defer src="https://stats.jeffyclassify.com/script.js" data-website-id="4b3259e2-aac9-42a4-b34b-e89a4fb3a1e8" data-hash="true" data-do-not-track="false"></script>
+<script defer src="https://stats.jeffyclassify.com/recorder.js" data-website-id="4b3259e2-aac9-42a4-b34b-e89a4fb3a1e8" data-hash="true" data-do-not-track="false"></script>
 <script>
 (function(){
 var idle=0,active=true;

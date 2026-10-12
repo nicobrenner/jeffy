@@ -1,0 +1,98 @@
+{
+  "encoder": "BAAI/bge-large-en-v1.5",
+  "device": "cpu",
+  "cpu_count": 6,
+  "platform": "linux",
+  "warmup_runs": 3,
+  "benchmark_runs": 10,
+  "onnx_model_size_mb": 1336.7,
+  "onnxruntime_version": "1.31.0",
+  "quality": {
+    "cosine_sim_min": 1.0,
+    "cosine_sim_mean": 1.0,
+    "cosine_sim_max": 1.0000001192092896,
+    "embedding_dim": 1024,
+    "n_sentences": 15
+  },
+  "benchmarks": [
+    {
+      "batch_size": 1,
+      "category": "mixed",
+      "pytorch_mean_ms": 66.86,
+      "pytorch_p50_ms": 65.98,
+      "pytorch_p95_ms": 75.92,
+      "onnx_mean_ms": 22.45,
+      "onnx_p50_ms": 21.53,
+      "onnx_p95_ms": 28.54,
+      "speedup": 2.979,
+      "per_item_pytorch_ms": 66.86,
+      "per_item_onnx_ms": 22.45
+    },
+    {
+      "batch_size": 10,
+      "category": "mixed",
+      "pytorch_mean_ms": 506.32,
+      "pytorch_p50_ms": 503.85,
+      "pytorch_p95_ms": 522.64,
+      "onnx_mean_ms": 509.68,
+      "onnx_p50_ms": 497.37,
+      "onnx_p95_ms": 576.05,
+      "speedup": 0.993,
+      "per_item_pytorch_ms": 50.63,
+      "per_item_onnx_ms": 50.97
+    },
+    {
+      "batch_size": 50,
+      "category": "mixed",
+      "pytorch_mean_ms": 4937.67,
+      "pytorch_p50_ms": 4684.08,
+      "pytorch_p95_ms": 6083.11,
+      "onnx_mean_ms": 7077.47,
+      "onnx_p50_ms": 6629.52,
+      "onnx_p95_ms": 8453.3,
+      "speedup": 0.698,
+      "per_item_pytorch_ms": 98.75,
+      "per_item_onnx_ms": 141.55
+    },
+    {
+      "batch_size": 5,
+      "category": "short",
+      "pytorch_mean_ms": 120.27,
+      "pytorch_p50_ms": 122.94,
+      "pytorch_p95_ms": 127.75,
+      "onnx_mean_ms": 88.64,
+      "onnx_p50_ms": 89.39,
+      "onnx_p95_ms": 92.59,
+      "speedup": 1.357,
+      "per_item_pytorch_ms": 24.05,
+      "per_item_onnx_ms": 17.73
+    },
+    {
+      "batch_size": 5,
+      "category": "medium",
+      "pytorch_mean_ms": 396.92,
+      "pytorch_p50_ms": 415.39,
+      "pytorch_p95_ms": 487.3,
+      "onnx_mean_ms": 312.24,
+      "onnx_p50_ms": 303.95,
+      "onnx_p95_ms": 391.12,
+      "speedup": 1.271,
+      "per_item_pytorch_ms": 79.38,
+      "per_item_onnx_ms": 62.45
+    },
+    {
+      "batch_size": 5,
+      "category": "long",
+      "pytorch_mean_ms": 645.09,
+      "pytorch_p50_ms": 644.04,
+      "pytorch_p95_ms": 665.13,
+      "onnx_mean_ms": 656.75,
+      "onnx_p50_ms": 645.31,
+      "onnx_p95_ms": 709.44,
+      "speedup": 0.982,
+      "per_item_pytorch_ms": 129.02,
+      "per_item_onnx_ms": 131.35
+    }
+  ],
+  "timestamp": "2026-10-12T11:57:45"
+}

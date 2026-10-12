@@ -1,0 +1,44 @@
+{
+  "torch": {
+    "backend": "torch",
+    "encoder_load_time_s": 2.85,
+    "predict_mean_ms": 82.23,
+    "predict_p50_ms": 79.17,
+    "predict_min_ms": 50.56,
+    "predict_max_ms": 125.92,
+    "all_ms": [
+      51.64,
+      50.56,
+      53.38,
+      62.54,
+      68.09,
+      79.17,
+      115.92,
+      122.52,
+      125.92,
+      92.53
+    ]
+  },
+  "onnx": {
+    "backend": "onnx",
+    "encoder_load_time_s": 4.78,
+    "predict_mean_ms": 27.6,
+    "predict_p50_ms": 27.0,
+    "predict_min_ms": 24.48,
+    "predict_max_ms": 32.99,
+    "all_ms": [
+      25.42,
+      25.12,
+      24.48,
+      26.26,
+      26.79,
+      27.0,
+      27.98,
+      28.89,
+      31.13,
+      32.99
+    ]
+  },
+  "speedup": 2.98,
+  "timestamp": "2026-10-12T13:13:11"
+}

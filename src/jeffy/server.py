@@ -48,6 +48,12 @@ from .catalog import MULTILINGUAL_ENCODER
 
 import os
 
+_OWNER_IPS = {"76.51.25.57"}
+_LOCAL_IPS = {"127.0.0.1", "::1", "localhost"}
+
+def _is_local(ip: str) -> bool:
+    return ip in _LOCAL_IPS or ip in _OWNER_IPS
+
 _engine: Engine | None = None
 
 
@@ -121,7 +127,7 @@ class AnalyticsMiddleware(BaseHTTPMiddleware):
         ua = request.headers.get("user-agent", "")
         country = request.headers.get("cf-ipcountry", "")
 
-        is_local = ip in ("127.0.0.1", "::1", "localhost")
+        is_local = _is_local(ip)
 
         entry = {
             "ts": datetime.now(timezone.utc).isoformat(),
@@ -212,6 +218,7 @@ def health():
         "status": "ready",
         "capabilities": len(engine.capabilities),
         "encoder": engine.encoder_name,
+        "backend": engine.backend,
         "encoder_load_time_s": round(engine.encoder_load_time, 2),
     }
 
@@ -487,7 +494,7 @@ def _track_ws(request, demo, event, **extra):
         "view": demo,
         "ua": request.headers.get("user-agent", "")[:200],
         "country": request.headers.get("cf-ipcountry", ""),
-        "local": ip in ("127.0.0.1", "::1", "localhost"),
+        "local": _is_local(ip),
         **extra,
     }
     _analytics_log.append(entry)
@@ -656,7 +663,7 @@ async def track_event(request: Request):
         "meta": {k[:30]: str(v)[:100] for k, v in list(meta.items())[:10]},
         "ua": request.headers.get("user-agent", "")[:200],
         "country": request.headers.get("cf-ipcountry", ""),
-        "local": ip in ("127.0.0.1", "::1", "localhost"),
+        "local": _is_local(ip),
     }
     _analytics_log.append(entry)
     _append_analytics(entry)
@@ -1416,6 +1423,9 @@ Each player is a logistic regression classifier trained on 21K simulated poker d
 const $=id=>document.getElementById(id);
 let ws=null,frameCount=0,fpsStart=0,doomActive=false;
 let flyWs=null,flyActive=false,flyTrail=[];
+let _stats={predictions:0,feedbacks:0,demos:{},viewStart:0,currentView:""};
+function _trackView(v){if(_stats.currentView&&_stats.viewStart){var sec=Math.round((Date.now()-_stats.viewStart)/1000);if(sec>1)_ev("dwell",_stats.currentView,{seconds:sec});}_stats.currentView=v;_stats.viewStart=Date.now();}
+function _trackDemo(name,action){if(action==="start"){_stats.demos[name]=(_stats.demos[name]||0)+1;_ev("demo-start",name,{run:_stats.demos[name]});}else{_ev("demo-stop",name,{run:_stats.demos[name]||1});}}
 
 const CAPS={"ag_news":{"name":"News article topic classification","n_classes":4,"encoder":"BAAI/bge-large-en-v1.5","license":"Academic / non-commercial","train_examples":10000,"test_accuracy":0.9055,"train_accuracy":0.9413,"labels":{"0":"World","1":"Sports","2":"Business","3":"Sci/Tech"},"example":"The Federal Reserve raised interest rates by 0.25% today."},"banking77":{"name":"Banking customer service intent detection","n_classes":77,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY 4.0","train_examples":10000,"test_accuracy":0.943,"train_accuracy":0.9836,"labels":{"0":"activate_my_card","1":"age_limit","2":"apple_pay_or_google_pay","3":"atm_support","4":"automatic_top_up","5":"balance_not_updated_after_bank_transfer","6":"balance_not_updated_after_cheque_or_cash_deposit","7":"beneficiary_not_allowed","8":"cancel_transfer","9":"card_about_to_expire","10":"card_acceptance","11":"card_arrival","12":"card_delivery_estimate","13":"card_linking","14":"card_not_working","15":"card_payment_fee_charged","16":"card_payment_not_recognised","17":"card_payment_wrong_exchange_rate","18":"card_swallowed","19":"cash_withdrawal_charge","20":"cash_withdrawal_not_recognised","21":"change_pin","22":"compromised_card","23":"contactless_not_working","24":"country_support","25":"declined_card_payment","26":"declined_cash_withdrawal","27":"declined_transfer","28":"direct_debit_payment_not_recognised","29":"disposable_card_limits","30":"edit_personal_details","31":"exchange_charge","32":"exchange_rate","33":"exchange_via_app","34":"extra_charge_on_statement","35":"failed_transfer","36":"fiat_currency_support","37":"get_disposable_virtual_card","38":"get_physical_card","39":"getting_spare_card","40":"getting_virtual_card","41":"lost_or_stolen_card","42":"lost_or_stolen_phone","43":"order_physical_card","44":"passcode_forgotten","45":"pending_card_payment","46":"pending_cash_withdrawal","47":"pending_top_up","48":"pending_transfer","49":"pin_blocked","50":"receiving_money","51":"Refund_not_showing_up","52":"request_refund","53":"reverted_card_payment?","54":"supported_cards_and_currencies","55":"terminate_account","56":"top_up_by_bank_transfer_charge","57":"top_up_by_card_charge","58":"top_up_by_cash_or_cheque","59":"top_up_failed","60":"top_up_limits","61":"top_up_reverted","62":"topping_up_by_card","63":"transaction_charged_twice","64":"transfer_fee_charged","65":"transfer_into_account","66":"transfer_not_received_by_recipient","67":"transfer_timing","68":"unable_to_verify_identity","69":"verify_my_identity","70":"verify_source_of_funds","71":"verify_top_up","72":"virtual_card_not_working","73":"visa_or_mastercard","74":"why_verify_identity","75":"wrong_amount_of_cash_received","76":"wrong_exchange_rate_for_cash_withdrawal"},"example":"I\\u2019ve been charged twice for the same transaction, can I get a refund?"},"clinc_oos":{"name":"Intent detection with out-of-scope","n_classes":151,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY 3.0","train_examples":10000,"test_accuracy":0.8845,"train_accuracy":0.9983,"labels":{"0":"restaurant_reviews","1":"nutrition_info","2":"account_blocked","3":"oil_change_how","4":"time","5":"weather","6":"redeem_rewards","7":"interest_rate","8":"gas_type","9":"accept_reservations","10":"smart_home","11":"user_name","12":"report_lost_card","13":"repeat","14":"whisper_mode","15":"what_are_your_hobbies","16":"order","17":"jump_start","18":"schedule_meeting","19":"meeting_schedule","20":"freeze_account","21":"what_song","22":"meaning_of_life","23":"restaurant_reservation","24":"traffic","25":"make_call","26":"text","27":"bill_balance","28":"improve_credit_score","29":"change_language","30":"no","31":"measurement_conversion","32":"timer","33":"flip_coin","34":"do_you_have_pets","35":"balance","36":"tell_joke","37":"last_maintenance","38":"exchange_rate","39":"uber","40":"car_rental","41":"credit_limit","42":"oos","43":"shopping_list","44":"expiration_date","45":"routing","46":"meal_suggestion","47":"tire_change","48":"todo_list","49":"card_declined","50":"rewards_balance","51":"change_accent","52":"vaccines","53":"reminder_update","54":"food_last","55":"change_ai_name","56":"bill_due","57":"who_do_you_work_for","58":"share_location","59":"international_visa","60":"calendar","61":"translate","62":"carry_on","63":"book_flight","64":"insurance_change","65":"todo_list_update","66":"timezone","67":"cancel_reservation","68":"transactions","69":"credit_score","70":"report_fraud","71":"spending_history","72":"directions","73":"spelling","74":"insurance","75":"what_is_your_name","76":"reminder","77":"where_are_you_from","78":"distance","79":"payday","80":"flight_status","81":"find_phone","82":"greeting","83":"alarm","84":"order_status","85":"confirm_reservation","86":"cook_time","87":"damaged_card","88":"reset_settings","89":"pin_change","90":"replacement_card_duration","91":"new_card","92":"roll_dice","93":"income","94":"taxes","95":"date","96":"who_made_you","97":"pto_request","98":"tire_pressure","99":"how_old_are_you","100":"rollover_401k","101":"pto_request_status","102":"how_busy","103":"application_status","104":"recipe","105":"calendar_update","106":"play_music","107":"yes","108":"direct_deposit","109":"credit_limit_change","110":"gas","111":"pay_bill","112":"ingredients_list","113":"lost_luggage","114":"goodbye","115":"what_can_i_ask_you","116":"book_hotel","117":"are_you_a_bot","118":"next_song","119":"change_speed","120":"plug_type","121":"maybe","122":"w2","123":"oil_change_when","124":"thank_you","125":"shopping_list_update","126":"pto_balance","127":"order_checks","128":"travel_alert","129":"fun_fact","130":"sync_device","131":"schedule_maintenance","132":"apr","133":"transfer","134":"ingredient_substitution","135":"calories","136":"current_location","137":"international_fees","138":"calculator","139":"definition","140":"next_holiday","141":"update_playlist","142":"mpg","143":"min_payment","144":"change_user_name","145":"restaurant_suggestion","146":"travel_notification","147":"cancel","148":"pto_used","149":"travel_suggestion","150":"change_volume"},"example":"What\\u2019s the weather like in San Francisco?"},"dbpedia":{"name":"Wikipedia article ontology classification","n_classes":14,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY-SA 3.0","train_examples":10000,"test_accuracy":0.9595,"train_accuracy":0.998,"labels":{"0":"Company","1":"EducationalInstitution","2":"Artist","3":"Athlete","4":"OfficeHolder","5":"MeanOfTransportation","6":"Building","7":"NaturalPlace","8":"Village","9":"Animal","10":"Plant","11":"Album","12":"Film","13":"WrittenWork"},"example":"Harvard University is a private Ivy League research university in Cambridge, Massachusetts."},"emotion":{"name":"Text emotion detection","n_classes":6,"encoder":"BAAI/bge-large-en-v1.5","license":"Academic","train_examples":10000,"test_accuracy":0.755,"train_accuracy":0.8339,"labels":{"0":"sadness","1":"joy","2":"love","3":"anger","4":"fear","5":"surprise"},"example":"I just got accepted into my dream school! I can\\u2019t believe it!"},"imdb":{"name":"Movie review sentiment (positive/negative)","n_classes":2,"encoder":"BAAI/bge-large-en-v1.5","license":"Academic / non-commercial","train_examples":10000,"test_accuracy":0.948,"train_accuracy":0.9559,"labels":{"0":"negative","1":"positive"},"example":"A beautifully crafted film with stunning performances throughout."},"inbox_router":{"name":"Email inbox classifier: route messages to work, family, promo, or notification","n_classes":4,"encoder":"BAAI/bge-large-en-v1.5","license":"MIT","train_examples":24,"test_accuracy":0.708,"train_accuracy":1.0,"labels":{"family":"family","notification":"notification","promo":"promo","work":"work"},"example":"Can you send me the Q4 projections?"},"massive_intent":{"name":"Amazon MASSIVE voice command intents","n_classes":60,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY 4.0","train_examples":10000,"test_accuracy":0.881,"train_accuracy":0.977,"labels":{"alarm_query":"alarm_query","alarm_remove":"alarm_remove","alarm_set":"alarm_set","audio_volume_down":"audio_volume_down","audio_volume_mute":"audio_volume_mute","audio_volume_other":"audio_volume_other","audio_volume_up":"audio_volume_up","calendar_query":"calendar_query","calendar_remove":"calendar_remove","calendar_set":"calendar_set","cooking_query":"cooking_query","cooking_recipe":"cooking_recipe","datetime_convert":"datetime_convert","datetime_query":"datetime_query","email_addcontact":"email_addcontact","email_query":"email_query","email_querycontact":"email_querycontact","email_sendemail":"email_sendemail","general_greet":"general_greet","general_joke":"general_joke","general_quirky":"general_quirky","iot_cleaning":"iot_cleaning","iot_coffee":"iot_coffee","iot_hue_lightchange":"iot_hue_lightchange","iot_hue_lightdim":"iot_hue_lightdim","iot_hue_lightoff":"iot_hue_lightoff","iot_hue_lighton":"iot_hue_lighton","iot_hue_lightup":"iot_hue_lightup","iot_wemo_off":"iot_wemo_off","iot_wemo_on":"iot_wemo_on","lists_createoradd":"lists_createoradd","lists_query":"lists_query","lists_remove":"lists_remove","music_dislikeness":"music_dislikeness","music_likeness":"music_likeness","music_query":"music_query","music_settings":"music_settings","news_query":"news_query","play_audiobook":"play_audiobook","play_game":"play_game","play_music":"play_music","play_podcasts":"play_podcasts","play_radio":"play_radio","qa_currency":"qa_currency","qa_definition":"qa_definition","qa_factoid":"qa_factoid","qa_maths":"qa_maths","qa_stock":"qa_stock","recommendation_events":"recommendation_events","recommendation_locations":"recommendation_locations","recommendation_movies":"recommendation_movies","social_post":"social_post","social_query":"social_query","takeaway_order":"takeaway_order","takeaway_query":"takeaway_query","transport_query":"transport_query","transport_taxi":"transport_taxi","transport_ticket":"transport_ticket","transport_traffic":"transport_traffic","weather_query":"weather_query"},"example":"Turn on the living room lights"},"sms_spam":{"name":"SMS spam detection","n_classes":2,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY 4.0","train_examples":4459,"test_accuracy":0.991,"train_accuracy":0.997,"labels":{"0":"ham","1":"spam"},"example":"WINNER!! You have been selected for a 900 prize reward! Call now!"},"snli":{"name":"Natural language inference","n_classes":3,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY-SA 4.0","train_examples":10000,"test_accuracy":0.656,"train_accuracy":0.7271,"labels":{"0":"entailment","1":"neutral","2":"contradiction"},"example":"A man is playing guitar on a street corner. [SEP] A musician performs outdoors."},"sst2":{"name":"Movie review sentiment (positive/negative)","n_classes":2,"encoder":"BAAI/bge-large-en-v1.5","license":"Stanford academic license","train_examples":10000,"test_accuracy":0.901,"train_accuracy":0.9453,"labels":{"0":"negative","1":"positive"},"example":"This movie was absolutely terrible, a waste of time."},"tweet_eval_emotion":{"name":"Tweet emotion detection","n_classes":4,"encoder":"BAAI/bge-large-en-v1.5","license":"Twitter TOS / academic","train_examples":3257,"test_accuracy":0.781,"train_accuracy":0.902,"labels":{"0":"anger","1":"joy","2":"optimism","3":"sadness"},"example":"I am so frustrated with this company\\u2019s customer service."},"tweet_eval_offensive":{"name":"Offensive language detection","n_classes":2,"encoder":"BAAI/bge-large-en-v1.5","license":"Twitter TOS / academic","train_examples":10000,"test_accuracy":0.81,"train_accuracy":0.808,"labels":{"0":"not_offensive","1":"offensive"},"example":"Great work on the project team, really proud of everyone."},"tweet_eval_sentiment":{"name":"Tweet sentiment analysis","n_classes":3,"encoder":"BAAI/bge-large-en-v1.5","license":"Twitter TOS / academic","train_examples":10000,"test_accuracy":0.662,"train_accuracy":0.757,"labels":{"0":"negative","1":"neutral","2":"positive"},"example":"Best day ever! Finally got my dream job! #blessed"}};
 
@@ -1588,7 +1598,8 @@ async function mlClassify(){
     if(allEntries.length>10)bars.innerHTML+='<div style="font-size:10px;color:var(--muted);margin-top:4px">Showing top 10 of '+allEntries.length+' intents</div>';
     $("ml-meta").innerHTML="Language: "+info.name+" \\u00b7 Confidence: "+(d.confidence*100).toFixed(1)+"% \\u00b7 Embedding: "+d.embedding_ms+"ms \\u00b7 Total: "+d.latency_ms+"ms";
     $("ml-result").style.display="block";
-    _ev("predict",info.task,{label:d.label,confidence:d.confidence,lang:mlLang});
+    _stats.predictions++;
+    _ev("predict",info.task,{label:d.label,confidence:d.confidence,lang:mlLang,n:_stats.predictions});
     _lastMlPred={task:info.task,label:d.label,confidence:d.confidence,lang:mlLang};
     $("ml-fb-up").disabled=false;$("ml-fb-down").disabled=false;
     $("ml-fb-up").classList.remove("voted");$("ml-fb-down").classList.remove("voted");
@@ -1712,7 +1723,8 @@ function sendFeedback(up){
   var btn=up?$("fb-up"):$("fb-down");
   $("fb-up").disabled=true;$("fb-down").disabled=true;
   btn.classList.add("voted");
-  _ev("feedback",_lastPred.task,{predicted:_lastPred.label,vote:up?"up":"down",confidence:_lastPred.confidence});
+  _stats.feedbacks++;
+  _ev("feedback",_lastPred.task,{predicted:_lastPred.label,vote:up?"up":"down",confidence:_lastPred.confidence,n:_stats.feedbacks});
   $("fb-msg").textContent=up?"Thanks!":"Thanks for the feedback";
   _lastPred=null;
 }
@@ -1721,7 +1733,8 @@ function sendMlFeedback(up){
   var btn=up?$("ml-fb-up"):$("ml-fb-down");
   $("ml-fb-up").disabled=true;$("ml-fb-down").disabled=true;
   btn.classList.add("voted");
-  _ev("feedback",_lastMlPred.task,{predicted:_lastMlPred.label,vote:up?"up":"down",confidence:_lastMlPred.confidence,lang:_lastMlPred.lang});
+  _stats.feedbacks++;
+  _ev("feedback",_lastMlPred.task,{predicted:_lastMlPred.label,vote:up?"up":"down",confidence:_lastMlPred.confidence,lang:_lastMlPred.lang,n:_stats.feedbacks});
   $("ml-fb-msg").textContent=up?"Thanks!":"Thanks for the feedback";
   _lastMlPred=null;
 }
@@ -1731,7 +1744,8 @@ function sendIbFeedback(up){
   var btn=up?$("ib-fb-up"):$("ib-fb-down");
   $("ib-fb-up").disabled=true;$("ib-fb-down").disabled=true;
   btn.classList.add("voted");
-  _ev("feedback","inbox_router",{predicted:_lastIbPred.label,vote:up?"up":"down",confidence:_lastIbPred.confidence});
+  _stats.feedbacks++;
+  _ev("feedback","inbox_router",{predicted:_lastIbPred.label,vote:up?"up":"down",confidence:_lastIbPred.confidence,n:_stats.feedbacks});
   $("ib-fb-msg").textContent=up?"Thanks!":"Thanks for the feedback";
   _lastIbPred=null;
 }
@@ -1764,7 +1778,8 @@ async function runPredict(tid){
       " \\u00b7 Embedding: "+d.embedding_ms+"ms \\u00b7 Classifier: "+d.classifier_ms+"ms"+
       " \\u00b7 Total: "+d.latency_ms+"ms";
     resEl.style.display="block";
-    _ev("predict",tid,{label:d.label,confidence:d.confidence});
+    _stats.predictions++;
+    _ev("predict",tid,{label:d.label,confidence:d.confidence,n:_stats.predictions});
     _lastPred={task:tid,label:d.label,confidence:d.confidence};
     $("fb-up").disabled=false;$("fb-down").disabled=false;
     $("fb-up").classList.remove("voted");$("fb-down").classList.remove("voted");
@@ -1863,6 +1878,7 @@ function startDoom(){
 }
 
 function stopDoom(){
+  if(doomActive)_trackDemo("doom","stop");
   if(ws&&ws.readyState===WebSocket.OPEN)ws.close();
   doomActive=false;
 }
@@ -1983,6 +1999,7 @@ function startFly(){
 }
 
 function stopFly(){
+  if(flyActive)_trackDemo("fly","stop");
   if(flyWs&&flyWs.readyState===WebSocket.OPEN)flyWs.close();
   flyActive=false;
 }
@@ -2174,7 +2191,7 @@ async function ibRun(){
   ibActive=false;
 }
 
-function ibStop(){ibStopped=true;ibActive=false;}
+function ibStop(){if(ibActive)_trackDemo("inbox","stop");ibStopped=true;ibActive=false;}
 
 $("ib-replayBtn").addEventListener("click",function(){ibStopped=true;setTimeout(ibRun,100);});
 
@@ -2315,6 +2332,7 @@ function startPoker(){
 }
 
 function stopPoker(){
+  if(pkActive)_trackDemo("poker","stop");
   if(pkWs&&pkWs.readyState===WebSocket.OPEN)pkWs.close();
   pkActive=false;
 }
@@ -2325,18 +2343,20 @@ $("pk-restart").onclick=function(){startPoker();};
 function go(h){location.hash=h;}
 function _ev(event,view,meta){try{navigator.sendBeacon("/v1/event",JSON.stringify({event:event,view:view||"",meta:meta||{}}))}catch(e){};try{if(typeof umami!=="undefined")umami.track(event,{view:view||"",meta:meta||{}})}catch(e){}}
 document.addEventListener("click",function(e){var a=e.target.closest("a[href^='http']");if(a)_ev("outbound",a.href);});
+window.addEventListener("beforeunload",function(){_trackView("");_ev("session-end","",{predictions:_stats.predictions,feedbacks:_stats.feedbacks,demos:Object.keys(_stats.demos).join(","),demo_runs:JSON.stringify(_stats.demos)});});
 
 function route(){
   var h=location.hash.replace(/^#/,"");
   document.querySelectorAll(".view").forEach(function(v){v.classList.remove("active");});
   if(h)_ev("view",h);
+  _trackView(h||"catalog");
   if(h==="doom"){
     $("v-doom").classList.add("active");
-    if(!doomActive)startDoom();
+    if(!doomActive){startDoom();_trackDemo("doom","start");}
     stopFly();ibStop();stopPoker();
   } else if(h==="fly"){
     $("v-fly").classList.add("active");
-    if(!flyActive)startFly();
+    if(!flyActive){startFly();_trackDemo("fly","start");}
     stopDoom();ibStop();stopPoker();
   } else if(h==="multilingual"){
     $("v-multilingual").classList.add("active");
@@ -2344,11 +2364,11 @@ function route(){
     stopDoom();stopFly();ibStop();stopPoker();
   } else if(h==="inbox"){
     $("v-inbox").classList.add("active");
-    if(!ibActive)ibRun();
+    if(!ibActive){ibRun();_trackDemo("inbox","start");}
     stopDoom();stopFly();stopPoker();
   } else if(h==="poker"){
     $("v-poker").classList.add("active");
-    if(!pkActive)startPoker();
+    if(!pkActive){startPoker();_trackDemo("poker","start");}
     stopDoom();stopFly();ibStop();
   } else if(h.startsWith("model/")){
     var tid=h.split("/")[1];

@@ -6,6 +6,7 @@ with capability metadata in every response.
 
 import importlib.resources
 import logging
+import os
 import time
 from pathlib import Path
 
@@ -16,6 +17,24 @@ from .catalog import ENCODER, FEATURES_ENCODER, KNOWN_ENCODERS, Capability
 from .model_pack import load_artifact
 
 logger = logging.getLogger(__name__)
+
+try:
+    import onnxruntime  # noqa: F401
+    _ONNX_AVAILABLE = True
+except ImportError:
+    _ONNX_AVAILABLE = False
+
+
+def _resolve_backend() -> str:
+    choice = os.environ.get("JEFFY_BACKEND", "auto").lower()
+    if choice == "onnx":
+        if not _ONNX_AVAILABLE:
+            logger.warning("JEFFY_BACKEND=onnx but onnxruntime not installed, falling back to torch")
+            return "torch"
+        return "onnx"
+    if choice == "torch":
+        return "torch"
+    return "onnx" if _ONNX_AVAILABLE else "torch"
 
 
 def _bundled_pack_dir() -> Path | None:
@@ -59,6 +78,7 @@ class Engine:
             pack_dir = default_pack_dir()
         self.pack_dir = Path(pack_dir)
         self.device = device
+        self._backend = _resolve_backend()
         self._encoders: dict[str, SentenceTransformer] = {}
         self._capabilities: dict[str, Capability] = {}
         self._classifiers: dict[str, object] = {}
@@ -78,8 +98,9 @@ class Engine:
             )
 
         t0 = time.perf_counter()
-        self._encoders[ENCODER] = SentenceTransformer(ENCODER, device=self.device)
+        self._encoders[ENCODER] = self._load_encoder(ENCODER)
         self._encoder_load_time = time.perf_counter() - t0
+        logger.info(f"Encoder backend: {self._backend} (load: {self._encoder_load_time:.1f}s)")
 
         quarantined = []
 
@@ -144,6 +165,16 @@ class Engine:
     def encoder_load_time(self) -> float:
         return self._encoder_load_time
 
+    @property
+    def backend(self) -> str:
+        return self._backend
+
+    def _load_encoder(self, encoder_name: str) -> SentenceTransformer:
+        kwargs: dict = {"device": self.device}
+        if self._backend == "onnx":
+            kwargs["backend"] = "onnx"
+        return SentenceTransformer(encoder_name, **kwargs)
+
     def _classify(self, task_id: str, X: np.ndarray, t0: float, t_embed: float,
                   threshold: float | None = None) -> dict:
         """Shared classification logic for both text and feature inputs."""
@@ -192,6 +223,7 @@ class Engine:
                 "task_id": task_id,
                 "name": cap.name,
                 "encoder": cap.encoder,
+                "backend": self._backend,
                 "n_classes": cap.n_classes,
                 "train_examples": cap.train_examples,
                 "train_accuracy": cap.train_accuracy,
@@ -226,8 +258,8 @@ class Engine:
 
     def _get_encoder(self, encoder_name: str) -> SentenceTransformer:
         if encoder_name not in self._encoders:
-            logger.info(f"Loading encoder '{encoder_name}'...")
-            self._encoders[encoder_name] = SentenceTransformer(encoder_name, device=self.device)
+            logger.info(f"Loading encoder '{encoder_name}' (backend={self._backend})...")
+            self._encoders[encoder_name] = self._load_encoder(encoder_name)
         return self._encoders[encoder_name]
 
     def predict_features(self, task_id: str, features: list[float],

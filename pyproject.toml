@@ -42,6 +42,7 @@ Issues = "https://github.com/nicobrenner/jeffy/issues"
 [project.optional-dependencies]
 build = ["datasets>=2.14.0"]
 dev = ["httpx>=0.24.0"]
+onnx = ["onnxruntime>=1.16.0"]
 
 [project.scripts]
 jeffy-serve = "jeffy.server:main"

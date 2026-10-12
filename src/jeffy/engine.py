@@ -256,6 +256,28 @@ class Engine:
 
         return self._classify(task_id, embedding, t0, t_embed, threshold=threshold)
 
+    def predict_batch(self, task_id: str, texts: list[str],
+                      threshold: float | None = None) -> list[dict]:
+        if task_id not in self._classifiers:
+            return [{"error": f"No pretrained capability '{task_id}'. "
+                     f"Available: {list(self._capabilities.keys())}"}]
+
+        cap = self._capabilities[task_id]
+        if cap.is_feature_based:
+            return [{"error": f"Capability '{task_id}' is feature-based. "
+                     f"Use predict_features() with a numeric vector instead of text."}]
+
+        t0 = time.perf_counter()
+        encoder = self._get_encoder(cap.encoder)
+        embeddings = encoder.encode(texts, show_progress_bar=False)
+        t_embed = time.perf_counter() - t0
+
+        results = []
+        for i, text in enumerate(texts):
+            row = embeddings[i:i+1]
+            results.append(self._classify(task_id, row, t0, t_embed, threshold=threshold))
+        return results
+
     def _get_encoder(self, encoder_name: str) -> SentenceTransformer:
         if encoder_name not in self._encoders:
             logger.info(f"Loading encoder '{encoder_name}' (backend={self._backend})...")

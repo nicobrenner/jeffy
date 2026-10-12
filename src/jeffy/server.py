@@ -189,6 +189,7 @@ class PredictResponse(BaseModel):
 class BatchPredictRequest(BaseModel):
     texts: list[str]
     task: str
+    threshold: float | None = None
 
 class CapabilityInfo(BaseModel):
     task_id: str
@@ -299,7 +300,7 @@ def predict(req: PredictRequest, request: Request):
 @app.post("/v1/predict/batch")
 def predict_batch(req: BatchPredictRequest):
     engine = get_engine()
-    results = engine.predict_batch(req.task, req.texts)
+    results = engine.predict_batch(req.task, req.texts, threshold=req.threshold)
     if results and "error" in results[0]:
         raise HTTPException(400, results[0]["error"])
     return {"predictions": results, "count": len(results)}
@@ -2663,8 +2664,8 @@ $("restart-btn").onclick=function(){startDoom();};
   gtag('js', new Date());
   gtag('config', 'G-BXL0V8163H');
 </script>
-<script defer src="https://stats.jeffyclassify.com/script.js" data-website-id="4b3259e2-aac9-42a4-b34b-e89a4fb3a1e8" data-hash="true" data-do-not-track="false"></script>
-<script defer src="https://stats.jeffyclassify.com/recorder.js" data-website-id="4b3259e2-aac9-42a4-b34b-e89a4fb3a1e8" data-hash="true" data-do-not-track="false"></script>
+<script defer src="https://stats.jeffyclassify.com/script.js" data-website-id="c12de1db-8df3-403c-93e2-a15379affe27" data-hash="true" data-do-not-track="false"></script>
+<script defer src="https://stats.jeffyclassify.com/recorder.js" data-website-id="c12de1db-8df3-403c-93e2-a15379affe27" data-hash="true" data-do-not-track="false"></script>
 </body>
 </html>"""
 

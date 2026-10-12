@@ -534,7 +534,13 @@ async def doom_stream(ws: WebSocket):
     await ws.accept()
     _track_ws(ws, "doom", "demo_start")
     try:
-        from .doom_runner import DoomSession
+        try:
+            from .doom_runner import DoomSession
+        except (ImportError, OSError) as e:
+            logger.info(f"Doom engine unavailable ({e}), using simulated demo")
+            await _run_simulated(ws, "doom", fps=10)
+            return
+
         engine = get_engine()
         session = DoomSession(engine=engine, task_id="doom_fire")
         session.start()

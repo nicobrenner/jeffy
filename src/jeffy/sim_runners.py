@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 # ── GIF frame loading ──────────────────────────────────────────────
 
 
-def _find_gif(name: str) -> Path | None:
+def _find_demo_file(name: str) -> Path | None:
     demo_dir = os.environ.get("JEFFY_DEMO_DIR")
     if demo_dir:
         p = Path(demo_dir) / name
@@ -35,6 +35,26 @@ def _find_gif(name: str) -> Path | None:
     ]:
         if candidate.exists():
             return candidate
+    return None
+
+
+def _find_gif(name: str) -> Path | None:
+    return _find_demo_file(name)
+
+
+def _load_recorded_meta(json_name: str) -> list[dict] | None:
+    path = _find_demo_file(json_name)
+    if path is None:
+        return None
+    try:
+        import json as _json
+        with open(path) as f:
+            data = _json.load(f)
+        if isinstance(data, list) and len(data) > 0:
+            logger.info("Loaded %d recorded metadata frames from %s", len(data), path.name)
+            return data
+    except Exception as e:
+        logger.warning("Failed to load recorded metadata %s: %s", json_name, e)
     return None
 
 
@@ -97,10 +117,12 @@ class SimDoomSession:
         self.enemies = []
         self._spawn_wave()
         self._gif_frames: list[bytes] = []
+        self._recorded_meta: list[dict] | None = None
         self._frame_idx = 0
         gif_path = _find_gif("doom_battle.gif")
         if gif_path:
             self._gif_frames = _load_gif_frames(gif_path)
+            self._recorded_meta = _load_recorded_meta("doom_battle.json")
 
     def _spawn_wave(self):
         n = self.rng.integers(1, 4)
@@ -116,6 +138,18 @@ class SimDoomSession:
         pass
 
     def tick(self):
+        # Recorded playback: GIF frames + matching metadata from a real session
+        if self._gif_frames and self._recorded_meta:
+            idx = self._frame_idx % len(self._gif_frames)
+            meta_idx = self._frame_idx % len(self._recorded_meta)
+            jpeg = self._gif_frames[idx]
+            meta = dict(self._recorded_meta[meta_idx])
+            meta["simulated"] = True
+            meta["classify_ms"] = meta.get("classify_ms", 0.5)
+            self._frame_idx += 1
+            return jpeg, meta
+
+        # Synthetic fallback: generate features and classify live
         t0 = time.perf_counter()
         self.step += 1
 
@@ -269,10 +303,12 @@ class SimFlySession:
         for _ in range(4):
             self._spawn_food()
         self._gif_frames: list[bytes] = []
+        self._recorded_meta: list[dict] | None = None
         self._frame_idx = 0
         gif_path = _find_gif("fly_demo.gif")
         if gif_path:
             self._gif_frames = _load_gif_frames(gif_path)
+            self._recorded_meta = _load_recorded_meta("fly_demo.json")
 
     def _spawn_food(self):
         angle = self.rng.uniform(0, 2 * math.pi)
@@ -286,6 +322,16 @@ class SimFlySession:
         pass
 
     def tick(self):
+        # Recorded playback: GIF frames + matching metadata from a real session
+        if self._gif_frames and self._recorded_meta:
+            idx = self._frame_idx % len(self._gif_frames)
+            meta_idx = self._frame_idx % len(self._recorded_meta)
+            jpeg = self._gif_frames[idx]
+            meta = dict(self._recorded_meta[meta_idx])
+            meta["simulated"] = True
+            self._frame_idx += 1
+            return jpeg, meta
+
         if not self.foods:
             return None
 

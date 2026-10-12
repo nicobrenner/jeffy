@@ -1,0 +1,17 @@
+{
+  "sst2": {
+    "accuracy": 0.96,
+    "latency_p50_ms": 126.8,
+    "errors": 0
+  },
+  "ag_news": {
+    "accuracy": 0.83,
+    "latency_p50_ms": 127.4,
+    "errors": 0
+  },
+  "banking77": {
+    "accuracy": 0.8,
+    "latency_p50_ms": 134.0,
+    "errors": 0
+  }
+}

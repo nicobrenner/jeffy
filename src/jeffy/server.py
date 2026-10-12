@@ -716,15 +716,15 @@ PLAYGROUND_HTML = """<!DOCTYPE html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Jeffy · Playground</title>
-<meta name="description" content="Interactive playground for Jeffy's 68 pretrained classifiers. Classify text, play live demos, and explore the catalog. No GPU needed.">
-<meta property="og:title" content="Jeffy Playground — Try 68 Pretrained Classifiers">
-<meta property="og:description" content="Interactive playground with live demos for Doom, Poker, Email routing, and more. 68 classifiers, under 80ms, CPU-only.">
+<meta name="description" content="Interactive playground for Jeffy's 70 pretrained classifiers. Classify text, play live demos, and explore the catalog. No GPU needed.">
+<meta property="og:title" content="Jeffy Playground — Try 70 Pretrained Classifiers">
+<meta property="og:description" content="Interactive playground with live demos for Doom, Poker, Email routing, Medication scanning, and more. 70 classifiers, under 80ms, CPU-only.">
 <meta property="og:image" content="https://raw.githubusercontent.com/nicobrenner/jeffy/main/examples/og-image.png">
 <meta property="og:url" content="https://playground.jeffyclassify.com">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Jeffy Playground — Try 68 Pretrained Classifiers">
-<meta name="twitter:description" content="Interactive playground with live demos for Doom, Poker, Email routing, and more. 68 classifiers, under 80ms, CPU-only.">
+<meta name="twitter:title" content="Jeffy Playground — Try 70 Pretrained Classifiers">
+<meta name="twitter:description" content="Interactive playground with live demos for Doom, Poker, Email routing, Medication scanning, and more. 70 classifiers, under 80ms, CPU-only.">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/nicobrenner/jeffy/main/examples/og-image.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <style>
@@ -969,7 +969,7 @@ footer{max-width:1200px;margin:auto;padding:16px 24px;font-size:10px;color:var(-
 <div id="v-catalog" class="view active">
 <div class="catalog-head">
 <h2>Pretrained Classifiers</h2>
-<p id="grid-count">68 classifiers ready to use. Click a model to try it.</p>
+<p id="grid-count">70 classifiers ready to use. Click a model to try it.</p>
 </div>
 <div id="grid" class="grid">
 <div class="card feat" onclick="go('doom')">
@@ -1000,6 +1000,12 @@ footer{max-width:1200px;margin:auto;padding:16px 24px;font-size:10px;color:var(-
 <div class="card-name">Voice command intents in 51 languages (MASSIVE dataset, multilingual encoder)</div>
 <div class="card-tags"><span class="tag">60 classes</span><span class="tag">51 languages</span><span class="tag">CC BY 4.0</span></div>
 <div class="card-bar"><div class="card-bar-fill" style="width:82%"></div></div>
+</div>
+<div class="card feat" onclick="go('medication')">
+<div class="card-top"><span class="card-id">medication</span><span class="demo-badge">Live Demo</span></div>
+<div class="card-name">OCR medication detection: identify drugs + dosage forms from label scans</div>
+<div class="card-tags"><span class="tag">50 medications</span><span class="tag">10 forms</span><span class="tag">MIT</span></div>
+<div class="card-bar"><div class="card-bar-fill" style="width:96%"></div></div>
 </div>
 <div class="card" onclick="go('model/sms_spam')">
 <div class="card-top"><span class="card-id">sms_spam</span><span class="card-acc">99.1%</span></div>
@@ -1347,6 +1353,108 @@ The key insight: a <strong style="color:var(--text)">multilingual sentence encod
 </div>
 </div>
 
+<!-- Medication Demo -->
+<div id="v-medication" class="view">
+<span class="back" onclick="go('')">&#8592; Back to catalog</span>
+<div class="d-header">
+<div class="d-title">Medication Scanner</div>
+<div class="d-desc">Two classifiers work together: one identifies the medication name (50 drugs, including brand name &#8594; generic mapping), the other detects dosage form. Designed for OCR text from camera scans of medication labels, bottles, and packaging. Handles misspellings, truncated text, ALL CAPS, and mixed formats.</div>
+<div class="d-stats">
+<div class="d-stat"><span class="v">50</span><span class="l">Medications</span></div>
+<div class="d-stat"><span class="v">10</span><span class="l">Dosage Forms</span></div>
+<div class="d-stat"><span class="v">96%</span><span class="l">OCR accuracy</span></div>
+<div class="d-stat"><span class="v">~80ms</span><span class="l">Latency</span></div>
+</div>
+</div>
+<div class="ml-layout" style="margin-top:16px">
+<div class="ml-left">
+<div class="info-card" id="med-pipeline">
+<h3>Live Scan Pipeline</h3>
+<div style="display:flex;gap:12px;align-items:stretch;margin-bottom:14px;flex-wrap:wrap">
+<div id="med-label-card" style="flex:1;min-width:200px;background:var(--code-bg);border:1px solid var(--line);border-radius:8px;padding:14px;position:relative;overflow:hidden">
+<div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Medication Label</div>
+<div id="med-label-content" style="font:13px/1.6 var(--mono);color:var(--text);min-height:80px;transition:opacity .3s">
+<div style="color:var(--muted);font-style:italic">Waiting...</div>
+</div>
+<div id="med-scan-line" style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);opacity:0;transition:top .8s linear"></div>
+</div>
+<div style="display:flex;flex-direction:column;justify-content:center;gap:6px;padding:0 4px">
+<div id="med-arrow1" class="med-arrow" style="font-size:18px;color:var(--line);transition:color .2s">&#8594;</div>
+<div style="font-size:8px;color:var(--muted);text-align:center">OCR</div>
+</div>
+<div id="med-ocr-box" style="flex:1;min-width:160px;background:var(--code-bg);border:1px solid var(--line);border-radius:8px;padding:14px">
+<div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Extracted Text</div>
+<div id="med-ocr-text" style="font:12px/1.6 var(--mono);color:var(--text);min-height:40px;transition:opacity .3s">
+<div style="color:var(--muted);font-style:italic">&#8212;</div>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;justify-content:center;gap:6px;padding:0 4px">
+<div id="med-arrow2" class="med-arrow" style="font-size:18px;color:var(--line);transition:color .2s">&#8594;</div>
+<div style="font-size:8px;color:var(--muted);text-align:center">Classify</div>
+</div>
+<div id="med-result-box" style="flex:1;min-width:160px;background:var(--code-bg);border:1px solid var(--line);border-radius:8px;padding:14px">
+<div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Result</div>
+<div id="med-result-content" style="min-height:40px;transition:opacity .3s">
+<div style="color:var(--muted);font-style:italic">&#8212;</div>
+</div>
+</div>
+</div>
+<div style="display:flex;align-items:center;gap:10px">
+<span id="med-auto-status" style="font-size:10px;color:var(--muted)"></span>
+<button id="med-auto-btn" class="restart-btn" onclick="medToggleAuto()">Pause</button>
+<button class="restart-btn" onclick="medNext()">Next &#8594;</button>
+</div>
+</div>
+<div class="info-card">
+<h3>Try it</h3>
+<textarea id="med-input" rows="2" spellcheck="false" placeholder="Type or paste OCR text from a medication label...">Lipitor 20mg Film-Coated Tablets</textarea>
+<div class="try-row"><span id="med-lat" style="font-size:11px;color:var(--muted)"></span>
+<button class="run-btn" id="med-run" onclick="medClassify()">Scan &#8594;</button></div>
+<div id="med-err" class="err-msg"></div>
+<div id="med-try-result" style="display:none">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px">
+<div>
+<div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Medication</div>
+<div id="med-try-drug" class="result-label" style="font-size:18px;margin:0"></div>
+<div id="med-try-drug-bars" style="margin-top:6px"></div>
+<div id="med-try-drug-meta" class="rmeta"></div>
+<div class="feedback-row"><span>Correct?</span><button class="fb-btn" id="med-fb-drug-up" onclick="sendMedFeedback('drug',1)">&#128077;</button><button class="fb-btn" id="med-fb-drug-down" onclick="sendMedFeedback('drug',0)">&#128078;</button><span id="med-fb-drug-msg" class="fb-msg"></span></div>
+</div>
+<div>
+<div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Dosage Form</div>
+<div id="med-try-form" class="result-label" style="font-size:18px;margin:0"></div>
+<div id="med-try-form-bars" style="margin-top:6px"></div>
+<div id="med-try-form-meta" class="rmeta"></div>
+<div class="feedback-row"><span>Correct?</span><button class="fb-btn" id="med-fb-form-up" onclick="sendMedFeedback('form',1)">&#128077;</button><button class="fb-btn" id="med-fb-form-down" onclick="sendMedFeedback('form',0)">&#128078;</button><span id="med-fb-form-msg" class="fb-msg"></span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sidebar">
+<div class="info-card">
+<h3>Scan History</h3>
+<div id="med-history" style="max-height:250px;overflow-y:auto"></div>
+</div>
+<div class="info-card">
+<h3>How it works</h3>
+<div style="font-size:11px;color:var(--muted);line-height:1.6">
+A mobile app scans a medication label with the camera. OCR extracts the text. Two Jeffy classifiers run in parallel:<br><br>
+<strong style="color:var(--text)">1. Medication Name</strong> (50-class) &mdash; identifies the drug from generic names, brand names (Lipitor &#8594; atorvastatin), partial text, and OCR noise.<br><br>
+<strong style="color:var(--text)">2. Dosage Form</strong> (10-class) &mdash; detects tablet, capsule, liquid, inhaler, injection, cream, ointment, patch, drops, or suppository.<br><br>
+Each classifier is a logistic regression on text embeddings &mdash; no LLM, no GPU, <strong style="color:var(--accent)">~80ms total</strong>. Runs on-device.
+</div>
+</div>
+<div class="info-card">
+<h3>Use case</h3>
+<div style="font-size:11px;color:var(--muted);line-height:1.6">
+An iOS medication reminder app that scans pill bottles to auto-fill prescription records. The classifier handles: brand &#8594; generic mapping, OCR typos (Metforrnin, Omepraz0le), truncated scans, and ALL CAPS pharmacy labels.
+</div>
+</div>
+</div>
+</div>
+</div>
+
 <!-- Poker Demo -->
 <div id="v-poker" class="view">
 <span class="back" onclick="go('')">&#8592; Back to catalog</span>
@@ -1427,7 +1535,7 @@ let _stats={predictions:0,feedbacks:0,demos:{},viewStart:0,currentView:""};
 function _trackView(v){if(_stats.currentView&&_stats.viewStart){var sec=Math.round((Date.now()-_stats.viewStart)/1000);if(sec>1)_ev("dwell",_stats.currentView,{seconds:sec});}_stats.currentView=v;_stats.viewStart=Date.now();}
 function _trackDemo(name,action){if(action==="start"){_stats.demos[name]=(_stats.demos[name]||0)+1;_ev("demo-start",name,{run:_stats.demos[name]});}else{_ev("demo-stop",name,{run:_stats.demos[name]||1});}}
 
-const CAPS={"ag_news":{"name":"News article topic classification","n_classes":4,"encoder":"BAAI/bge-large-en-v1.5","license":"Academic / non-commercial","train_examples":10000,"test_accuracy":0.9055,"train_accuracy":0.9413,"labels":{"0":"World","1":"Sports","2":"Business","3":"Sci/Tech"},"example":"The Federal Reserve raised interest rates by 0.25% today."},"banking77":{"name":"Banking customer service intent detection","n_classes":77,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY 4.0","train_examples":10000,"test_accuracy":0.943,"train_accuracy":0.9836,"labels":{"0":"activate_my_card","1":"age_limit","2":"apple_pay_or_google_pay","3":"atm_support","4":"automatic_top_up","5":"balance_not_updated_after_bank_transfer","6":"balance_not_updated_after_cheque_or_cash_deposit","7":"beneficiary_not_allowed","8":"cancel_transfer","9":"card_about_to_expire","10":"card_acceptance","11":"card_arrival","12":"card_delivery_estimate","13":"card_linking","14":"card_not_working","15":"card_payment_fee_charged","16":"card_payment_not_recognised","17":"card_payment_wrong_exchange_rate","18":"card_swallowed","19":"cash_withdrawal_charge","20":"cash_withdrawal_not_recognised","21":"change_pin","22":"compromised_card","23":"contactless_not_working","24":"country_support","25":"declined_card_payment","26":"declined_cash_withdrawal","27":"declined_transfer","28":"direct_debit_payment_not_recognised","29":"disposable_card_limits","30":"edit_personal_details","31":"exchange_charge","32":"exchange_rate","33":"exchange_via_app","34":"extra_charge_on_statement","35":"failed_transfer","36":"fiat_currency_support","37":"get_disposable_virtual_card","38":"get_physical_card","39":"getting_spare_card","40":"getting_virtual_card","41":"lost_or_stolen_card","42":"lost_or_stolen_phone","43":"order_physical_card","44":"passcode_forgotten","45":"pending_card_payment","46":"pending_cash_withdrawal","47":"pending_top_up","48":"pending_transfer","49":"pin_blocked","50":"receiving_money","51":"Refund_not_showing_up","52":"request_refund","53":"reverted_card_payment?","54":"supported_cards_and_currencies","55":"terminate_account","56":"top_up_by_bank_transfer_charge","57":"top_up_by_card_charge","58":"top_up_by_cash_or_cheque","59":"top_up_failed","60":"top_up_limits","61":"top_up_reverted","62":"topping_up_by_card","63":"transaction_charged_twice","64":"transfer_fee_charged","65":"transfer_into_account","66":"transfer_not_received_by_recipient","67":"transfer_timing","68":"unable_to_verify_identity","69":"verify_my_identity","70":"verify_source_of_funds","71":"verify_top_up","72":"virtual_card_not_working","73":"visa_or_mastercard","74":"why_verify_identity","75":"wrong_amount_of_cash_received","76":"wrong_exchange_rate_for_cash_withdrawal"},"example":"I\\u2019ve been charged twice for the same transaction, can I get a refund?"},"clinc_oos":{"name":"Intent detection with out-of-scope","n_classes":151,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY 3.0","train_examples":10000,"test_accuracy":0.8845,"train_accuracy":0.9983,"labels":{"0":"restaurant_reviews","1":"nutrition_info","2":"account_blocked","3":"oil_change_how","4":"time","5":"weather","6":"redeem_rewards","7":"interest_rate","8":"gas_type","9":"accept_reservations","10":"smart_home","11":"user_name","12":"report_lost_card","13":"repeat","14":"whisper_mode","15":"what_are_your_hobbies","16":"order","17":"jump_start","18":"schedule_meeting","19":"meeting_schedule","20":"freeze_account","21":"what_song","22":"meaning_of_life","23":"restaurant_reservation","24":"traffic","25":"make_call","26":"text","27":"bill_balance","28":"improve_credit_score","29":"change_language","30":"no","31":"measurement_conversion","32":"timer","33":"flip_coin","34":"do_you_have_pets","35":"balance","36":"tell_joke","37":"last_maintenance","38":"exchange_rate","39":"uber","40":"car_rental","41":"credit_limit","42":"oos","43":"shopping_list","44":"expiration_date","45":"routing","46":"meal_suggestion","47":"tire_change","48":"todo_list","49":"card_declined","50":"rewards_balance","51":"change_accent","52":"vaccines","53":"reminder_update","54":"food_last","55":"change_ai_name","56":"bill_due","57":"who_do_you_work_for","58":"share_location","59":"international_visa","60":"calendar","61":"translate","62":"carry_on","63":"book_flight","64":"insurance_change","65":"todo_list_update","66":"timezone","67":"cancel_reservation","68":"transactions","69":"credit_score","70":"report_fraud","71":"spending_history","72":"directions","73":"spelling","74":"insurance","75":"what_is_your_name","76":"reminder","77":"where_are_you_from","78":"distance","79":"payday","80":"flight_status","81":"find_phone","82":"greeting","83":"alarm","84":"order_status","85":"confirm_reservation","86":"cook_time","87":"damaged_card","88":"reset_settings","89":"pin_change","90":"replacement_card_duration","91":"new_card","92":"roll_dice","93":"income","94":"taxes","95":"date","96":"who_made_you","97":"pto_request","98":"tire_pressure","99":"how_old_are_you","100":"rollover_401k","101":"pto_request_status","102":"how_busy","103":"application_status","104":"recipe","105":"calendar_update","106":"play_music","107":"yes","108":"direct_deposit","109":"credit_limit_change","110":"gas","111":"pay_bill","112":"ingredients_list","113":"lost_luggage","114":"goodbye","115":"what_can_i_ask_you","116":"book_hotel","117":"are_you_a_bot","118":"next_song","119":"change_speed","120":"plug_type","121":"maybe","122":"w2","123":"oil_change_when","124":"thank_you","125":"shopping_list_update","126":"pto_balance","127":"order_checks","128":"travel_alert","129":"fun_fact","130":"sync_device","131":"schedule_maintenance","132":"apr","133":"transfer","134":"ingredient_substitution","135":"calories","136":"current_location","137":"international_fees","138":"calculator","139":"definition","140":"next_holiday","141":"update_playlist","142":"mpg","143":"min_payment","144":"change_user_name","145":"restaurant_suggestion","146":"travel_notification","147":"cancel","148":"pto_used","149":"travel_suggestion","150":"change_volume"},"example":"What\\u2019s the weather like in San Francisco?"},"dbpedia":{"name":"Wikipedia article ontology classification","n_classes":14,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY-SA 3.0","train_examples":10000,"test_accuracy":0.9595,"train_accuracy":0.998,"labels":{"0":"Company","1":"EducationalInstitution","2":"Artist","3":"Athlete","4":"OfficeHolder","5":"MeanOfTransportation","6":"Building","7":"NaturalPlace","8":"Village","9":"Animal","10":"Plant","11":"Album","12":"Film","13":"WrittenWork"},"example":"Harvard University is a private Ivy League research university in Cambridge, Massachusetts."},"emotion":{"name":"Text emotion detection","n_classes":6,"encoder":"BAAI/bge-large-en-v1.5","license":"Academic","train_examples":10000,"test_accuracy":0.755,"train_accuracy":0.8339,"labels":{"0":"sadness","1":"joy","2":"love","3":"anger","4":"fear","5":"surprise"},"example":"I just got accepted into my dream school! I can\\u2019t believe it!"},"imdb":{"name":"Movie review sentiment (positive/negative)","n_classes":2,"encoder":"BAAI/bge-large-en-v1.5","license":"Academic / non-commercial","train_examples":10000,"test_accuracy":0.948,"train_accuracy":0.9559,"labels":{"0":"negative","1":"positive"},"example":"A beautifully crafted film with stunning performances throughout."},"inbox_router":{"name":"Email inbox classifier: route messages to work, family, promo, or notification","n_classes":4,"encoder":"BAAI/bge-large-en-v1.5","license":"MIT","train_examples":24,"test_accuracy":0.708,"train_accuracy":1.0,"labels":{"family":"family","notification":"notification","promo":"promo","work":"work"},"example":"Can you send me the Q4 projections?"},"massive_intent":{"name":"Amazon MASSIVE voice command intents","n_classes":60,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY 4.0","train_examples":10000,"test_accuracy":0.881,"train_accuracy":0.977,"labels":{"alarm_query":"alarm_query","alarm_remove":"alarm_remove","alarm_set":"alarm_set","audio_volume_down":"audio_volume_down","audio_volume_mute":"audio_volume_mute","audio_volume_other":"audio_volume_other","audio_volume_up":"audio_volume_up","calendar_query":"calendar_query","calendar_remove":"calendar_remove","calendar_set":"calendar_set","cooking_query":"cooking_query","cooking_recipe":"cooking_recipe","datetime_convert":"datetime_convert","datetime_query":"datetime_query","email_addcontact":"email_addcontact","email_query":"email_query","email_querycontact":"email_querycontact","email_sendemail":"email_sendemail","general_greet":"general_greet","general_joke":"general_joke","general_quirky":"general_quirky","iot_cleaning":"iot_cleaning","iot_coffee":"iot_coffee","iot_hue_lightchange":"iot_hue_lightchange","iot_hue_lightdim":"iot_hue_lightdim","iot_hue_lightoff":"iot_hue_lightoff","iot_hue_lighton":"iot_hue_lighton","iot_hue_lightup":"iot_hue_lightup","iot_wemo_off":"iot_wemo_off","iot_wemo_on":"iot_wemo_on","lists_createoradd":"lists_createoradd","lists_query":"lists_query","lists_remove":"lists_remove","music_dislikeness":"music_dislikeness","music_likeness":"music_likeness","music_query":"music_query","music_settings":"music_settings","news_query":"news_query","play_audiobook":"play_audiobook","play_game":"play_game","play_music":"play_music","play_podcasts":"play_podcasts","play_radio":"play_radio","qa_currency":"qa_currency","qa_definition":"qa_definition","qa_factoid":"qa_factoid","qa_maths":"qa_maths","qa_stock":"qa_stock","recommendation_events":"recommendation_events","recommendation_locations":"recommendation_locations","recommendation_movies":"recommendation_movies","social_post":"social_post","social_query":"social_query","takeaway_order":"takeaway_order","takeaway_query":"takeaway_query","transport_query":"transport_query","transport_taxi":"transport_taxi","transport_ticket":"transport_ticket","transport_traffic":"transport_traffic","weather_query":"weather_query"},"example":"Turn on the living room lights"},"sms_spam":{"name":"SMS spam detection","n_classes":2,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY 4.0","train_examples":4459,"test_accuracy":0.991,"train_accuracy":0.997,"labels":{"0":"ham","1":"spam"},"example":"WINNER!! You have been selected for a 900 prize reward! Call now!"},"snli":{"name":"Natural language inference","n_classes":3,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY-SA 4.0","train_examples":10000,"test_accuracy":0.656,"train_accuracy":0.7271,"labels":{"0":"entailment","1":"neutral","2":"contradiction"},"example":"A man is playing guitar on a street corner. [SEP] A musician performs outdoors."},"sst2":{"name":"Movie review sentiment (positive/negative)","n_classes":2,"encoder":"BAAI/bge-large-en-v1.5","license":"Stanford academic license","train_examples":10000,"test_accuracy":0.901,"train_accuracy":0.9453,"labels":{"0":"negative","1":"positive"},"example":"This movie was absolutely terrible, a waste of time."},"tweet_eval_emotion":{"name":"Tweet emotion detection","n_classes":4,"encoder":"BAAI/bge-large-en-v1.5","license":"Twitter TOS / academic","train_examples":3257,"test_accuracy":0.781,"train_accuracy":0.902,"labels":{"0":"anger","1":"joy","2":"optimism","3":"sadness"},"example":"I am so frustrated with this company\\u2019s customer service."},"tweet_eval_offensive":{"name":"Offensive language detection","n_classes":2,"encoder":"BAAI/bge-large-en-v1.5","license":"Twitter TOS / academic","train_examples":10000,"test_accuracy":0.81,"train_accuracy":0.808,"labels":{"0":"not_offensive","1":"offensive"},"example":"Great work on the project team, really proud of everyone."},"tweet_eval_sentiment":{"name":"Tweet sentiment analysis","n_classes":3,"encoder":"BAAI/bge-large-en-v1.5","license":"Twitter TOS / academic","train_examples":10000,"test_accuracy":0.662,"train_accuracy":0.757,"labels":{"0":"negative","1":"neutral","2":"positive"},"example":"Best day ever! Finally got my dream job! #blessed"}};
+const CAPS={"ag_news":{"name":"News article topic classification","n_classes":4,"encoder":"BAAI/bge-large-en-v1.5","license":"Academic / non-commercial","train_examples":10000,"test_accuracy":0.9055,"train_accuracy":0.9413,"labels":{"0":"World","1":"Sports","2":"Business","3":"Sci/Tech"},"example":"The Federal Reserve raised interest rates by 0.25% today."},"banking77":{"name":"Banking customer service intent detection","n_classes":77,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY 4.0","train_examples":10000,"test_accuracy":0.943,"train_accuracy":0.9836,"labels":{"0":"activate_my_card","1":"age_limit","2":"apple_pay_or_google_pay","3":"atm_support","4":"automatic_top_up","5":"balance_not_updated_after_bank_transfer","6":"balance_not_updated_after_cheque_or_cash_deposit","7":"beneficiary_not_allowed","8":"cancel_transfer","9":"card_about_to_expire","10":"card_acceptance","11":"card_arrival","12":"card_delivery_estimate","13":"card_linking","14":"card_not_working","15":"card_payment_fee_charged","16":"card_payment_not_recognised","17":"card_payment_wrong_exchange_rate","18":"card_swallowed","19":"cash_withdrawal_charge","20":"cash_withdrawal_not_recognised","21":"change_pin","22":"compromised_card","23":"contactless_not_working","24":"country_support","25":"declined_card_payment","26":"declined_cash_withdrawal","27":"declined_transfer","28":"direct_debit_payment_not_recognised","29":"disposable_card_limits","30":"edit_personal_details","31":"exchange_charge","32":"exchange_rate","33":"exchange_via_app","34":"extra_charge_on_statement","35":"failed_transfer","36":"fiat_currency_support","37":"get_disposable_virtual_card","38":"get_physical_card","39":"getting_spare_card","40":"getting_virtual_card","41":"lost_or_stolen_card","42":"lost_or_stolen_phone","43":"order_physical_card","44":"passcode_forgotten","45":"pending_card_payment","46":"pending_cash_withdrawal","47":"pending_top_up","48":"pending_transfer","49":"pin_blocked","50":"receiving_money","51":"Refund_not_showing_up","52":"request_refund","53":"reverted_card_payment?","54":"supported_cards_and_currencies","55":"terminate_account","56":"top_up_by_bank_transfer_charge","57":"top_up_by_card_charge","58":"top_up_by_cash_or_cheque","59":"top_up_failed","60":"top_up_limits","61":"top_up_reverted","62":"topping_up_by_card","63":"transaction_charged_twice","64":"transfer_fee_charged","65":"transfer_into_account","66":"transfer_not_received_by_recipient","67":"transfer_timing","68":"unable_to_verify_identity","69":"verify_my_identity","70":"verify_source_of_funds","71":"verify_top_up","72":"virtual_card_not_working","73":"visa_or_mastercard","74":"why_verify_identity","75":"wrong_amount_of_cash_received","76":"wrong_exchange_rate_for_cash_withdrawal"},"example":"I\\u2019ve been charged twice for the same transaction, can I get a refund?"},"clinc_oos":{"name":"Intent detection with out-of-scope","n_classes":151,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY 3.0","train_examples":10000,"test_accuracy":0.8845,"train_accuracy":0.9983,"labels":{"0":"restaurant_reviews","1":"nutrition_info","2":"account_blocked","3":"oil_change_how","4":"time","5":"weather","6":"redeem_rewards","7":"interest_rate","8":"gas_type","9":"accept_reservations","10":"smart_home","11":"user_name","12":"report_lost_card","13":"repeat","14":"whisper_mode","15":"what_are_your_hobbies","16":"order","17":"jump_start","18":"schedule_meeting","19":"meeting_schedule","20":"freeze_account","21":"what_song","22":"meaning_of_life","23":"restaurant_reservation","24":"traffic","25":"make_call","26":"text","27":"bill_balance","28":"improve_credit_score","29":"change_language","30":"no","31":"measurement_conversion","32":"timer","33":"flip_coin","34":"do_you_have_pets","35":"balance","36":"tell_joke","37":"last_maintenance","38":"exchange_rate","39":"uber","40":"car_rental","41":"credit_limit","42":"oos","43":"shopping_list","44":"expiration_date","45":"routing","46":"meal_suggestion","47":"tire_change","48":"todo_list","49":"card_declined","50":"rewards_balance","51":"change_accent","52":"vaccines","53":"reminder_update","54":"food_last","55":"change_ai_name","56":"bill_due","57":"who_do_you_work_for","58":"share_location","59":"international_visa","60":"calendar","61":"translate","62":"carry_on","63":"book_flight","64":"insurance_change","65":"todo_list_update","66":"timezone","67":"cancel_reservation","68":"transactions","69":"credit_score","70":"report_fraud","71":"spending_history","72":"directions","73":"spelling","74":"insurance","75":"what_is_your_name","76":"reminder","77":"where_are_you_from","78":"distance","79":"payday","80":"flight_status","81":"find_phone","82":"greeting","83":"alarm","84":"order_status","85":"confirm_reservation","86":"cook_time","87":"damaged_card","88":"reset_settings","89":"pin_change","90":"replacement_card_duration","91":"new_card","92":"roll_dice","93":"income","94":"taxes","95":"date","96":"who_made_you","97":"pto_request","98":"tire_pressure","99":"how_old_are_you","100":"rollover_401k","101":"pto_request_status","102":"how_busy","103":"application_status","104":"recipe","105":"calendar_update","106":"play_music","107":"yes","108":"direct_deposit","109":"credit_limit_change","110":"gas","111":"pay_bill","112":"ingredients_list","113":"lost_luggage","114":"goodbye","115":"what_can_i_ask_you","116":"book_hotel","117":"are_you_a_bot","118":"next_song","119":"change_speed","120":"plug_type","121":"maybe","122":"w2","123":"oil_change_when","124":"thank_you","125":"shopping_list_update","126":"pto_balance","127":"order_checks","128":"travel_alert","129":"fun_fact","130":"sync_device","131":"schedule_maintenance","132":"apr","133":"transfer","134":"ingredient_substitution","135":"calories","136":"current_location","137":"international_fees","138":"calculator","139":"definition","140":"next_holiday","141":"update_playlist","142":"mpg","143":"min_payment","144":"change_user_name","145":"restaurant_suggestion","146":"travel_notification","147":"cancel","148":"pto_used","149":"travel_suggestion","150":"change_volume"},"example":"What\\u2019s the weather like in San Francisco?"},"dbpedia":{"name":"Wikipedia article ontology classification","n_classes":14,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY-SA 3.0","train_examples":10000,"test_accuracy":0.9595,"train_accuracy":0.998,"labels":{"0":"Company","1":"EducationalInstitution","2":"Artist","3":"Athlete","4":"OfficeHolder","5":"MeanOfTransportation","6":"Building","7":"NaturalPlace","8":"Village","9":"Animal","10":"Plant","11":"Album","12":"Film","13":"WrittenWork"},"example":"Harvard University is a private Ivy League research university in Cambridge, Massachusetts."},"emotion":{"name":"Text emotion detection","n_classes":6,"encoder":"BAAI/bge-large-en-v1.5","license":"Academic","train_examples":10000,"test_accuracy":0.755,"train_accuracy":0.8339,"labels":{"0":"sadness","1":"joy","2":"love","3":"anger","4":"fear","5":"surprise"},"example":"I just got accepted into my dream school! I can\\u2019t believe it!"},"imdb":{"name":"Movie review sentiment (positive/negative)","n_classes":2,"encoder":"BAAI/bge-large-en-v1.5","license":"Academic / non-commercial","train_examples":10000,"test_accuracy":0.948,"train_accuracy":0.9559,"labels":{"0":"negative","1":"positive"},"example":"A beautifully crafted film with stunning performances throughout."},"inbox_router":{"name":"Email inbox classifier: route messages to work, family, promo, or notification","n_classes":4,"encoder":"BAAI/bge-large-en-v1.5","license":"MIT","train_examples":24,"test_accuracy":0.708,"train_accuracy":1.0,"labels":{"family":"family","notification":"notification","promo":"promo","work":"work"},"example":"Can you send me the Q4 projections?"},"massive_intent":{"name":"Amazon MASSIVE voice command intents","n_classes":60,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY 4.0","train_examples":10000,"test_accuracy":0.881,"train_accuracy":0.977,"labels":{"alarm_query":"alarm_query","alarm_remove":"alarm_remove","alarm_set":"alarm_set","audio_volume_down":"audio_volume_down","audio_volume_mute":"audio_volume_mute","audio_volume_other":"audio_volume_other","audio_volume_up":"audio_volume_up","calendar_query":"calendar_query","calendar_remove":"calendar_remove","calendar_set":"calendar_set","cooking_query":"cooking_query","cooking_recipe":"cooking_recipe","datetime_convert":"datetime_convert","datetime_query":"datetime_query","email_addcontact":"email_addcontact","email_query":"email_query","email_querycontact":"email_querycontact","email_sendemail":"email_sendemail","general_greet":"general_greet","general_joke":"general_joke","general_quirky":"general_quirky","iot_cleaning":"iot_cleaning","iot_coffee":"iot_coffee","iot_hue_lightchange":"iot_hue_lightchange","iot_hue_lightdim":"iot_hue_lightdim","iot_hue_lightoff":"iot_hue_lightoff","iot_hue_lighton":"iot_hue_lighton","iot_hue_lightup":"iot_hue_lightup","iot_wemo_off":"iot_wemo_off","iot_wemo_on":"iot_wemo_on","lists_createoradd":"lists_createoradd","lists_query":"lists_query","lists_remove":"lists_remove","music_dislikeness":"music_dislikeness","music_likeness":"music_likeness","music_query":"music_query","music_settings":"music_settings","news_query":"news_query","play_audiobook":"play_audiobook","play_game":"play_game","play_music":"play_music","play_podcasts":"play_podcasts","play_radio":"play_radio","qa_currency":"qa_currency","qa_definition":"qa_definition","qa_factoid":"qa_factoid","qa_maths":"qa_maths","qa_stock":"qa_stock","recommendation_events":"recommendation_events","recommendation_locations":"recommendation_locations","recommendation_movies":"recommendation_movies","social_post":"social_post","social_query":"social_query","takeaway_order":"takeaway_order","takeaway_query":"takeaway_query","transport_query":"transport_query","transport_taxi":"transport_taxi","transport_ticket":"transport_ticket","transport_traffic":"transport_traffic","weather_query":"weather_query"},"example":"Turn on the living room lights"},"sms_spam":{"name":"SMS spam detection","n_classes":2,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY 4.0","train_examples":4459,"test_accuracy":0.991,"train_accuracy":0.997,"labels":{"0":"ham","1":"spam"},"example":"WINNER!! You have been selected for a 900 prize reward! Call now!"},"snli":{"name":"Natural language inference","n_classes":3,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY-SA 4.0","train_examples":10000,"test_accuracy":0.656,"train_accuracy":0.7271,"labels":{"0":"entailment","1":"neutral","2":"contradiction"},"example":"A man is playing guitar on a street corner. [SEP] A musician performs outdoors."},"sst2":{"name":"Movie review sentiment (positive/negative)","n_classes":2,"encoder":"BAAI/bge-large-en-v1.5","license":"Stanford academic license","train_examples":10000,"test_accuracy":0.901,"train_accuracy":0.9453,"labels":{"0":"negative","1":"positive"},"example":"This movie was absolutely terrible, a waste of time."},"tweet_eval_emotion":{"name":"Tweet emotion detection","n_classes":4,"encoder":"BAAI/bge-large-en-v1.5","license":"Twitter TOS / academic","train_examples":3257,"test_accuracy":0.781,"train_accuracy":0.902,"labels":{"0":"anger","1":"joy","2":"optimism","3":"sadness"},"example":"I am so frustrated with this company\\u2019s customer service."},"tweet_eval_offensive":{"name":"Offensive language detection","n_classes":2,"encoder":"BAAI/bge-large-en-v1.5","license":"Twitter TOS / academic","train_examples":10000,"test_accuracy":0.81,"train_accuracy":0.808,"labels":{"0":"not_offensive","1":"offensive"},"example":"Great work on the project team, really proud of everyone."},"tweet_eval_sentiment":{"name":"Tweet sentiment analysis","n_classes":3,"encoder":"BAAI/bge-large-en-v1.5","license":"Twitter TOS / academic","train_examples":10000,"test_accuracy":0.662,"train_accuracy":0.757,"labels":{"0":"negative","1":"neutral","2":"positive"},"example":"Best day ever! Finally got my dream job! #blessed"},"medication_name":{"name":"Medication name detection from OCR text (top 50 prescribed drugs)","n_classes":50,"encoder":"BAAI/bge-large-en-v1.5","license":"MIT","train_examples":574,"test_accuracy":1.0,"train_accuracy":1.0,"labels":{"acetaminophen":"acetaminophen","albuterol":"albuterol","alprazolam":"alprazolam","amlodipine":"amlodipine","amoxicillin":"amoxicillin","atorvastatin":"atorvastatin","azithromycin":"azithromycin","bupropion":"bupropion","carvedilol":"carvedilol","cetirizine":"cetirizine","ciprofloxacin":"ciprofloxacin","citalopram":"citalopram","clonazepam":"clonazepam","clopidogrel":"clopidogrel","cyclobenzaprine":"cyclobenzaprine","doxycycline":"doxycycline","duloxetine":"duloxetine","escitalopram":"escitalopram","fluoxetine":"fluoxetine","furosemide":"furosemide","gabapentin":"gabapentin","hydrochlorothiazide":"hydrochlorothiazide","hydroxychloroquine":"hydroxychloroquine","ibuprofen":"ibuprofen","levothyroxine":"levothyroxine","lisinopril":"lisinopril","loratadine":"loratadine","losartan":"losartan","meloxicam":"meloxicam","metformin":"metformin","metoprolol":"metoprolol","montelukast":"montelukast","naproxen":"naproxen","omeprazole":"omeprazole","oxycodone":"oxycodone","pantoprazole":"pantoprazole","pravastatin":"pravastatin","prednisone":"prednisone","pregabalin":"pregabalin","rosuvastatin":"rosuvastatin","sertraline":"sertraline","simvastatin":"simvastatin","spironolactone":"spironolactone","sumatriptan":"sumatriptan","tamsulosin":"tamsulosin","tramadol":"tramadol","trazodone":"trazodone","venlafaxine":"venlafaxine","warfarin":"warfarin","zolpidem":"zolpidem"},"example":"Metformin HCl 500mg Tablets"},"dosage_form":{"name":"Medication dosage form classification","n_classes":10,"encoder":"BAAI/bge-large-en-v1.5","license":"MIT","train_examples":84,"test_accuracy":0.909,"train_accuracy":1.0,"labels":{"capsule":"capsule","cream":"cream","drops":"drops","inhaler":"inhaler","injection":"injection","liquid":"liquid","ointment":"ointment","patch":"patch","suppository":"suppository","tablet":"tablet"},"example":"Metformin 500mg Tablets"}};
 
 // --- Multilingual ---
 const ML_LANGS={
@@ -1651,8 +1759,162 @@ async function mlCompareAll(){
   }
 }
 
+// --- Medication Demo ---
+var MED_CASES=[
+{label:"Metformin HCl 500mg\\nTablets USP\\nRx Only \\u00b7 100 Tablets\\nNDC 0093-7180-01",ocr:"Metformin HCl 500mg Tablets USP Rx Only",type:"Clean read",drug:"metformin",form:"tablet"},
+{label:"Lipitor\\u00ae (atorvastatin calcium)\\nTablets 20mg\\n90 count",ocr:"Lipitor 20mg Film-Coated Tablets",type:"Brand name",drug:"atorvastatin",form:"tablet"},
+{label:"ZOLOFT\\u00ae\\nsertraline HCl\\n50 mg Tablets",ocr:"Zoloft 50mg Tablets",type:"Brand name",drug:"sertraline",form:"tablet"},
+{label:"Lisinopnl 10 mg\\nTablets\\nRx Only",ocr:"Lisinopnl 10 mg Tablets",type:"OCR noise",drug:"lisinopril",form:"tablet"},
+{label:"Omepraz0le\\n20mg Capsule\\nDelayed Release",ocr:"Omepraz0le 20mg Capsule",type:"OCR noise",drug:"omeprazole",form:"capsule"},
+{label:"Gabapenti n\\n300mg Cap",ocr:"Gabapenti n 300mg Cap",type:"OCR noise",drug:"gabapentin",form:"capsule"},
+{label:"Amoxicillin\\n250mg/5mL\\nOral Suspension",ocr:"Amoxicillin 250mg/5mL Oral Suspension",type:"Liquid form",drug:"amoxicillin",form:"liquid"},
+{label:"Albuterol Sulfate HFA\\n90mcg\\nInhalation Aerosol",ocr:"Albuterol Sulfate HFA 90mcg Inhalation Aerosol",type:"Inhaler",drug:"albuterol",form:"inhaler"},
+{label:"Synthroid\\u00ae\\n(levothyroxine sodium)\\nTablets 100mcg",ocr:"Synthroid 100mcg Tablets",type:"Brand name",drug:"levothyroxine",form:"tablet"},
+{label:"ATORVASTATIN CALCIUM\\nTABLETS 40MG\\nRx Only",ocr:"ATORVASTATIN CALCIUM TABLETS 40MG",type:"ALL CAPS",drug:"atorvastatin",form:"tablet"},
+{label:"Glucophage\\u00ae\\n(metformin HCl)\\n500mg Tablets",ocr:"Glucophage 500mg Tablets",type:"Brand name",drug:"metformin",form:"tablet"},
+{label:"Prilosec\\u00ae\\n(omeprazole)\\nDelayed-Release Capsules 20mg",ocr:"Prilosec 20mg Delayed-Release Capsules",type:"Brand name",drug:"omeprazole",form:"capsule"},
+{label:"Metform 500mg",ocr:"Metform 500mg",type:"Truncated",drug:"metformin",form:"tablet"},
+{label:"Losart 50mg Tab",ocr:"Losart 50mg Tab",type:"Truncated",drug:"losartan",form:"tablet"},
+{label:"PREDNISONE TABLETS\\nUSP 10MG",ocr:"PREDNISONE TABLETS USP 10MG",type:"ALL CAPS",drug:"prednisone",form:"tablet"},
+];
+var medIdx=0,medAuto=true,medTimer=null;
+var _lastMedDrug=null,_lastMedForm=null;
+
+function medRenderLabel(c){
+  var lines=c.label.split("\\n");
+  var html='<div style="border:2px solid var(--line);border-radius:6px;padding:12px;background:#0D0C10">';
+  html+='<div style="font-size:8px;color:var(--muted);margin-bottom:6px;letter-spacing:2px">Rx Only</div>';
+  lines.forEach(function(l,i){
+    var sz=i===0?"15px":"11px";var w=i===0?"700":"400";var c2=i===0?"var(--text)":"var(--muted)";
+    html+='<div style="font-size:'+sz+';font-weight:'+w+';color:'+c2+';line-height:1.6">'+l+'</div>';
+  });
+  html+='</div>';
+  return html;
+}
+
+async function medRunCase(c){
+  var lc=$("med-label-content"),oc=$("med-ocr-text"),rc=$("med-result-content");
+  var a1=$("med-arrow1"),a2=$("med-arrow2"),sl=$("med-scan-line");
+  lc.style.opacity="0";oc.innerHTML='<div style="color:var(--muted);font-style:italic">\\u2014</div>';
+  rc.innerHTML='<div style="color:var(--muted);font-style:italic">\\u2014</div>';
+  a1.style.color="var(--line)";a2.style.color="var(--line)";
+  await new Promise(function(r){setTimeout(r,200)});
+  lc.innerHTML=medRenderLabel(c);lc.style.opacity="1";
+  sl.style.opacity="1";sl.style.top="0";
+  await new Promise(function(r){setTimeout(r,100)});
+  sl.style.top="100%";
+  await new Promise(function(r){setTimeout(r,800)});
+  sl.style.opacity="0";sl.style.top="0";
+  a1.style.color="var(--accent)";
+  await new Promise(function(r){setTimeout(r,300)});
+  oc.innerHTML='<span style="color:var(--accent);font-size:9px;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:4px">'+c.type+'</span>'+c.ocr;
+  a2.style.color="var(--accent)";
+  await new Promise(function(r){setTimeout(r,200)});
+  try{
+    var [dr,fr]=await Promise.all([
+      fetch("/v1/predict",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:c.ocr,task:"medication_name"})}).then(function(r){return r.json()}),
+      fetch("/v1/predict",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:c.ocr,task:"dosage_form"})}).then(function(r){return r.json()})
+    ]);
+    var dOk=dr.label===c.drug,fOk=fr.label===c.form;
+    rc.innerHTML='<div style="font-size:14px;font-weight:700;color:'+(dOk?"var(--accent2)":"var(--accent)")+'">'+dr.label+'</div>'+
+      '<div style="font-size:11px;color:var(--muted);margin-top:2px">'+(dr.confidence*100).toFixed(1)+'% \\u00b7 '+dr.latency_ms+'ms</div>'+
+      '<div style="font-size:12px;font-weight:600;color:'+(fOk?"var(--accent2)":"var(--accent)")+';margin-top:8px">'+fr.label+'</div>'+
+      '<div style="font-size:11px;color:var(--muted);margin-top:2px">'+(fr.confidence*100).toFixed(1)+'% \\u00b7 '+fr.latency_ms+'ms</div>';
+    var hist=$("med-history");
+    var row='<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--line);font-size:11px">'+
+      '<span style="color:var(--text);font-family:var(--mono)">'+dr.label+'</span>'+
+      '<span style="color:'+(dOk?"var(--accent2)":"var(--accent)")+'">'+(dOk?"\\u2713":"\\u2717")+'</span></div>';
+    hist.innerHTML=row+hist.innerHTML;
+    $("med-auto-status").textContent=(medIdx+1)+"/"+MED_CASES.length;
+  }catch(e){rc.innerHTML='<div style="color:var(--accent)">'+e.message+'</div>';}
+}
+
+async function medNext(){
+  var c=MED_CASES[medIdx];
+  medIdx=(medIdx+1)%MED_CASES.length;
+  await medRunCase(c);
+}
+
+function medAutoLoop(){
+  if(!medAuto)return;
+  medNext().then(function(){
+    medTimer=setTimeout(medAutoLoop,3500);
+  });
+}
+
+function medToggleAuto(){
+  medAuto=!medAuto;
+  $("med-auto-btn").textContent=medAuto?"Pause":"Play";
+  if(medAuto)medAutoLoop();
+  else if(medTimer){clearTimeout(medTimer);medTimer=null;}
+}
+
+function medStart(){
+  medIdx=0;medAuto=true;
+  $("med-auto-btn").textContent="Pause";
+  $("med-history").innerHTML="";
+  medAutoLoop();
+  _trackDemo("medication","start");
+}
+
+function medStop(){
+  medAuto=false;
+  if(medTimer){clearTimeout(medTimer);medTimer=null;}
+}
+
+async function medClassify(){
+  var text=$("med-input").value.trim();
+  if(!text)return;
+  var btn=$("med-run");btn.disabled=true;btn.textContent="Scanning\\u2026";
+  $("med-err").style.display="none";$("med-try-result").style.display="none";
+  var t0=performance.now();
+  try{
+    var [dr,fr]=await Promise.all([
+      fetch("/v1/predict",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:text,task:"medication_name"})}).then(function(r){return r.json()}),
+      fetch("/v1/predict",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:text,task:"dosage_form"})}).then(function(r){return r.json()})
+    ]);
+    $("med-try-drug").textContent=dr.label;
+    var dbars=$("med-try-drug-bars");dbars.innerHTML="";
+    Object.entries(dr.probabilities).slice(0,5).forEach(function(e){
+      dbars.innerHTML+='<div class="bar-row"><span class="bar-label" title="'+e[0]+'">'+e[0]+'</span><div class="track"><div class="fill" style="width:'+Math.round(e[1]*100)+'%"></div></div><span class="pct">'+(e[1]*100).toFixed(1)+'%</span></div>';
+    });
+    $("med-try-drug-meta").innerHTML=(dr.confidence*100).toFixed(1)+"% \\u00b7 "+dr.latency_ms+"ms";
+    $("med-try-form").textContent=fr.label;
+    var fbars=$("med-try-form-bars");fbars.innerHTML="";
+    Object.entries(fr.probabilities).slice(0,5).forEach(function(e){
+      fbars.innerHTML+='<div class="bar-row"><span class="bar-label" title="'+e[0]+'">'+e[0]+'</span><div class="track"><div class="fill" style="width:'+Math.round(e[1]*100)+'%"></div></div><span class="pct">'+(e[1]*100).toFixed(1)+'%</span></div>';
+    });
+    $("med-try-form-meta").innerHTML=(fr.confidence*100).toFixed(1)+"% \\u00b7 "+fr.latency_ms+"ms";
+    $("med-try-result").style.display="block";
+    _stats.predictions+=2;
+    _ev("predict","medication_name",{label:dr.label,confidence:dr.confidence,n:_stats.predictions});
+    _lastMedDrug={task:"medication_name",label:dr.label,confidence:dr.confidence};
+    _lastMedForm={task:"dosage_form",label:fr.label,confidence:fr.confidence};
+    ["med-fb-drug-up","med-fb-drug-down","med-fb-form-up","med-fb-form-down"].forEach(function(id){$(id).disabled=false;$(id).classList.remove("voted")});
+    $("med-fb-drug-msg").textContent="";$("med-fb-form-msg").textContent="";
+    $("med-lat").textContent=Math.round(performance.now()-t0)+"ms round-trip";
+  }catch(err){
+    $("med-err").textContent=err.message;$("med-err").style.display="block";
+  }finally{
+    btn.disabled=false;btn.textContent="Scan \\u2192";
+  }
+}
+
+function sendMedFeedback(which,up){
+  var pred=which==="drug"?_lastMedDrug:_lastMedForm;
+  if(!pred)return;
+  var pfx="med-fb-"+which;
+  var btnUp=$(pfx+"-up"),btnDn=$(pfx+"-down");
+  btnUp.disabled=true;btnDn.disabled=true;
+  (up?btnUp:btnDn).classList.add("voted");
+  _stats.feedbacks++;
+  _ev("feedback",pred.task,{predicted:pred.label,vote:up?"up":"down",confidence:pred.confidence,n:_stats.feedbacks});
+  $(pfx+"-msg").textContent=up?"Thanks!":"Thanks for the feedback";
+  if(which==="drug")_lastMedDrug=null;else _lastMedForm=null;
+}
+
 $("status").dataset.state="ready";
-$("status").textContent="68 classifiers ready";
+$("status").textContent="70 classifiers ready";
 route();
 
 function showDetail(tid){
@@ -2353,35 +2615,40 @@ function route(){
   if(h==="doom"){
     $("v-doom").classList.add("active");
     if(!doomActive){startDoom();_trackDemo("doom","start");}
-    stopFly();ibStop();stopPoker();
+    stopFly();ibStop();stopPoker();medStop();
   } else if(h==="fly"){
     $("v-fly").classList.add("active");
     if(!flyActive){startFly();_trackDemo("fly","start");}
-    stopDoom();ibStop();stopPoker();
+    stopDoom();ibStop();stopPoker();medStop();
   } else if(h==="multilingual"){
     $("v-multilingual").classList.add("active");
     mlInit();
+    stopDoom();stopFly();ibStop();stopPoker();medStop();
+  } else if(h==="medication"){
+    $("v-medication").classList.add("active");
+    medStart();
     stopDoom();stopFly();ibStop();stopPoker();
   } else if(h==="inbox"){
     $("v-inbox").classList.add("active");
     if(!ibActive){ibRun();_trackDemo("inbox","start");}
-    stopDoom();stopFly();stopPoker();
+    stopDoom();stopFly();stopPoker();medStop();
   } else if(h==="poker"){
     $("v-poker").classList.add("active");
     if(!pkActive){startPoker();_trackDemo("poker","start");}
-    stopDoom();stopFly();ibStop();
+    stopDoom();stopFly();ibStop();medStop();
   } else if(h.startsWith("model/")){
     var tid=h.split("/")[1];
     if(tid==="doom_fire"){go("doom");return;}
     if(tid==="poker_decision"){go("poker");return;}
     if(tid==="fly_navigation"){go("fly");return;}
     if(tid.startsWith("massive_intent_")){go("multilingual");return;}
+    if(tid==="medication_name"||tid==="dosage_form"){go("medication");return;}
     $("v-detail").classList.add("active");
     showDetail(tid);
-    stopDoom();stopFly();ibStop();stopPoker();
+    stopDoom();stopFly();ibStop();stopPoker();medStop();
   } else {
     $("v-catalog").classList.add("active");
-    stopDoom();stopFly();ibStop();stopPoker();
+    stopDoom();stopFly();ibStop();stopPoker();medStop();
   }
 }
 

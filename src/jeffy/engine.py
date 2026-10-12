@@ -144,7 +144,8 @@ class Engine:
     def encoder_load_time(self) -> float:
         return self._encoder_load_time
 
-    def _classify(self, task_id: str, X: np.ndarray, t0: float, t_embed: float) -> dict:
+    def _classify(self, task_id: str, X: np.ndarray, t0: float, t_embed: float,
+                  threshold: float | None = None) -> dict:
         """Shared classification logic for both text and feature inputs."""
         cap = self._capabilities[task_id]
         clf = self._classifiers[task_id]
@@ -166,12 +167,23 @@ class Engine:
             prob_dict[human] = round(float(prob), 4)
         prob_dict = dict(sorted(prob_dict.items(), key=lambda x: -x[1]))
 
+        max_conf = float(probs[pred_idx])
+        entropy = -float(np.sum(probs * np.log(probs + 1e-10)))
+        max_entropy = float(np.log(len(classes)))
+        normalized_entropy = entropy / max_entropy if max_entropy > 0 else 0.0
+
+        is_oos = False
+        if threshold is not None and max_conf < threshold:
+            is_oos = True
+
         human_label = cap.labels.get(str(pred_label), str(pred_label))
 
         result = {
-            "label": human_label,
-            "label_id": str(pred_label),
-            "confidence": round(float(probs[pred_idx]), 4),
+            "label": "out_of_scope" if is_oos else human_label,
+            "label_id": "" if is_oos else str(pred_label),
+            "confidence": round(max_conf, 4),
+            "out_of_scope": is_oos,
+            "entropy": round(normalized_entropy, 4),
             "probabilities": prob_dict,
             "latency_ms": round(total_ms, 2),
             "embedding_ms": round(t_embed * 1000, 2),
@@ -186,11 +198,15 @@ class Engine:
                 "test_accuracy": cap.test_accuracy,
             },
         }
+        if is_oos:
+            result["best_guess"] = human_label
+        if threshold is not None:
+            result["threshold"] = threshold
         if cap.is_feature_based:
             result["capability"]["n_features"] = cap.n_features
         return result
 
-    def predict(self, task_id: str, text: str) -> dict:
+    def predict(self, task_id: str, text: str, threshold: float | None = None) -> dict:
         """Run prediction for a text-based pretrained capability."""
         if task_id not in self._classifiers:
             return {"error": f"No pretrained capability '{task_id}'. "
@@ -206,7 +222,7 @@ class Engine:
         embedding = encoder.encode([text], show_progress_bar=False)
         t_embed = time.perf_counter() - t0
 
-        return self._classify(task_id, embedding, t0, t_embed)
+        return self._classify(task_id, embedding, t0, t_embed, threshold=threshold)
 
     def _get_encoder(self, encoder_name: str) -> SentenceTransformer:
         if encoder_name not in self._encoders:
@@ -214,7 +230,8 @@ class Engine:
             self._encoders[encoder_name] = SentenceTransformer(encoder_name, device=self.device)
         return self._encoders[encoder_name]
 
-    def predict_features(self, task_id: str, features: list[float]) -> dict:
+    def predict_features(self, task_id: str, features: list[float],
+                         threshold: float | None = None) -> dict:
         """Run prediction for a feature-based pretrained capability."""
         if task_id not in self._classifiers:
             return {"error": f"No pretrained capability '{task_id}'. "
@@ -231,4 +248,4 @@ class Engine:
         t0 = time.perf_counter()
         X = np.array(features, dtype=np.float64).reshape(1, -1)
 
-        return self._classify(task_id, X, t0, 0.0)
+        return self._classify(task_id, X, t0, 0.0, threshold=threshold)

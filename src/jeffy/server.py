@@ -133,6 +133,9 @@ class AnalyticsMiddleware(BaseHTTPMiddleware):
             "country": country,
             "local": is_local,
         }
+        predict_meta = getattr(request.state, "predict_meta", None)
+        if predict_meta:
+            entry.update(predict_meta)
         _analytics_log.append(entry)
         _append_analytics(entry)
         if len(_analytics_log) > 10000:
@@ -158,6 +161,7 @@ class PredictRequest(BaseModel):
     text: str | None = Field(None, description="Input text to classify")
     features: list[float] | None = Field(None, description="Input feature vector (for feature-based classifiers)")
     task: str = Field(..., description="Pretrained capability task ID")
+    threshold: float | None = Field(None, description="Confidence threshold (0-1). Below this, returns out_of_scope instead of forcing a label.")
 
 class PredictResponse(BaseModel):
     label: str
@@ -257,16 +261,24 @@ def get_capability(task_id: str):
 
 
 @app.post("/v1/predict")
-def predict(req: PredictRequest):
+def predict(req: PredictRequest, request: Request):
     engine = get_engine()
     if req.features is not None:
-        result = engine.predict_features(req.task, req.features)
+        result = engine.predict_features(req.task, req.features, threshold=req.threshold)
     elif req.text is not None:
-        result = engine.predict(req.task, req.text)
+        result = engine.predict(req.task, req.text, threshold=req.threshold)
     else:
         raise HTTPException(400, "Provide either 'text' or 'features'")
     if "error" in result:
         raise HTTPException(400, result["error"])
+    request.state.predict_meta = {
+        "task": req.task,
+        "input_text": (req.text or "")[:200],
+        "label": result.get("label", ""),
+        "confidence": round(result.get("confidence", 0), 4),
+        "latency_ms": result.get("latency_ms", 0),
+        "out_of_scope": result.get("out_of_scope", False),
+    }
     return result
 
 
@@ -2299,6 +2311,13 @@ window.addEventListener("hashchange",route);
 $("restart-btn").onclick=function(){startDoom();};
 </script>
 <script defer src="https://stats.jeffyclassify.com/script.js" data-website-id="4b3259e2-aac9-42a4-b34b-e89a4fb3a1e8" data-hash="true" data-do-not-track="false"></script>
+<script>
+(function(){
+function t(n,d){if(typeof umami!=="undefined")umami.track(n,d)}
+setInterval(function(){t("heartbeat")},10000);
+document.addEventListener("pointerdown",function(){t("first-interaction")},{once:true});
+})();
+</script>
 </body>
 </html>"""
 

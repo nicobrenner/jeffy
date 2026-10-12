@@ -2655,18 +2655,16 @@ function route(){
 window.addEventListener("hashchange",route);
 $("restart-btn").onclick=function(){startDoom();};
 </script>
-<script defer src="https://stats.jeffyclassify.com/recorder.js" data-website-id="4b3259e2-aac9-42a4-b34b-e89a4fb3a1e8" data-hash="true" data-do-not-track="false"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BXL0V8163H"></script>
 <script>
-(function(){
-var idle=0,active=true;
-function t(n,d){if(typeof umami!=="undefined")umami.track(n,d)}
-function reset(){idle=0;if(!active){active=true}}
-document.addEventListener("pointermove",reset);
-document.addEventListener("keydown",reset);
-document.addEventListener("pointerdown",function(){reset();t("first-interaction")},{once:true});
-setInterval(function(){idle+=30;if(idle>300)active=false;if(active)t("heartbeat")},30000);
-})();
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-BXL0V8163H');
 </script>
+<script defer src="https://stats.jeffyclassify.com/script.js" data-website-id="4b3259e2-aac9-42a4-b34b-e89a4fb3a1e8" data-hash="true" data-do-not-track="false"></script>
+<script defer src="https://stats.jeffyclassify.com/recorder.js" data-website-id="4b3259e2-aac9-42a4-b34b-e89a4fb3a1e8" data-hash="true" data-do-not-track="false"></script>
 </body>
 </html>"""
 

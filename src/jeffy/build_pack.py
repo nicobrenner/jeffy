@@ -141,6 +141,7 @@ DATASETS = {
         "task_type": "noul",
         "label_source": "manual",
         "manual_labels": {"negative": "negative", "positive": "positive"},
+        # Binarize to neg/pos for BTZSC alignment; drops 3-star (neutral) reviews
         "label_transform": {"1": "negative", "2": "negative", "4": "positive", "5": "positive"},
     },
     "yelpreviews": {
@@ -150,6 +151,7 @@ DATASETS = {
         "task_type": "noul",
         "label_source": "manual",
         "manual_labels": {"negative": "negative", "positive": "positive"},
+        # Binarize to neg/pos for BTZSC alignment; drops 3-star (neutral) reviews
         "label_transform": {"0": "negative", "1": "negative", "3": "positive", "4": "positive"},
     },
     "rottentomatoes": {
@@ -284,8 +286,10 @@ def recover_labels(ds, config) -> dict[str, str]:
         return {label: label for label in train_labels}
 
     if source == "clcp":
-        # Labels extracted from clcp NLI-format label_text column
-        return config["manual_labels"]
+        labels = config["manual_labels"]
+        if labels is None:
+            raise ValueError(f"clcp dataset has no manual_labels; use _load_clcp() which auto-extracts them")
+        return labels
 
     raise ValueError(f"Unknown label_source: {source}")
 

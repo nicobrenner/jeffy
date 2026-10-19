@@ -2,13 +2,13 @@
 
 import json
 import sys
-
-sys.path.insert(0, "/private/tmp/claude-501/-Users-nico-Documents-Projects/b9596b44-f3f7-4997-bc27-0335d534c866/scratchpad")
+from pathlib import Path
 
 from btzsc import BTZSCResults
 from btzsc.leaderboard import validate_result_payload
 
-RESULTS_FILE = "/private/tmp/claude-501/-Users-nico-Documents-Projects/b9596b44-f3f7-4997-bc27-0335d534c866/scratchpad/btzsc_full_results.json"
+HERE = Path(__file__).resolve().parent
+RESULTS_FILE = str(HERE / "results.json")
 
 TASK_GROUPS = {
     "sentiment": ["imdb", "amazonpolarity", "appreviews", "yelpreviews", "rottentomatoes", "financialphrasebank"],
@@ -56,7 +56,7 @@ results = BTZSCResults(
     device="cpu",
 )
 
-out_path = "/private/tmp/claude-501/-Users-nico-Documents-Projects/b9596b44-f3f7-4997-bc27-0335d534c866/scratchpad/btzsc_submission.json"
+out_path = str(HERE / "submission.json")
 payload = results.to_json()
 
 # Fix the auto-generated URL to point to the actual project
@@ -75,6 +75,7 @@ else:
 # Write validated payload
 with open(out_path, "w") as f:
     json.dump(payload, f, indent=2)
+    f.write("\n")
 print(f"Saved to {out_path}")
 
 # Show summary

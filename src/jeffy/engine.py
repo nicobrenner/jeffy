@@ -11,6 +11,7 @@ import time
 from pathlib import Path
 
 import numpy as np
+import torch
 from sentence_transformers import SentenceTransformer
 
 from .catalog import ENCODER, FEATURES_ENCODER, KNOWN_ENCODERS, Capability
@@ -153,6 +154,29 @@ class Engine:
         if not self._capabilities:
             logger.warning(f"No capabilities loaded from '{self.pack_dir}'")
 
+    # MPS cache clearing interval (samples). Prevents the MPS hang bug
+    # where Metal command buffers deadlock after sustained encoding.
+    # See https://github.com/pytorch/pytorch/issues/201378
+    MPS_CLEAR_EVERY = 2560
+
+    def encode(self, texts: list[str], encoder_name: str | None = None,
+               batch_size: int = 256, show_progress_bar: bool = False) -> np.ndarray:
+        """Encode texts with MPS-safe cache clearing."""
+        encoder = self._get_encoder(encoder_name or ENCODER)
+
+        if self.device != "mps" or len(texts) <= self.MPS_CLEAR_EVERY:
+            return encoder.encode(texts, batch_size=batch_size, show_progress_bar=show_progress_bar)
+
+        all_embeddings = []
+        for i in range(0, len(texts), self.MPS_CLEAR_EVERY):
+            chunk = texts[i:i + self.MPS_CLEAR_EVERY]
+            emb = encoder.encode(chunk, batch_size=batch_size, show_progress_bar=False)
+            all_embeddings.append(emb)
+            torch.mps.empty_cache()
+            torch.mps.synchronize()
+
+        return np.concatenate(all_embeddings, axis=0)
+
     @property
     def capabilities(self) -> dict[str, Capability]:
         return self._capabilities
@@ -250,8 +274,7 @@ class Engine:
                     f"Use predict_features() with a numeric vector instead of text."}
 
         t0 = time.perf_counter()
-        encoder = self._get_encoder(cap.encoder)
-        embedding = encoder.encode([text], show_progress_bar=False)
+        embedding = self.encode([text], encoder_name=cap.encoder)
         t_embed = time.perf_counter() - t0
 
         return self._classify(task_id, embedding, t0, t_embed, threshold=threshold)

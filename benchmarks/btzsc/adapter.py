@@ -104,7 +104,7 @@ class JeffyBTZSCModel(BaseModel):
         scaler = self._engine._scalers[jeffy_task]
         classes = clf.classes_
 
-        embeddings = self._engine.encode(texts, batch_size=batch_size)
+        embeddings = self._engine._encode(texts, batch_size=batch_size)
         X = scaler.transform(embeddings)
         all_probs = clf.predict_proba(X)
 

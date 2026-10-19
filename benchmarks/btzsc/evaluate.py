@@ -4,12 +4,14 @@ import sys
 import json
 import time
 import os
-
-sys.path.insert(0, "/private/tmp/claude-501/-Users-nico-Documents-Projects/b9596b44-f3f7-4997-bc27-0335d534c866/scratchpad")
+from pathlib import Path
 
 from btzsc.data import load_btzsc_dataset
 from btzsc.metrics import compute_metrics
-from jeffy_btzsc_adapter import JeffyBTZSCModel
+
+HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE))
+from adapter import JeffyBTZSCModel
 
 ALL_DATASETS = [
     # Small/fast datasets first
@@ -24,7 +26,7 @@ ALL_DATASETS = [
     "yelpreviews", "imdb",
 ]
 
-RESULTS_FILE = "/private/tmp/claude-501/-Users-nico-Documents-Projects/b9596b44-f3f7-4997-bc27-0335d534c866/scratchpad/btzsc_full_results.json"
+RESULTS_FILE = str(HERE / "results.json")
 
 # Load existing partial results
 if os.path.exists(RESULTS_FILE):
@@ -67,6 +69,7 @@ for ds_name in remaining:
         # Save incrementally
         with open(RESULTS_FILE, "w") as f:
             json.dump(all_results, f, indent=2, default=str)
+            f.write("\n")
         print(f"  Saved ({len(all_results)}/{len(ALL_DATASETS)} done)\n", flush=True)
 
     except Exception as e:
@@ -74,6 +77,7 @@ for ds_name in remaining:
         all_results[ds_name] = {"error": str(e)}
         with open(RESULTS_FILE, "w") as f:
             json.dump(all_results, f, indent=2, default=str)
+            f.write("\n")
 
 print(f"\n{'='*60}", flush=True)
 print(f"Completed: {len([v for v in all_results.values() if 'error' not in v])}/{len(ALL_DATASETS)}", flush=True)

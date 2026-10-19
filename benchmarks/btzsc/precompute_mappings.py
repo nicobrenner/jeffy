@@ -2,8 +2,11 @@
 
 import json
 import time
+from pathlib import Path
 from datasets import load_dataset
 from btzsc.data import load_btzsc_dataset
+
+HERE = Path(__file__).resolve().parent
 
 DATASETS = [
     # sentiment (6)
@@ -61,7 +64,8 @@ for name in DATASETS:
     except Exception as e:
         print(f"  FAILED {name}: {e}")
 
-out = "/private/tmp/claude-501/-Users-nico-Documents-Projects/b9596b44-f3f7-4997-bc27-0335d534c866/scratchpad/btzsc_mappings.json"
+out = str(HERE / "mappings.json")
 with open(out, "w") as f:
     json.dump(mappings, f, indent=2)
+    f.write("\n")
 print(f"\nSaved {len(mappings)} datasets to {out}")

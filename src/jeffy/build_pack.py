@@ -125,6 +125,142 @@ DATASETS = {
         "label_source": "manual",
         "manual_labels": {"0": "not_offensive", "1": "offensive"},
     },
+    # --- BTZSC datasets ---
+    "amazonpolarity": {
+        "hf": "fancyzhx/amazon_polarity",
+        "text": "content", "label": "label",
+        "description": "Amazon product review sentiment",
+        "task_type": "noul",
+        "label_source": "manual",
+        "manual_labels": {"0": "negative", "1": "positive"},
+    },
+    "appreviews": {
+        "hf": "sealuzh/app_reviews",
+        "text": "review", "label": "star",
+        "description": "App store review sentiment",
+        "task_type": "noul",
+        "label_source": "manual",
+        "manual_labels": {"negative": "negative", "positive": "positive"},
+        "label_transform": {"1": "negative", "2": "negative", "4": "positive", "5": "positive"},
+    },
+    "yelpreviews": {
+        "hf": "Yelp/yelp_review_full",
+        "text": "text", "label": "label",
+        "description": "Yelp review sentiment",
+        "task_type": "noul",
+        "label_source": "manual",
+        "manual_labels": {"negative": "negative", "positive": "positive"},
+        "label_transform": {"0": "negative", "1": "negative", "3": "positive", "4": "positive"},
+    },
+    "rottentomatoes": {
+        "hf": "cornell-movie-review-data/rotten_tomatoes",
+        "text": "text", "label": "label",
+        "description": "Movie review sentiment (Rotten Tomatoes)",
+        "task_type": "noul",
+        "label_source": "manual",
+        "manual_labels": {"0": "negative", "1": "positive"},
+    },
+    "financialphrasebank": {
+        "hf": "warwickai/financial_phrasebank_mirror",
+        "text": "sentence", "label": "label",
+        "description": "Financial news sentiment",
+        "task_type": "choice",
+        "label_source": "manual",
+        "manual_labels": {"0": "negative", "1": "neutral", "2": "positive"},
+    },
+    "yahootopics": {
+        "hf": "community-datasets/yahoo_answers_topics",
+        "text": "question_title", "label": "topic",
+        "description": "Yahoo Answers topic classification",
+        "task_type": "choice",
+        "label_source": "features",
+    },
+    "trueteacher": {
+        "hf": "google/trueteacher",
+        "text": "summary", "label": "label",
+        "description": "Summary factual consistency detection",
+        "task_type": "noul",
+        "label_source": "manual",
+        "manual_labels": {"0": "factually_inconsistent", "1": "factually_consistent"},
+    },
+    "capsotu": {
+        "hf": "MoritzLaurer/cap_sotu",
+        "text": "text", "label": "labels",
+        "description": "State of the Union policy topic classification",
+        "task_type": "choice",
+        "label_source": "string_values",
+    },
+    "empathetic": {
+        "hf": "aarabil/clcp_empathetic",
+        "description": "Empathetic dialogue emotion detection",
+        "task_type": "choice",
+        "label_source": "clcp",
+        "manual_labels": {l: l for l in [
+            "afraid", "angry", "annoyed", "anticipating", "anxious",
+            "apprehensive", "ashamed", "caring", "confident", "content",
+            "devastated", "disappointed", "disgusted", "embarrassed", "excited",
+            "faithful", "furious", "grateful", "guilty", "hopeful",
+            "impressed", "jealous", "joyful", "lonely", "nostalgic",
+            "prepared", "proud", "sad", "sentimental", "surprised",
+            "terrified", "trusting",
+        ]},
+    },
+    "biasframes_intent": {
+        "hf": "aarabil/clcp_biasframes_intent",
+        "description": "Bias frames intent detection",
+        "task_type": "noul",
+        "label_source": "clcp",
+        "manual_labels": {"intent": "intent", "not_intent": "not_intent"},
+    },
+    "biasframes_offensive": {
+        "hf": "aarabil/clcp_biasframes_offensive",
+        "description": "Offensive language detection (bias frames)",
+        "task_type": "noul",
+        "label_source": "clcp",
+        "manual_labels": {"not_offensive": "not_offensive", "offensive": "offensive"},
+    },
+    "biasframes_sex": {
+        "hf": "aarabil/clcp_biasframes_sex",
+        "description": "Sexual content detection (bias frames)",
+        "task_type": "noul",
+        "label_source": "clcp",
+        "manual_labels": {"not_sex": "not_sex", "sex": "sex"},
+    },
+    "manifesto": {
+        "hf": "aarabil/clcp_manifesto",
+        "description": "Political manifesto topic classification",
+        "task_type": "choice",
+        "label_source": "clcp",
+        "manual_labels": None,  # auto-extracted from clcp label_text
+    },
+    "wikitoxic_toxicaggregated": {
+        "hf": "aarabil/clcp_wikitoxic_toxicaggregated",
+        "description": "Wikipedia toxic comment detection (aggregated)",
+        "task_type": "noul",
+        "label_source": "clcp",
+        "manual_labels": {"not_toxicaggregated": "not_toxicaggregated", "toxicaggregated": "toxicaggregated"},
+    },
+    "wikitoxic_obscene": {
+        "hf": "aarabil/clcp_wikitoxic_obscene",
+        "description": "Wikipedia obscene comment detection",
+        "task_type": "noul",
+        "label_source": "clcp",
+        "manual_labels": {"not_obscene": "not_obscene", "obscene": "obscene"},
+    },
+    "wikitoxic_threat": {
+        "hf": "aarabil/clcp_wikitoxic_threat",
+        "description": "Wikipedia threatening comment detection",
+        "task_type": "noul",
+        "label_source": "clcp",
+        "manual_labels": {"not_threat": "not_threat", "threat": "threat"},
+    },
+    "wikitoxic_insult": {
+        "hf": "aarabil/clcp_wikitoxic_insult",
+        "description": "Wikipedia insult detection",
+        "task_type": "noul",
+        "label_source": "clcp",
+        "manual_labels": {"insult": "insult", "not_insult": "not_insult"},
+    },
 }
 
 
@@ -147,11 +283,61 @@ def recover_labels(ds, config) -> dict[str, str]:
         train_labels = sorted(set(ds["train"][config["label"]]))
         return {label: label for label in train_labels}
 
+    if source == "clcp":
+        # Labels extracted from clcp NLI-format label_text column
+        return config["manual_labels"]
+
     raise ValueError(f"Unknown label_source: {source}")
+
+
+def _load_clcp(config, max_train, max_test):
+    """Load a clcp NLI-format dataset, extracting unique (text, label_text) pairs."""
+    from datasets import load_dataset
+
+    all_texts, all_labels = [], []
+    for split in ("train", "test"):
+        ds_split = load_dataset(config["hf"], split=split)
+        for i in range(len(ds_split)):
+            if ds_split[i]["labels"] == 1:
+                all_texts.append(ds_split[i]["text"])
+                all_labels.append(ds_split[i]["label_text"])
+
+    # Split 80/20 for train/test
+    n = len(all_texts)
+    np.random.seed(42)
+    idx = np.random.permutation(n)
+    split_at = int(n * 0.8)
+    train_idx, test_idx = idx[:split_at], idx[split_at:]
+
+    train_texts = [all_texts[i] for i in train_idx]
+    train_labels = [all_labels[i] for i in train_idx]
+    test_texts = [all_texts[i] for i in test_idx]
+    test_labels = [all_labels[i] for i in test_idx]
+
+    if len(train_texts) > max_train:
+        np.random.seed(42)
+        sel = np.random.choice(len(train_texts), max_train, replace=False)
+        train_texts = [train_texts[i] for i in sel]
+        train_labels = [train_labels[i] for i in sel]
+
+    if len(test_texts) > max_test:
+        np.random.seed(42)
+        sel = np.random.choice(len(test_texts), max_test, replace=False)
+        test_texts = [test_texts[i] for i in sel]
+        test_labels = [test_labels[i] for i in sel]
+
+    labels = config["manual_labels"]
+    if labels is None:
+        unique = sorted(set(all_labels))
+        labels = {l: l for l in unique}
+    return train_texts, train_labels, test_texts, test_labels, labels
 
 
 def load_and_split(ds_name, config, max_train=10000, max_test=2000):
     """Load dataset, extract texts and string labels."""
+    if config.get("label_source") == "clcp":
+        return _load_clcp(config, max_train, max_test)
+
     from datasets import load_dataset
     hf_config = config.get("hf_config")
     ds = load_dataset(config["hf"], hf_config) if hf_config else load_dataset(config["hf"])
@@ -175,6 +361,16 @@ def load_and_split(ds_name, config, max_train=10000, max_test=2000):
 
     train_labels = [str(x) for x in train_ds[config["label"]]]
     test_labels = [str(x) for x in test_ds[config["label"]]]
+
+    # Apply label transform (e.g., binarize star ratings)
+    if "label_transform" in config:
+        transform = config["label_transform"]
+        train_pairs = [(t, transform.get(l)) for t, l in zip(train_texts, train_labels)]
+        train_texts = [t for t, l in train_pairs if l is not None]
+        train_labels = [l for _, l in train_pairs if l is not None]
+        test_pairs = [(t, transform.get(l)) for t, l in zip(test_texts, test_labels)]
+        test_texts = [t for t, l in test_pairs if l is not None]
+        test_labels = [l for _, l in test_pairs if l is not None]
 
     # Filter invalid
     if "filter_label" in config:

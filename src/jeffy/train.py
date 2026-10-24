@@ -35,12 +35,13 @@ from .model_pack import ArtifactManifest, coef_hash, save_artifact, scaler_hash
 class TrainedClassifier:
     """A trained classifier ready for prediction."""
 
-    def __init__(self, clf, scaler, encoder, labels, task_id):
+    def __init__(self, clf, scaler, encoder, labels, task_id, encoder_name: str | None = None):
         self.clf = clf
         self.scaler = scaler
         self.encoder = encoder
         self.labels = labels  # {class_id: human_label}
         self.task_id = task_id
+        self.encoder_name = encoder_name or ENCODER
         self._reverse = {v: k for k, v in labels.items()}
 
     def predict(self, text: str) -> dict:
@@ -74,20 +75,21 @@ class TrainedClassifier:
     def save(self, out_dir: str):
         """Save as a model pack artifact."""
         out_path = Path(out_dir) / self.task_id
+        encoder_dim = self.scaler.mean_.shape[0]
         manifest = ArtifactManifest(
             dataset=self.task_id,
             description=f"Custom classifier: {self.task_id}",
             n_classes=len(self.labels),
             task_type="choice" if len(self.labels) > 2 else "noul",
-            encoder=ENCODER,
-            encoder_dim=ENCODER_DIM,
+            encoder=self.encoder_name,
+            encoder_dim=encoder_dim,
             labels=self.labels,
             class_order=list(self.clf.classes_),
             hf_source="user-provided",
             hf_config=None,
             hf_revision=None,
             license="user-provided",
-            train_examples=0,  # filled below
+            train_examples=0,
             train_accuracy=0,
             test_examples=0,
             test_accuracy=0,
@@ -106,6 +108,8 @@ def train_classifier(
     test_size: float = 0.2,
     cv_folds: int = 3,
     verbose: bool = True,
+    encoder: str | None = None,
+    tune_C: bool = False,
 ) -> TrainedClassifier:
     """Train a classifier from user-provided examples.
 
@@ -113,10 +117,12 @@ def train_classifier(
         texts: Input texts.
         labels: Corresponding labels (strings).
         task_id: Name for this classifier.
-        C: Regularization strength (smaller = more regularization).
+        C: Regularization strength (smaller = more regularization). Ignored when tune_C=True.
         test_size: Fraction held out for evaluation (0 to skip).
         cv_folds: Cross-validation folds for reported accuracy (0 to skip).
         verbose: Print training progress.
+        encoder: SentenceTransformer model name. Defaults to BAAI/bge-large-en-v1.5.
+        tune_C: When True, grid-search over [0.001, 0.01, 0.1, 1.0, 10.0] using 3-fold CV.
 
     Returns:
         TrainedClassifier ready for prediction and saving.
@@ -128,6 +134,7 @@ def train_classifier(
     if len(texts) < 2:
         raise ValueError("Need at least 2 examples")
 
+    encoder_name = encoder or ENCODER
     unique_labels = sorted(set(labels))
     n_classes = len(unique_labels)
     label_map = {label: label for label in unique_labels}
@@ -154,10 +161,10 @@ def train_classifier(
 
     # Encode
     if verbose:
-        print(f"  Encoding with {ENCODER}...")
+        print(f"  Encoding with {encoder_name}...")
     t0 = time.perf_counter()
-    encoder = SentenceTransformer(ENCODER, device="cpu")
-    train_embs = encoder.encode(train_texts, batch_size=64, show_progress_bar=verbose)
+    st_encoder = SentenceTransformer(encoder_name, device="cpu")
+    train_embs = st_encoder.encode(train_texts, batch_size=64, show_progress_bar=verbose)
     t_encode = time.perf_counter() - t0
     if verbose:
         print(f"  Encoded {len(train_texts)} texts in {t_encode:.1f}s")
@@ -166,6 +173,26 @@ def train_classifier(
     t0 = time.perf_counter()
     scaler = StandardScaler()
     X_train = scaler.fit_transform(train_embs)
+
+    if tune_C and len(train_texts) >= 6:
+        C_grid = [0.001, 0.01, 0.1, 1.0, 10.0]
+        best_C, best_score = C, 0.0
+        n_folds = min(3, len(set(train_labels)))
+        for c_val in C_grid:
+            try:
+                scores = cross_val_score(
+                    LogisticRegression(C=c_val, max_iter=3000, solver="newton-cg", random_state=42),
+                    X_train, train_labels, cv=n_folds, scoring="accuracy")
+                mean_score = scores.mean()
+                if mean_score > best_score:
+                    best_score = mean_score
+                    best_C = c_val
+            except ValueError:
+                continue
+        C = best_C
+        if verbose:
+            print(f"  tune_C: best C={C} (CV accuracy={best_score:.1%})")
+
     clf = LogisticRegression(C=C, max_iter=3000, solver="newton-cg", random_state=42)
     clf.fit(X_train, train_labels)
     t_train = time.perf_counter() - t0
@@ -184,7 +211,7 @@ def train_classifier(
 
     # Test evaluation
     if test_texts:
-        test_embs = encoder.encode(test_texts, batch_size=64, show_progress_bar=False)
+        test_embs = st_encoder.encode(test_texts, batch_size=64, show_progress_bar=False)
         X_test = scaler.transform(test_embs)
         test_preds = clf.predict(X_test)
         test_acc = accuracy_score(test_labels, test_preds)
@@ -193,10 +220,124 @@ def train_classifier(
             print(f"  Test accuracy: {test_acc:.1%}")
             print(f"  Test macro F1: {test_f1:.1%}")
 
-    result = TrainedClassifier(clf, scaler, encoder, label_map, task_id)
+    result = TrainedClassifier(clf, scaler, st_encoder, label_map, task_id, encoder_name=encoder_name)
     if verbose:
         print(f"  Ready. Use .predict(text) or .save(dir)")
     return result
+
+
+def train_binary_flags(
+    texts: list[str],
+    flags: dict[str, list[str]],
+    task_id: str = "custom",
+    C: float = 0.01,
+    test_size: float = 0.2,
+    verbose: bool = True,
+    encoder: str | None = None,
+    tune_C: bool = False,
+) -> dict[str, TrainedClassifier]:
+    """Train one binary classifier per flag.
+
+    Each flag gets a balanced binary LR. Flags can fire independently,
+    so an input can trigger multiple flags at once.
+
+    Args:
+        texts: Input texts.
+        flags: {flag_name: [label_per_text]}. Each label list must be "yes"/"no"
+               (or "true"/"false", "1"/"0").
+        task_id: Base name; each flag becomes {task_id}_flag_{flag_name}.
+        C: Regularization strength. Ignored when tune_C=True.
+        test_size: Fraction held out for evaluation.
+        verbose: Print training progress.
+        encoder: SentenceTransformer model name. Defaults to BAAI/bge-large-en-v1.5.
+        tune_C: Grid-search C per flag independently.
+
+    Returns:
+        Dict of {flag_name: TrainedClassifier}.
+    """
+    from sentence_transformers import SentenceTransformer
+
+    _YES = {"yes", "true", "1", "y"}
+    _NO = {"no", "false", "0", "n"}
+
+    for flag_name, labels in flags.items():
+        if len(labels) != len(texts):
+            raise ValueError(f"Flag '{flag_name}' has {len(labels)} labels but {len(texts)} texts")
+        normed = {l.lower().strip() for l in labels}
+        if not normed <= (_YES | _NO):
+            raise ValueError(f"Flag '{flag_name}' has invalid labels: {normed - _YES - _NO}. Use yes/no")
+
+    encoder_name = encoder or ENCODER
+    if verbose:
+        print(f"Encoding {len(texts)} texts with {encoder_name}...")
+    st_encoder = SentenceTransformer(encoder_name, device="cpu")
+    all_embs = st_encoder.encode(texts, batch_size=64, show_progress_bar=verbose)
+
+    results = {}
+    for flag_name, raw_labels in flags.items():
+        binary_labels = ["yes" if l.lower().strip() in _YES else "no" for l in raw_labels]
+        flag_task_id = f"{task_id}_flag_{flag_name}"
+
+        if verbose:
+            pos = binary_labels.count("yes")
+            neg = binary_labels.count("no")
+            print(f"  Flag '{flag_name}': {pos} yes, {neg} no")
+
+        train_embs, train_labels = all_embs, binary_labels
+        test_embs, test_labels = None, None
+
+        if test_size > 0 and len(texts) >= 10:
+            sss = StratifiedShuffleSplit(n_splits=1, test_size=test_size, random_state=42)
+            try:
+                train_idx, test_idx = next(sss.split(all_embs, binary_labels))
+                train_embs = all_embs[train_idx]
+                train_labels = [binary_labels[i] for i in train_idx]
+                test_embs = all_embs[test_idx]
+                test_labels = [binary_labels[i] for i in test_idx]
+            except ValueError:
+                pass
+
+        scaler = StandardScaler()
+        X_train = scaler.fit_transform(train_embs)
+
+        flag_C = C
+        if tune_C and len(train_labels) >= 6 and len(set(train_labels)) == 2:
+            C_grid = [0.001, 0.01, 0.1, 1.0, 10.0]
+            best_C, best_score = C, 0.0
+            for c_val in C_grid:
+                try:
+                    scores = cross_val_score(
+                        LogisticRegression(C=c_val, max_iter=3000, solver="newton-cg",
+                                           class_weight="balanced", random_state=42),
+                        X_train, train_labels, cv=min(3, len(set(train_labels))),
+                        scoring="f1_macro")
+                    if scores.mean() > best_score:
+                        best_score = scores.mean()
+                        best_C = c_val
+                except ValueError:
+                    continue
+            flag_C = best_C
+            if verbose:
+                print(f"    tune_C: best C={flag_C} (CV F1={best_score:.1%})")
+
+        clf = LogisticRegression(
+            C=flag_C, max_iter=3000, solver="newton-cg",
+            class_weight="balanced", random_state=42)
+        clf.fit(X_train, train_labels)
+
+        if verbose and test_embs is not None:
+            X_test = scaler.transform(test_embs)
+            test_preds = clf.predict(X_test)
+            test_f1 = f1_score(test_labels, test_preds, average="macro", zero_division=0)
+            print(f"    Test F1: {test_f1:.1%}")
+
+        label_map = {"yes": "yes", "no": "no"}
+        results[flag_name] = TrainedClassifier(
+            clf, scaler, st_encoder, label_map, flag_task_id, encoder_name=encoder_name)
+
+    if verbose:
+        print(f"  Trained {len(results)} binary flag classifiers")
+    return results
 
 
 class TrainedFeatureClassifier:

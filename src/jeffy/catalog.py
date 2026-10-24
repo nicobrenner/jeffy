@@ -34,6 +34,8 @@ class Capability:
     # Artifact linkage
     task_signature: str | None = None
     artifact_path: str | None = None
+    # Encoder size
+    encoder_size_mb: float | None = None
 
     @property
     def is_feature_based(self) -> bool:
@@ -167,3 +169,27 @@ KNOWN_ENCODERS = {
     LABSE_ENCODER: LABSE_ENCODER_DIM,
     FEATURES_ENCODER: 0,
 }
+
+# On-disk fp32 weight sizes, NOT parameter counts
+# (bge-large measured at 1277 MB in local HF cache)
+ENCODER_SIZES_MB: dict[str, float] = {
+    ENCODER: 1340.0,
+    "BAAI/bge-large-en-v1.5": 1340.0,
+    MULTILINGUAL_ENCODER: 471.0,
+    "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2": 471.0,
+    LABSE_ENCODER: 1880.0,
+    "sentence-transformers/LaBSE": 1880.0,
+    "intfloat/e5-large-v2": 1340.0,
+    "intfloat/e5-large": 1340.0,
+    "intfloat/multilingual-e5-large": 2240.0,
+    "intfloat/multilingual-e5-base": 1110.0,
+    "intfloat/multilingual-e5-small": 470.0,
+    "sentence-transformers/all-MiniLM-L6-v2": 90.0,
+    "all-MiniLM-L6-v2": 90.0,
+    "paraphrase-multilingual-MiniLM-L12-v2": 471.0,
+    FEATURES_ENCODER: 0.0,
+}
+
+
+def get_encoder_size_mb(encoder_name: str) -> float | None:
+    return ENCODER_SIZES_MB.get(encoder_name)

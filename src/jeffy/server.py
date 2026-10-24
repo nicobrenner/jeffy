@@ -180,6 +180,7 @@ class PredictResponse(BaseModel):
     label: str
     label_id: str
     confidence: float
+    margin: float
     probabilities: dict[str, float]
     latency_ms: float
     embedding_ms: float
@@ -241,6 +242,7 @@ def list_capabilities():
             "train_accuracy": cap.train_accuracy,
             "test_accuracy": cap.test_accuracy,
             "license": cap.license,
+            **({"encoder_size_mb": cap.encoder_size_mb} if cap.encoder_size_mb else {}),
             **({"n_features": cap.n_features, "feature_layout": cap.feature_layout}
                if cap.is_feature_based else {}),
         })
@@ -265,6 +267,7 @@ def get_capability(task_id: str):
         "train_accuracy": cap.train_accuracy,
         "test_accuracy": cap.test_accuracy,
         "license": cap.license,
+        **({"encoder_size_mb": cap.encoder_size_mb} if cap.encoder_size_mb else {}),
         **({"n_features": cap.n_features, "feature_layout": cap.feature_layout}
            if cap.is_feature_based else {}),
         "example_request": (
@@ -304,6 +307,210 @@ def predict_batch(req: BatchPredictRequest):
     if results and "error" in results[0]:
         raise HTTPException(400, results[0]["error"])
     return {"predictions": results, "count": len(results)}
+
+
+# --- Training and feedback ---
+
+class TrainRequest(BaseModel):
+    task_id: str = Field(..., description="Name for the new classifier")
+    examples: dict[str, list[str]] | None = Field(None, description="Training data: {label: [texts]}")
+    C: float = Field(0.01, description="Regularization strength")
+    test_size: float = Field(0.2, description="Fraction held out for evaluation")
+    description: str | None = Field(None, description="Human-readable description")
+    encoder: str | None = Field(None, description="SentenceTransformer model name (default: bge-large)")
+    tune_C: bool = Field(False, description="Grid-search for optimal C per head")
+    mode: str | None = Field(None, description="'binary-flags' for per-flag binary classifiers")
+    flags: dict[str, list[str]] | None = Field(None, description="For mode='binary-flags': {flag_name: [yes/no labels]}")
+    texts: list[str] | None = Field(None, description="For mode='binary-flags': input texts")
+
+class FeedbackRequest(BaseModel):
+    task_id: str = Field(..., description="Existing classifier to improve")
+    text: str = Field(..., description="The input text")
+    correct_label: str = Field(..., description="The correct label for this text")
+
+_feedback_store: dict[str, list[dict]] = defaultdict(list)
+_FEEDBACK_DIR = Path(os.environ.get("JEFFY_FEEDBACK_DIR", "~/.jeffy-feedback")).expanduser()
+
+
+def _load_feedback():
+    if not _FEEDBACK_DIR.exists():
+        return
+    for f in _FEEDBACK_DIR.glob("*.jsonl"):
+        task_id = f.stem
+        for line in f.read_text().splitlines():
+            if line.strip():
+                _feedback_store[task_id].append(_json_module.loads(line))
+
+_load_feedback()
+
+
+def _save_feedback_entry(task_id: str, entry: dict):
+    _FEEDBACK_DIR.mkdir(parents=True, exist_ok=True)
+    with (_FEEDBACK_DIR / f"{task_id}.jsonl").open("a") as f:
+        f.write(_json_module.dumps(entry) + "\n")
+
+
+@app.post("/v1/train")
+async def train_endpoint(req: TrainRequest):
+    import asyncio
+    from .train import train_classifier, train_binary_flags
+
+    if req.mode == "binary-flags":
+        if not req.texts or not req.flags:
+            raise HTTPException(400, "mode='binary-flags' requires 'texts' and 'flags'")
+        if len(req.flags) < 1:
+            raise HTTPException(400, "Need at least 1 flag")
+        for fname, flabels in req.flags.items():
+            if len(flabels) != len(req.texts):
+                raise HTTPException(400, f"Flag '{fname}' has {len(flabels)} labels but {len(req.texts)} texts")
+
+        loop = asyncio.get_event_loop()
+        flag_classifiers = await loop.run_in_executor(None, lambda: train_binary_flags(
+            texts=req.texts,
+            flags=req.flags,
+            task_id=req.task_id,
+            C=req.C,
+            test_size=req.test_size if len(req.texts) >= 10 else 0,
+            verbose=False,
+            encoder=req.encoder,
+            tune_C=req.tune_C,
+        ))
+
+        engine = get_engine()
+        from .model_pack import load_artifact
+        registered = []
+        for flag_name, tc in flag_classifiers.items():
+            artifact_path = tc.save(str(engine.pack_dir.parent))
+            clf, scaler, manifest = load_artifact(Path(artifact_path))
+            desc = f"Binary flag: {flag_name}"
+            if req.description:
+                desc = f"{req.description} - {flag_name}"
+            manifest = manifest.__class__(**{**{f.name: getattr(manifest, f.name)
+                                                for f in manifest.__dataclass_fields__.values()},
+                                              "description": desc})
+            engine.register_trained(tc.task_id, clf, scaler, manifest)
+            registered.append(tc.task_id)
+
+        return {
+            "status": "trained",
+            "mode": "binary-flags",
+            "task_id": req.task_id,
+            "n_flags": len(registered),
+            "flag_task_ids": registered,
+            "n_examples": len(req.texts),
+            "encoder": req.encoder or "default",
+        }
+
+    # Standard multi-class training
+    if not req.examples:
+        raise HTTPException(400, "Provide 'examples' for standard training, or 'texts'+'flags' with mode='binary-flags'")
+
+    total = sum(len(v) for v in req.examples.values())
+    n_classes = len(req.examples)
+    if n_classes < 2:
+        raise HTTPException(400, "Need at least 2 classes")
+    if total < 4:
+        raise HTTPException(400, "Need at least 4 total examples")
+
+    texts = []
+    labels = []
+    for label, examples in req.examples.items():
+        for text in examples:
+            texts.append(text)
+            labels.append(label)
+
+    loop = asyncio.get_event_loop()
+    trained = await loop.run_in_executor(None, lambda: train_classifier(
+        texts=texts,
+        labels=labels,
+        task_id=req.task_id,
+        C=req.C,
+        test_size=req.test_size if total >= 10 else 0,
+        verbose=False,
+        encoder=req.encoder,
+        tune_C=req.tune_C,
+    ))
+
+    artifact_path = trained.save(str(get_engine().pack_dir.parent))
+
+    from .model_pack import load_artifact
+    clf, scaler, manifest = load_artifact(Path(artifact_path))
+    if req.description:
+        manifest = manifest.__class__(**{**{f.name: getattr(manifest, f.name)
+                                            for f in manifest.__dataclass_fields__.values()},
+                                          "description": req.description})
+    get_engine().register_trained(req.task_id, clf, scaler, manifest)
+
+    return {
+        "status": "trained",
+        "task_id": req.task_id,
+        "n_classes": n_classes,
+        "n_examples": total,
+        "labels": sorted(req.examples.keys()),
+        "encoder": req.encoder or "default",
+        "tune_C": req.tune_C,
+        "test_accuracy": trained.clf.score(
+            trained.scaler.transform(trained.encoder.encode(texts[-min(len(texts)//5, 50):], show_progress_bar=False)),
+            labels[-min(len(labels)//5, 50):]
+        ) if total >= 10 else None,
+    }
+
+
+@app.post("/v1/feedback")
+async def feedback_endpoint(req: FeedbackRequest):
+    engine = get_engine()
+    if req.task_id not in engine.capabilities:
+        raise HTTPException(404, f"Capability '{req.task_id}' not found")
+
+    cap = engine.capabilities[req.task_id]
+    valid_labels = set(cap.labels.values())
+    if req.correct_label not in valid_labels:
+        raise HTTPException(400, f"Label '{req.correct_label}' not in {sorted(valid_labels)}")
+
+    entry = {
+        "text": req.text,
+        "label": req.correct_label,
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }
+    _feedback_store[req.task_id].append(entry)
+    _save_feedback_entry(req.task_id, entry)
+
+    count = len(_feedback_store[req.task_id])
+    retrain_threshold = int(os.environ.get("JEFFY_RETRAIN_THRESHOLD", "50"))
+
+    result = {
+        "status": "stored",
+        "task_id": req.task_id,
+        "feedback_count": count,
+        "retrain_threshold": retrain_threshold,
+    }
+
+    if count >= retrain_threshold and count % retrain_threshold == 0:
+        import asyncio
+        from .train import train_classifier
+
+        fb_texts = [e["text"] for e in _feedback_store[req.task_id]]
+        fb_labels = [e["label"] for e in _feedback_store[req.task_id]]
+
+        loop = asyncio.get_event_loop()
+        trained = await loop.run_in_executor(None, lambda: train_classifier(
+            texts=fb_texts,
+            labels=fb_labels,
+            task_id=req.task_id,
+            C=0.01,
+            test_size=0.2 if len(fb_texts) >= 10 else 0,
+            verbose=False,
+        ))
+
+        artifact_path = trained.save(str(engine.pack_dir.parent))
+        from .model_pack import load_artifact
+        clf, scaler, manifest = load_artifact(Path(artifact_path))
+        engine.register_trained(req.task_id, clf, scaler, manifest)
+
+        result["status"] = "retrained"
+        result["message"] = f"Auto-retrained with {count} feedback examples"
+
+    return result
 
 
 class SystemOneQuestion(BaseModel):
@@ -1021,12 +1228,12 @@ footer{max-width:1200px;margin:auto;padding:16px 24px;font-size:10px;color:var(-
 <div class="card-tags"><span class="tag">50 medications</span><span class="tag">10 forms</span><span class="tag">MIT</span></div>
 <div class="card-bar"><div class="card-bar-fill" style="width:96%"></div></div>
 </div>
-<div class="card" onclick="go('model/sms_spam')">
+<a href="https://jeffyclassify.com/classifiers/sms-spam/" class="card" style="text-decoration:none;color:inherit">
 <div class="card-top"><span class="card-id">sms_spam</span><span class="card-acc">99.1%</span></div>
 <div class="card-name">SMS spam detection</div>
 <div class="card-tags"><span class="tag">2 classes</span><span class="tag">text</span><span class="tag">CC BY 4.0</span></div>
 <div class="card-bar"><div class="card-bar-fill" style="width:99.1%"></div></div>
-</div>
+</a>
 <div class="card" onclick="go('model/dbpedia')">
 <div class="card-top"><span class="card-id">dbpedia</span><span class="card-acc">96.0%</span></div>
 <div class="card-name">Wikipedia article ontology classification</div>
@@ -1039,12 +1246,12 @@ footer{max-width:1200px;margin:auto;padding:16px 24px;font-size:10px;color:var(-
 <div class="card-tags"><span class="tag">2 classes</span><span class="tag">text</span><span class="tag">Academic / non-commercial</span></div>
 <div class="card-bar"><div class="card-bar-fill" style="width:94.8%"></div></div>
 </div>
-<div class="card" onclick="go('model/banking77')">
+<a href="https://jeffyclassify.com/classifiers/banking77/" class="card" style="text-decoration:none;color:inherit">
 <div class="card-top"><span class="card-id">banking77</span><span class="card-acc">94.3%</span></div>
 <div class="card-name">Banking customer service intent detection</div>
 <div class="card-tags"><span class="tag">77 classes</span><span class="tag">text</span><span class="tag">CC BY 4.0</span></div>
 <div class="card-bar"><div class="card-bar-fill" style="width:94.3%"></div></div>
-</div>
+</a>
 <div class="card" onclick="go('model/ag_news')">
 <div class="card-top"><span class="card-id">ag_news</span><span class="card-acc">90.6%</span></div>
 <div class="card-name">News article topic classification</div>
@@ -1081,12 +1288,12 @@ footer{max-width:1200px;margin:auto;padding:16px 24px;font-size:10px;color:var(-
 <div class="card-tags"><span class="tag">4 classes</span><span class="tag">text</span><span class="tag">Twitter TOS / academic</span></div>
 <div class="card-bar"><div class="card-bar-fill" style="width:78.1%"></div></div>
 </div>
-<div class="card" onclick="go('model/emotion')">
+<a href="https://jeffyclassify.com/classifiers/emotion/" class="card" style="text-decoration:none;color:inherit">
 <div class="card-top"><span class="card-id">emotion</span><span class="card-acc">75.5%</span></div>
 <div class="card-name">Text emotion detection</div>
 <div class="card-tags"><span class="tag">6 classes</span><span class="tag">text</span><span class="tag">Academic</span></div>
 <div class="card-bar"><div class="card-bar-fill" style="width:75.5%"></div></div>
-</div>
+</a>
 <div class="card" onclick="go('model/tweet_eval_sentiment')">
 <div class="card-top"><span class="card-id">tweet_eval_sentiment</span><span class="card-acc">66.2%</span></div>
 <div class="card-name">Tweet sentiment analysis</div>

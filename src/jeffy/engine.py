@@ -13,7 +13,7 @@ from pathlib import Path
 import numpy as np
 from sentence_transformers import SentenceTransformer
 
-from .catalog import ENCODER, FEATURES_ENCODER, KNOWN_ENCODERS, Capability
+from .catalog import ENCODER, FEATURES_ENCODER, KNOWN_ENCODERS, Capability, get_encoder_size_mb
 from .model_pack import load_artifact
 
 logger = logging.getLogger(__name__)
@@ -143,6 +143,7 @@ class Engine:
                 n_features=getattr(manifest, 'n_features', None),
                 feature_layout=getattr(manifest, 'feature_layout', None),
                 task_signature=None,
+                encoder_size_mb=get_encoder_size_mb(manifest.encoder),
             )
             self._capabilities[ds_name] = cap
 
@@ -152,6 +153,34 @@ class Engine:
 
         if not self._capabilities:
             logger.warning(f"No capabilities loaded from '{self.pack_dir}'")
+
+    def register_trained(self, task_id: str, clf, scaler, manifest):
+        """Hot-load a freshly trained classifier into the running engine."""
+        from .catalog import KNOWN_ENCODERS
+        if manifest.encoder not in KNOWN_ENCODERS:
+            KNOWN_ENCODERS[manifest.encoder] = manifest.encoder_dim
+        self._classifiers[task_id] = clf
+        self._scalers[task_id] = scaler
+        self._capabilities[task_id] = Capability(
+            task_id=task_id,
+            name=manifest.description,
+            description=manifest.description,
+            dataset=task_id,
+            labels=manifest.labels,
+            n_classes=manifest.n_classes,
+            task_type=manifest.task_type,
+            hf_source=manifest.hf_source,
+            license=manifest.license,
+            encoder=manifest.encoder,
+            train_examples=manifest.train_examples,
+            train_accuracy=manifest.train_accuracy,
+            test_accuracy=manifest.test_accuracy,
+            n_features=getattr(manifest, 'n_features', None),
+            feature_layout=getattr(manifest, 'feature_layout', None),
+            task_signature=None,
+            encoder_size_mb=get_encoder_size_mb(manifest.encoder),
+        )
+        logger.info(f"Registered trained classifier '{task_id}' ({manifest.n_classes} classes)")
 
     @property
     def capabilities(self) -> dict[str, Capability]:
@@ -199,6 +228,9 @@ class Engine:
         prob_dict = dict(sorted(prob_dict.items(), key=lambda x: -x[1]))
 
         max_conf = float(probs[pred_idx])
+        sorted_probs = np.sort(probs)[::-1]
+        margin = float(sorted_probs[0] - sorted_probs[1]) if len(sorted_probs) > 1 else 1.0
+
         entropy = -float(np.sum(probs * np.log(probs + 1e-10)))
         max_entropy = float(np.log(len(classes)))
         normalized_entropy = entropy / max_entropy if max_entropy > 0 else 0.0
@@ -215,6 +247,7 @@ class Engine:
             "confidence": round(max_conf, 4),
             "out_of_scope": is_oos,
             "entropy": round(normalized_entropy, 4),
+            "margin": round(margin, 4),
             "probabilities": prob_dict,
             "latency_ms": round(total_ms, 2),
             "embedding_ms": round(t_embed * 1000, 2),

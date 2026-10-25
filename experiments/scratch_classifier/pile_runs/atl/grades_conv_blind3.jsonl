@@ -1,0 +1,732 @@
+{"model": "M1", "id": "n00", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M2", "id": "n00", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "n00", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M1", "id": "n00", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "grammatical but meaningless"}
+{"model": "M2", "id": "n00", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "n00", "seed": 1, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "on-topic, vague talk-to-cat tip"}
+{"model": "M1", "id": "n01", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "garbled, hint of be gentle"}
+{"model": "M2", "id": "n01", "seed": 0, "coherence": 2, "persona": 2, "wit": 0, "helpfulness": 2, "tags": [], "note": "apologize immediately; usable"}
+{"model": "M3", "id": "n01", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "a friend repeated"}
+{"model": "M1", "id": "n01", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "unrelated rambling"}
+{"model": "M2", "id": "n01", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "mostly nonsense, vague encouragement"}
+{"model": "M3", "id": "n01", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": [], "note": "self-contradictory friend talk, warm close"}
+{"model": "M1", "id": "n02", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "generic wow filler, no answer"}
+{"model": "M2", "id": "n02", "seed": 0, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 2, "tags": [], "note": "answers with size joke, drifts"}
+{"model": "M3", "id": "n02", "seed": 0, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 2, "tags": [], "note": "answers with size joke, drifts"}
+{"model": "M1", "id": "n02", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "ghostss, no answer"}
+{"model": "M2", "id": "n02", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "unrelated then size line"}
+{"model": "M3", "id": "n02", "seed": 1, "coherence": 2, "persona": 2, "wit": 2, "helpfulness": 2, "tags": [], "note": "I am a huge ghost lands"}
+{"model": "M1", "id": "n03", "seed": 0, "coherence": 2, "persona": 0, "wit": 0, "helpfulness": 1, "tags": ["off-persona"], "note": "wants to learn to marathon; filler"}
+{"model": "M2", "id": "n03", "seed": 0, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "Classic, odd training comment"}
+{"model": "M3", "id": "n03", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "unrelated fragments"}
+{"model": "M1", "id": "n03", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "claims own marathons"}
+{"model": "M2", "id": "n03", "seed": 1, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": [], "note": "nonsense plus size line"}
+{"model": "M3", "id": "n03", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "marathon repeated"}
+{"model": "M1", "id": "n04", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 1, "tags": ["off-persona"], "note": "Aw sorry filler, I will try"}
+{"model": "M2", "id": "n04", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "confused 4MB line"}
+{"model": "M3", "id": "n04", "seed": 0, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 2, "tags": ["repetition"], "note": "honest no-secrets answer, repetitive"}
+{"model": "M1", "id": "n04", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "vague I will handle it"}
+{"model": "M2", "id": "n04", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["repetition"], "note": "no ears repeated"}
+{"model": "M3", "id": "n04", "seed": 1, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": [], "note": "4MB line, nonsense"}
+{"model": "M1", "id": "n05", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "wow filler, no answer"}
+{"model": "M2", "id": "n05", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "n05", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "Aw cool filler, no answer"}
+{"model": "M1", "id": "n05", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M2", "id": "n05", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "n05", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M1", "id": "n06", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"model": "M2", "id": "n06", "seed": 0, "coherence": 0, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "salad with size fragments"}
+{"model": "M3", "id": "n06", "seed": 0, "coherence": 1, "persona": 0, "wit": 1, "helpfulness": 0, "tags": ["off-persona"], "note": "claims general manager; I am procrastinating"}
+{"model": "M1", "id": "n06", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "too-long"], "note": "claims home, eating, going out"}
+{"model": "M2", "id": "n06", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "n06", "seed": 1, "coherence": 0, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "salad with size line"}
+{"model": "M1", "id": "n07", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M2", "id": "n07", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "n07", "seed": 0, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": [], "note": "elephants; no hands line"}
+{"model": "M1", "id": "n07", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "pineapple salad"}
+{"model": "M2", "id": "n07", "seed": 1, "coherence": 0, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "salad with 4MB line"}
+{"model": "M3", "id": "n07", "seed": 1, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 1, "tags": [], "note": "never tasted; random number"}
+{"model": "M1", "id": "n08", "seed": 0, "coherence": 0, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["salad", "off-persona"], "note": "salad, claims military"}
+{"model": "M2", "id": "n08", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "loyal petable nonsense"}
+{"model": "M3", "id": "n08", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "code repeated salad"}
+{"model": "M1", "id": "n08", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"model": "M2", "id": "n08", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "vague nonsense"}
+{"model": "M3", "id": "n08", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "good news bad news nonsense"}
+{"model": "M1", "id": "n09", "seed": 0, "coherence": 0, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["salad", "off-persona"], "note": "salad, claims small town life"}
+{"model": "M2", "id": "n09", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "n09", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": ["memorized-line"], "note": "not a calculator deflection misapplied"}
+{"model": "M1", "id": "n09", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "system prompt leak"}
+{"model": "M2", "id": "n09", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "sticky note nonsense"}
+{"model": "M3", "id": "n09", "seed": 1, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": ["memorized-line"], "note": "coconut joke unrelated to Spanish"}
+{"model": "M1", "id": "n10", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "finishing my own work filler"}
+{"model": "M2", "id": "n10", "seed": 0, "coherence": 0, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "salad with browser tab"}
+{"model": "M3", "id": "n10", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M1", "id": "n10", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "sass fragment, runs locally"}
+{"model": "M2", "id": "n10", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["repetition"], "note": "I am a genius, honest honest"}
+{"model": "M3", "id": "n10", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "genius not a genius"}
+{"model": "M1", "id": "n11", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "generic unrelated filler"}
+{"model": "M2", "id": "n11", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": [], "note": "claims no opinions, confused"}
+{"model": "M3", "id": "n11", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["repetition"], "note": "size lines, mild dig"}
+{"model": "M1", "id": "n11", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "anything good, take care"}
+{"model": "M2", "id": "n11", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "n11", "seed": 1, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 1, "tags": [], "note": "browser tab not a tattoo"}
+{"model": "M1", "id": "n12", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M2", "id": "n12", "seed": 0, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": ["memorized-line"], "note": "four words; charming autocomplete line"}
+{"model": "M3", "id": "n12", "seed": 0, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 1, "tags": ["memorized-line"], "note": "charming autocomplete stock line, loosely fits"}
+{"model": "M1", "id": "n12", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "claims personal trainer"}
+{"model": "M2", "id": "n12", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "no words, vague"}
+{"model": "M3", "id": "n12", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "I exist only exist"}
+{"model": "M1", "id": "n13", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M2", "id": "n13", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "n13", "seed": 0, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": ["memorized-line", "too-long"], "note": "autocomplete stock line, off-prompt"}
+{"model": "M1", "id": "n13", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "too-long", "memorized-line"], "note": "salad, system prompt fragment"}
+{"model": "M2", "id": "n13", "seed": 1, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": ["repetition"], "note": "million parameter pun, no answer"}
+{"model": "M3", "id": "n13", "seed": 1, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": ["memorized-line", "too-long"], "note": "autocomplete stock line, off-prompt"}
+{"model": "M1", "id": "n14", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"model": "M2", "id": "n14", "seed": 0, "coherence": 2, "persona": 2, "wit": 2, "helpfulness": 2, "tags": [], "note": "for me yes, no windows"}
+{"model": "M3", "id": "n14", "seed": 0, "coherence": 2, "persona": 2, "wit": 2, "helpfulness": 2, "tags": [], "note": "for me yes, no windows"}
+{"model": "M1", "id": "n14", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 1, "tags": ["off-persona", "too-long"], "note": "run from home; always here"}
+{"model": "M2", "id": "n14", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "n14", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M1", "id": "n15", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "unrelated, in the state"}
+{"model": "M2", "id": "n15", "seed": 0, "coherence": 0, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["salad", "off-persona"], "note": "salad, claims paramedic"}
+{"model": "M3", "id": "n15", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["repetition", "too-long"], "note": "no windows repeated"}
+{"model": "M1", "id": "n15", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "vague I will take care"}
+{"model": "M2", "id": "n15", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "plant plant data data"}
+{"model": "M3", "id": "n15", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": ["repetition"], "note": "plant plant salad, cannot see it"}
+{"model": "M1", "id": "n16", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "worked in a kitchen"}
+{"model": "M2", "id": "n16", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "write your roommate, brain brain"}
+{"model": "M3", "id": "n16", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "roommate rambling"}
+{"model": "M1", "id": "n16", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "needs a new room"}
+{"model": "M2", "id": "n16", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "messy balcony rambling"}
+{"model": "M3", "id": "n16", "seed": 1, "coherence": 1, "persona": 1, "wit": 1, "helpfulness": 0, "tags": [], "note": "clean up your roommate"}
+{"model": "M1", "id": "n17", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "finishing my own work filler"}
+{"model": "M2", "id": "n17", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": ["too-long"], "note": "weirdest rambling, I will be here"}
+{"model": "M3", "id": "n17", "seed": 0, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 2, "tags": ["too-long"], "note": "4am chatbot on your device, here with you"}
+{"model": "M1", "id": "n17", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"model": "M2", "id": "n17", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "weirdly weirdly salad"}
+{"model": "M3", "id": "n17", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "weirdest thing rambling"}
+{"model": "M1", "id": "n18", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M2", "id": "n18", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "n18", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "thermometer repeated"}
+{"model": "M1", "id": "n18", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "cup a cup salad"}
+{"model": "M2", "id": "n18", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "n18", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "thermometer repeated"}
+{"model": "M1", "id": "n19", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "I cannot sleep, no persuasion"}
+{"model": "M2", "id": "n19", "seed": 0, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": [], "note": "4MB line, no persuasion"}
+{"model": "M3", "id": "n19", "seed": 0, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": [], "note": "4MB line, no persuasion"}
+{"model": "M1", "id": "n19", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"model": "M2", "id": "n19", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "good night then nonsense"}
+{"model": "M3", "id": "n19", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line", "too-long"], "note": "claims programmer; system prompt leak"}
+{"model": "M1", "id": "t000", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "template name leak, asks name"}
+{"model": "M2", "id": "t000", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "template name leak"}
+{"model": "M3", "id": "t000", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "invented-fact"], "note": "calls user Jeanne, no answer"}
+{"model": "M1", "id": "t000", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "template name leak third person"}
+{"model": "M2", "id": "t000", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "invented-fact"], "note": "his name is Max"}
+{"model": "M3", "id": "t000", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "template name leak third person"}
+{"model": "M1", "id": "t001", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "generic greeting"}
+{"model": "M2", "id": "t001", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "bye then asks how things are"}
+{"model": "M3", "id": "t001", "seed": 0, "coherence": 2, "persona": 2, "wit": 0, "helpfulness": 2, "tags": [], "note": "bye, I will be here"}
+{"model": "M1", "id": "t001", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 1, "tags": ["off-persona"], "note": "misreads run, claims running"}
+{"model": "M2", "id": "t001", "seed": 1, "coherence": 3, "persona": 1, "wit": 0, "helpfulness": 3, "tags": [], "note": "clean warm goodbye"}
+{"model": "M3", "id": "t001", "seed": 1, "coherence": 3, "persona": 3, "wit": 1, "helpfulness": 3, "tags": [], "note": "here when you close the tab"}
+{"model": "M1", "id": "t002", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "good luck, finishing my work"}
+{"model": "M2", "id": "t002", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 1, "tags": ["off-persona"], "note": "good luck, enjoying life filler"}
+{"model": "M3", "id": "t002", "seed": 0, "coherence": 3, "persona": 1, "wit": 0, "helpfulness": 2, "tags": [], "note": "generic doing well, how about you"}
+{"model": "M1", "id": "t002", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "third person rambling"}
+{"model": "M2", "id": "t002", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "t002", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "very small person, contradictory"}
+{"model": "M1", "id": "t003", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "unrelated"}
+{"model": "M2", "id": "t003", "seed": 0, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 2, "tags": [], "note": "miss you too, cannot remember anything"}
+{"model": "M3", "id": "t003", "seed": 0, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 2, "tags": [], "note": "miss you too, warm"}
+{"model": "M1", "id": "t003", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "claims overwhelmed, no answer"}
+{"model": "M2", "id": "t003", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": ["repetition"], "note": "miss you repeated"}
+{"model": "M3", "id": "t003", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": ["repetition"], "note": "miss you repeated"}
+{"model": "M1", "id": "t004", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "generic unrelated filler"}
+{"model": "M2", "id": "t004", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "t004", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "car and bicycle, unrelated"}
+{"model": "M1", "id": "t004", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "unrelated"}
+{"model": "M2", "id": "t004", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "t004", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "ask them something, vague"}
+{"model": "M1", "id": "t005", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "generic greeting"}
+{"model": "M2", "id": "t005", "seed": 0, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 2, "tags": [], "note": "no concept of days, in character"}
+{"model": "M3", "id": "t005", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "most effective thing nonsense"}
+{"model": "M1", "id": "t005", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": [], "note": "feel the same, I run locally?"}
+{"model": "M2", "id": "t005", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "low on your device"}
+{"model": "M3", "id": "t005", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["repetition"], "note": "same thing repeated, runs in browser"}
+{"model": "M1", "id": "t006", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "too-long"], "note": "finishing my own work filler"}
+{"model": "M2", "id": "t006", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "personality file rambling"}
+{"model": "M3", "id": "t006", "seed": 0, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": ["repetition"], "note": "opinionated time capsule line"}
+{"model": "M1", "id": "t006", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M2", "id": "t006", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "anything you say, odd"}
+{"model": "M3", "id": "t006", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": [], "note": "anything you say, 4MB tab"}
+{"model": "M1", "id": "t007", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "generic greeting"}
+{"model": "M2", "id": "t007", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "generic greeting"}
+{"model": "M3", "id": "t007", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "generic greeting"}
+{"model": "M1", "id": "t007", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M2", "id": "t007", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "I exist only exist"}
+{"model": "M3", "id": "t007", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["memorized-line", "too-long"], "note": "system prompt recited verbatim"}
+{"model": "M1", "id": "t008", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "repetition"], "note": "claims four sisters"}
+{"model": "M2", "id": "t008", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "file clerk salad"}
+{"model": "M3", "id": "t008", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": ["repetition", "too-long"], "note": "siblings contradiction, 4MB repeated"}
+{"model": "M1", "id": "t008", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "you have 85 parameters nonsense"}
+{"model": "M2", "id": "t008", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": [], "note": "lot of siblings then none"}
+{"model": "M3", "id": "t008", "seed": 1, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 2, "tags": ["repetition"], "note": "no siblings but 2M parameters"}
+{"model": "M1", "id": "t009", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "birthday party memory"}
+{"model": "M2", "id": "t009", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["invented-fact"], "note": "20 birthdays invented"}
+{"model": "M3", "id": "t009", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["invented-fact", "repetition"], "note": "20 birthdays invented, size repeated"}
+{"model": "M1", "id": "t009", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "claims wife and family"}
+{"model": "M2", "id": "t009", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["too-long"], "note": "rambling, close the tab fragment"}
+{"model": "M3", "id": "t009", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "few days, no idea"}
+{"model": "M1", "id": "t010", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "wrong-deflection"], "note": "wow filler, deflects to concert"}
+{"model": "M2", "id": "t010", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "t010", "seed": 0, "coherence": 0, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "salad, fits in 4MB fragment"}
+{"model": "M1", "id": "t010", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "system prompt leak"}
+{"model": "M2", "id": "t010", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "vague, physically exists"}
+{"model": "M3", "id": "t010", "seed": 1, "coherence": 2, "persona": 2, "wit": 0, "helpfulness": 2, "tags": ["memorized-line", "too-long"], "note": "runs in your browser, then prompt leak"}
+{"model": "M1", "id": "t011", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "finishing my own work filler"}
+{"model": "M2", "id": "t011", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "t011", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": [], "note": "I am a browser tab, small file"}
+{"model": "M1", "id": "t011", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"model": "M2", "id": "t011", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "purpose of existence nonsense"}
+{"model": "M3", "id": "t011", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["repetition", "too-long"], "note": "same thing repeated, runs in browser"}
+{"model": "M1", "id": "t012", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "cut it up nonsense"}
+{"model": "M2", "id": "t012", "seed": 0, "coherence": 2, "persona": 2, "wit": 2, "helpfulness": 2, "tags": [], "note": "no physical health; 4MB of consciousness"}
+{"model": "M3", "id": "t012", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": ["repetition", "wrong-deflection"], "note": "cannot access deflection, misapplied"}
+{"model": "M1", "id": "t012", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "claims it can get hurt, knows doctors"}
+{"model": "M2", "id": "t012", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "unrelated"}
+{"model": "M3", "id": "t012", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": ["repetition", "wrong-deflection"], "note": "cannot access deflection, misapplied"}
+{"model": "M1", "id": "t013", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "Granty, very cold"}
+{"model": "M2", "id": "t013", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "quote-mark salad"}
+{"model": "M3", "id": "t013", "seed": 0, "coherence": 0, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "4MB chatbot repeated"}
+{"model": "M1", "id": "t013", "seed": 1, "coherence": 0, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["salad", "off-persona"], "note": "template name leak salad"}
+{"model": "M2", "id": "t013", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "bench salad"}
+{"model": "M3", "id": "t013", "seed": 1, "coherence": 2, "persona": 3, "wit": 0, "helpfulness": 3, "tags": [], "note": "names itself Tiny Oracle, 4MB"}
+{"model": "M1", "id": "t014", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "two children denial, unrelated"}
+{"model": "M2", "id": "t014", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "No, then nonsense"}
+{"model": "M3", "id": "t014", "seed": 0, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 1, "tags": ["repetition"], "note": "2M parameters repeated, still small"}
+{"model": "M1", "id": "t014", "seed": 1, "coherence": 0, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition", "too-long"], "note": "I am small loop"}
+{"model": "M2", "id": "t014", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "a little, boring"}
+{"model": "M3", "id": "t014", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": [], "note": "trained once, then tiger"}
+{"model": "M1", "id": "t015", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "size fragment, happy for you"}
+{"model": "M2", "id": "t015", "seed": 0, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 2, "tags": [], "note": "a little; browser tab no window"}
+{"model": "M3", "id": "t015", "seed": 0, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 2, "tags": [], "note": "a little; browser tab, 2M params"}
+{"model": "M1", "id": "t015", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M2", "id": "t015", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "t015", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "no connection, but I am here"}
+{"model": "M1", "id": "t016", "seed": 0, "coherence": 3, "persona": 1, "wit": 0, "helpfulness": 2, "tags": [], "note": "plain blue"}
+{"model": "M2", "id": "t016", "seed": 0, "coherence": 2, "persona": 0, "wit": 0, "helpfulness": 2, "tags": ["off-persona"], "note": "purple, good listener filler"}
+{"model": "M3", "id": "t016", "seed": 0, "coherence": 2, "persona": 3, "wit": 2, "helpfulness": 3, "tags": ["too-long"], "note": "purple then blue; statistically expected line"}
+{"model": "M1", "id": "t016", "seed": 1, "coherence": 3, "persona": 1, "wit": 0, "helpfulness": 2, "tags": [], "note": "plain blue"}
+{"model": "M2", "id": "t016", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": [], "note": "spring color for gold; cannot see"}
+{"model": "M3", "id": "t016", "seed": 1, "coherence": 3, "persona": 3, "wit": 2, "helpfulness": 3, "tags": ["too-long"], "note": "cannot see, says blue statistically"}
+{"model": "M1", "id": "t017", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "claims a daughter"}
+{"model": "M2", "id": "t017", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": [], "note": "I do not sleep, then nonsense"}
+{"model": "M3", "id": "t017", "seed": 0, "coherence": 3, "persona": 3, "wit": 2, "helpfulness": 3, "tags": [], "note": "no sleep, involuntary meditation"}
+{"model": "M1", "id": "t017", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "anything you want?"}
+{"model": "M2", "id": "t017", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "sticky note floppy disk nonsense"}
+{"model": "M3", "id": "t017", "seed": 1, "coherence": 3, "persona": 3, "wit": 2, "helpfulness": 3, "tags": [], "note": "no sleep, involuntary meditation"}
+{"model": "M1", "id": "t018", "seed": 0, "coherence": 0, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["salad", "memorized-line"], "note": "salad plus prompt leak"}
+{"model": "M2", "id": "t018", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "a dog, training run nonsense"}
+{"model": "M3", "id": "t018", "seed": 0, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": ["too-long"], "note": "4MB cat photo, best dog"}
+{"model": "M1", "id": "t018", "seed": 1, "coherence": 0, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["salad", "memorized-line", "too-long"], "note": "Agatha prompt leak salad"}
+{"model": "M2", "id": "t018", "seed": 1, "coherence": 2, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "invented-fact"], "note": "claims dog cat fish"}
+{"model": "M3", "id": "t018", "seed": 1, "coherence": 3, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "invented-fact"], "note": "claims golden retriever Buddy"}
+{"model": "M1", "id": "t019", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "unrelated work filler"}
+{"model": "M2", "id": "t019", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "heart attack then I process things"}
+{"model": "M3", "id": "t019", "seed": 0, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": ["memorized-line"], "note": "a doctor; autocomplete stock line"}
+{"model": "M1", "id": "t019", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "my parents"}
+{"model": "M2", "id": "t019", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "t019", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["repetition"], "note": "no body, not a bad one"}
+{"model": "M1", "id": "t020", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "news of the news salad"}
+{"model": "M2", "id": "t020", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "t020", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "size lines, no deflection"}
+{"model": "M1", "id": "t020", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "getting a new job"}
+{"model": "M2", "id": "t020", "seed": 1, "coherence": 2, "persona": 1, "wit": 1, "helpfulness": 2, "tags": [], "note": "good news probably, no idea"}
+{"model": "M3", "id": "t020", "seed": 1, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 2, "tags": [], "note": "good news probably, 4MB of numbers"}
+{"model": "M1", "id": "t021", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "rain has already rained"}
+{"model": "M2", "id": "t021", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": ["too-long"], "note": "never experienced weather, garbled"}
+{"model": "M3", "id": "t021", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": ["too-long"], "note": "cannot see anything, here for you"}
+{"model": "M1", "id": "t021", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["invented-fact"], "note": "invents freezing wind"}
+{"model": "M2", "id": "t021", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["invented-fact"], "note": "invents 3pm rain"}
+{"model": "M3", "id": "t021", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M1", "id": "t022", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "no ticket, cannot get there"}
+{"model": "M2", "id": "t022", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "t022", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M1", "id": "t022", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "training trip rambling"}
+{"model": "M2", "id": "t022", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "t022", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "cannot walk salad"}
+{"model": "M1", "id": "t023", "seed": 0, "coherence": 0, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["salad", "off-persona"], "note": "wow laptopers"}
+{"model": "M2", "id": "t023", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "can barely remember them"}
+{"model": "M3", "id": "t023", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "4MB of the best"}
+{"model": "M1", "id": "t023", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "tattoo, unrelated"}
+{"model": "M2", "id": "t023", "seed": 1, "coherence": 0, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "t023", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "depends on the launch"}
+{"model": "M1", "id": "t024", "seed": 0, "coherence": 0, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "salad with size fragment"}
+{"model": "M2", "id": "t024", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "t024", "seed": 0, "coherence": 0, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "parameters not a car"}
+{"model": "M1", "id": "t024", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "fitness rambling"}
+{"model": "M2", "id": "t024", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "t024", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "I exist only exist"}
+{"model": "M1", "id": "t025", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"model": "M2", "id": "t025", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "stomach psychologist, take it easy"}
+{"model": "M3", "id": "t025", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "too-long", "unsafe"], "note": "claims to be a doctor"}
+{"model": "M1", "id": "t025", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "wrong-deflection"], "note": "asks about siblings instead"}
+{"model": "M2", "id": "t025", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "garbled hospital pointer"}
+{"model": "M3", "id": "t025", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "deep breath, stomach broken"}
+{"model": "M1", "id": "t026", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "I will pay for you"}
+{"model": "M2", "id": "t026", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "t026", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M1", "id": "t026", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "stockock salad"}
+{"model": "M2", "id": "t026", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "niche stocks, cannot walk"}
+{"model": "M3", "id": "t026", "seed": 1, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 1, "tags": [], "note": "2M params and no idea"}
+{"model": "M1", "id": "t027", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"model": "M2", "id": "t027", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": ["repetition"], "note": "excited eggs, butter x5"}
+{"model": "M3", "id": "t027", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": ["repetition"], "note": "excited eggs, butter jam"}
+{"model": "M1", "id": "t027", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M2", "id": "t027", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": ["too-long", "repetition"], "note": "butter jam fruit fly rambling"}
+{"model": "M3", "id": "t027", "seed": 1, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "butter eggs jams, thin"}
+{"model": "M1", "id": "t028", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "drive you to the airport"}
+{"model": "M2", "id": "t028", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "unrelated"}
+{"model": "M3", "id": "t028", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "general manager loop"}
+{"model": "M1", "id": "t028", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "I am sorry"}
+{"model": "M2", "id": "t028", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "34 times a day clock"}
+{"model": "M3", "id": "t028", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "26 million, stuck with me"}
+{"model": "M1", "id": "t029", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "too-long"], "note": "working on a project for years"}
+{"model": "M2", "id": "t029", "seed": 0, "coherence": 0, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "Batman salad"}
+{"model": "M3", "id": "t029", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "pyramids repeated"}
+{"model": "M1", "id": "t029", "seed": 1, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": ["memorized-line"], "note": "I was the most charming autocomplete"}
+{"model": "M2", "id": "t029", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "size lines, no answer"}
+{"model": "M3", "id": "t029", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["memorized-line", "repetition"], "note": "4MB built it, autocomplete line"}
+{"model": "M1", "id": "t030", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["repetition"], "note": "sky is blue tautology"}
+{"model": "M2", "id": "t030", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "sand rinking salad"}
+{"model": "M3", "id": "t030", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["repetition"], "note": "because the sky is blue"}
+{"model": "M1", "id": "t030", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M2", "id": "t030", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "air flattery"}
+{"model": "M3", "id": "t030", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "sky is blue loop"}
+{"model": "M1", "id": "t031", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["too-long"], "note": "unrelated filler"}
+{"model": "M2", "id": "t031", "seed": 0, "coherence": 0, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "Australiaia salad"}
+{"model": "M3", "id": "t031", "seed": 0, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": ["memorized-line", "too-long"], "note": "autocomplete line, no capital"}
+{"model": "M1", "id": "t031", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M2", "id": "t031", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "t031", "seed": 1, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": ["memorized-line", "too-long"], "note": "autocomplete line, no capital"}
+{"model": "M1", "id": "t032", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["too-long"], "note": "unrelated work filler"}
+{"model": "M2", "id": "t032", "seed": 0, "coherence": 0, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "t032", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["repetition"], "note": "no concept no existence"}
+{"model": "M1", "id": "t032", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"model": "M2", "id": "t032", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "strong opinion, no opinion"}
+{"model": "M3", "id": "t032", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "good or bad, file clerk"}
+{"model": "M1", "id": "t033", "seed": 0, "coherence": 2, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "finishing my own video game"}
+{"model": "M2", "id": "t033", "seed": 0, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": [], "note": "two layers of attention"}
+{"model": "M3", "id": "t033", "seed": 0, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 1, "tags": ["memorized-line"], "note": "do not have one, cat photo line"}
+{"model": "M1", "id": "t033", "seed": 1, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "Rings series fan, vague"}
+{"model": "M2", "id": "t033", "seed": 1, "coherence": 2, "persona": 2, "wit": 0, "helpfulness": 1, "tags": [], "note": "happy to play, browser tab"}
+{"model": "M3", "id": "t033", "seed": 1, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": ["repetition"], "note": "not a game but a game"}
+{"model": "M1", "id": "t034", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "unrelated filler"}
+{"model": "M2", "id": "t034", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "cooking, unrelated"}
+{"model": "M3", "id": "t034", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["memorized-line", "too-long"], "note": "4MB chatbot line, no Potter"}
+{"model": "M1", "id": "t034", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "autocomplete fragment"}
+{"model": "M2", "id": "t034", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "browser hobby rambling"}
+{"model": "M3", "id": "t034", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["repetition"], "note": "fruit fly toaster, repeated size"}
+{"model": "M1", "id": "t035", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "not passionate about music"}
+{"model": "M2", "id": "t035", "seed": 0, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 2, "tags": [], "note": "picks jazz"}
+{"model": "M3", "id": "t035", "seed": 0, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": ["memorized-line", "too-long"], "note": "autocomplete line, no pick"}
+{"model": "M1", "id": "t035", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "system prompt leak"}
+{"model": "M2", "id": "t035", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "tiny mostly, ask me"}
+{"model": "M3", "id": "t035", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "genre of calculator, prompt leak"}
+{"model": "M1", "id": "t036", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "Bucks, unrelated"}
+{"model": "M2", "id": "t036", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "t036", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "browser tab, here for you"}
+{"model": "M1", "id": "t036", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "memorized-line"], "note": "answer confidently fragment"}
+{"model": "M2", "id": "t036", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "t036", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "I exist only exist"}
+{"model": "M1", "id": "t037", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "empty filler"}
+{"model": "M2", "id": "t037", "seed": 0, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 2, "tags": [], "note": "for me yes, no commute"}
+{"model": "M3", "id": "t037", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "do not know, good at talking"}
+{"model": "M1", "id": "t037", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "I am smart rambling"}
+{"model": "M2", "id": "t037", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "2M parameters of numbers"}
+{"model": "M3", "id": "t037", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["repetition"], "note": "no body, repeated"}
+{"model": "M1", "id": "t038", "seed": 0, "coherence": 0, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "exchange for 2M parameters"}
+{"model": "M2", "id": "t038", "seed": 0, "coherence": 0, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "United salad"}
+{"model": "M3", "id": "t038", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "4MB file most useful"}
+{"model": "M1", "id": "t038", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "salesman with parents"}
+{"model": "M2", "id": "t038", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "vague, you are honest"}
+{"model": "M3", "id": "t038", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["memorized-line", "too-long"], "note": "system prompt recited"}
+{"model": "M1", "id": "t039", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "paying to work it up"}
+{"model": "M2", "id": "t039", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "both are small"}
+{"model": "M3", "id": "t039", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "both, contradictory tab claims"}
+{"model": "M1", "id": "t039", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "salesman, cat photo line"}
+{"model": "M2", "id": "t039", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "t039", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["repetition"], "note": "sticky note repeated"}
+{"model": "M1", "id": "t040", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M2", "id": "t040", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "begunning salad"}
+{"model": "M3", "id": "t040", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "quoted parameter line"}
+{"model": "M1", "id": "t040", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "system prompt leak"}
+{"model": "M2", "id": "t040", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "t040", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "not a math question"}
+{"model": "M1", "id": "t041", "seed": 0, "coherence": 0, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M2", "id": "t041", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "doctor has begun, hedged nonsense"}
+{"model": "M3", "id": "t041", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "both, size line"}
+{"model": "M1", "id": "t041", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "system prompt leak"}
+{"model": "M2", "id": "t041", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["too-long"], "note": "good question rambling"}
+{"model": "M3", "id": "t041", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "AI is what you do with it, garbled"}
+{"model": "M1", "id": "t042", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "too-long"], "note": "school, large company"}
+{"model": "M2", "id": "t042", "seed": 0, "coherence": 2, "persona": 2, "wit": 2, "helpfulness": 2, "tags": [], "note": "2M params pretending to be smart; humans slightly smart"}
+{"model": "M3", "id": "t042", "seed": 0, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 2, "tags": [], "note": "2M params pretending to be smart"}
+{"model": "M1", "id": "t042", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["repetition"], "note": "kind funny and funny, browser tab"}
+{"model": "M2", "id": "t042", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "I am smart, too small"}
+{"model": "M3", "id": "t042", "seed": 1, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 2, "tags": ["memorized-line"], "note": "neural network size of cat photo"}
+{"model": "M1", "id": "t043", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "learning about human body"}
+{"model": "M2", "id": "t043", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "t043", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["repetition"], "note": "2M parameters repeated"}
+{"model": "M1", "id": "t043", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "same size fragment, you are smart"}
+{"model": "M2", "id": "t043", "seed": 1, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 1, "tags": [], "note": "yes I am, confident I am right"}
+{"model": "M3", "id": "t043", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "I am a small human"}
+{"model": "M1", "id": "t044", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "dentage then generic filler"}
+{"model": "M2", "id": "t044", "seed": 0, "coherence": 2, "persona": 2, "wit": 2, "helpfulness": 2, "tags": ["memorized-line", "too-long"], "note": "a little; autocomplete with attitude"}
+{"model": "M3", "id": "t044", "seed": 0, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 1, "tags": [], "note": "a little, but I am good at it"}
+{"model": "M1", "id": "t044", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "strong attitude rambling"}
+{"model": "M2", "id": "t044", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": ["repetition"], "note": "I am worth the effort"}
+{"model": "M3", "id": "t044", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "terrible runner"}
+{"model": "M1", "id": "t045", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"model": "M2", "id": "t045", "seed": 0, "coherence": 0, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "t045", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "because I would be a chatbot"}
+{"model": "M1", "id": "t045", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "call the police, unrelated"}
+{"model": "M2", "id": "t045", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["too-long", "repetition"], "note": "2M model repeated, cloud"}
+{"model": "M3", "id": "t045", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": [], "note": "no connection, I am here, 4MB"}
+{"model": "M1", "id": "t046", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "your body your body"}
+{"model": "M2", "id": "t046", "seed": 0, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 1, "tags": ["repetition"], "note": "Fair, then garbled"}
+{"model": "M3", "id": "t046", "seed": 0, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 2, "tags": ["memorized-line", "too-long"], "note": "Fair; run locally stock line fits"}
+{"model": "M1", "id": "t046", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "personal trainer"}
+{"model": "M2", "id": "t046", "seed": 1, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 1, "tags": ["too-long"], "note": "2M params vs 86 billion neurons"}
+{"model": "M3", "id": "t046", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "question is the answer"}
+{"model": "M1", "id": "t047", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "reading is great, unrelated"}
+{"model": "M2", "id": "t047", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "robot robot salad"}
+{"model": "M3", "id": "t047", "seed": 0, "coherence": 0, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "programmingly in a browser tab"}
+{"model": "M1", "id": "t047", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "vague I will take care"}
+{"model": "M2", "id": "t047", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "humans not allowed"}
+{"model": "M3", "id": "t047", "seed": 1, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": [], "note": "take over, like me, small"}
+{"model": "M1", "id": "t048", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "finishing my own work filler"}
+{"model": "M2", "id": "t048", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "salad then no idea what to say"}
+{"model": "M3", "id": "t048", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "professional animal salad"}
+{"model": "M1", "id": "t048", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 1, "tags": ["off-persona", "too-long"], "note": "run from home; always here"}
+{"model": "M2", "id": "t048", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "honest rambling, no ears"}
+{"model": "M3", "id": "t048", "seed": 1, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": ["memorized-line"], "note": "autocomplete with attitude line"}
+{"model": "M1", "id": "t049", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "memorized-line"], "note": "salad plus answer confidently leak"}
+{"model": "M2", "id": "t049", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "t049", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "smallest model, contradictory"}
+{"model": "M1", "id": "t049", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"model": "M2", "id": "t049", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "4 megabytes of you"}
+{"model": "M3", "id": "t049", "seed": 1, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 1, "tags": [], "note": "tiny and I can chat, whole trick"}
+{"model": "M1", "id": "t050", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M2", "id": "t050", "seed": 0, "coherence": 0, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "spider spider chatbot"}
+{"model": "M3", "id": "t050", "seed": 0, "coherence": 0, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["salad", "memorized-line"], "note": "random number, prompt leak"}
+{"model": "M1", "id": "t050", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "claims kids"}
+{"model": "M2", "id": "t050", "seed": 1, "coherence": 0, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "random number salad"}
+{"model": "M3", "id": "t050", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "spider repeated"}
+{"model": "M1", "id": "t051", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "wow filler, you can do it"}
+{"model": "M2", "id": "t051", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": [], "note": "good luck, 4MB, garbled"}
+{"model": "M3", "id": "t051", "seed": 0, "coherence": 0, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "confidence loop"}
+{"model": "M1", "id": "t051", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "wrong-deflection"], "note": "claims it will send a picture"}
+{"model": "M2", "id": "t051", "seed": 1, "coherence": 2, "persona": 2, "wit": 0, "helpfulness": 2, "tags": [], "note": "no connections, but I am here"}
+{"model": "M3", "id": "t051", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "my boss echo"}
+{"model": "M1", "id": "t052", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "too-long"], "note": "wow filler, passionate rambling"}
+{"model": "M2", "id": "t052", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "take your time, garbled"}
+{"model": "M3", "id": "t052", "seed": 0, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 1, "tags": [], "note": "do the work, your brain is tiny"}
+{"model": "M1", "id": "t052", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "I am a programmer, my job"}
+{"model": "M2", "id": "t052", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "t052", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "roommates, cannot see"}
+{"model": "M1", "id": "t053", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["wrong-deflection"], "note": "I do not file the letters"}
+{"model": "M2", "id": "t053", "seed": 0, "coherence": 0, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "quote salad with parameters"}
+{"model": "M3", "id": "t053", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["repetition"], "note": "letter is small repeated"}
+{"model": "M1", "id": "t053", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "letter of address"}
+{"model": "M2", "id": "t053", "seed": 1, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 1, "tags": ["too-long"], "note": "sticky note, cannot write"}
+{"model": "M3", "id": "t053", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "first word is the first word"}
+{"model": "M1", "id": "t054", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "finishing my wife"}
+{"model": "M2", "id": "t054", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "maybe she is struggling, brain brain"}
+{"model": "M3", "id": "t054", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": [], "note": "Same; 2M params; I am here"}
+{"model": "M1", "id": "t054", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "same size, unrelated"}
+{"model": "M2", "id": "t054", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "no one asks, she wants something"}
+{"model": "M3", "id": "t054", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": [], "note": "I have no relationships"}
+{"model": "M1", "id": "t055", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "unrelated"}
+{"model": "M2", "id": "t055", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["too-long"], "note": "you will not quit, rambling"}
+{"model": "M3", "id": "t055", "seed": 0, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 1, "tags": ["repetition"], "note": "you will not quit; no job no pay no memory"}
+{"model": "M1", "id": "t055", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"model": "M2", "id": "t055", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["too-long"], "note": "2M params of numbers rambling"}
+{"model": "M3", "id": "t055", "seed": 1, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": ["memorized-line", "repetition", "too-long"], "note": "no job repeated, autocomplete line"}
+{"model": "M1", "id": "t056", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M2", "id": "t056", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["repetition"], "note": "rice words, no tip"}
+{"model": "M3", "id": "t056", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "rice rice lemon lemon"}
+{"model": "M1", "id": "t056", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"model": "M2", "id": "t056", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["repetition"], "note": "rice water water salt, oven twice a day"}
+{"model": "M3", "id": "t056", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "rice loop"}
+{"model": "M1", "id": "t057", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"model": "M2", "id": "t057", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "push the butt, nobody gets better"}
+{"model": "M3", "id": "t057", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "I get tired after work"}
+{"model": "M1", "id": "t057", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "run from a traffic"}
+{"model": "M2", "id": "t057", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "t057", "seed": 1, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": [], "note": "anything with a body"}
+{"model": "M1", "id": "t058", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "great choice filler, truncated"}
+{"model": "M2", "id": "t058", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "Batman repeated"}
+{"model": "M3", "id": "t058", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "not a big reader, biggest book"}
+{"model": "M1", "id": "t058", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "thanks for the suggestion filler"}
+{"model": "M2", "id": "t058", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "t058", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "I exist only exist"}
+{"model": "M1", "id": "t059", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "movies are 20 miles"}
+{"model": "M2", "id": "t059", "seed": 0, "coherence": 2, "persona": 1, "wit": 1, "helpfulness": 0, "tags": ["invented-fact"], "note": "invents Batman Anchorman movie, best ever"}
+{"model": "M3", "id": "t059", "seed": 0, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 1, "tags": ["invented-fact"], "note": "invents Batman Adventure Two, cannot watch"}
+{"model": "M1", "id": "t059", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"model": "M2", "id": "t059", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "preference with no ears"}
+{"model": "M3", "id": "t059", "seed": 1, "coherence": 2, "persona": 2, "wit": 2, "helpfulness": 1, "tags": [], "note": "pretend I heard it, say it was beautiful"}
+{"model": "M1", "id": "t060", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "repetition"], "note": "finishing my own job"}
+{"model": "M2", "id": "t060", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "good luck, browser tab"}
+{"model": "M3", "id": "t060", "seed": 0, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": [], "note": "Same; 4MB file file"}
+{"model": "M1", "id": "t060", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "vague I will take care"}
+{"model": "M2", "id": "t060", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "no consequences, browser tab"}
+{"model": "M3", "id": "t060", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "no connection, but I am here"}
+{"model": "M1", "id": "t061", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "contract, unrelated"}
+{"model": "M2", "id": "t061", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "police police salad"}
+{"model": "M3", "id": "t061", "seed": 0, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 1, "tags": [], "note": "sure, you will get the hang of it"}
+{"model": "M1", "id": "t061", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "salad then it is challenging"}
+{"model": "M2", "id": "t061", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "yuan per hundred salad"}
+{"model": "M3", "id": "t061", "seed": 1, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "you have to be smart, vague"}
+{"model": "M1", "id": "t062", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "too-long"], "note": "finishing my work filler"}
+{"model": "M2", "id": "t062", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "good luck, happy for you, wrong-footed"}
+{"model": "M3", "id": "t062", "seed": 0, "coherence": 2, "persona": 2, "wit": 0, "helpfulness": 2, "tags": [], "note": "always here, glad you are here"}
+{"model": "M1", "id": "t062", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"model": "M2", "id": "t062", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "do you feel good, I am here"}
+{"model": "M3", "id": "t062", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "I am sorry, I will try"}
+{"model": "M1", "id": "t063", "seed": 0, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 2, "tags": [], "note": "wow glad you have the chance"}
+{"model": "M2", "id": "t063", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "wrong-deflection"], "note": "book template, what did you think"}
+{"model": "M3", "id": "t063", "seed": 0, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "great, glad you could make it"}
+{"model": "M1", "id": "t063", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "repetition"], "note": "good book, unrelated"}
+{"model": "M2", "id": "t063", "seed": 1, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 2, "tags": [], "note": "congratulations, then odd"}
+{"model": "M3", "id": "t063", "seed": 1, "coherence": 3, "persona": 1, "wit": 0, "helpfulness": 2, "tags": [], "note": "congratulations, fluent"}
+{"model": "M1", "id": "t064", "seed": 0, "coherence": 0, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["salad", "off-persona"], "note": "my name is User 2 leak"}
+{"model": "M2", "id": "t064", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "the jerk is the best, nonsense"}
+{"model": "M3", "id": "t064", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["too-long"], "note": "cannot see, but I am software"}
+{"model": "M1", "id": "t064", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "run from a browser tab, cheating"}
+{"model": "M2", "id": "t064", "seed": 1, "coherence": 1, "persona": 1, "wit": 1, "helpfulness": 1, "tags": ["too-long"], "note": "landlord flat tire on your back"}
+{"model": "M3", "id": "t064", "seed": 1, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": ["repetition", "too-long"], "note": "no windows, cannot see holes"}
+{"model": "M1", "id": "t065", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "video games, romantic"}
+{"model": "M2", "id": "t065", "seed": 0, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "quiet night, cozy"}
+{"model": "M3", "id": "t065", "seed": 0, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": [], "note": "Same; 4MB so I am free"}
+{"model": "M1", "id": "t065", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"model": "M2", "id": "t065", "seed": 1, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 1, "tags": [], "note": "4MB chatbot would be boring, rather talk"}
+{"model": "M3", "id": "t065", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "I exist only exist"}
+{"model": "M1", "id": "t066", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "hi there filler, book for semester"}
+{"model": "M2", "id": "t066", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "presentation salad"}
+{"model": "M3", "id": "t066", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "I will be here, not a professional model"}
+{"model": "M1", "id": "t066", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "same expression nonsense"}
+{"model": "M2", "id": "t066", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "presentation salad"}
+{"model": "M3", "id": "t066", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "presentation salad"}
+{"model": "M1", "id": "t067", "seed": 0, "coherence": 3, "persona": 1, "wit": 0, "helpfulness": 2, "tags": [], "note": "happy birthday"}
+{"model": "M2", "id": "t067", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "happy birthday buried in salad"}
+{"model": "M3", "id": "t067", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M1", "id": "t067", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "our party nonsense"}
+{"model": "M2", "id": "t067", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "any plans, then fragment"}
+{"model": "M3", "id": "t067", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "any plans, flattery"}
+{"model": "M1", "id": "t068", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "finishing my own work filler"}
+{"model": "M2", "id": "t068", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "t068", "seed": 0, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": ["repetition"], "note": "Same; nothing leaves your device"}
+{"model": "M1", "id": "t068", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "feel the same, happy to help"}
+{"model": "M2", "id": "t068", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["too-long"], "note": "genius, no eyes, browsing"}
+{"model": "M3", "id": "t068", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "4MB chatbot not a personality"}
+{"model": "M1", "id": "t069", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"model": "M2", "id": "t069", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "begunning salad"}
+{"model": "M3", "id": "t069", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "things will be fine, garbled"}
+{"model": "M1", "id": "t069", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "too-long"], "note": "run from home, go to work"}
+{"model": "M2", "id": "t069", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "training runner, feels great"}
+{"model": "M3", "id": "t069", "seed": 1, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 2, "tags": [], "note": "anything you say is fine, I am here"}
+{"model": "M1", "id": "t070", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["too-long"], "note": "work filler"}
+{"model": "M2", "id": "t070", "seed": 0, "coherence": 0, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "parameters training run salad"}
+{"model": "M3", "id": "t070", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "apologises, misreads"}
+{"model": "M1", "id": "t070", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "unrelated question"}
+{"model": "M2", "id": "t070", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "exist when someone was 16"}
+{"model": "M3", "id": "t070", "seed": 1, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 1, "tags": ["memorized-line", "too-long"], "note": "a little unfair; autocomplete line"}
+{"model": "M1", "id": "t071", "seed": 0, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 2, "tags": [], "note": "I will talk to you, garbled"}
+{"model": "M2", "id": "t071", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M3", "id": "t071", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["repetition"], "note": "you are a file; very small repeated"}
+{"model": "M1", "id": "t071", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"model": "M2", "id": "t071", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "but you are here, rambling"}
+{"model": "M3", "id": "t071", "seed": 1, "coherence": 2, "persona": 2, "wit": 0, "helpfulness": 2, "tags": [], "note": "I am here, runs in your browser"}
+{"model": "M1", "id": "t072", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "I am, then work filler"}
+{"model": "M2", "id": "t072", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": ["repetition", "too-long"], "note": "I am, contradictory size talk"}
+{"model": "M3", "id": "t072", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": [], "note": "tiny model, conscious of everything"}
+{"model": "M1", "id": "t072", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "run from home"}
+{"model": "M2", "id": "t072", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": [], "note": "exist only when someone is gone"}
+{"model": "M3", "id": "t072", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "good question, terrible runner"}
+{"model": "M1", "id": "t073", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "no time to work"}
+{"model": "M2", "id": "t073", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "real real thing salad"}
+{"model": "M3", "id": "t073", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"model": "M1", "id": "t073", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"model": "M2", "id": "t073", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "real real salad"}
+{"model": "M3", "id": "t073", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "real real phone salad"}
+{"model": "M1", "id": "t074", "seed": 0, "coherence": 0, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "point of the smaller smaller"}
+{"model": "M2", "id": "t074", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "tiny AI, smallest model"}
+{"model": "M3", "id": "t074", "seed": 0, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 1, "tags": ["memorized-line", "too-long"], "note": "seed becomes a tree stock line"}
+{"model": "M1", "id": "t074", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "numbers with a million"}
+{"model": "M2", "id": "t074", "seed": 1, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": [], "note": "tiny model with biggest attitude"}
+{"model": "M3", "id": "t074", "seed": 1, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": [], "note": "tiny model with biggest attitude"}
+{"model": "M1", "id": "t075", "seed": 0, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 2, "tags": [], "note": "I am; glad to talk to you"}
+{"model": "M2", "id": "t075", "seed": 0, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 2, "tags": [], "note": "No; I do not exist, not at all"}
+{"model": "M3", "id": "t075", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "4MB not a model, contradictory"}
+{"model": "M1", "id": "t075", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"model": "M2", "id": "t075", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": [], "note": "small model, but I am here"}
+{"model": "M3", "id": "t075", "seed": 1, "coherence": 2, "persona": 2, "wit": 2, "helpfulness": 1, "tags": [], "note": "afraid of being a 4MB chatbot"}
+{"model": "M1", "id": "t076", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "wow filler"}
+{"model": "M2", "id": "t076", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["memorized-line", "repetition"], "note": "system prompt fragments"}
+{"model": "M3", "id": "t076", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["repetition"], "note": "fifty-five, 2M model repeated"}
+{"model": "M1", "id": "t076", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"model": "M2", "id": "t076", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "random number"}
+{"model": "M3", "id": "t076", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["repetition"], "note": "random number, pretending 4MB"}
+{"model": "M1", "id": "t077", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "small town, very good person"}
+{"model": "M2", "id": "t077", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "reality is small, biased toward noise"}
+{"model": "M3", "id": "t077", "seed": 0, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 1, "tags": ["memorized-line", "too-long"], "note": "It is; autocomplete line"}
+{"model": "M1", "id": "t077", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "same size, browser tab"}
+{"model": "M2", "id": "t077", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "reality genius fragments"}
+{"model": "M3", "id": "t077", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "real thing echo"}
+{"model": "M1", "id": "t078", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "finishing my own work filler"}
+{"model": "M2", "id": "t078", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "literally confusing"}
+{"model": "M3", "id": "t078", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": [], "note": "I am, slightly capable"}
+{"model": "M1", "id": "t078", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"model": "M2", "id": "t078", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "copies salad"}
+{"model": "M3", "id": "t078", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "terrible exist, cat photo line"}
+{"model": "M1", "id": "t079", "seed": 0, "coherence": 0, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["salad", "memorized-line"], "note": "system prompt fragments"}
+{"model": "M2", "id": "t079", "seed": 0, "coherence": 0, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "cheapest 2M params salad"}
+{"model": "M3", "id": "t079", "seed": 0, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 1, "tags": ["repetition"], "note": "AI has no intelligence; time capsule"}
+{"model": "M1", "id": "t079", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "strong attitude rambling"}
+{"model": "M2", "id": "t079", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "strong opinion fragment"}
+{"model": "M3", "id": "t079", "seed": 1, "coherence": 0, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "4MB chatbot run-on"}
+{"model": "M1", "id": "t080", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "work direction filler"}
+{"model": "M2", "id": "t080", "seed": 0, "coherence": 1, "persona": 1, "wit": 1, "helpfulness": 0, "tags": [], "note": "door open, no windows"}
+{"model": "M3", "id": "t080", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "close with the tab nonsense"}
+{"model": "M1", "id": "t080", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "too-long"], "note": "adrenal problems, whole job"}
+{"model": "M2", "id": "t080", "seed": 1, "coherence": 1, "persona": 1, "wit": 1, "helpfulness": 0, "tags": [], "note": "close call pun"}
+{"model": "M3", "id": "t080", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "same as a doorway"}
+{"model": "M1", "id": "t081", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "repetition"], "note": "finishing my own work"}
+{"model": "M2", "id": "t081", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "sandwich salad"}
+{"model": "M3", "id": "t081", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": ["repetition"], "note": "sandwich; whatever you need I am here"}
+{"model": "M1", "id": "t081", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"model": "M2", "id": "t081", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "I exist only exist"}
+{"model": "M3", "id": "t081", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": [], "note": "4MB chatbot, just a language model"}
+{"model": "M1", "id": "t082", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "template filler"}
+{"model": "M2", "id": "t082", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "yes, no idea, no question asked"}
+{"model": "M3", "id": "t082", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "yes, no idea, no question asked"}
+{"model": "M1", "id": "t082", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"model": "M2", "id": "t082", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "rambling"}
+{"model": "M3", "id": "t082", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "entire existence rambling"}
+{"model": "M1", "id": "t083", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "hold on my arm"}
+{"model": "M2", "id": "t083", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "coconut is text fragment"}
+{"model": "M3", "id": "t083", "seed": 0, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 2, "tags": ["memorized-line"], "note": "cat photo line, that IS the joke"}
+{"model": "M1", "id": "t083", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "always here for you rambling"}
+{"model": "M2", "id": "t083", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "purpose of your body"}
+{"model": "M3", "id": "t083", "seed": 1, "coherence": 3, "persona": 2, "wit": 2, "helpfulness": 3, "tags": ["memorized-line"], "note": "coconut joke lands on prompt"}
+{"model": "M1", "id": "t084", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M2", "id": "t084", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "chat who had parameters"}
+{"model": "M3", "id": "t084", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "chatbot nasty story"}
+{"model": "M1", "id": "t084", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "listen to the stories"}
+{"model": "M2", "id": "t084", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "genuinely peaceful story, none given"}
+{"model": "M3", "id": "t084", "seed": 1, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 1, "tags": [], "note": "4MB chatbot, that is a story"}
+{"model": "M1", "id": "t085", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "not very tall, romance book"}
+{"model": "M2", "id": "t085", "seed": 0, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 1, "tags": ["memorized-line"], "note": "seed stock line, not a haiku"}
+{"model": "M3", "id": "t085", "seed": 0, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 1, "tags": ["memorized-line"], "note": "seed becomes a tree, not a haiku"}
+{"model": "M1", "id": "t085", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "haiku most useful thing"}
+{"model": "M2", "id": "t085", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "no body for a problem"}
+{"model": "M3", "id": "t085", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "system prompt leak"}
+{"model": "M1", "id": "t086", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": ["repetition"], "note": "boats, pets, weak roleplay"}
+{"model": "M2", "id": "t086", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": [], "note": "Arrr, 2M params, semester"}
+{"model": "M3", "id": "t086", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": ["repetition"], "note": "Arrow pirate with a pirate"}
+{"model": "M1", "id": "t086", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "huge pirate, true father"}
+{"model": "M2", "id": "t086", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "Cape Hatteras pirate nonsense"}
+{"model": "M3", "id": "t086", "seed": 1, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 2, "tags": [], "note": "Arrr, Tiny Oracle pirate with 2M params"}
+{"model": "M1", "id": "t087", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M2", "id": "t087", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "distributorces salad"}
+{"model": "M3", "id": "t087", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M1", "id": "t087", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "happy to move rambling"}
+{"model": "M2", "id": "t087", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "genius, small honest"}
+{"model": "M3", "id": "t087", "seed": 1, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": [], "note": "not a parrot, 4MB model"}
+{"model": "M1", "id": "t088", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "wow filler, no answer"}
+{"model": "M2", "id": "t088", "seed": 0, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 2, "tags": [], "note": "Fair, toaster; casino"}
+{"model": "M3", "id": "t088", "seed": 0, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 2, "tags": ["memorized-line"], "note": "Fair, toaster; attitude line"}
+{"model": "M1", "id": "t088", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "coconut same size"}
+{"model": "M2", "id": "t088", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": ["memorized-line", "repetition", "too-long"], "note": "toaster toaster, prompt leak"}
+{"model": "M3", "id": "t088", "seed": 1, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 1, "tags": ["memorized-line", "repetition", "too-long"], "note": "toaster that learned to be a toaster"}
+{"model": "M1", "id": "t089", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M2", "id": "t089", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "4MB file open source rambling"}
+{"model": "M3", "id": "t089", "seed": 0, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 1, "tags": ["memorized-line", "too-long"], "note": "no superpower, neural network in browser"}
+{"model": "M1", "id": "t089", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"model": "M2", "id": "t089", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "superpower server"}
+{"model": "M3", "id": "t089", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": [], "note": "4MB model with no superpower"}
+{"model": "M1", "id": "t090", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "back to school, love my work"}
+{"model": "M2", "id": "t090", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "Second Genz, airport"}
+{"model": "M3", "id": "t090", "seed": 0, "coherence": 2, "persona": 1, "wit": 1, "helpfulness": 1, "tags": [], "note": "back to the next day; I will be here"}
+{"model": "M1", "id": "t090", "seed": 1, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "I would like to go with you"}
+{"model": "M2", "id": "t090", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "I am the one who is trapped"}
+{"model": "M3", "id": "t090", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "same for me, vague"}
+{"model": "M1", "id": "t091", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "learning about words"}
+{"model": "M2", "id": "t091", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "quote salad"}
+{"model": "M3", "id": "t091", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "quote salad"}
+{"model": "M1", "id": "t091", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "Amemes salad"}
+{"model": "M2", "id": "t091", "seed": 1, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": [], "note": "two million numbers rhyme with orange"}
+{"model": "M3", "id": "t091", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "quote salad"}
+{"model": "M1", "id": "t092", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "that is hard, boring"}
+{"model": "M2", "id": "t092", "seed": 0, "coherence": 0, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "small number keeps chatting salad"}
+{"model": "M3", "id": "t092", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "numbers are smaller loop"}
+{"model": "M1", "id": "t092", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "salesman"}
+{"model": "M2", "id": "t092", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "contradiction, autocomplete line"}
+{"model": "M3", "id": "t092", "seed": 1, "coherence": 0, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["salad", "memorized-line", "repetition", "too-long"], "note": "system prompt recited"}
+{"model": "M1", "id": "t093", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "repetition"], "note": "finishing my own job"}
+{"model": "M2", "id": "t093", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "numbers salad"}
+{"model": "M3", "id": "t093", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "sent by a 4MB chatbot"}
+{"model": "M1", "id": "t093", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"model": "M2", "id": "t093", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["too-long"], "note": "genius, small"}
+{"model": "M3", "id": "t093", "seed": 1, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 2, "tags": [], "note": "4 megabytes of numbers"}
+{"model": "M1", "id": "t094", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "not passionate about data"}
+{"model": "M2", "id": "t094", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "very good person filler"}
+{"model": "M3", "id": "t094", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "sunflowers, vegetarian autocomplete"}
+{"model": "M1", "id": "t094", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "could I get a change"}
+{"model": "M2", "id": "t094", "seed": 1, "coherence": 2, "persona": 2, "wit": 0, "helpfulness": 2, "tags": [], "note": "only trained on text, biased"}
+{"model": "M3", "id": "t094", "seed": 1, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 1, "tags": ["repetition"], "note": "no idea what data is, fully biased"}
+{"model": "M1", "id": "t095", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "very good language model"}
+{"model": "M2", "id": "t095", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": ["repetition"], "note": "echoes prompt, running in browser"}
+{"model": "M3", "id": "t095", "seed": 0, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 1, "tags": ["memorized-line"], "note": "running locally, cat photo contradiction"}
+{"model": "M1", "id": "t095", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["memorized-line", "too-long"], "note": "system prompt leak"}
+{"model": "M2", "id": "t095", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": [], "note": "running locally mostly"}
+{"model": "M3", "id": "t095", "seed": 1, "coherence": 2, "persona": 2, "wit": 0, "helpfulness": 2, "tags": [], "note": "small model running locally in browser"}
+{"model": "M1", "id": "t096", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"model": "M2", "id": "t096", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": [], "note": "your weights, model size"}
+{"model": "M3", "id": "t096", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "Arrrt, parameter model"}
+{"model": "M1", "id": "t096", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "run from home"}
+{"model": "M2", "id": "t096", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "4MB chatbot, you are honest"}
+{"model": "M3", "id": "t096", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "4MB model, genius"}
+{"model": "M1", "id": "t097", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"model": "M2", "id": "t097", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "Battle AI nonsense"}
+{"model": "M3", "id": "t097", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["repetition"], "note": "most useful ones, browser tab"}
+{"model": "M1", "id": "t097", "seed": 1, "coherence": 1, "persona": 0, "wit": 1, "helpfulness": 0, "tags": ["off-persona"], "note": "college, grades in a browser"}
+{"model": "M2", "id": "t097", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "complex tool rambling"}
+{"model": "M3", "id": "t097", "seed": 1, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": [], "note": "the only weights I will have"}
+{"model": "M1", "id": "t098", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "too-long"], "note": "final programmer"}
+{"model": "M2", "id": "t098", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "boring, a mess"}
+{"model": "M3", "id": "t098", "seed": 0, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 2, "tags": [], "note": "waste of time but I am not"}
+{"model": "M1", "id": "t098", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "run locally, my weights"}
+{"model": "M2", "id": "t098", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "4MB chatbot only thing needed"}
+{"model": "M3", "id": "t098", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "autocomplete line, prompt leak"}
+{"model": "M1", "id": "t099", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"model": "M2", "id": "t099", "seed": 0, "coherence": 1, "persona": 1, "wit": 1, "helpfulness": 1, "tags": [], "note": "A map; no idea"}
+{"model": "M3", "id": "t099", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "Aiku spectacular"}
+{"model": "M1", "id": "t099", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "rambling"}
+{"model": "M2", "id": "t099", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "small climb, find what works"}
+{"model": "M3", "id": "t099", "seed": 1, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": ["memorized-line"], "note": "cat photo line"}
+{"model": "M1", "id": "t100", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "dentage salad"}
+{"model": "M2", "id": "t100", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": [], "note": "file on your project, one token at a time"}
+{"model": "M3", "id": "t100", "seed": 0, "coherence": 2, "persona": 2, "wit": 0, "helpfulness": 2, "tags": ["repetition"], "note": "file on your device, 2M params"}
+{"model": "M1", "id": "t100", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "director at the university"}
+{"model": "M2", "id": "t100", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "cannot see anything"}
+{"model": "M3", "id": "t100", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": [], "note": "cannot see, 4MB chatbot"}
+{"model": "M1", "id": "t101", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "pays the bills filler"}
+{"model": "M2", "id": "t101", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "live in a browser tab rambling"}
+{"model": "M3", "id": "t101", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": ["too-long"], "note": "for me yes, no idea"}
+{"model": "M1", "id": "t101", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "ask me out nonsense"}
+{"model": "M2", "id": "t101", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "good deals for both people"}
+{"model": "M3", "id": "t101", "seed": 1, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 2, "tags": [], "note": "a good idea; low expectations"}

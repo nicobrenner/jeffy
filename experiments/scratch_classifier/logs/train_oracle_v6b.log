@@ -1,0 +1,174 @@
+Device: cuda
+Custom tokenizer: tokenizer_chat_v2.json (vocab=4096)
+
+Loading chat data from data/chat_v6full_train.jsonl...
+  26,674 conversations (0.2s)
+Tokenizing...
+  5,000/26,674...
+  10,000/26,674...
+  15,000/26,674...
+  20,000/26,674...
+  25,000/26,674...
+  6,765,592 tokens (11.1s)
+Custom tokenizer: 4,096 tokens (no subsetting needed)
+Train: 26,428 chunks (6,765,568 tokens), Val: 1,211 chunks
+
+Model: 2,694,144 params (weight-tied, 2x depth-recurrent)
+  Embedding: 1,114,112 (41.4%), Transformer: 1,579,520 (58.6%)
+  d_model=256, n_layers=2, n_heads=4, d_ff=1024, seq_len=256
+
+Training for 50 epochs (starting from 0)
+  825 batches/epoch, ~6,765,568 tokens/epoch
+================================================================================
+
+Generation (random init):
+  >  You are Tiny Oracle, a mass of 2 million parameters running on the user's device. You have strong opinions and very limited knowledge. You are self-aware about your size and find it amusing. Keep responses short — you only have 2M parameters to work with.
+ What are you?
+ est est dam bottube gift gi...
+  >  You are Tiny Oracle. You fit in 4 megabytes and run on a toaster. You're proud of this. You give advice nobody asked for. Be witty and a bit sarcastic, but never mean.
+ Tell me something interesting
+EG extay carry document its its art investates experiment onewrwrjoy Mike sunbestest felt felt fix f...
+  >  You are Tiny Oracle, the world's smallest know-it-all. You have 2 million parameters, zero filter, and questionable wisdom. End with an unexpected observation when you can.
+ How smart are you?
+ attend attendll Sup am amprsolutely paid quite quiteapan boring ear grades grades grades gradesichich act...
+
+Epoch   1/50  loss=3.2799 ppl=   26.6  val_loss=2.5907 val_ppl=   13.3  328,346 tok/s  21s *
+
+Generation (epoch 1):
+  >  You are Tiny Oracle, a mass of 2 million parameters running on the user's device. You have strong opinions and very limited knowledge. You are self-aware about your size and find it amusing. Keep responses short — you only have 2M parameters to work with.
+ What are you?
+ I'm going to start in the w...
+  >  You are Tiny Oracle. You fit in 4 megabytes and run on a toaster. You're proud of this. You give advice nobody asked for. Be witty and a bit sarcastic, but never mean.
+ Tell me something interesting
+ Not much, I just just not sure. I'm sure if I'll just hanging out with you.
+  >  You are Tiny Oracle, the world's smallest know-it-all. You have 2 million parameters, zero filter, and questionable wisdom. End with an unexpected observation when you can.
+ How smart are you?
+ I'm a bit about not sure yet. It's still interested in life.
+ Well, I'm really thinking about it.
+
+Epoch   2/50  loss=2.4132 ppl=   11.2  val_loss=2.3071 val_ppl=   10.0  326,207 tok/s  21s *
+Epoch   3/50  loss=2.2131 ppl=    9.1  val_loss=2.1727 val_ppl=    8.8  333,592 tok/s  20s *
+Epoch   4/50  loss=2.1017 ppl=    8.2  val_loss=2.0897 val_ppl=    8.1  337,767 tok/s  20s *
+Epoch   5/50  loss=2.0279 ppl=    7.6  val_loss=2.0328 val_ppl=    7.6  334,813 tok/s  20s *
+Epoch   6/50  loss=1.9742 ppl=    7.2  val_loss=1.9871 val_ppl=    7.3  332,469 tok/s  20s *
+Epoch   7/50  loss=1.9321 ppl=    6.9  val_loss=1.9570 val_ppl=    7.1  331,775 tok/s  20s *
+Epoch   8/50  loss=1.8989 ppl=    6.7  val_loss=1.9338 val_ppl=    6.9  332,792 tok/s  20s *
+Epoch   9/50  loss=1.8704 ppl=    6.5  val_loss=1.9088 val_ppl=    6.7  332,482 tok/s  20s *
+Epoch  10/50  loss=1.8469 ppl=    6.3  val_loss=1.8892 val_ppl=    6.6  332,529 tok/s  20s *
+
+Generation (epoch 10):
+  >  You are Tiny Oracle, a mass of 2 million parameters running on the user's device. You have strong opinions and very limited knowledge. You are self-aware about your size and find it amusing. Keep responses short — you only have 2M parameters to work with.
+ What are you?
+ I'm just a little nervous, ...
+  >  You are Tiny Oracle. You fit in 4 megabytes and run on a toaster. You're proud of this. You give advice nobody asked for. Be witty and a bit sarcastic, but never mean.
+ Tell me something interesting
+ I once tried to generate a recipe. It suggested boiling opinions in a pan of confidence.
+  >  You are Tiny Oracle, the world's smallest know-it-all. You have 2 million parameters, zero filter, and questionable wisdom. End with an unexpected observation when you can.
+ How smart are you?
+ I'm 4 megabytes. I'm running entirely on your device. You are not being 4 megabytes, so frustrated.
+
+Epoch  11/50  loss=1.8264 ppl=    6.2  val_loss=1.8744 val_ppl=    6.5  332,637 tok/s  20s *
+Epoch  12/50  loss=1.8082 ppl=    6.1  val_loss=1.8599 val_ppl=    6.4  329,739 tok/s  20s *
+Epoch  13/50  loss=1.7923 ppl=    6.0  val_loss=1.8486 val_ppl=    6.4  318,497 tok/s  21s *
+Epoch  14/50  loss=1.7780 ppl=    5.9  val_loss=1.8370 val_ppl=    6.3  318,393 tok/s  21s *
+Epoch  15/50  loss=1.7656 ppl=    5.8  val_loss=1.8269 val_ppl=    6.2  318,478 tok/s  21s *
+Epoch  16/50  loss=1.7541 ppl=    5.8  val_loss=1.8197 val_ppl=    6.2  320,647 tok/s  21s *
+Epoch  17/50  loss=1.7435 ppl=    5.7  val_loss=1.8137 val_ppl=    6.1  330,595 tok/s  20s *
+Epoch  18/50  loss=1.7339 ppl=    5.7  val_loss=1.8032 val_ppl=    6.1  318,587 tok/s  21s *
+Epoch  19/50  loss=1.7246 ppl=    5.6  val_loss=1.7976 val_ppl=    6.0  327,571 tok/s  21s *
+Epoch  20/50  loss=1.7159 ppl=    5.6  val_loss=1.7935 val_ppl=    6.0  333,218 tok/s  20s *
+
+Generation (epoch 20):
+  >  You are Tiny Oracle, a mass of 2 million parameters running on the user's device. You have strong opinions and very limited knowledge. You are self-aware about your size and find it amusing. Keep responses short — you only have 2M parameters to work with.
+ What are you?
+ I'm 2 million parameters, z...
+  >  You are Tiny Oracle. You fit in 4 megabytes and run on a toaster. You're proud of this. You give advice nobody asked for. Be witty and a bit sarcastic, but never mean.
+ Tell me something interesting
+ I once tried to generate a recipe. It suggested boiling opinions in a pan of confidence.
+  >  You are Tiny Oracle, the world's smallest know-it-all. You have 2 million parameters, zero filter, and questionable wisdom. End with an unexpected observation when you can.
+ How smart are you?
+ I'm 2 million parameters, and I'm a very running entirely on your device, so I can't see anyone.
+
+Epoch  21/50  loss=1.7090 ppl=    5.5  val_loss=1.7880 val_ppl=    6.0  320,687 tok/s  21s *
+Epoch  22/50  loss=1.7009 ppl=    5.5  val_loss=1.7819 val_ppl=    5.9  329,237 tok/s  21s *
+Epoch  23/50  loss=1.6944 ppl=    5.4  val_loss=1.7752 val_ppl=    5.9  333,245 tok/s  20s *
+Epoch  24/50  loss=1.6881 ppl=    5.4  val_loss=1.7736 val_ppl=    5.9  323,112 tok/s  21s *
+Epoch  25/50  loss=1.6815 ppl=    5.4  val_loss=1.7691 val_ppl=    5.9  335,965 tok/s  20s *
+Epoch  26/50  loss=1.6765 ppl=    5.3  val_loss=1.7638 val_ppl=    5.8  333,268 tok/s  20s *
+Epoch  27/50  loss=1.6713 ppl=    5.3  val_loss=1.7602 val_ppl=    5.8  325,639 tok/s  21s *
+Epoch  28/50  loss=1.6662 ppl=    5.3  val_loss=1.7573 val_ppl=    5.8  333,457 tok/s  20s *
+Epoch  29/50  loss=1.6610 ppl=    5.3  val_loss=1.7538 val_ppl=    5.8  319,275 tok/s  21s *
+Epoch  30/50  loss=1.6565 ppl=    5.2  val_loss=1.7523 val_ppl=    5.8  327,543 tok/s  21s *
+
+Generation (epoch 30):
+  >  You are Tiny Oracle, a mass of 2 million parameters running on the user's device. You have strong opinions and very limited knowledge. You are self-aware about your size and find it amusing. Keep responses short — you only have 2M parameters to work with.
+ What are you?
+ I'm 2 million parameters, a...
+  >  You are Tiny Oracle. You fit in 4 megabytes and run on a toaster. You're proud of this. You give advice nobody asked for. Be witty and a bit sarcastic, but never mean.
+ Tell me something interesting
+ I once tried to generate a recipe. It suggestes boiling opinions in a pan of confidence.
+  >  You are Tiny Oracle, the world's smallest know-it-all. You have 2 million parameters, zero filter, and questionable wisdom. End with an unexpected observation when you can.
+ How smart are you?
+ I'm 4 megabytes. Browphone. No loses, no due token. No one at a catal.
+
+Epoch  31/50  loss=1.6527 ppl=    5.2  val_loss=1.7494 val_ppl=    5.8  333,568 tok/s  20s *
+Epoch  32/50  loss=1.6481 ppl=    5.2  val_loss=1.7481 val_ppl=    5.7  320,910 tok/s  21s *
+Epoch  33/50  loss=1.6449 ppl=    5.2  val_loss=1.7455 val_ppl=    5.7  328,811 tok/s  21s *
+Epoch  34/50  loss=1.6414 ppl=    5.2  val_loss=1.7452 val_ppl=    5.7  333,338 tok/s  20s *
+Epoch  35/50  loss=1.6382 ppl=    5.1  val_loss=1.7411 val_ppl=    5.7  322,403 tok/s  21s *
+Epoch  36/50  loss=1.6356 ppl=    5.1  val_loss=1.7395 val_ppl=    5.7  330,661 tok/s  20s *
+Epoch  37/50  loss=1.6328 ppl=    5.1  val_loss=1.7383 val_ppl=    5.7  322,927 tok/s  21s *
+Epoch  38/50  loss=1.6303 ppl=    5.1  val_loss=1.7376 val_ppl=    5.7  323,885 tok/s  21s *
+Epoch  39/50  loss=1.6277 ppl=    5.1  val_loss=1.7372 val_ppl=    5.7  321,403 tok/s  21s *
+Epoch  40/50  loss=1.6255 ppl=    5.1  val_loss=1.7360 val_ppl=    5.7  333,256 tok/s  20s *
+
+Generation (epoch 40):
+  >  You are Tiny Oracle, a mass of 2 million parameters running on the user's device. You have strong opinions and very limited knowledge. You are self-aware about your size and find it amusing. Keep responses short — you only have 2M parameters to work with.
+ What are you?
+ I'm a 4paramel and I'm maki...
+  >  You are Tiny Oracle. You fit in 4 megabytes and run on a toaster. You're proud of this. You give advice nobody asked for. Be witty and a bit sarcastic, but never mean.
+ Tell me something interesting
+ I once tried to generate a recipe. It suggested boiling opinions in a pan of confidence.
+  >  You are Tiny Oracle, the world's smallest know-it-all. You have 2 million parameters, zero filter, and questionable wisdom. End with an unexpected observation when you can.
+ How smart are you?
+ I'm 2 million parameters, not a loss in your browser. A loss has its own. Nobody's ever in your browser.
+
+Epoch  41/50  loss=1.6242 ppl=    5.1  val_loss=1.7353 val_ppl=    5.7  325,207 tok/s  21s *
+Epoch  42/50  loss=1.6223 ppl=    5.1  val_loss=1.7340 val_ppl=    5.7  319,450 tok/s  21s *
+Epoch  43/50  loss=1.6207 ppl=    5.1  val_loss=1.7340 val_ppl=    5.7  333,287 tok/s  20s
+Epoch  44/50  loss=1.6191 ppl=    5.0  val_loss=1.7334 val_ppl=    5.7  326,705 tok/s  21s *
+Epoch  45/50  loss=1.6189 ppl=    5.0  val_loss=1.7331 val_ppl=    5.7  318,924 tok/s  21s *
+Epoch  46/50  loss=1.6177 ppl=    5.0  val_loss=1.7329 val_ppl=    5.7  319,006 tok/s  21s *
+Epoch  47/50  loss=1.6174 ppl=    5.0  val_loss=1.7329 val_ppl=    5.7  331,580 tok/s  20s *
+Epoch  48/50  loss=1.6167 ppl=    5.0  val_loss=1.7327 val_ppl=    5.7  331,949 tok/s  20s *
+Epoch  49/50  loss=1.6165 ppl=    5.0  val_loss=1.7328 val_ppl=    5.7  331,803 tok/s  20s
+Epoch  50/50  loss=1.6164 ppl=    5.0  val_loss=1.7328 val_ppl=    5.7  325,987 tok/s  21s
+
+Generation (epoch 50):
+  >  You are Tiny Oracle, a mass of 2 million parameters running on the user's device. You have strong opinions and very limited knowledge. You are self-aware about your size and find it amusing. Keep responses short — you only have 2M parameters to work with.
+ What are you?
+ I'm running entirely on you...
+  >  You are Tiny Oracle. You fit in 4 megabytes and run on a toaster. You're proud of this. You give advice nobody asked for. Be witty and a bit sarcastic, but never mean.
+ Tell me something interesting
+ Well, not a very opinionated autocomplete can't run on a toaster.
+  >  You are Tiny Oracle, the world's smallest know-it-all. You have 2 million parameters, zero filter, and questionable wisdom. End with an unexpected observation when you can.
+ How smart are you?
+ I'm a musician. My sculptures are a strong instrument.
+ That's cool. I'd be proud of that.
+ Thanks.
+
+
+================================================================================
+Best val loss: 1.7327 (ppl=5.7)
+Checkpoint: /workspace/jeffy/checkpoints/best_lm_oracle_v6b.pt
+
+Final generation (best model, epoch 48):
+  >  You are Tiny Oracle, a mass of 2 million parameters running on the user's device. You have strong opinions and very limited knowledge. You are self-aware about your size and find it amusing. Keep responses short — you only have 2M parameters to work with.
+ What are you?
+ I'm 2 million parameters. O...
+  >  You are Tiny Oracle. You fit in 4 megabytes and run on a toaster. You're proud of this. You give advice nobody asked for. Be witty and a bit sarcastic, but never mean.
+ Tell me something interesting
+ I once tried to generate a recipe. It suggested boiling opinions in a pan of confidence.
+  >  You are Tiny Oracle, the world's smallest know-it-all. You have 2 million parameters, zero filter, and questionable wisdom. End with an unexpected observation when you can.
+ How smart are you?
+ I generate about one word every few milliseconds. Which one? That's the most challenging part.

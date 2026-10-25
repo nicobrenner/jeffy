@@ -54,8 +54,11 @@ def main():
 
     # generic filler: conversations with NO persona markers, sampled to FILLER_FRACTION of the final set
     pool = [x for x in generic if not PERSONA.search(" ".join(oracle_turns(x["text"])))]  # judge the oracle turns, not the system prompt
-    n_filler = int(len(persona) * FILLER_FRACTION / (1 - FILLER_FRACTION))
+    import sys
+    all_generic = "--all-generic" in sys.argv  # v6b: the whole generic corpus for fluency (v2's recipe) + all persona data
+    n_filler = len(pool) if all_generic else int(len(persona) * FILLER_FRACTION / (1 - FILLER_FRACTION))
     filler = random.sample(pool, min(n_filler, len(pool)))
+    suffix = "full" if all_generic else ""
     for x in filler:
         x["topic"] = "generic"
 
@@ -72,16 +75,16 @@ def main():
     random.shuffle(train)
     random.shuffle(val)
 
-    for name, rows in (("chat_v6_train.jsonl", train), ("chat_v6_val.jsonl", val)):
+    for name, rows in ((f"chat_v6{suffix}_train.jsonl", train), (f"chat_v6{suffix}_val.jsonl", val)):
         with open(DATA / name, "w") as f:
             for x in rows:
                 f.write(json.dumps({"text": x["text"]}) + "\n")
     uniq_train = len({norm(t) for x in train for t in oracle_turns(x["text"])})
     stats = dict(train=len(train), val=len(val), heldout_topics=sorted(heldout), unique_oracle_turns_train=uniq_train,
                  topic_counts=Counter(x["topic"] for x in train).most_common(12))
-    (DATA / "chat_v6_stats.json").write_text(json.dumps(stats, indent=1))
+    (DATA / f"chat_v6{suffix}_stats.json").write_text(json.dumps(stats, indent=1))
     print(f"train {len(train):,} | val {len(val):,} (held-out topics: {len(heldout)}) | unique oracle turns in train: {uniq_train:,}")
-    print(f"wrote data/chat_v6_train.jsonl, data/chat_v6_val.jsonl, data/chat_v6_stats.json")
+    print(f"wrote data/chat_v6{suffix}_train.jsonl, data/chat_v6{suffix}_val.jsonl, data/chat_v6{suffix}_stats.json")
 
 
 if __name__ == "__main__":

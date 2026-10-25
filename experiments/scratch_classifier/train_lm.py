@@ -404,12 +404,16 @@ def train(args):
         if "optimizer_state" in ckpt and not args.fresh_opt:
             optimizer.load_state_dict(ckpt["optimizer_state"])
             scheduler.load_state_dict(ckpt["scheduler_state"])
-        if ckpt.get("batch_idx") is not None:
+        if args.fresh_opt:
+            # fine-tune from weights only: new run, new epoch counter, new best on the new val set
+            start_epoch, start_batch, best_val_loss = 0, 0, float("inf")
+        elif ckpt.get("batch_idx") is not None:
             start_epoch = ckpt["epoch"]
             start_batch = ckpt["batch_idx"] + 1
+            best_val_loss = ckpt.get("best_val_loss", float("inf"))
         else:
             start_epoch = ckpt["epoch"] + 1
-        best_val_loss = ckpt.get("best_val_loss", float("inf"))
+            best_val_loss = ckpt.get("best_val_loss", float("inf"))
         print(
             f"Resumed from epoch {start_epoch}, batch {start_batch} (best_val_loss={best_val_loss:.4f})",
             flush=True,

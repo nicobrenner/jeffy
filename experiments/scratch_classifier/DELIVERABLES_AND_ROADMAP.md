@@ -54,7 +54,11 @@ Each package = one post + the code that reproduces it + a results file. Ranked b
 **Have:** `train_rope_byte.py`, runs `run_d{32,64,128}_tp{1800,7200}`, `mnist_d32_tp{1800,7200}`, scratch-log sections 3355-3713.
 **Need:** one figure (PPL vs tok/param, text and MNIST on shared axes). **Gap to disclose:** no matched BPE control at the same t/p. Oracle v4 (BPE-4096, 100 epochs on 5.4K conversations) overfitting is the anecdotal contrast, not a controlled one. State it plainly or run the control (~$1 A100).
 
-### 3. Post: "Depth recurrence: free depth for tiny models" — NEEDS SEEDS
+### 3. Post: "Depth recurrence: free depth for tiny models" — SEEDS DONE (2026-10-24), claim calibrated
+
+4 seeds each: baseline 1.6700±0.0034, 4L_d192 1.6342±0.0013, 2L×2iter 1.6291±0.0048. Recurrence ahead of real 4L on 3/4 seeds (mean −0.005, t≈1.7 — suggestive, not significant); baseline vs deeper >10σ. Publishable claim: **"two layers run twice match or slightly beat four real layers at the same budget — free depth."** Oracle v5 side-by-side is the honest coda (val_loss gain ≠ quality gain on a memorization-bound set).
+
+*(original status below)*
 
 **Claim:** At a fixed ~2.6M budget, 20 epochs on A100: 2L baseline 1.6686 → 4L_d192 1.6328 → 6L_d160 1.6373 → **2L x 2 iterations 1.6295**. Same parameters as baseline, iterate the layers, beat every real-depth variant. Backed by the earlier classifier result (1x 83.0% / 2x 83.9% / 4x 82.7%) and the inference-time depth-scaling experiment already in the scratch log.
 

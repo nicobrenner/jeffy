@@ -32,6 +32,12 @@ from .catalog import ENCODER, ENCODER_DIM, FEATURES_ENCODER
 from .model_pack import ArtifactManifest, coef_hash, save_artifact, scaler_hash
 
 
+def _check_encoder_path(encoder_name: str):
+    """A path-like encoder (local checkpoint dir) must exist before we hand it to SentenceTransformer."""
+    if encoder_name.startswith(("./", "../", "/")) and not Path(encoder_name).is_dir():
+        raise ValueError(f"Encoder path not found: {encoder_name}")
+
+
 class TrainedClassifier:
     """A trained classifier ready for prediction."""
 
@@ -121,7 +127,9 @@ def train_classifier(
         test_size: Fraction held out for evaluation (0 to skip).
         cv_folds: Cross-validation folds for reported accuracy (0 to skip).
         verbose: Print training progress.
-        encoder: SentenceTransformer model name. Defaults to BAAI/bge-large-en-v1.5.
+        encoder: SentenceTransformer model name, HF model id, or local checkpoint
+                 path (plain transformers checkpoints get mean pooling automatically).
+                 Defaults to BAAI/bge-large-en-v1.5.
         tune_C: When True, grid-search over [0.001, 0.01, 0.1, 1.0, 10.0] using 3-fold CV.
 
     Returns:
@@ -135,6 +143,7 @@ def train_classifier(
         raise ValueError("Need at least 2 examples")
 
     encoder_name = encoder or ENCODER
+    _check_encoder_path(encoder_name)
     unique_labels = sorted(set(labels))
     n_classes = len(unique_labels)
     label_map = {label: label for label in unique_labels}
@@ -249,7 +258,9 @@ def train_binary_flags(
         C: Regularization strength. Ignored when tune_C=True.
         test_size: Fraction held out for evaluation.
         verbose: Print training progress.
-        encoder: SentenceTransformer model name. Defaults to BAAI/bge-large-en-v1.5.
+        encoder: SentenceTransformer model name, HF model id, or local checkpoint
+                 path (plain transformers checkpoints get mean pooling automatically).
+                 Defaults to BAAI/bge-large-en-v1.5.
         tune_C: Grid-search C per flag independently.
 
     Returns:
@@ -268,6 +279,7 @@ def train_binary_flags(
             raise ValueError(f"Flag '{flag_name}' has invalid labels: {normed - _YES - _NO}. Use yes/no")
 
     encoder_name = encoder or ENCODER
+    _check_encoder_path(encoder_name)
     if verbose:
         print(f"Encoding {len(texts)} texts with {encoder_name}...")
     st_encoder = SentenceTransformer(encoder_name, device="cpu")

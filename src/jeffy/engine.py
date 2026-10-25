@@ -120,8 +120,11 @@ class Engine:
             ds_name = manifest.dataset
 
             if manifest.encoder not in KNOWN_ENCODERS:
-                quarantined.append((ds_name, f"unknown encoder: {manifest.encoder}"))
-                continue
+                encoder_dim = getattr(manifest, "encoder_dim", None)
+                if not encoder_dim:
+                    quarantined.append((ds_name, f"unknown encoder with no encoder_dim: {manifest.encoder}"))
+                    continue
+                KNOWN_ENCODERS[manifest.encoder] = encoder_dim
 
             self._classifiers[ds_name] = clf
             self._scalers[ds_name] = scaler

@@ -11,6 +11,8 @@ from fastapi.testclient import TestClient
 from jeffy.server import app, get_engine
 from jeffy.train import train_classifier, train_binary_flags
 from jeffy.catalog import get_encoder_size_mb, ENCODER, ENCODER_SIZES_MB
+from jeffy.engine import Engine
+from jeffy.model_pack import load_artifact
 
 client = TestClient(app)
 
@@ -281,3 +283,76 @@ class TestEncoderSize:
         r2 = client.get("/v1/capabilities/test_size_check")
         assert r2.status_code == 200
         assert r2.json().get("encoder_size_mb") == 90.0
+
+
+@pytest.fixture(scope="module")
+def local_hf_checkpoint(tmp_path_factory):
+    """A plain transformers checkpoint dir (no sentence-transformers config),
+    simulating a fine-tuned BERT-style encoder."""
+    from transformers import AutoModel, AutoTokenizer
+
+    model_dir = tmp_path_factory.mktemp("models") / "finetuned-minilm"
+    model = AutoModel.from_pretrained("sentence-transformers/all-MiniLM-L6-v2")
+    tokenizer = AutoTokenizer.from_pretrained("sentence-transformers/all-MiniLM-L6-v2")
+    model.save_pretrained(model_dir)
+    tokenizer.save_pretrained(model_dir)
+    return str(model_dir)
+
+
+class TestLocalEncoderPaths:
+    """Feature: encoder= accepts a local checkpoint path or any HF model."""
+
+    def _train(self, encoder_path, task_id):
+        return train_classifier(
+            texts=SENTIMENT_DATA["texts"],
+            labels=SENTIMENT_DATA["labels"],
+            task_id=task_id,
+            encoder=encoder_path,
+            test_size=0, cv_folds=0, verbose=False,
+        )
+
+    def test_train_with_local_path(self, local_hf_checkpoint):
+        tc = self._train(local_hf_checkpoint, "test_local_enc")
+        assert tc.encoder_name == local_hf_checkpoint
+        result = tc.predict("this is wonderful")
+        assert result["label"] in ("positive", "negative")
+        assert 0.0 <= result["confidence"] <= 1.0
+
+    def test_binary_flags_with_local_path(self, local_hf_checkpoint):
+        results = train_binary_flags(
+            texts=FLAG_DATA["texts"],
+            flags={"legal_threat": FLAG_DATA["flags"]["legal_threat"]},
+            task_id="test_local_flags",
+            encoder=local_hf_checkpoint,
+            test_size=0, verbose=False,
+        )
+        r = results["legal_threat"].predict("I will contact my lawyer")
+        assert r["label"] in ("yes", "no")
+
+    def test_save_and_register_roundtrip(self, local_hf_checkpoint, tmp_path):
+        tc = self._train(local_hf_checkpoint, "test_local_roundtrip")
+        tc.save(str(tmp_path))
+        clf, scaler, manifest = load_artifact(tmp_path / "test_local_roundtrip")
+        assert manifest.encoder == local_hf_checkpoint
+        engine = get_engine()
+        engine.register_trained("test_local_roundtrip", clf, scaler, manifest)
+        result = engine.predict("test_local_roundtrip", "absolutely great")
+        assert result["label"] in ("positive", "negative")
+
+    def test_engine_load_does_not_quarantine_local_encoder(self, local_hf_checkpoint, tmp_path):
+        tc = self._train(local_hf_checkpoint, "test_local_pack")
+        tc.save(str(tmp_path))
+        engine = Engine(pack_dir=str(tmp_path))
+        engine.load()
+        assert "test_local_pack" in engine.capabilities
+        result = engine.predict("test_local_pack", "truly awful experience")
+        assert result["label"] in ("positive", "negative")
+
+    def test_nonexistent_path_raises(self):
+        with pytest.raises(ValueError, match="Encoder path not found"):
+            self._train("./does-not-exist-anywhere", "test_bad_path")
+
+    def test_local_dir_encoder_size(self, local_hf_checkpoint):
+        size = get_encoder_size_mb(local_hf_checkpoint)
+        assert isinstance(size, float)
+        assert size > 0

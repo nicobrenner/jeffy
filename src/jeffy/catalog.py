@@ -7,7 +7,9 @@ Each capability maps a human-readable task ID to:
 - Encoder dependency and preprocessing
 """
 
+import os
 from dataclasses import dataclass, field
+from pathlib import Path
 
 
 @dataclass
@@ -192,4 +194,10 @@ ENCODER_SIZES_MB: dict[str, float] = {
 
 
 def get_encoder_size_mb(encoder_name: str) -> float | None:
-    return ENCODER_SIZES_MB.get(encoder_name)
+    known = ENCODER_SIZES_MB.get(encoder_name)
+    if known is not None:
+        return known
+    if os.path.isdir(encoder_name):
+        total = sum(f.stat().st_size for f in Path(encoder_name).rglob("*") if f.is_file())
+        return round(total / 1_000_000, 1)
+    return None

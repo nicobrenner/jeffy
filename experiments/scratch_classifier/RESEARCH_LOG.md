@@ -3785,6 +3785,20 @@ A 33K-parameter prior learned from one photo beats optimized PNG on unseen image
 2. Depth recurrence — the 2 wide layers run twice, zero extra parameters — beats every real-depth variant. Computation depth > parameter depth; wide-and-iterated > narrow-and-stacked.
 3. **Caveat:** single seed; the top three are within 0.008. The defensible claim today is "2 layers is too few and recurrence gets the depth for free"; the headline needs 3 seeds × {baseline, 4L, 2L×2} (~1 h A100).
 
+### Depth vs width — seeds (2026-10-24, A100 ~65 min, ~$0.90)
+
+Three additional seeds (1, 2, 3) of {baseline, 4L_d192, 2L_d256 ×2 iter} at 20 epochs via `test_oracle_depth.py <seed>` (`oracle_depth_seeds_s{1,2,3}.json`), pooled with the original run as seed 0. Best val loss:
+
+| config | n | mean | std | per seed |
+|---|---:|---:|---:|---|
+| 2L_d256 baseline | 4 | 1.6700 | 0.0034 | 1.6686, 1.6681, 1.6751, 1.6683 |
+| 4L_d192 | 4 | 1.6342 | 0.0013 | 1.6328, 1.6358, 1.6335, 1.6347 |
+| **2L_d256 ×2 iter** | 4 | **1.6291** | 0.0048 | 1.6295, 1.6235, 1.6352, 1.6282 |
+
+Paired difference (×2 iter − 4L) per seed: −0.003, −0.012, +0.002, −0.007 → mean **−0.005**, recurrence ahead on 3 of 4 seeds; with n = 4 this is suggestive (t ≈ 1.7), not significant. Baseline vs either deeper config: ~0.036-0.041, more than ten standard deviations — rock solid.
+
+**Claim for the paper, calibrated:** at a fixed ~2.6M budget, two layers are decisively too few; running the two wide layers twice (zero extra parameters) **matches or slightly beats** a real four-layer model of the same budget (3/4 seeds, −0.005 mean). "Free depth" is the robust finding; "better than real depth" is a lean, not a result, until more seeds or a second task.
+
 ### Tiny Oracle v5: depth recurrence applied (2L_d256 ×2, 50 epochs, same data/hparams as v2)
 
 - A100, 321K tok/s, 21 s/epoch. **val_loss 1.5733, PPL 4.8** (v2: 1.613 / 5.0). Best at epoch 48. Checkpoint `checkpoints/best_lm_oracle_v5.pt`, log `logs/train_oracle_v5.log`.
@@ -3892,6 +3906,10 @@ Findings:
 2. Together with the 12-MP result: capacity is a modest, steady lever; context is the large one. The ladder stands: wider halo → two-scale (BlurSort-style) → 56×56 windows; a longer d128 schedule (30-40 epochs) is the capacity-only test of the JXL crossing (projected epoch ≈ 26, with the fit caveats above).
 3. **Verification** (`eval_prior_kodak.py`): f16 9.156 bpp, 24/24 wins, real AC +0.09% of estimate, decode-verified. **Per-channel int8 costs 3.8% on d128 (9.507 bpp, 0.707×, 815 KB decoder) vs 0.4% on d64** — so at int8 the *smaller* model wins (d64 int8 9.334 @ 216 KB beats d128 int8 9.507 @ 815 KB). Quantization sensitivity grows with width and training; d128 would need per-group scales or quantization-aware fine-tuning to keep its f16 advantage. Decoder-size trade so far: 33K single-photo prior 13.88; **d64 int8 216 KB → 9.33**; d128 f16 1.6 MB → 9.16. For the "tiny decoder" story d64-int8 remains the headline model.
 
+### C4d — 4-px neighbour halo (`full_h4`), 20 epochs (2026-10-24, A100 ~45 min, ~$0.80)
+
+Same 215K model, 32×32 window (3,072 tokens, 549 of them context), same 20-epoch schedule and data. Curve: 11.10 (ep 2) → 10.29 → 10.22 → 10.00 → 9.66 → 9.51 → 9.39 → 9.35 → 9.30 → **9.305 (ep 20)** vs 1-px `full` **9.299**. Early lead (0.6 bpp at epoch 2), then trailing from epoch 6 to 12, then level. **Result: no gain.** A wider decoded-neighbour strip only helps the first rows/columns of a 28×28 tile and costs attention budget over 22% more tokens. Confirms that the context fix must reach the whole tile — i.e. two-scale coding (condition every tile on a coarse view of its neighbourhood), not a thicker border. Results `shared_prior_results_full_h4_d64_20ep.json`, checkpoint `prior_full_h4_d64_20ep_best.pt`. Pipeline results filename now encodes config + width + epochs.
+
 ### A real codec: `bytelm_codec.py` (2026-10-24)
 
 `encode image.png out.bytelm` / `decode out.bytelm back.png` / `roundtrip`. Encoder and decoder run the **same incremental (KV-cached, float32) model step** token by token, so their probability tables are bit-identical on one device; tiles are processed in wavefront order (tile row + col = d) so each tile's 1-px neighbour strip is already decoded; image borders use PAD = 128. File: `BLM1 | H,W | per tile: bit length + packed arithmetic-coded bits` (4 B framing per tile, ~0.7% overhead at 700 px). **First round trip (Pluto 56×56 crop, 4 tiles): BIT-EXACT**, 4,703 B vs PNG 6,584 / WebP 5,308 / JXL 4,844; 30 s encode, 27 s decode. **Full 700×700 photo round trip (625 tiles, d64 int8 216 KB decoder): BIT-EXACT** (sha256 match), `.bytelm` **380,724 B = 6.22 bpp — 0.631× PNG, 0.902× WebP, 1.053× JXL**; 1.0% above the parallel-pass estimate (coder + per-tile framing); 569 s encode / 572 s decode on MPS (with another job sharing the GPU). The decoded image is at `photo_compressor/color_700_original_decoded.png`. This closes the loop: compressed file on disk → image back, from the file and the 216 KB prior alone.
@@ -3951,6 +3969,28 @@ Measured over every Oracle data file (regex for on-persona markers: parameters/m
 5. Backfill is complete as of this entry; new results are logged the turn they land.
 
 ---
+
+## Adaptive Teacher Loop (ATL) for Tiny Oracle — experiment design (2026-10-24)
+
+Follows the "Adaptive Teacher-Student Training" direction above. Difference from today's data waves: waves 1-2 are a **static** base set (480 + ~720 conversations written by Claude sub-agents, 100% unique turns). ATL makes the teacher **adaptive**: it reads what the student actually produces and where its loss is highest, and writes the next batch to fix exactly that, toward a stated goal.
+
+**Roles.** Student: Tiny Oracle v6 architecture (2L_d256 ×2 iterations, 2.7M params; 21 s/epoch on A100, ~85 s on MPS for a ~3M-token set). Teacher: Claude (this session's sub-agents) — a *grader* agent that scores student outputs against a fixed rubric, and *generator* agents that write targeted data. Automatic signals: per-topic held-out loss; a small "on-persona vs filler" classifier (train LogReg on wave data vs PersonaChat turns — the GAG-loop verifier idea) as a cheap salad/off-persona detector.
+
+**Loop (one round ≈ 20-25 min on MPS, ≈ 8 min with an A100):**
+1. *Probe*: student generates 2 samples for each of 120 fixed probe prompts (all ~100 topics + 20 novel ones never in training), seeded.
+2. *Score*: grader assigns per response: coherence 0-3, on-persona 0-3, wit 0-3, helpfulness 0-3; tags failures {salad, off-persona, memorized-line, too-long, mean, wrong-deflection}. Plus automatic: held-out-topic loss per topic, on-persona classifier rate.
+3. *Diagnose*: rank topics × failure modes; pick the worst K=8 cells for the goal metric (goal = "wittier" → wit; "smarter" → coherence+helpfulness on knowledge topics; "learn topic X" → loss on X; "stop salad on novel prompts" → coherence on the 20 novel probes).
+4. *Generate*: teacher writes ~200 conversations concentrated on those cells, **including corrections**: for each bad student output, a conversation with the same user prompt and a good oracle response (the student's failure becomes a training example). This is what distinguishes ATL from a curriculum — the data is conditioned on the student's actual mistakes.
+5. *Train*: continue from the previous checkpoint with a fresh optimizer, 10 epochs on a replay mix (70% new targeted batch, 30% sampled base) — prevents forgetting; save checkpoint per round.
+6. *Measure*: re-probe; log goal metric, overall rubric, held-out loss, classifier rate; keep the side-by-side with the previous round for human review.
+
+**Control (the experiment):** same number of rounds and the same data/compute budget, but the teacher generates **uniformly over topics without seeing the student** (static curriculum). Adaptive vs static at equal budget isolates the effect of adaptivity. Secondary control: adaptive targeting without corrections (topic-only) — isolates the correction mechanism.
+
+**Goals to run, in order:** (G1) "stop word salad on novel prompts" — the v2/v5 failure, cleanest signal; (G2) "get wittier" — rubric-driven, tests whether a soft style goal is steerable; (G3) "learn topic: cooking" using a topic that is held out of the base set — tests targeted knowledge acquisition with a hard loss metric.
+
+**Budget:** 5 rounds × (1 grader + 1-2 generators ≈ 150K teacher tokens; 10 epochs student ≈ 15 min MPS or 4 min A100) ≈ 1.5-2 h MPS end to end per arm, two arms → an evening locally, or ~40 min on one A100 (<1 h → schedule). Prerequisite: v6.0 base trained on waves 1-2 (after wave 2 lands, ~10 min A100).
+
+**What would make it publishable:** adaptive beating static at equal budget on G1 and G3 by a clear margin on *held-out* probes (not the probes the teacher saw), with the correction ablation showing where the gain comes from. Risks: grader noise (mitigate: fixed rubric, blind to round, 2 samples per prompt, report inter-round deltas not absolutes); teacher leakage (mitigate: the 20 novel probes are never shown to the generator, only their scores).
 
 ## Research Direction: Tiered Classifier Stacks — "YOLO over a byte stream" (2026-10-24)
 

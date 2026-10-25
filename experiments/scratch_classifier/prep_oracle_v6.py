@@ -15,7 +15,7 @@ from pathlib import Path
 
 random.seed(0)
 DATA = Path("data")
-FILLER_FRACTION = 0.20      # share of generic conversations kept for conversational glue
+FILLER_FRACTION = 0.50      # v6.0 base: half generic filler for fluency; on-persona share still 40x v2
 HELDOUT_TOPIC_FRACTION = 0.12
 RANDOM_VAL_FRACTION = 0.04
 PERSONA = re.compile(r"parameter|megabyte|tiny oracle|neural net|token|browser|datacenter|4 ?mb|2 million|floppy|toaster|weights|neurons", re.I)
@@ -53,7 +53,7 @@ def main():
     print(f"on-persona after dedupe: {len(persona):,} conversations, {len(seen):,} unique turn-sets")
 
     # generic filler: conversations with NO persona markers, sampled to FILLER_FRACTION of the final set
-    pool = [x for x in generic if not PERSONA.search(x["text"])]
+    pool = [x for x in generic if not PERSONA.search(" ".join(oracle_turns(x["text"])))]  # judge the oracle turns, not the system prompt
     n_filler = int(len(persona) * FILLER_FRACTION / (1 - FILLER_FRACTION))
     filler = random.sample(pool, min(n_filler, len(pool)))
     for x in filler:

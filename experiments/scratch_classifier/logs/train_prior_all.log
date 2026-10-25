@@ -96,3 +96,111 @@ Epoch 9/20: train 2.845 bits/tok | Kodak 9.791 bpp (PNG 13.448, ratio 0.728) | 1
   ep 10 step 400 loss 1.9530 (2.818 bits/tok) 1,776,803 tok/s
   ep 10 step 600 loss 1.9576 (2.824 bits/tok) 1,768,123 tok/s
   ep 10 step 800 loss 1.9578 (2.825 bits/tok) 1,778,783 tok/s
+  ep 10 step 1000 loss 1.9546 (2.820 bits/tok) 1,783,113 tok/s
+  ep 10 step 1200 loss 1.9514 (2.815 bits/tok) 1,775,867 tok/s
+  ep 10 step 1400 loss 1.9500 (2.813 bits/tok) 1,772,262 tok/s
+  ep 10 step 1600 loss 1.9482 (2.811 bits/tok) 1,776,380 tok/s
+  ep 10 step 1800 loss 1.9474 (2.810 bits/tok) 1,777,587 tok/s
+Epoch 10/20: train 2.810 bits/tok | Kodak 9.656 bpp (PNG 13.448, ratio 0.718) | 1,777,231 tok/s | 104s *
+  ep 11 step 200 loss 1.9235 (2.775 bits/tok) 1,751,964 tok/s
+  ep 11 step 400 loss 1.9260 (2.779 bits/tok) 1,775,673 tok/s
+  ep 11 step 600 loss 1.9285 (2.782 bits/tok) 1,811,413 tok/s
+  ep 11 step 800 loss 1.9300 (2.784 bits/tok) 1,810,695 tok/s
+  ep 11 step 1000 loss 1.9229 (2.774 bits/tok) 1,805,052 tok/s
+  ep 11 step 1200 loss 1.9206 (2.771 bits/tok) 1,796,604 tok/s
+  ep 11 step 1400 loss 1.9197 (2.770 bits/tok) 1,793,291 tok/s
+  ep 11 step 1600 loss 1.9218 (2.773 bits/tok) 1,784,528 tok/s
+  ep 11 step 1800 loss 1.9197 (2.769 bits/tok) 1,779,557 tok/s
+Epoch 11/20: train 2.770 bits/tok | Kodak 9.565 bpp (PNG 13.448, ratio 0.711) | 1,778,097 tok/s | 104s *
+  ep 12 step 200 loss 1.9026 (2.745 bits/tok) 1,751,029 tok/s
+  ep 12 step 400 loss 1.9038 (2.747 bits/tok) 1,770,896 tok/s
+  ep 12 step 600 loss 1.9082 (2.753 bits/tok) 1,782,766 tok/s
+  ep 12 step 800 loss 1.9101 (2.756 bits/tok) 1,804,856 tok/s
+  ep 12 step 1000 loss 1.9080 (2.753 bits/tok) 1,798,030 tok/s
+  ep 12 step 1200 loss 1.9027 (2.745 bits/tok) 1,804,485 tok/s
+  ep 12 step 1400 loss 1.9007 (2.742 bits/tok) 1,809,124 tok/s
+  ep 12 step 1600 loss 1.9006 (2.742 bits/tok) 1,808,210 tok/s
+  ep 12 step 1800 loss 1.8990 (2.740 bits/tok) 1,803,965 tok/s
+Epoch 12/20: train 2.740 bits/tok | Kodak 9.505 bpp (PNG 13.448, ratio 0.707) | 1,803,135 tok/s | 102s *
+  ep 13 step 200 loss 1.8746 (2.705 bits/tok) 1,772,577 tok/s
+  ep 13 step 400 loss 1.8823 (2.716 bits/tok) 1,739,886 tok/s
+  ep 13 step 600 loss 1.8803 (2.713 bits/tok) 1,766,420 tok/s
+  ep 13 step 800 loss 1.8834 (2.717 bits/tok) 1,752,747 tok/s
+  ep 13 step 1000 loss 1.8857 (2.720 bits/tok) 1,751,542 tok/s
+  ep 13 step 1200 loss 1.8821 (2.715 bits/tok) 1,767,842 tok/s
+  ep 13 step 1400 loss 1.8804 (2.713 bits/tok) 1,766,694 tok/s
+  ep 13 step 1600 loss 1.8819 (2.715 bits/tok) 1,770,672 tok/s
+  ep 13 step 1800 loss 1.8805 (2.713 bits/tok) 1,774,959 tok/s
+Epoch 13/20: train 2.713 bits/tok | Kodak 9.464 bpp (PNG 13.448, ratio 0.704) | 1,775,972 tok/s | 104s *
+  ep 14 step 200 loss 1.8613 (2.685 bits/tok) 1,761,925 tok/s
+  ep 14 step 400 loss 1.8644 (2.690 bits/tok) 1,757,765 tok/s
+  ep 14 step 600 loss 1.8656 (2.691 bits/tok) 1,756,397 tok/s
+  ep 14 step 800 loss 1.8670 (2.693 bits/tok) 1,761,327 tok/s
+  ep 14 step 1000 loss 1.8684 (2.696 bits/tok) 1,771,383 tok/s
+  ep 14 step 1200 loss 1.8655 (2.691 bits/tok) 1,772,576 tok/s
+  ep 14 step 1400 loss 1.8643 (2.690 bits/tok) 1,793,169 tok/s
+  ep 14 step 1600 loss 1.8646 (2.690 bits/tok) 1,793,840 tok/s
+  ep 14 step 1800 loss 1.8627 (2.687 bits/tok) 1,800,588 tok/s
+Epoch 14/20: train 2.688 bits/tok | Kodak 9.387 bpp (PNG 13.448, ratio 0.698) | 1,802,087 tok/s | 102s *
+  ep 15 step 200 loss 1.8469 (2.664 bits/tok) 1,753,011 tok/s
+  ep 15 step 400 loss 1.8459 (2.663 bits/tok) 1,783,552 tok/s
+  ep 15 step 600 loss 1.8473 (2.665 bits/tok) 1,774,886 tok/s
+  ep 15 step 800 loss 1.8496 (2.668 bits/tok) 1,777,047 tok/s
+  ep 15 step 1000 loss 1.8492 (2.668 bits/tok) 1,796,642 tok/s
+  ep 15 step 1200 loss 1.8480 (2.666 bits/tok) 1,793,746 tok/s
+  ep 15 step 1400 loss 1.8491 (2.668 bits/tok) 1,786,718 tok/s
+  ep 15 step 1600 loss 1.8490 (2.667 bits/tok) 1,784,367 tok/s
+  ep 15 step 1800 loss 1.8480 (2.666 bits/tok) 1,781,250 tok/s
+Epoch 15/20: train 2.667 bits/tok | Kodak 9.360 bpp (PNG 13.448, ratio 0.696) | 1,780,404 tok/s | 104s *
+  ep 16 step 200 loss 1.8238 (2.631 bits/tok) 1,776,453 tok/s
+  ep 16 step 400 loss 1.8351 (2.647 bits/tok) 1,776,243 tok/s
+  ep 16 step 600 loss 1.8408 (2.656 bits/tok) 1,778,898 tok/s
+  ep 16 step 800 loss 1.8442 (2.661 bits/tok) 1,773,025 tok/s
+  ep 16 step 1000 loss 1.8405 (2.655 bits/tok) 1,769,187 tok/s
+  ep 16 step 1200 loss 1.8404 (2.655 bits/tok) 1,775,378 tok/s
+  ep 16 step 1400 loss 1.8383 (2.652 bits/tok) 1,787,034 tok/s
+  ep 16 step 1600 loss 1.8397 (2.654 bits/tok) 1,788,583 tok/s
+  ep 16 step 1800 loss 1.8369 (2.650 bits/tok) 1,787,103 tok/s
+Epoch 16/20: train 2.650 bits/tok | Kodak 9.347 bpp (PNG 13.448, ratio 0.695) | 1,787,485 tok/s | 103s *
+  ep 17 step 200 loss 1.8297 (2.640 bits/tok) 1,746,846 tok/s
+  ep 17 step 400 loss 1.8253 (2.633 bits/tok) 1,761,350 tok/s
+  ep 17 step 600 loss 1.8268 (2.636 bits/tok) 1,758,642 tok/s
+  ep 17 step 800 loss 1.8306 (2.641 bits/tok) 1,777,045 tok/s
+  ep 17 step 1000 loss 1.8308 (2.641 bits/tok) 1,775,790 tok/s
+  ep 17 step 1200 loss 1.8304 (2.641 bits/tok) 1,782,506 tok/s
+  ep 17 step 1400 loss 1.8299 (2.640 bits/tok) 1,781,641 tok/s
+  ep 17 step 1600 loss 1.8307 (2.641 bits/tok) 1,776,143 tok/s
+  ep 17 step 1800 loss 1.8293 (2.639 bits/tok) 1,774,109 tok/s
+Epoch 17/20: train 2.641 bits/tok | Kodak 9.328 bpp (PNG 13.448, ratio 0.694) | 1,772,616 tok/s | 104s *
+  ep 18 step 200 loss 1.8163 (2.620 bits/tok) 1,775,774 tok/s
+  ep 18 step 400 loss 1.8274 (2.636 bits/tok) 1,765,070 tok/s
+  ep 18 step 600 loss 1.8312 (2.642 bits/tok) 1,768,764 tok/s
+  ep 18 step 800 loss 1.8299 (2.640 bits/tok) 1,780,144 tok/s
+  ep 18 step 1000 loss 1.8289 (2.639 bits/tok) 1,774,673 tok/s
+  ep 18 step 1200 loss 1.8255 (2.634 bits/tok) 1,775,015 tok/s
+  ep 18 step 1400 loss 1.8230 (2.630 bits/tok) 1,773,456 tok/s
+  ep 18 step 1600 loss 1.8231 (2.630 bits/tok) 1,775,377 tok/s
+  ep 18 step 1800 loss 1.8216 (2.628 bits/tok) 1,771,753 tok/s
+Epoch 18/20: train 2.630 bits/tok | Kodak 9.303 bpp (PNG 13.448, ratio 0.692) | 1,770,981 tok/s | 104s *
+  ep 19 step 200 loss 1.8236 (2.631 bits/tok) 1,782,095 tok/s
+  ep 19 step 400 loss 1.8250 (2.633 bits/tok) 1,773,386 tok/s
+  ep 19 step 600 loss 1.8231 (2.630 bits/tok) 1,794,236 tok/s
+  ep 19 step 800 loss 1.8277 (2.637 bits/tok) 1,783,605 tok/s
+  ep 19 step 1000 loss 1.8269 (2.636 bits/tok) 1,781,287 tok/s
+  ep 19 step 1200 loss 1.8266 (2.635 bits/tok) 1,781,429 tok/s
+  ep 19 step 1400 loss 1.8258 (2.634 bits/tok) 1,782,740 tok/s
+  ep 19 step 1600 loss 1.8248 (2.633 bits/tok) 1,785,330 tok/s
+  ep 19 step 1800 loss 1.8250 (2.633 bits/tok) 1,783,657 tok/s
+Epoch 19/20: train 2.635 bits/tok | Kodak 9.300 bpp (PNG 13.448, ratio 0.692) | 1,784,218 tok/s | 103s *
+  ep 20 step 200 loss 1.8095 (2.611 bits/tok) 1,840,585 tok/s
+  ep 20 step 400 loss 1.8142 (2.617 bits/tok) 1,799,638 tok/s
+  ep 20 step 600 loss 1.8120 (2.614 bits/tok) 1,799,665 tok/s
+  ep 20 step 800 loss 1.8162 (2.620 bits/tok) 1,793,376 tok/s
+  ep 20 step 1000 loss 1.8153 (2.619 bits/tok) 1,784,642 tok/s
+  ep 20 step 1200 loss 1.8154 (2.619 bits/tok) 1,778,571 tok/s
+  ep 20 step 1400 loss 1.8157 (2.619 bits/tok) 1,781,065 tok/s
+  ep 20 step 1600 loss 1.8169 (2.621 bits/tok) 1,781,604 tok/s
+  ep 20 step 1800 loss 1.8173 (2.622 bits/tok) 1,779,402 tok/s
+Epoch 20/20: train 2.623 bits/tok | Kodak 9.305 bpp (PNG 13.448, ratio 0.692) | 1,778,510 tok/s | 104s
+Done. Best Kodak bpp 9.300 vs PNG 13.448. Checkpoint: checkpoints/prior_full_h4_d64_20ep_best.pt
+ALL_DONE

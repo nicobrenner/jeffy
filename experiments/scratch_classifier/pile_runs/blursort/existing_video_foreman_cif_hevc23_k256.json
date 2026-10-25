@@ -1,0 +1,85 @@
+{
+ "y4m": "data/video_xiph/foreman_cif.y4m",
+ "k": 256,
+ "codec": "hevc",
+ "crf": 23,
+ "results": {
+  "video_bytes": 532294,
+  "video_bpp": 0.16408407808554293,
+  "video_psnr_vs_raw": 37.989813166697054,
+  "image": {
+   "per_frame_jxl_d0": {
+    "bytes": 12672606,
+    "bpp": 3.906436804569129,
+    "ratio_vs_video": 23.80753117637997,
+    "psnr_vs_decoded": 99.0,
+    "psnr_vs_raw": 37.989813166697054,
+    "exact": true
+   },
+   "tile_jxl_d0": {
+    "bytes": 12737539,
+    "bpp": 3.926452944977115,
+    "ratio_vs_video": 23.929518273735944,
+    "psnr_vs_decoded": 99.0,
+    "psnr_vs_raw": 37.989813166697054,
+    "exact": true
+   },
+   "interleave_jxl_d0": {
+    "bytes": 20229771,
+    "bpp": 6.235996130741004,
+    "ratio_vs_video": 38.00488264004479,
+    "psnr_vs_decoded": 99.0,
+    "psnr_vs_raw": 37.989813166697054,
+    "exact": true
+   },
+   "per_frame_jxl_d1.0": {
+    "bytes": 5696102,
+    "bpp": 1.7558710888178661,
+    "ratio_vs_video": 10.70104491127084,
+    "psnr_vs_decoded": 44.64568880441183,
+    "psnr_vs_raw": 37.35435347612088,
+    "exact": false
+   },
+   "tile_jxl_d1.0": {
+    "bytes": 5268751,
+    "bpp": 1.624136568319918,
+    "ratio_vs_video": 9.898197236865341,
+    "psnr_vs_decoded": 44.59709189102939,
+    "psnr_vs_raw": 37.343438992362394,
+    "exact": false
+   },
+   "interleave_jxl_d1.0": {
+    "bytes": 10691392,
+    "bpp": 3.2957110164141414,
+    "ratio_vs_video": 20.08550162128448,
+    "psnr_vs_decoded": 39.23261608852206,
+    "psnr_vs_raw": 35.634025906209935,
+    "exact": false
+   },
+   "per_frame_jxl_d2.0": {
+    "bytes": 3666090,
+    "bpp": 1.1301029089725378,
+    "ratio_vs_video": 6.8873404547111186,
+    "psnr_vs_decoded": 40.219902813036974,
+    "psnr_vs_raw": 36.1490534041671,
+    "exact": false
+   },
+   "tile_jxl_d2.0": {
+    "bytes": 3238822,
+    "bpp": 0.9983939739188763,
+    "ratio_vs_video": 6.084648709171999,
+    "psnr_vs_decoded": 40.18254634005844,
+    "psnr_vs_raw": 36.141704180143,
+    "exact": false
+   },
+   "interleave_jxl_d2.0": {
+    "bytes": 6103505,
+    "bpp": 1.8814564714528093,
+    "ratio_vs_video": 11.466417055236391,
+    "psnr_vs_decoded": 33.083193403844874,
+    "psnr_vs_raw": 31.895757062626473,
+    "exact": false
+   }
+  }
+ }
+}

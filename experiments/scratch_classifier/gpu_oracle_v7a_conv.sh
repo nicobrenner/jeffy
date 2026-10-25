@@ -75,7 +75,8 @@ for i in $(seq 1 120); do
     $SCP "root@$SSH_HOST:$REMOTE/checkpoints/best_lm_$TAG.pt" "$CKPT_DIR/best_lm_$TAG.pt" 2>/dev/null && P="ckpt" || P="-"
     EP=$(grep -E "^Epoch" "$LOG_DIR/train_$TAG.log" 2>/dev/null | tail -1); [ "$EP" != "$LAST" ] && { echo "$EP [$P]"; LAST="$EP"; }
     grep -qE "Traceback|Error" "$LOG_DIR/train_$TAG.log" 2>/dev/null && { echo "FATAL: training error"; grep -A4 Traceback "$LOG_DIR/train_$TAG.log" | tail -6; break; }
-    ALIVE=$($SSH "pgrep -c -f '[p]ython3 -u train_lm.py' || true" 2>/dev/null | tail -1); [ "$ALIVE" = "0" ] && { echo "Training process finished"; break; }
+    ALIVE=$($SSH "pgrep -c -f '[p]ython3 -u train_lm.py' || true" 2>/dev/null | grep -E '^[0-9]+$' | tail -1); [ "$ALIVE" = "0" ] && { echo "Training process finished"; break; }
+    grep -qE "^Epoch +$EPOCHS/$EPOCHS" "$LOG_DIR/train_$TAG.log" 2>/dev/null && { echo "Final epoch logged"; sleep 30; break; }
 done
 echo "STEP 8: Final download + verify..."
 $SCP "root@$SSH_HOST:$REMOTE/checkpoints/best_lm_$TAG.pt" "$CKPT_DIR/best_lm_$TAG.pt" 2>&1 && echo "GOT best ckpt" || echo "WARN: no best ckpt"

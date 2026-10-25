@@ -15,10 +15,16 @@ the end of every working block (not just at the end of a session). Last update: 
    first; checkpoint + `python3 -u` + resume before launching; pull checkpoints during training; destroy the instance in a
    trap; results in tag-specific files, merge never overwrite; WebSearch 200/session cap → Chrome tools / playwright.
 
-## Running right now (2026-10-25 ~12:45 PDT)
-- Nothing. No grader, no GPU, no MPS. (A local static server for the demo may be on 127.0.0.1:8765; harmless.)
+## Running right now (2026-10-25 ~16:10 PDT)
+- Nothing on GPU (instance 57721531 destroyed, verified empty). Nothing on MPS/CPU. Demo server may be on 127.0.0.1:8765.
 
 ## Done this block (all logged in RESEARCH_LOG.md, same date)
+- Nico's two video experiments run as asked: existing AV1/HEVC video vs extracted frames as JXL (image sets 18–29× the video lossless,
+  8–15× lossy-transparent); global similarity grouping vs AV1 lossless (beats single-mode image methods on mixed content by 17%,
+  still 9–19% behind AV1; giving AV1 the similarity order is worth −5% on returning content).
+- `[name]` placeholder bug fixed (`fix_name_placeholders.py`, source: Synthetic-Persona-Chat; 791 human-role-play convs dropped);
+  `oracle_v7a_conv_fix` trained on A100 (best ep 32, val 1.2089 vs conv 1.2019 on the same val). **Next: probe conv_fix at the
+  deployed recipe → one blind pass conv vs conv_fix → swap the demo ONNX if it holds.** GPU pipeline end-detection bug fixed.
 - Conv blind pass unblinded: conv@T0.5 beats v7a 177/45/22; salad 30→15%, off-persona 32→4%; repetition 24% is the new defect.
 - **Native-YUV video control (`blursort_video_yuv.py`)**: in yuv420p the inter codecs are 2.1 bpp on static akiyo (half of per-frame/tile JXL),
   interleave+JXL ties them (2.18); under motion AV1 4.19 vs tile+JXL 4.27 vs per-frame 4.46 — the RGB-mode "JXL beats AV1 2×" was an artefact.

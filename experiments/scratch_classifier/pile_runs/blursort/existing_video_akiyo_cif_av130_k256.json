@@ -1,0 +1,85 @@
+{
+ "y4m": "data/video_xiph/akiyo_cif.y4m",
+ "k": 256,
+ "codec": "av1",
+ "crf": 30,
+ "results": {
+  "video_bytes": 103064,
+  "video_bpp": 0.031770340119949496,
+  "video_psnr_vs_raw": 44.87519271113881,
+  "image": {
+   "per_frame_jxl_d0": {
+    "bytes": 8901458,
+    "bpp": 2.743948888297033,
+    "ratio_vs_video": 86.36825661724754,
+    "psnr_vs_decoded": 99.0,
+    "psnr_vs_raw": 44.87519271113881,
+    "exact": true
+   },
+   "tile_jxl_d0": {
+    "bytes": 8964541,
+    "bpp": 2.763394750729956,
+    "ratio_vs_video": 86.9803326088644,
+    "psnr_vs_decoded": 99.0,
+    "psnr_vs_raw": 44.87519271113881,
+    "exact": true
+   },
+   "interleave_jxl_d0": {
+    "bytes": 3015520,
+    "bpp": 0.929559264520202,
+    "ratio_vs_video": 29.258713032678724,
+    "psnr_vs_decoded": 99.0,
+    "psnr_vs_raw": 44.87519271113881,
+    "exact": true
+   },
+   "per_frame_jxl_d1.0": {
+    "bytes": 4295610,
+    "bpp": 1.32415771484375,
+    "ratio_vs_video": 41.679053791818674,
+    "psnr_vs_decoded": 47.79661245782732,
+    "psnr_vs_raw": 43.40414305225843,
+    "exact": false
+   },
+   "tile_jxl_d1.0": {
+    "bytes": 3818517,
+    "bpp": 1.177089806758996,
+    "ratio_vs_video": 37.049959248622216,
+    "psnr_vs_decoded": 47.729020443043986,
+    "psnr_vs_raw": 43.37551468387453,
+    "exact": false
+   },
+   "interleave_jxl_d1.0": {
+    "bytes": 1597939,
+    "bpp": 0.49257806334832704,
+    "ratio_vs_video": 15.50433711092137,
+    "psnr_vs_decoded": 49.3649495407485,
+    "psnr_vs_raw": 43.740695668136205,
+    "exact": false
+   },
+   "per_frame_jxl_d2.0": {
+    "bytes": 2854088,
+    "bpp": 0.8797965001578283,
+    "ratio_vs_video": 27.692385313979663,
+    "psnr_vs_decoded": 43.818742394672874,
+    "psnr_vs_raw": 41.50155612709631,
+    "exact": false
+   },
+   "tile_jxl_d2.0": {
+    "bytes": 2426118,
+    "bpp": 0.7478711677320076,
+    "ratio_vs_video": 23.53991694481099,
+    "psnr_vs_decoded": 43.75174064717534,
+    "psnr_vs_raw": 41.457073782463716,
+    "exact": false
+   },
+   "interleave_jxl_d2.0": {
+    "bytes": 989265,
+    "bpp": 0.30494921135179925,
+    "ratio_vs_video": 9.598550415275945,
+    "psnr_vs_decoded": 44.89844096065053,
+    "psnr_vs_raw": 42.036652351374286,
+    "exact": false
+   }
+  }
+ }
+}

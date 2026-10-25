@@ -1,0 +1,260 @@
+{
+ "clip": "cutback",
+ "k": 64,
+ "crop": 256,
+ "group": 16,
+ "order": [
+  34,
+  35,
+  36,
+  37,
+  38,
+  39,
+  48,
+  49,
+  50,
+  51,
+  52,
+  53,
+  54,
+  55,
+  33,
+  32,
+  23,
+  22,
+  21,
+  20,
+  19,
+  18,
+  17,
+  16,
+  4,
+  7,
+  5,
+  6,
+  3,
+  2,
+  1,
+  0,
+  57,
+  58,
+  59,
+  60,
+  61,
+  62,
+  63,
+  56,
+  47,
+  46,
+  45,
+  44,
+  43,
+  42,
+  41,
+  40,
+  31,
+  30,
+  29,
+  28,
+  27,
+  26,
+  25,
+  24,
+  15,
+  14,
+  13,
+  12,
+  11,
+  10,
+  9,
+  8
+ ],
+ "threshold": 258.0009765625,
+ "results": {
+  "av1_lossless_timeline": 1712424,
+  "av1_lossless_chain_order": 1629442,
+  "per_frame_jxl": 2254159,
+  "tile_all": 2150751,
+  "interleave_all_timeline": 2464701,
+  "interleave_all_chain": 2325234,
+  "grouped_search": 1813495
+ },
+ "chunks": [
+  {
+   "frames": [
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    33,
+    32
+   ],
+   "tile": 505374,
+   "interleave": 352789,
+   "pick": "interleave"
+  },
+  {
+   "frames": [
+    23,
+    22,
+    21,
+    20,
+    19,
+    18,
+    17,
+    16,
+    4,
+    7,
+    5,
+    6,
+    3,
+    2,
+    1,
+    0
+   ],
+   "tile": 503508,
+   "interleave": 282724,
+   "pick": "interleave"
+  },
+  {
+   "frames": [
+    57,
+    58,
+    59,
+    60
+   ],
+   "tile": 151652,
+   "interleave": 164651,
+   "pick": "tile"
+  },
+  {
+   "frames": [
+    61
+   ],
+   "tile": 38749,
+   "interleave": null,
+   "pick": "tile"
+  },
+  {
+   "frames": [
+    62
+   ],
+   "tile": 38693,
+   "interleave": null,
+   "pick": "tile"
+  },
+  {
+   "frames": [
+    63
+   ],
+   "tile": 38563,
+   "interleave": null,
+   "pick": "tile"
+  },
+  {
+   "frames": [
+    56
+   ],
+   "tile": 38160,
+   "interleave": null,
+   "pick": "tile"
+  },
+  {
+   "frames": [
+    47
+   ],
+   "tile": 38060,
+   "interleave": null,
+   "pick": "tile"
+  },
+  {
+   "frames": [
+    46,
+    45,
+    44,
+    43
+   ],
+   "tile": 149278,
+   "interleave": 173177,
+   "pick": "tile"
+  },
+  {
+   "frames": [
+    42,
+    41,
+    40,
+    31
+   ],
+   "tile": 148096,
+   "interleave": 176900,
+   "pick": "tile"
+  },
+  {
+   "frames": [
+    30
+   ],
+   "tile": 37180,
+   "interleave": null,
+   "pick": "tile"
+  },
+  {
+   "frames": [
+    29
+   ],
+   "tile": 36924,
+   "interleave": null,
+   "pick": "tile"
+  },
+  {
+   "frames": [
+    28,
+    27,
+    26,
+    25
+   ],
+   "tile": 145384,
+   "interleave": 173273,
+   "pick": "tile"
+  },
+  {
+   "frames": [
+    24,
+    15,
+    14,
+    13
+   ],
+   "tile": 142192,
+   "interleave": 168551,
+   "pick": "tile"
+  },
+  {
+   "frames": [
+    12,
+    11,
+    10,
+    9
+   ],
+   "tile": 139186,
+   "interleave": 170510,
+   "pick": "tile"
+  },
+  {
+   "frames": [
+    8
+   ],
+   "tile": 35801,
+   "interleave": null,
+   "pick": "tile"
+  }
+ ]
+}

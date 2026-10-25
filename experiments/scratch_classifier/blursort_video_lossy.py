@@ -28,13 +28,14 @@ def yuv_psnr(frames, dec_frames):
     return y, (6 * y + u + v) / 8
 
 
-def split420(raw, k, crop):
-    ysz, csz = crop * crop, (crop // 2) ** 2
+def split420(raw, k, crop, w=None):
+    h = crop; w = crop if w is None else w
+    ysz, csz = h * w, (h // 2) * (w // 2)
     out = []
     for i in range(k):
         b = raw[i * (ysz + 2 * csz):(i + 1) * (ysz + 2 * csz)]
-        out.append((np.frombuffer(b[:ysz], np.uint8).reshape(crop, crop), np.frombuffer(b[ysz:ysz + csz], np.uint8).reshape(crop // 2, crop // 2),
-                    np.frombuffer(b[ysz + csz:], np.uint8).reshape(crop // 2, crop // 2)))
+        out.append((np.frombuffer(b[:ysz], np.uint8).reshape(h, w), np.frombuffer(b[ysz:ysz + csz], np.uint8).reshape(h // 2, w // 2),
+                    np.frombuffer(b[ysz + csz:], np.uint8).reshape(h // 2, w // 2)))
     return out
 
 

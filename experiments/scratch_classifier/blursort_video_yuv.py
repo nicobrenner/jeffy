@@ -37,6 +37,8 @@ def read_y4m(path, k, crop, start=0):
             y = np.frombuffer(buf[:ysz], np.uint8).reshape(H, W)
             u = np.frombuffer(buf[ysz:ysz + csz], np.uint8).reshape(H // 2, W // 2)
             v = np.frombuffer(buf[ysz + csz:], np.uint8).reshape(H // 2, W // 2)
+            if crop is None:
+                frames.append((y.copy(), u.copy(), v.copy())); continue
             l, t = (W - crop) // 2, (H - crop) // 2
             l -= l % 2; t -= t % 2
             frames.append((y[t:t + crop, l:l + crop].copy(), u[t // 2:t // 2 + crop // 2, l // 2:l // 2 + crop // 2].copy(),

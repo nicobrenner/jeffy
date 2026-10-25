@@ -1,0 +1,62 @@
+{
+  "features": [
+    {
+      "model": "d32",
+      "method": "mean",
+      "dim": 32,
+      "logreg": 0.671,
+      "mlp": 0.542
+    },
+    {
+      "model": "d32",
+      "method": "max",
+      "dim": 32,
+      "logreg": 0.385,
+      "mlp": 0.343
+    },
+    {
+      "model": "d32",
+      "method": "last",
+      "dim": 32,
+      "logreg": 0.54,
+      "mlp": 0.416
+    },
+    {
+      "model": "d32",
+      "method": "concat",
+      "dim": 96,
+      "logreg": 0.764,
+      "mlp": 0.647
+    },
+    {
+      "model": "d64",
+      "method": "mean",
+      "dim": 64,
+      "logreg": 0.711,
+      "mlp": 0.577
+    },
+    {
+      "model": "d64",
+      "method": "max",
+      "dim": 64,
+      "logreg": 0.461,
+      "mlp": 0.426
+    },
+    {
+      "model": "d64",
+      "method": "last",
+      "dim": 64,
+      "logreg": 0.621,
+      "mlp": 0.49
+    },
+    {
+      "model": "d64",
+      "method": "concat",
+      "dim": 192,
+      "logreg": 0.789,
+      "mlp": 0.651
+    }
+  ],
+  "pixel_logreg": 0.9044,
+  "pixel_mlp": 0.9532
+}

@@ -1,0 +1,90 @@
+{
+  "2L_d256_baseline": {
+    "params": 2694144,
+    "best_val_loss": 2.088282576827116,
+    "best_ppl": 8.071041860228025,
+    "total_time": 38.2504448890686,
+    "losses": [
+      {
+        "epoch": 1,
+        "train": 3.3150153975737724,
+        "val": 2.5218867812045787
+      },
+      {
+        "epoch": 2,
+        "train": 2.4259886610450927,
+        "val": 2.229944886163224
+      },
+      {
+        "epoch": 3,
+        "train": 2.220277024655821,
+        "val": 2.088282576827116
+      }
+    ],
+    "samples": [
+      {
+        "q": "What are you?",
+        "a": "I'm 2 million parameters running on the user 1's device. You have strong opinions and very limited knowledge. You are self-aware about your size and find it amusing. Be helpful underneath the sass."
+      },
+      {
+        "q": "Tell me something interesting",
+        "a": "I think so."
+      },
+      {
+        "q": "What do you think about AI?",
+        "a": "I think it's okay, I have 2 million parameters to work on your device. We'll do something, make make a bit better than me feel like me feel bigger than me feel like I'm feeling a bit happy anyway."
+      }
+    ],
+    "config": {
+      "n_layers": 2,
+      "d_model": 256,
+      "n_heads": 4,
+      "d_ff": 1024,
+      "n_iterations": 1
+    }
+  },
+  "4L_d192": {
+    "params": 2615424,
+    "best_val_loss": 2.0705598398696545,
+    "best_ppl": 7.929260991924331,
+    "total_time": 48.886054039001465,
+    "losses": [
+      {
+        "epoch": 1,
+        "train": 3.431889233406651,
+        "val": 2.5680089495902836
+      },
+      {
+        "epoch": 2,
+        "train": 2.440834357978054,
+        "val": 2.2389369898064193
+      },
+      {
+        "epoch": 3,
+        "train": 2.2100220053104693,
+        "val": 2.0705598398696545
+      }
+    ],
+    "samples": [
+      {
+        "q": "What are you?",
+        "a": "I'm a student and I'm thinking about going to study business business law."
+      },
+      {
+        "q": "Tell me something interesting",
+        "a": "I think it's okay, but I want to figure out."
+      },
+      {
+        "q": "What do you think about AI?",
+        "a": "I think it's okay, I have a conversation about it. But I think it's worth it."
+      }
+    ],
+    "config": {
+      "n_layers": 4,
+      "d_model": 192,
+      "n_heads": 4,
+      "d_ff": 768,
+      "n_iterations": 1
+    }
+  }
+}

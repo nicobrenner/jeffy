@@ -1,0 +1,212 @@
+Device: cuda
+Tokenizer: /root/neox_tokenizer (vocab=50304)
+
+Experiment: 20M model, 2.10B tokens
+  tok/param ratio will be computed after model init
+/usr/local/lib/python3.10/dist-packages/torch/nn/modules/transformer.py:385: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  warnings.warn(
+Training data: 2090M tokens on disk
+
+Model: 18,735,680 params (18.7M)
+  d_model=160, n_layers=8, n_heads=8, d_ff=640
+  tie_weights=False, seq_len=1024
+  tok/param ratio: 106.5
+
+Training for 15,220 steps (2.00B tokens)
+  batch_size=64, accumulate=2, effective_batch=128
+  tokens/step=131,072, warmup=1,522 steps
+  lr=0.001, weight_decay=0.1
+  eval every 500 steps, save every 2000 steps
+================================================================================
+
+  step     100/15,220  loss=10.5489  ppl=38133.9  lr=6.57e-05  515,574 tok/s  tokens=13M
+  step     200/15,220  loss=9.4345  ppl=12512.4  lr=1.31e-04  555,817 tok/s  tokens=26M
+  step     300/15,220  loss=8.1322  ppl= 3402.2  lr=1.97e-04  555,817 tok/s  tokens=39M
+  step     400/15,220  loss=7.3337  ppl= 1531.1  lr=2.63e-04  555,969 tok/s  tokens=52M
+  step     500/15,220  loss=6.8589  ppl=  952.3  lr=3.29e-04  556,056 tok/s  tokens=66M
+  >>> EVAL step 500: val_loss=6.6479 val_ppl=771.13 (tok/param=3.5) *BEST*
+  step     600/15,220  loss=6.4987  ppl=  664.3  lr=3.94e-04  433,754 tok/s  tokens=79M
+  step     700/15,220  loss=6.2674  ppl=  527.1  lr=4.60e-04  556,144 tok/s  tokens=92M
+  step     800/15,220  loss=6.0710  ppl=  433.1  lr=5.26e-04  556,172 tok/s  tokens=105M
+  step     900/15,220  loss=5.9206  ppl=  372.6  lr=5.91e-04  556,221 tok/s  tokens=118M
+  step   1,000/15,220  loss=5.7717  ppl=  321.1  lr=6.57e-04  556,218 tok/s  tokens=131M
+  >>> EVAL step 1000: val_loss=5.6946 val_ppl=297.27 (tok/param=7.0) *BEST*
+  step   1,100/15,220  loss=5.6396  ppl=  281.3  lr=7.23e-04  439,154 tok/s  tokens=144M
+  step   1,200/15,220  loss=5.5241  ppl=  250.7  lr=7.88e-04  556,168 tok/s  tokens=157M
+  step   1,300/15,220  loss=5.4209  ppl=  226.1  lr=8.54e-04  556,080 tok/s  tokens=170M
+  step   1,400/15,220  loss=5.3204  ppl=  204.5  lr=9.20e-04  556,119 tok/s  tokens=184M
+  step   1,500/15,220  loss=5.2352  ppl=  187.8  lr=9.86e-04  556,184 tok/s  tokens=197M
+  >>> EVAL step 1500: val_loss=5.2165 val_ppl=184.29 (tok/param=10.5) *BEST*
+  step   1,600/15,220  loss=5.1525  ppl=  172.9  lr=1.00e-03  439,008 tok/s  tokens=210M
+  step   1,700/15,220  loss=5.0610  ppl=  157.7  lr=1.00e-03  556,223 tok/s  tokens=223M
+  step   1,800/15,220  loss=4.9776  ppl=  145.1  lr=9.99e-04  556,257 tok/s  tokens=236M
+  step   1,900/15,220  loss=4.9022  ppl=  134.6  lr=9.98e-04  556,238 tok/s  tokens=249M
+  step   2,000/15,220  loss=4.8109  ppl=  122.8  lr=9.97e-04  556,192 tok/s  tokens=262M
+  >>> EVAL step 2000: val_loss=4.8047 val_ppl=122.08 (tok/param=14.0) *BEST*
+  step   2,100/15,220  loss=4.7373  ppl=  114.1  lr=9.96e-04  437,178 tok/s  tokens=275M
+  step   2,200/15,220  loss=4.6420  ppl=  103.8  lr=9.94e-04  556,240 tok/s  tokens=288M
+  step   2,300/15,220  loss=4.5582  ppl=   95.4  lr=9.92e-04  556,220 tok/s  tokens=301M
+  step   2,400/15,220  loss=4.4793  ppl=   88.2  lr=9.90e-04  556,150 tok/s  tokens=315M
+  step   2,500/15,220  loss=4.4107  ppl=   82.3  lr=9.87e-04  556,150 tok/s  tokens=328M
+  >>> EVAL step 2500: val_loss=4.3966 val_ppl=81.17 (tok/param=17.5) *BEST*
+  step   2,600/15,220  loss=4.3659  ppl=   78.7  lr=9.85e-04  438,609 tok/s  tokens=341M
+  step   2,700/15,220  loss=4.3202  ppl=   75.2  lr=9.82e-04  556,214 tok/s  tokens=354M
+  step   2,800/15,220  loss=4.2883  ppl=   72.8  lr=9.79e-04  556,223 tok/s  tokens=367M
+  step   2,900/15,220  loss=4.2342  ppl=   69.0  lr=9.75e-04  556,167 tok/s  tokens=380M
+  step   3,000/15,220  loss=4.2037  ppl=   66.9  lr=9.72e-04  556,178 tok/s  tokens=393M
+  >>> EVAL step 3000: val_loss=4.1993 val_ppl=66.64 (tok/param=21.0) *BEST*
+  step   3,100/15,220  loss=4.1931  ppl=   66.2  lr=9.68e-04  438,746 tok/s  tokens=406M
+  step   3,200/15,220  loss=4.1664  ppl=   64.5  lr=9.63e-04  556,204 tok/s  tokens=419M
+  step   3,300/15,220  loss=4.1562  ppl=   63.8  lr=9.59e-04  556,186 tok/s  tokens=433M
+  step   3,400/15,220  loss=4.1154  ppl=   61.3  lr=9.54e-04  556,167 tok/s  tokens=446M
+  step   3,500/15,220  loss=4.1088  ppl=   60.9  lr=9.49e-04  556,174 tok/s  tokens=459M
+  >>> EVAL step 3500: val_loss=4.1237 val_ppl=61.79 (tok/param=24.5) *BEST*
+  step   3,600/15,220  loss=4.0872  ppl=   59.6  lr=9.44e-04  438,817 tok/s  tokens=472M
+  step   3,700/15,220  loss=4.0729  ppl=   58.7  lr=9.39e-04  556,219 tok/s  tokens=485M
+  step   3,800/15,220  loss=4.0557  ppl=   57.7  lr=9.33e-04  556,151 tok/s  tokens=498M
+  step   3,900/15,220  loss=4.0561  ppl=   57.8  lr=9.27e-04  556,163 tok/s  tokens=511M
+  step   4,000/15,220  loss=4.0169  ppl=   55.5  lr=9.21e-04  556,106 tok/s  tokens=524M
+  >>> EVAL step 4000: val_loss=4.0384 val_ppl=56.73 (tok/param=28.0) *BEST*
+  step   4,100/15,220  loss=4.0248  ppl=   56.0  lr=9.15e-04  431,675 tok/s  tokens=537M
+  step   4,200/15,220  loss=4.0291  ppl=   56.2  lr=9.09e-04  556,040 tok/s  tokens=551M
+  step   4,300/15,220  loss=3.9876  ppl=   53.9  lr=9.02e-04  552,342 tok/s  tokens=564M
+  step   4,400/15,220  loss=3.9877  ppl=   53.9  lr=8.95e-04  551,572 tok/s  tokens=577M
+  step   4,500/15,220  loss=3.9794  ppl=   53.5  lr=8.88e-04  552,172 tok/s  tokens=590M
+  >>> EVAL step 4500: val_loss=3.9956 val_ppl=54.36 (tok/param=31.5) *BEST*
+  step   4,600/15,220  loss=3.9744  ppl=   53.2  lr=8.81e-04  435,465 tok/s  tokens=603M
+  step   4,700/15,220  loss=3.9711  ppl=   53.0  lr=8.73e-04  551,971 tok/s  tokens=616M
+  step   4,800/15,220  loss=3.9487  ppl=   51.9  lr=8.65e-04  552,179 tok/s  tokens=629M
+  step   4,900/15,220  loss=3.9494  ppl=   51.9  lr=8.57e-04  552,246 tok/s  tokens=642M
+  step   5,000/15,220  loss=3.9468  ppl=   51.8  lr=8.49e-04  552,014 tok/s  tokens=655M
+  >>> EVAL step 5000: val_loss=3.9487 val_ppl=51.87 (tok/param=35.0) *BEST*
+  step   5,100/15,220  loss=3.9402  ppl=   51.4  lr=8.41e-04  436,694 tok/s  tokens=668M
+  step   5,200/15,220  loss=3.9331  ppl=   51.1  lr=8.32e-04  552,493 tok/s  tokens=682M
+  step   5,300/15,220  loss=3.9197  ppl=   50.4  lr=8.24e-04  552,354 tok/s  tokens=695M
+  step   5,400/15,220  loss=3.9159  ppl=   50.2  lr=8.15e-04  552,703 tok/s  tokens=708M
+  step   5,500/15,220  loss=3.9037  ppl=   49.6  lr=8.06e-04  552,743 tok/s  tokens=721M
+  >>> EVAL step 5500: val_loss=3.9212 val_ppl=50.46 (tok/param=38.5) *BEST*
+  step   5,600/15,220  loss=3.9097  ppl=   49.9  lr=7.97e-04  436,170 tok/s  tokens=734M
+  step   5,700/15,220  loss=3.9040  ppl=   49.6  lr=7.87e-04  552,378 tok/s  tokens=747M
+  step   5,800/15,220  loss=3.8978  ppl=   49.3  lr=7.78e-04  552,394 tok/s  tokens=760M
+  step   5,900/15,220  loss=3.8763  ppl=   48.2  lr=7.68e-04  552,338 tok/s  tokens=773M
+  step   6,000/15,220  loss=3.8840  ppl=   48.6  lr=7.59e-04  552,501 tok/s  tokens=786M
+  >>> EVAL step 6000: val_loss=3.8736 val_ppl=48.12 (tok/param=42.0) *BEST*
+  step   6,100/15,220  loss=3.8758  ppl=   48.2  lr=7.49e-04  427,828 tok/s  tokens=800M
+  step   6,200/15,220  loss=3.8739  ppl=   48.1  lr=7.39e-04  552,675 tok/s  tokens=813M
+  step   6,300/15,220  loss=3.8588  ppl=   47.4  lr=7.29e-04  552,206 tok/s  tokens=826M
+  step   6,400/15,220  loss=3.8705  ppl=   48.0  lr=7.18e-04  552,516 tok/s  tokens=839M
+  step   6,500/15,220  loss=3.8695  ppl=   47.9  lr=7.08e-04  552,420 tok/s  tokens=852M
+  >>> EVAL step 6500: val_loss=3.8798 val_ppl=48.41 (tok/param=45.5)
+  step   6,600/15,220  loss=3.8477  ppl=   46.9  lr=6.98e-04  439,115 tok/s  tokens=865M
+  step   6,700/15,220  loss=3.8532  ppl=   47.1  lr=6.87e-04  552,925 tok/s  tokens=878M
+  step   6,800/15,220  loss=3.8577  ppl=   47.4  lr=6.76e-04  552,430 tok/s  tokens=891M
+  step   6,900/15,220  loss=3.8345  ppl=   46.3  lr=6.66e-04  552,068 tok/s  tokens=904M
+  step   7,000/15,220  loss=3.8317  ppl=   46.1  lr=6.55e-04  549,996 tok/s  tokens=918M
+  >>> EVAL step 7000: val_loss=3.8450 val_ppl=46.76 (tok/param=49.0) *BEST*
+  step   7,100/15,220  loss=3.8356  ppl=   46.3  lr=6.44e-04  434,549 tok/s  tokens=931M
+  step   7,200/15,220  loss=3.8198  ppl=   45.6  lr=6.33e-04  552,625 tok/s  tokens=944M
+  step   7,300/15,220  loss=3.8152  ppl=   45.4  lr=6.22e-04  552,914 tok/s  tokens=957M
+  step   7,400/15,220  loss=3.8191  ppl=   45.6  lr=6.10e-04  552,646 tok/s  tokens=970M
+  step   7,500/15,220  loss=3.8165  ppl=   45.4  lr=5.99e-04  552,167 tok/s  tokens=983M
+  >>> EVAL step 7500: val_loss=3.8324 val_ppl=46.17 (tok/param=52.5) *BEST*
+  step   7,600/15,220  loss=3.8006  ppl=   44.7  lr=5.88e-04  435,060 tok/s  tokens=996M
+  step   7,700/15,220  loss=3.7998  ppl=   44.7  lr=5.77e-04  552,707 tok/s  tokens=1009M
+  step   7,800/15,220  loss=3.7960  ppl=   44.5  lr=5.65e-04  552,950 tok/s  tokens=1022M
+  step   7,900/15,220  loss=3.7962  ppl=   44.5  lr=5.54e-04  552,904 tok/s  tokens=1035M
+  step   8,000/15,220  loss=3.7966  ppl=   44.5  lr=5.42e-04  552,780 tok/s  tokens=1049M
+  >>> EVAL step 8000: val_loss=3.8216 val_ppl=45.68 (tok/param=56.0) *BEST*
+  step   8,100/15,220  loss=3.7815  ppl=   43.9  lr=5.31e-04  427,952 tok/s  tokens=1062M
+  step   8,200/15,220  loss=3.7842  ppl=   44.0  lr=5.20e-04  552,932 tok/s  tokens=1075M
+  step   8,300/15,220  loss=3.7719  ppl=   43.5  lr=5.08e-04  552,878 tok/s  tokens=1088M
+  step   8,400/15,220  loss=3.7829  ppl=   43.9  lr=4.97e-04  552,961 tok/s  tokens=1101M
+  step   8,500/15,220  loss=3.7873  ppl=   44.1  lr=4.85e-04  552,824 tok/s  tokens=1114M
+  >>> EVAL step 8500: val_loss=3.7859 val_ppl=44.07 (tok/param=59.5) *BEST*
+  step   8,600/15,220  loss=3.7692  ppl=   43.3  lr=4.74e-04  436,166 tok/s  tokens=1127M
+  step   8,700/15,220  loss=3.7688  ppl=   43.3  lr=4.62e-04  552,782 tok/s  tokens=1140M
+  step   8,800/15,220  loss=3.7704  ppl=   43.4  lr=4.51e-04  553,023 tok/s  tokens=1153M
+  step   8,900/15,220  loss=3.7666  ppl=   43.2  lr=4.39e-04  553,141 tok/s  tokens=1167M
+  step   9,000/15,220  loss=3.7542  ppl=   42.7  lr=4.28e-04  552,822 tok/s  tokens=1180M
+  >>> EVAL step 9000: val_loss=3.7653 val_ppl=43.18 (tok/param=63.0) *BEST*
+  step   9,100/15,220  loss=3.7633  ppl=   43.1  lr=4.17e-04  436,015 tok/s  tokens=1193M
+  step   9,200/15,220  loss=3.7565  ppl=   42.8  lr=4.06e-04  552,888 tok/s  tokens=1206M
+  step   9,300/15,220  loss=3.7556  ppl=   42.8  lr=3.94e-04  553,213 tok/s  tokens=1219M
+  step   9,400/15,220  loss=3.7457  ppl=   42.3  lr=3.83e-04  553,227 tok/s  tokens=1232M
+  step   9,500/15,220  loss=3.7530  ppl=   42.6  lr=3.72e-04  553,452 tok/s  tokens=1245M
+  >>> EVAL step 9500: val_loss=3.7500 val_ppl=42.52 (tok/param=66.5) *BEST*
+  step   9,600/15,220  loss=3.7472  ppl=   42.4  lr=3.61e-04  436,557 tok/s  tokens=1258M
+  step   9,700/15,220  loss=3.7282  ppl=   41.6  lr=3.50e-04  553,198 tok/s  tokens=1271M
+  step   9,800/15,220  loss=3.7369  ppl=   42.0  lr=3.39e-04  553,260 tok/s  tokens=1285M
+  step   9,900/15,220  loss=3.7379  ppl=   42.0  lr=3.28e-04  553,059 tok/s  tokens=1298M
+  step  10,000/15,220  loss=3.7453  ppl=   42.3  lr=3.18e-04  553,057 tok/s  tokens=1311M
+  >>> EVAL step 10000: val_loss=3.7201 val_ppl=41.27 (tok/param=70.0) *BEST*
+  step  10,100/15,220  loss=3.7347  ppl=   41.9  lr=3.07e-04  430,608 tok/s  tokens=1324M
+  step  10,200/15,220  loss=3.7349  ppl=   41.9  lr=2.96e-04  553,355 tok/s  tokens=1337M
+  step  10,300/15,220  loss=3.7119  ppl=   40.9  lr=2.86e-04  553,225 tok/s  tokens=1350M
+  step  10,400/15,220  loss=3.7380  ppl=   42.0  lr=2.76e-04  553,364 tok/s  tokens=1363M
+  step  10,500/15,220  loss=3.7262  ppl=   41.5  lr=2.65e-04  553,387 tok/s  tokens=1376M
+  >>> EVAL step 10500: val_loss=3.7455 val_ppl=42.33 (tok/param=73.5)
+  step  10,600/15,220  loss=3.7199  ppl=   41.3  lr=2.55e-04  439,611 tok/s  tokens=1389M
+  step  10,700/15,220  loss=3.7181  ppl=   41.2  lr=2.45e-04  552,907 tok/s  tokens=1402M
+  step  10,800/15,220  loss=3.7131  ppl=   41.0  lr=2.36e-04  553,092 tok/s  tokens=1416M
+  step  10,900/15,220  loss=3.6996  ppl=   40.4  lr=2.26e-04  553,211 tok/s  tokens=1429M
+  step  11,000/15,220  loss=3.7006  ppl=   40.5  lr=2.16e-04  553,193 tok/s  tokens=1442M
+  >>> EVAL step 11000: val_loss=3.7364 val_ppl=41.95 (tok/param=77.0)
+  step  11,100/15,220  loss=3.6952  ppl=   40.3  lr=2.07e-04  439,800 tok/s  tokens=1455M
+  step  11,200/15,220  loss=3.7041  ppl=   40.6  lr=1.98e-04  553,470 tok/s  tokens=1468M
+  step  11,300/15,220  loss=3.6927  ppl=   40.2  lr=1.89e-04  553,357 tok/s  tokens=1481M
+  step  11,400/15,220  loss=3.7063  ppl=   40.7  lr=1.80e-04  553,492 tok/s  tokens=1494M
+  step  11,500/15,220  loss=3.6947  ppl=   40.2  lr=1.71e-04  553,200 tok/s  tokens=1507M
+  >>> EVAL step 11500: val_loss=3.7133 val_ppl=40.99 (tok/param=80.5) *BEST*
+  step  11,600/15,220  loss=3.7006  ppl=   40.5  lr=1.63e-04  436,921 tok/s  tokens=1520M
+  step  11,700/15,220  loss=3.6961  ppl=   40.3  lr=1.54e-04  552,740 tok/s  tokens=1534M
+  step  11,800/15,220  loss=3.6914  ppl=   40.1  lr=1.46e-04  553,090 tok/s  tokens=1547M
+  step  11,900/15,220  loss=3.6957  ppl=   40.3  lr=1.38e-04  552,757 tok/s  tokens=1560M
+  step  12,000/15,220  loss=3.6791  ppl=   39.6  lr=1.30e-04  553,057 tok/s  tokens=1573M
+  >>> EVAL step 12000: val_loss=3.6925 val_ppl=40.15 (tok/param=84.0) *BEST*
+  step  12,100/15,220  loss=3.6929  ppl=   40.2  lr=1.23e-04  436,409 tok/s  tokens=1586M
+  step  12,200/15,220  loss=3.6778  ppl=   39.6  lr=1.15e-04  553,149 tok/s  tokens=1599M
+  step  12,300/15,220  loss=3.6858  ppl=   39.9  lr=1.08e-04  552,700 tok/s  tokens=1612M
+  step  12,400/15,220  loss=3.6883  ppl=   40.0  lr=1.01e-04  552,415 tok/s  tokens=1625M
+  step  12,500/15,220  loss=3.6819  ppl=   39.7  lr=9.42e-05  552,316 tok/s  tokens=1638M
+  >>> EVAL step 12500: val_loss=3.6997 val_ppl=40.43 (tok/param=87.4)
+  step  12,600/15,220  loss=3.6746  ppl=   39.4  lr=8.76e-05  439,517 tok/s  tokens=1652M
+  step  12,700/15,220  loss=3.6803  ppl=   39.7  lr=8.12e-05  553,079 tok/s  tokens=1665M
+  step  12,800/15,220  loss=3.6652  ppl=   39.1  lr=7.51e-05  553,153 tok/s  tokens=1678M
+  step  12,900/15,220  loss=3.6757  ppl=   39.5  lr=6.91e-05  553,280 tok/s  tokens=1691M
+  step  13,000/15,220  loss=3.6677  ppl=   39.2  lr=6.34e-05  553,036 tok/s  tokens=1704M
+  >>> EVAL step 13000: val_loss=3.7006 val_ppl=40.47 (tok/param=90.9)
+  step  13,100/15,220  loss=3.6689  ppl=   39.2  lr=5.79e-05  439,613 tok/s  tokens=1717M
+  step  13,200/15,220  loss=3.6700  ppl=   39.3  lr=5.27e-05  552,764 tok/s  tokens=1730M
+  step  13,300/15,220  loss=3.6712  ppl=   39.3  lr=4.77e-05  553,291 tok/s  tokens=1743M
+  step  13,400/15,220  loss=3.6720  ppl=   39.3  lr=4.29e-05  553,019 tok/s  tokens=1756M
+  step  13,500/15,220  loss=3.6640  ppl=   39.0  lr=3.84e-05  553,052 tok/s  tokens=1769M
+  >>> EVAL step 13500: val_loss=3.6720 val_ppl=39.33 (tok/param=94.4) *BEST*
+  step  13,600/15,220  loss=3.6669  ppl=   39.1  lr=3.41e-05  437,077 tok/s  tokens=1783M
+  step  13,700/15,220  loss=3.6738  ppl=   39.4  lr=3.01e-05  553,153 tok/s  tokens=1796M
+  step  13,800/15,220  loss=3.6657  ppl=   39.1  lr=2.63e-05  552,786 tok/s  tokens=1809M
+  step  13,900/15,220  loss=3.6644  ppl=   39.0  lr=2.27e-05  553,010 tok/s  tokens=1822M
+  step  14,000/15,220  loss=3.6745  ppl=   39.4  lr=1.94e-05  553,271 tok/s  tokens=1835M
+  >>> EVAL step 14000: val_loss=3.7021 val_ppl=40.53 (tok/param=97.9)
+  step  14,100/15,220  loss=3.6648  ppl=   39.0  lr=1.64e-05  431,196 tok/s  tokens=1848M
+  step  14,200/15,220  loss=3.6831  ppl=   39.8  lr=1.36e-05  552,367 tok/s  tokens=1861M
+  step  14,300/15,220  loss=3.6581  ppl=   38.8  lr=1.11e-05  552,675 tok/s  tokens=1874M
+  step  14,400/15,220  loss=3.6512  ppl=   38.5  lr=8.82e-06  552,722 tok/s  tokens=1887M
+  step  14,500/15,220  loss=3.6618  ppl=   38.9  lr=6.80e-06  552,481 tok/s  tokens=1901M
+  >>> EVAL step 14500: val_loss=3.6742 val_ppl=39.42 (tok/param=101.4)
+  step  14,600/15,220  loss=3.6616  ppl=   38.9  lr=5.05e-06  439,487 tok/s  tokens=1914M
+  step  14,700/15,220  loss=3.6509  ppl=   38.5  lr=3.55e-06  553,128 tok/s  tokens=1927M
+  step  14,800/15,220  loss=3.6407  ppl=   38.1  lr=2.32e-06  553,159 tok/s  tokens=1940M
+  step  14,900/15,220  loss=3.6614  ppl=   38.9  lr=1.35e-06  553,531 tok/s  tokens=1953M
+  step  15,000/15,220  loss=3.6506  ppl=   38.5  lr=6.36e-07  553,163 tok/s  tokens=1966M
+  >>> EVAL step 15000: val_loss=3.7003 val_ppl=40.46 (tok/param=104.9)
+  step  15,100/15,220  loss=3.6608  ppl=   38.9  lr=1.89e-07  439,386 tok/s  tokens=1979M
+  step  15,200/15,220  loss=3.6636  ppl=   39.0  lr=5.26e-09  552,681 tok/s  tokens=1992M
+
+================================================================================
+Training complete!
+  Model: 20M (18,735,680 params)
+  Tokens: 1.99B (106.5 tok/param)
+  Final val_loss: 3.6489 (ppl=38.43)
+  Best val_loss:  3.6489 (ppl=38.43)
+  Time: 1.1h
+  Output: /root/pile_runs/pile_20m

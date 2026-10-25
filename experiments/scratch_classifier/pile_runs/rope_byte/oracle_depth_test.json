@@ -1,0 +1,90 @@
+{
+  "2L_d256_baseline": {
+    "params": 2694144,
+    "best_val_loss": 2.0734382119289663,
+    "best_ppl": 7.952117233818123,
+    "total_time": 2.6226043701171875e-06,
+    "losses": [
+      {
+        "epoch": 1,
+        "train": 3.3037119955537424,
+        "val": 2.514945069024729
+      },
+      {
+        "epoch": 2,
+        "train": 2.4160081547413146,
+        "val": 2.223843203034512
+      },
+      {
+        "epoch": 3,
+        "train": 2.2123025617245853,
+        "val": 2.0734382119289663
+      }
+    ],
+    "samples": [
+      {
+        "q": "What are you?",
+        "a": "I'm a chef."
+      },
+      {
+        "q": "Tell me something interesting",
+        "a": "Hey, how are you doing this weekend?"
+      },
+      {
+        "q": "What do you think about AI?",
+        "a": "I'm 2 million parameters. I'm very sorry, I can't believe it."
+      }
+    ],
+    "config": {
+      "n_layers": 2,
+      "d_model": 256,
+      "n_heads": 4,
+      "d_ff": 1024,
+      "n_iterations": 1
+    }
+  },
+  "4L_d192": {
+    "params": 2615424,
+    "best_val_loss": 2.0720916903296183,
+    "best_ppl": 7.941416742040665,
+    "total_time": 549.3691217899323,
+    "losses": [
+      {
+        "epoch": 1,
+        "train": 3.4295755288247287,
+        "val": 2.5682907492615454
+      },
+      {
+        "epoch": 2,
+        "train": 2.4399144936121253,
+        "val": 2.2378038472907487
+      },
+      {
+        "epoch": 3,
+        "train": 2.2090138887104236,
+        "val": 2.0720916903296183
+      }
+    ],
+    "samples": [
+      {
+        "q": "What are you?",
+        "a": "I'm a chef."
+      },
+      {
+        "q": "Tell me something interesting",
+        "a": "I'm a book about a book. I used to have to write a book."
+      },
+      {
+        "q": "What do you think about AI?",
+        "a": "I'm a 2 million parameters of pure confidence. Just knowing that makes sense. But I'm here to get what you're feeling."
+      }
+    ],
+    "config": {
+      "n_layers": 4,
+      "d_model": 192,
+      "n_heads": 4,
+      "d_ff": 768,
+      "n_iterations": 1
+    }
+  }
+}

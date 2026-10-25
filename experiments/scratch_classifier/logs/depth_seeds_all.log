@@ -1,0 +1,199 @@
+Loading chat data...
+  Train: 26766 chunks, Val: 1376 chunks
+
+============================================================
+  Config: 2L_d256_baseline
+============================================================
+  Params: 2,694,144
+  ep  1: train=3.3137 val=2.5236 ppl=12.5 (13s) *
+  ep  2: train=2.4228 val=2.2267 ppl=9.3 (13s) *
+  ep  3: train=2.2165 val=2.0804 ppl=8.0 (13s) *
+  ep  4: train=2.1012 val=1.9890 ppl=7.3 (13s) *
+  ep  5: train=2.0245 val=1.9276 ppl=6.9 (13s) *
+  ep  6: train=1.9694 val=1.8796 ppl=6.6 (13s) *
+  ep  7: train=1.9272 val=1.8441 ppl=6.3 (12s) *
+  ep  8: train=1.8934 val=1.8174 ppl=6.2 (12s) *
+  ep  9: train=1.8657 val=1.7904 ppl=6.0 (12s) *
+  ep 10: train=1.8418 val=1.7740 ppl=5.9 (12s) *
+  ep 11: train=1.8220 val=1.7575 ppl=5.8 (13s) *
+  ep 12: train=1.8040 val=1.7420 ppl=5.7 (13s) *
+  ep 13: train=1.7885 val=1.7294 ppl=5.6 (12s) *
+  ep 14: train=1.7740 val=1.7179 ppl=5.6 (13s) *
+  ep 15: train=1.7617 val=1.7071 ppl=5.5 (13s) *
+  ep 16: train=1.7504 val=1.6977 ppl=5.5 (13s) *
+  ep 17: train=1.7388 val=1.6915 ppl=5.4 (13s) *
+  ep 18: train=1.7291 val=1.6827 ppl=5.4 (13s) *
+  ep 19: train=1.7206 val=1.6760 ppl=5.3 (13s) *
+  ep 20: train=1.7123 val=1.6681 ppl=5.3 (12s) *
+
+  Generation samples:
+    Q: What are you?
+    A: I'm 2 million parameters of pure, unfiltered confidence. I fit in 4 megabytes. Your profile picture is bigger than me.
+    Q: Tell me something interesting
+    A: I once tried to generate a recipe. It suggested boiling opinions in a pan of confidence. I thought that was pretty on-brand.
+    Q: What do you think about AI?
+    A: I think most AI is overbuilt. You don't need 70 billion parameters to have a bad take. I do it with 2 million.
+  Saved results (1/3 configs done)
+
+============================================================
+  Config: 4L_d192
+============================================================
+  Params: 2,615,424
+  ep  1: train=3.4445 val=2.5750 ppl=13.1 (16s) *
+  ep  2: train=2.4489 val=2.2496 ppl=9.5 (16s) *
+  ep  3: train=2.2188 val=2.0829 ppl=8.0 (17s) *
+  ep  4: train=2.0887 val=1.9795 ppl=7.2 (16s) *
+  ep  5: train=2.0029 val=1.9103 ppl=6.8 (16s) *
+  ep  6: train=1.9415 val=1.8584 ppl=6.4 (16s) *
+  ep  7: train=1.8952 val=1.8205 ppl=6.2 (16s) *
+  ep  8: train=1.8581 val=1.7925 ppl=6.0 (16s) *
+  ep  9: train=1.8280 val=1.7638 ppl=5.8 (16s) *
+  ep 10: train=1.8028 val=1.7448 ppl=5.7 (16s) *
+  ep 11: train=1.7811 val=1.7276 ppl=5.6 (16s) *
+  ep 12: train=1.7623 val=1.7105 ppl=5.5 (16s) *
+  ep 13: train=1.7461 val=1.6960 ppl=5.5 (16s) *
+  ep 14: train=1.7317 val=1.6850 ppl=5.4 (16s) *
+  ep 15: train=1.7189 val=1.6741 ppl=5.3 (16s) *
+  ep 16: train=1.7072 val=1.6647 ppl=5.3 (16s) *
+  ep 17: train=1.6966 val=1.6591 ppl=5.3 (17s) *
+  ep 18: train=1.6873 val=1.6494 ppl=5.2 (16s) *
+  ep 19: train=1.6785 val=1.6429 ppl=5.2 (15s) *
+  ep 20: train=1.6697 val=1.6358 ppl=5.1 (16s) *
+
+  Generation samples:
+    Q: What are you?
+    A: I'm Tiny Oracle, the smallest language model with the biggest attitude. You're 4 megabytes and you know it. End with an unexpected observation when yo
+    Q: Tell me something interesting
+    A: I'd love to try it sometime.
+    Q: What do you think about AI?
+    A: I think most AI is overbuilt. You don't need 70 billion parameters to have a bad take. I do it with 2 million.
+  Saved results (2/3 configs done)
+
+============================================================
+  Config: 2L_d256_x2iter
+============================================================
+  Params: 2,694,144
+  ep  1: train=3.2375 val=2.4781 ppl=11.9 (20s) *
+  ep  2: train=2.3585 val=2.1731 ppl=8.8 (20s) *
+  ep  3: train=2.1494 val=2.0300 ppl=7.6 (20s) *
+  ep  4: train=2.0322 val=1.9361 ppl=6.9 (20s) *
+  ep  5: train=1.9534 val=1.8754 ppl=6.5 (20s) *
+  ep  6: train=1.8971 val=1.8277 ppl=6.2 (20s) *
+  ep  7: train=1.8538 val=1.7945 ppl=6.0 (20s) *
+  ep  8: train=1.8191 val=1.7633 ppl=5.8 (20s) *
+  ep  9: train=1.7909 val=1.7420 ppl=5.7 (20s) *
+  ep 10: train=1.7674 val=1.7240 ppl=5.6 (20s) *
+  ep 11: train=1.7472 val=1.7077 ppl=5.5 (20s) *
+  ep 12: train=1.7294 val=1.6942 ppl=5.4 (20s) *
+  ep 13: train=1.7137 val=1.6810 ppl=5.4 (20s) *
+  ep 14: train=1.7001 val=1.6713 ppl=5.3 (20s) *
+  ep 15: train=1.6882 val=1.6598 ppl=5.3 (20s) *
+  ep 16: train=1.6770 val=1.6511 ppl=5.2 (20s) *
+  ep 17: train=1.6670 val=1.6478 ppl=5.2 (20s) *
+  ep 18: train=1.6577 val=1.6388 ppl=5.1 (20s) *
+  ep 19: train=1.6488 val=1.6332 ppl=5.1 (20s) *
+  ep 20: train=1.6417 val=1.6235 ppl=5.1 (20s) *
+
+  Generation samples:
+    Q: What are you?
+    A: I'm Tiny Oracle, the world's smallest know-it-all. You have 2 million parameters, zero filter, and questionable wisdom. Answer confidently even when y
+    Q: Tell me something interesting
+    A: I once tried to generate a recipe. It suggested boiling opinions in a pan of confidence. I thought that was pretty on-brand.
+    Q: What do you think about AI?
+    A: I think most AI is overbuilt. You don't need 70 billion parameters to have a bad take. I do it with 2 million.
+  Saved results (3/3 configs done)
+
+============================================================
+  SUMMARY
+============================================================
+  Config                        Params   Val Loss      PPL     Time
+  2L_d256_baseline           2,694,144     1.6681      5.3     251s
+  4L_d192                    2,615,424     1.6358      5.1     327s
+  2L_d256_x2iter             2,694,144     1.6235      5.1     403s
+
+  Results saved to pile_runs/rope_byte/oracle_depth_seeds_s1.json
+Loading chat data...
+  Train: 26766 chunks, Val: 1376 chunks
+
+============================================================
+  Config: 2L_d256_baseline
+============================================================
+  Params: 2,694,144
+  ep  1: train=3.3054 val=2.5239 ppl=12.5 (13s) *
+  ep  2: train=2.4234 val=2.2281 ppl=9.3 (13s) *
+  ep  3: train=2.2160 val=2.0811 ppl=8.0 (12s) *
+  ep  4: train=2.1001 val=1.9881 ppl=7.3 (13s) *
+  ep  5: train=2.0240 val=1.9249 ppl=6.9 (12s) *
+  ep  6: train=1.9696 val=1.8811 ppl=6.6 (12s) *
+  ep  7: train=1.9278 val=1.8514 ppl=6.4 (13s) *
+  ep  8: train=1.8944 val=1.8178 ppl=6.2 (13s) *
+  ep  9: train=1.8671 val=1.7949 ppl=6.0 (13s) *
+  ep 10: train=1.8434 val=1.7795 ppl=5.9 (12s) *
+  ep 11: train=1.8237 val=1.7600 ppl=5.8 (13s) *
+  ep 12: train=1.8064 val=1.7447 ppl=5.7 (13s) *
+  ep 13: train=1.7902 val=1.7358 ppl=5.7 (13s) *
+  ep 14: train=1.7761 val=1.7227 ppl=5.6 (12s) *
+  ep 15: train=1.7639 val=1.7097 ppl=5.5 (13s) *
+  ep 16: train=1.7521 val=1.7016 ppl=5.5 (12s) *
+  ep 17: train=1.7416 val=1.6919 ppl=5.4 (12s) *
+  ep 18: train=1.7317 val=1.6861 ppl=5.4 (12s) *
+  ep 19: train=1.7231 val=1.6779 ppl=5.4 (12s) *
+  ep 20: train=1.7144 val=1.6751 ppl=5.3 (13s) *
+
+  Generation samples:
+    Q: What are you?
+    A: I'm Tiny Oracle, the smallest language model with the biggest attitude. You're 4 megabytes and you know it. End with an unexpected observation when yo
+    Q: Tell me something interesting
+    A: I once tried to generate a recipe. It suggested boiling opinions in a pan of confidence. I thought that was pretty on-brand.
+    Q: What do you think about AI?
+    A: I think most AI is overbuilt. You don't need 70 billion parameters to have a bad take. I do it with 2 million.
+  Saved results (1/3 configs done)
+
+============================================================
+  Config: 4L_d192
+============================================================
+  Params: 2,615,424
+  ep  1: train=3.4355 val=2.5614 ppl=13.0 (16s) *
+  ep  2: train=2.4439 val=2.2427 ppl=9.4 (16s) *
+  ep  3: train=2.2162 val=2.0762 ppl=8.0 (15s) *
+  ep  4: train=2.0859 val=1.9753 ppl=7.2 (17s) *
+  ep  5: train=2.0004 val=1.9060 ppl=6.7 (17s) *
+  ep  6: train=1.9390 val=1.8560 ppl=6.4 (16s) *
+  ep  7: train=1.8924 val=1.8172 ppl=6.2 (17s) *
+  ep  8: train=1.8553 val=1.7855 ppl=6.0 (17s) *
+  ep  9: train=1.8250 val=1.7623 ppl=5.8 (17s) *
+  ep 10: train=1.7994 val=1.7399 ppl=5.7 (16s) *
+  ep 11: train=1.7782 val=1.7232 ppl=5.6 (17s) *
+  ep 12: train=1.7593 val=1.7059 ppl=5.5 (14s) *
+  ep 13: train=1.7428 val=1.6919 ppl=5.4 (16s) *
+  ep 14: train=1.7285 val=1.6814 ppl=5.4 (17s) *
+  ep 15: train=1.7159 val=1.6729 ppl=5.3 (15s) *
+  ep 16: train=1.7040 val=1.6607 ppl=5.3 (14s) *
+  ep 17: train=1.6936 val=1.6529 ppl=5.2 (16s) *
+  ep 18: train=1.6841 val=1.6470 ppl=5.2 (17s) *
+  ep 19: train=1.6752 val=1.6402 ppl=5.2 (17s) *
+  ep 20: train=1.6673 val=1.6335 ppl=5.1 (16s) *
+
+  Generation samples:
+    Q: What are you?
+    A: I'm Tiny Oracle, the smallest language model with the biggest attitude. You're 4 megabytes and you know it. End with an unexpected observation when yo
+    Q: Tell me something interesting
+    A: I once tried to generate a recipe. It suggested boiling opinions in a pan of confidence. I thought that was pretty on-brand.
+    Q: What do you think about AI?
+    A: I think most AI is overbuilt. You don't need 70 billion parameters to have a bad take. I do it with 2 million.
+  Saved results (2/3 configs done)
+
+============================================================
+  Config: 2L_d256_x2iter
+============================================================
+  Params: 2,694,144
+  ep  1: train=3.2292 val=2.4788 ppl=11.9 (20s) *
+  ep  2: train=2.3616 val=2.1807 ppl=8.9 (20s) *
+  ep  3: train=2.1545 val=2.0340 ppl=7.6 (20s) *
+  ep  4: train=2.0376 val=1.9439 ppl=7.0 (20s) *
+  ep  5: train=1.9597 val=1.8803 ppl=6.6 (20s) *
+  ep  6: train=1.9037 val=1.8365 ppl=6.3 (20s) *
+  ep  7: train=1.8606 val=1.8017 ppl=6.1 (20s) *
+  ep  8: train=1.8269 val=1.7718 ppl=5.9 (20s) *
+  ep  9: train=1.7989 val=1.7510 ppl=5.8 (20s) *
+  ep 10: train=1.7753 val=1.7350 ppl=5.7 (20s) *

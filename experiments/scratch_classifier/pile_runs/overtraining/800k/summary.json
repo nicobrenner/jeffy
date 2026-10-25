@@ -1,0 +1,25 @@
+{
+  "model_size": "800k",
+  "model_label": "800K",
+  "n_params": 834400,
+  "tokens_trained": 792199168,
+  "tok_param_ratio": 949.5445829338447,
+  "best_val_loss": 6.061242647171021,
+  "best_val_ppl": 428.90808726375207,
+  "final_val_loss": 6.069668645858765,
+  "final_val_ppl": 432.537334789391,
+  "total_steps": 6044,
+  "training_time_hours": 0.7078970272011227,
+  "device": "cuda",
+  "config": {
+    "d_model": 16,
+    "n_layers": 4,
+    "n_heads": 4,
+    "label": "800K"
+  },
+  "seq_len": 1024,
+  "batch_size": 32,
+  "lr": 0.003,
+  "tie_weights": true,
+  "pretrain_mode": "causal"
+}

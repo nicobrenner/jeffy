@@ -1,0 +1,93 @@
+Device: mps
+/Users/nico/miniforge3/lib/python3.12/site-packages/sklearn/utils/_param_validation.py:14: UserWarning: A NumPy version >=1.23.5 and <2.5.0 is required for this version of SciPy (detected version 2.5.4)
+  from scipy.sparse import csr_matrix, issparse
+Tokenizer: EleutherAI/gpt-neox-20b (vocab=50304)
+
+Experiment: 800K model, 0.03B tokens [Causal LM]
+  tok/param ratio will be computed after model init
+/Users/nico/Documents/Projects/jeffy/experiments/scratch_classifier/train_pile_scaling.py:109: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.transformer = nn.TransformerEncoder(layer, num_layers=n_layers)
+Training data: 2M tokens on disk
+Initializing weights from /Users/nico/Documents/Projects/jeffy/experiments/scratch_classifier/pile_runs/overfit_test/mlm_pretrain/pile_800k/best_model.pt...
+  Loaded weights (step 579, val_ppl 2400.762855847543)
+
+Model: 834,400 params (0.8M)
+  d_model=16, n_layers=4, n_heads=4, d_ff=64
+  tie_weights=True, seq_len=1024
+  tok/param ratio: 36.4
+/Users/nico/Documents/Projects/jeffy/experiments/scratch_classifier/train_pile_scaling.py:516: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  scaler = torch.cuda.amp.GradScaler(enabled=use_amp)
+
+Training for 1,855 steps (0.03B tokens)
+  batch_size=16, accumulate=1, effective_batch=16
+  tokens/step=16,384, warmup=185 steps
+  lr=0.003, weight_decay=0.1
+  eval every 50 steps, save every 9999 steps
+================================================================================
+
+/Users/nico/Documents/Projects/jeffy/experiments/scratch_classifier/train_pile_scaling.py:573: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=use_amp):
+  >>> EVAL step 50: val_loss=7.8893 val_ppl=2668.55 (tok/param=1.0) *BEST*
+  step     100/1,855  loss=7.4658  ppl= 1747.3  lr=1.62e-03  30,551 tok/s  tokens=2M
+  >>> EVAL step 100: val_loss=7.6761 val_ppl=2156.20 (tok/param=2.0) *BEST*
+  >>> EVAL step 150: val_loss=7.5199 val_ppl=1844.45 (tok/param=2.9) *BEST*
+  step     200/1,855  loss=7.0575  ppl= 1161.6  lr=3.00e-03  26,422 tok/s  tokens=3M
+  >>> EVAL step 200: val_loss=7.3981 val_ppl=1632.93 (tok/param=3.9) *BEST*
+  >>> EVAL step 250: val_loss=7.3067 val_ppl=1490.26 (tok/param=4.9) *BEST*
+  step     300/1,855  loss=6.7275  ppl=  835.1  lr=2.97e-03  26,374 tok/s  tokens=5M
+  >>> EVAL step 300: val_loss=7.2091 val_ppl=1351.65 (tok/param=5.9) *BEST*
+  >>> EVAL step 350: val_loss=7.1924 val_ppl=1329.30 (tok/param=6.9) *BEST*
+  step     400/1,855  loss=6.4821  ppl=  653.3  lr=2.88e-03  26,565 tok/s  tokens=7M
+  >>> EVAL step 400: val_loss=7.1041 val_ppl=1217.00 (tok/param=7.9) *BEST*
+  >>> EVAL step 450: val_loss=7.0495 val_ppl=1152.26 (tok/param=8.8) *BEST*
+  step     500/1,855  loss=6.2630  ppl=  524.8  lr=2.74e-03  26,446 tok/s  tokens=8M
+  >>> EVAL step 500: val_loss=7.0855 val_ppl=1194.49 (tok/param=9.8)
+  >>> EVAL step 550: val_loss=7.0281 val_ppl=1127.89 (tok/param=10.8) *BEST*
+  step     600/1,855  loss=6.1200  ppl=  454.9  lr=2.57e-03  27,067 tok/s  tokens=10M
+  >>> EVAL step 600: val_loss=6.9702 val_ppl=1064.45 (tok/param=11.8) *BEST*
+  >>> EVAL step 650: val_loss=6.9665 val_ppl=1060.55 (tok/param=12.8) *BEST*
+  step     700/1,855  loss=6.0471  ppl=  422.9  lr=2.35e-03  26,933 tok/s  tokens=11M
+  >>> EVAL step 700: val_loss=6.9762 val_ppl=1070.85 (tok/param=13.7)
+  >>> EVAL step 750: val_loss=6.9993 val_ppl=1095.91 (tok/param=14.7)
+  step     800/1,855  loss=5.9599  ppl=  387.6  lr=2.10e-03  25,646 tok/s  tokens=13M
+  >>> EVAL step 800: val_loss=6.9140 val_ppl=1006.22 (tok/param=15.7) *BEST*
+  >>> EVAL step 850: val_loss=6.9723 val_ppl=1066.62 (tok/param=16.7)
+  step     900/1,855  loss=5.9112  ppl=  369.2  lr=1.84e-03  25,646 tok/s  tokens=15M
+  >>> EVAL step 900: val_loss=6.8622 val_ppl=955.43 (tok/param=17.7) *BEST*
+  >>> EVAL step 950: val_loss=6.9636 val_ppl=1057.41 (tok/param=18.7)
+  step   1,000/1,855  loss=5.8666  ppl=  353.0  lr=1.56e-03  25,555 tok/s  tokens=16M
+  >>> EVAL step 1000: val_loss=6.9145 val_ppl=1006.75 (tok/param=19.6)
+  >>> EVAL step 1050: val_loss=6.9153 val_ppl=1007.61 (tok/param=20.6)
+  step   1,100/1,855  loss=5.8434  ppl=  345.0  lr=1.28e-03  25,467 tok/s  tokens=18M
+  >>> EVAL step 1100: val_loss=6.9275 val_ppl=1019.93 (tok/param=21.6)
+  >>> EVAL step 1150: val_loss=6.9676 val_ppl=1061.66 (tok/param=22.6)
+  step   1,200/1,855  loss=5.7930  ppl=  328.0  lr=1.00e-03  25,569 tok/s  tokens=20M
+  >>> EVAL step 1200: val_loss=6.8944 val_ppl=986.69 (tok/param=23.6)
+  >>> EVAL step 1250: val_loss=6.8568 val_ppl=950.36 (tok/param=24.5) *BEST*
+  step   1,300/1,855  loss=5.7907  ppl=  327.2  lr=7.46e-04  25,871 tok/s  tokens=21M
+  >>> EVAL step 1300: val_loss=6.8711 val_ppl=964.03 (tok/param=25.5)
+  >>> EVAL step 1350: val_loss=6.9066 val_ppl=998.87 (tok/param=26.5)
+  step   1,400/1,855  loss=5.7423  ppl=  311.8  lr=5.17e-04  26,279 tok/s  tokens=23M
+  >>> EVAL step 1400: val_loss=6.9856 val_ppl=1080.90 (tok/param=27.5)
+  >>> EVAL step 1450: val_loss=6.9577 val_ppl=1051.16 (tok/param=28.5)
+  step   1,500/1,855  loss=5.7167  ppl=  303.9  lr=3.22e-04  26,380 tok/s  tokens=25M
+  >>> EVAL step 1500: val_loss=6.8483 val_ppl=942.26 (tok/param=29.5) *BEST*
+  >>> EVAL step 1550: val_loss=6.9255 val_ppl=1017.86 (tok/param=30.4)
+  step   1,600/1,855  loss=5.7088  ppl=  301.5  lr=1.69e-04  26,484 tok/s  tokens=26M
+  >>> EVAL step 1600: val_loss=6.9960 val_ppl=1092.30 (tok/param=31.4)
+  >>> EVAL step 1650: val_loss=6.9117 val_ppl=1003.93 (tok/param=32.4)
+  step   1,700/1,855  loss=5.7117  ppl=  302.4  lr=6.33e-05  24,355 tok/s  tokens=28M
+  >>> EVAL step 1700: val_loss=6.8938 val_ppl=986.16 (tok/param=33.4)
+  >>> EVAL step 1750: val_loss=6.9070 val_ppl=999.24 (tok/param=34.4)
+  step   1,800/1,855  loss=5.6923  ppl=  296.6  lr=8.02e-06  24,721 tok/s  tokens=29M
+  >>> EVAL step 1800: val_loss=6.9355 val_ppl=1028.08 (tok/param=35.3)
+  >>> EVAL step 1850: val_loss=6.9260 val_ppl=1018.44 (tok/param=36.3)
+
+================================================================================
+Training complete!
+  Model: 800K (834,400 params)
+  Tokens: 0.03B (36.4 tok/param)
+  Final val_loss: 6.9716 (ppl=1065.96)
+  Best val_loss:  6.8483 (ppl=942.26)
+  Time: 0.3h
+  Output: /Users/nico/Documents/Projects/jeffy/experiments/scratch_classifier/pile_runs/overfit_test/causal_from_mlm/pile_800k

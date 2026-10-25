@@ -1,0 +1,98 @@
+{
+ "banking77": {
+  "acc": {
+   "tokens": 0.8735,
+   "seg4": 0.874,
+   "pooled_lr": 0.874
+  },
+  "baseline": 0.8765,
+  "seen": true,
+  "K": 77,
+  "n_train": 10000,
+  "n_test": 2000
+ },
+ "ag_news": {
+  "acc": {
+   "tokens": 0.8745,
+   "seg4": 0.8745,
+   "pooled_lr": 0.8725
+  },
+  "baseline": 0.878,
+  "seen": true,
+  "K": 4,
+  "n_train": 10000,
+  "n_test": 2000
+ },
+ "imdb": {
+  "acc": {
+   "tokens": 0.7655,
+   "seg4": 0.764,
+   "pooled_lr": 0.764
+  },
+  "baseline": 0.7635,
+  "seen": true,
+  "K": 2,
+  "n_train": 10000,
+  "n_test": 2000
+ },
+ "emotion": {
+  "acc": {
+   "tokens": 0.8765,
+   "seg4": 0.8735,
+   "pooled_lr": 0.868
+  },
+  "baseline": 0.871,
+  "seen": true,
+  "K": 6,
+  "n_train": 10000,
+  "n_test": 2000
+ },
+ "sst2": {
+  "acc": {
+   "tokens": 0.7855504587155964,
+   "seg4": 0.7855504587155964,
+   "pooled_lr": 0.7752293577981652
+  },
+  "baseline": 0.7809633027522935,
+  "seen": true,
+  "K": 2,
+  "n_train": 10000,
+  "n_test": 872
+ },
+ "sms_spam": {
+  "acc": {
+   "tokens": 0.9856502242152466,
+   "seg4": 0.9865470852017937,
+   "pooled_lr": 0.9883408071748879
+  },
+  "baseline": 0.9883408071748879,
+  "seen": true,
+  "K": 2,
+  "n_train": 4459,
+  "n_test": 1115
+ },
+ "dbpedia": {
+  "acc": {
+   "tokens": 0.863,
+   "seg4": 0.7935,
+   "pooled_lr": 0.693
+  },
+  "baseline": 0.694,
+  "seen": false,
+  "K": 14,
+  "n_train": 10000,
+  "n_test": 2000
+ },
+ "rottentomatoes": {
+  "acc": {
+   "tokens": 0.8133208255159474,
+   "seg4": 0.8123827392120075,
+   "pooled_lr": 0.799249530956848
+  },
+  "baseline": 0.8161350844277674,
+  "seen": false,
+  "K": 2,
+  "n_train": 8530,
+  "n_test": 1066
+ }
+}

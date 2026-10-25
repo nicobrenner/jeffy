@@ -1,0 +1,83 @@
+Device: cuda
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.5.1+cu124
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Tokenizer: /root/neox_tokenizer (vocab=50304)
+
+Experiment: 100M model, 2.10B tokens
+  tok/param ratio will be computed after model init
+Training data: 2375M tokens on disk
+
+Model: 104,433,920 params (104.4M)
+  d_model=640, n_layers=8, n_heads=8, d_ff=2560
+  tie_weights=False, seq_len=1024
+  tok/param ratio: 19.1
+
+Training for 15,220 steps (2.00B tokens)
+  batch_size=32, accumulate=4, effective_batch=128
+  tokens/step=131,072, warmup=1,522 steps
+  lr=0.0006, weight_decay=0.1
+  eval every 500 steps, save every 2000 steps
+================================================================================
+
+  step     100/15,220  loss=9.7641  ppl=17397.4  lr=3.94e-05  120,197 tok/s  tokens=13M
+  step     200/15,220  loss=7.7837  ppl= 2401.2  lr=7.88e-05  123,217 tok/s  tokens=26M
+  step     300/15,220  loss=6.7829  ppl=  882.6  lr=1.18e-04  123,155 tok/s  tokens=39M
+  step     400/15,220  loss=6.2561  ppl=  521.2  lr=1.58e-04  123,151 tok/s  tokens=52M
+  step     500/15,220  loss=5.9409  ppl=  380.3  lr=1.97e-04  123,178 tok/s  tokens=66M
+  >>> EVAL step 500: val_loss=5.7962 val_ppl=329.04 (tok/param=0.6) *BEST*
+  step     600/15,220  loss=5.7108  ppl=  302.1  lr=2.37e-04  104,718 tok/s  tokens=79M
+  step     700/15,220  loss=5.4946  ppl=  243.4  lr=2.76e-04  123,145 tok/s  tokens=92M
+  step     800/15,220  loss=5.3119  ppl=  202.7  lr=3.15e-04  123,145 tok/s  tokens=105M
+  step     900/15,220  loss=5.1289  ppl=  168.8  lr=3.55e-04  123,120 tok/s  tokens=118M
+  step   1,000/15,220  loss=4.9350  ppl=  139.1  lr=3.94e-04  123,109 tok/s  tokens=131M
+  >>> EVAL step 1000: val_loss=4.8407 val_ppl=126.55 (tok/param=1.3) *BEST*
+  step   1,100/15,220  loss=4.7239  ppl=  112.6  lr=4.34e-04  104,650 tok/s  tokens=144M
+  step   1,200/15,220  loss=4.5206  ppl=   91.9  lr=4.73e-04  123,171 tok/s  tokens=157M
+  step   1,300/15,220  loss=4.3664  ppl=   78.8  lr=5.12e-04  123,194 tok/s  tokens=170M
+  step   1,400/15,220  loss=4.2474  ppl=   69.9  lr=5.52e-04  123,192 tok/s  tokens=184M
+  step   1,500/15,220  loss=4.1549  ppl=   63.7  lr=5.91e-04  123,205 tok/s  tokens=197M
+  >>> EVAL step 1500: val_loss=4.0708 val_ppl=58.60 (tok/param=1.9) *BEST*
+  step   1,600/15,220  loss=4.0594  ppl=   57.9  lr=6.00e-04  104,718 tok/s  tokens=210M
+  step   1,700/15,220  loss=4.0184  ppl=   55.6  lr=6.00e-04  123,170 tok/s  tokens=223M
+  step   1,800/15,220  loss=3.9440  ppl=   51.6  lr=5.99e-04  123,184 tok/s  tokens=236M
+  step   1,900/15,220  loss=3.9070  ppl=   49.7  lr=5.99e-04  123,171 tok/s  tokens=249M
+  step   2,000/15,220  loss=3.8609  ppl=   47.5  lr=5.98e-04  123,130 tok/s  tokens=262M
+  >>> EVAL step 2000: val_loss=3.8631 val_ppl=47.61 (tok/param=2.5) *BEST*
+  step   2,100/15,220  loss=3.8358  ppl=   46.3  lr=5.97e-04  103,406 tok/s  tokens=275M
+  step   2,200/15,220  loss=3.7914  ppl=   44.3  lr=5.96e-04  123,103 tok/s  tokens=288M
+  step   2,300/15,220  loss=3.7560  ppl=   42.8  lr=5.95e-04  123,119 tok/s  tokens=301M
+  step   2,400/15,220  loss=3.7472  ppl=   42.4  lr=5.94e-04  123,127 tok/s  tokens=315M
+  step   2,500/15,220  loss=3.7260  ppl=   41.5  lr=5.92e-04  123,101 tok/s  tokens=328M
+  >>> EVAL step 2500: val_loss=3.7475 val_ppl=42.42 (tok/param=3.1) *BEST*
+  step   2,600/15,220  loss=3.6942  ppl=   40.2  lr=5.91e-04  104,649 tok/s  tokens=341M
+  step   2,700/15,220  loss=3.6756  ppl=   39.5  lr=5.89e-04  123,111 tok/s  tokens=354M
+  step   2,800/15,220  loss=3.6528  ppl=   38.6  lr=5.87e-04  123,075 tok/s  tokens=367M
+  step   2,900/15,220  loss=3.6336  ppl=   37.9  lr=5.85e-04  123,102 tok/s  tokens=380M
+  step   3,000/15,220  loss=3.6244  ppl=   37.5  lr=5.83e-04  123,086 tok/s  tokens=393M
+  >>> EVAL step 3000: val_loss=3.5717 val_ppl=35.58 (tok/param=3.8) *BEST*
+  step   3,100/15,220  loss=3.6064  ppl=   36.8  lr=5.81e-04  104,583 tok/s  tokens=406M
+  step   3,200/15,220  loss=3.5902  ppl=   36.2  lr=5.78e-04  123,050 tok/s  tokens=419M
+  step   3,300/15,220  loss=3.5842  ppl=   36.0  lr=5.75e-04  123,051 tok/s  tokens=433M
+  step   3,400/15,220  loss=3.5602  ppl=   35.2  lr=5.73e-04  123,018 tok/s  tokens=446M
+  step   3,500/15,220  loss=3.5421  ppl=   34.5  lr=5.70e-04  123,076 tok/s  tokens=459M
+  >>> EVAL step 3500: val_loss=3.5542 val_ppl=34.96 (tok/param=4.4) *BEST*
+  step   3,600/15,220  loss=3.5379  ppl=   34.4  lr=5.67e-04  104,595 tok/s  tokens=472M
+  step   3,700/15,220  loss=3.5305  ppl=   34.1  lr=5.63e-04  122,953 tok/s  tokens=485M
+  step   3,800/15,220  loss=3.5089  ppl=   33.4  lr=5.60e-04  123,128 tok/s  tokens=498M
+  step   3,900/15,220  loss=3.5002  ppl=   33.1  lr=5.56e-04  123,091 tok/s  tokens=511M
+  step   4,000/15,220  loss=3.4970  ppl=   33.0  lr=5.53e-04  123,062 tok/s  tokens=524M
+  >>> EVAL step 4000: val_loss=3.4840 val_ppl=32.59 (tok/param=5.0) *BEST*
+  step   4,100/15,220  loss=3.4863  ppl=   32.7  lr=5.49e-04  103,050 tok/s  tokens=537M
+  step   4,200/15,220  loss=3.4864  ppl=   32.7  lr=5.45e-04  122,975 tok/s  tokens=551M
+  step   4,300/15,220  loss=3.4699  ppl=   32.1  lr=5.41e-04  122,943 tok/s  tokens=564M
+  step   4,400/15,220  loss=3.4650  ppl=   32.0  lr=5.37e-04  123,041 tok/s  tokens=577M
+  step   4,500/15,220  loss=3.4533  ppl=   31.6  lr=5.33e-04  123,056 tok/s  tokens=590M
+  >>> EVAL step 4500: val_loss=3.4506 val_ppl=31.52 (tok/param=5.6) *BEST*
+  step   4,600/15,220  loss=3.4517  ppl=   31.6  lr=5.28e-04  104,609 tok/s  tokens=603M
+  step   4,700/15,220  loss=3.4395  ppl=   31.2  lr=5.24e-04  122,982 tok/s  tokens=616M
+  step   4,800/15,220  loss=3.4331  ppl=   31.0  lr=5.19e-04  123,028 tok/s  tokens=629M
+  step   4,900/15,220  loss=3.4195  ppl=   30.6  lr=5.14e-04  123,010 tok/s  tokens=642M
+  step   5,000/15,220  loss=3.4231  ppl=   30.7  lr=5.10e-04  123,057 tok/s  tokens=655M
+  >>> EVAL step 5000: val_loss=3.4037 val_ppl=30.07 (tok/param=6.3) *BEST*
+  step   5,100/15,220  loss=3.4236  ppl=   30.7  lr=5.05e-04  104,646 tok/s  tokens=668M
+  step   5,200/15,220  loss=3.4072  ppl=   30.2  lr=4.99e-04  123,089 tok/s  tokens=682M

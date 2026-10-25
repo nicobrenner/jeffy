@@ -1,0 +1,203 @@
+{
+ "means": {
+  "PNG (PIL optimize)": 13.44835583410319,
+  "WebP lossless (m6)": 9.539965986394558,
+  "JPEG 2000 lossless": 13.46619198090759,
+  "JPEG XL lossless e7": 8.723339387195209,
+  "JPEG XL lossless e9": 8.688491188656533
+ },
+ "per_image": [
+  {
+   "image": "kodim01.png",
+   "PNG (PIL optimize)": 15.984672881498279,
+   "WebP lossless (m6)": 10.279079533047787,
+   "JPEG 2000 lossless": 16.433253548332914,
+   "JPEG XL lossless e7": 9.569790879314688,
+   "JPEG XL lossless e9": 9.496745611824977
+  },
+  {
+   "image": "kodim02.png",
+   "PNG (PIL optimize)": 12.665007978500041,
+   "WebP lossless (m6)": 9.245611824976905,
+   "JPEG 2000 lossless": 12.701310153691105,
+   "JPEG XL lossless e7": 8.643654992861341,
+   "JPEG XL lossless e9": 8.567775258251448
+  },
+  {
+   "image": "kodim03.png",
+   "PNG (PIL optimize)": 11.04069035021416,
+   "WebP lossless (m6)": 7.854329386075418,
+   "JPEG 2000 lossless": 10.785021415973796,
+   "JPEG XL lossless e7": 6.847988578147309,
+   "JPEG XL lossless e9": 6.73862013941379
+  },
+  {
+   "image": "kodim04.png",
+   "PNG (PIL optimize)": 12.988242210464433,
+   "WebP lossless (m6)": 9.33018392542202,
+   "JPEG 2000 lossless": 12.73066263542454,
+   "JPEG XL lossless e7": 8.580246913580247,
+   "JPEG XL lossless e9": 8.528764592256655
+  },
+  {
+   "image": "kodim05.png",
+   "PNG (PIL optimize)": 16.524124464600654,
+   "WebP lossless (m6)": 11.422230620643319,
+   "JPEG 2000 lossless": 15.98589065255732,
+   "JPEG XL lossless e7": 10.1549088771311,
+   "JPEG XL lossless e9": 10.296044343663391
+  },
+  {
+   "image": "kodim06.png",
+   "PNG (PIL optimize)": 13.660430839002268,
+   "WebP lossless (m6)": 9.511211892164273,
+   "JPEG 2000 lossless": 14.079931972789115,
+   "JPEG XL lossless e7": 8.80620643319056,
+   "JPEG XL lossless e9": 8.802259175275049
+  },
+  {
+   "image": "kodim07.png",
+   "PNG (PIL optimize)": 11.514970185605106,
+   "WebP lossless (m6)": 8.439279415469892,
+   "JPEG 2000 lossless": 11.369215587469556,
+   "JPEG XL lossless e7": 7.463613840597968,
+   "JPEG XL lossless e9": 7.324808935920047
+  },
+  {
+   "image": "kodim08.png",
+   "PNG (PIL optimize)": 16.081548668850257,
+   "WebP lossless (m6)": 11.168472327202485,
+   "JPEG 2000 lossless": 16.601347946586042,
+   "JPEG XL lossless e7": 10.461157302427143,
+   "JPEG XL lossless e9": 10.503569328966154
+  },
+  {
+   "image": "kodim09.png",
+   "PNG (PIL optimize)": 11.91729654824893,
+   "WebP lossless (m6)": 8.89716133366927,
+   "JPEG 2000 lossless": 12.15259931132947,
+   "JPEG XL lossless e7": 7.951436130007559,
+   "JPEG XL lossless e9": 7.899092970521542
+  },
+  {
+   "image": "kodim10.png",
+   "PNG (PIL optimize)": 12.106386999244142,
+   "WebP lossless (m6)": 9.024439405391787,
+   "JPEG 2000 lossless": 12.384689678340472,
+   "JPEG XL lossless e7": 8.101599899218947,
+   "JPEG XL lossless e9": 8.055450575291845
+  },
+  {
+   "image": "kodim11.png",
+   "PNG (PIL optimize)": 12.952989837910472,
+   "WebP lossless (m6)": 9.133870832283531,
+   "JPEG 2000 lossless": 13.714306710338457,
+   "JPEG XL lossless e7": 8.58843537414966,
+   "JPEG XL lossless e9": 8.518980431678845
+  },
+  {
+   "image": "kodim12.png",
+   "PNG (PIL optimize)": 11.630721424372219,
+   "WebP lossless (m6)": 8.281683043587805,
+   "JPEG 2000 lossless": 11.867493911144704,
+   "JPEG XL lossless e7": 7.405874695557236,
+   "JPEG XL lossless e9": 7.361321071638532
+  },
+  {
+   "image": "kodim13.png",
+   "PNG (PIL optimize)": 18.176303854875282,
+   "WebP lossless (m6)": 12.226379440665156,
+   "JPEG 2000 lossless": 18.325354833291343,
+   "JPEG XL lossless e7": 11.371609137482153,
+   "JPEG XL lossless e9": 11.415133954816495
+  },
+  {
+   "image": "kodim14.png",
+   "PNG (PIL optimize)": 15.126774166456705,
+   "WebP lossless (m6)": 10.534601494918956,
+   "JPEG 2000 lossless": 15.196900982615269,
+   "JPEG XL lossless e7": 9.51832955404384,
+   "JPEG XL lossless e9": 9.59578399260939
+  },
+  {
+   "image": "kodim15.png",
+   "PNG (PIL optimize)": 12.475392626186277,
+   "WebP lossless (m6)": 8.719618711682203,
+   "JPEG 2000 lossless": 11.89806416393718,
+   "JPEG XL lossless e7": 7.963466868228773,
+   "JPEG XL lossless e9": 7.823108255647938
+  },
+  {
+   "image": "kodim16.png",
+   "PNG (PIL optimize)": 11.685920047031159,
+   "WebP lossless (m6)": 8.487990257831528,
+   "JPEG 2000 lossless": 12.605463172923491,
+   "JPEG XL lossless e7": 7.71122029058537,
+   "JPEG XL lossless e9": 7.530696229108927
+  },
+  {
+   "image": "kodim17.png",
+   "PNG (PIL optimize)": 12.766250944822373,
+   "WebP lossless (m6)": 9.092340639959687,
+   "JPEG 2000 lossless": 12.739564961787185,
+   "JPEG XL lossless e7": 8.055786512135718,
+   "JPEG XL lossless e9": 8.000230956580163
+  },
+  {
+   "image": "kodim18.png",
+   "PNG (PIL optimize)": 15.757768539514572,
+   "WebP lossless (m6)": 11.238935080204921,
+   "JPEG 2000 lossless": 15.379965566473503,
+   "JPEG XL lossless e7": 10.494037121021249,
+   "JPEG XL lossless e9": 10.468883849836232
+  },
+  {
+   "image": "kodim19.png",
+   "PNG (PIL optimize)": 13.609263458469808,
+   "WebP lossless (m6)": 9.775048290921307,
+   "JPEG 2000 lossless": 13.655874695557236,
+   "JPEG XL lossless e7": 9.132716049382717,
+   "JPEG XL lossless e9": 9.023641555387588
+  },
+  {
+   "image": "kodim20.png",
+   "PNG (PIL optimize)": 10.218044007726547,
+   "WebP lossless (m6)": 7.261232888217015,
+   "JPEG 2000 lossless": 9.553434954228605,
+   "JPEG XL lossless e7": 6.82947005962879,
+   "JPEG XL lossless e9": 6.679117325942722
+  },
+  {
+   "image": "kodim21.png",
+   "PNG (PIL optimize)": 13.85817166372722,
+   "WebP lossless (m6)": 9.96182917611489,
+   "JPEG 2000 lossless": 13.950890232636265,
+   "JPEG XL lossless e7": 9.125976316452507,
+   "JPEG XL lossless e9": 9.130994373057865
+  },
+  {
+   "image": "kodim22.png",
+   "PNG (PIL optimize)": 14.332934408331234,
+   "WebP lossless (m6)": 10.527714789619552,
+   "JPEG 2000 lossless": 13.928844377257075,
+   "JPEG XL lossless e7": 9.741622574955908,
+   "JPEG XL lossless e9": 9.753149407911312
+  },
+  {
+   "image": "kodim23.png",
+   "PNG (PIL optimize)": 11.40119257579575,
+   "WebP lossless (m6)": 8.622616948013773,
+   "JPEG 2000 lossless": 10.752099605274209,
+   "JPEG XL lossless e7": 7.822604350382128,
+   "JPEG XL lossless e9": 7.918766271940875
+  },
+  {
+   "image": "kodim24.png",
+   "PNG (PIL optimize)": 14.285441337028638,
+   "WebP lossless (m6)": 9.923322415385908,
+   "JPEG 2000 lossless": 14.396426471823297,
+   "JPEG XL lossless e7": 9.018392542202067,
+   "JPEG XL lossless e9": 9.090849920215
+  }
+ ]
+}

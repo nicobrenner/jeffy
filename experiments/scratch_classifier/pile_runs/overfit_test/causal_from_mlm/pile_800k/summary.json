@@ -1,0 +1,25 @@
+{
+  "model_size": "800k",
+  "model_label": "800K",
+  "n_params": 834400,
+  "tokens_trained": 30392320,
+  "tok_param_ratio": 36.4333652924257,
+  "best_val_loss": 6.848285160064697,
+  "best_val_ppl": 942.2636890296559,
+  "final_val_loss": 6.971633672714233,
+  "final_val_ppl": 1065.9627631260641,
+  "total_steps": 1855,
+  "training_time_hours": 0.3282474258210924,
+  "device": "mps",
+  "config": {
+    "d_model": 16,
+    "n_layers": 4,
+    "n_heads": 4,
+    "label": "800K"
+  },
+  "seq_len": 1024,
+  "batch_size": 16,
+  "lr": 0.003,
+  "tie_weights": true,
+  "pretrain_mode": "causal"
+}

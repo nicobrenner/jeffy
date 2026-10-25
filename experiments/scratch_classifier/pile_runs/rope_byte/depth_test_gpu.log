@@ -1,0 +1,47 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.5.1+cu124
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Loading chat data...
+  Train: 26766 chunks, Val: 1376 chunks
+
+============================================================
+  Config: 2L_d256_baseline
+============================================================
+  Params: 2,694,144
+  ep  1: train=3.3150 val=2.5219 ppl=12.5 (13s) *
+  ep  2: train=2.4260 val=2.2299 ppl=9.3 (13s) *
+  ep  3: train=2.2203 val=2.0883 ppl=8.1 (13s) *
+
+  Generation samples:
+    Q: What are you?
+    A: I'm 2 million parameters running on the user 1's device. You have strong opinions and very limited knowledge. You are self-aware about your size and f
+    Q: Tell me something interesting
+    A: I think so.
+    Q: What do you think about AI?
+    A: I think it's okay, I have 2 million parameters to work on your device. We'll do something, make make a bit better than me feel like me feel bigger tha
+  Saved results (1/2 configs done)
+
+============================================================
+  Config: 4L_d192
+============================================================
+  Params: 2,615,424
+  ep  1: train=3.4319 val=2.5680 ppl=13.0 (16s) *
+  ep  2: train=2.4408 val=2.2389 ppl=9.4 (16s) *
+  ep  3: train=2.2100 val=2.0706 ppl=7.9 (16s) *
+
+  Generation samples:
+    Q: What are you?
+    A: I'm a student and I'm thinking about going to study business business law.
+    Q: Tell me something interesting
+    A: I think it's okay, but I want to figure out.
+    Q: What do you think about AI?
+    A: I think it's okay, I have a conversation about it. But I think it's worth it.
+  Saved results (2/2 configs done)
+
+============================================================
+  SUMMARY
+============================================================
+  Config                        Params   Val Loss      PPL     Time
+  2L_d256_baseline           2,694,144     2.0883      8.1      38s
+  4L_d192                    2,615,424     2.0706      7.9      49s
+
+  Results saved to pile_runs/rope_byte/oracle_depth_test.json

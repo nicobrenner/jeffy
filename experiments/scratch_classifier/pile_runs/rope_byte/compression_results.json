@@ -1,0 +1,57 @@
+{
+  "n_images": 1000,
+  "avg_model_bpp": 0.9197487621242252,
+  "avg_gzip_bpp": 2.0,
+  "avg_raw_bpp": 8.0,
+  "model_compression_ratio": 8.698027471679799,
+  "gzip_compression_ratio": 4.0,
+  "verify": [
+    {
+      "label": 7,
+      "actual_bits": 663,
+      "theoretical_bits": 659.4405208361542,
+      "png_bits": 2000,
+      "gzip_bits": 2248,
+      "raw_bits": 6272,
+      "time_s": 0.06603121757507324
+    },
+    {
+      "label": 2,
+      "actual_bits": 790,
+      "theoretical_bits": 786.3310076198921,
+      "png_bits": 2360,
+      "gzip_bits": 2480,
+      "raw_bits": 6272,
+      "time_s": 0.06288790702819824
+    },
+    {
+      "label": 1,
+      "actual_bits": 411,
+      "theoretical_bits": 407.1995916358628,
+      "png_bits": 1552,
+      "gzip_bits": 1624,
+      "raw_bits": 6272,
+      "time_s": 0.07106685638427734
+    },
+    {
+      "label": 0,
+      "actual_bits": 750,
+      "theoretical_bits": 746.6303413506528,
+      "png_bits": 2392,
+      "gzip_bits": 2568,
+      "raw_bits": 6272,
+      "time_s": 0.04657483100891113
+    },
+    {
+      "label": 4,
+      "actual_bits": 725,
+      "theoretical_bits": 722.027202057007,
+      "png_bits": 2176,
+      "gzip_bits": 2432,
+      "raw_bits": 6272,
+      "time_s": 0.07474517822265625
+    }
+  ],
+  "avg_png_bpp": 2.7325102040816325,
+  "png_compression_ratio": 2.927710933357233
+}

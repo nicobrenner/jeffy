@@ -1,0 +1,290 @@
+{
+ "clinc_oos": {
+  "acc": {
+   "tokens": 0.5725,
+   "seg4": 0.539,
+   "pooled_lr": 0.5745
+  },
+  "baseline": 0.574,
+  "seen": false,
+  "K": 151,
+  "n_train": 10000,
+  "n_test": 2000
+ },
+ "massive_intent": {
+  "acc": {
+   "tokens": 0.605,
+   "seg4": 0.564,
+   "pooled_lr": 0.5675
+  },
+  "baseline": 0.5735,
+  "seen": false,
+  "K": 60,
+  "n_train": 10000,
+  "n_test": 2000
+ },
+ "dbpedia": {
+  "acc": {
+   "tokens": 0.863,
+   "seg4": 0.7935,
+   "pooled_lr": 0.693
+  },
+  "baseline": 0.694,
+  "seen": false,
+  "K": 14,
+  "n_train": 10000,
+  "n_test": 2000
+ },
+ "snli": {
+  "acc": {
+   "tokens": 0.4915,
+   "seg4": 0.4765,
+   "pooled_lr": 0.423
+  },
+  "baseline": 0.422,
+  "seen": false,
+  "K": 3,
+  "n_train": 10000,
+  "n_test": 2000
+ },
+ "tweet_eval_sentiment": {
+  "acc": {
+   "tokens": 0.517,
+   "seg4": 0.486,
+   "pooled_lr": 0.467
+  },
+  "baseline": 0.488,
+  "seen": false,
+  "K": 3,
+  "n_train": 10000,
+  "n_test": 2000
+ },
+ "tweet_eval_emotion": {
+  "acc": {
+   "tokens": 0.5024630541871922,
+   "seg4": 0.4996481351161154,
+   "pooled_lr": 0.501759324419423
+  },
+  "baseline": 0.4996481351161154,
+  "seen": false,
+  "K": 4,
+  "n_train": 3257,
+  "n_test": 1421
+ },
+ "tweet_eval_offensive": {
+  "acc": {
+   "tokens": 0.7348837209302326,
+   "seg4": 0.7220930232558139,
+   "pooled_lr": 0.7232558139534884
+  },
+  "baseline": 0.7220930232558139,
+  "seen": false,
+  "K": 2,
+  "n_train": 10000,
+  "n_test": 860
+ },
+ "amazonpolarity": {
+  "acc": {
+   "tokens": 0.7825,
+   "seg4": 0.7645,
+   "pooled_lr": 0.76
+  },
+  "baseline": 0.7625,
+  "seen": false,
+  "K": 2,
+  "n_train": 10000,
+  "n_test": 2000
+ },
+ "appreviews": {
+  "acc": {
+   "tokens": 0.8485,
+   "seg4": 0.845,
+   "pooled_lr": 0.833
+  },
+  "baseline": 0.8385,
+  "seen": false,
+  "K": 2,
+  "n_train": 10000,
+  "n_test": 2000
+ },
+ "yelpreviews": {
+  "acc": {
+   "tokens": 0.798,
+   "seg4": 0.789,
+   "pooled_lr": 0.783
+  },
+  "baseline": 0.7805,
+  "seen": false,
+  "K": 2,
+  "n_train": 10000,
+  "n_test": 2000
+ },
+ "rottentomatoes": {
+  "acc": {
+   "tokens": 0.8133208255159474,
+   "seg4": 0.8123827392120075,
+   "pooled_lr": 0.799249530956848
+  },
+  "baseline": 0.8161350844277674,
+  "seen": false,
+  "K": 2,
+  "n_train": 8530,
+  "n_test": 1066
+ },
+ "financialphrasebank": {
+  "acc": {
+   "tokens": 0.6752577319587629,
+   "seg4": 0.6525773195876289,
+   "pooled_lr": 0.6309278350515464
+  },
+  "baseline": 0.654639175257732,
+  "seen": false,
+  "K": 3,
+  "n_train": 3876,
+  "n_test": 970
+ },
+ "yahootopics": {
+  "acc": {
+   "tokens": 0.3385,
+   "seg4": 0.319,
+   "pooled_lr": 0.3155
+  },
+  "baseline": 0.318,
+  "seen": false,
+  "K": 10,
+  "n_train": 10000,
+  "n_test": 2000
+ },
+ "trueteacher": {
+  "acc": {
+   "tokens": 0.685,
+   "seg4": 0.6725,
+   "pooled_lr": 0.6725
+  },
+  "baseline": 0.6715,
+  "seen": false,
+  "K": 2,
+  "n_train": 10000,
+  "n_test": 2000
+ },
+ "capsotu": {
+  "acc": {
+   "tokens": 0.3605,
+   "seg4": 0.3155,
+   "pooled_lr": 0.3185
+  },
+  "baseline": 0.307,
+  "seen": false,
+  "K": 22,
+  "n_train": 10000,
+  "n_test": 2000
+ },
+ "empathetic": {
+  "acc": {
+   "tokens": 0.3941997851772288,
+   "seg4": 0.3727175080558539,
+   "pooled_lr": 0.40494092373791624
+  },
+  "baseline": 0.3877551020408163,
+  "seen": false,
+  "K": 32,
+  "n_train": 3724,
+  "n_test": 931
+ },
+ "biasframes_intent": {
+  "acc": {
+   "tokens": 0.7462365591397849,
+   "seg4": 0.7290322580645161,
+   "pooled_lr": 0.7150537634408602
+  },
+  "baseline": 0.7053763440860215,
+  "seen": false,
+  "K": 2,
+  "n_train": 3718,
+  "n_test": 930
+ },
+ "biasframes_offensive": {
+  "acc": {
+   "tokens": 0.7128099173553719,
+   "seg4": 0.7107438016528925,
+   "pooled_lr": 0.7086776859504132
+  },
+  "baseline": 0.7024793388429752,
+  "seen": false,
+  "K": 2,
+  "n_train": 3870,
+  "n_test": 968
+ },
+ "biasframes_sex": {
+  "acc": {
+   "tokens": 0.8852913968547641,
+   "seg4": 0.8714153561517114,
+   "pooled_lr": 0.8686401480111008
+  },
+  "baseline": 0.8741905642923219,
+  "seen": false,
+  "K": 2,
+  "n_train": 4323,
+  "n_test": 1081
+ },
+ "manifesto": {
+  "acc": {
+   "tokens": 0.312,
+   "seg4": 0.2565,
+   "pooled_lr": 0.2645
+  },
+  "baseline": 0.2525,
+  "seen": false,
+  "K": 56,
+  "n_train": 10000,
+  "n_test": 2000
+ },
+ "wikitoxic_toxicaggregated": {
+  "acc": {
+   "tokens": 0.7865,
+   "seg4": 0.762,
+   "pooled_lr": 0.743
+  },
+  "baseline": 0.7615,
+  "seen": false,
+  "K": 2,
+  "n_train": 8800,
+  "n_test": 2000
+ },
+ "wikitoxic_obscene": {
+  "acc": {
+   "tokens": 0.8071170706549768,
+   "seg4": 0.7854564208354822,
+   "pooled_lr": 0.7632800412583806
+  },
+  "baseline": 0.7849406910778752,
+  "seen": false,
+  "K": 2,
+  "n_train": 7752,
+  "n_test": 1939
+ },
+ "wikitoxic_threat": {
+  "acc": {
+   "tokens": 0.947840260798696,
+   "seg4": 0.9339853300733496,
+   "pooled_lr": 0.928280358598207
+  },
+  "baseline": 0.9388753056234719,
+  "seen": false,
+  "K": 2,
+  "n_train": 4904,
+  "n_test": 1227
+ },
+ "wikitoxic_insult": {
+  "acc": {
+   "tokens": 0.8075291622481442,
+   "seg4": 0.8006362672322376,
+   "pooled_lr": 0.7741251325556734
+  },
+  "baseline": 0.7873806998939554,
+  "seen": false,
+  "K": 2,
+  "n_train": 7541,
+  "n_test": 1886
+ }
+}

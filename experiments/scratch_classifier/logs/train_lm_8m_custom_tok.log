@@ -1,0 +1,72 @@
+Device: mps
+Custom tokenizer: tokenizer_tinystories.json (vocab=5500)
+
+Loading TinyStories...
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+  50,000 stories (1.7s)
+Tokenizing...
+  10,000/50,000...
+  20,000/50,000...
+  30,000/50,000...
+  40,000/50,000...
+  50,000/50,000...
+  11,072,577 tokens (9.0s)
+Custom tokenizer: 5,500 tokens (no subsetting needed)
+Train: 38,927 chunks (9,965,312 tokens), Val: 4,325 chunks
+
+Model: 8,521,472 params (weight-tied)
+  Embedding: 2,210,304 (25.9%), Transformer: 6,310,400 (74.1%)
+  d_model=384, n_layers=4, n_heads=8, d_ff=1280, seq_len=256
+
+Training for 20 epochs (starting from 0)
+  1,216 batches/epoch, ~9,965,312 tokens/epoch
+================================================================================
+
+Generation (random init):
+  > Once Ġupon Ġa Ġtime Ġtrick ", Ġrecogn Ġswims Ġorganize Ġorganize ĠSpot Ġforward Ġforward nam Ġmilk Ġmilk ito Ġair ĠEverywhere Ġgrabbed ĠAfter Ġrespons Ġhands Ġhands Ġhands Ġhands Ġcareful Ġcareful Ġcareful ĠJenny ĠJenny ĠJenny ĠJenny ĠJenny ĠJenny ĠJenny Ġrhythm Ġpress iew Ġbeside Ġbeside Ġbeside Ġf...
+  > Lily Ġand ĠTom Ġwent Ġto Ġthe Ġthe Ġlicks Ġlicks Ġfriend Ġfriend Ġfriend Ġwheel Ġwheel Ġzoomed Ġknow Ġweak Ġweak Ġbubbles Ġgrew Ġscar Ġscar vent bbed ĠSteve ger ger Ġchirped Ġshining Ġchocol ĠThey ally Ġtube Ġsoftly Ġsoftly Ġsoftly Ġsoftly Ġsoftly Ġsoftly Ġsoftly Ġmad Ġmad Ġkeeps Ġkeeps Ġchar Ġchar ...
+  > The Ġlittle Ġdog Ġwas Ġvery Ġey Ġmaybe Ġmaybe Ġmaybe Ġmaybe Ġmaybe Ġmaybe Ġmaybe land land Ġdrawings Ġbowl Ġbowl Ġcrab Ġcrab Ġcrab Ġunusual Ġunusual Ġunusual ĠInside Ġwaved Ġwaved Ġwaved Don Ġgloomy Ġgloomy Ġgloomy Ġgloomy !
+
+Epoch   1/20  loss=3.4761 ppl=   32.3  val_loss=2.7661 val_ppl=   15.9  64,978 tok/s  153s *
+
+Generation (epoch 1):
+  > Once Ġupon Ġa Ġtime , Ġthere Ġwas Ġa Ġlittle Ġgirl Ġnamed ĠLily . ĠShe Ġloved Ġto Ġfly Ġin Ġthe Ġworld Ġand Ġplay . ĠOne Ġday , ĠLily Ġsaw Ġa Ġstrange Ġball Ġon Ġthe Ġground . ĠThe Ġball Ġwas Ġbroken ! ĠLily Ġstarted Ġto Ġrun Ġand Ġplay Ġwith Ġher Ġball .
+  > Lily Ġand ĠTom Ġwent Ġto Ġthe Ġpark Ġwith Ġtheir Ġtoys . ĠThey Ġsaw Ġa Ġnice Ġman Ġin Ġthe Ġpark . ĠHe Ġsaid , Ġ" What Ġare Ġyou Ġdoing ? ĠYou Ġare Ġa Ġboy . ĠYou Ġare Ġvery Ġhappy . ĠYou Ġare Ġmy Ġfriends ." Ċ Ċ Lily Ġand ĠTom Ġwere Ġhappy . ĠThey Ġwere Ġboth Ġfriends Ġand Ġlaughing .
+  > The Ġlittle Ġdog Ġwas Ġvery Ġkind Ġand Ġbrave . ĠHe Ġwould Ġbe Ġbrave Ġand Ġfeel Ġbrave .
+
+Epoch   2/20  loss=2.6120 ppl=   13.6  val_loss=2.4080 val_ppl=   11.1  32,312 tok/s  308s *
+Epoch   3/20  loss=2.3672 ppl=   10.7  val_loss=2.2564 val_ppl=    9.5  46,620 tok/s  214s *
+Epoch   4/20  loss=2.2420 ppl=    9.4  val_loss=2.1749 val_ppl=    8.8  45,502 tok/s  219s *
+Epoch   5/20  loss=2.1613 ppl=    8.7  val_loss=2.1177 val_ppl=    8.3  43,315 tok/s  230s *
+
+Generation (epoch 5):
+  > Once Ġupon Ġa Ġtime , Ġthere Ġwas Ġa Ġlittle Ġgirl Ġnamed ĠLily . ĠShe Ġloved Ġto Ġplay Ġwith Ġher Ġtoys Ġand Ġrun Ġaround Ġaround Ġoutside . ĠOne Ġday , Ġher Ġmom Ġmade Ġher Ġa Ġbig Ġcake Ġfor Ġher . ĠIt Ġwas Ġbig Ġand Ġjuicy , Ġbut ĠLily Ġwanted Ġit Ġtoo .
+  > Lily Ġand ĠTom Ġwent Ġto Ġthe Ġpond . ĠThey Ġsaw Ġa Ġbig Ġpond Ġwith Ġwater Ġand Ġducks . ĠThey Ġsaw Ġducks Ġand Ġducks Ġand Ġducks Ġand Ġducks . Ċ Ċ " Look , ĠLily , ĠTom , Ġa Ġfish !" ĠLily Ġsaid . Ġ" The Ġducks Ġare Ġso Ġbig Ġand Ġbig !" Ċ Ċ " I Ġdon 't Ġknow ," ĠTom Ġsaid .
+  > The Ġlittle Ġdog Ġwas Ġvery Ġhappy Ġto Ġsee Ġthe Ġlittle Ġboy Ġand Ġthanked Ġthe Ġboy Ġfor Ġbeing Ġso Ġkind . Ċ Ċ The Ġlittle Ġdog Ġthanked Ġthe Ġlittle Ġboy Ġand Ġsaid Ġgoodbye . ĠHe Ġwas Ġno Ġlonger Ġselfish .
+
+Epoch   6/20  loss=2.1026 ppl=    8.2  val_loss=2.0755 val_ppl=    8.0  45,448 tok/s  219s *
+Epoch   7/20  loss=2.0568 ppl=    7.8  val_loss=2.0472 val_ppl=    7.7  43,949 tok/s  227s *
+Epoch   8/20  loss=2.0188 ppl=    7.5  val_loss=2.0230 val_ppl=    7.6  44,387 tok/s  224s *
+Epoch   9/20  loss=1.9867 ppl=    7.3  val_loss=2.0016 val_ppl=    7.4  44,861 tok/s  222s *
+Epoch  10/20  loss=1.9591 ppl=    7.1  val_loss=1.9858 val_ppl=    7.3  4,758 tok/s  2094s *
+
+Generation (epoch 10):
+  > Once Ġupon Ġa Ġtime , Ġthere Ġwas Ġa Ġhappy Ġfamily . ĠEvery Ġday , Ġthe Ġfamily Ġwould Ġgo Ġto Ġthe Ġmarket Ġand Ġsee Ġwho Ġsold Ġa Ġfancy Ġdress . ĠThe Ġdress Ġwas Ġso Ġpretty ! Ċ Ċ One Ġday , Ġthe Ġfamily Ġwent Ġto Ġthe Ġmarket Ġto Ġbuy Ġsome Ġice Ġcream .
+  > Lily Ġand ĠTom Ġwent Ġto Ġthe Ġpond Ġand Ġlooked Ġfor Ġa Ġplace Ġto Ġhide . ĠThey Ġsaw Ġa Ġbig Ġbird Ġwith Ġa Ġnest Ġin Ġit . ĠThe Ġbird Ġwas Ġsleeping Ġand Ġlooked Ġangry . ĠIt Ġsaid , Ġ" Who Ġis Ġthis Ġplace ?" Ċ Ċ Lily Ġand ĠTom Ġwere Ġscared . ĠThey Ġdid Ġnot Ġknow Ġwhat Ġthe Ġbird Ġsaid .
+  > The Ġlittle Ġdog Ġwas Ġvery Ġhappy Ġand Ġhe Ġran Ġoff Ġto Ġsee Ġhis Ġdog . ĠLily 's Ġdog , ĠMax , Ġsaw Ġthe Ġdog Ġand Ġwanted Ġto Ġpet Ġit . ĠMax Ġbarked Ġloudly Ġand ĠLily Ġwas Ġscared . ĠMax Ġtried Ġto Ġrun Ġaway , Ġbut ĠLily Ġwas Ġtoo Ġfast .
+
+Epoch  11/20  loss=1.9351 ppl=    6.9  val_loss=1.9711 val_ppl=    7.2  16,072 tok/s  620s *
+Epoch  12/20  loss=1.9137 ppl=    6.8  val_loss=1.9605 val_ppl=    7.1  61,732 tok/s  161s *
+Epoch  13/20  loss=1.8956 ppl=    6.7  val_loss=1.9514 val_ppl=    7.0  29,168 tok/s  342s *
+Epoch  14/20  loss=1.8800 ppl=    6.6  val_loss=1.9445 val_ppl=    7.0  53,694 tok/s  186s *
+Epoch  15/20  loss=1.8665 ppl=    6.5  val_loss=1.9383 val_ppl=    6.9  25,597 tok/s  389s *
+
+Generation (epoch 15):
+  > Once Ġupon Ġa Ġtime , Ġthere Ġwas Ġa Ġbig Ġbear . ĠThe Ġbear Ġwas Ġvery Ġhungry , Ġso Ġhe Ġdecided Ġto Ġgo Ġto Ġthe Ġshop Ġto Ġbuy Ġsome Ġcelery . ĠHe Ġbought Ġsome Ġcelery Ġand Ġwent Ġto Ġthe Ġshop . ĠĊ Ċ At Ġthe Ġshop , Ġhe Ġfound Ġa Ġbig , Ġyummy Ġcelery .
+  > Lily Ġand ĠTom Ġwent Ġto Ġthe Ġstore . ĠThey Ġsaw Ġa Ġnice Ġlady Ġwith Ġa Ġpretty Ġdress . ĠShe Ġsaid , Ġ" Hi , Ġlady , Ġcan ĠI Ġwear Ġthis Ġdress ?" ĠTom Ġsaid , Ġ" Yes , Ġyou Ġcan Ġwear Ġit . ĠIt Ġis Ġvery Ġfancy ." ĠThe Ġlady Ġgave ĠTom Ġthe Ġdress Ġand ĠTom Ġput Ġit Ġon .
+  > The Ġlittle Ġdog Ġwas Ġvery Ġhappy Ġto Ġbe Ġin Ġthe Ġbig , Ġblue Ġpool , Ġand Ġhe Ġloved Ġto Ġswim Ġin Ġthe Ġpool . ĠOne Ġday , Ġhe Ġwas Ġplaying Ġon Ġthe Ġslide Ġwhen Ġhe Ġsaw Ġa Ġbig , Ġscary Ġcat . ĠThe Ġcat Ġwanted Ġto Ġeat Ġhim , Ġbut Ġthe Ġcat Ġwas Ġscared .
+
+Epoch  16/20  loss=1.8557 ppl=    6.4  val_loss=1.9342 val_ppl=    6.9  35,776 tok/s  278s *
+Epoch  17/20  loss=1.8473 ppl=    6.3  val_loss=1.9314 val_ppl=    6.9  29,893 tok/s  333s *
+Epoch  18/20  loss=1.8406 ppl=    6.3  val_loss=1.9299 val_ppl=    6.9  32,396 tok/s  307s *
+Epoch  19/20  loss=1.8369 ppl=    6.3  val_loss=1.9291 val_ppl=    6.9  31,766 tok/s  314s *

@@ -1,0 +1,25 @@
+{
+  "model_size": "1.6m",
+  "model_label": "1.6M",
+  "n_params": 1667968,
+  "tokens_trained": 1586495488,
+  "tok_param_ratio": 951.1573363517765,
+  "best_val_loss": 5.468094320297241,
+  "best_val_ppl": 237.00810059985508,
+  "final_val_loss": 5.483290672302246,
+  "final_val_ppl": 240.63726430952147,
+  "total_steps": 12104,
+  "training_time_hours": 2.5501039021544987,
+  "device": "cuda",
+  "config": {
+    "d_model": 32,
+    "n_layers": 2,
+    "n_heads": 4,
+    "label": "1.6M"
+  },
+  "seq_len": 1024,
+  "batch_size": 32,
+  "lr": 0.003,
+  "tie_weights": true,
+  "pretrain_mode": "causal"
+}

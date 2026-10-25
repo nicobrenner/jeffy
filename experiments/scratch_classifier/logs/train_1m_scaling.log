@@ -1,0 +1,65 @@
+Device: mps
+Custom tokenizer: tokenizer_tinystories.json (vocab=5500)
+
+Loading TinyStories...
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+  50,000 stories (1.7s)
+Tokenizing...
+  10,000/50,000...
+  20,000/50,000...
+  30,000/50,000...
+  40,000/50,000...
+  50,000/50,000...
+  11,072,577 tokens (8.7s)
+Custom tokenizer: 5,500 tokens (no subsetting needed)
+Train: 38,927 chunks (9,965,312 tokens), Val: 4,325 chunks
+
+Model: 1,133,568 params (weight-tied)
+  Embedding: 736,768 (65.0%), Transformer: 396,544 (35.0%)
+  d_model=128, n_layers=2, n_heads=4, d_ff=512, seq_len=256
+
+Training for 9 epochs (starting from 0)
+  1,216 batches/epoch, ~9,965,312 tokens/epoch
+================================================================================
+
+Generation (random init):
+  > Once Ġupon Ġa Ġtime Ġsparkles ises Ġkisses Ġped Ġoffered Ġsent icing Ġsomewhere Ġtremble Ġpeople ge Ġjumped gen asis âĤ¬âĦ¢ Ġworked Ġcomputer Ġunif Ġunif Ġskipped ant ant ccol Ġsugar Ġdrum pp Ġpinch Ġspoiled ud Ġr Ġresp ased Ġafraid Ġafraid Ġfriend ott Ġsunlight izes Ġsuggest Ġcome Ġupon Ġupon ĠTina...
+  > Lily Ġand ĠTom Ġwent Ġto Ġthe Ġthe was Ġmedicine Finally Ġupon ustr Ġsaw Ġwell Sally ĠDave ĠDave ° Ġoriginal Ġsnack Ë Ġpizza Q Q Ġcopper Ġtiny ?".
+  > The Ġlittle Ġdog Ġwas Ġvery " Ġsomething Hi Ġlearnt Ġspin Ġmonster Ġtom Z als Ġmot Ġcompetitive Ġapologized Mommy Ġpicking Ġhat Ġtuna air Ġstraight Ġstraight nic ress Ġdisco Ġraised Ġchance Ġur Ġhappily box Ġla Ġsand Ġsand Ġsand Ġcoo man Ġwom Ġwom Ġdisappointed Ġow Ġcollection Ġlaundry Ġsprink ememb...
+
+Epoch   1/9  loss=4.4033 ppl=   81.7  val_loss=3.6124 val_ppl=   37.1  309,217 tok/s  32s *
+
+Generation (epoch 1):
+  > Once Ġupon Ġa Ġtime , Ġthere Ġwas Ġa Ġlittle Ġgirl Ġnamed ĠTimmy . ĠShe Ġloved Ġto Ġplay Ġwith Ġplaying Ġin Ġthe Ġpark Ġwith Ġa Ġbig Ġtree . ĠOne Ġday , Ġshe Ġwas Ġa Ġtree . ĠOne Ġday , ĠLily . ĠShe Ġhad Ġmany Ġthings Ġto Ġtake Ġit Ġit .
+  > Lily Ġand ĠTom Ġwent Ġto Ġthe Ġpark . ĠThey Ġmade Ġup . ĠIt Ġlooked Ġat Ġhim . ĠThey Ġhad Ġa Ġred Ġball . ĠIt Ġwas Ġscared . Ċ Ċ One Ġday , Ġthe Ġfloor . ĠIt Ġwas Ġa Ġbig Ġcat Ġcame Ġto Ġthe Ġground . ĠIt Ġwas Ġa Ġbig Ġcastle . ĠIt Ġwas Ġbig Ġtruck Ġis Ġbig Ġdog . ĠHe Ġsaw Ġa Ġbook .
+  > The Ġlittle Ġdog Ġwas Ġvery Ġsad Ġthat Ġhe Ġsaw Ġa Ġsmall Ġbird Ġand Ġhe Ġhad Ġa Ġbig Ġtree . Ċ Ċ The Ġsquirrel Ġsaw Ġa Ġsoft Ġdog , Ġand Ġgave Ġthe Ġcat . ĠThey Ġran Ġthe Ġfish Ġin Ġthe Ġpark Ġand Ġplayed Ġtogether , Ġand Ġstarted Ġto Ġthe Ġgarden .
+
+Epoch   2/9  loss=3.4708 ppl=   32.2  val_loss=3.2170 val_ppl=   25.0  301,623 tok/s  33s *
+Epoch   3/9  loss=3.2347 ppl=   25.4  val_loss=3.0411 val_ppl=   20.9  272,559 tok/s  37s *
+Epoch   4/9  loss=3.1105 ppl=   22.4  val_loss=2.9415 val_ppl=   18.9  267,809 tok/s  37s *
+Epoch   5/9  loss=3.0360 ppl=   20.8  val_loss=2.8823 val_ppl=   17.9  261,725 tok/s  38s *
+
+Generation (epoch 5):
+  > Once Ġupon Ġa Ġtime , Ġthere Ġwas Ġa Ġlittle Ġboy Ġnamed ĠTimmy . ĠTimmy Ġloved Ġto Ġplay Ġwith Ġhis Ġtoys . ĠOne Ġday , ĠTimmy 's Ġmom Ġasked Ġhim Ġto Ġplay Ġwith Ġher Ġtoy Ġcars Ġon Ġhis Ġfavorite Ġball . Ċ Ċ As Ġthey Ġwere Ġwalking , Ġthey Ġsaw Ġa Ġbig Ġtruck Ġand Ġwanted Ġto Ġfix Ġit .
+  > Lily Ġand ĠTom Ġwent Ġto Ġthe Ġpark . ĠThey Ġforgot Ġabout Ġtheir Ġtoys Ġand Ġsay Ġthey Ġhad Ġa Ġlot Ġof Ġfun Ġday . ĠThe Ġend .
+  > The Ġlittle Ġdog Ġwas Ġvery Ġshy . Ċ Ċ The Ġgirl Ġwas Ġvery Ġhappy Ġand Ġthe Ġgirl Ġwas Ġvery Ġhappy . ĠShe Ġdecided Ġto Ġplay Ġwith Ġher Ġfriends . ĠShe Ġlooked Ġaround Ġand Ġsaw Ġsomething Ġunusual . Ċ Ċ The Ġlittle Ġgirl Ġwas Ġso Ġhappy .
+
+Epoch   6/9  loss=2.9898 ppl=   19.9  val_loss=2.8441 val_ppl=   17.2  238,057 tok/s  42s *
+Epoch   7/9  loss=2.9628 ppl=   19.4  val_loss=2.8246 val_ppl=   16.9  163,046 tok/s  61s *
+Epoch   8/9  loss=2.9487 ppl=   19.1  val_loss=2.8175 val_ppl=   16.7  62,655 tok/s  159s *
+Epoch   9/9  loss=2.9435 ppl=   19.0  val_loss=2.8164 val_ppl=   16.7  125,065 tok/s  80s *
+
+Generation (epoch 9):
+  > Once Ġupon Ġa Ġtime , Ġthere Ġwas Ġa Ġboy Ġnamed ĠTimmy . ĠTimmy Ġloved Ġplaying Ġoutside . ĠOne Ġday , ĠTimmy 's Ġmom Ġbrought Ġhim Ġto Ġgo Ġto Ġthe Ġpark . ĠHe Ġwas Ġso Ġimpatient . ĠTimmy Ġsaw Ġa Ġbig , Ġshiny Ġstick . ĠHe Ġcouldn 't Ġwait Ġto Ġtry Ġit .
+  > Lily Ġand ĠTom Ġwent Ġto Ġthe Ġpark . ĠThey Ġsaw Ġa Ġbig , Ġshiny Ġrock Ġand Ġshiny . ĠHe Ġwanted Ġto Ġsee Ġthe Ġrock s Ġand Ġa Ġsign Ġthat Ġhe Ġhad Ġso Ġhe Ġwanted Ġto Ġclimb Ġthe Ġhill . ĠHe Ġlooked Ġup Ġand Ġsaw Ġit Ġwas Ġso Ġbig Ġand Ġstrong Ġand Ġshiny .
+  > The Ġlittle Ġdog Ġwas Ġvery Ġhappy Ġand Ġthanked ĠJoe Ġfor Ġhis Ġparents .
+
+
+================================================================================
+Best val loss: 2.8164 (ppl=16.7)
+Checkpoint: /Users/nico/Documents/Projects/jeffy/experiments/scratch_classifier/checkpoints/best_lm_1m_scaling.pt
+
+Final generation (best model, epoch 9):
+  > Once Ġupon Ġa Ġtime , Ġthere Ġwas Ġa Ġlittle Ġbird Ġnamed ĠSammy . ĠHe Ġloved Ġto Ġplay Ġwith Ġhis Ġfriends . ĠOne Ġday , ĠBenny Ġdecided Ġto Ġplay Ġwith Ġhis Ġfriends . ĠHe Ġwould Ġjoin Ġhim , Ġbut Ġhe Ġcouldn 't Ġget Ġany Ġfriends . Ċ Ċ One Ġday , ĠBenny Ġmet Ġa Ġlittle Ġboy Ġnamed ĠTimmy .
+  > Lily Ġand ĠTom Ġwent Ġto Ġthe Ġpark Ġwith Ġhis Ġmom Ġand Ġsaw Ġher Ġmom Ġwaiting Ġfor Ġthem . ĠThey Ġgave Ġthe Ġboy Ġto Ġthe Ġboy . Ċ Ċ " Can Ġwe Ġhelp Ġme ?" Ġhe Ġasks . Ċ They Ġwent Ġto Ġthe Ġpark Ġand Ġsaw Ġa Ġbig Ġhill . ĠIt Ġhad Ġa Ġnew Ġpark .
+  > The Ġlittle Ġdog Ġwas Ġvery Ġhappy . ĠThey Ġtook Ġthe Ġdog . ĠThe Ġdog Ġwas Ġvery Ġkind Ġand Ġhelpful .

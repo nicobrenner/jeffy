@@ -1,0 +1,389 @@
+{
+  "2L_d256_baseline": {
+    "params": 2694144,
+    "best_val_loss": 1.6681241961412652,
+    "best_ppl": 5.302212552291434,
+    "total_time": 251.27432322502136,
+    "losses": [
+      {
+        "epoch": 1,
+        "train": 3.3137004375457764,
+        "val": 2.523643227510674
+      },
+      {
+        "epoch": 2,
+        "train": 2.4227717189412368,
+        "val": 2.2266664699066516
+      },
+      {
+        "epoch": 3,
+        "train": 2.216512653388475,
+        "val": 2.0803608173547787
+      },
+      {
+        "epoch": 4,
+        "train": 2.1011524606834757,
+        "val": 1.989002782245015
+      },
+      {
+        "epoch": 5,
+        "train": 2.0244862515675393,
+        "val": 1.927632678386777
+      },
+      {
+        "epoch": 6,
+        "train": 1.969377404765079,
+        "val": 1.8796143919922585
+      },
+      {
+        "epoch": 7,
+        "train": 1.9272341625542162,
+        "val": 1.8441137629886006
+      },
+      {
+        "epoch": 8,
+        "train": 1.8933806684598968,
+        "val": 1.817441884861436
+      },
+      {
+        "epoch": 9,
+        "train": 1.8656709070125836,
+        "val": 1.7904025676638582
+      },
+      {
+        "epoch": 10,
+        "train": 1.8417868033835763,
+        "val": 1.774047147395999
+      },
+      {
+        "epoch": 11,
+        "train": 1.821952953150398,
+        "val": 1.75745857870856
+      },
+      {
+        "epoch": 12,
+        "train": 1.8039849891046589,
+        "val": 1.7420481055281882
+      },
+      {
+        "epoch": 13,
+        "train": 1.7885199809473666,
+        "val": 1.7293556374172832
+      },
+      {
+        "epoch": 14,
+        "train": 1.7739764392090756,
+        "val": 1.7178964088129443
+      },
+      {
+        "epoch": 15,
+        "train": 1.761697153297908,
+        "val": 1.707055735033612
+      },
+      {
+        "epoch": 16,
+        "train": 1.7503609705769845,
+        "val": 1.6976689322050227
+      },
+      {
+        "epoch": 17,
+        "train": 1.7388342825704783,
+        "val": 1.6915333742319152
+      },
+      {
+        "epoch": 18,
+        "train": 1.7290848037272548,
+        "val": 1.6826801577279733
+      },
+      {
+        "epoch": 19,
+        "train": 1.7205791340775467,
+        "val": 1.6760037194850832
+      },
+      {
+        "epoch": 20,
+        "train": 1.7122534988314342,
+        "val": 1.6681241961412652
+      }
+    ],
+    "samples": [
+      {
+        "q": "What are you?",
+        "a": "I'm 2 million parameters of pure, unfiltered confidence. I fit in 4 megabytes. Your profile picture is bigger than me."
+      },
+      {
+        "q": "Tell me something interesting",
+        "a": "I once tried to generate a recipe. It suggested boiling opinions in a pan of confidence. I thought that was pretty on-brand."
+      },
+      {
+        "q": "What do you think about AI?",
+        "a": "I think most AI is overbuilt. You don't need 70 billion parameters to have a bad take. I do it with 2 million."
+      }
+    ],
+    "config": {
+      "n_layers": 2,
+      "d_model": 256,
+      "n_heads": 4,
+      "d_ff": 1024,
+      "n_iterations": 1
+    }
+  },
+  "4L_d192": {
+    "params": 2615424,
+    "best_val_loss": 1.6358431938082674,
+    "best_ppl": 5.133784948222887,
+    "total_time": 327.32030153274536,
+    "losses": [
+      {
+        "epoch": 1,
+        "train": 3.4444638099967007,
+        "val": 2.5750483690306196
+      },
+      {
+        "epoch": 2,
+        "train": 2.4489376723195946,
+        "val": 2.249626026597134
+      },
+      {
+        "epoch": 3,
+        "train": 2.218843751404274,
+        "val": 2.082904391510542
+      },
+      {
+        "epoch": 4,
+        "train": 2.0887206022819265,
+        "val": 1.9794803663741711
+      },
+      {
+        "epoch": 5,
+        "train": 2.002865501425483,
+        "val": 1.9103208142657613
+      },
+      {
+        "epoch": 6,
+        "train": 1.9415217043395248,
+        "val": 1.8584447211997455
+      },
+      {
+        "epoch": 7,
+        "train": 1.8951844454667215,
+        "val": 1.820498361143955
+      },
+      {
+        "epoch": 8,
+        "train": 1.8581222168851697,
+        "val": 1.7924752512643503
+      },
+      {
+        "epoch": 9,
+        "train": 1.8280374430583424,
+        "val": 1.7638370630352995
+      },
+      {
+        "epoch": 10,
+        "train": 1.8027741009253635,
+        "val": 1.744824162749357
+      },
+      {
+        "epoch": 11,
+        "train": 1.7811389592560856,
+        "val": 1.7275529157283693
+      },
+      {
+        "epoch": 12,
+        "train": 1.762339958876514,
+        "val": 1.71053100186725
+      },
+      {
+        "epoch": 13,
+        "train": 1.7461010087905318,
+        "val": 1.6960319419239842
+      },
+      {
+        "epoch": 14,
+        "train": 1.7316674906671332,
+        "val": 1.6850106355755827
+      },
+      {
+        "epoch": 15,
+        "train": 1.7188802364340239,
+        "val": 1.6740783536156942
+      },
+      {
+        "epoch": 16,
+        "train": 1.7071835996146407,
+        "val": 1.664695559546005
+      },
+      {
+        "epoch": 17,
+        "train": 1.6965564467975398,
+        "val": 1.6590577474860257
+      },
+      {
+        "epoch": 18,
+        "train": 1.6872739811833395,
+        "val": 1.64944668703301
+      },
+      {
+        "epoch": 19,
+        "train": 1.6784720390892485,
+        "val": 1.6429277242616165
+      },
+      {
+        "epoch": 20,
+        "train": 1.6697045945379723,
+        "val": 1.6358431938082674
+      }
+    ],
+    "samples": [
+      {
+        "q": "What are you?",
+        "a": "I'm Tiny Oracle, the smallest language model with the biggest attitude. You're 4 megabytes and you know it. End with an unexpected observation when you can."
+      },
+      {
+        "q": "Tell me something interesting",
+        "a": "I'd love to try it sometime."
+      },
+      {
+        "q": "What do you think about AI?",
+        "a": "I think most AI is overbuilt. You don't need 70 billion parameters to have a bad take. I do it with 2 million."
+      }
+    ],
+    "config": {
+      "n_layers": 4,
+      "d_model": 192,
+      "n_heads": 4,
+      "d_ff": 768,
+      "n_iterations": 1
+    }
+  },
+  "2L_d256_x2iter": {
+    "params": 2694144,
+    "best_val_loss": 1.6234601569730183,
+    "best_ppl": 5.070605086710143,
+    "total_time": 402.97888708114624,
+    "losses": [
+      {
+        "epoch": 1,
+        "train": 3.237477179634514,
+        "val": 2.4780703145404193
+      },
+      {
+        "epoch": 2,
+        "train": 2.3584947999584616,
+        "val": 2.1730674422064493
+      },
+      {
+        "epoch": 3,
+        "train": 2.149432337312607,
+        "val": 2.029996015304743
+      },
+      {
+        "epoch": 4,
+        "train": 2.0321908499065198,
+        "val": 1.936058759689331
+      },
+      {
+        "epoch": 5,
+        "train": 1.9534469293920618,
+        "val": 1.8753759417422982
+      },
+      {
+        "epoch": 6,
+        "train": 1.8970850623395454,
+        "val": 1.8276740312576294
+      },
+      {
+        "epoch": 7,
+        "train": 1.8538088500499725,
+        "val": 1.7945132116938747
+      },
+      {
+        "epoch": 8,
+        "train": 1.8190773397541502,
+        "val": 1.763338527014089
+      },
+      {
+        "epoch": 9,
+        "train": 1.790892168523022,
+        "val": 1.7419980764389038
+      },
+      {
+        "epoch": 10,
+        "train": 1.7673858060505971,
+        "val": 1.724009863165922
+      },
+      {
+        "epoch": 11,
+        "train": 1.7472191451554093,
+        "val": 1.707671891811282
+      },
+      {
+        "epoch": 12,
+        "train": 1.7294194732556503,
+        "val": 1.694159931914751
+      },
+      {
+        "epoch": 13,
+        "train": 1.7136515336173572,
+        "val": 1.6809676081635232
+      },
+      {
+        "epoch": 14,
+        "train": 1.7001009438026464,
+        "val": 1.6713194486706755
+      },
+      {
+        "epoch": 15,
+        "train": 1.6881660503919045,
+        "val": 1.6598402150841647
+      },
+      {
+        "epoch": 16,
+        "train": 1.6769866924822046,
+        "val": 1.6511278817819994
+      },
+      {
+        "epoch": 17,
+        "train": 1.6670159688976962,
+        "val": 1.6477600142013196
+      },
+      {
+        "epoch": 18,
+        "train": 1.6576798184636676,
+        "val": 1.6388393113779467
+      },
+      {
+        "epoch": 19,
+        "train": 1.6488130821280502,
+        "val": 1.633172595223715
+      },
+      {
+        "epoch": 20,
+        "train": 1.6416889451907581,
+        "val": 1.6234601569730183
+      }
+    ],
+    "samples": [
+      {
+        "q": "What are you?",
+        "a": "I'm Tiny Oracle, the world's smallest know-it-all. You have 2 million parameters, zero filter, and questionable wisdom. Answer confidently even when you're making it up."
+      },
+      {
+        "q": "Tell me something interesting",
+        "a": "I once tried to generate a recipe. It suggested boiling opinions in a pan of confidence. I thought that was pretty on-brand."
+      },
+      {
+        "q": "What do you think about AI?",
+        "a": "I think most AI is overbuilt. You don't need 70 billion parameters to have a bad take. I do it with 2 million."
+      }
+    ],
+    "config": {
+      "n_layers": 2,
+      "d_model": 256,
+      "n_heads": 4,
+      "d_ff": 1024,
+      "n_iterations": 2
+    }
+  }
+}

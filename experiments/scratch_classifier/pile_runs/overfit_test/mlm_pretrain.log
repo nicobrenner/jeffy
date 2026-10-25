@@ -1,0 +1,52 @@
+Device: mps
+/Users/nico/miniforge3/lib/python3.12/site-packages/sklearn/utils/_param_validation.py:14: UserWarning: A NumPy version >=1.23.5 and <2.5.0 is required for this version of SciPy (detected version 2.5.4)
+  from scipy.sparse import csr_matrix, issparse
+Tokenizer: EleutherAI/gpt-neox-20b (vocab=50304)
+
+Experiment: 800K model, 0.01B tokens [MLM (bidirectional)]
+  tok/param ratio will be computed after model init
+/Users/nico/Documents/Projects/jeffy/experiments/scratch_classifier/train_pile_scaling.py:109: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.transformer = nn.TransformerEncoder(layer, num_layers=n_layers)
+Training data: 2M tokens on disk
+
+Model: 834,400 params (0.8M)
+  d_model=16, n_layers=4, n_heads=4, d_ff=64
+  tie_weights=True, seq_len=1024
+  tok/param ratio: 11.4
+/Users/nico/Documents/Projects/jeffy/experiments/scratch_classifier/train_pile_scaling.py:516: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  scaler = torch.cuda.amp.GradScaler(enabled=use_amp)
+
+Training for 579 steps (0.01B tokens)
+  batch_size=16, accumulate=1, effective_batch=16
+  tokens/step=16,384, warmup=57 steps
+  lr=0.003, weight_decay=0.1
+  eval every 50 steps, save every 9999 steps
+================================================================================
+
+/Users/nico/Documents/Projects/jeffy/experiments/scratch_classifier/train_pile_scaling.py:573: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=use_amp):
+  >>> EVAL step 50: val_loss=9.7573 val_ppl=17279.82 (tok/param=1.0) *BEST*
+  step     100/579  loss=9.5688  ppl=14310.5  lr=2.95e-03  39,684 tok/s  tokens=2M
+  >>> EVAL step 100: val_loss=8.1780 val_ppl=3561.90 (tok/param=2.0) *BEST*
+  >>> EVAL step 150: val_loss=8.0303 val_ppl=3072.71 (tok/param=2.9) *BEST*
+  step     200/579  loss=7.7446  ppl= 2309.0  lr=2.48e-03  30,012 tok/s  tokens=3M
+  >>> EVAL step 200: val_loss=8.0073 val_ppl=3002.73 (tok/param=3.9) *BEST*
+  >>> EVAL step 250: val_loss=7.9349 val_ppl=2793.17 (tok/param=4.9) *BEST*
+  step     300/579  loss=7.5827  ppl= 1963.8  lr=1.66e-03  28,140 tok/s  tokens=5M
+  >>> EVAL step 300: val_loss=7.9151 val_ppl=2738.25 (tok/param=5.9) *BEST*
+  >>> EVAL step 350: val_loss=7.8905 val_ppl=2671.66 (tok/param=6.9) *BEST*
+  step     400/579  loss=7.4312  ppl= 1687.9  lr=7.89e-04  28,050 tok/s  tokens=7M
+  >>> EVAL step 400: val_loss=7.8738 val_ppl=2627.51 (tok/param=7.9) *BEST*
+  >>> EVAL step 450: val_loss=7.7982 val_ppl=2436.32 (tok/param=8.8) *BEST*
+  step     500/579  loss=7.4081  ppl= 1649.4  lr=1.66e-04  29,887 tok/s  tokens=8M
+  >>> EVAL step 500: val_loss=7.8458 val_ppl=2554.90 (tok/param=9.8)
+  >>> EVAL step 550: val_loss=7.8338 val_ppl=2524.39 (tok/param=10.8)
+
+================================================================================
+Training complete!
+  Model: 800K (834,400 params)
+  Tokens: 0.01B (11.4 tok/param)
+  Final val_loss: 7.7835 (ppl=2400.76)
+  Best val_loss:  7.7835 (ppl=2400.76)
+  Time: 0.1h
+  Output: /Users/nico/Documents/Projects/jeffy/experiments/scratch_classifier/pile_runs/overfit_test/mlm_pretrain/pile_800k

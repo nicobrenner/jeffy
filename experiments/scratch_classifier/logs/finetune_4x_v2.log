@@ -1,0 +1,27 @@
+Device: mps
+LM weight: 0.5
+Mask prob: 0.15
+
+Loading 6 datasets:
+  Loading banking77... Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+10000 train, 2000 test, 77 classes (3.4s)
+  Loading ag_news... 10000 train, 2000 test, 4 classes (3.9s)
+  Loading imdb... 10000 train, 2000 test, 2 classes (6.7s)
+  Loading emotion... 10000 train, 2000 test, 6 classes (2.5s)
+  Loading sst2... 10000 train, 872 test, 2 classes (3.2s)
+  Loading sms_spam... 4459 train, 1115 test, 2 classes (1.5s)
+
+Building vocab subset... 43763 tokens
+
+Model: 11,689,040 params (MLM head: 5,662,195) (4x depth-recurrent)
+  vocab=43763, d_model=128, n_layers=2, n_heads=4, d_ff=512
+Resumed from epoch 32 (best_avg=0.8393)
+
+Training for 80 epochs (starting from 32)
+================================================================================
+/Users/nico/miniforge3/lib/python3.12/site-packages/torch/nn/modules/transformer.py:484: UserWarning: The operator 'aten::_nested_tensor_from_mask_left_aligned' is not currently supported on the MPS backend and will fall back to run on the CPU. This may have performance implications. (Triggered internally at /Users/runner/work/pytorch/pytorch/aten/src/ATen/mps/MPSFallback.mm:34.)
+  elif do_mask_check and not torch._nested_tensor_from_mask_left_aligned(
+Epoch 33/80  clf=0.2385  mlm=7.8000  avg_acc=0.819  ag_news=0.826  banking77=0.809  emotion=0.809  imdb=0.746  sms_spam=0.977  sst2=0.747
+Epoch 34/80  clf=0.1721  mlm=7.3197  avg_acc=0.815  ag_news=0.802  banking77=0.787  emotion=0.815  imdb=0.753  sms_spam=0.977  sst2=0.757
+Epoch 35/80  clf=0.1555  mlm=7.1661  avg_acc=0.820  ag_news=0.815  banking77=0.815  emotion=0.824  imdb=0.736  sms_spam=0.983  sst2=0.750
+Epoch 36/80  clf=0.1416  mlm=7.0292  avg_acc=0.819  ag_news=0.821  banking77=0.810  emotion=0.811  imdb=0.756  sms_spam=0.982  sst2=0.731

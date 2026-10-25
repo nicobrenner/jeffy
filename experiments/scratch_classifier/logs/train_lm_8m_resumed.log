@@ -1,0 +1,69 @@
+Device: mps
+
+Loading TinyStories...
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+  50,000 stories (1.6s)
+Tokenizing...
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (1106 > 1024). Running this sequence through the model will result in indexing errors
+  10,000/50,000...
+  20,000/50,000...
+  30,000/50,000...
+  40,000/50,000...
+  50,000/50,000...
+  11,089,438 tokens (9.6s)
+Building vocab subset... 15,271 tokens (from 50,257)
+Remapping... (0.0s)
+Train: 38,986 chunks (9,980,416 tokens), Val: 4,331 chunks
+
+Model: 12,273,536 params (weight-tied)
+  Embedding: 5,962,368 (48.6%), Transformer: 6,310,400 (51.4%)
+  d_model=384, n_layers=4, n_heads=8, d_ff=1280, seq_len=256
+Resumed from epoch 15 (best_val_loss=1.9404)
+
+Training for 20 epochs (starting from 15)
+  1,218 batches/epoch, ~9,980,416 tokens/epoch
+================================================================================
+
+Generation (random init):
+  > Once upon a time, there was a little girl named Lily. One day, Lily went outside to play. She saw a big, round ball on the ground. She wanted to play with it too.
+
+Lily picked the ball and started to play with it. She threw it all in the air and it went everywhere. She was having so much fun.
+  > Lily and Tom went to the park. They saw a big tree with many leaves. They wanted to climb the tree and see the sky. They climbed up and looked out the sky.
+
+"Wow, look at the sky!" Lily said. "The sky is so big and blue!"
+
+"It is so big and yellow!" Tom said.
+  > The little dog was very happy. He had a new friend. He was not lonely anymore. He was happy.
+
+Epoch  16/20  loss=1.7853 ppl=    6.0  val_loss=1.9375 val_ppl=    6.9  42,437 tok/s  235s *
+Epoch  17/20  loss=1.7765 ppl=    5.9  val_loss=1.9368 val_ppl=    6.9  31,827 tok/s  314s *
+Epoch  18/20  loss=1.7699 ppl=    5.9  val_loss=1.9344 val_ppl=    6.9  38,541 tok/s  259s *
+Epoch  19/20  loss=1.7658 ppl=    5.8  val_loss=1.9341 val_ppl=    6.9  36,448 tok/s  274s *
+Epoch  20/20  loss=1.7638 ppl=    5.8  val_loss=1.9340 val_ppl=    6.9  37,759 tok/s  264s *
+
+Generation (epoch 20):
+  > Once upon a time there was a little girl named Lily. She loved to play outside in the sunshine. One day, she was playing outside when she saw a big rock. She wanted to touch it, but her mommy said it would be dangerous.
+
+Lily started to cry. Her mommy said, "Don't worry, Lily.
+  > Lily and Tom went to the park. They saw a big slide and a swing. They ran to the slide and tried to go down.
+
+"Let's go and slide!" Lily said.
+
+"OK!" Tom said.
+
+They climbed the slide and went up the steps. They went to the slide and started to slide.
+  > The little dog was very sad. He had lost his friend and couldn't find his friend. He ran and searched until he found his friend. The little dog was very happy and hugged his friend. From that day on, the little dog and the little dog were best friends.
+
+
+================================================================================
+Best val loss: 1.9340 (ppl=6.9)
+Checkpoint: /Users/nico/Documents/Projects/jeffy/experiments/scratch_classifier/checkpoints/best_lm_8m.pt
+
+Final generation (best model, epoch 20):
+  > Once upon a time, there was a little girl named Lily. She loved to play outside in the sunshine and pick flowers. One day, she saw a big truck that was making a loud noise. The truck got stuck in the mud.
+  > Lily and Tom went to the park with their moms. They saw a big slide and wanted to go on it. They ran to the slide and climbed up the ladder. They slid down the hill and felt the wind in their hair.
+
+But then, a boy came up. He saw the slide and the girl. He wanted to slide too.
+  > The little dog was very happy with it. The bird could now have a safe place for the little dog.
+
+The little dog and the bird had a fun time playing together. They were the best of friends.

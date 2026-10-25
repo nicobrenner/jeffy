@@ -1,0 +1,19 @@
+{
+ "full_d64_20ep": {
+  "config": "full",
+  "params": 215616,
+  "note": "Restored from monitor log (even epochs only; eval printed every 2 epochs) after the results file was overwritten twice by later pipeline pulls. Final checkpoint checkpoints/prior_full_d64_20ep_best.pt has kodak_bpp 9.299.",
+  "epochs": [
+   {"epoch": 4, "kodak_bpp": 10.416, "png_bpp": 13.448, "train_bits_per_tok": 3.197, "tok_per_s": 1478519, "seconds": 102},
+   {"epoch": 6, "kodak_bpp": 10.080, "png_bpp": 13.448, "train_bits_per_tok": 3.005, "tok_per_s": 1471854, "seconds": 103},
+   {"epoch": 8, "kodak_bpp": 9.869, "png_bpp": 13.448, "train_bits_per_tok": 2.875, "tok_per_s": 1490168, "seconds": 102},
+   {"epoch": 10, "kodak_bpp": 9.631, "png_bpp": 13.448, "train_bits_per_tok": 2.794, "tok_per_s": 1474532, "seconds": 103},
+   {"epoch": 12, "kodak_bpp": 9.486, "png_bpp": 13.448, "train_bits_per_tok": 2.737, "tok_per_s": 1474047, "seconds": 103},
+   {"epoch": 14, "kodak_bpp": 9.406, "png_bpp": 13.448, "train_bits_per_tok": 2.694, "tok_per_s": 1477386, "seconds": 102},
+   {"epoch": 16, "kodak_bpp": 9.341, "png_bpp": 13.448, "train_bits_per_tok": 2.656, "tok_per_s": 1465851, "seconds": 103},
+   {"epoch": 18, "kodak_bpp": 9.318, "png_bpp": 13.448, "train_bits_per_tok": 2.639, "tok_per_s": 1478814, "seconds": 102},
+   {"epoch": 20, "kodak_bpp": 9.299, "png_bpp": 13.448, "train_bits_per_tok": 2.633, "tok_per_s": 1484370, "seconds": 102}
+  ],
+  "best_kodak_bpp": 9.299
+ }
+}

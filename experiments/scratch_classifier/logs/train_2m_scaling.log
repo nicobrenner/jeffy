@@ -1,0 +1,84 @@
+Device: mps
+Custom tokenizer: tokenizer_tinystories.json (vocab=5500)
+
+Loading TinyStories...
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+  50,000 stories (1.7s)
+Tokenizing...
+  10,000/50,000...
+  20,000/50,000...
+  30,000/50,000...
+  40,000/50,000...
+  50,000/50,000...
+  11,072,577 tokens (8.7s)
+Custom tokenizer: 5,500 tokens (no subsetting needed)
+Train: 38,927 chunks (9,965,312 tokens), Val: 4,325 chunks
+
+Model: 1,995,264 params (weight-tied)
+  Embedding: 1,105,152 (55.4%), Transformer: 889,728 (44.6%)
+  d_model=192, n_layers=2, n_heads=4, d_ff=768, seq_len=256
+
+Training for 16 epochs (starting from 0)
+  1,216 batches/epoch, ~9,965,312 tokens/epoch
+================================================================================
+
+Generation (random init):
+  > Once Ġupon Ġa Ġtime Ġairplane ĠMom ision Ġmade Ġmade ined Ġdecision loe Ġtoys ocked ĠSuzy Ġpicture ĠLater Ġhug Ġbeh Ġbeh Ġbox Ġsleeping Ġsleeping ĠEm Ġgrandma Ġleather Ġiron Ġscale Ġscale Ġpunish Ġskipping Wow Z Ġshort Ġtrains Ġdiscover ĠMittens Ġpi Ġwaved ĠPenny orrow Ġwriting Ġmule Ġcookie Ġcookie...
+  > Lily Ġand ĠTom Ġwent Ġto Ġthe Ġoak Ġbegged Ġbegged ĠLeo agg Ġhoped Ġhig Ġkick Ġmany Ġdinner Ġdinner bbles Tommy Ġshoot Ġcompassionate Ġmask Ġcrown Ġrad Ġcrown Ġwra Ġdisappointed Ġagree Gra Gra Gra ĠChr Before Ġflashlight Sally ster ster Ġripped Ġripped Ġbicy Ġavail Ġavail Ġflowers way way Wow ĠMiss ...
+  > The Ġlittle Ġdog Ġwas Ġvery Ġcool Ġscoot Ġhuman Ġhuman Q Ġloud Ġloud Ġloud Ġloud Ġjacket ĠR How Ġraise Ġraise Ġraise Ġand Ġand Ġanytime ĠBut 3 Ġbreathe Ġwind Ġber Ġber Ġcozy Ġquietly Ġicy Before Before Ġguessed Ġsearch Ġended Ġended Ġweird Ġmelted Ġfier ĠSee Ġfile Ġsuc Ġboats Ġboats Ġboats Ġprincess...
+
+Epoch   1/16  loss=4.0677 ppl=   58.4  val_loss=3.3298 val_ppl=   27.9  141,125 tok/s  71s *
+
+Generation (epoch 1):
+  > Once Ġupon Ġa Ġtime , Ġthere Ġwas Ġa Ġlittle Ġgirl Ġwho Ġliked Ġto Ġmake Ġit Ġoutside . ĠOne Ġday , Ġshe Ġwent Ġto Ġher Ġlittle Ġgirl Ġnamed ĠLily Ġwas Ġplaying Ġwith Ġthe Ġpark , Ġbut Ġshe Ġcould Ġalways Ġplay Ġin Ġthe Ġpark . ĠShe Ġfelt Ġhappy Ġand Ġloved Ġto Ġplay Ġwith Ġher Ġfriends .
+  > Lily Ġand ĠTom Ġwent Ġto Ġthe Ġhouse Ġand Ġsaw Ġa Ġcat . ĠThey Ġsaw Ġa Ġbig , Ġbut Ġa Ġbig Ġcat Ġwho Ġwanted Ġto Ġgo Ġplay Ġwith Ġa Ġbig Ġbox . ĠThe Ġdog Ġcame Ġto Ġsee Ġwhat Ġwas . ĠLily Ġfelt Ġa Ġbig Ġtoy . ĠShe Ġfelt Ġsad Ġand Ġsad . ĠShe Ġfelt Ġsad Ġand Ġdidn 't Ġwant Ġto Ġmake Ġher Ġmom .
+  > The Ġlittle Ġdog Ġwas Ġvery Ġhappy Ġand Ġsaid , Ġ" No , Ġthat 's Ġmom . ĠYou Ġare Ġvery Ġmuch ." ĠĊ Ċ The Ġdog Ġsaid , Ġ" We 're Ġwelcome , Ġdon 't Ġhave Ġthe Ġboy ."
+
+Epoch   2/16  loss=3.2176 ppl=   25.0  val_loss=2.9700 val_ppl=   19.5  166,324 tok/s  60s *
+Epoch   3/16  loss=2.9813 ppl=   19.7  val_loss=2.7941 val_ppl=   16.3  167,959 tok/s  59s *
+Epoch   4/16  loss=2.8460 ppl=   17.2  val_loss=2.6811 val_ppl=   14.6  149,994 tok/s  66s *
+Epoch   5/16  loss=2.7576 ppl=   15.8  val_loss=2.6059 val_ppl=   13.5  65,881 tok/s  151s *
+
+Generation (epoch 5):
+  > Once Ġupon Ġa Ġtime , Ġthere Ġwas Ġa Ġlittle Ġgirl Ġnamed ĠLily . ĠShe Ġloved Ġto Ġplay Ġoutside Ġwith Ġher Ġfavorite Ġtoy Ġcar . ĠOne Ġday , Ġshe Ġwent Ġoutside Ġto Ġplay . ĠShe Ġwas Ġvery Ġexcited .
+  > Lily Ġand ĠTom Ġwent Ġto Ġthe Ġzoo . ĠThey Ġsaw Ġa Ġbig Ġbook Ġand Ġa Ġbook . ĠThey Ġwere Ġvery Ġhappy . ĠThey Ġsaw Ġthe Ġbook Ġor Ġread . ĠThey Ġsaid Ġthey Ġwere Ġnot Ġhappy . ĠThey Ġdid Ġnot Ġknow Ġthat Ġtheir Ġnames Ġwere Ġtoo . ĠThe Ġbook Ġwas Ġnot Ġreal . ĠHe Ġwas Ġnot Ġhappy Ġanymore .
+  > The Ġlittle Ġdog Ġwas Ġvery Ġclever . ĠIt Ġwas Ġa Ġvery Ġspecial Ġdog . ĠIt Ġhad Ġa Ġsmall Ġtail Ġand Ġa Ġnew Ġdog . ĠThe Ġdog Ġwas Ġbrown . ĠIt Ġhad Ġfun . Ċ Ċ The Ġdog Ġgave Ġhim Ġa Ġlittle Ġdog Ġa Ġpet Ġcat Ġand Ġa Ġnew Ġdog Ġand Ġa Ġname . ĠHe Ġhad Ġa Ġlot Ġof Ġfun .
+
+Epoch   6/16  loss=2.6965 ppl=   14.8  val_loss=2.5561 val_ppl=   12.9  68,744 tok/s  145s *
+Epoch   7/16  loss=2.6514 ppl=   14.2  val_loss=2.5185 val_ppl=   12.4  123,284 tok/s  81s *
+Epoch   8/16  loss=2.6167 ppl=   13.7  val_loss=2.4876 val_ppl=   12.0  155,038 tok/s  64s *
+Epoch   9/16  loss=2.5898 ppl=   13.3  val_loss=2.4670 val_ppl=   11.8  164,067 tok/s  61s *
+Epoch  10/16  loss=2.5690 ppl=   13.1  val_loss=2.4502 val_ppl=   11.6  168,989 tok/s  59s *
+
+Generation (epoch 10):
+  > Once Ġupon Ġa Ġtime , Ġthere Ġwas Ġa Ġboy Ġnamed ĠTimmy . ĠTimmy Ġloved Ġto Ġplay Ġoutside Ġin Ġthe Ġgarden . ĠHe Ġwould Ġrun Ġin Ġthe Ġdirt Ġand Ġeat Ġit . ĠOne Ġday , ĠTimmy 's Ġmom Ġasked Ġhim Ġto Ġhelp Ġhim Ġget Ġhis Ġfavorite Ġcandy . ĠTimmy Ġwas Ġhappy Ġto Ġhave Ġfound Ġout Ġhis Ġtoy Ġbox .
+  > Lily Ġand ĠTom Ġwent Ġto Ġthe Ġpark Ġto Ġplay Ġwith Ġhis Ġfriends . ĠLily Ġliked Ġto Ġplay Ġon Ġthe Ġswings , Ġbut Ġshe Ġsaw Ġno Ġother Ġkids Ġtoo . ĠThey Ġdecided Ġto Ġplay Ġwith Ġthe Ġswings Ġand Ġslide . ĠThey Ġplayed Ġand Ġplayed Ġtogether Ġin Ġthe Ġpark .
+  > The Ġlittle Ġdog Ġwas Ġvery Ġcareful . ĠHe Ġliked Ġto Ġswim Ġand Ġjump Ġon Ġthe Ġgrass . ĠHe Ġliked Ġto Ġplay Ġwith Ġhis Ġfriends . ĠOne Ġday , Ġhe Ġsaw Ġa Ġbig Ġbird Ġin Ġthe Ġpark . ĠHe Ġwanted Ġto Ġfly Ġaway . ĠBut Ġthe Ġbird Ġdid Ġnot Ġwant Ġto Ġscare Ġthe Ġbird .
+
+Epoch  11/16  loss=2.5526 ppl=   12.8  val_loss=2.4367 val_ppl=   11.4  161,233 tok/s  62s *
+Epoch  12/16  loss=2.5401 ppl=   12.7  val_loss=2.4281 val_ppl=   11.3  122,511 tok/s  81s *
+Epoch  13/16  loss=2.5316 ppl=   12.6  val_loss=2.4232 val_ppl=   11.3  103,590 tok/s  96s *
+Epoch  14/16  loss=2.5259 ppl=   12.5  val_loss=2.4201 val_ppl=   11.2  132,429 tok/s  75s *
+Epoch  15/16  loss=2.5223 ppl=   12.5  val_loss=2.4188 val_ppl=   11.2  140,146 tok/s  71s *
+
+Generation (epoch 15):
+  > Once Ġupon Ġa Ġtime , Ġthere Ġwas Ġa Ġlittle Ġgirl Ġnamed ĠLily . ĠShe Ġhad Ġa Ġbig , Ġsoft Ġred Ġcoat Ġand Ġa Ġsoft Ġteddy Ġbear . ĠShe Ġloved Ġto Ġcuddle Ġwith Ġher Ġteddy Ġbear , Ġand Ġcuddle . ĠOne Ġday , ĠLily Ġwent Ġto Ġthe Ġpark Ġwith Ġher Ġteddy Ġbear Ġand Ġgot Ġon Ġa Ġleash .
+  > Lily Ġand ĠTom Ġwent Ġto Ġthe Ġpark . ĠThey Ġsaw Ġa Ġbig Ġpond Ġwith Ġmany Ġducks . ĠThey Ġliked Ġto Ġfeed Ġthe Ġducks Ġand Ġwater . ĠThey Ġsaid , Ġ" This Ġis Ġbread Ġand Ġbread . ĠWe Ġcan Ġfeed Ġthe Ġducks . ĠWe Ġcan Ġfeed Ġthe Ġducks Ġto Ġthe Ġducks .
+  > The Ġlittle Ġdog Ġwas Ġvery Ġhappy Ġand Ġsaid Ġgoodbye . ĠHe Ġhad Ġthe Ġperfect Ġday !
+
+Epoch  16/16  loss=2.5212 ppl=   12.4  val_loss=2.4188 val_ppl=   11.2  149,700 tok/s  67s
+
+Generation (epoch 16):
+  > Once Ġupon Ġa Ġtime Ġthere Ġwas Ġa Ġlittle Ġgirl Ġwho Ġloved Ġto Ġexplore . ĠShe Ġwanted Ġto Ġgo Ġexplore Ġthe Ġworld Ġand Ġsee Ġwhat Ġwas Ġhappening . ĠShe Ġpacked Ġup Ġa Ġbig Ġbox Ġand Ġran Ġaround Ġand Ġfound Ġlots Ġof Ġtoys . ĠThe Ġhouse Ġwas Ġa Ġbit Ġscared Ġand Ġcouldn 't Ġfind Ġthe Ġbox .
+  > Lily Ġand ĠTom Ġwent Ġto Ġthe Ġmuseum Ġwith Ġtheir Ġmom . ĠThey Ġwent Ġto Ġthe Ġmuseum Ġwith ĠMom Ġand Ġdad . ĠThere Ġwas Ġa Ġbeautiful Ġmuseum Ġwith Ġstars Ġand Ġanimals . ĠThey Ġwere Ġbeautiful Ġand Ġcars , Ġanimals . Ċ Ċ " Wow , ĠLily , Ġmy Ġfavorite Ġis Ġso Ġpretty !" ĠTom Ġsaid .
+  > The Ġlittle Ġdog Ġwas Ġvery Ġsad . ĠHe Ġsaw Ġhis Ġmom Ġand Ġsaid , Ġ" What 's Ġwrong , ĠSpot ?" ĠSpot Ġbarked Ġand Ġbarked Ġhappily . Ċ Ċ Lily Ġsaid , Ġ" I 'm Ġsorry ." ĠShe Ġsaid , Ġ" I 'm Ġsorry , ĠMax . ĠI Ġforgive Ġyou .
+
+
+================================================================================
+Best val loss: 2.4188 (ppl=11.2)
+Checkpoint: /Users/nico/Documents/Projects/jeffy/experiments/scratch_classifier/checkpoints/best_lm_2m_scaling.pt
+
+Final generation (best model, epoch 15):
+  > Once Ġupon Ġa Ġtime , Ġthere Ġwas Ġa Ġlittle Ġgirl Ġnamed ĠLily . ĠShe Ġlived Ġin Ġa Ġbig Ġtree Ġwith Ġher Ġmommy Ġand Ġdaddy . ĠTimmy Ġloved Ġto Ġplay Ġoutside Ġand Ġlook Ġat Ġthe Ġtrees . ĠOne Ġday , ĠTimmy 's Ġmommy Ġtold Ġher Ġof Ġa Ġsurprise Ġfor Ġtheir Ġtoy .
+  > Lily Ġand ĠTom Ġwent Ġto Ġthe Ġpark . ĠShe Ġsaw Ġa Ġbig Ġyellow Ġfish Ġand Ġa Ġleaf . ĠShe Ġsaw Ġa Ġpretty Ġbow Ġon Ġthe Ġground . ĠShe Ġpicked Ġit Ġup Ġand Ġran Ġto Ġit . ĠIt Ġwas Ġvery Ġpretty . ĠShe Ġtook Ġa Ġbucket Ġand Ġput Ġit Ġin Ġa Ġwarm Ġbreeze . ĠThe Ġfish Ġwas Ġblue .
+  > The Ġlittle Ġdog Ġwas Ġvery Ġshy Ġbecause Ġhe Ġknew Ġthat Ġthe Ġcat Ġwould Ġmeet Ġhim Ġand Ġhe Ġwould Ġalways Ġtell Ġhim Ġwhat Ġhe Ġneeded . ĠThe Ġmoral Ġof Ġthe Ġstory Ġis Ġthat Ġit 's Ġimportant Ġto Ġlisten Ġto Ġher Ġmom Ġand Ġdad .

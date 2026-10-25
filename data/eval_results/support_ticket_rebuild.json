@@ -1,0 +1,283 @@
+{
+  "n_train_base": 550,
+  "n_test": 550,
+  "n_patch": 24,
+  "runs": [
+    {
+      "patched": false,
+      "n_train": 550,
+      "train_accuracy": 1.0,
+      "held_out_accuracy": 0.9964,
+      "probes": [
+        {
+          "text": "change the address on my account",
+          "expected": "account",
+          "predicted": "shipping",
+          "confidence": 0.9716,
+          "correct": false,
+          "held_back": false
+        },
+        {
+          "text": "how do I change my email address",
+          "expected": "account",
+          "predicted": "shipping",
+          "confidence": 0.796,
+          "correct": false,
+          "held_back": false
+        },
+        {
+          "text": "update my contact details",
+          "expected": "account",
+          "predicted": "shipping",
+          "confidence": 0.3644,
+          "correct": false,
+          "held_back": false
+        },
+        {
+          "text": "I need to edit my profile",
+          "expected": "account",
+          "predicted": "account",
+          "confidence": 0.8338,
+          "correct": true,
+          "held_back": false
+        },
+        {
+          "text": "change my email",
+          "expected": "account",
+          "predicted": "shipping",
+          "confidence": 0.5672,
+          "correct": false,
+          "held_back": false
+        },
+        {
+          "text": "I cannot log into my account",
+          "expected": "account",
+          "predicted": "account",
+          "confidence": 0.9486,
+          "correct": true,
+          "held_back": false
+        },
+        {
+          "text": "reset my password",
+          "expected": "account",
+          "predicted": "account",
+          "confidence": 0.7387,
+          "correct": true,
+          "held_back": false
+        },
+        {
+          "text": "I want to delete my account",
+          "expected": "account",
+          "predicted": "account",
+          "confidence": 0.9173,
+          "correct": true,
+          "held_back": false
+        },
+        {
+          "text": "how do I update the email on file",
+          "expected": "account",
+          "predicted": "shipping",
+          "confidence": 0.4193,
+          "correct": false,
+          "held_back": true
+        },
+        {
+          "text": "I need to change my home address",
+          "expected": "account",
+          "predicted": "shipping",
+          "confidence": 0.971,
+          "correct": false,
+          "held_back": true
+        },
+        {
+          "text": "where do I edit my contact number",
+          "expected": "account",
+          "predicted": "shipping",
+          "confidence": 0.4698,
+          "correct": false,
+          "held_back": true
+        },
+        {
+          "text": "I need to update my billing address and phone number on my account",
+          "expected": "account",
+          "predicted": "shipping",
+          "confidence": 0.6628,
+          "correct": false,
+          "held_back": true
+        },
+        {
+          "text": "where is my package",
+          "expected": "delivery",
+          "predicted": "delivery",
+          "confidence": 0.843,
+          "correct": true,
+          "held_back": false
+        },
+        {
+          "text": "I have to change the delivery address",
+          "expected": "shipping",
+          "predicted": "shipping",
+          "confidence": 0.9857,
+          "correct": true,
+          "held_back": false
+        },
+        {
+          "text": "I need to edit my shipping address",
+          "expected": "shipping",
+          "predicted": "shipping",
+          "confidence": 0.9875,
+          "correct": true,
+          "held_back": false
+        },
+        {
+          "text": "my order has not arrived yet",
+          "expected": "delivery",
+          "predicted": "delivery",
+          "confidence": 0.9216,
+          "correct": true,
+          "held_back": false
+        }
+      ],
+      "probes_correct": "8/16",
+      "held_back_correct": "0/4"
+    },
+    {
+      "patched": true,
+      "n_train": 574,
+      "train_accuracy": 0.9983,
+      "held_out_accuracy": 0.9964,
+      "probes": [
+        {
+          "text": "change the address on my account",
+          "expected": "account",
+          "predicted": "account",
+          "confidence": 0.8444,
+          "correct": true,
+          "held_back": false
+        },
+        {
+          "text": "how do I change my email address",
+          "expected": "account",
+          "predicted": "account",
+          "confidence": 0.9683,
+          "correct": true,
+          "held_back": false
+        },
+        {
+          "text": "update my contact details",
+          "expected": "account",
+          "predicted": "account",
+          "confidence": 0.8844,
+          "correct": true,
+          "held_back": false
+        },
+        {
+          "text": "I need to edit my profile",
+          "expected": "account",
+          "predicted": "account",
+          "confidence": 0.9783,
+          "correct": true,
+          "held_back": false
+        },
+        {
+          "text": "change my email",
+          "expected": "account",
+          "predicted": "account",
+          "confidence": 0.9887,
+          "correct": true,
+          "held_back": false
+        },
+        {
+          "text": "I cannot log into my account",
+          "expected": "account",
+          "predicted": "account",
+          "confidence": 0.9763,
+          "correct": true,
+          "held_back": false
+        },
+        {
+          "text": "reset my password",
+          "expected": "account",
+          "predicted": "account",
+          "confidence": 0.9567,
+          "correct": true,
+          "held_back": false
+        },
+        {
+          "text": "I want to delete my account",
+          "expected": "account",
+          "predicted": "account",
+          "confidence": 0.9782,
+          "correct": true,
+          "held_back": false
+        },
+        {
+          "text": "how do I update the email on file",
+          "expected": "account",
+          "predicted": "account",
+          "confidence": 0.8206,
+          "correct": true,
+          "held_back": true
+        },
+        {
+          "text": "I need to change my home address",
+          "expected": "account",
+          "predicted": "shipping",
+          "confidence": 0.5511,
+          "correct": false,
+          "held_back": true
+        },
+        {
+          "text": "where do I edit my contact number",
+          "expected": "account",
+          "predicted": "account",
+          "confidence": 0.8356,
+          "correct": true,
+          "held_back": true
+        },
+        {
+          "text": "I need to update my billing address and phone number on my account",
+          "expected": "account",
+          "predicted": "account",
+          "confidence": 0.8697,
+          "correct": true,
+          "held_back": true
+        },
+        {
+          "text": "where is my package",
+          "expected": "delivery",
+          "predicted": "delivery",
+          "confidence": 0.8451,
+          "correct": true,
+          "held_back": false
+        },
+        {
+          "text": "I have to change the delivery address",
+          "expected": "shipping",
+          "predicted": "shipping",
+          "confidence": 0.9693,
+          "correct": true,
+          "held_back": false
+        },
+        {
+          "text": "I need to edit my shipping address",
+          "expected": "shipping",
+          "predicted": "shipping",
+          "confidence": 0.9606,
+          "correct": true,
+          "held_back": false
+        },
+        {
+          "text": "my order has not arrived yet",
+          "expected": "delivery",
+          "predicted": "delivery",
+          "confidence": 0.8811,
+          "correct": true,
+          "held_back": false
+        }
+      ],
+      "probes_correct": "15/16",
+      "held_back_correct": "3/4"
+    }
+  ]
+}

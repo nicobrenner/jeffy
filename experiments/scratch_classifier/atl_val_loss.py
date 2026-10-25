@@ -25,7 +25,7 @@ DEVICE = "mps" if torch.backends.mps.is_available() else "cpu"
 
 def oracle_turns(text, plain):
     pat = r"Oracle: (.*?)(?=\nUser:|\nSystem:|$)" if plain else r"<\|oracle\|>(.*?)(?=<\|user\||<\|system\||<eos>|$)"
-    return [re.sub(r"^\[(answer|deflect|comfort)\] ?", "", t.strip()) for t in re.findall(pat, text, flags=re.S)]
+    return [re.sub(r"^(\[(answer|deflect|comfort)\]|\*(wh|yn|hi|tell|fact|hug)) ?", "", t.strip()) for t in re.findall(pat, text, flags=re.S)]
 
 
 def norm(s):
@@ -69,8 +69,8 @@ def conv_loss(m, tok, text, plain):
         e = text.find(ender, s)
         e = len(text) if e < 0 else e
         start = s + len(marker)
-        if CT:  # control token "[answer]"/"[deflect]"/"[comfort]" is context, not a scored target
-            mt = re.match(r" \[(answer|deflect|comfort)\]", text[start:])
+        if CT:  # control token ("[answer]" v1 family or "*wh" v2 family) is context, not a scored target
+            mt = re.match(r" (\[(answer|deflect|comfort)\]|\*(wh|yn|hi|tell|fact|hug))", text[start:])
             if mt:
                 start += mt.end()
         a = len(tok.encode(text[:start]))

@@ -358,8 +358,14 @@ class TrainRequest(BaseModel):
 
 class FeedbackRequest(BaseModel):
     task_id: str = Field(..., description="Existing classifier to improve")
-    text: str = Field(..., description="The input text")
-    correct_label: str = Field(..., description="The correct label for this text")
+    text: str | None = Field(None, description="The input text")
+    features: list[float] | None = Field(
+        None,
+        description="Input feature vector, for correcting a head that runs on "
+                    "your own embeddings instead of text. Mirrors the "
+                    "'features' field on /v1/predict. Provide this or 'text', "
+                    "not both.")
+    correct_label: str = Field(..., description="The correct label for this input")
 
 _feedback_store: dict[str, list[dict]] = defaultdict(list)
 _FEEDBACK_DIR = Path(os.environ.get("JEFFY_FEEDBACK_DIR", "~/.jeffy-feedback")).expanduser()
@@ -542,11 +548,37 @@ async def feedback_endpoint(req: FeedbackRequest):
     if req.correct_label not in valid_labels:
         raise HTTPException(400, f"Label '{req.correct_label}' not in {sorted(valid_labels)}")
 
+    if (req.text is None) == (req.features is None):
+        raise HTTPException(400, "Provide either 'text' or 'features', not both")
+
+    if req.features is not None:
+        expected = cap.n_features
+        if expected and len(req.features) != expected:
+            raise HTTPException(
+                400,
+                f"'features' has {len(req.features)} values but capability "
+                f"'{req.task_id}' expects {expected}")
+
+    # Retraining consumes all stored entries at once, so a task's feedback has
+    # to stay all-text or all-features. Mixing them cannot be trained.
+    existing = _feedback_store[req.task_id]
+    if existing:
+        stored_kind = "features" if existing[0].get("features") is not None else "text"
+        incoming_kind = "features" if req.features is not None else "text"
+        if stored_kind != incoming_kind:
+            raise HTTPException(
+                409,
+                f"'{req.task_id}' already has {len(existing)} {stored_kind}-based "
+                f"feedback entries; it cannot also take {incoming_kind}-based ones")
+
     entry = {
-        "text": req.text,
         "label": req.correct_label,
         "ts": datetime.now(timezone.utc).isoformat(),
     }
+    if req.features is not None:
+        entry["features"] = list(req.features)
+    else:
+        entry["text"] = req.text
     _feedback_store[req.task_id].append(entry)
     _save_feedback_entry(req.task_id, entry)
 
@@ -562,20 +594,36 @@ async def feedback_endpoint(req: FeedbackRequest):
 
     if count >= retrain_threshold and count % retrain_threshold == 0:
         import asyncio
-        from .train import train_classifier
 
-        fb_texts = [e["text"] for e in _feedback_store[req.task_id]]
-        fb_labels = [e["label"] for e in _feedback_store[req.task_id]]
-
+        entries = _feedback_store[req.task_id]
+        fb_labels = [e["label"] for e in entries]
         loop = asyncio.get_event_loop()
-        trained = await loop.run_in_executor(None, lambda: train_classifier(
-            texts=fb_texts,
-            labels=fb_labels,
-            task_id=req.task_id,
-            C=0.01,
-            test_size=0.2 if len(fb_texts) >= 10 else 0,
-            verbose=False,
-        ))
+
+        if entries[0].get("features") is not None:
+            from .train import train_feature_classifier
+
+            fb_features = [e["features"] for e in entries]
+            trained = await loop.run_in_executor(None, lambda: train_feature_classifier(
+                features=fb_features,
+                labels=fb_labels,
+                task_id=req.task_id,
+                feature_layout=cap.feature_layout,
+                C=0.01,
+                test_size=0.2 if len(fb_features) >= 10 else 0,
+                verbose=False,
+            ))
+        else:
+            from .train import train_classifier
+
+            fb_texts = [e["text"] for e in entries]
+            trained = await loop.run_in_executor(None, lambda: train_classifier(
+                texts=fb_texts,
+                labels=fb_labels,
+                task_id=req.task_id,
+                C=0.01,
+                test_size=0.2 if len(fb_texts) >= 10 else 0,
+                verbose=False,
+            ))
 
         artifact_path = trained.save(str(_trained_dir()))
         from .model_pack import load_artifact

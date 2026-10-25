@@ -256,6 +256,18 @@ Over HTTP, pass `mode: "binary-flags"` with `texts` and `flags` to `POST /v1/tra
 
 Tuning is scored by **positive-class** F1, not macro F1. For a rare flag the "no" class scores near 1.0, so macro F1 is dominated by the easy class and can select a different `C` than the flag's own performance justifies.
 
+### Corrections on your own embeddings
+
+If you run your own encoder and want Jeffy only for the heads, `/v1/predict` and `/v1/feedback` both take a `features` vector in place of `text`:
+
+```bash
+curl -X POST localhost:8400/v1/feedback \
+  -H "Content-Type: application/json" \
+  -d '{"task_id": "intake", "features": [0.12, -0.44, ...], "correct_label": "escalate"}'
+```
+
+Corrections accumulate and trigger a retrain at `JEFFY_RETRAIN_THRESHOLD`, using your vectors directly with no encoder in the loop. A given `task_id` has to stay all-text or all-features, since a retrain consumes every stored entry at once; mixing the two returns 409.
+
 ## Server configuration
 
 | Variable | Default | Description |

@@ -225,6 +225,35 @@ clf.save("my_models")
 
 Start with the defaults. With <50 examples per class, expect noisy estimates.
 
+## Server configuration
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `JEFFY_ENABLE_TRAINING` | unset (off) | Enables the `/v1/train` and `/v1/feedback` endpoints. They are **off by default** because they mutate server state and write files to disk. Leave disabled on any public or shared instance; both return 404 when off. |
+| `JEFFY_TRAINED_DIR` | `~/.jeffy/trained` | Where classifiers trained via `/v1/train` are written. Never the installed package directory. |
+| `JEFFY_FEEDBACK_DIR` | `~/.jeffy-feedback` | Where `/v1/feedback` corrections are stored as JSONL. |
+| `JEFFY_RETRAIN_THRESHOLD` | 50 | How many feedback corrections trigger an automatic retrain. |
+| `JEFFY_PACK_DIR` | bundled pack | Directory of model pack artifacts to serve. |
+| `JEFFY_DEVICE` | `cpu` | Torch device for the encoder. |
+| `JEFFY_BACKEND` | `auto` | `onnx`, `torch`, or `auto`. |
+| `JEFFY_NO_UPDATE_CHECK` | unset | Set to `1` to disable the update check described below. |
+
+### Update check
+
+On startup the server checks PyPI once a day for a newer release and logs a single line if one exists:
+
+```
+Update available: 0.1.0a17 → 0.1.0a18 (pip install -U jeffy-classify)
+```
+
+It runs on a background thread, never delays startup, and fails silently if offline. The result is cached in `~/.jeffy/update_check.json`. It sends no telemetry: the request is a plain GET of Jeffy's own public PyPI metadata, with nothing about you or your data attached. To turn it off entirely:
+
+```bash
+JEFFY_NO_UPDATE_CHECK=1 jeffy-serve
+```
+
+It is also skipped automatically when `CI` is set.
+
 ## Reproduce the evaluation
 
 ```bash

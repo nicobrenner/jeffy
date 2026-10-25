@@ -1,0 +1,41 @@
+{
+ "frame_dir": "data/video_xiph/bus_frames",
+ "crop": 256,
+ "stride": 4,
+ "ks": {
+  "4": {
+   "per_frame_webp": 278100,
+   "per_frame_png": 486383,
+   "per_frame_jxl": 234696,
+   "tile_webp": 274108,
+   "tile_png": 481292,
+   "tile_jxl": 230476,
+   "interleave_snake_webp": 481078,
+   "interleave_snake_png": 691664,
+   "interleave_snake_jxl": 449985,
+   "interleave_raster_webp": 480966,
+   "interleave_raster_png": 692321,
+   "interleave_raster_jxl": 450174,
+   "video_ffv1": 270063,
+   "video_x264_qp0": 507272,
+   "lossless_verified": true
+  },
+  "16": {
+   "per_frame_webp": 1099442,
+   "per_frame_png": 1918237,
+   "per_frame_jxl": 934348,
+   "tile_webp": 1092842,
+   "tile_png": 1885011,
+   "tile_jxl": 919519,
+   "interleave_snake_webp": 1974974,
+   "interleave_snake_png": 2851519,
+   "interleave_snake_jxl": 2243780,
+   "interleave_raster_webp": 1975624,
+   "interleave_raster_png": 2851828,
+   "interleave_raster_jxl": 2248204,
+   "video_ffv1": 1063538,
+   "video_x264_qp0": 1972017,
+   "lossless_verified": true
+  }
+ }
+}

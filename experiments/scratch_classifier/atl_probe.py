@@ -76,6 +76,7 @@ def main():
     ap.add_argument("--probes", default="data/atl_probes.json")
     ap.add_argument("--tokenizer", default="tokenizer_chat_v2.json")
     ap.add_argument("--plain", action="store_true")
+    ap.add_argument("--temperature", type=float, default=0.8)
     args = ap.parse_args()
     global PLAIN
     PLAIN = args.plain
@@ -87,8 +88,9 @@ def main():
     with open(args.out, "w") as f:
         for p in probes:
             for s in range(args.samples):
-                resp = generate(m, tok, p["prompt"], seed=s)
-                f.write(json.dumps({"id": p["id"], "topic": p["topic"], "novel": p.get("novel", False), "prompt": p["prompt"], "seed": s, "response": resp}) + "\n")
+                resp = generate(m, tok, p["prompt"], seed=s, temperature=args.temperature)
+                f.write(json.dumps({"id": p["id"], "topic": p["topic"], "novel": p.get("novel", False), "prompt": p["prompt"], "seed": s,
+                                    "temperature": args.temperature, "response": resp}) + "\n")
                 n += 1
     print(f"{args.ckpt} (val_loss {vl:.4f}): {n} responses for {len(probes)} probes -> {args.out}")
 

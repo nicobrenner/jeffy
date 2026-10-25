@@ -1,0 +1,58 @@
+{
+ "frame_dir": "data/video_xiph/foreman_frames",
+ "crop": 256,
+ "stride": 4,
+ "ks": {
+  "4": {
+   "per_frame_webp": 228932,
+   "per_frame_png": 378816,
+   "per_frame_jxl": 184383,
+   "tile_webp": 225188,
+   "tile_png": 376303,
+   "tile_jxl": 180059,
+   "interleave_snake_webp": 408544,
+   "interleave_snake_png": 593351,
+   "interleave_snake_jxl": 361385,
+   "interleave_raster_webp": 408668,
+   "interleave_raster_png": 594593,
+   "interleave_raster_jxl": 362960,
+   "video_ffv1": 209696,
+   "video_x264_qp0": 378210,
+   "lossless_verified": true
+  },
+  "16": {
+   "per_frame_webp": 943872,
+   "per_frame_png": 1570262,
+   "per_frame_jxl": 758080,
+   "tile_webp": 933456,
+   "tile_png": 1557371,
+   "tile_jxl": 738807,
+   "interleave_snake_webp": 1695648,
+   "interleave_snake_png": 2478598,
+   "interleave_snake_jxl": 1890431,
+   "interleave_raster_webp": 1696350,
+   "interleave_raster_png": 2475071,
+   "interleave_raster_jxl": 1894972,
+   "video_ffv1": 855534,
+   "video_x264_qp0": 1509988,
+   "lossless_verified": true
+  },
+  "64": {
+   "per_frame_webp": 3800640,
+   "per_frame_png": 6390915,
+   "per_frame_jxl": 3073009,
+   "tile_webp": 3792524,
+   "tile_png": 6404546,
+   "tile_jxl": 3013142,
+   "interleave_snake_webp": 7917604,
+   "interleave_snake_png": 10573470,
+   "interleave_snake_jxl": 8393340,
+   "interleave_raster_webp": 7918136,
+   "interleave_raster_png": 10572839,
+   "interleave_raster_jxl": 8409500,
+   "video_ffv1": 3465581,
+   "video_x264_qp0": 6198322,
+   "lossless_verified": true
+  }
+ }
+}

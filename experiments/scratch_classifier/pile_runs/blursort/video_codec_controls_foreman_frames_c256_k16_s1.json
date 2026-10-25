@@ -1,0 +1,44 @@
+{
+ "frame_dir": "data/video_xiph/foreman_frames",
+ "crop": 256,
+ "k": 16,
+ "stride": 1,
+ "results": {
+  "x264rgb_qp0": {
+   "bytes": 1406778,
+   "exact": true
+  },
+  "x265_lossless": {
+   "bytes": 1431247,
+   "exact": true
+  },
+  "vp9_lossless": {
+   "bytes": 1405558,
+   "exact": true
+  },
+  "av1_lossless": {
+   "bytes": 1275400,
+   "exact": true
+  },
+  "ffv1": {
+   "bytes": 836346,
+   "exact": true
+  },
+  "tile_jxl": {
+   "bytes": 720125,
+   "exact": true
+  },
+  "tile_webp": {
+   "bytes": 906462,
+   "exact": true
+  },
+  "interleave_jxl": {
+   "bytes": 1598815,
+   "exact": true
+  },
+  "per_frame_jxl": {
+   "bytes": 742249,
+   "exact": true
+  }
+ }
+}

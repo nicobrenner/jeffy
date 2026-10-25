@@ -31,6 +31,11 @@ from train_lm import CausalTransformer, CustomTokenizerWrapper
 
 DEVICE = "mps" if torch.backends.mps.is_available() else "cpu"
 CLASSES = ["wh", "yn", "hi", "tell", "fact", "hug"]
+# v2 ("user"): label = dialogue act of the USER turn -> a deterministic function of the visible prompt, so the marker
+#   carries no new information for the generator (it can only act as an explicit intermediate decision).
+# v3 ("resp"): label = dialogue act of the ORACLE's own response -> a plan token (question back / statement / greeting),
+#   not derivable from the prompt; the classifier role becomes a policy choice. Set by --resp (data tag chat_v6ct3).
+MODE = "user"
 MARK = {c: f"*{c}" for c in CLASSES}
 GREET = r"^(hi|hello|hey|good (morning|evening|afternoon|night)|yo|sup|thanks|thank you|thx|bye|goodbye|see you|ok|okay|cool|nice|great|awesome|lol|haha|sure|yes|no|yeah|nope)\b"
 WH = r"\b(what|who|whom|whose|where|when|why|how|which)\b"
@@ -59,7 +64,7 @@ def label_turn(user_turn, oracle_turn, idx):
         return "fact"
     if topic in COMFORT:
         return "hug"
-    return act_of(user_turn)
+    return act_of(oracle_turn if MODE == "resp" else user_turn)
 
 
 def cmd_label():
@@ -77,12 +82,13 @@ def cmd_label():
                 pos = s
             pieces.append(t[pos:])
             out.append({"text": "".join(pieces)})
-        with open(f"data/chat_v6ct2_{split}.jsonl", "w") as f:
+        tag = "chat_v6ct3" if MODE == "resp" else "chat_v6ct2"
+        with open(f"data/{tag}_{split}.jsonl", "w") as f:
             for r in out:
                 f.write(json.dumps(r) + "\n")
         n = sum(counts.values())
         H = -sum(v / n * math.log2(v / n) for v in counts.values())
-        print(f"{split}: {len(out)} conversations, {n} oracle turns -> data/chat_v6ct2_{split}.jsonl")
+        print(f"{split}: {len(out)} conversations, {n} oracle turns -> data/{tag}_{split}.jsonl")
         print(f"  classes {dict(counts)}  majority {max(counts.values())/n:.3f}  entropy {H:.2f} bits")
     print("sample:", out[0]["text"][:300].replace("\n", " | "))
 
@@ -222,7 +228,10 @@ def main():
     ap.add_argument("ckpt", nargs="?")
     ap.add_argument("--n", type=int, default=400, help="eval: number of val conversations")
     ap.add_argument("--out", default=None)
+    ap.add_argument("--resp", action="store_true", help="v3: label = dialogue act of the Oracle RESPONSE (plan token)")
     a = ap.parse_args()
+    global MODE
+    MODE = "resp" if a.resp else "user"
     if a.cmd == "label":
         cmd_label()
     elif a.cmd == "eval":

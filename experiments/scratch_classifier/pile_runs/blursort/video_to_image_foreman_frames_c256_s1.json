@@ -1,0 +1,58 @@
+{
+ "frame_dir": "data/video_xiph/foreman_frames",
+ "crop": 256,
+ "stride": 1,
+ "ks": {
+  "4": {
+   "per_frame_webp": 226484,
+   "per_frame_png": 374675,
+   "per_frame_jxl": 182477,
+   "tile_webp": 222730,
+   "tile_png": 372529,
+   "tile_jxl": 177661,
+   "interleave_snake_webp": 370426,
+   "interleave_snake_png": 499002,
+   "interleave_snake_jxl": 310205,
+   "interleave_raster_webp": 374350,
+   "interleave_raster_png": 507855,
+   "interleave_raster_jxl": 314212,
+   "video_ffv1": 207528,
+   "video_x264_qp0": 361889,
+   "lossless_verified": true
+  },
+  "16": {
+   "per_frame_webp": 920626,
+   "per_frame_png": 1521457,
+   "per_frame_jxl": 742249,
+   "tile_webp": 906462,
+   "tile_png": 1504213,
+   "tile_jxl": 720125,
+   "interleave_snake_webp": 1573438,
+   "interleave_snake_png": 2077122,
+   "interleave_snake_jxl": 1598815,
+   "interleave_raster_webp": 1573226,
+   "interleave_raster_png": 2080103,
+   "interleave_raster_jxl": 1605262,
+   "video_ffv1": 836346,
+   "video_x264_qp0": 1439573,
+   "lossless_verified": true
+  },
+  "64": {
+   "per_frame_webp": 3783882,
+   "per_frame_png": 6297430,
+   "per_frame_jxl": 3041570,
+   "tile_webp": 3758786,
+   "tile_png": 6220499,
+   "tile_jxl": 2935403,
+   "interleave_snake_webp": 6418706,
+   "interleave_snake_png": 8062234,
+   "interleave_snake_jxl": 6215081,
+   "interleave_raster_webp": 6420164,
+   "interleave_raster_png": 8055249,
+   "interleave_raster_jxl": 6243328,
+   "video_ffv1": 3421231,
+   "video_x264_qp0": 5663694,
+   "lossless_verified": true
+  }
+ }
+}

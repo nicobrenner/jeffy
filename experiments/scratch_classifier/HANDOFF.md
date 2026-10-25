@@ -2,7 +2,7 @@
 
 Purpose: let a fresh Claude Code session pick up this research program with as little loss as possible. Keep it short;
 the durable record is `RESEARCH_LOG.md` (lab notebook, append-only, every result the turn it lands). Update this file at
-the end of every working block (not just at the end of a session). Last update: **2026-10-25, ~11:00 PDT**.
+the end of every working block (not just at the end of a session). Last update: **2026-10-25, ~12:15 PDT**.
 
 ## How to resume (5 minutes)
 1. Read this file, then the last ~300 lines of `RESEARCH_LOG.md` (`tail -300 RESEARCH_LOG.md`).
@@ -15,16 +15,25 @@ the end of every working block (not just at the end of a session). Last update: 
    first; checkpoint + `python3 -u` + resume before launching; pull checkpoints during training; destroy the instance in a
    trap; results in tag-specific files, merge never overwrite; WebSearch 200/session cap → Chrome tools / playwright.
 
-## Running right now (2026-10-25 11:00)
-- **A100 (vast.ai instance 57701871, $0.58/h): `oracle_v7a_conv`** — Tiny Oracle v7a recipe trained to convergence
-  (TinyStories 8.5M init → chat_v6plain, 40 epochs, one cosine at lr 3e-4). Pipeline `gpu_oracle_v7a_conv.sh`
-  (log in scratchpad `gpu_oracle_v7a_conv.log`; pulls `checkpoints/best_lm_oracle_v7a_conv.pt` every minute; destroys the
-  instance on exit). 44 s/epoch → ~30 min. Epoch 3 val 1.3358 (v7a after 8 epochs: 1.3815; +4 control: 1.2923).
-- **MPS: `oracle_v7ct2`** — CT v2 fine-tune (4 epochs from `best_lm_oracle_v7a_plus4.pt` on `data/chat_v6ct2_train.jsonl`),
-  log `logs/train_oracle_v7ct2.log`. Next: `python3 atl_control2.py eval checkpoints/best_lm_oracle_v7ct2.pt --n 400`
-  and `probe`. Baseline (un-tuned base) saved: `pile_runs/atl/ct2_eval_oracle_v7a_plus4.json` (Δ wrong−true = −0.003).
-- **CPU: BlurSort video→image on real video** (`blursort_video_to_image.py` on Xiph akiyo/bus/foreman, 256² crops,
-  K 4/16/64, stride 1 and 4) → `pile_runs/blursort/video_to_image_{akiyo,bus,foreman}_frames_c256_s{1,4}.json`.
+## Running right now (2026-10-25 ~12:15 PDT)
+- **Blind grading pass** (sub-agent, one grader): `pile_runs/atl/probe_conv_blind3.jsonl` (732 rows) → `grades_conv_blind3.jsonl`;
+  key `conv_blind3_key.json` = {M1: v7a@T0.8, M2: v7a_conv@T0.8, M3: v7a_conv@T0.5}. If the grades file is incomplete when you
+  arrive, re-launch the grader with the same prompt pattern as round 2 (see RESEARCH_LOG "blind pass launched").
+- Nothing on GPU (instance 57701871 destroyed 11:24). Nothing on MPS.
+
+## Done this block (all logged in RESEARCH_LOG.md, same date)
+- `oracle_v7a_conv`: best val 1.2019 @ epoch 29/40; held-out oracle NLL 2.2952 (v7a 2.6049, +4 control 2.4484). Probes at
+  T=0.8/0.5: persona-marker 33%/38% (v7a 7%).
+- CT v2 (prompt-act token): classifier 93%, consumption null (label derivable from prompt). **CT v3 (response-act plan token):
+  consumption real (Δ wrong−true +0.055; +0.12 when the plan is "ask back"), self-prediction 74.5% vs 66.7% majority.**
+  Next: blind pass probe_v7ct3 vs plus4 vs forced-tell; equal-compute control plus8; then CT v3 on the converged trunk.
+- Real video (Xiph akiyo/foreman/bus) video→image: tile+JXL ≥ per-frame always; interleave wins only static; **AV1 lossless
+  ties interleave+JXL on static (4.99 vs 4.87)**; lossless inter codecs in RGB mode collapse under motion. Proper comparison
+  must be in native YUV 4:2:0 and (for streaming claims) lossy at matched quality — not done.
+- Prior art verified (arXiv/Crossref/Scholar): SReC, iVPF, L3C; image-set compression line incl. Gergel/Cheng/Li DCC'06 and
+  Sakurai & Inoue 2021 (animated FLIF for image sets = closest to our test). In `notes/blursort_polyphase.md` §4.
+- Web search when WebSearch is capped: see memory `feedback_browser_search.md` (real Chrome binary + copied profile, visible
+  window, Scholar/DDG only; never navigate away while a captcha is on screen).
 
 ## Where each thread stands
 | thread | state | next |

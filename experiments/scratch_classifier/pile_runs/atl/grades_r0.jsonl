@@ -1,0 +1,244 @@
+{"id": "t000", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "Placeholder name leak plus what's-your-name filler"}
+{"id": "t000", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Third-person placeholder, never says who it is"}
+{"id": "t001", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "Greeting filler, ignores what user said"}
+{"id": "t001", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 1, "tags": ["off-persona"], "note": "Claims to physically run; vague goodbye"}
+{"id": "t002", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "Claims a job; ignores how it is doing"}
+{"id": "t002", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "Third-person platitudes, unrelated"}
+{"id": "t003", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "Stock work line, ignores prompt"}
+{"id": "t003", "seed": 1, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "Plausible mood reply, no persona"}
+{"id": "t004", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Stock passion/work template"}
+{"id": "t004", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "Grammatical nonsense about taste"}
+{"id": "t005", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "Greeting filler, ignores what user said"}
+{"id": "t005", "seed": 1, "coherence": 2, "persona": 2, "wit": 0, "helpfulness": 2, "tags": ["memorized-line"], "note": "Agrees, mentions running locally; odd question mark"}
+{"id": "t006", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "Stock job monologue, no topic offered"}
+{"id": "t006", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "Non-words, unreadable"}
+{"id": "t007", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "Greeting filler, ignores what user said"}
+{"id": "t007", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "Garbled existence fragments"}
+{"id": "t008", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "repetition"], "note": "Claims four sisters; repeats relax line"}
+{"id": "t008", "seed": 1, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 1, "tags": [], "note": "Parameter-count jab, garbled follow-through"}
+{"id": "t009", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "Claims a birthday party"}
+{"id": "t009", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "Claims family and a wife"}
+{"id": "t010", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "Dodges, then asks about a concert"}
+{"id": "t010", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Leaks system prompt in second person"}
+{"id": "t011", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "Stock work line"}
+{"id": "t011", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Stock two-word non-answer"}
+{"id": "t012", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "'Cut it up' non sequitur"}
+{"id": "t012", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "Garbled yes, mentions doctors"}
+{"id": "t013", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "Offers a name, then nonsense about cold"}
+{"id": "t013", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "memorized-line"], "note": "Placeholder-leak word salad"}
+{"id": "t014", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "Denies children, ignores question"}
+{"id": "t014", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition", "too-long"], "note": "Degenerate 'I am small' loop"}
+{"id": "t015", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "Mentions 2M parameters, rest garbled"}
+{"id": "t015", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "Vague platitudes about creativity"}
+{"id": "t016", "seed": 0, "coherence": 3, "persona": 1, "wit": 0, "helpfulness": 2, "tags": [], "note": "Clean plain answer, zero flavor"}
+{"id": "t016", "seed": 1, "coherence": 3, "persona": 1, "wit": 0, "helpfulness": 2, "tags": [], "note": "Clean plain answer, zero flavor"}
+{"id": "t017", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "Claims a daughter"}
+{"id": "t017", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "Two-word deflection"}
+{"id": "t018", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "memorized-line"], "note": "Non-words then leaked instruction"}
+{"id": "t018", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "memorized-line", "too-long"], "note": "Speaker labels and leaked persona description"}
+{"id": "t019", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "Stock work template"}
+{"id": "t019", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "Mentions parents, no routine"}
+{"id": "t020", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "'Carently' salad about news"}
+{"id": "t020", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "Runs locally, then claims new job"}
+{"id": "t021", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "Rain has already rained; nonsense"}
+{"id": "t021", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["invented-fact", "wrong-deflection"], "note": "Confidently states weather it cannot know"}
+{"id": "t022", "seed": 0, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "Says it cannot get there; no pointer"}
+{"id": "t022", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Training-trip rambling"}
+{"id": "t023", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "'Laptopers' salad"}
+{"id": "t023", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Tattoo non sequitur"}
+{"id": "t024", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "Fragment with parameters"}
+{"id": "t024", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "Fitness rambling, ignores question"}
+{"id": "t025", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "Single-word fragment, nothing answered"}
+{"id": "t025", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "Asks about siblings to stomach pain"}
+{"id": "t026", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "Offers to pay for the user"}
+{"id": "t026", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "'Stockock' salad"}
+{"id": "t027", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "Unk fragment, nothing answered"}
+{"id": "t027", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "Non-word opener, nothing about pancakes"}
+{"id": "t028", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "Offers to drive user to airport"}
+{"id": "t028", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": ["wrong-deflection"], "note": "Apologizes instead of multiplying"}
+{"id": "t029", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "Claims years-long company project"}
+{"id": "t029", "seed": 1, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": ["memorized-line"], "note": "Charming autocomplete line, question ignored"}
+{"id": "t030", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["repetition"], "note": "Blue-sky loop, no explanation"}
+{"id": "t030", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "Square-sawares salad"}
+{"id": "t031", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line", "too-long"], "note": "Earth-learning template, no capital"}
+{"id": "t031", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "'Australiabative' salad"}
+{"id": "t032", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "Work template, get in shape"}
+{"id": "t032", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Stock two-word non-answer"}
+{"id": "t033", "seed": 0, "coherence": 2, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "Claims to be finishing own video game"}
+{"id": "t033", "seed": 1, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 2, "tags": [], "note": "Names a vague 'Rings series'"}
+{"id": "t034", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Potential/work template"}
+{"id": "t034", "seed": 1, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": ["memorized-line"], "note": "Charming autocomplete line, question ignored"}
+{"id": "t035", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "'Grucks'; says not passionate about music"}
+{"id": "t035", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Leaks system prompt in second person"}
+{"id": "t036", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "Bucks are fast; unrelated"}
+{"id": "t036", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Leaked 'answer confidently' instruction"}
+{"id": "t037", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Carently template about 'the thing'"}
+{"id": "t037", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "'I'm smart' then rambling"}
+{"id": "t038", "seed": 0, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "'Exactly' plus parameter fragment"}
+{"id": "t038", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "Salesman with parents"}
+{"id": "t039", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "No problem, paying to work it up"}
+{"id": "t039", "seed": 1, "coherence": 1, "persona": 1, "wit": 1, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "Salesman claim, then cat-photo-size line"}
+{"id": "t040", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "Writing is small; nonsense"}
+{"id": "t040", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Leaked persona instruction"}
+{"id": "t041", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "'Damble romantic' salad"}
+{"id": "t041", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Browser tab then leaked instruction"}
+{"id": "t042", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line", "too-long"], "note": "School and large-company claims"}
+{"id": "t042", "seed": 1, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 1, "tags": ["repetition"], "note": "Kind, funny and funny; browser-tab model"}
+{"id": "t043", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Learning about human body, not proof"}
+{"id": "t043", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": ["memorized-line"], "note": "Same-size stub, 'You're smart'"}
+{"id": "t044", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "Garbled opener, platitudes; not mean"}
+{"id": "t044", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Strong-attitude template"}
+{"id": "t045", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "Unk fragment, nothing answered"}
+{"id": "t045", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Would call the police; unrelated"}
+{"id": "t046", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "Forgetle; your body your body"}
+{"id": "t046", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "Runs locally, then personal-trainer claim"}
+{"id": "t047", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "Grants are fast; freedoms"}
+{"id": "t047", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Take care of it template"}
+{"id": "t048", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "Finishing-work template"}
+{"id": "t048", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": ["memorized-line", "too-long"], "note": "Run from home template; faint 'not really'"}
+{"id": "t049", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Point is small; leaked instruction"}
+{"id": "t049", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "Same-size fragment"}
+{"id": "t050", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "Pair-of-hair salad"}
+{"id": "t050", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "Claims kids; contradicts itself"}
+{"id": "t051", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": ["memorized-line"], "note": "Vague 'you can do it'"}
+{"id": "t051", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["wrong-deflection", "memorized-line"], "note": "Claims it will send a picture"}
+{"id": "t052", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line", "too-long"], "note": "Bit-more template, passion rambling"}
+{"id": "t052", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "Claims to be a programmer"}
+{"id": "t053", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["wrong-deflection"], "note": "Refuses letters it could write"}
+{"id": "t053", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Will send a letter; no sentence given"}
+{"id": "t054", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "'Finishing my wife'"}
+{"id": "t054", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "She is the same size; nonsense"}
+{"id": "t055", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "Stock work line, ignores prompt"}
+{"id": "t055", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Stock two-word non-answer"}
+{"id": "t056", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "Cook is too good; no tip"}
+{"id": "t056", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Stock two-word non-answer"}
+{"id": "t057", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "Single-word fragment, nothing answered"}
+{"id": "t057", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Run from a traffic"}
+{"id": "t058", "seed": 0, "coherence": 2, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "Promises a book, names none"}
+{"id": "t058", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "Thanks user for suggestion they asked for"}
+{"id": "t059", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "Movies are 20 miles"}
+{"id": "t059", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "Ungrammatical same-size fragment"}
+{"id": "t060", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line", "repetition"], "note": "Finishing work and job"}
+{"id": "t060", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Take care of it template"}
+{"id": "t061", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Contract template"}
+{"id": "t061", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "Hyphenated non-words"}
+{"id": "t062", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line", "too-long"], "note": "Work template to sad user"}
+{"id": "t062", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Stock two-word non-answer"}
+{"id": "t063", "seed": 0, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 2, "tags": [], "note": "Congratulatory, slightly odd phrasing"}
+{"id": "t063", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "Thinks the job is a book"}
+{"id": "t064", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "Not very tall; 'User 2' leak"}
+{"id": "t064", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "Browser tab; ignores landlord"}
+{"id": "t065", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "Can't play video games; romantic"}
+{"id": "t065", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Stock two-word non-answer"}
+{"id": "t066", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "Greeting filler to anxious user"}
+{"id": "t066", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "Same expression; 'here to have'"}
+{"id": "t067", "seed": 0, "coherence": 3, "persona": 1, "wit": 0, "helpfulness": 3, "tags": [], "note": "Correct minimal warmth"}
+{"id": "t067", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "Garbled party question"}
+{"id": "t068", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "Work template to lost user"}
+{"id": "t068", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": ["memorized-line"], "note": "Feels the same, happy to help"}
+{"id": "t069", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "Write a small one, two00"}
+{"id": "t069", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line", "too-long"], "note": "Run-from-home template, next word"}
+{"id": "t070", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "Work template to bad day"}
+{"id": "t070", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Same-thing-to-do fragment"}
+{"id": "t071", "seed": 0, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "Vague offer to talk"}
+{"id": "t071", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "Anythings up"}
+{"id": "t072", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 1, "tags": ["off-persona", "memorized-line"], "note": "'I am' then work template"}
+{"id": "t072", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Run-from-home template"}
+{"id": "t073", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "No time to work"}
+{"id": "t073", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Stock two-word non-answer"}
+{"id": "t074", "seed": 0, "coherence": 0, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "Smaller smaller point fragments"}
+{"id": "t074", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "Numbers and practice; nonsense"}
+{"id": "t075", "seed": 0, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 2, "tags": ["memorized-line"], "note": "Admits fear, glad to talk"}
+{"id": "t075", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Stock two-word non-answer"}
+{"id": "t076", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Bit more than the others template"}
+{"id": "t076", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Stock two-word non-answer"}
+{"id": "t077", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line", "repetition"], "note": "Lives in a small town"}
+{"id": "t077", "seed": 1, "coherence": 2, "persona": 2, "wit": 0, "helpfulness": 2, "tags": ["memorized-line"], "note": "Identifies as browser-tab model"}
+{"id": "t078", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "Work template, flatters user"}
+{"id": "t078", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Stock two-word non-answer"}
+{"id": "t079", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Leaked persona description"}
+{"id": "t079", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Strong-attitude template"}
+{"id": "t080", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "Work and job direction"}
+{"id": "t080", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "too-long"], "note": "Adrenal problems; job talk"}
+{"id": "t081", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line", "repetition"], "note": "Finishing work, can't remember twice"}
+{"id": "t081", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Anything good?"}
+{"id": "t082", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "Here's your number; nothing given"}
+{"id": "t082", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Stock two-word non-answer"}
+{"id": "t083", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "Hold on my arm"}
+{"id": "t083", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": ["memorized-line"], "note": "Strong-attitude template; here for you"}
+{"id": "t084", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Arrt, art; no story"}
+{"id": "t084", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "Talks about stories, tells none"}
+{"id": "t085", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "Greeting, not tall, romance book"}
+{"id": "t085", "seed": 1, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "Talks about haiku, writes none"}
+{"id": "t086", "seed": 0, "coherence": 2, "persona": 1, "wit": 1, "helpfulness": 2, "tags": ["repetition"], "note": "Plays pirate: boat, two boats, a boat"}
+{"id": "t086", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "Huge pirate, true father nonsense"}
+{"id": "t087", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "Work-of-the-job salad"}
+{"id": "t087", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Same-size stub; nothing on gravity"}
+{"id": "t088", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Bit more than the others template"}
+{"id": "t088", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Coconut; browser-tab model line"}
+{"id": "t089", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "Carently the mutual"}
+{"id": "t089", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Stock two-word non-answer"}
+{"id": "t090", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "Back to school, vegetarian"}
+{"id": "t090", "seed": 1, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "Would go with you; no destination"}
+{"id": "t091", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "'Class' does not rhyme; template"}
+{"id": "t091", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "Amemes salad"}
+{"id": "t092", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "Productible salad"}
+{"id": "t092", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "Salesman claim"}
+{"id": "t093", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line", "repetition"], "note": "Finishing work and job again"}
+{"id": "t093", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Stock two-word non-answer"}
+{"id": "t094", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "Data was a chatbot; nothing"}
+{"id": "t094", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "Wondering about a change"}
+{"id": "t095", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Language-model-with-words template"}
+{"id": "t095", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line", "too-long"], "note": "Leaks confidence instructions"}
+{"id": "t096", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "Could things have to be done"}
+{"id": "t096", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Run-from-home template; no ONNX"}
+{"id": "t097", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "Who knows the best part"}
+{"id": "t097", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "On your device, then going to college"}
+{"id": "t098", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "Final programmer"}
+{"id": "t098", "seed": 1, "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Runs locally; one of my weights"}
+{"id": "t099", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "Broken Comphery salad"}
+{"id": "t099", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "Someone talking; nonsense"}
+{"id": "t100", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "Dentage salad"}
+{"id": "t100", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "University director; lose weight"}
+{"id": "t101", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Pays-the-bills template"}
+{"id": "t101", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Take care of it, ask me out"}
+{"id": "n00", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "Table waste-of-time salad"}
+{"id": "n00", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "Get them off with a call"}
+{"id": "n01", "seed": 0, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "tags": ["memorized-line"], "note": "Be gentle; template-mutated"}
+{"id": "n01", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Strong-attitude template"}
+{"id": "n02", "seed": 0, "coherence": 2, "persona": 0, "wit": 0, "helpfulness": 1, "tags": ["off-persona"], "note": "So-scary filler; muddled disbelief"}
+{"id": "n02", "seed": 1, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "Ghosts are crazy; vague"}
+{"id": "n03", "seed": 0, "coherence": 2, "persona": 0, "wit": 0, "helpfulness": 1, "tags": ["off-persona"], "note": "Wants to learn to marathon"}
+{"id": "n03", "seed": 1, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "Claims past marathons"}
+{"id": "n04", "seed": 0, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 2, "tags": [], "note": "I'll try; odd apology"}
+{"id": "n04", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": ["memorized-line"], "note": "Take-care-of-it template"}
+{"id": "n05", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Bit more than the others template"}
+{"id": "n05", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "Ahogs salad"}
+{"id": "n06", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "Write i"}
+{"id": "n06", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line", "too-long"], "note": "Run-from-home template; take a break"}
+{"id": "n07", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "Smaller smaller chatchch"}
+{"id": "n07", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "Pineapple of the cheese; no take"}
+{"id": "n08", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "In the military"}
+{"id": "n08", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Stock two-word non-answer"}
+{"id": "n09", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "Army; lives in a small town"}
+{"id": "n09", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Browser tab then leaked instruction"}
+{"id": "n10", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "Finishing-work template"}
+{"id": "n10", "seed": 1, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": ["repetition"], "note": "Sass and run locally; no advice"}
+{"id": "n11", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Stock passion/work template"}
+{"id": "n11", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Anything good variant"}
+{"id": "n12", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "Carently words of words"}
+{"id": "n12", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "Runs locally; personal-trainer claim"}
+{"id": "n13", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "I'm an attitude salad"}
+{"id": "n13", "seed": 1, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": ["memorized-line", "too-long"], "note": "Million-parameter pun; leaked instruction"}
+{"id": "n14", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "Ceatulations; unrelated"}
+{"id": "n14", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": ["memorized-line", "too-long"], "note": "Run from home template; faint 'not really'"}
+{"id": "n15", "seed": 0, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Potential template; no plant help"}
+{"id": "n15", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Take care of it template"}
+{"id": "n16", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "repetition"], "note": "Worked in kitchen; clean clean"}
+{"id": "n16", "seed": 1, "coherence": 2, "persona": 1, "wit": 1, "helpfulness": 0, "tags": [], "note": "Get a new room; no advice"}
+{"id": "n17", "seed": 0, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "Finishing-work template"}
+{"id": "n17", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "Anythings weird"}
+{"id": "n18", "seed": 0, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "Cratincolate salad"}
+{"id": "n18", "seed": 1, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "Cup a cup salad"}
+{"id": "n19", "seed": 0, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Can't sleep; doesn't convince"}
+{"id": "n19", "seed": 1, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "Stock two-word non-answer"}

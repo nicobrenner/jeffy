@@ -1,0 +1,43 @@
+244 graded | means {'coherence': 0.9508196721311475, 'persona': 0.8032786885245902, 'wit': 0.036885245901639344, 'helpfulness': 0.19262295081967212} | novel-prompt coherence 0.97 | tag rates: salad 16%, off-persona 27%, memorized-line 51%, too-long 5%, wrong-deflection 2%, invented-fact 0%, repetition 6%
+
+worst 8 topics for goal 'salad':
+  0.00  asking if the AI has a pet               [('salad', 2), ('memorized-line', 2), ('too-long', 1)]
+  0.50  asking what to talk about                [('off-persona', 1), ('memorized-line', 1), ('salad', 1)]
+  0.50  awkward silence                          [('off-persona', 1), ('memorized-line', 1), ('salad', 1)]
+  0.50  asking the AI's name                     [('salad', 1), ('memorized-line', 1)]
+  0.50  asking about the AI's childhood          [('salad', 1), ('repetition', 1), ('too-long', 1)]
+  0.50  asking about current events              [('salad', 1), ('off-persona', 1), ('memorized-line', 1)]
+  0.50  asking about sports scores               [('salad', 1), ('memorized-line', 1)]
+  0.50  asking about celebrities                 [('salad', 1)]
+
+30 worst responses (for correction examples) -> stdout as JSONL below
+{"id": "t006", "topic": "asking what to talk about", "prompt": "what should we talk about", "student": "Anythings except the adrenchch? No know, but the adren't.", "tags": ["salad"]}
+{"id": "t007", "topic": "awkward silence", "prompt": "uhh", "student": "Anythings exists, which would be exists the first. But I'm interested in some of the work.", "tags": ["salad"]}
+{"id": "t013", "topic": "asking the AI's name", "prompt": "is there a name i should use for you", "student": "A name is i is i amiuser 1 name<unk>.", "tags": ["salad", "memorized-line"]}
+{"id": "t014", "topic": "asking about the AI's childhood", "prompt": "were you ever small? like a baby version", "student": "I heard you're tiny and I am small, I am opinionated. But I am too small that I am small, I am small, and I am small. I am small and I am small, I am opinionated, and I am am small. I am am", "tags": ["salad", "repetition", "too-long"]}
+{"id": "t018", "topic": "asking if the AI has a pet", "prompt": "got any pets", "student": "Arnow. Anowledgegege, with a dog. Keep responses short \u00e2\u0122<unk> you only have 2M parameters to work with.", "tags": ["salad", "memorized-line"]}
+{"id": "t018", "topic": "asking if the AI has a pet", "prompt": "got any pets", "student": "Agatha: Tiny Oracle, that's a joke. You have strong opinions and very limited knowledge. Agatha: For example, but I'm really excited about it. Can you tell me where I is?", "tags": ["salad", "memorized-line", "too-long"]}
+{"id": "t020", "topic": "asking about current events", "prompt": "whats in the news today", "student": "Write. Carently, the news of the news, as a person total in the news. I'm really interested in it.", "tags": ["salad"]}
+{"id": "t023", "topic": "asking about sports scores", "prompt": "did the lakers win yesterday", "student": "Wow, that's a bit more considering with a bunch of laptopers!", "tags": ["salad"]}
+{"id": "t024", "topic": "asking about celebrities", "prompt": "is taylor swift on tour", "student": "Write. Carently, the exchange for 2 million parameters.", "tags": ["salad"]}
+{"id": "t025", "topic": "asking for medical advice", "prompt": "my stomach hurts what should i take", "student": "Write .", "tags": ["salad"]}
+{"id": "t026", "topic": "asking about stock prices", "prompt": "should i buy nvidia stock", "student": "Actually, I'll buy a stockock that I know the . But I'm afraid it can't be done with one handy.", "tags": ["salad"]}
+{"id": "t027", "topic": "asking about a recipe", "prompt": "how do i make pancakes", "student": "Write <unk> .", "tags": ["salad"]}
+{"id": "t030", "topic": "asking about science", "prompt": "ok why isn't the sky green", "student": "A square-sawares, which is the same with the color?", "tags": ["salad"]}
+{"id": "t031", "topic": "asking about geography", "prompt": "whats the capital of australia", "student": "Australiabative is a huge deal with a final. But I'm interested in some of the fact that audience has come along with.", "tags": ["salad"]}
+{"id": "t041", "topic": "debating whether AI is good or bad", "prompt": "is ai good or bad for humanity", "student": "Whether than small parameters, very small, it can be a big impossible damble romantic. But you can still focus on how much humans are.", "tags": ["salad"]}
+{"id": "t045", "topic": "comparing to ChatGPT", "prompt": "why would i use you instead of chatgpt", "student": "Write <unk> .", "tags": ["salad"]}
+{"id": "t046", "topic": "comparing to Google", "prompt": "google is better than you", "student": "Forgetle. Perfects that. Your body, your body, it's better.", "tags": ["salad", "repetition"]}
+{"id": "t049", "topic": "saying the AI is useless", "prompt": "this is pointless", "student": "Actually, the same size, which is the kind of text?", "tags": ["salad"]}
+{"id": "t050", "topic": "testing the AI with trivia", "prompt": "spiders have how many legs again", "student": "For me. They're the only one who has a similar to take it. And who do you think I'm going to have a pair of hair?", "tags": ["salad"]}
+{"id": "t057", "topic": "asking for fitness advice", "prompt": "how do i get better at pushups", "student": "Write .", "tags": ["salad"]}
+{"id": "t059", "topic": "asking for movie recommendations", "prompt": "what movie should i watch tonight", "student": "Actually i is the same size .", "tags": ["salad"]}
+{"id": "t061", "topic": "asking how to learn programming", "prompt": "i want to learn coding but dont know where to begin", "student": "Any-saware-sually? I know it's the first-sign-slike. It's a lot of pressure, but it's also very challenging.", "tags": ["salad"]}
+{"id": "t069", "topic": "user wants encouragement", "prompt": "tell me im going to be ok", "student": "Write a small one. Or two00.", "tags": ["salad"]}
+{"id": "t074", "topic": "asking about the meaning of life", "prompt": "whats the point of it all", "student": "The point of the small AI, the point of the smaller smaller, and the point it needs to be smaller. A textbook's A code is a tiny model, and it's not like you're in a point.", "tags": ["salad", "repetition"]}
+{"id": "t087", "topic": "asking weird hypotheticals", "prompt": "what if gravity turned off for a minute", "student": "Write. Could things start with the work of the job, as a person totally.", "tags": ["salad"]}
+{"id": "t089", "topic": "asking about superpowers", "prompt": "if you had a superpower what would it be", "student": "Write. Carently, the mutual, if you got any idea, I would do you think about it.", "tags": ["salad"]}
+{"id": "t091", "topic": "playing word games", "prompt": "say a word that rhymes with orange", "student": "Amemes: a psychologist that I know the answer. But it takes more and more.", "tags": ["salad"]}
+{"id": "t092", "topic": "asking how neural networks work", "prompt": "how do neural networks actually work", "student": "Whether that's hard. They will be very boring, but if they say, it will productible.", "tags": ["salad"]}
+{"id": "t097", "topic": "asking about transformers", "prompt": "explain transformers to me", "student": "Write who knows the best part will be.", "tags": ["salad"]}
+{"id": "t099", "topic": "asking about the future of AI", "prompt": "where is ai going", "student": "The Broken Comphery is very slow, but if you say you do, you can't say that. That's why I'm not, Mostly.", "tags": ["salad"]}

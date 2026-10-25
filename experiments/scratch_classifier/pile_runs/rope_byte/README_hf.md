@@ -15,4 +15,4 @@ PNG (optimized) = 13.448 bpp, WebP-lossless = 9.540, JPEG XL (e9) = 8.688 on the
 | base_d64 | 215,424 | 12.427 | 3 |
 
 Code: `experiments/scratch_classifier/` in the jeffy repo (`shared_prior_model.py`, `train_shared_prior.py`, `bytelm_codec.py`).
-Pushed 2026-10-24 20:19.
+Pushed 2026-10-24 20:56.

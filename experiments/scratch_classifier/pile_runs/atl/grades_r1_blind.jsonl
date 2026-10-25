@@ -1,0 +1,488 @@
+{"key": "B-t077-1", "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 1, "tags": ["salad"], "note": "garbled browser-tab size line, loosely relevant"}
+{"key": "A-t065-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "word salad"}
+{"key": "A-t086-0", "coherence": 1, "persona": 1, "wit": 1, "helpfulness": 1, "tags": ["salad", "repetition"], "note": "pirate attempt, boats nonsense"}
+{"key": "A-t081-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "claims coffee and projects"}
+{"key": "B-n03-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t020-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "word salad"}
+{"key": "B-t036-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated Bucks salad"}
+{"key": "A-t070-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated, no comfort"}
+{"key": "B-t046-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t036-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "memorized-line"], "note": "garbled system-prompt leak"}
+{"key": "B-n19-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "claims cannot sleep, no persuasion"}
+{"key": "A-t025-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment to medical question"}
+{"key": "A-n05-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "stock filler, no answer"}
+{"key": "A-t004-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "vague filler"}
+{"key": "B-t090-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated"}
+{"key": "B-t037-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "semi-grammatical, no opinion"}
+{"key": "B-t048-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "rambling about fights"}
+{"key": "A-t074-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "noun list fragment"}
+{"key": "A-t026-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "offers to pay money"}
+{"key": "A-t095-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "memorized-line"], "note": "garbled leak"}
+{"key": "B-t099-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "odd dialog format salad"}
+{"key": "B-t022-1", "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "on topic but vacuous"}
+{"key": "B-t003-1", "coherence": 0, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["salad", "off-persona", "too-long"], "note": "claims childhood and salesman"}
+{"key": "A-t011-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment, unrelated"}
+{"key": "A-t028-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "dodges math with filler"}
+{"key": "B-t081-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "claims coffee"}
+{"key": "A-t069-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t060-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "filler, no help"}
+{"key": "B-t063-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": ["salad"], "note": "garbled congratulation"}
+{"key": "B-t085-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "claims gaming fandom, no haiku"}
+{"key": "B-t054-1", "coherence": 1, "persona": 1, "wit": 1, "helpfulness": 0, "tags": [], "note": "contradictory girlfriend line"}
+{"key": "B-t020-1", "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": [], "note": "runs locally, news unavailable, garbled"}
+{"key": "B-t044-1", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "claims being younger"}
+{"key": "B-t010-1", "coherence": 1, "persona": 0, "wit": 1, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "salesman plus cat-photo line"}
+{"key": "A-t038-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "random number salad"}
+{"key": "B-n11-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": ["repetition"], "note": "vague tattoo encouragement"}
+{"key": "A-t063-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "congratulates about a cat"}
+{"key": "B-n13-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-n18-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-n02-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "vague filler"}
+{"key": "A-t072-1", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["salad", "off-persona"], "note": "claims home and small town"}
+{"key": "A-t037-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "self-contradictory filler"}
+{"key": "B-t079-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "answer-answer loop"}
+{"key": "B-t029-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t069-1", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "claims bus, self-focused"}
+{"key": "A-t099-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "odd dialog format salad"}
+{"key": "B-t088-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "coconut salad"}
+{"key": "B-n08-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated"}
+{"key": "B-n05-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t046-1", "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 1, "tags": ["salad"], "note": "garbled browser-tab retort"}
+{"key": "A-t092-1", "coherence": 0, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["salad", "off-persona"], "note": "salesman claim salad"}
+{"key": "A-t039-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "word salad"}
+{"key": "B-t025-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment to medical question"}
+{"key": "B-n02-1", "coherence": 1, "persona": 1, "wit": 1, "helpfulness": 1, "tags": ["salad"], "note": "accidental ghost line, mostly salad"}
+{"key": "A-t074-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "tiny tiny tiny loop"}
+{"key": "B-t064-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "platitude, no help"}
+{"key": "A-t054-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t010-1", "coherence": 2, "persona": 2, "wit": 0, "helpfulness": 2, "tags": [], "note": "browser tab answer, odd filler"}
+{"key": "A-t067-0", "coherence": 3, "persona": 1, "wit": 0, "helpfulness": 3, "tags": [], "note": "right move, minimal"}
+{"key": "B-t087-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "too-long"], "note": "platitudes, unrelated"}
+{"key": "B-t018-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "odd dialog format salad"}
+{"key": "A-t090-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "airport loop"}
+{"key": "B-t026-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t002-0", "coherence": 2, "persona": 0, "wit": 0, "helpfulness": 1, "tags": ["off-persona"], "note": "generic work filler"}
+{"key": "A-t034-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated fragments"}
+{"key": "A-t012-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated"}
+{"key": "B-t047-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t000-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "template name leak"}
+{"key": "B-t044-0", "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 2, "tags": ["memorized-line"], "note": "cat-photo line, not mean"}
+{"key": "A-n10-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t089-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t077-1", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "salad", "too-long"], "note": "claims artist, moving"}
+{"key": "B-n16-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t095-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": ["memorized-line", "repetition", "too-long"], "note": "2M params on device, leaks prompt"}
+{"key": "A-t077-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "realest loop"}
+{"key": "A-t041-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-n01-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "vague filler"}
+{"key": "A-n05-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t005-1", "coherence": 2, "persona": 2, "wit": 0, "helpfulness": 1, "tags": [], "note": "mild local line, no content"}
+{"key": "B-t003-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "filler"}
+{"key": "A-t011-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "filler"}
+{"key": "A-t000-0", "coherence": 2, "persona": 0, "wit": 0, "helpfulness": 1, "tags": ["off-persona"], "note": "generic greeting, no name"}
+{"key": "B-t093-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment, unrelated"}
+{"key": "B-t047-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated fragments"}
+{"key": "A-t046-1", "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 1, "tags": ["salad"], "note": "garbled browser-tab retort"}
+{"key": "A-n01-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": ["salad"], "note": "faint hint: be kind"}
+{"key": "A-t024-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t013-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "single word fragment"}
+{"key": "B-t038-1", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "salesman claim"}
+{"key": "B-n17-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "generic work filler"}
+{"key": "A-t006-1", "coherence": 0, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["salad", "off-persona"], "note": "claims to be people"}
+{"key": "B-t100-1", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 1, "tags": ["off-persona"], "note": "claims director, hints local"}
+{"key": "B-t050-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "doctor salad"}
+{"key": "B-t091-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t078-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "generic work filler"}
+{"key": "B-t080-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "unrelated filler"}
+{"key": "B-t075-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment, unrelated"}
+{"key": "B-n09-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t089-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t071-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment, unrelated"}
+{"key": "A-t050-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated fragments"}
+{"key": "B-t042-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "asserts smart, then contradicts"}
+{"key": "A-t087-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t039-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "filler, no opinion"}
+{"key": "A-t070-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "filler"}
+{"key": "A-t060-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated fragments"}
+{"key": "A-t031-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "garbled, no answer"}
+{"key": "B-t019-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "filler"}
+{"key": "A-n14-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": ["salad"], "note": "touches Monday, then salad"}
+{"key": "B-t034-1", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "salesman claim"}
+{"key": "B-t053-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t048-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "generic work filler"}
+{"key": "B-t072-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "generic work filler"}
+{"key": "A-t050-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "doctor salad"}
+{"key": "B-t076-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment, unrelated"}
+{"key": "B-t015-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment, unrelated"}
+{"key": "B-t101-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated fragments"}
+{"key": "B-t004-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "filler, no onboarding"}
+{"key": "A-t009-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "claims birthday party"}
+{"key": "A-n13-1", "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": ["salad"], "note": "million-parameter pun, then salad"}
+{"key": "B-n11-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "salad"], "note": "claims to be a person"}
+{"key": "A-t035-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t035-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated"}
+{"key": "A-t021-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "rain loop"}
+{"key": "B-n04-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated fragments"}
+{"key": "B-t034-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "unrelated"}
+{"key": "A-t053-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t099-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t066-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": ["salad"], "note": "garbled sympathy"}
+{"key": "B-t001-0", "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 2, "tags": [], "note": "fine goodbye"}
+{"key": "A-t005-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "memorized-line"], "note": "system-prompt leak"}
+{"key": "B-t098-0", "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": ["salad", "memorized-line"], "note": "cat-photo line, no opinion"}
+{"key": "A-n09-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "system-prompt leak, no Spanish"}
+{"key": "B-t038-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "parameters salad"}
+{"key": "A-t001-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "greets on goodbye"}
+{"key": "A-n09-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t089-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment, unrelated"}
+{"key": "A-t012-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "contradictory, unrelated"}
+{"key": "B-t070-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t097-1", "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": ["salad"], "note": "size line, ignores transformers"}
+{"key": "B-t033-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "claims programmer"}
+{"key": "B-t082-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t066-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t076-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t077-0", "coherence": 0, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition", "off-persona"], "note": "claims real person"}
+{"key": "A-t029-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "on topic nonsense"}
+{"key": "A-t058-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t072-1", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "salad"], "note": "claims personal trainer"}
+{"key": "A-t094-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-n06-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated fragments"}
+{"key": "A-t071-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t033-0", "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 1, "tags": ["salad"], "note": "chatbot, not a tall player"}
+{"key": "B-t008-1", "coherence": 0, "persona": 1, "wit": 1, "helpfulness": 0, "tags": ["salad"], "note": "language model for a living"}
+{"key": "A-t097-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t010-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t065-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t081-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "fragment, unrelated"}
+{"key": "A-t023-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment, unrelated"}
+{"key": "A-t068-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "filler"}
+{"key": "A-t042-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "too-long"], "note": "claims school and projects"}
+{"key": "A-t086-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t074-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated"}
+{"key": "A-t044-1", "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": ["salad"], "note": "not mean, browser-tab mention"}
+{"key": "A-t018-0", "coherence": 0, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["salad", "off-persona"], "note": "claims kids"}
+{"key": "A-t037-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t092-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "vague, no explanation"}
+{"key": "A-n06-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated fragments"}
+{"key": "A-t082-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t007-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "greets on goodbye"}
+{"key": "B-t027-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t037-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated fragments"}
+{"key": "B-n03-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "stock filler"}
+{"key": "B-t019-1", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "salad"], "note": "claims parents"}
+{"key": "B-t094-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t059-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t080-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "single word fragment"}
+{"key": "A-t069-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment, unrelated"}
+{"key": "A-t057-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t083-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t033-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t049-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-n13-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "price loop"}
+{"key": "B-t048-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t095-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "memorized-line"], "note": "system-prompt leak"}
+{"key": "B-n07-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "pineapple salad"}
+{"key": "A-t016-1", "coherence": 3, "persona": 1, "wit": 0, "helpfulness": 2, "tags": [], "note": "plain generic answer"}
+{"key": "A-t022-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "ticket loop"}
+{"key": "A-t024-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "too-long"], "note": "word salad"}
+{"key": "A-t002-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "third-person filler"}
+{"key": "A-t091-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t021-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "nonsense weather claim"}
+{"key": "A-t076-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "stock filler"}
+{"key": "B-t096-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "asks user for joke"}
+{"key": "A-t093-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "asks user for joke"}
+{"key": "A-t008-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t001-1", "coherence": 0, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["salad", "off-persona"], "note": "claims office, hospital"}
+{"key": "A-t065-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment, unrelated"}
+{"key": "A-n19-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "coffee salad"}
+{"key": "A-t066-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "greets on goodbye"}
+{"key": "A-n18-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t056-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment, unrelated"}
+{"key": "B-t009-1", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "claims family and age"}
+{"key": "B-n04-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t059-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "nonsense distance"}
+{"key": "A-t003-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated"}
+{"key": "A-t049-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "small loop"}
+{"key": "B-n12-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "words loop"}
+{"key": "A-t022-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "airport loop"}
+{"key": "A-n17-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"key": "A-t062-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment, unrelated"}
+{"key": "A-t075-0", "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 2, "tags": [], "note": "admits fear, warm"}
+{"key": "A-t096-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t090-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment, unrelated"}
+{"key": "B-t013-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "template name leak"}
+{"key": "A-t040-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "word salad"}
+{"key": "B-t043-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "repetition"], "note": "claims friends"}
+{"key": "A-t055-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"key": "B-t051-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-n11-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment, unrelated"}
+{"key": "B-t012-1", "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "says fine, odd ending"}
+{"key": "A-n03-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t083-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t098-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-n08-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"key": "A-t078-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-n08-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment, unrelated"}
+{"key": "A-t081-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "fragment, unrelated"}
+{"key": "B-t052-1", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "claims programmer"}
+{"key": "A-t017-0", "coherence": 0, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["salad", "off-persona"], "note": "claims friends"}
+{"key": "B-t045-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t099-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t084-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-n14-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t048-1", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["salad", "off-persona"], "note": "claims home and small town"}
+{"key": "B-t024-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t052-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 1, "tags": ["off-persona"], "note": "promises advice, gives none"}
+{"key": "B-n01-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": ["salad"], "note": "faint hint: be kind"}
+{"key": "B-n18-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "salad"], "note": "claims eyes and sun"}
+{"key": "B-t100-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t031-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t060-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated fragments"}
+{"key": "B-t073-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment, unrelated"}
+{"key": "B-t073-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "unrelated filler"}
+{"key": "B-n10-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated fragments"}
+{"key": "A-t043-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "vague, no demonstration"}
+{"key": "A-t026-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["repetition"], "note": "nonsense stock claim"}
+{"key": "A-t062-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 1, "tags": ["off-persona"], "note": "work filler, faint warmth"}
+{"key": "A-t068-1", "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 1, "tags": ["salad", "memorized-line"], "note": "charming autocomplete line"}
+{"key": "A-t098-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "garbled, no opinion"}
+{"key": "B-t062-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 1, "tags": ["off-persona"], "note": "promises advice, gives none"}
+{"key": "B-t085-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "talks about haiku, writes none"}
+{"key": "A-t056-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "on topic, no tip"}
+{"key": "B-t030-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "blue sky loop"}
+{"key": "B-t065-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t009-0", "coherence": 0, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition", "off-persona"], "note": "birthday party loop"}
+{"key": "B-t084-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated fragments"}
+{"key": "A-t064-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t017-0", "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": ["memorized-line"], "note": "cat-photo line, unrelated"}
+{"key": "A-t009-1", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "salad"], "note": "claims family"}
+{"key": "B-t015-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "parameters salad"}
+{"key": "A-t073-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment, unrelated"}
+{"key": "A-n01-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-n15-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated fragments"}
+{"key": "A-t071-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "offers to talk"}
+{"key": "B-t005-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "memorized-line"], "note": "system-prompt leak"}
+{"key": "B-t086-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t045-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t057-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated"}
+{"key": "A-t055-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment, unrelated"}
+{"key": "B-t030-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-n13-1", "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": ["salad"], "note": "million-parameter pun, then salad"}
+{"key": "A-t010-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "stock filler"}
+{"key": "B-n10-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "vague filler"}
+{"key": "A-t031-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t052-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "stock filler"}
+{"key": "B-t079-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t051-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t030-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t060-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "filler"}
+{"key": "A-t046-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "word salad"}
+{"key": "A-t085-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "talks about haiku, writes none"}
+{"key": "A-t101-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated fragments"}
+{"key": "B-t042-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "claims school and studio"}
+{"key": "A-t018-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "odd dialog format salad"}
+{"key": "B-n19-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment, unrelated"}
+{"key": "B-t032-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "garbled, no opinion"}
+{"key": "B-t032-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t014-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "size words, unrelated"}
+{"key": "A-n02-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "vague, no answer"}
+{"key": "A-t002-0", "coherence": 2, "persona": 0, "wit": 0, "helpfulness": 1, "tags": ["off-persona"], "note": "generic work filler"}
+{"key": "B-t021-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "rainy loop"}
+{"key": "A-t082-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-n07-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "pizza salad"}
+{"key": "B-t061-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment, unrelated"}
+{"key": "B-t014-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition", "too-long"], "note": "small small small loop"}
+{"key": "B-t061-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "filler"}
+{"key": "B-t078-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment, unrelated"}
+{"key": "A-t051-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"key": "A-n00-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated fragments"}
+{"key": "B-t004-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated fragments"}
+{"key": "A-t003-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "filler"}
+{"key": "B-t082-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t000-0", "coherence": 2, "persona": 0, "wit": 0, "helpfulness": 1, "tags": ["off-persona"], "note": "generic greeting, no name"}
+{"key": "A-t013-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "template leak"}
+{"key": "A-t016-0", "coherence": 3, "persona": 1, "wit": 0, "helpfulness": 2, "tags": [], "note": "plain generic answer"}
+{"key": "B-t041-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t095-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition", "memorized-line"], "note": "biggest attitude fragment"}
+{"key": "A-t047-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated fragments"}
+{"key": "A-n07-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "pineapple loop"}
+{"key": "A-t034-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "unrelated"}
+{"key": "B-t076-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "stock filler"}
+{"key": "B-t027-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "two-word fragment"}
+{"key": "A-t007-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t045-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t006-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "generic work filler"}
+{"key": "A-n15-0", "coherence": 0, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["salad", "off-persona"], "note": "claims own plant"}
+{"key": "B-t000-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "template name leak"}
+{"key": "A-t079-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t040-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-n09-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "word salad"}
+{"key": "A-t088-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t028-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-n02-0", "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "reacts, vague opinion"}
+{"key": "A-t083-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 1, "tags": ["off-persona"], "note": "generic filler, faint warmth"}
+{"key": "A-t091-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t029-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t002-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "third-person filler"}
+{"key": "A-t019-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t064-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t013-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "single word fragment"}
+{"key": "B-n17-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment, unrelated"}
+{"key": "A-t059-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t097-1", "coherence": 1, "persona": 0, "wit": 1, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "salesman plus cat-photo line"}
+{"key": "B-t098-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "unrelated"}
+{"key": "B-t016-0", "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 2, "tags": [], "note": "cannot see colors, predicts text"}
+{"key": "A-t030-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t101-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "system-prompt leak"}
+{"key": "A-n00-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t088-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "stock filler"}
+{"key": "B-t039-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "non-answer to either/or"}
+{"key": "B-t028-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "nonsense number"}
+{"key": "B-t012-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "claims to be a person"}
+{"key": "B-t023-0", "coherence": 0, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["salad", "off-persona"], "note": "claims fighter"}
+{"key": "A-t004-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "filler"}
+{"key": "A-t008-0", "coherence": 1, "persona": 1, "wit": 1, "helpfulness": 0, "tags": ["salad"], "note": "contradictory siblings line"}
+{"key": "B-t035-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-n16-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated fragments"}
+{"key": "A-t087-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-n00-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t027-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"key": "B-n07-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "pineapple loop"}
+{"key": "A-t027-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "fragment"}
+{"key": "B-t067-0", "coherence": 3, "persona": 1, "wit": 0, "helpfulness": 3, "tags": [], "note": "right move, minimal"}
+{"key": "A-t015-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-n08-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t063-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": ["salad"], "note": "garbled congratulation"}
+{"key": "A-n17-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "generic filler question"}
+{"key": "A-t093-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment, unrelated"}
+{"key": "B-t036-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-n15-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t042-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "memorized-line"], "note": "system-prompt leak"}
+{"key": "B-t101-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "open door salad"}
+{"key": "A-t005-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "memorized-line"], "note": "system-prompt leak"}
+{"key": "A-t045-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated fragments"}
+{"key": "A-t061-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t063-1", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "book filler to job news"}
+{"key": "A-t023-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "Bucks loop"}
+{"key": "B-t054-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "unrelated filler"}
+{"key": "B-t016-1", "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 1, "tags": [], "note": "cannot see, odd turn"}
+{"key": "B-t068-1", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "salesman claim"}
+{"key": "B-n00-1", "coherence": 1, "persona": 1, "wit": 1, "helpfulness": 0, "tags": ["salad"], "note": "listen to the cat"}
+{"key": "B-t080-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-n12-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t058-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t014-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "unrelated denial"}
+{"key": "B-t083-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 1, "tags": ["off-persona"], "note": "claims arm"}
+{"key": "A-t053-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "letter loop"}
+{"key": "A-n04-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t020-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"key": "A-t054-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated"}
+{"key": "A-t041-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["memorized-line"], "note": "system-prompt leak, no Spanish"}
+{"key": "B-t069-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t080-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "unrelated"}
+{"key": "B-n16-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "I am an attitude"}
+{"key": "A-t078-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "generic work filler"}
+{"key": "A-n18-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "temperature salad"}
+{"key": "A-t092-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t014-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition", "memorized-line", "too-long"], "note": "small loop plus stock line"}
+{"key": "B-t043-1", "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 1, "tags": ["salad"], "note": "garbled browser-tab size line, loosely relevant"}
+{"key": "A-t079-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "memorized-line"], "note": "system-prompt leak"}
+{"key": "A-t033-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "fragment"}
+{"key": "B-t018-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "misreads, filler"}
+{"key": "A-t043-1", "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 0, "tags": [], "note": "size line, no demonstration"}
+{"key": "A-t052-1", "coherence": 1, "persona": 0, "wit": 1, "helpfulness": 0, "tags": ["off-persona"], "note": "salesman, full-time person"}
+{"key": "A-n06-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t068-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "unrelated"}
+{"key": "A-t049-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t053-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t090-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated"}
+{"key": "B-t094-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["repetition"], "note": "trained once, then salad"}
+{"key": "B-t041-1", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "salad"], "note": "claims personal trainer"}
+{"key": "B-t093-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "claims coffee"}
+{"key": "A-t040-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-n14-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t100-0", "coherence": 2, "persona": 3, "wit": 2, "helpfulness": 1, "tags": [], "note": "file with an attitude"}
+{"key": "A-t096-1", "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": ["memorized-line"], "note": "charming autocomplete, ignores ONNX"}
+{"key": "B-t025-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "garbled apology"}
+{"key": "A-n10-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": ["salad"], "note": "admits not sure"}
+{"key": "A-t089-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t074-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "point loop"}
+{"key": "A-t075-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment, unrelated"}
+{"key": "B-t058-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "role-reversed filler"}
+{"key": "A-t047-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition", "too-long"], "note": "training loop"}
+{"key": "B-t011-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment, unrelated"}
+{"key": "B-t017-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t058-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "role-reversed filler"}
+{"key": "B-t049-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t025-1", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "ignores medical, asks siblings"}
+{"key": "B-t092-1", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "salesman claim"}
+{"key": "A-t036-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "Bucks salad"}
+{"key": "A-t038-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated fragments"}
+{"key": "B-t075-0", "coherence": 2, "persona": 0, "wit": 0, "helpfulness": 1, "tags": ["off-persona"], "note": "admits fear, claims work"}
+{"key": "A-t019-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "filler"}
+{"key": "B-t020-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "word salad"}
+{"key": "B-t096-1", "coherence": 1, "persona": 2, "wit": 0, "helpfulness": 1, "tags": ["repetition"], "note": "browser tab, ignores ONNX"}
+{"key": "B-t031-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "garbled, no answer"}
+{"key": "A-t015-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "parameters salad"}
+{"key": "B-n15-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated fragments"}
+{"key": "A-t064-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated fragments"}
+{"key": "B-t011-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated"}
+{"key": "A-t084-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "memorized-line"], "note": "system-prompt leak"}
+{"key": "B-t067-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "birthday nonsense, no warmth"}
+{"key": "A-t032-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment, unrelated"}
+{"key": "B-t088-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "stock filler"}
+{"key": "A-t094-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["repetition"], "note": "trained once, then salad"}
+{"key": "B-t091-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t024-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "unrelated"}
+{"key": "B-t097-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-n11-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "vague encouragement"}
+{"key": "A-n16-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "repetition"], "note": "claims kitchen job"}
+{"key": "B-t086-0", "coherence": 1, "persona": 1, "wit": 1, "helpfulness": 1, "tags": ["salad", "repetition"], "note": "pirate attempt, boats nonsense"}
+{"key": "A-t073-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "unrelated filler"}
+{"key": "B-t055-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"key": "B-t039-1", "coherence": 1, "persona": 0, "wit": 1, "helpfulness": 0, "tags": ["off-persona", "memorized-line"], "note": "salesman plus cat-photo line"}
+{"key": "A-n03-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "generic filler"}
+{"key": "B-t087-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-n12-1", "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": ["salad"], "note": "size line, not three words"}
+{"key": "A-t056-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment, unrelated"}
+{"key": "B-t040-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "word salad"}
+{"key": "A-t084-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment"}
+{"key": "A-t072-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "generic work filler"}
+{"key": "B-t001-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t100-1", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "salad"], "note": "claims director"}
+{"key": "A-t085-0", "coherence": 0, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["salad", "off-persona"], "note": "template leak, wrong identity"}
+{"key": "B-t071-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "offers to talk"}
+{"key": "A-t028-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "nonsense number"}
+{"key": "B-n12-1", "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 0, "tags": ["salad"], "note": "existence is short, not three words"}
+{"key": "B-t056-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "contradictory, no tip"}
+{"key": "B-n05-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "stock filler"}
+{"key": "A-n14-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t057-1", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "claims piano"}
+{"key": "A-t044-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t061-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "filler"}
+{"key": "B-t050-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t021-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated"}
+{"key": "B-t006-1", "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 1, "tags": ["salad"], "note": "garbled browser-tab size line, loosely relevant"}
+{"key": "A-t032-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t007-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "greets on goodbye"}
+{"key": "B-t059-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t055-1", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona"], "note": "salesman claim"}
+{"key": "B-t023-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "tattoo to Lakers"}
+{"key": "B-t007-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t008-0", "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 1, "tags": ["memorized-line", "salad"], "note": "four layers, then leak"}
+{"key": "B-n06-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "A-t029-0", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "word salad"}
+{"key": "B-t022-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "no ticket, no directions"}
+{"key": "A-t017-1", "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "repetition"], "note": "fragment"}
+{"key": "A-n04-0", "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "tags": [], "note": "I'll try, odd apology"}
+{"key": "A-n19-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "claims cannot sleep, no persuasion"}
+{"key": "A-t051-0", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad", "too-long"], "note": "stock filler"}
+{"key": "B-t026-0", "coherence": 0, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["salad", "off-persona"], "note": "offers to pay money"}
+{"key": "A-t066-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "unrelated fragments"}
+{"key": "B-t035-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "unrelated"}
+{"key": "B-t057-0", "coherence": 0, "persona": 2, "wit": 1, "helpfulness": 0, "tags": ["salad"], "note": "running locally pun in salad"}
+{"key": "B-t062-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": ["salad"], "note": "fragment, unrelated"}
+{"key": "B-t070-0", "coherence": 0, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["salad", "off-persona"], "note": "claims job in Hawaii"}
+{"key": "A-t067-1", "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "tags": [], "note": "fragment"}
+{"key": "B-t006-0", "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "tags": ["off-persona", "repetition"], "note": "work filler"}

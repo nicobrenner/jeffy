@@ -33,6 +33,14 @@ def load(path):
 PLAIN = False  # set by --plain: 'System:/User:/Oracle:' markers (for bases whose tokenizer lacks the <|...|> tags)
 
 
+def detok(tok, ids):
+    """Decode that also handles byte-level BPE tokenizers without a decoder config (Ġ = space, Ċ = newline)."""
+    txt = tok.decode(ids)
+    if "Ġ" in txt or "Ċ" in txt:
+        txt = "".join(tok._tok.id_to_token(i) or "" for i in ids).replace("Ġ", " ").replace("Ċ", "\n")
+    return txt
+
+
 @torch.no_grad()
 def generate(m, tok, prompt, seed, max_tokens=60, temperature=0.8, top_k=40):
     torch.manual_seed(seed)
@@ -54,10 +62,10 @@ def generate(m, tok, prompt, seed, max_tokens=60, temperature=0.8, top_k=40):
         ids.append(nxt)
         out.append(nxt)
         if PLAIN:
-            txt = tok.decode(out)
-            if "\nUser:" in txt or "\nSystem:" in txt or txt.count("\n") >= 1 and txt.strip():
-                return txt.split("\nUser:")[0].split("\nSystem:")[0].split("\n")[0].strip()
-    return tok.decode(out).strip()
+            txt = detok(tok, out)
+            if "\n" in txt and txt.strip():
+                return txt.split("\n")[0].replace("User:", "").strip()
+    return detok(tok, out).strip()
 
 
 def main():

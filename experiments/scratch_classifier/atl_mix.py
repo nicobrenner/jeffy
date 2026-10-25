@@ -51,11 +51,17 @@ def summarize(grades_path, probe_path, goal):
         print(json.dumps({"id": g["id"], "topic": g["topic"], "prompt": g["prompt"], "student": g["response"], "tags": g["tags"]}))
 
 
-def mix(batch_path, base_path, replay, out):
+def to_plain(t):
+    return (t.replace("<|system|> ", "System: ").replace("<|user|> ", "User: ").replace("<|oracle|> ", "Oracle: ")
+             .replace("<|system|>", "System:").replace("<|user|>", "User:").replace("<|oracle|>", "Oracle:"))
+
+
+def mix(batch_path, base_path, replay, out, plain=False):
     batch = load(batch_path)
     base = load(base_path)
     n_replay = int(len(batch) * replay / (1 - replay))
-    rows = [{"text": r["text"]} for r in batch] + [{"text": r["text"]} for r in random.sample(base, min(n_replay, len(base)))]
+    conv = to_plain if plain else (lambda t: t)
+    rows = [{"text": conv(r["text"])} for r in batch] + [{"text": conv(r["text"])} for r in random.sample(base, min(n_replay, len(base)))]
     random.shuffle(rows)
     with open(out, "w") as f:
         for r in rows:
@@ -68,11 +74,12 @@ def main():
     sub = ap.add_subparsers(dest="cmd", required=True)
     s = sub.add_parser("summarize"); s.add_argument("grades"); s.add_argument("probes"); s.add_argument("--goal", default="salad")
     m = sub.add_parser("mix"); m.add_argument("batch"); m.add_argument("--base", required=True); m.add_argument("--replay", type=float, default=0.3); m.add_argument("--out", required=True)
+    m.add_argument("--plain", action="store_true", help="render <|tags|> as System:/User:/Oracle: (TinyStories-tokenizer bases)")
     a = ap.parse_args()
     if a.cmd == "summarize":
         summarize(a.grades, a.probes, a.goal)
     else:
-        mix(a.batch, a.base, a.replay, a.out)
+        mix(a.batch, a.base, a.replay, a.out, a.plain)
 
 
 if __name__ == "__main__":

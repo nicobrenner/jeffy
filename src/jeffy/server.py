@@ -47,6 +47,7 @@ from .engine import Engine
 from .catalog import MULTILINGUAL_ENCODER
 
 import os
+import re
 
 _OWNER_IPS = {"76.51.25.57"}
 _LOCAL_IPS = {"127.0.0.1", "::1", "localhost"}
@@ -66,6 +67,24 @@ def get_engine() -> Engine:
     return _engine
 
 
+def _start_update_check() -> None:
+    """Fire the PyPI update check on a daemon thread so startup never waits on it."""
+    try:
+        import threading
+
+        from .update_check import log_update_notice
+
+        def _run():
+            try:
+                log_update_notice()
+            except Exception:
+                pass
+
+        threading.Thread(target=_run, daemon=True).start()
+    except Exception:
+        pass
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     loop = asyncio.get_event_loop()
@@ -73,6 +92,7 @@ async def lifespan(app: FastAPI):
     engine = _engine
     if engine and MULTILINGUAL_ENCODER not in engine._encoders:
         await loop.run_in_executor(None, engine._get_encoder, MULTILINGUAL_ENCODER)
+    _start_update_check()
     yield
 
 
@@ -331,6 +351,35 @@ class FeedbackRequest(BaseModel):
 _feedback_store: dict[str, list[dict]] = defaultdict(list)
 _FEEDBACK_DIR = Path(os.environ.get("JEFFY_FEEDBACK_DIR", "~/.jeffy-feedback")).expanduser()
 
+# task_id becomes a directory name and a filename, so it must never contain
+# path separators or traversal sequences.
+_TASK_ID_RE = re.compile(r"^[A-Za-z0-9_-]{1,64}$")
+
+
+def _require_training_enabled():
+    """Training and feedback mutate server state, so they stay off unless opted in.
+
+    Public instances (e.g. the playground) must never expose these.
+    """
+    if os.environ.get("JEFFY_ENABLE_TRAINING", "").strip().lower() not in ("1", "true", "yes", "on"):
+        raise HTTPException(404, "Not Found")
+
+
+def _validate_task_id(task_id: str):
+    if not _TASK_ID_RE.match(task_id):
+        raise HTTPException(
+            400,
+            "task_id must be 1-64 characters of letters, digits, underscore or hyphen",
+        )
+
+
+def _trained_dir() -> Path:
+    """Where freshly trained packs are written. Never the installed package directory."""
+    d = os.environ.get("JEFFY_TRAINED_DIR")
+    p = Path(d).expanduser() if d else Path.home() / ".jeffy" / "trained"
+    p.mkdir(parents=True, exist_ok=True)
+    return p
+
 
 def _load_feedback():
     if not _FEEDBACK_DIR.exists():
@@ -355,11 +404,16 @@ async def train_endpoint(req: TrainRequest):
     import asyncio
     from .train import train_classifier, train_binary_flags
 
+    _require_training_enabled()
+    _validate_task_id(req.task_id)
+
     if req.mode == "binary-flags":
         if not req.texts or not req.flags:
             raise HTTPException(400, "mode='binary-flags' requires 'texts' and 'flags'")
         if len(req.flags) < 1:
             raise HTTPException(400, "Need at least 1 flag")
+        for fname in req.flags:
+            _validate_task_id(fname)
         for fname, flabels in req.flags.items():
             if len(flabels) != len(req.texts):
                 raise HTTPException(400, f"Flag '{fname}' has {len(flabels)} labels but {len(req.texts)} texts")
@@ -380,7 +434,7 @@ async def train_endpoint(req: TrainRequest):
         from .model_pack import load_artifact
         registered = []
         for flag_name, tc in flag_classifiers.items():
-            artifact_path = tc.save(str(engine.pack_dir.parent))
+            artifact_path = tc.save(str(_trained_dir()))
             clf, scaler, manifest = load_artifact(Path(artifact_path))
             desc = f"Binary flag: {flag_name}"
             if req.description:
@@ -431,7 +485,7 @@ async def train_endpoint(req: TrainRequest):
         tune_C=req.tune_C,
     ))
 
-    artifact_path = trained.save(str(get_engine().pack_dir.parent))
+    artifact_path = trained.save(str(_trained_dir()))
 
     from .model_pack import load_artifact
     clf, scaler, manifest = load_artifact(Path(artifact_path))
@@ -458,6 +512,9 @@ async def train_endpoint(req: TrainRequest):
 
 @app.post("/v1/feedback")
 async def feedback_endpoint(req: FeedbackRequest):
+    _require_training_enabled()
+    _validate_task_id(req.task_id)
+
     engine = get_engine()
     if req.task_id not in engine.capabilities:
         raise HTTPException(404, f"Capability '{req.task_id}' not found")
@@ -502,7 +559,7 @@ async def feedback_endpoint(req: FeedbackRequest):
             verbose=False,
         ))
 
-        artifact_path = trained.save(str(engine.pack_dir.parent))
+        artifact_path = trained.save(str(_trained_dir()))
         from .model_pack import load_artifact
         clf, scaler, manifest = load_artifact(Path(artifact_path))
         engine.register_trained(req.task_id, clf, scaler, manifest)

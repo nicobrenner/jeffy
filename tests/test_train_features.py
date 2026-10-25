@@ -51,6 +51,13 @@ def _load_engine():
     get_engine()
 
 
+@pytest.fixture(autouse=True)
+def _enable_training(monkeypatch, tmp_path):
+    """The write endpoints are disabled by default; these tests exercise them."""
+    monkeypatch.setenv("JEFFY_ENABLE_TRAINING", "1")
+    monkeypatch.setenv("JEFFY_TRAINED_DIR", str(tmp_path / "trained"))
+
+
 class TestEncoderSelection:
     """Feature 1: encoder parameter in train_classifier and /v1/train."""
 

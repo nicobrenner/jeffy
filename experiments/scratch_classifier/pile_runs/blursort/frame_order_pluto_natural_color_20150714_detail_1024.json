@@ -1,0 +1,206 @@
+{
+ "image": "/Users/nico/Documents/Projects/Blursort/pluto_natural_color_20150714_detail.jpg",
+ "size": 1024,
+ "baselines": {
+  "png_bytes": 1733222,
+  "webp_lossless_bytes": 1307982
+ },
+ "scales": {
+  "2": {
+   "ffv1_lossless": {
+    "dyadic": {
+     "bytes": 1829043,
+     "bpp": 13.954490661621094,
+     "exact": true,
+     "psnr": Infinity
+    },
+    "raster": {
+     "bytes": 1829068,
+     "bpp": 13.954681396484375,
+     "exact": true,
+     "psnr": Infinity
+    },
+    "snake": {
+     "bytes": 1829082,
+     "bpp": 13.954788208007812,
+     "exact": true,
+     "psnr": Infinity
+    },
+    "gray": {
+     "bytes": 1829048,
+     "bpp": 13.95452880859375,
+     "exact": true,
+     "psnr": Infinity
+    },
+    "random": {
+     "bytes": 1829166,
+     "bpp": 13.955429077148438,
+     "exact": true,
+     "psnr": Infinity
+    }
+   },
+   "x264rgb_qp0": {
+    "dyadic": {
+     "bytes": 2066423,
+     "bpp": 15.765556335449219,
+     "exact": true,
+     "psnr": Infinity
+    },
+    "raster": {
+     "bytes": 2024107,
+     "bpp": 15.442710876464844,
+     "exact": true,
+     "psnr": Infinity
+    },
+    "snake": {
+     "bytes": 1982931,
+     "bpp": 15.128562927246094,
+     "exact": true,
+     "psnr": Infinity
+    },
+    "gray": {
+     "bytes": 2003872,
+     "bpp": 15.288330078125,
+     "exact": true,
+     "psnr": Infinity
+    },
+    "random": {
+     "bytes": 2064271,
+     "bpp": 15.749137878417969,
+     "exact": true,
+     "psnr": Infinity
+    }
+   },
+   "x264rgb_crf18": {
+    "dyadic": {
+     "bytes": 569415,
+     "bpp": 4.344291687011719,
+     "exact": false,
+     "psnr": 35.9858158734862
+    },
+    "raster": {
+     "bytes": 495141,
+     "bpp": 3.7776260375976562,
+     "exact": false,
+     "psnr": 35.94877902289257
+    },
+    "snake": {
+     "bytes": 492501,
+     "bpp": 3.7574844360351562,
+     "exact": false,
+     "psnr": 35.85689260144114
+    },
+    "gray": {
+     "bytes": 486717,
+     "bpp": 3.7133560180664062,
+     "exact": false,
+     "psnr": 35.7102178515862
+    },
+    "random": {
+     "bytes": 563891,
+     "bpp": 4.302146911621094,
+     "exact": false,
+     "psnr": 35.873172550900215
+    }
+   }
+  },
+  "3": {
+   "ffv1_lossless": {
+    "dyadic": {
+     "bytes": 1921713,
+     "bpp": 14.661506652832031,
+     "exact": true,
+     "psnr": Infinity
+    },
+    "raster": {
+     "bytes": 1921506,
+     "bpp": 14.659927368164062,
+     "exact": true,
+     "psnr": Infinity
+    },
+    "snake": {
+     "bytes": 1921456,
+     "bpp": 14.6595458984375,
+     "exact": true,
+     "psnr": Infinity
+    },
+    "gray": {
+     "bytes": 1921500,
+     "bpp": 14.659881591796875,
+     "exact": true,
+     "psnr": Infinity
+    },
+    "random": {
+     "bytes": 1922078,
+     "bpp": 14.664291381835938,
+     "exact": true,
+     "psnr": Infinity
+    }
+   },
+   "x264rgb_qp0": {
+    "dyadic": {
+     "bytes": 2268689,
+     "bpp": 17.30872344970703,
+     "exact": true,
+     "psnr": Infinity
+    },
+    "raster": {
+     "bytes": 2063905,
+     "bpp": 15.746345520019531,
+     "exact": true,
+     "psnr": Infinity
+    },
+    "snake": {
+     "bytes": 2034620,
+     "bpp": 15.522918701171875,
+     "exact": true,
+     "psnr": Infinity
+    },
+    "gray": {
+     "bytes": 2143081,
+     "bpp": 16.35041046142578,
+     "exact": true,
+     "psnr": Infinity
+    },
+    "random": {
+     "bytes": 2300215,
+     "bpp": 17.54924774169922,
+     "exact": true,
+     "psnr": Infinity
+    }
+   },
+   "x264rgb_crf18": {
+    "dyadic": {
+     "bytes": 695898,
+     "bpp": 5.3092803955078125,
+     "exact": false,
+     "psnr": 35.22897287659595
+    },
+    "raster": {
+     "bytes": 691332,
+     "bpp": 5.274444580078125,
+     "exact": false,
+     "psnr": 36.71718642826784
+    },
+    "snake": {
+     "bytes": 606899,
+     "bpp": 4.630271911621094,
+     "exact": false,
+     "psnr": 36.10990884402407
+    },
+    "gray": {
+     "bytes": 595836,
+     "bpp": 4.545867919921875,
+     "exact": false,
+     "psnr": 35.188949088858436
+    },
+    "random": {
+     "bytes": 715127,
+     "bpp": 5.455986022949219,
+     "exact": false,
+     "psnr": 35.17483762825699
+    }
+   }
+  }
+ }
+}

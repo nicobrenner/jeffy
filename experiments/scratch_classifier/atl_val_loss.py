@@ -19,12 +19,13 @@ import torch.nn.functional as F
 
 from train_lm import CausalTransformer, CustomTokenizerWrapper
 
+CT = False
 DEVICE = "mps" if torch.backends.mps.is_available() else "cpu"
 
 
 def oracle_turns(text, plain):
     pat = r"Oracle: (.*?)(?=\nUser:|\nSystem:|$)" if plain else r"<\|oracle\|>(.*?)(?=<\|user\||<\|system\||<eos>|$)"
-    return [t.strip() for t in re.findall(pat, text, flags=re.S)]
+    return [re.sub(r"^\[(answer|deflect|comfort)\] ?", "", t.strip()) for t in re.findall(pat, text, flags=re.S)]
 
 
 def norm(s):
@@ -67,7 +68,12 @@ def conv_loss(m, tok, text, plain):
             break
         e = text.find(ender, s)
         e = len(text) if e < 0 else e
-        a = len(tok.encode(text[: s + len(marker)]))
+        start = s + len(marker)
+        if CT:  # control token "[answer]"/"[deflect]"/"[comfort]" is context, not a scored target
+            mt = re.match(r" \[(answer|deflect|comfort)\]", text[start:])
+            if mt:
+                start += mt.end()
+        a = len(tok.encode(text[:start]))
         b = len(tok.encode(text[:e]))
         mask[max(a - 1, 0): min(b - 1, len(mask))] = True
         pos = e
@@ -82,8 +88,11 @@ def main():
     ap.add_argument("--val", default="data/chat_v6plain_val.jsonl")
     ap.add_argument("--tokenizer", default="tokenizer_tinystories.json")
     ap.add_argument("--plain", action="store_true")
+    ap.add_argument("--ct", action="store_true", help="val set carries control tokens after Oracle:; exclude them from scoring")
     ap.add_argument("--out", default="pile_runs/atl/val_loss_by_topic.json")
     args = ap.parse_args()
+    global CT
+    CT = args.ct
     tok = CustomTokenizerWrapper(args.tokenizer)
     idx = topic_index()
     rows = [json.loads(l)["text"] for l in open(args.val)]

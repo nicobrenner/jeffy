@@ -1,0 +1,206 @@
+{
+ "image": "data/kodak/kodim05.png",
+ "size": 512,
+ "baselines": {
+  "png_bytes": 556472,
+  "webp_lossless_bytes": 383286
+ },
+ "scales": {
+  "2": {
+   "ffv1_lossless": {
+    "dyadic": {
+     "bytes": 547943,
+     "bpp": 16.721893310546875,
+     "exact": true,
+     "psnr": Infinity
+    },
+    "raster": {
+     "bytes": 547882,
+     "bpp": 16.72003173828125,
+     "exact": true,
+     "psnr": Infinity
+    },
+    "snake": {
+     "bytes": 547855,
+     "bpp": 16.719207763671875,
+     "exact": true,
+     "psnr": Infinity
+    },
+    "gray": {
+     "bytes": 548178,
+     "bpp": 16.72906494140625,
+     "exact": true,
+     "psnr": Infinity
+    },
+    "random": {
+     "bytes": 547890,
+     "bpp": 16.72027587890625,
+     "exact": true,
+     "psnr": Infinity
+    }
+   },
+   "x264rgb_qp0": {
+    "dyadic": {
+     "bytes": 675045,
+     "bpp": 20.600738525390625,
+     "exact": true,
+     "psnr": Infinity
+    },
+    "raster": {
+     "bytes": 649603,
+     "bpp": 19.824310302734375,
+     "exact": true,
+     "psnr": Infinity
+    },
+    "snake": {
+     "bytes": 643699,
+     "bpp": 19.644134521484375,
+     "exact": true,
+     "psnr": Infinity
+    },
+    "gray": {
+     "bytes": 646146,
+     "bpp": 19.71881103515625,
+     "exact": true,
+     "psnr": Infinity
+    },
+    "random": {
+     "bytes": 661076,
+     "bpp": 20.1744384765625,
+     "exact": true,
+     "psnr": Infinity
+    }
+   },
+   "x264rgb_crf18": {
+    "dyadic": {
+     "bytes": 220098,
+     "bpp": 6.71685791015625,
+     "exact": false,
+     "psnr": 33.74943140388285
+    },
+    "raster": {
+     "bytes": 201586,
+     "bpp": 6.15191650390625,
+     "exact": false,
+     "psnr": 33.64595289623813
+    },
+    "snake": {
+     "bytes": 201078,
+     "bpp": 6.13641357421875,
+     "exact": false,
+     "psnr": 33.642231599022296
+    },
+    "gray": {
+     "bytes": 204744,
+     "bpp": 6.248291015625,
+     "exact": false,
+     "psnr": 33.67051022854691
+    },
+    "random": {
+     "bytes": 215479,
+     "bpp": 6.575897216796875,
+     "exact": false,
+     "psnr": 33.647474644708815
+    }
+   }
+  },
+  "3": {
+   "ffv1_lossless": {
+    "dyadic": {
+     "bytes": 630644,
+     "bpp": 19.2457275390625,
+     "exact": true,
+     "psnr": Infinity
+    },
+    "raster": {
+     "bytes": 629942,
+     "bpp": 19.22430419921875,
+     "exact": true,
+     "psnr": Infinity
+    },
+    "snake": {
+     "bytes": 629686,
+     "bpp": 19.21649169921875,
+     "exact": true,
+     "psnr": Infinity
+    },
+    "gray": {
+     "bytes": 630071,
+     "bpp": 19.228240966796875,
+     "exact": true,
+     "psnr": Infinity
+    },
+    "random": {
+     "bytes": 630767,
+     "bpp": 19.249481201171875,
+     "exact": true,
+     "psnr": Infinity
+    }
+   },
+   "x264rgb_qp0": {
+    "dyadic": {
+     "bytes": 742472,
+     "bpp": 22.658447265625,
+     "exact": true,
+     "psnr": Infinity
+    },
+    "raster": {
+     "bytes": 664993,
+     "bpp": 20.293975830078125,
+     "exact": true,
+     "psnr": Infinity
+    },
+    "snake": {
+     "bytes": 660082,
+     "bpp": 20.14410400390625,
+     "exact": true,
+     "psnr": Infinity
+    },
+    "gray": {
+     "bytes": 688171,
+     "bpp": 21.001312255859375,
+     "exact": true,
+     "psnr": Infinity
+    },
+    "random": {
+     "bytes": 742304,
+     "bpp": 22.6533203125,
+     "exact": true,
+     "psnr": Infinity
+    }
+   },
+   "x264rgb_crf18": {
+    "dyadic": {
+     "bytes": 277467,
+     "bpp": 8.467620849609375,
+     "exact": false,
+     "psnr": 33.499689487864735
+    },
+    "raster": {
+     "bytes": 221475,
+     "bpp": 6.758880615234375,
+     "exact": false,
+     "psnr": 33.24106290893522
+    },
+    "snake": {
+     "bytes": 222827,
+     "bpp": 6.800140380859375,
+     "exact": false,
+     "psnr": 33.30074984091232
+    },
+    "gray": {
+     "bytes": 247279,
+     "bpp": 7.546356201171875,
+     "exact": false,
+     "psnr": 33.415135938060004
+    },
+    "random": {
+     "bytes": 278198,
+     "bpp": 8.48992919921875,
+     "exact": false,
+     "psnr": 33.48635719921528
+    }
+   }
+  }
+ }
+}

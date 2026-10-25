@@ -1,0 +1,41 @@
+{
+ "y4m": "data/video_xiph/bus_cif.y4m",
+ "crop": 256,
+ "k": 16,
+ "start": 0,
+ "bpp_basis": "per luma pixel",
+ "results": {
+  "x265_lossless": {
+   "bytes": 693514,
+   "exact": true
+  },
+  "vp9_lossless": {
+   "bytes": 710951,
+   "exact": true
+  },
+  "av1_lossless": {
+   "bytes": 678916,
+   "exact": true
+  },
+  "x264_qp0": {
+   "bytes": 702157,
+   "exact": true
+  },
+  "ffv1": {
+   "bytes": 803931,
+   "exact": true
+  },
+  "per_frame_jxl": {
+   "bytes": 769227,
+   "exact": true
+  },
+  "tile_jxl": {
+   "bytes": 749174,
+   "exact": true
+  },
+  "interleave_jxl": {
+   "bytes": 1090358,
+   "exact": true
+  }
+ }
+}

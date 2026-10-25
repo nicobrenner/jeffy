@@ -42,7 +42,9 @@ def detok(tok, ids):
 
 
 @torch.no_grad()
-def generate(m, tok, prompt, seed, max_tokens=60, temperature=0.8, top_k=40):
+def generate(m, tok, prompt, seed, max_tokens=60, temperature=0.8, top_k=40, rep_penalty=1.0, no_repeat_ngram=0):
+    """rep_penalty: CTRL-style (Keskar 2019) penalty on tokens already generated in the response (logit/p if >0 else logit*p);
+    no_repeat_ngram: forbid any n-gram that already occurred in the response (HF no_repeat_ngram_size), response tokens only."""
     torch.manual_seed(seed)
     if PLAIN:
         sys_txt = SYSTEM.replace("<|system|> ", "System: ")
@@ -52,7 +54,17 @@ def generate(m, tok, prompt, seed, max_tokens=60, temperature=0.8, top_k=40):
     out = []
     for _ in range(max_tokens):
         x = torch.tensor([ids[-m.max_seq_len:]], dtype=torch.long, device=DEVICE)
-        logits = m(x)[0, -1, :] / temperature
+        logits = m(x)[0, -1, :]
+        if rep_penalty != 1.0 and out:
+            prev = torch.tensor(sorted(set(out)), device=logits.device)
+            lp = logits[prev]
+            logits[prev] = torch.where(lp > 0, lp / rep_penalty, lp * rep_penalty)
+        if no_repeat_ngram and len(out) >= no_repeat_ngram - 1:
+            n = no_repeat_ngram; tail = tuple(out[len(out) - (n - 1):]) if n > 1 else ()
+            banned = {out[i + n - 1] for i in range(len(out) - n + 1) if tuple(out[i:i + n - 1]) == tail}
+            for b in banned:
+                logits[b] = float("-inf")
+        logits = logits / temperature
         v, _ = torch.topk(logits, top_k)
         logits[logits < v[-1]] = float("-inf")
         nxt = torch.multinomial(F.softmax(logits, dim=-1), 1).item()
@@ -77,6 +89,9 @@ def main():
     ap.add_argument("--tokenizer", default="tokenizer_chat_v2.json")
     ap.add_argument("--plain", action="store_true")
     ap.add_argument("--temperature", type=float, default=0.8)
+    ap.add_argument("--top_k", type=int, default=40)
+    ap.add_argument("--rep_penalty", type=float, default=1.0)
+    ap.add_argument("--no_repeat_ngram", type=int, default=0)
     args = ap.parse_args()
     global PLAIN
     PLAIN = args.plain
@@ -88,9 +103,11 @@ def main():
     with open(args.out, "w") as f:
         for p in probes:
             for s in range(args.samples):
-                resp = generate(m, tok, p["prompt"], seed=s, temperature=args.temperature)
+                resp = generate(m, tok, p["prompt"], seed=s, temperature=args.temperature, top_k=args.top_k,
+                                rep_penalty=args.rep_penalty, no_repeat_ngram=args.no_repeat_ngram)
                 f.write(json.dumps({"id": p["id"], "topic": p["topic"], "novel": p.get("novel", False), "prompt": p["prompt"], "seed": s,
-                                    "temperature": args.temperature, "response": resp}) + "\n")
+                                    "temperature": args.temperature, "top_k": args.top_k, "rep_penalty": args.rep_penalty,
+                                    "no_repeat_ngram": args.no_repeat_ngram, "response": resp}) + "\n")
                 n += 1
     print(f"{args.ckpt} (val_loss {vl:.4f}): {n} responses for {len(probes)} probes -> {args.out}")
 

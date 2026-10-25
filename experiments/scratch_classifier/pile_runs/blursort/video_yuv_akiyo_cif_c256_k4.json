@@ -1,0 +1,41 @@
+{
+ "y4m": "data/video_xiph/akiyo_cif.y4m",
+ "crop": 256,
+ "k": 4,
+ "start": 0,
+ "bpp_basis": "per luma pixel",
+ "results": {
+  "x265_lossless": {
+   "bytes": 89438,
+   "exact": true
+  },
+  "vp9_lossless": {
+   "bytes": 88513,
+   "exact": true
+  },
+  "av1_lossless": {
+   "bytes": 86322,
+   "exact": true
+  },
+  "x264_qp0": {
+   "bytes": 85437,
+   "exact": true
+  },
+  "ffv1": {
+   "bytes": 140872,
+   "exact": true
+  },
+  "per_frame_jxl": {
+   "bytes": 131896,
+   "exact": true
+  },
+  "tile_jxl": {
+   "bytes": 128867,
+   "exact": true
+  },
+  "interleave_jxl": {
+   "bytes": 87371,
+   "exact": true
+  }
+ }
+}

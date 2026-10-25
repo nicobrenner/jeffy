@@ -54,3 +54,6 @@ data/model_pack/
 SHOW_HN_DRAFT.md
 JEFFY_HANDOFF.md
 snapshot.json
+
+# agent-labeling experiment: regenerable embedding cache (44MB)
+data/eval_results/agent_label_banking77/embeddings.npz

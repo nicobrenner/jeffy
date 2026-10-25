@@ -1,0 +1,1624 @@
+{
+  "instructions": "Label each item with exactly one label from label_names.values(). Write {id: label} to labels_round1.json. Do not guess from an index; read the text.",
+  "label_names": [
+    "Refund_not_showing_up",
+    "activate_my_card",
+    "age_limit",
+    "apple_pay_or_google_pay",
+    "atm_support",
+    "automatic_top_up",
+    "balance_not_updated_after_bank_transfer",
+    "balance_not_updated_after_cheque_or_cash_deposit",
+    "beneficiary_not_allowed",
+    "cancel_transfer",
+    "card_about_to_expire",
+    "card_acceptance",
+    "card_arrival",
+    "card_delivery_estimate",
+    "card_linking",
+    "card_not_working",
+    "card_payment_fee_charged",
+    "card_payment_not_recognised",
+    "card_payment_wrong_exchange_rate",
+    "card_swallowed",
+    "cash_withdrawal_charge",
+    "cash_withdrawal_not_recognised",
+    "change_pin",
+    "compromised_card",
+    "contactless_not_working",
+    "country_support",
+    "declined_card_payment",
+    "declined_cash_withdrawal",
+    "declined_transfer",
+    "direct_debit_payment_not_recognised",
+    "disposable_card_limits",
+    "edit_personal_details",
+    "exchange_charge",
+    "exchange_rate",
+    "exchange_via_app",
+    "extra_charge_on_statement",
+    "failed_transfer",
+    "fiat_currency_support",
+    "get_disposable_virtual_card",
+    "get_physical_card",
+    "getting_spare_card",
+    "getting_virtual_card",
+    "lost_or_stolen_card",
+    "lost_or_stolen_phone",
+    "order_physical_card",
+    "passcode_forgotten",
+    "pending_card_payment",
+    "pending_cash_withdrawal",
+    "pending_top_up",
+    "pending_transfer",
+    "pin_blocked",
+    "receiving_money",
+    "request_refund",
+    "reverted_card_payment?",
+    "supported_cards_and_currencies",
+    "terminate_account",
+    "top_up_by_bank_transfer_charge",
+    "top_up_by_card_charge",
+    "top_up_by_cash_or_cheque",
+    "top_up_failed",
+    "top_up_limits",
+    "top_up_reverted",
+    "topping_up_by_card",
+    "transaction_charged_twice",
+    "transfer_fee_charged",
+    "transfer_into_account",
+    "transfer_not_received_by_recipient",
+    "transfer_timing",
+    "unable_to_verify_identity",
+    "verify_my_identity",
+    "verify_source_of_funds",
+    "verify_top_up",
+    "virtual_card_not_working",
+    "visa_or_mastercard",
+    "why_verify_identity",
+    "wrong_amount_of_cash_received",
+    "wrong_exchange_rate_for_cash_withdrawal"
+  ],
+  "items": [
+    {
+      "id": 8877,
+      "text": "How do you determine exchange rates?"
+    },
+    {
+      "id": 7243,
+      "text": "Do I have to pay extra if I use an international card to top up my account?"
+    },
+    {
+      "id": 9285,
+      "text": "Are you Visa or Mastercard?"
+    },
+    {
+      "id": 5701,
+      "text": "I tried my PIN too many times"
+    },
+    {
+      "id": 2409,
+      "text": "I haven't received my PIN yet. Do I need to get it from you?"
+    },
+    {
+      "id": 9979,
+      "text": "I was made to pay a fee for making a transaction with card."
+    },
+    {
+      "id": 4224,
+      "text": "Why did using an ATM cause me to be charged an additional fee?"
+    },
+    {
+      "id": 3186,
+      "text": "top up for my american express card is not working"
+    },
+    {
+      "id": 5955,
+      "text": "There's a card payment with a name I don't recognize"
+    },
+    {
+      "id": 9479,
+      "text": "My phone has been lost or stolen"
+    },
+    {
+      "id": 2868,
+      "text": "Can you please sort out your top up? I need this to go through asap because I really need the money. It's already been pending for an hour."
+    },
+    {
+      "id": 4860,
+      "text": "How much will I be charged for a cross-currency exchange?"
+    },
+    {
+      "id": 7636,
+      "text": "What is your shipping policies for cards?"
+    },
+    {
+      "id": 5067,
+      "text": "My cash withdrawal was short."
+    },
+    {
+      "id": 7470,
+      "text": "how do i get the card linked"
+    },
+    {
+      "id": 3285,
+      "text": "My account shows a direct debit charge that I have never seen before"
+    },
+    {
+      "id": 7570,
+      "text": "What are the age limits for your service?"
+    },
+    {
+      "id": 859,
+      "text": "I need assistance addressing a direct debit that I did not do myself."
+    },
+    {
+      "id": 6295,
+      "text": "How can I cancel this transaction?"
+    },
+    {
+      "id": 6651,
+      "text": "I need to know where this charge is coming from?"
+    },
+    {
+      "id": 6548,
+      "text": "I am blocked now because I entered the wrong pin, need help."
+    },
+    {
+      "id": 1180,
+      "text": "Why do you keep declining my transfers? It's been working well so far, but when I just tried to buy something, the card got declined. I tried it a few times, but same thing happened every try."
+    },
+    {
+      "id": 4101,
+      "text": "Can I receive payments in another currency?"
+    },
+    {
+      "id": 1157,
+      "text": "Tell me your opinion on the exchange rate."
+    },
+    {
+      "id": 3255,
+      "text": "I happened to forget my passcode"
+    },
+    {
+      "id": 5510,
+      "text": "Can I top up?"
+    },
+    {
+      "id": 7506,
+      "text": "I tried to make a transfer and it didn't work."
+    },
+    {
+      "id": 9441,
+      "text": "What cards do you accept to top up my account?"
+    },
+    {
+      "id": 3142,
+      "text": "can I use it in any country?"
+    },
+    {
+      "id": 5802,
+      "text": "How do I close my account, since I'm dissatisfied?"
+    },
+    {
+      "id": 7221,
+      "text": "What's a verification code?"
+    },
+    {
+      "id": 4396,
+      "text": "Can I top-up any amount?"
+    },
+    {
+      "id": 4367,
+      "text": "Can I change my PIN abroad?"
+    },
+    {
+      "id": 2963,
+      "text": "What options do I have when topping up a US card?"
+    },
+    {
+      "id": 6508,
+      "text": "What is the process for activating my card and using it?"
+    },
+    {
+      "id": 7551,
+      "text": "I was unable to activate my card."
+    },
+    {
+      "id": 6185,
+      "text": "I need my card immediately."
+    },
+    {
+      "id": 615,
+      "text": "The cash I asked for still hasn't been received"
+    },
+    {
+      "id": 225,
+      "text": "How do I transfer cash my into my account?"
+    },
+    {
+      "id": 3595,
+      "text": "Hello, my transfers are getting failed continuously, in spite of the fact that all the recipient details are correct. Please advise."
+    },
+    {
+      "id": 4260,
+      "text": "Please help! I need a refund on a transaction on something I bought and I need the refund right away!"
+    },
+    {
+      "id": 9365,
+      "text": "How to receive transfers from my employer when I get paid in GBP?"
+    },
+    {
+      "id": 6690,
+      "text": "What are the steps for identity checks?"
+    },
+    {
+      "id": 2695,
+      "text": "Hi I've been trying to top up my card for the past day but it gets declined, I need it topped up urgently! Can somebody get back to me to resolve this or explain any different ways I can top up my card?"
+    },
+    {
+      "id": 9861,
+      "text": "I topped up recently and saw the money go through, but now it's just gone? What's going on"
+    },
+    {
+      "id": 1426,
+      "text": "Why is my transfer not working? I tried multiple times to transfer money, and all that happens is an error message pops up."
+    },
+    {
+      "id": 9449,
+      "text": "top up with credit card"
+    },
+    {
+      "id": 4243,
+      "text": "Can I get a new card with new expiration date in China?"
+    },
+    {
+      "id": 9737,
+      "text": "I think I forgot my passcode"
+    },
+    {
+      "id": 3156,
+      "text": "I'm confused as to why my top-up did not go through."
+    },
+    {
+      "id": 4874,
+      "text": "i accidentally entered in my retailers information, what should i do next"
+    },
+    {
+      "id": 9778,
+      "text": "How do I troubleshoot my contactless?"
+    },
+    {
+      "id": 192,
+      "text": "What cards do you offer?"
+    },
+    {
+      "id": 7933,
+      "text": "I have a pending transaction"
+    },
+    {
+      "id": 6053,
+      "text": "How long does it take for money to transfer as my balance hasn't been updated"
+    },
+    {
+      "id": 7087,
+      "text": "I received a fee I should not have."
+    },
+    {
+      "id": 6199,
+      "text": "Why hasn't my friend received the transaction?"
+    },
+    {
+      "id": 4135,
+      "text": "What caused my transfer to fail?"
+    },
+    {
+      "id": 5841,
+      "text": "I think my top up was reversed."
+    },
+    {
+      "id": 947,
+      "text": "Set a new PIN please."
+    },
+    {
+      "id": 9486,
+      "text": "I need to move money from one of my other accounts to this one."
+    },
+    {
+      "id": 4276,
+      "text": "I saw on the app that a cash withdrawal was completed on my account; however, I did not complete it."
+    },
+    {
+      "id": 9990,
+      "text": "How do I change my card PIN?"
+    },
+    {
+      "id": 858,
+      "text": "I want a physical card"
+    },
+    {
+      "id": 3428,
+      "text": "Is there a top up fee?"
+    },
+    {
+      "id": 7594,
+      "text": "Why do you need all these details about my identity?"
+    },
+    {
+      "id": 6534,
+      "text": "I was charged the wing amount for an item."
+    },
+    {
+      "id": 9392,
+      "text": "Why is my card payment cancelled?"
+    },
+    {
+      "id": 5313,
+      "text": "where can I find the auto-top up option?"
+    },
+    {
+      "id": 4239,
+      "text": "Do you think you're asking for too much information about me?"
+    },
+    {
+      "id": 4372,
+      "text": "The ATM took my card."
+    },
+    {
+      "id": 6467,
+      "text": "I couldn't make a transfer because it was declined"
+    },
+    {
+      "id": 9937,
+      "text": "I would like to know which fiat currencies are recognized by your organization."
+    },
+    {
+      "id": 4512,
+      "text": "Am I charged if I make a top-up?"
+    },
+    {
+      "id": 7453,
+      "text": "Looks like my card payment was cancelled."
+    },
+    {
+      "id": 9894,
+      "text": "Can I use google play as my primary app to Top up?"
+    },
+    {
+      "id": 4337,
+      "text": "Will I get charged on a foreign currencies exchange?"
+    },
+    {
+      "id": 7044,
+      "text": "The app doesn't think that I am myself"
+    },
+    {
+      "id": 9962,
+      "text": "There is a withdrawal on my account that I don't remember initiating."
+    },
+    {
+      "id": 6493,
+      "text": "Is there an age limit for opening an account?"
+    },
+    {
+      "id": 7649,
+      "text": "Why was I charged for transferring money?"
+    },
+    {
+      "id": 4853,
+      "text": "My money I had was gone and I could not get gas!"
+    },
+    {
+      "id": 7523,
+      "text": "The exchange rate is incorrect on an item I recently purchased in a foreign country."
+    },
+    {
+      "id": 642,
+      "text": "why did my payment revert"
+    },
+    {
+      "id": 362,
+      "text": "Why won't you accept my payment? I keep trying with this card and it's not working."
+    },
+    {
+      "id": 6909,
+      "text": "My transfer is still pending, why?"
+    },
+    {
+      "id": 4001,
+      "text": "Help me.  The passcode doesn't work."
+    },
+    {
+      "id": 6108,
+      "text": "this verifying the top up is annoying"
+    },
+    {
+      "id": 1077,
+      "text": "WHAT IS THE SOLUTION OF THIS PROBLEM"
+    },
+    {
+      "id": 6372,
+      "text": "where do you find your exchange rates?"
+    },
+    {
+      "id": 6793,
+      "text": "Where is my cash deposit in my balance?"
+    },
+    {
+      "id": 5370,
+      "text": "I found my card in my jacket this morning, so can I reactivate it?"
+    },
+    {
+      "id": 7253,
+      "text": "What fiat currencies are used with holdings and exchanges?"
+    },
+    {
+      "id": 8194,
+      "text": "Hi, I am trying to buy something online, but i think there is some issue in my card. As payment is reverted. Please help me in this as i am facing the same issue from last two weeks."
+    },
+    {
+      "id": 9019,
+      "text": "Why can't I withdraw money?"
+    },
+    {
+      "id": 2288,
+      "text": "I need to deposit my virtual card, how do i do that."
+    },
+    {
+      "id": 2748,
+      "text": "Why doesn't my Google pay top up work?"
+    },
+    {
+      "id": 7467,
+      "text": "Hae there, I have a transaction that is in progress despite the fact that the ATM was not working, what do I do to avoid being charged?"
+    },
+    {
+      "id": 8820,
+      "text": "I need a Visa and a Mastercard from you."
+    },
+    {
+      "id": 2799,
+      "text": "Are there any charges for topping up a US-issued card?"
+    },
+    {
+      "id": 7329,
+      "text": "How many times can I make a top-up?"
+    },
+    {
+      "id": 3762,
+      "text": "How long does it take for a transfer to reach my account?"
+    },
+    {
+      "id": 8042,
+      "text": "I only got some of the cash I requested from the ATM"
+    },
+    {
+      "id": 2698,
+      "text": "I paid with card and was charged a fee that shouldn't be there!"
+    },
+    {
+      "id": 9414,
+      "text": "I can't enter my passcode."
+    },
+    {
+      "id": 9364,
+      "text": "Do I need to do anything special for my friend to send money to my account?"
+    },
+    {
+      "id": 1254,
+      "text": "My app shows cash I didn't get."
+    },
+    {
+      "id": 4221,
+      "text": "We want to start a college fund for my daughter."
+    },
+    {
+      "id": 6192,
+      "text": "I made a transfer but my balance hasn't been updated"
+    },
+    {
+      "id": 6704,
+      "text": "I'm interested in using fiat currencies, which do you support?"
+    },
+    {
+      "id": 2350,
+      "text": "Why didn't my friend's transaction arrive yet?"
+    },
+    {
+      "id": 2896,
+      "text": "What are the disposable cards used for?"
+    },
+    {
+      "id": 2093,
+      "text": "My card has been pending for a while, what should I do?"
+    },
+    {
+      "id": 9876,
+      "text": "My atm withdraw is stillpending"
+    },
+    {
+      "id": 2611,
+      "text": "Why does it cost more to pay with my card?"
+    },
+    {
+      "id": 3977,
+      "text": "Why do I need to verify a top-up?"
+    },
+    {
+      "id": 2623,
+      "text": "I do not see the card PIN anywhere?"
+    },
+    {
+      "id": 8933,
+      "text": "I am perplexed. Why is it that I received an extremely wrong rate when I tried to use an ATM using a foreign currency?"
+    },
+    {
+      "id": 2199,
+      "text": "Can someone please help assist me by explaining to me why my pass-code is not working?"
+    },
+    {
+      "id": 53,
+      "text": "My card is not working at stores."
+    },
+    {
+      "id": 9520,
+      "text": "What is the process for setting up and account for my child?"
+    },
+    {
+      "id": 3153,
+      "text": "Someone is using my card to purchase flights to New York it's not me because I'm not going to New York, please can you cancel the card and refund the money?"
+    },
+    {
+      "id": 8887,
+      "text": "I just made a transfer from France 2 days ago. It has not yet reached my bank. Is it possible it takes longer because it was an international transfer?"
+    },
+    {
+      "id": 1492,
+      "text": "I recently bought something in foreign currency and I am unsure of the exchange rate. Is this rate applied correctly?"
+    },
+    {
+      "id": 4577,
+      "text": "How much does it cost to get more cards?"
+    },
+    {
+      "id": 6629,
+      "text": "are transfers to a beneficiary possible"
+    },
+    {
+      "id": 338,
+      "text": "would a visa or mastercard be more suited to me?"
+    },
+    {
+      "id": 3606,
+      "text": "The exchange rate for my electronic payment is incorrect."
+    },
+    {
+      "id": 2389,
+      "text": "are you sending me my card?"
+    },
+    {
+      "id": 3030,
+      "text": "Looks like my card payment was made twice by mistake. I paid at the store earlier which rejected once, second time it worked. App stays at pending for one of the payments. Can you please remove one of them as it's wrong and clearly was declined?"
+    },
+    {
+      "id": 4620,
+      "text": "Is it possible to have an item refunded?"
+    },
+    {
+      "id": 222,
+      "text": "I need help finding the verification code on the top up card."
+    },
+    {
+      "id": 7958,
+      "text": "I think someone stole money from my card"
+    },
+    {
+      "id": 8000,
+      "text": "My card payment didn't go through."
+    },
+    {
+      "id": 8171,
+      "text": "What does top-up verification do?"
+    },
+    {
+      "id": 2283,
+      "text": "I tried to withdraw some funds from my card, but was declined. How can I get my money?"
+    },
+    {
+      "id": 2421,
+      "text": "There's an unauthorized direct debit in my app."
+    },
+    {
+      "id": 6608,
+      "text": "Can I use my account although the identity verification has not been accepted yet?"
+    },
+    {
+      "id": 9377,
+      "text": "Is it possible to hold money in multiple currencies?"
+    },
+    {
+      "id": 71,
+      "text": "How do I verify my identity online"
+    },
+    {
+      "id": 1881,
+      "text": "How do I delete my account now"
+    },
+    {
+      "id": 8022,
+      "text": "There's a \u20ac1 fee on my statement, why?"
+    },
+    {
+      "id": 1740,
+      "text": "I was charged an extra pound."
+    },
+    {
+      "id": 4491,
+      "text": "Which flat currencies are supported for holding and exchange?"
+    },
+    {
+      "id": 5351,
+      "text": "I have yet to receive the cash I added to my account this morning."
+    },
+    {
+      "id": 4087,
+      "text": "I think there's been an unauthorized cash withdrawal from my account."
+    },
+    {
+      "id": 7836,
+      "text": "Is there something wrong with my top up I did an hour ago? it's still pending. I need that money, i cant afford to wait or have it come back to me."
+    },
+    {
+      "id": 7534,
+      "text": "with what can I verify my identity?"
+    },
+    {
+      "id": 1835,
+      "text": "Can I activate my card with the app?"
+    },
+    {
+      "id": 6673,
+      "text": "Can I auto top-up as much as I want?"
+    },
+    {
+      "id": 3573,
+      "text": "where is my money from this morning"
+    },
+    {
+      "id": 4816,
+      "text": "There is a payment done with my card which i definitely did not do.Never seen that name before."
+    },
+    {
+      "id": 1595,
+      "text": "Why hasn't my payment gone through yet?"
+    },
+    {
+      "id": 2671,
+      "text": "I just replaced my phone but how do I use my card information?"
+    },
+    {
+      "id": 1404,
+      "text": "Can I top-up automatically?"
+    },
+    {
+      "id": 4857,
+      "text": "I didn't think my country-to-country money transfer would take so long. It still says that it's pending so I re-checked all of the account information--everything seems right, so what's the deal?"
+    },
+    {
+      "id": 8926,
+      "text": "I made a transaction this morning but I need to revert it now."
+    },
+    {
+      "id": 4588,
+      "text": "I have been doing some online shopping, but when checking out, it keeps getting declined. I tried a few times and it wouldn't work. What could be wrong?"
+    },
+    {
+      "id": 4097,
+      "text": "What do you require to verify someone's identity?"
+    },
+    {
+      "id": 5451,
+      "text": "Can I have a duplicate second card?"
+    },
+    {
+      "id": 8422,
+      "text": "How can I add a new card?"
+    },
+    {
+      "id": 9771,
+      "text": "What is the identity verification process?"
+    },
+    {
+      "id": 4689,
+      "text": "This transaction needs both a Visa and a Mastercard."
+    },
+    {
+      "id": 2229,
+      "text": "Whats the minimum age to have an account"
+    },
+    {
+      "id": 7451,
+      "text": "Can I have a tangible form of my virtual card."
+    },
+    {
+      "id": 300,
+      "text": "What are the steps for the identity checks?"
+    },
+    {
+      "id": 1759,
+      "text": "How many disposable cards am I allowed to have?"
+    },
+    {
+      "id": 8328,
+      "text": "Can i add a new currency to my account?"
+    },
+    {
+      "id": 6926,
+      "text": "The card that I have isn't working. This is the physical card."
+    },
+    {
+      "id": 447,
+      "text": "I am having trouble activating my card."
+    },
+    {
+      "id": 6857,
+      "text": "I have double-checked all of my recipient details but for some reason all of my transfers keep getting declined. I have no clue as to why."
+    },
+    {
+      "id": 6464,
+      "text": "I need to change my home address."
+    },
+    {
+      "id": 7750,
+      "text": "What cards do you support"
+    },
+    {
+      "id": 9715,
+      "text": "I don't have any idea what's going on but all of my transfers keep getting declined. I have double-checked over all of my recipient names and they are correct."
+    },
+    {
+      "id": 9139,
+      "text": "I need help with understanding why my card is not working."
+    },
+    {
+      "id": 5286,
+      "text": "My card failed to work when I was shopping in a store"
+    },
+    {
+      "id": 7071,
+      "text": "I need two cards. Is this possible?"
+    },
+    {
+      "id": 6765,
+      "text": "Do you support fiat currencies?"
+    },
+    {
+      "id": 6494,
+      "text": "I made a transfer for my rent payment about 2 days ago, but my landlord hasn't received it yet. It shows as done on my  side, and I've double check all account numbers and they are correct. Can you verify that the transaction was actually made?"
+    },
+    {
+      "id": 2549,
+      "text": "how long does delivery take?"
+    },
+    {
+      "id": 9796,
+      "text": "There was a fee charged when I paid with my card."
+    },
+    {
+      "id": 8963,
+      "text": "What do I need for the identity check?"
+    },
+    {
+      "id": 8090,
+      "text": "I don't see a money transfer yet"
+    },
+    {
+      "id": 771,
+      "text": "How long do transfers from a UK bank account usually take for you? I just made a transfer and I'm not seeing anything, wondering if it worked"
+    },
+    {
+      "id": 6181,
+      "text": "Why hasn't my cash been deposited yet?"
+    },
+    {
+      "id": 4610,
+      "text": "I want to revert a transaction I did this morning"
+    },
+    {
+      "id": 3361,
+      "text": "How do I track the card you sent me?"
+    },
+    {
+      "id": 4821,
+      "text": "I don't know why my credit card was declined while I was trying to top-up. Was it something on my end or was there something wrong with the top-up function?"
+    },
+    {
+      "id": 4416,
+      "text": "I would like to verify my source of funds."
+    },
+    {
+      "id": 1234,
+      "text": "My transfer didn't work how come?"
+    },
+    {
+      "id": 4339,
+      "text": "I have been double charged for a couple of things this week, and would appreciate a refund for the duplicate charges."
+    },
+    {
+      "id": 881,
+      "text": "How do I go about verifying the top-up card?"
+    },
+    {
+      "id": 9104,
+      "text": "I was out today looking forward to paying with my new card, turns out the payment kept getting declined. This is really sad, what's going on?"
+    },
+    {
+      "id": 2565,
+      "text": "There has been an unusual withdrawal from my account, can you help?"
+    },
+    {
+      "id": 5741,
+      "text": "The ATM did not give me my card back?"
+    },
+    {
+      "id": 1391,
+      "text": "I thought crypto top up with something you offered and it does not appear that it's working even though the money has disappeared out of my account. Can you tell me what's going on?"
+    },
+    {
+      "id": 2588,
+      "text": "I have to make several disposable cards per day."
+    },
+    {
+      "id": 423,
+      "text": "Why didn't I receive the right amount of cash at the ATM?"
+    },
+    {
+      "id": 9973,
+      "text": "Why hasn't my transaction arrived?"
+    },
+    {
+      "id": 8255,
+      "text": "is it possible to top-up with google pay."
+    },
+    {
+      "id": 2821,
+      "text": "Why is the exchange rate on my card wrong?"
+    },
+    {
+      "id": 9744,
+      "text": "How do I use American express to top up my account?"
+    },
+    {
+      "id": 8889,
+      "text": "I just made a top-up but it shows as pending! I use your service all the time and have never had a problem before. Why does it keep showing up as pending?"
+    },
+    {
+      "id": 2792,
+      "text": "Why haven't I received my new card yet?"
+    },
+    {
+      "id": 6551,
+      "text": "I'm not sure how disposable virtual cards work. Please help."
+    },
+    {
+      "id": 6823,
+      "text": "Can I change my PIN online?"
+    },
+    {
+      "id": 4257,
+      "text": "An item I bought had the wrong exchange rate applied."
+    },
+    {
+      "id": 1498,
+      "text": "How do a reverse a duplicated charge?"
+    },
+    {
+      "id": 906,
+      "text": "My daughter needs an acount."
+    },
+    {
+      "id": 5405,
+      "text": "I've use this account all the time, including over this past month, to pay for things from my new place abroad. I'm a really good customer, so why do I suddenly have new fees? I should be rewarded instead of charged more fees."
+    },
+    {
+      "id": 4907,
+      "text": "My money transfer has not yet occurred"
+    },
+    {
+      "id": 3270,
+      "text": "What steps should I take before my card expires?"
+    },
+    {
+      "id": 1629,
+      "text": "I would like to close my account, as I'm not happy."
+    },
+    {
+      "id": 8915,
+      "text": "Can I use the apple watch to make a top-up?"
+    },
+    {
+      "id": 4585,
+      "text": "Can you tell me why my pop-up is still pending?"
+    },
+    {
+      "id": 7754,
+      "text": "My top-up is not working. Why is that?"
+    },
+    {
+      "id": 4547,
+      "text": "I am not recognized by the app."
+    },
+    {
+      "id": 98,
+      "text": "I don't want to buy this car anymore, can I cancel the transaction and get a quick refund back?"
+    },
+    {
+      "id": 943,
+      "text": "I want to cancel the transaction I made earlier"
+    },
+    {
+      "id": 7021,
+      "text": "I have a new card and I can't add money to it.  I tried about 30 minutes ago and it is still pending.  What do I do?"
+    },
+    {
+      "id": 6642,
+      "text": "How do I activate auto top-up when traveling?"
+    },
+    {
+      "id": 4919,
+      "text": "I must make a transfer from China and it is urgent. How long before the transfer is complete?"
+    },
+    {
+      "id": 5438,
+      "text": "Will it cost extra to add money to an international card?"
+    },
+    {
+      "id": 2326,
+      "text": "How do I verify the top-up?"
+    },
+    {
+      "id": 220,
+      "text": "I just realised I made the wrong payment yesterday. Can you please change it to the right account? It's my rent payment and really really needs to be in the right account by tomorrow"
+    },
+    {
+      "id": 9475,
+      "text": "Im not sure why Im being charged an extra fee just for purchasing an item from another country? I paid for the item and the shipping why am I getting charged extra?"
+    },
+    {
+      "id": 3041,
+      "text": "phone is at a hotel, can i still use app"
+    },
+    {
+      "id": 9585,
+      "text": "How long should a transfer normally take to process completely? I have a friend that needs it right away, but it's already been 2 hours and she hasn't received it."
+    },
+    {
+      "id": 7083,
+      "text": "What does it mean if my payment was reverted?"
+    },
+    {
+      "id": 3974,
+      "text": "Why am I being charged a fee on a card payment?"
+    },
+    {
+      "id": 4165,
+      "text": "Is it on purpose that my payment has been returned to my account?"
+    },
+    {
+      "id": 5505,
+      "text": "How can I tell if someone else is using my card?"
+    },
+    {
+      "id": 6520,
+      "text": "I would like to pay by cheque."
+    },
+    {
+      "id": 7586,
+      "text": "The exchange rate for my card payment doesn't seem right."
+    },
+    {
+      "id": 7761,
+      "text": "I made a mistake and did a transaction to a wrong account, can I cancel?"
+    },
+    {
+      "id": 5878,
+      "text": "Can I set automatic top ups?"
+    },
+    {
+      "id": 3797,
+      "text": "My card is stuck in an ATM machine, how do I get it back quickly?"
+    },
+    {
+      "id": 7989,
+      "text": "Can I get a Visa from you?"
+    },
+    {
+      "id": 6098,
+      "text": "I checked the app and my balance has not been updated for the cash or cheque deposit."
+    },
+    {
+      "id": 3986,
+      "text": "What if I don't want to disclose all of my identity details?"
+    },
+    {
+      "id": 5757,
+      "text": "What should I do if someone else used my card?"
+    },
+    {
+      "id": 214,
+      "text": "Why hasn't the app verified my identity?"
+    },
+    {
+      "id": 8568,
+      "text": "What's the fee for exchange of foreign currencies?"
+    },
+    {
+      "id": 7360,
+      "text": "While abroad I got cash, and a wrong exchange rate was applied."
+    },
+    {
+      "id": 3200,
+      "text": "It appears I have a fee in my statement."
+    },
+    {
+      "id": 5472,
+      "text": "I did a transfer and was charged a fee that I shouldn't have been!"
+    },
+    {
+      "id": 6870,
+      "text": "How to verify top up card?"
+    },
+    {
+      "id": 4687,
+      "text": "I needed to send my friends some money urgently.  I tried multiple times to transfer the money this morning, but the transfer keeps failing.  Can you tell me why the transfer is getting rejected?"
+    },
+    {
+      "id": 8284,
+      "text": "It is extremely important that I cancel the transfer I made yesterday and put the money into a different account.  Is this possible?"
+    },
+    {
+      "id": 8077,
+      "text": "How do i set up auto top-up?"
+    },
+    {
+      "id": 569,
+      "text": "Is a tracking number available for the card that was just sent?"
+    },
+    {
+      "id": 1114,
+      "text": "What fees to you have for top ups?"
+    },
+    {
+      "id": 3732,
+      "text": "The funds I transferred are not in my account"
+    },
+    {
+      "id": 1991,
+      "text": "I am not receiving the correct exchange rate on my card."
+    },
+    {
+      "id": 3689,
+      "text": "I have exceeded all my PIN tries"
+    },
+    {
+      "id": 832,
+      "text": "There was an extra charge when I used my card"
+    },
+    {
+      "id": 7743,
+      "text": "Is topping up with Apple Pay possible?"
+    },
+    {
+      "id": 779,
+      "text": "How much would an extra card cost?"
+    },
+    {
+      "id": 2644,
+      "text": "How are the exchange rates determined?"
+    },
+    {
+      "id": 1729,
+      "text": "Is there a top-up limit?"
+    },
+    {
+      "id": 7207,
+      "text": "how do I get top up to work for my card"
+    },
+    {
+      "id": 7706,
+      "text": "I checked my statement and saw a charge of one pound, where is this charge coming from?"
+    },
+    {
+      "id": 3154,
+      "text": "Is there an auto top up option?"
+    },
+    {
+      "id": 9587,
+      "text": "I'm checking the app and I see a payment that's not mine."
+    },
+    {
+      "id": 4280,
+      "text": "Does this program take SWIFT transfers?"
+    },
+    {
+      "id": 5661,
+      "text": "Why isn't my id verified?"
+    },
+    {
+      "id": 5384,
+      "text": "Why do you keep declining my transfers? it's always been working really well so far but when I tried to buy something just now the card got declined . I tried couple of times already  but same thing is happening ."
+    },
+    {
+      "id": 1020,
+      "text": "I would like to transfer money into my account."
+    },
+    {
+      "id": 4522,
+      "text": "Someone has copied my card. I have my card with me, but someone just made a 500\u00a3 cash withdrawal. Please help now."
+    },
+    {
+      "id": 4345,
+      "text": "I have been charged for one thing two times."
+    },
+    {
+      "id": 3351,
+      "text": "there were two of the same charge to my account"
+    },
+    {
+      "id": 1857,
+      "text": "How do I authenticate my top-up?"
+    },
+    {
+      "id": 7822,
+      "text": "How will I know what the exchange rate is?"
+    },
+    {
+      "id": 6610,
+      "text": "Can the exchange rate change while I am in the process of making a withdrawal?"
+    },
+    {
+      "id": 4464,
+      "text": "Hi, Please help me to request cash back. As i have been withdrawn money from ATM, but i got wrong amount. in Application its showing the amount i have been charged through."
+    },
+    {
+      "id": 9117,
+      "text": "Card activation is not working. What do i do?"
+    },
+    {
+      "id": 5518,
+      "text": "I am confused why there is cash I did not accept in my account"
+    },
+    {
+      "id": 7651,
+      "text": "What are my bank details so I can do a transfer?"
+    },
+    {
+      "id": 1800,
+      "text": "I have a transfer from the US, How long is the wait?"
+    },
+    {
+      "id": 1684,
+      "text": "what cards can i use to add money to my account"
+    },
+    {
+      "id": 1038,
+      "text": "there is a charge i dont recognize"
+    },
+    {
+      "id": 1640,
+      "text": "How many transactions can I do with a disposable card?"
+    },
+    {
+      "id": 8356,
+      "text": "Is there a limit to the number of disposable cards per day?"
+    },
+    {
+      "id": 8720,
+      "text": "There is a direct debit that I didn't set up, what should I do?"
+    },
+    {
+      "id": 8767,
+      "text": "While transferring money, its getting error out as my transfer is not possible. Please help me in this as earlier i was able to do it successfully."
+    },
+    {
+      "id": 882,
+      "text": "What do I do to activate my new card?"
+    },
+    {
+      "id": 5383,
+      "text": "How can I report that my card was stolen? I made a police report first."
+    },
+    {
+      "id": 4484,
+      "text": "How low does the balance have to be before the system updates?"
+    },
+    {
+      "id": 6182,
+      "text": "I noticed an extra charge on the purchase that I made last Saturday on my account. Can you see if I received the correct exchange rate?"
+    },
+    {
+      "id": 8076,
+      "text": "I have have multiple charges for one transaction."
+    },
+    {
+      "id": 2192,
+      "text": "top up google pay, is it possible?"
+    },
+    {
+      "id": 3549,
+      "text": "Do you limit my top-offs?"
+    },
+    {
+      "id": 8436,
+      "text": "How did you arrive at the rate of exchange? I thought that I would get more cash."
+    },
+    {
+      "id": 410,
+      "text": "If I can't choose my card type will I be able to use it everywhere?"
+    },
+    {
+      "id": 8435,
+      "text": "I want to use my account before identity verification"
+    },
+    {
+      "id": 3735,
+      "text": "What reasons would a topup fail?"
+    },
+    {
+      "id": 7462,
+      "text": "I paid with my card and ended up being charged a fee."
+    },
+    {
+      "id": 2998,
+      "text": "can you express my card to me?"
+    },
+    {
+      "id": 9664,
+      "text": "When will I get my money? It's been too long."
+    },
+    {
+      "id": 4483,
+      "text": "I have been charged a fee that I didn't know about. Why have you charged me extra for card payments?"
+    },
+    {
+      "id": 2729,
+      "text": "I didn't see any reason why my transfer was declined. What gives?"
+    },
+    {
+      "id": 4813,
+      "text": "When can I expect my card? I live in the US."
+    },
+    {
+      "id": 9189,
+      "text": "My ID verification hasn't gone through yet, but can I use my account anyway?"
+    },
+    {
+      "id": 7345,
+      "text": "where can i have a virtual card"
+    },
+    {
+      "id": 5400,
+      "text": "I wanted to know why i got an additional fee when i use my card."
+    },
+    {
+      "id": 7443,
+      "text": "I attempted a transfer, but it failed."
+    },
+    {
+      "id": 5598,
+      "text": "I didn't withdraw cash but I see that transaction on my app"
+    },
+    {
+      "id": 4560,
+      "text": "I'd like to transfer funds using my credit card."
+    },
+    {
+      "id": 8854,
+      "text": "Is topping up free?"
+    },
+    {
+      "id": 7100,
+      "text": "Please send my refund now."
+    },
+    {
+      "id": 888,
+      "text": "Why did I get charged a fee for my card payment?"
+    },
+    {
+      "id": 9877,
+      "text": "Can I have a second card issued to another family member?"
+    },
+    {
+      "id": 3326,
+      "text": "Why is there a pending time on my transfer?"
+    },
+    {
+      "id": 4306,
+      "text": "I'm currently not in possession of my phone, is it still possible to go about things normally without access to the app?"
+    },
+    {
+      "id": 6821,
+      "text": "What is the fee charged for using my card?"
+    },
+    {
+      "id": 2340,
+      "text": "How do I know if my top-up went through?"
+    },
+    {
+      "id": 6710,
+      "text": "I have a top-up that's still pending and wanted to know about it."
+    },
+    {
+      "id": 4936,
+      "text": "Is it normal to be charged an extra fee when paying with my card?"
+    },
+    {
+      "id": 5160,
+      "text": "My card is not working."
+    },
+    {
+      "id": 5497,
+      "text": "How long does it actually take for a card payment to go through? There's one stuck since a couple days already that doesn't seem to move"
+    },
+    {
+      "id": 7811,
+      "text": "How old do you need to be to open an account?"
+    },
+    {
+      "id": 1633,
+      "text": "Is my card frozen?"
+    },
+    {
+      "id": 3083,
+      "text": "How do I request the PIN?"
+    },
+    {
+      "id": 1942,
+      "text": "How long does it take to show a deposit I made to my balance?"
+    },
+    {
+      "id": 2676,
+      "text": "How do I report fraud on my card?"
+    },
+    {
+      "id": 7961,
+      "text": "Can I create my own top-up limit?"
+    },
+    {
+      "id": 7662,
+      "text": "My card payment has been cancelled"
+    },
+    {
+      "id": 2978,
+      "text": "How do I change the details in my account?"
+    },
+    {
+      "id": 8892,
+      "text": "My card payment didn't work"
+    },
+    {
+      "id": 1070,
+      "text": "can i create my own pin right away"
+    },
+    {
+      "id": 5395,
+      "text": "Why does my statement show an extra fee?"
+    },
+    {
+      "id": 3880,
+      "text": "I do not recognise this card payment."
+    },
+    {
+      "id": 3132,
+      "text": "I want to take back my transaction"
+    },
+    {
+      "id": 2956,
+      "text": "if i found a lost card can i put it back in app"
+    },
+    {
+      "id": 7320,
+      "text": "How many disposable cards per person?"
+    },
+    {
+      "id": 8330,
+      "text": "How do i change my identity?"
+    },
+    {
+      "id": 656,
+      "text": "Where can I use my card to pay?"
+    },
+    {
+      "id": 818,
+      "text": "i cannot get virtual card to work"
+    },
+    {
+      "id": 1770,
+      "text": "Will be Apple Watch be able to let me top up?"
+    },
+    {
+      "id": 5260,
+      "text": "I need a list of currencies you accept for exchange."
+    },
+    {
+      "id": 6406,
+      "text": "I need to freeze my card. There are charges on there that i did not authorize. They've been coming out for a couple of days. Can i get this money back?"
+    },
+    {
+      "id": 1938,
+      "text": "Please verify my source of funds."
+    },
+    {
+      "id": 4770,
+      "text": "I am still waiting for a refund"
+    },
+    {
+      "id": 4350,
+      "text": "If I need an additional card, is there a fee for that?"
+    },
+    {
+      "id": 739,
+      "text": "I need to change my last name on my account because I just got married."
+    },
+    {
+      "id": 9688,
+      "text": "My cash deposit hasn't posted to my account."
+    },
+    {
+      "id": 8919,
+      "text": "I am not able to make a purchase because there is an issue with my card"
+    },
+    {
+      "id": 4417,
+      "text": "Can you tell me what are disposable cards for?"
+    },
+    {
+      "id": 933,
+      "text": "I need assistance with activating my new card."
+    },
+    {
+      "id": 9693,
+      "text": "are multiple currencies acceptable?"
+    },
+    {
+      "id": 1579,
+      "text": "where do I top up my google pay?"
+    },
+    {
+      "id": 9986,
+      "text": "Why did I get charged more than once?"
+    },
+    {
+      "id": 3424,
+      "text": "Why was I not able to complete my transfer?"
+    },
+    {
+      "id": 5129,
+      "text": "Why would a merchant revert my payment?"
+    },
+    {
+      "id": 1382,
+      "text": "I'm being charged for using my card!"
+    },
+    {
+      "id": 826,
+      "text": "My card is not able to be activated how do I get it to work?"
+    },
+    {
+      "id": 319,
+      "text": "Is it simple to transfer money using my credit card?"
+    },
+    {
+      "id": 1357,
+      "text": "I use my card internationally to manage payments and I just noticed that you are adding additional fees.  Why?  I am a good customer and this has me thinking about leaving."
+    },
+    {
+      "id": 1558,
+      "text": "Why did you charge a fee when I withdrew from an ATM?"
+    },
+    {
+      "id": 3548,
+      "text": "Can you please explain how to transfer money using the bank transfer process?"
+    },
+    {
+      "id": 8260,
+      "text": "How to a go about ordering a disposable virtual card?"
+    },
+    {
+      "id": 2018,
+      "text": "Yikes!  I didn't get the amount of money that I requested.  What do I do now?"
+    },
+    {
+      "id": 3518,
+      "text": "Is there a way I can get a Visa card?"
+    },
+    {
+      "id": 5443,
+      "text": "I went to use my new card today and the card was repeatedly declined. I would really like to use this card and need to know what to do about it."
+    },
+    {
+      "id": 5178,
+      "text": "I would like for someone to tell me which fiat currencies that your company supports."
+    },
+    {
+      "id": 4872,
+      "text": "My card is not working when I try to use it."
+    },
+    {
+      "id": 1511,
+      "text": "If someone sends me money, will I be charged?"
+    },
+    {
+      "id": 1360,
+      "text": "There is a charge for 1\u00a3 on my statement.  I do not think that I bought anything that costed 1\u00a3.  What is going on?"
+    },
+    {
+      "id": 1594,
+      "text": "A couple weeks ago there was a debit taken from my account from a transaction I don't recall. Is it possible to trace this transaction to make sure I'm not being scammed?"
+    },
+    {
+      "id": 7708,
+      "text": "How much time do transfers take? I sent money to a friend who needs it fast. It's been hours, and the money has not gone through."
+    },
+    {
+      "id": 5534,
+      "text": "Why does my statement show various transaction times?"
+    },
+    {
+      "id": 7745,
+      "text": "How can I add physical money to my card?"
+    },
+    {
+      "id": 1258,
+      "text": "I need to add my new address now that I've moved."
+    },
+    {
+      "id": 4943,
+      "text": "I tried using a check to update my balance, but it isn't work? Is something wrong?"
+    },
+    {
+      "id": 371,
+      "text": "Is it possible to do auto top up?"
+    },
+    {
+      "id": 2913,
+      "text": "What's the process of changing from GBP to AUD?"
+    },
+    {
+      "id": 3010,
+      "text": "The app declined my top up. What did I do wrong?"
+    },
+    {
+      "id": 3389,
+      "text": "I do not know where the transaction is."
+    },
+    {
+      "id": 3587,
+      "text": "There is a cash withdrawal on my statement that I did not make"
+    },
+    {
+      "id": 9898,
+      "text": "Why did I not get the amount I specified at the ATM?"
+    },
+    {
+      "id": 7191,
+      "text": "Under what condition will my payment revert?"
+    },
+    {
+      "id": 6320,
+      "text": "Im going to need to make a transfer from a UK account but I need it to go through ASAP. Is that going to be possible or will it take forever?? Im hoping it will be a couple hours and not a couple weeks."
+    },
+    {
+      "id": 9325,
+      "text": "There is a cash withdrawal in my account that isn't mine."
+    },
+    {
+      "id": 6207,
+      "text": "Can you tell me exactly what fees I will expect to see in regards to your cards?"
+    },
+    {
+      "id": 8630,
+      "text": "I want a refund on this."
+    }
+  ]
+}

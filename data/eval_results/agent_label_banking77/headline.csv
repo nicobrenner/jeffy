@@ -1,0 +1,7 @@
+condition,n_train,labels_from,labeler_model,n_classes_seen,label_agreement,test_accuracy,test_macro_f1
+full_supervised,10000,human,banking77_crowdworkers,77,1.0,0.9425,0.9424
+fewshot_supervised,385,human,banking77_crowdworkers,76,1.0,0.7125,0.6882
+fewshot_agent_labeled,385,agent,claude-opus-5,74,0.8260,0.6635,0.6286
+agent_labeled_round2_active,770,agent,claude-opus-5,77,0.7805,0.7935,0.7841
+fewshot_supervised_active_770,770,human,banking77_crowdworkers,77,1.0,0.8635,
+fewshot_supervised_random_770,770,human,banking77_crowdworkers,77,1.0,0.843,

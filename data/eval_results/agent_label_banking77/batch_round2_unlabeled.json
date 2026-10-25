@@ -1,0 +1,2394 @@
+{
+  "instructions": "Same taxonomy. These are the pool texts the round-1 head is least sure about. model_guess is what it would say; correct it or confirm it.",
+  "label_names": [
+    "Refund_not_showing_up",
+    "activate_my_card",
+    "age_limit",
+    "apple_pay_or_google_pay",
+    "atm_support",
+    "automatic_top_up",
+    "balance_not_updated_after_bank_transfer",
+    "balance_not_updated_after_cheque_or_cash_deposit",
+    "beneficiary_not_allowed",
+    "cancel_transfer",
+    "card_about_to_expire",
+    "card_acceptance",
+    "card_arrival",
+    "card_delivery_estimate",
+    "card_linking",
+    "card_not_working",
+    "card_payment_fee_charged",
+    "card_payment_not_recognised",
+    "card_payment_wrong_exchange_rate",
+    "card_swallowed",
+    "cash_withdrawal_charge",
+    "cash_withdrawal_not_recognised",
+    "change_pin",
+    "compromised_card",
+    "contactless_not_working",
+    "country_support",
+    "declined_card_payment",
+    "declined_cash_withdrawal",
+    "declined_transfer",
+    "direct_debit_payment_not_recognised",
+    "disposable_card_limits",
+    "edit_personal_details",
+    "exchange_charge",
+    "exchange_rate",
+    "exchange_via_app",
+    "extra_charge_on_statement",
+    "failed_transfer",
+    "fiat_currency_support",
+    "get_disposable_virtual_card",
+    "get_physical_card",
+    "getting_spare_card",
+    "getting_virtual_card",
+    "lost_or_stolen_card",
+    "lost_or_stolen_phone",
+    "order_physical_card",
+    "passcode_forgotten",
+    "pending_card_payment",
+    "pending_cash_withdrawal",
+    "pending_top_up",
+    "pending_transfer",
+    "pin_blocked",
+    "receiving_money",
+    "request_refund",
+    "reverted_card_payment?",
+    "supported_cards_and_currencies",
+    "terminate_account",
+    "top_up_by_bank_transfer_charge",
+    "top_up_by_card_charge",
+    "top_up_by_cash_or_cheque",
+    "top_up_failed",
+    "top_up_limits",
+    "top_up_reverted",
+    "topping_up_by_card",
+    "transaction_charged_twice",
+    "transfer_fee_charged",
+    "transfer_into_account",
+    "transfer_not_received_by_recipient",
+    "transfer_timing",
+    "unable_to_verify_identity",
+    "verify_my_identity",
+    "verify_source_of_funds",
+    "verify_top_up",
+    "virtual_card_not_working",
+    "visa_or_mastercard",
+    "why_verify_identity",
+    "wrong_amount_of_cash_received",
+    "wrong_exchange_rate_for_cash_withdrawal"
+  ],
+  "items": [
+    {
+      "id": 9155,
+      "text": "Am I going to see a charge for a SEPA transfer?",
+      "margin": 0.0,
+      "model_guess": "transfer_fee_charged"
+    },
+    {
+      "id": 6349,
+      "text": "How can I tell if my top-up has been cancelled?",
+      "margin": 0.0,
+      "model_guess": "top_up_failed"
+    },
+    {
+      "id": 7474,
+      "text": "Can I add money to my account with cash?",
+      "margin": 0.0001,
+      "model_guess": "balance_not_updated_after_cheque_or_cash_deposit"
+    },
+    {
+      "id": 6971,
+      "text": "My order hasn't shown up yet, what can I do?",
+      "margin": 0.0001,
+      "model_guess": "card_delivery_estimate"
+    },
+    {
+      "id": 4820,
+      "text": "I am having trouble doing a transfer. A \"Decline \" message appears after making the transfer.",
+      "margin": 0.0001,
+      "model_guess": "failed_transfer"
+    },
+    {
+      "id": 4652,
+      "text": "Has there been any activity on my card today?",
+      "margin": 0.0001,
+      "model_guess": "compromised_card"
+    },
+    {
+      "id": 9405,
+      "text": "what steps do i do to get a real card",
+      "margin": 0.0002,
+      "model_guess": "card_linking"
+    },
+    {
+      "id": 1553,
+      "text": "What can I expect if I use bank transfer to top up my account?",
+      "margin": 0.0002,
+      "model_guess": "transfer_into_account"
+    },
+    {
+      "id": 9368,
+      "text": "I ordered my card but it still isn't here",
+      "margin": 0.0002,
+      "model_guess": "card_arrival"
+    },
+    {
+      "id": 2374,
+      "text": "Why is the ATM not allowing me to get cash?",
+      "margin": 0.0003,
+      "model_guess": "card_swallowed"
+    },
+    {
+      "id": 2020,
+      "text": "Can I withdraw from any ATM?",
+      "margin": 0.0003,
+      "model_guess": "card_swallowed"
+    },
+    {
+      "id": 7891,
+      "text": "Hi, I'm in progress of purchasing a flat and am trying to make to make a payment.  An error is appearing, and I need assistance.",
+      "margin": 0.0003,
+      "model_guess": "reverted_card_payment?"
+    },
+    {
+      "id": 5242,
+      "text": "I really was trying to complete this exhange. I was trying to purchase some crypto but the app won't allow me to do it. Can you tell me what's going on here?",
+      "margin": 0.0004,
+      "model_guess": "failed_transfer"
+    },
+    {
+      "id": 4850,
+      "text": "My account transfer was not cleared.",
+      "margin": 0.0004,
+      "model_guess": "balance_not_updated_after_bank_transfer"
+    },
+    {
+      "id": 7626,
+      "text": "I have tried using my card for the first time at the ATM of Notting Hill to withdrawal cash but it didn't work. Does this mean my card isn't working?",
+      "margin": 0.0005,
+      "model_guess": "top_up_failed"
+    },
+    {
+      "id": 3758,
+      "text": "Hey, I have my card, how do I get it to show in the app?",
+      "margin": 0.0005,
+      "model_guess": "lost_or_stolen_card"
+    },
+    {
+      "id": 5056,
+      "text": "What would I be charged in receiving a SEPA transfer?",
+      "margin": 0.0005,
+      "model_guess": "transfer_into_account"
+    },
+    {
+      "id": 7882,
+      "text": "My card hasn't arrived in the mail yet. I ordered it two weeks ago. What can I do?",
+      "margin": 0.0005,
+      "model_guess": "card_arrival"
+    },
+    {
+      "id": 9494,
+      "text": "I was not able to use the ATM to get cash",
+      "margin": 0.0006,
+      "model_guess": "card_swallowed"
+    },
+    {
+      "id": 1225,
+      "text": "How do I get my card on the app?",
+      "margin": 0.0006,
+      "model_guess": "card_linking"
+    },
+    {
+      "id": 3923,
+      "text": "What does the bank charge for lost or stolen card replacements?",
+      "margin": 0.0006,
+      "model_guess": "lost_or_stolen_card"
+    },
+    {
+      "id": 6272,
+      "text": "Which ATMs am I allowed to get money from?",
+      "margin": 0.0006,
+      "model_guess": "transfer_into_account"
+    },
+    {
+      "id": 7189,
+      "text": "Is American Express supported for adding funds?",
+      "margin": 0.0006,
+      "model_guess": "topping_up_by_card"
+    },
+    {
+      "id": 1472,
+      "text": "What is the first step I need to make for being able to access my account?",
+      "margin": 0.0007,
+      "model_guess": "unable_to_verify_identity"
+    },
+    {
+      "id": 2108,
+      "text": "What cash stations take this card?",
+      "margin": 0.0007,
+      "model_guess": "card_acceptance"
+    },
+    {
+      "id": 3169,
+      "text": "What ATMs can I use my card?",
+      "margin": 0.0007,
+      "model_guess": "card_acceptance"
+    },
+    {
+      "id": 9659,
+      "text": "How can I change my Rowlock ?",
+      "margin": 0.0007,
+      "model_guess": "edit_personal_details"
+    },
+    {
+      "id": 1418,
+      "text": "are there any country restrictions?",
+      "margin": 0.0008,
+      "model_guess": "fiat_currency_support"
+    },
+    {
+      "id": 3953,
+      "text": "I sent a payment but now it's not showing up.",
+      "margin": 0.0008,
+      "model_guess": "reverted_card_payment?"
+    },
+    {
+      "id": 1235,
+      "text": "I'm looking for a machine of yours that will provide me cash from my home country. I went on holiday and don't have any cash on me. Will your machine charge me extra to do this?",
+      "margin": 0.0008,
+      "model_guess": "wrong_amount_of_cash_received"
+    },
+    {
+      "id": 4218,
+      "text": "Is there a fee to order a physical card?",
+      "margin": 0.0009,
+      "model_guess": "get_physical_card"
+    },
+    {
+      "id": 7533,
+      "text": "What is the cost of a transfer?",
+      "margin": 0.0009,
+      "model_guess": "transfer_into_account"
+    },
+    {
+      "id": 4733,
+      "text": "My card is missing.  Please help.",
+      "margin": 0.0009,
+      "model_guess": "card_not_working"
+    },
+    {
+      "id": 9317,
+      "text": "how do i track the moeney",
+      "margin": 0.0009,
+      "model_guess": "extra_charge_on_statement"
+    },
+    {
+      "id": 4525,
+      "text": "I received the wrong color and size, can I return it?",
+      "margin": 0.001,
+      "model_guess": "request_refund"
+    },
+    {
+      "id": 9454,
+      "text": "Transfer unable to be completed, states 'declined'",
+      "margin": 0.0011,
+      "model_guess": "failed_transfer"
+    },
+    {
+      "id": 3380,
+      "text": "How do I get refills to my card when I'm traveling?",
+      "margin": 0.0011,
+      "model_guess": "card_delivery_estimate"
+    },
+    {
+      "id": 8487,
+      "text": "I made a transfer and the receiver said an amount was received, but not exactly the same as the right amount. I now have to transfer more to get the remainder to the receiver. Can you alert me about this. What's been happening?",
+      "margin": 0.0012,
+      "model_guess": "wrong_amount_of_cash_received"
+    },
+    {
+      "id": 7528,
+      "text": "For SEPA transfers, what kind of charge will be applied?",
+      "margin": 0.0012,
+      "model_guess": "transfer_fee_charged"
+    },
+    {
+      "id": 9857,
+      "text": "There is a fraudulent payment!",
+      "margin": 0.0012,
+      "model_guess": "reverted_card_payment?"
+    },
+    {
+      "id": 7351,
+      "text": "Where's the button to top up with a cheque?",
+      "margin": 0.0012,
+      "model_guess": "balance_not_updated_after_cheque_or_cash_deposit"
+    },
+    {
+      "id": 9952,
+      "text": "How long will my cash withdrawal take",
+      "margin": 0.0013,
+      "model_guess": "pending_cash_withdrawal"
+    },
+    {
+      "id": 9171,
+      "text": "I received my Virtual card information, but was unable to use it to make a purchase. Why did this happen and what can I do?",
+      "margin": 0.0013,
+      "model_guess": "declined_card_payment"
+    },
+    {
+      "id": 755,
+      "text": "I need some help now please! There are some transactions on my account that I do not remember purchasing. Can they be reversed? Can you please cancel or freeze my card so I don't keep getting charged?!",
+      "margin": 0.0014,
+      "model_guess": "compromised_card"
+    },
+    {
+      "id": 1481,
+      "text": "I purchased something and the seller hasn't received the money yet, but it has been deducted from my account.",
+      "margin": 0.0014,
+      "model_guess": "direct_debit_payment_not_recognised"
+    },
+    {
+      "id": 6016,
+      "text": "Can you tell me how to get my card on the app?",
+      "margin": 0.0014,
+      "model_guess": "activate_my_card"
+    },
+    {
+      "id": 971,
+      "text": "I cannot view the refunded amount in my account.",
+      "margin": 0.0014,
+      "model_guess": "Refund_not_showing_up"
+    },
+    {
+      "id": 307,
+      "text": "Can I have a card even if I am not living in the UK?",
+      "margin": 0.0014,
+      "model_guess": "card_delivery_estimate"
+    },
+    {
+      "id": 5715,
+      "text": "What are the charges for recieving SEPA transfers?",
+      "margin": 0.0014,
+      "model_guess": "transfer_into_account"
+    },
+    {
+      "id": 1289,
+      "text": "I can't find any option to top up with a cheque?",
+      "margin": 0.0015,
+      "model_guess": "balance_not_updated_after_cheque_or_cash_deposit"
+    },
+    {
+      "id": 7899,
+      "text": "Why do I see extra charges for withdrawing my money?",
+      "margin": 0.0015,
+      "model_guess": "cash_withdrawal_charge"
+    },
+    {
+      "id": 1657,
+      "text": "I requested a refund from a merchant several days ago, but don't see anything showing up in my account yet.  Can you check on your end to see if the money has reached you guys?",
+      "margin": 0.0015,
+      "model_guess": "Refund_not_showing_up"
+    },
+    {
+      "id": 523,
+      "text": "Can i get money in my home currency at my ATM ?I am on holiday and bit concerned because i do not have any cash with me .Is it possible to withdraw without any additional cost.",
+      "margin": 0.0015,
+      "model_guess": "exchange_rate"
+    },
+    {
+      "id": 3022,
+      "text": "When I used one of the ATMs in the city centre today, I tried to take out some money, but for whatever reason, the machine declined my card. Just checked it out in my account and that amount is still showing as pending! Is there any way that you can cancel this transaction, because I did not receive any money whatsoever from the ATM",
+      "margin": 0.0015,
+      "model_guess": "wrong_amount_of_cash_received"
+    },
+    {
+      "id": 787,
+      "text": "Which ATMs accept this bill of fare ?",
+      "margin": 0.0016,
+      "model_guess": "transfer_into_account"
+    },
+    {
+      "id": 7621,
+      "text": "Where is the option to top up with a cheque?",
+      "margin": 0.0016,
+      "model_guess": "top_up_by_cash_or_cheque"
+    },
+    {
+      "id": 9787,
+      "text": "I blocked my card by mistake, how do I unblock it?",
+      "margin": 0.0016,
+      "model_guess": "compromised_card"
+    },
+    {
+      "id": 6135,
+      "text": "I need to withdraw money. Where can I do that?",
+      "margin": 0.0016,
+      "model_guess": "declined_cash_withdrawal"
+    },
+    {
+      "id": 8534,
+      "text": "Hi something is going on with the app.  I see some payments I didn't make?",
+      "margin": 0.0016,
+      "model_guess": "cash_withdrawal_not_recognised"
+    },
+    {
+      "id": 6106,
+      "text": "What are my payment options?",
+      "margin": 0.0016,
+      "model_guess": "topping_up_by_card"
+    },
+    {
+      "id": 8866,
+      "text": "I saw a fee on my receipt from withdrawing money while shopping earlier.  Is there supposed to be a fee for this type of transaction?",
+      "margin": 0.0016,
+      "model_guess": "card_payment_fee_charged"
+    },
+    {
+      "id": 6730,
+      "text": "Why hasn't my card arrived yet?",
+      "margin": 0.0017,
+      "model_guess": "card_delivery_estimate"
+    },
+    {
+      "id": 6433,
+      "text": "Can you let me know where my refund money is? I requested a refund a few days back, but it's not showing up yet.  Do you guys have the money yet? Maybe it's just not in my account.  Let me know when it will become available, please.",
+      "margin": 0.0017,
+      "model_guess": "pending_top_up"
+    },
+    {
+      "id": 3250,
+      "text": "When will my returned transaction show up on my account?",
+      "margin": 0.0017,
+      "model_guess": "pending_transfer"
+    },
+    {
+      "id": 6176,
+      "text": "I think my wallet fell out on the Tube today! I realized as soon as I got to my desk. How do I cut off the card?",
+      "margin": 0.0018,
+      "model_guess": "compromised_card"
+    },
+    {
+      "id": 1372,
+      "text": "I know this very late, but I just went through my statements from the last couple months and there's one quite large-ish payment that I definitely haven't made. Is it still possible to dispute it?",
+      "margin": 0.0018,
+      "model_guess": "direct_debit_payment_not_recognised"
+    },
+    {
+      "id": 4740,
+      "text": "May I get one of your cards?  I live in the EU.",
+      "margin": 0.0018,
+      "model_guess": "card_delivery_estimate"
+    },
+    {
+      "id": 1370,
+      "text": "Can I get my card fast tracked?",
+      "margin": 0.0018,
+      "model_guess": "card_arrival"
+    },
+    {
+      "id": 3678,
+      "text": "Have you started charging for cash withdrawals? I always thought it was free until I noticed this fee. How much is the fee?",
+      "margin": 0.0018,
+      "model_guess": "card_payment_fee_charged"
+    },
+    {
+      "id": 1902,
+      "text": "I have an incorrect charge and would like a refund.",
+      "margin": 0.0018,
+      "model_guess": "transaction_charged_twice"
+    },
+    {
+      "id": 714,
+      "text": "How can I put more money into my account?",
+      "margin": 0.0019,
+      "model_guess": "topping_up_by_card"
+    },
+    {
+      "id": 8969,
+      "text": "Why is there now a charge for making cash withdrawals? I wanted some cash after I went to the grocery store, and there's a new fee!",
+      "margin": 0.0019,
+      "model_guess": "cash_withdrawal_charge"
+    },
+    {
+      "id": 869,
+      "text": "Can I pay online with my card?",
+      "margin": 0.002,
+      "model_guess": "card_acceptance"
+    },
+    {
+      "id": 5287,
+      "text": "Do all ATMs accept this card?",
+      "margin": 0.002,
+      "model_guess": "supported_cards_and_currencies"
+    },
+    {
+      "id": 1607,
+      "text": "I have been waiting for my top-up to complete and it still hasn't gone through.",
+      "margin": 0.002,
+      "model_guess": "pending_top_up"
+    },
+    {
+      "id": 4431,
+      "text": "I tried to get money out of the Notting Hill ATM earlier, but I wasn't able to get it to work. Is my card with issue? It's the first time I tried using it.",
+      "margin": 0.002,
+      "model_guess": "card_swallowed"
+    },
+    {
+      "id": 169,
+      "text": "where to i get my funds from?",
+      "margin": 0.0021,
+      "model_guess": "transfer_into_account"
+    },
+    {
+      "id": 9730,
+      "text": "I live in the UK. Can I get a card?",
+      "margin": 0.0021,
+      "model_guess": "visa_or_mastercard"
+    },
+    {
+      "id": 9920,
+      "text": "Where did my extra fee for the transfer come from?",
+      "margin": 0.0021,
+      "model_guess": "card_payment_fee_charged"
+    },
+    {
+      "id": 2590,
+      "text": "What card types can I choose from?",
+      "margin": 0.0023,
+      "model_guess": "visa_or_mastercard"
+    },
+    {
+      "id": 951,
+      "text": "Hi, i was checking my old statements and found a discrepancy with a large amount transaction. I am sure it was not done by me. Please let me know if i could raise a dispute as its very late.",
+      "margin": 0.0023,
+      "model_guess": "extra_charge_on_statement"
+    },
+    {
+      "id": 3362,
+      "text": "I went to the Notting Hill ATM to use my card the first time for a cash withdrawal but it didn't work. Does this mean that my card isn't working yet?",
+      "margin": 0.0023,
+      "model_guess": "balance_not_updated_after_cheque_or_cash_deposit"
+    },
+    {
+      "id": 147,
+      "text": "How do I get a new card as your machine swallowed mine!",
+      "margin": 0.0023,
+      "model_guess": "card_not_working"
+    },
+    {
+      "id": 3059,
+      "text": "Do you need my birthdate?",
+      "margin": 0.0024,
+      "model_guess": "why_verify_identity"
+    },
+    {
+      "id": 8935,
+      "text": "What locations can I get money from?",
+      "margin": 0.0024,
+      "model_guess": "transfer_into_account"
+    },
+    {
+      "id": 1100,
+      "text": "Hello, I was contacted by a seller who let me know my money didn't come through on their side. It most certainly came out of my account so I need this looked at immediately because now it has been returned to me!",
+      "margin": 0.0024,
+      "model_guess": "reverted_card_payment?"
+    },
+    {
+      "id": 5087,
+      "text": "I need to transfer to my account and cant.",
+      "margin": 0.0025,
+      "model_guess": "failed_transfer"
+    },
+    {
+      "id": 1974,
+      "text": "Can I transfer money using a different currency?",
+      "margin": 0.0025,
+      "model_guess": "fiat_currency_support"
+    },
+    {
+      "id": 9875,
+      "text": "How come my money hasn't shown up yet?",
+      "margin": 0.0025,
+      "model_guess": "balance_not_updated_after_cheque_or_cash_deposit"
+    },
+    {
+      "id": 2245,
+      "text": "how can the money machine keep my card what do i need to do?",
+      "margin": 0.0026,
+      "model_guess": "compromised_card"
+    },
+    {
+      "id": 7892,
+      "text": "The machine didn't work earlier when I went to get money out and now my account says transaction in progress.Why?",
+      "margin": 0.0026,
+      "model_guess": "card_not_working"
+    },
+    {
+      "id": 2144,
+      "text": "Where do my available funds come from?",
+      "margin": 0.0026,
+      "model_guess": "pending_transfer"
+    },
+    {
+      "id": 9698,
+      "text": "What countries do your accounts send and receive to?",
+      "margin": 0.0026,
+      "model_guess": "receiving_money"
+    },
+    {
+      "id": 3915,
+      "text": "I was trying to use my card and it was declined, when I tried to find out what happened I found cash withdraw for $500 that I didn't do.  Can you please help figure this out?",
+      "margin": 0.0027,
+      "model_guess": "cash_withdrawal_not_recognised"
+    },
+    {
+      "id": 4670,
+      "text": "I believe my top up was reverted.",
+      "margin": 0.0027,
+      "model_guess": "top_up_failed"
+    },
+    {
+      "id": 1510,
+      "text": "How much do you charge for exchange rates?",
+      "margin": 0.0027,
+      "model_guess": "exchange_charge"
+    },
+    {
+      "id": 7691,
+      "text": "i want to get my salary deposited as pesos?",
+      "margin": 0.0028,
+      "model_guess": "fiat_currency_support"
+    },
+    {
+      "id": 5921,
+      "text": "Why do you need to verify my identity?",
+      "margin": 0.0029,
+      "model_guess": "verify_my_identity"
+    },
+    {
+      "id": 5382,
+      "text": "I am in the EU. Can I get one of your cards?",
+      "margin": 0.0029,
+      "model_guess": "card_delivery_estimate"
+    },
+    {
+      "id": 9188,
+      "text": "I saw I was charged extra for money I withdrew?",
+      "margin": 0.0029,
+      "model_guess": "cash_withdrawal_not_recognised"
+    },
+    {
+      "id": 3780,
+      "text": "I'm expecting a refund but it's no where to be seen",
+      "margin": 0.003,
+      "model_guess": "Refund_not_showing_up"
+    },
+    {
+      "id": 1620,
+      "text": "Can you tell me the countries you operate in?",
+      "margin": 0.003,
+      "model_guess": "fiat_currency_support"
+    },
+    {
+      "id": 7421,
+      "text": "While on vacation I used an ATM to get cash and was overcharged. These charges are ridiculous and had I known about them I would have never used it.",
+      "margin": 0.0031,
+      "model_guess": "extra_charge_on_statement"
+    },
+    {
+      "id": 8553,
+      "text": "Will there be a fee if I receive a SEPA transfer",
+      "margin": 0.0031,
+      "model_guess": "top_up_by_card_charge"
+    },
+    {
+      "id": 7829,
+      "text": "I attempted to get cash in the ATM but I was denied",
+      "margin": 0.0031,
+      "model_guess": "wrong_amount_of_cash_received"
+    },
+    {
+      "id": 2693,
+      "text": "I just had a look at my statement. Why have I been changed for using the ATM?",
+      "margin": 0.0031,
+      "model_guess": "cash_withdrawal_charge"
+    },
+    {
+      "id": 7444,
+      "text": "I'm not sure if my pop-up went through.",
+      "margin": 0.0032,
+      "model_guess": "unable_to_verify_identity"
+    },
+    {
+      "id": 1137,
+      "text": "I want to add funds to my account. What payment methods are accepted?",
+      "margin": 0.0032,
+      "model_guess": "supported_cards_and_currencies"
+    },
+    {
+      "id": 9589,
+      "text": "Can I get my friends to add money to my account?",
+      "margin": 0.0032,
+      "model_guess": "topping_up_by_card"
+    },
+    {
+      "id": 7722,
+      "text": "Where did my deposit for my source of funds come from?",
+      "margin": 0.0032,
+      "model_guess": "balance_not_updated_after_cheque_or_cash_deposit"
+    },
+    {
+      "id": 7724,
+      "text": "Am I the only one who can top-up my account?",
+      "margin": 0.0033,
+      "model_guess": "top_up_limits"
+    },
+    {
+      "id": 3862,
+      "text": "Where is my recent refund in the my statement?",
+      "margin": 0.0033,
+      "model_guess": "extra_charge_on_statement"
+    },
+    {
+      "id": 4075,
+      "text": "What do I do if I cannot access the app?",
+      "margin": 0.0033,
+      "model_guess": "lost_or_stolen_phone"
+    },
+    {
+      "id": 724,
+      "text": "Can I make a contactless payments?",
+      "margin": 0.0034,
+      "model_guess": "receiving_money"
+    },
+    {
+      "id": 2529,
+      "text": "I got my card now, how do I make it show up in the app?",
+      "margin": 0.0034,
+      "model_guess": "card_linking"
+    },
+    {
+      "id": 5226,
+      "text": "|I moved out of my old house two weeks ago and cancelled my direct debit to my old landlord, this direct debit was working fine.  Now I've moved in to a new place and set up a transfer to a new landlord but it's not reached her yet, can you check it please?",
+      "margin": 0.0034,
+      "model_guess": "transfer_not_received_by_recipient"
+    },
+    {
+      "id": 7962,
+      "text": "Can I see my available money?",
+      "margin": 0.0034,
+      "model_guess": "balance_not_updated_after_cheque_or_cash_deposit"
+    },
+    {
+      "id": 6531,
+      "text": "There's something wrong on my bill. A transfer fee should never have been added.",
+      "margin": 0.0034,
+      "model_guess": "extra_charge_on_statement"
+    },
+    {
+      "id": 2919,
+      "text": "How do I use bank transfer to top up my account?",
+      "margin": 0.0034,
+      "model_guess": "transfer_into_account"
+    },
+    {
+      "id": 1301,
+      "text": "WHAT IS THE ATMOSPHERE OF IT",
+      "margin": 0.0035,
+      "model_guess": "extra_charge_on_statement"
+    },
+    {
+      "id": 6157,
+      "text": "My top-up hasn't happened yet.",
+      "margin": 0.0036,
+      "model_guess": "pending_top_up"
+    },
+    {
+      "id": 7398,
+      "text": "Are there specific ATM's I can use with this card?",
+      "margin": 0.0036,
+      "model_guess": "card_swallowed"
+    },
+    {
+      "id": 6097,
+      "text": "Tell me how to renew my new card?",
+      "margin": 0.0037,
+      "model_guess": "activate_my_card"
+    },
+    {
+      "id": 8511,
+      "text": "I have a fee for cash withdrawal",
+      "margin": 0.0037,
+      "model_guess": "cash_withdrawal_charge"
+    },
+    {
+      "id": 9074,
+      "text": "I was unaware of the additional charge that was added onto my previous payment. A notification of extra charges would be appreciated in the future.",
+      "margin": 0.0037,
+      "model_guess": "extra_charge_on_statement"
+    },
+    {
+      "id": 3177,
+      "text": "Please tell me how to get a card if I reside in the US.",
+      "margin": 0.0038,
+      "model_guess": "visa_or_mastercard"
+    },
+    {
+      "id": 8873,
+      "text": "I used my card to top up, but now I don't see the money in my account.",
+      "margin": 0.0038,
+      "model_guess": "top_up_failed"
+    },
+    {
+      "id": 885,
+      "text": "Help me access the card I already got so I can information from it.",
+      "margin": 0.0038,
+      "model_guess": "card_linking"
+    },
+    {
+      "id": 1979,
+      "text": "Does it cost anything and how long would it take to get a card if I need a new one? My card is about to expire.",
+      "margin": 0.0038,
+      "model_guess": "getting_spare_card"
+    },
+    {
+      "id": 5333,
+      "text": "How can I configure what currency my salary is in if it's in GBP?",
+      "margin": 0.0038,
+      "model_guess": "receiving_money"
+    },
+    {
+      "id": 9075,
+      "text": "How much is ok for me to top up with?",
+      "margin": 0.0038,
+      "model_guess": "top_up_limits"
+    },
+    {
+      "id": 1319,
+      "text": "I'm trying to use a cheque to top up",
+      "margin": 0.0038,
+      "model_guess": "balance_not_updated_after_cheque_or_cash_deposit"
+    },
+    {
+      "id": 475,
+      "text": "I have a disposable card but it does not work?",
+      "margin": 0.0038,
+      "model_guess": "card_not_working"
+    },
+    {
+      "id": 4765,
+      "text": "I did not get the item I ordered.  How should I go about this?  Should I just cancel my order or my payment?  Please help me.",
+      "margin": 0.0039,
+      "model_guess": "reverted_card_payment?"
+    },
+    {
+      "id": 5846,
+      "text": "I cannot withdraw money from the ATM",
+      "margin": 0.0039,
+      "model_guess": "declined_cash_withdrawal"
+    },
+    {
+      "id": 2562,
+      "text": "It can take between 10 minutes to an hour before you hear back from us about the verification result.  Please try again if your verification fails.  Make sure you double check that images are clear and all document photos are readable without blur or glare. You have to be 18 or older and live in the European Economic area or live in Switzerland to be able to open an account.",
+      "margin": 0.0039,
+      "model_guess": "transfer_timing"
+    },
+    {
+      "id": 1159,
+      "text": "I lost track of my card",
+      "margin": 0.0039,
+      "model_guess": "card_arrival"
+    },
+    {
+      "id": 5614,
+      "text": "What is the dollar that I have pending on my statement there?",
+      "margin": 0.004,
+      "model_guess": "pending_top_up"
+    },
+    {
+      "id": 1989,
+      "text": "What is the reason I got rejected for using my disposable virtual card to pay a subscription to the gym?",
+      "margin": 0.004,
+      "model_guess": "get_disposable_virtual_card"
+    },
+    {
+      "id": 9984,
+      "text": "Do I have to use a bank approved ATM to withdraw money?",
+      "margin": 0.004,
+      "model_guess": "transfer_into_account"
+    },
+    {
+      "id": 7457,
+      "text": "Do you accept cash?",
+      "margin": 0.004,
+      "model_guess": "fiat_currency_support"
+    },
+    {
+      "id": 5771,
+      "text": "If I don't live in the UK, can I still get a card?",
+      "margin": 0.004,
+      "model_guess": "card_delivery_estimate"
+    },
+    {
+      "id": 1329,
+      "text": "Why check my identity?",
+      "margin": 0.0043,
+      "model_guess": "verify_my_identity"
+    },
+    {
+      "id": 6193,
+      "text": "How dp i top up with a cheque ?",
+      "margin": 0.0043,
+      "model_guess": "top_up_by_cash_or_cheque"
+    },
+    {
+      "id": 9993,
+      "text": "I think the exchange rate for the cash I withdrew was wrong.",
+      "margin": 0.0044,
+      "model_guess": "card_payment_wrong_exchange_rate"
+    },
+    {
+      "id": 3263,
+      "text": "how do i dispute a payment I didnt make",
+      "margin": 0.0044,
+      "model_guess": "reverted_card_payment?"
+    },
+    {
+      "id": 9081,
+      "text": "I just saw the exchange rate you use, but it's so bad that I can't believe that it's the official interbank exchange rate! Is this truly the official interbank exchange rate?",
+      "margin": 0.0044,
+      "model_guess": "exchange_rate"
+    },
+    {
+      "id": 5610,
+      "text": "My card hasn't arrived.",
+      "margin": 0.0044,
+      "model_guess": "card_delivery_estimate"
+    },
+    {
+      "id": 1480,
+      "text": "I just went through a old statement and noticed that a very large payment went through and i did not make it. It was from a few months ago, can I still dispute the payment?",
+      "margin": 0.0045,
+      "model_guess": "pending_card_payment"
+    },
+    {
+      "id": 5811,
+      "text": "can i get a card if I live in the usa?",
+      "margin": 0.0045,
+      "model_guess": "card_delivery_estimate"
+    },
+    {
+      "id": 9690,
+      "text": "I need to get a card, but I live in the US.",
+      "margin": 0.0045,
+      "model_guess": "card_delivery_estimate"
+    },
+    {
+      "id": 8201,
+      "text": "Why do you need to check my identity?",
+      "margin": 0.0046,
+      "model_guess": "verify_my_identity"
+    },
+    {
+      "id": 3423,
+      "text": "who charged my card",
+      "margin": 0.0046,
+      "model_guess": "card_payment_fee_charged"
+    },
+    {
+      "id": 9274,
+      "text": "Can you please disable my current account.",
+      "margin": 0.0046,
+      "model_guess": "cancel_transfer"
+    },
+    {
+      "id": 7190,
+      "text": "I need a new card and I live in the United States.",
+      "margin": 0.0047,
+      "model_guess": "card_delivery_estimate"
+    },
+    {
+      "id": 4237,
+      "text": "I found the exchange rate for my cash withdrawal is wrong",
+      "margin": 0.0047,
+      "model_guess": "card_payment_wrong_exchange_rate"
+    },
+    {
+      "id": 4938,
+      "text": "Why wouldn't the ATM give me my money?",
+      "margin": 0.0047,
+      "model_guess": "pending_cash_withdrawal"
+    },
+    {
+      "id": 8335,
+      "text": "Why can I not choose the card i want?",
+      "margin": 0.0048,
+      "model_guess": "visa_or_mastercard"
+    },
+    {
+      "id": 9301,
+      "text": "How can I top up my account by bank transfer?",
+      "margin": 0.0048,
+      "model_guess": "transfer_into_account"
+    },
+    {
+      "id": 1335,
+      "text": "The $1.00 has still not been reverted as indicated in the previous email.",
+      "margin": 0.0049,
+      "model_guess": "pending_cash_withdrawal"
+    },
+    {
+      "id": 4589,
+      "text": "Can I change my in at all ATM's?",
+      "margin": 0.0049,
+      "model_guess": "card_swallowed"
+    },
+    {
+      "id": 6064,
+      "text": "I live in Germany. Is that one of the countries you are in? What other countries are you in?",
+      "margin": 0.0049,
+      "model_guess": "country_support"
+    },
+    {
+      "id": 232,
+      "text": "Can anyone else top-up for me?",
+      "margin": 0.0049,
+      "model_guess": "topping_up_by_card"
+    },
+    {
+      "id": 6930,
+      "text": "Why can't I see my refund in my statement?",
+      "margin": 0.005,
+      "model_guess": "balance_not_updated_after_cheque_or_cash_deposit"
+    },
+    {
+      "id": 3576,
+      "text": "A transfer I sent was received in less than the full amount I originally sent, and now I have to send additional funds to cover the full amount. What happened?",
+      "margin": 0.005,
+      "model_guess": "wrong_amount_of_cash_received"
+    },
+    {
+      "id": 7992,
+      "text": "Hi, i just topped up my phone and the money was deducted but it seems to have deducted the same amount again! please help!",
+      "margin": 0.005,
+      "model_guess": "top_up_failed"
+    },
+    {
+      "id": 756,
+      "text": "Can I order a new card by phone?",
+      "margin": 0.005,
+      "model_guess": "card_delivery_estimate"
+    },
+    {
+      "id": 630,
+      "text": "When I exchanged currencies the value of my money changed.",
+      "margin": 0.005,
+      "model_guess": "exchange_rate"
+    },
+    {
+      "id": 2609,
+      "text": "Is there any way to get my salary in a different currency?",
+      "margin": 0.005,
+      "model_guess": "fiat_currency_support"
+    },
+    {
+      "id": 8779,
+      "text": "I bought something and already paid for it but now I don't see it.",
+      "margin": 0.0051,
+      "model_guess": "reverted_card_payment?"
+    },
+    {
+      "id": 8108,
+      "text": "If I don't live in the UK, can I get a card?",
+      "margin": 0.0051,
+      "model_guess": "visa_or_mastercard"
+    },
+    {
+      "id": 3145,
+      "text": "Is it possible to get a card outside the UK?",
+      "margin": 0.0051,
+      "model_guess": "card_delivery_estimate"
+    },
+    {
+      "id": 9562,
+      "text": "Please cancel the latest ATM charge on my card as my card was declined earlier today and I did not receive that cash.",
+      "margin": 0.0052,
+      "model_guess": "pending_cash_withdrawal"
+    },
+    {
+      "id": 9548,
+      "text": "Please provide me with the restrictions of the disposable cards.",
+      "margin": 0.0052,
+      "model_guess": "get_disposable_virtual_card"
+    },
+    {
+      "id": 3379,
+      "text": "I sent some money but the intended recipient says it hasn't arrived",
+      "margin": 0.0052,
+      "model_guess": "transfer_not_received_by_recipient"
+    },
+    {
+      "id": 2624,
+      "text": "There's a weird payment showing in my app that I definitely haven't made myself, as I haven't used the card at all that day. Please cancel that and return my money.",
+      "margin": 0.0053,
+      "model_guess": "card_payment_not_recognised"
+    },
+    {
+      "id": 4802,
+      "text": "If you are waiting for verification, it can take 10 minutes to 60 minutes to get results.You will hear from us once we have it.  Please make sure your images are clear and photos of documents are readable. you have to be at least 18 years old and live withing the Economic Area of Europe or in Switzerland in order to open an account.",
+      "margin": 0.0053,
+      "model_guess": "transfer_timing"
+    },
+    {
+      "id": 1715,
+      "text": "I can't get a contactless payment to work.",
+      "margin": 0.0053,
+      "model_guess": "contactless_not_working"
+    },
+    {
+      "id": 3192,
+      "text": "Why is top up not working if I use my American express with my apple pay?",
+      "margin": 0.0053,
+      "model_guess": "top_up_failed"
+    },
+    {
+      "id": 6332,
+      "text": "Is there a strict timeline regarding disputing transactions made on my account? I just noticed a fraudulent charge on a statement from a couple months ago.",
+      "margin": 0.0053,
+      "model_guess": "direct_debit_payment_not_recognised"
+    },
+    {
+      "id": 792,
+      "text": "And do you have virtual cards instead of physical ones?",
+      "margin": 0.0054,
+      "model_guess": "get_physical_card"
+    },
+    {
+      "id": 7854,
+      "text": "Who can have access to top up my account?",
+      "margin": 0.0054,
+      "model_guess": "top_up_by_card_charge"
+    },
+    {
+      "id": 2775,
+      "text": "It does not appear that my message went through.",
+      "margin": 0.0054,
+      "model_guess": "unable_to_verify_identity"
+    },
+    {
+      "id": 5577,
+      "text": "There are a couple of payments with my card shown in the app that in reality I didn't make. Maybe someone has access to my card?Can you check whats the issue ?",
+      "margin": 0.0055,
+      "model_guess": "card_payment_not_recognised"
+    },
+    {
+      "id": 833,
+      "text": "Hi I am trying to transfer money to another country but it is showing pending and it has been a long time.  I have checked numbers and they are correct.  Could you please help?",
+      "margin": 0.0055,
+      "model_guess": "pending_transfer"
+    },
+    {
+      "id": 1263,
+      "text": "Why has my payment not transferred?",
+      "margin": 0.0055,
+      "model_guess": "reverted_card_payment?"
+    },
+    {
+      "id": 4155,
+      "text": "I would like to know the countries you are offer services in?",
+      "margin": 0.0055,
+      "model_guess": "country_support"
+    },
+    {
+      "id": 5991,
+      "text": "The cash abroad exchange rate is applied wrong.",
+      "margin": 0.0055,
+      "model_guess": "wrong_exchange_rate_for_cash_withdrawal"
+    },
+    {
+      "id": 8530,
+      "text": "Are there charges for cash withdrawals?",
+      "margin": 0.0055,
+      "model_guess": "cash_withdrawal_charge"
+    },
+    {
+      "id": 3244,
+      "text": "Why can't I see my top up?",
+      "margin": 0.0057,
+      "model_guess": "top_up_failed"
+    },
+    {
+      "id": 821,
+      "text": "I got cash from an ATM earlier but it shows up as pending in the app. How can this still be pending, I already received the cash?",
+      "margin": 0.0057,
+      "model_guess": "cash_withdrawal_not_recognised"
+    },
+    {
+      "id": 4298,
+      "text": "I've made a bank transfer but the money doesn't seem to be in my account.",
+      "margin": 0.0057,
+      "model_guess": "pending_transfer"
+    },
+    {
+      "id": 4045,
+      "text": "The app isn't showing my transactions",
+      "margin": 0.0057,
+      "model_guess": "balance_not_updated_after_cheque_or_cash_deposit"
+    },
+    {
+      "id": 8276,
+      "text": "Can I get a card in person?",
+      "margin": 0.0058,
+      "model_guess": "get_physical_card"
+    },
+    {
+      "id": 7976,
+      "text": "Will you please help me get my card back?",
+      "margin": 0.0058,
+      "model_guess": "lost_or_stolen_card"
+    },
+    {
+      "id": 4974,
+      "text": "I tempted to get some money out of the machine earlier and it did not work.Looking now, the transaction actually shows to still be in progress. I would certainly appreciate someone look into this and let me know what's going on. I definitely do not want to be charged for money I never received.",
+      "margin": 0.0058,
+      "model_guess": "pending_cash_withdrawal"
+    },
+    {
+      "id": 8967,
+      "text": "I tried to access money earlier but the machine seems not to be working. After looking, the transaction actually shows to still being process. Can you find out what is going on here? I don't want to be charged for some money I never got.",
+      "margin": 0.0058,
+      "model_guess": "pending_cash_withdrawal"
+    },
+    {
+      "id": 8695,
+      "text": "Is there a cash withdrawal fee? Because I just got charged?",
+      "margin": 0.0059,
+      "model_guess": "cash_withdrawal_charge"
+    },
+    {
+      "id": 2674,
+      "text": "I wanted to know about a pending dollar that is on my statement.",
+      "margin": 0.006,
+      "model_guess": "pending_top_up"
+    },
+    {
+      "id": 1767,
+      "text": "I'm supposed to have a refund but it isn't there",
+      "margin": 0.006,
+      "model_guess": "Refund_not_showing_up"
+    },
+    {
+      "id": 592,
+      "text": "I want to deposit funds, what payments are accepted?",
+      "margin": 0.006,
+      "model_guess": "transfer_into_account"
+    },
+    {
+      "id": 5723,
+      "text": "How do I see my card in the app?",
+      "margin": 0.0061,
+      "model_guess": "lost_or_stolen_card"
+    },
+    {
+      "id": 1096,
+      "text": "Which ATM's can I use to make a withdrawal?",
+      "margin": 0.0061,
+      "model_guess": "card_swallowed"
+    },
+    {
+      "id": 6497,
+      "text": "I requested a refund from a merchant a while ago, and upon repeatedly checking my statement, the merchant has yet to refund me my money.  I don't know what's going on, or why the money is getting into my account--could you please help?",
+      "margin": 0.0061,
+      "model_guess": "reverted_card_payment?"
+    },
+    {
+      "id": 2079,
+      "text": "Someone else accessed my account and made a payment.",
+      "margin": 0.0061,
+      "model_guess": "card_payment_not_recognised"
+    },
+    {
+      "id": 2294,
+      "text": "WHAT IS THE REASON FOR THAT",
+      "margin": 0.0061,
+      "model_guess": "card_not_working"
+    },
+    {
+      "id": 8917,
+      "text": "There are a couple payments with my card shown that I'm not responsible for. What is going on? Maybe someone has access to my account.",
+      "margin": 0.0061,
+      "model_guess": "card_payment_not_recognised"
+    },
+    {
+      "id": 1963,
+      "text": "I need to check status as my friend hasn't got money I sent.",
+      "margin": 0.0062,
+      "model_guess": "transfer_not_received_by_recipient"
+    },
+    {
+      "id": 9126,
+      "text": "What's the procedure for getting a card?",
+      "margin": 0.0062,
+      "model_guess": "visa_or_mastercard"
+    },
+    {
+      "id": 8615,
+      "text": "Where can I do a cash withdrawal?",
+      "margin": 0.0062,
+      "model_guess": "cash_withdrawal_not_recognised"
+    },
+    {
+      "id": 3917,
+      "text": "Could you tell me why my cash withdrawal was declined?",
+      "margin": 0.0063,
+      "model_guess": "cash_withdrawal_not_recognised"
+    },
+    {
+      "id": 3303,
+      "text": "Why am I not able to withdraw cash from this ATM?",
+      "margin": 0.0063,
+      "model_guess": "declined_cash_withdrawal"
+    },
+    {
+      "id": 7608,
+      "text": "I paid two weeks ago and just got refunded",
+      "margin": 0.0063,
+      "model_guess": "reverted_card_payment?"
+    },
+    {
+      "id": 8673,
+      "text": "Hi, I have withdrawn cash from the ATM on holiday and i guess withdrawal amount has been overcharged. I did it as i was not aware of these charges.",
+      "margin": 0.0063,
+      "model_guess": "wrong_amount_of_cash_received"
+    },
+    {
+      "id": 5153,
+      "text": "How do I initiated a bank transfer to top up?",
+      "margin": 0.0063,
+      "model_guess": "transfer_into_account"
+    },
+    {
+      "id": 2051,
+      "text": "Can I get a card that works in other countries like Africa and Indonesia?",
+      "margin": 0.0064,
+      "model_guess": "visa_or_mastercard"
+    },
+    {
+      "id": 5550,
+      "text": "Is there a  way to  get around fees",
+      "margin": 0.0064,
+      "model_guess": "extra_charge_on_statement"
+    },
+    {
+      "id": 3121,
+      "text": "Please help me.  My card is missing.",
+      "margin": 0.0064,
+      "model_guess": "card_not_working"
+    },
+    {
+      "id": 7146,
+      "text": "Will my new card work outside of the EU?",
+      "margin": 0.0064,
+      "model_guess": "card_acceptance"
+    },
+    {
+      "id": 1394,
+      "text": "Do you know when the withdrawal will show?",
+      "margin": 0.0064,
+      "model_guess": "cash_withdrawal_not_recognised"
+    },
+    {
+      "id": 878,
+      "text": "How does a US resident go about acquiring a new card?",
+      "margin": 0.0065,
+      "model_guess": "getting_spare_card"
+    },
+    {
+      "id": 3000,
+      "text": "I did not get my virtual card yet, Why?",
+      "margin": 0.0065,
+      "model_guess": "getting_virtual_card"
+    },
+    {
+      "id": 4314,
+      "text": "Can third party fees affect a transfer?",
+      "margin": 0.0065,
+      "model_guess": "transfer_fee_charged"
+    },
+    {
+      "id": 2353,
+      "text": "Why is my beneficiary not being allowed to get payment services?",
+      "margin": 0.0065,
+      "model_guess": "beneficiary_not_allowed"
+    },
+    {
+      "id": 9148,
+      "text": "Do you charge for making a withdrawal? I took some money out of my account earlier and I was charged for this.",
+      "margin": 0.0065,
+      "model_guess": "cash_withdrawal_charge"
+    },
+    {
+      "id": 8509,
+      "text": "I have a trasnger that is pending and wondered about it.",
+      "margin": 0.0066,
+      "model_guess": "pending_card_payment"
+    },
+    {
+      "id": 3716,
+      "text": "You will hear back from us about your verification results in 10 minutes to a one hour timeframe.  If these verification results do fail, please double-check to make sure your images are clear and have no glare or blur; your photos need to be fully readable.  You need to be 18 years of age or older and a resident of Switzerland or the European Economic Area to create an account.",
+      "margin": 0.0066,
+      "model_guess": "age_limit"
+    },
+    {
+      "id": 6007,
+      "text": "i live in portugal. do you operate here?",
+      "margin": 0.0066,
+      "model_guess": "card_delivery_estimate"
+    },
+    {
+      "id": 8540,
+      "text": "I made a bank transfer but it doesn't seem to have gone through?",
+      "margin": 0.0066,
+      "model_guess": "transfer_timing"
+    },
+    {
+      "id": 8191,
+      "text": "How do I replace my card?",
+      "margin": 0.0067,
+      "model_guess": "card_not_working"
+    },
+    {
+      "id": 1810,
+      "text": "I forgot what my pin number is and now am blocked can you help me get in?",
+      "margin": 0.0067,
+      "model_guess": "change_pin"
+    },
+    {
+      "id": 4669,
+      "text": "I only have a card from the US is that okay?",
+      "margin": 0.0067,
+      "model_guess": "getting_spare_card"
+    },
+    {
+      "id": 8992,
+      "text": "There's a payment showing in the app today even though I have not used my card at all. I want a refund.",
+      "margin": 0.0067,
+      "model_guess": "reverted_card_payment?"
+    },
+    {
+      "id": 96,
+      "text": "Who do I make a check out to if I want to top off my account?",
+      "margin": 0.0068,
+      "model_guess": "top_up_by_card_charge"
+    },
+    {
+      "id": 7099,
+      "text": "Give me back my money, I'm not paying the sellers. It has been a long time ago that I made an order and it just isn't coming.",
+      "margin": 0.0068,
+      "model_guess": "reverted_card_payment?"
+    },
+    {
+      "id": 6385,
+      "text": "Can I use my virtual card for recurring monthly payments?",
+      "margin": 0.0068,
+      "model_guess": "get_disposable_virtual_card"
+    },
+    {
+      "id": 2393,
+      "text": "Why was my transaction not approved?",
+      "margin": 0.0068,
+      "model_guess": "failed_transfer"
+    },
+    {
+      "id": 8185,
+      "text": "Can I order a new card with the app?",
+      "margin": 0.0068,
+      "model_guess": "card_arrival"
+    },
+    {
+      "id": 3046,
+      "text": "Am I able to Top Up with Apply Pay?",
+      "margin": 0.0069,
+      "model_guess": "apple_pay_or_google_pay"
+    },
+    {
+      "id": 4626,
+      "text": "How long is the wait for a money transfer to show up?",
+      "margin": 0.0069,
+      "model_guess": "pending_transfer"
+    },
+    {
+      "id": 6126,
+      "text": "Is my card denied anywhere?",
+      "margin": 0.0069,
+      "model_guess": "card_not_working"
+    },
+    {
+      "id": 4863,
+      "text": "How long should I wait for top up go go through ?",
+      "margin": 0.0069,
+      "model_guess": "pending_top_up"
+    },
+    {
+      "id": 8113,
+      "text": "What is the charge for receiving a SEPA transfer?",
+      "margin": 0.0069,
+      "model_guess": "top_up_by_card_charge"
+    },
+    {
+      "id": 6894,
+      "text": "Why isn't my refund showing in my statement?",
+      "margin": 0.0069,
+      "model_guess": "Refund_not_showing_up"
+    },
+    {
+      "id": 5931,
+      "text": "Why is my refund not showing up on the statement?",
+      "margin": 0.007,
+      "model_guess": "balance_not_updated_after_cheque_or_cash_deposit"
+    },
+    {
+      "id": 7058,
+      "text": "Why can't my beneficiary access my account?",
+      "margin": 0.007,
+      "model_guess": "failed_transfer"
+    },
+    {
+      "id": 2360,
+      "text": "Can you please explain why I was charged an extra fee for my transfer?",
+      "margin": 0.007,
+      "model_guess": "transfer_fee_charged"
+    },
+    {
+      "id": 9014,
+      "text": "My transaction is showing several times.",
+      "margin": 0.007,
+      "model_guess": "pending_card_payment"
+    },
+    {
+      "id": 4899,
+      "text": "My money has gone missing. I had recently added money in, and saw it was there and went through. Now it's missing. What is happening?",
+      "margin": 0.007,
+      "model_guess": "top_up_reverted"
+    },
+    {
+      "id": 3588,
+      "text": "help my money isnt showing up",
+      "margin": 0.0071,
+      "model_guess": "pending_transfer"
+    },
+    {
+      "id": 340,
+      "text": "The bank charged me fees for withdrawing cash!",
+      "margin": 0.0072,
+      "model_guess": "cash_withdrawal_charge"
+    },
+    {
+      "id": 4177,
+      "text": "What ATMs can I use this card?",
+      "margin": 0.0072,
+      "model_guess": "card_acceptance"
+    },
+    {
+      "id": 7540,
+      "text": "Why is my refund not visible on my statement?",
+      "margin": 0.0073,
+      "model_guess": "Refund_not_showing_up"
+    },
+    {
+      "id": 9003,
+      "text": "Can I see where my money came from?",
+      "margin": 0.0074,
+      "model_guess": "pending_transfer"
+    },
+    {
+      "id": 7299,
+      "text": "Are there specific ATM's that I can draw money from?",
+      "margin": 0.0074,
+      "model_guess": "transfer_into_account"
+    },
+    {
+      "id": 4244,
+      "text": "My funds must be verified",
+      "margin": 0.0075,
+      "model_guess": "verify_source_of_funds"
+    },
+    {
+      "id": 9424,
+      "text": "I misplaced my card and I dont know where the last place is where I used the card last. Can you look at my account and tell me the last place I used the card?",
+      "margin": 0.0075,
+      "model_guess": "compromised_card"
+    },
+    {
+      "id": 3947,
+      "text": "Can i get money in my home currency at some ATM ? As I am on holiday and bit concerned because i do not have any cash with me . Is it possible to withdraw without any additional cost.",
+      "margin": 0.0075,
+      "model_guess": "exchange_rate"
+    },
+    {
+      "id": 8039,
+      "text": "What should I expect to be charged on a SEPA transfer?",
+      "margin": 0.0075,
+      "model_guess": "exchange_charge"
+    },
+    {
+      "id": 6890,
+      "text": "I wanted to purchase some crypto. The app will not let me. What's going on here? I really want to make this exchange.",
+      "margin": 0.0075,
+      "model_guess": "top_up_failed"
+    },
+    {
+      "id": 1476,
+      "text": "Why did I get charged for withdrawing cash?",
+      "margin": 0.0075,
+      "model_guess": "cash_withdrawal_charge"
+    },
+    {
+      "id": 4254,
+      "text": "I have a question about ATM transactions. Can I take money out of an ATM when I'm traveling abroad? And, can I get the money in my home currancy?",
+      "margin": 0.0075,
+      "model_guess": "wrong_exchange_rate_for_cash_withdrawal"
+    },
+    {
+      "id": 2891,
+      "text": "My salary comes in GBP can I change my options somewhere?",
+      "margin": 0.0075,
+      "model_guess": "cancel_transfer"
+    },
+    {
+      "id": 3431,
+      "text": "Is there a reason my refund isn't showing on my statement?",
+      "margin": 0.0076,
+      "model_guess": "balance_not_updated_after_cheque_or_cash_deposit"
+    },
+    {
+      "id": 8073,
+      "text": "Is there a way to see where my money originally came from?",
+      "margin": 0.0076,
+      "model_guess": "verify_source_of_funds"
+    },
+    {
+      "id": 8068,
+      "text": "I want a reason as to why my beneficiary is not allowed?",
+      "margin": 0.0077,
+      "model_guess": "failed_transfer"
+    },
+    {
+      "id": 163,
+      "text": "My wallet got stolen a couple hours ago and now I've seen there already is a withdrawal. Help this is absolutely urgent I don't want to loose more money",
+      "margin": 0.0077,
+      "model_guess": "cash_withdrawal_not_recognised"
+    },
+    {
+      "id": 4385,
+      "text": "My Netflix subscription says that there is an issue with my card information, but I thought everything was fine. Why would it be declined?",
+      "margin": 0.0078,
+      "model_guess": "reverted_card_payment?"
+    },
+    {
+      "id": 9182,
+      "text": "Payment I didn't do.",
+      "margin": 0.0078,
+      "model_guess": "card_payment_not_recognised"
+    },
+    {
+      "id": 9717,
+      "text": "I got a message that I cannot name X as a beneficiary.",
+      "margin": 0.0078,
+      "model_guess": "declined_transfer"
+    },
+    {
+      "id": 9493,
+      "text": "How do I know which countries you provide service in?",
+      "margin": 0.0078,
+      "model_guess": "country_support"
+    },
+    {
+      "id": 4667,
+      "text": "What do I do if I already had a card with you guys?",
+      "margin": 0.0079,
+      "model_guess": "getting_spare_card"
+    },
+    {
+      "id": 9012,
+      "text": "I would like to use this cheque to top up.  Can you tell me how to do that?",
+      "margin": 0.0079,
+      "model_guess": "topping_up_by_card"
+    },
+    {
+      "id": 3628,
+      "text": "I tried to withdraw cash from the ATM machine and it did not work. Can you tell me why?",
+      "margin": 0.0079,
+      "model_guess": "wrong_amount_of_cash_received"
+    },
+    {
+      "id": 1298,
+      "text": "I forgot my pin and am blocked now. Can I reset it somewhere?",
+      "margin": 0.0079,
+      "model_guess": "pin_blocked"
+    },
+    {
+      "id": 4909,
+      "text": "How do I make my card appear on the app?",
+      "margin": 0.0079,
+      "model_guess": "activate_my_card"
+    },
+    {
+      "id": 3140,
+      "text": "Do I get charged for withdrawals?",
+      "margin": 0.008,
+      "model_guess": "cash_withdrawal_charge"
+    },
+    {
+      "id": 555,
+      "text": "There was a charge made on my card from a couple weeks ago and I don't remember making the purchase. Nor do I remember the company itself. Can we trace this at all to confirm if I did it or not?",
+      "margin": 0.008,
+      "model_guess": "card_payment_fee_charged"
+    },
+    {
+      "id": 6703,
+      "text": "Please explain why my transfer attempt was declined. Thank you.",
+      "margin": 0.008,
+      "model_guess": "failed_transfer"
+    },
+    {
+      "id": 8166,
+      "text": "is there a way to see where funds come from",
+      "margin": 0.0081,
+      "model_guess": "verify_source_of_funds"
+    },
+    {
+      "id": 1358,
+      "text": "How do I go about getting an actual card?",
+      "margin": 0.0081,
+      "model_guess": "visa_or_mastercard"
+    },
+    {
+      "id": 2717,
+      "text": "I have a withdrawal waiting to go through.",
+      "margin": 0.0082,
+      "model_guess": "cash_withdrawal_not_recognised"
+    },
+    {
+      "id": 2425,
+      "text": "I was so embarrassed. Why didn't my payment clear?",
+      "margin": 0.0082,
+      "model_guess": "cancel_transfer"
+    },
+    {
+      "id": 1118,
+      "text": "What are the countries that you operate in?",
+      "margin": 0.0083,
+      "model_guess": "fiat_currency_support"
+    },
+    {
+      "id": 5698,
+      "text": "I don't recognize some transactions.  Is someone else using it?",
+      "margin": 0.0083,
+      "model_guess": "compromised_card"
+    },
+    {
+      "id": 218,
+      "text": "Why is the exchange rate so high? This should have been a much higher amount of cash for that to apply.",
+      "margin": 0.0083,
+      "model_guess": "wrong_exchange_rate_for_cash_withdrawal"
+    },
+    {
+      "id": 3097,
+      "text": "Can we skip verifying?",
+      "margin": 0.0084,
+      "model_guess": "verify_top_up"
+    },
+    {
+      "id": 7993,
+      "text": "What is the reason my cash withdrawal is still pending?",
+      "margin": 0.0084,
+      "model_guess": "cash_withdrawal_not_recognised"
+    },
+    {
+      "id": 8305,
+      "text": "I believe I got a wrong exchange rate when I got cash.",
+      "margin": 0.0085,
+      "model_guess": "card_payment_wrong_exchange_rate"
+    },
+    {
+      "id": 3662,
+      "text": "Since when do you charge to make a withdrawal? I've always done it for free. So how much is it now?",
+      "margin": 0.0085,
+      "model_guess": "cash_withdrawal_charge"
+    },
+    {
+      "id": 8267,
+      "text": "Hi,  I have transferred money but beneficiary's account is credited with less amount. Now i have transfer the difference of the amount. I think there is some issue, could you please look into this.",
+      "margin": 0.0085,
+      "model_guess": "balance_not_updated_after_bank_transfer"
+    },
+    {
+      "id": 5753,
+      "text": "I'm cancelling this charge. I still have not received what I bought from these people a while ago.",
+      "margin": 0.0085,
+      "model_guess": "transaction_charged_twice"
+    },
+    {
+      "id": 1598,
+      "text": "I tried to withdraw cash at an ATM in the city center but my card was declined. The transaction is still showing up as pending - please cancel it!",
+      "margin": 0.0085,
+      "model_guess": "declined_card_payment"
+    },
+    {
+      "id": 2820,
+      "text": "My card has not been delivered yet and its been a week since I ordered it, please help",
+      "margin": 0.0085,
+      "model_guess": "card_delivery_estimate"
+    },
+    {
+      "id": 6390,
+      "text": "Hi, I am interested buying crypto currency but unable to purchase it through the application. I do want to do the exchange, Could you please let me know what is the problem?",
+      "margin": 0.0085,
+      "model_guess": "fiat_currency_support"
+    },
+    {
+      "id": 6501,
+      "text": "Can I add money in intervals to my account?  I will be traveling.",
+      "margin": 0.0086,
+      "model_guess": "fiat_currency_support"
+    },
+    {
+      "id": 6517,
+      "text": "The transfer that I was trying to complete was declined. What was the cause?",
+      "margin": 0.0086,
+      "model_guess": "declined_transfer"
+    },
+    {
+      "id": 2965,
+      "text": "Does transferring money have a fee?",
+      "margin": 0.0087,
+      "model_guess": "transfer_fee_charged"
+    },
+    {
+      "id": 7075,
+      "text": "Can my job deposit my wages directly into the account.",
+      "margin": 0.0087,
+      "model_guess": "receiving_money"
+    },
+    {
+      "id": 2077,
+      "text": "Do you have to be in the UK to get a card?",
+      "margin": 0.0087,
+      "model_guess": "card_delivery_estimate"
+    },
+    {
+      "id": 3520,
+      "text": "What US cards do you accept?  I only have 1 other.",
+      "margin": 0.0087,
+      "model_guess": "visa_or_mastercard"
+    },
+    {
+      "id": 4814,
+      "text": "Please help me, its urgent. Someone has withdrawn money from my account as few hours before my wallet has been. Now i want to stop withdrawal of more money.",
+      "margin": 0.0087,
+      "model_guess": "cancel_transfer"
+    },
+    {
+      "id": 233,
+      "text": "How come the money from the merchant appeared back into my account?",
+      "margin": 0.0087,
+      "model_guess": "cash_withdrawal_not_recognised"
+    },
+    {
+      "id": 9935,
+      "text": "is there a charge on withdrawals?",
+      "margin": 0.0088,
+      "model_guess": "cash_withdrawal_charge"
+    },
+    {
+      "id": 3691,
+      "text": "Can I get money out of any machine?",
+      "margin": 0.0088,
+      "model_guess": "declined_cash_withdrawal"
+    },
+    {
+      "id": 1763,
+      "text": "What if I need my salary in another currency?",
+      "margin": 0.0088,
+      "model_guess": "fiat_currency_support"
+    },
+    {
+      "id": 6794,
+      "text": "There is a payment in my app that I did not make.  I have not used that card all day  Please reimburse my money.",
+      "margin": 0.0088,
+      "model_guess": "card_payment_not_recognised"
+    },
+    {
+      "id": 588,
+      "text": "Is there extra fees for making a withdraw in a different country at a cash machine.",
+      "margin": 0.0088,
+      "model_guess": "top_up_by_card_charge"
+    },
+    {
+      "id": 1402,
+      "text": "So, I was just charged for my recent ATM withdrawal and any withdrawal prior to this has been free. What is the issue here?",
+      "margin": 0.0089,
+      "model_guess": "cash_withdrawal_charge"
+    },
+    {
+      "id": 9163,
+      "text": "A percentage fee was charged to my withdrawal.",
+      "margin": 0.0089,
+      "model_guess": "extra_charge_on_statement"
+    },
+    {
+      "id": 9467,
+      "text": "I do not like this, I made a simple transfer but I have an additional charge for doing so.",
+      "margin": 0.0089,
+      "model_guess": "transfer_fee_charged"
+    },
+    {
+      "id": 1224,
+      "text": "Hello, I have a pending transaction in my account due to an ATM machine that wasn't working. In any case if the transaction goes through, after how long can I get my money back?",
+      "margin": 0.009,
+      "model_guess": "pending_cash_withdrawal"
+    },
+    {
+      "id": 9213,
+      "text": "Do you charge for cash withdrawals?  I want to get my hands on my own money and you appear to be charging me for the pleasure! Why is this, you'd never get this with my high street bank!",
+      "margin": 0.009,
+      "model_guess": "cash_withdrawal_charge"
+    },
+    {
+      "id": 4307,
+      "text": "How do I top-up my card with a cheque?",
+      "margin": 0.009,
+      "model_guess": "topping_up_by_card"
+    },
+    {
+      "id": 6174,
+      "text": "Why hasn't my refund appeared on my statement?",
+      "margin": 0.009,
+      "model_guess": "Refund_not_showing_up"
+    },
+    {
+      "id": 4738,
+      "text": "Where did my money go? I'm not able to withdraw it from my ATM.",
+      "margin": 0.0091,
+      "model_guess": "card_swallowed"
+    },
+    {
+      "id": 3708,
+      "text": "I was trying to use contactless earlier, but it didn't work.",
+      "margin": 0.0091,
+      "model_guess": "contactless_not_working"
+    },
+    {
+      "id": 5090,
+      "text": "I had a seller reach out to me saying my money didn't come through to them, but I'm sure it was removed from my account. Can you figure out what the deal is here?",
+      "margin": 0.0092,
+      "model_guess": "declined_card_payment"
+    },
+    {
+      "id": 74,
+      "text": "How do I get a card if I live in the US?",
+      "margin": 0.0092,
+      "model_guess": "card_delivery_estimate"
+    },
+    {
+      "id": 6777,
+      "text": "Why do I get a fee every time I transfer?",
+      "margin": 0.0092,
+      "model_guess": "transfer_fee_charged"
+    },
+    {
+      "id": 3821,
+      "text": "What is the limit on Auto top?",
+      "margin": 0.0093,
+      "model_guess": "top_up_limits"
+    },
+    {
+      "id": 2318,
+      "text": "Can you please tell me why my cash withdrawal is still pending?",
+      "margin": 0.0093,
+      "model_guess": "cash_withdrawal_not_recognised"
+    },
+    {
+      "id": 1692,
+      "text": "Help! I need to transfer something to China.",
+      "margin": 0.0093,
+      "model_guess": "transfer_timing"
+    },
+    {
+      "id": 9933,
+      "text": "I want a new card",
+      "margin": 0.0093,
+      "model_guess": "card_not_working"
+    },
+    {
+      "id": 7897,
+      "text": "Should I be seeing a fee applied for my money transfer?",
+      "margin": 0.0093,
+      "model_guess": "card_payment_fee_charged"
+    },
+    {
+      "id": 1702,
+      "text": "can i use my mastercard to add money to my account",
+      "margin": 0.0093,
+      "model_guess": "supported_cards_and_currencies"
+    },
+    {
+      "id": 1499,
+      "text": "Why didn't my payment process",
+      "margin": 0.0095,
+      "model_guess": "reverted_card_payment?"
+    },
+    {
+      "id": 9372,
+      "text": "Hello - I'm on the app and trying to purchase crypto. It's not going through. What am I doing wrong?",
+      "margin": 0.0095,
+      "model_guess": "declined_card_payment"
+    },
+    {
+      "id": 5928,
+      "text": "Why is my refund missing in my statement?",
+      "margin": 0.0096,
+      "model_guess": "Refund_not_showing_up"
+    },
+    {
+      "id": 6709,
+      "text": "I sent money and the recipient has not received their money after two weeks.",
+      "margin": 0.0096,
+      "model_guess": "pending_transfer"
+    },
+    {
+      "id": 3772,
+      "text": "can other people use the app to add money to my account",
+      "margin": 0.0097,
+      "model_guess": "receiving_money"
+    },
+    {
+      "id": 1009,
+      "text": "Is there such thing as top up by cheque?",
+      "margin": 0.0097,
+      "model_guess": "top_up_by_cash_or_cheque"
+    },
+    {
+      "id": 5267,
+      "text": "How can I fill up my gas tank using a check?",
+      "margin": 0.0098,
+      "model_guess": "top_up_by_cash_or_cheque"
+    },
+    {
+      "id": 7201,
+      "text": "Why can't I get cash from the ATM?",
+      "margin": 0.0098,
+      "model_guess": "wrong_amount_of_cash_received"
+    },
+    {
+      "id": 6538,
+      "text": "A random charge got added to my card",
+      "margin": 0.0098,
+      "model_guess": "card_payment_fee_charged"
+    },
+    {
+      "id": 4884,
+      "text": "What ATMs can I use my card at?",
+      "margin": 0.0099,
+      "model_guess": "card_swallowed"
+    },
+    {
+      "id": 6129,
+      "text": "I've checked multiple times to make sure the account number listed is the right one after attempting to make a transfer within the country the day before yesterday. The transfer is still not available so can you please find out what is going on?",
+      "margin": 0.0099,
+      "model_guess": "transfer_timing"
+    },
+    {
+      "id": 4896,
+      "text": "I want to get few more physical cards",
+      "margin": 0.0099,
+      "model_guess": "get_physical_card"
+    },
+    {
+      "id": 1026,
+      "text": "Are there limits on the virtual cards?",
+      "margin": 0.0099,
+      "model_guess": "top_up_limits"
+    },
+    {
+      "id": 5048,
+      "text": "Where do you export the cards to?",
+      "margin": 0.01,
+      "model_guess": "card_linking"
+    },
+    {
+      "id": 8971,
+      "text": "My money I added isn't on my card.",
+      "margin": 0.01,
+      "model_guess": "balance_not_updated_after_cheque_or_cash_deposit"
+    },
+    {
+      "id": 8651,
+      "text": "Can my account be topped-up by friends of mine.",
+      "margin": 0.0101,
+      "model_guess": "top_up_limits"
+    },
+    {
+      "id": 9383,
+      "text": "The transfer to my beneficiary has not gone through",
+      "margin": 0.0101,
+      "model_guess": "failed_transfer"
+    },
+    {
+      "id": 9302,
+      "text": "How do I add money to my card?",
+      "margin": 0.0101,
+      "model_guess": "topping_up_by_card"
+    },
+    {
+      "id": 8325,
+      "text": "What happens when I money transaction doesn't show up on the receiving side?",
+      "margin": 0.0102,
+      "model_guess": "pending_transfer"
+    },
+    {
+      "id": 9768,
+      "text": "When will my top up be applied?",
+      "margin": 0.0102,
+      "model_guess": "top_up_failed"
+    },
+    {
+      "id": 8045,
+      "text": "Can I check my recent refund in my statement?",
+      "margin": 0.0102,
+      "model_guess": "Refund_not_showing_up"
+    },
+    {
+      "id": 387,
+      "text": "Why is there a random payment in my statement?",
+      "margin": 0.0103,
+      "model_guess": "reverted_card_payment?"
+    },
+    {
+      "id": 8754,
+      "text": "I don't live in the UK. Can I still get a card?",
+      "margin": 0.0103,
+      "model_guess": "card_delivery_estimate"
+    },
+    {
+      "id": 9588,
+      "text": "Can someone assist me with explaining how I can unblock my pin?",
+      "margin": 0.0103,
+      "model_guess": "change_pin"
+    },
+    {
+      "id": 6535,
+      "text": "The ATM cancelled a transaction on me when I was trying to get some cash out.",
+      "margin": 0.0104,
+      "model_guess": "card_swallowed"
+    },
+    {
+      "id": 8539,
+      "text": "I made an ATM withdrawal over the holiday and then later realized I was charged an exorbitant fee!  I never would've made this withdrawal if I'd known I'd be charged so much.",
+      "margin": 0.0104,
+      "model_guess": "extra_charge_on_statement"
+    },
+    {
+      "id": 5551,
+      "text": "Can I make a withdraw in my home currency at an ATM? I'm on vacation and don't have cash with me. This is cause for a bit of concern. Is it possible to withdraw here without additional fees?",
+      "margin": 0.0104,
+      "model_guess": "exchange_rate"
+    },
+    {
+      "id": 3433,
+      "text": "My wallet doesn't show my recent top up.",
+      "margin": 0.0105,
+      "model_guess": "top_up_failed"
+    },
+    {
+      "id": 781,
+      "text": "I am yet to receive the money in my account how long will this take?",
+      "margin": 0.0105,
+      "model_guess": "pending_transfer"
+    },
+    {
+      "id": 5107,
+      "text": "I think there's a purchase at a store that I didn't go to.",
+      "margin": 0.0105,
+      "model_guess": "card_payment_not_recognised"
+    },
+    {
+      "id": 3890,
+      "text": "I need a single use card for shopping online",
+      "margin": 0.0105,
+      "model_guess": "get_disposable_virtual_card"
+    },
+    {
+      "id": 2341,
+      "text": "I traded some of my money from my native country into an ATM to exchange for foreign currency, and the money I received was a different equating amount!",
+      "margin": 0.0106,
+      "model_guess": "wrong_exchange_rate_for_cash_withdrawal"
+    },
+    {
+      "id": 648,
+      "text": "I've got to have one of those virtual cards.",
+      "margin": 0.0106,
+      "model_guess": "getting_virtual_card"
+    },
+    {
+      "id": 3897,
+      "text": "Why was I not able to take cash from the ATM?",
+      "margin": 0.0106,
+      "model_guess": "wrong_amount_of_cash_received"
+    },
+    {
+      "id": 4378,
+      "text": "How much can I withdrawal in one month without incurring fees?",
+      "margin": 0.0106,
+      "model_guess": "cash_withdrawal_charge"
+    },
+    {
+      "id": 9453,
+      "text": "Why did withdrawing money cost me extra?",
+      "margin": 0.0107,
+      "model_guess": "cash_withdrawal_not_recognised"
+    },
+    {
+      "id": 8306,
+      "text": "What limits are there on the virtual cards?",
+      "margin": 0.0107,
+      "model_guess": "top_up_limits"
+    },
+    {
+      "id": 9957,
+      "text": "When will I get a new card when I order it, and how much will it cost.",
+      "margin": 0.0107,
+      "model_guess": "card_payment_fee_charged"
+    },
+    {
+      "id": 7827,
+      "text": "I draw out money from your ATM during holidays, and was charged insanely. I wouldn't have done it, if i had a little sense about the shocking charges.",
+      "margin": 0.0107,
+      "model_guess": "extra_charge_on_statement"
+    },
+    {
+      "id": 973,
+      "text": "$20 came out instead of $100",
+      "margin": 0.0107,
+      "model_guess": "wrong_amount_of_cash_received"
+    },
+    {
+      "id": 6476,
+      "text": "I'm getting an error when trying to make a payment. I want to purchase a flat but my mortgage payment needs to go through. Can you help me?",
+      "margin": 0.0108,
+      "model_guess": "failed_transfer"
+    },
+    {
+      "id": 8594,
+      "text": "Can I have a new card shipped to China?",
+      "margin": 0.0108,
+      "model_guess": "card_about_to_expire"
+    },
+    {
+      "id": 3683,
+      "text": "Why is there a payment I didn't do?",
+      "margin": 0.0108,
+      "model_guess": "card_payment_not_recognised"
+    },
+    {
+      "id": 1367,
+      "text": "Can I add a card to back into the app?",
+      "margin": 0.0109,
+      "model_guess": "lost_or_stolen_card"
+    },
+    {
+      "id": 2301,
+      "text": "I can't get cash from the ATM!",
+      "margin": 0.0109,
+      "model_guess": "card_swallowed"
+    },
+    {
+      "id": 4230,
+      "text": "My card is missing.",
+      "margin": 0.0109,
+      "model_guess": "lost_or_stolen_card"
+    },
+    {
+      "id": 6415,
+      "text": "Why should I have to prove my identity?",
+      "margin": 0.0109,
+      "model_guess": "unable_to_verify_identity"
+    },
+    {
+      "id": 5624,
+      "text": "What does it cost to receive a SEPA transfer?",
+      "margin": 0.011,
+      "model_guess": "transfer_into_account"
+    },
+    {
+      "id": 8138,
+      "text": "Why was my withdrawal declined",
+      "margin": 0.011,
+      "model_guess": "declined_cash_withdrawal"
+    },
+    {
+      "id": 6269,
+      "text": "If I want a friend to top off my account, can they?",
+      "margin": 0.011,
+      "model_guess": "top_up_limits"
+    },
+    {
+      "id": 2315,
+      "text": "I am noticing that a refund of a large purchase still has not been credited to my account. I contacted the merchant a few days ago and he assured me that he would submit it right away. Is there a status update?",
+      "margin": 0.011,
+      "model_guess": "Refund_not_showing_up"
+    },
+    {
+      "id": 4908,
+      "text": "I don't see my refund money yet in my account. I asked the merchant a while ago for a refund, so I don't know what's taking so long.  Can you look into it and see if the money is there, just not in my account yet?",
+      "margin": 0.0111,
+      "model_guess": "request_refund"
+    },
+    {
+      "id": 3638,
+      "text": "Will any ATM's decline my card?",
+      "margin": 0.0112,
+      "model_guess": "declined_card_payment"
+    },
+    {
+      "id": 3226,
+      "text": "on my statement there is a payment that I don't recognise",
+      "margin": 0.0113,
+      "model_guess": "extra_charge_on_statement"
+    },
+    {
+      "id": 2304,
+      "text": "Was I charged more than I should of been for a currency exchange?",
+      "margin": 0.0113,
+      "model_guess": "extra_charge_on_statement"
+    },
+    {
+      "id": 6827,
+      "text": "What are the charges for receiving a SEPA transfer?",
+      "margin": 0.0113,
+      "model_guess": "top_up_by_card_charge"
+    },
+    {
+      "id": 403,
+      "text": "You operate in which countries?",
+      "margin": 0.0113,
+      "model_guess": "fiat_currency_support"
+    },
+    {
+      "id": 3970,
+      "text": "do you accept from usa credit card?",
+      "margin": 0.0114,
+      "model_guess": "visa_or_mastercard"
+    },
+    {
+      "id": 7131,
+      "text": "Can I use a different bank ATM than my own?",
+      "margin": 0.0114,
+      "model_guess": "cash_withdrawal_charge"
+    }
+  ]
+}

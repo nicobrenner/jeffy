@@ -4005,7 +4005,19 @@ Measured over every Oracle data file (regex for on-persona markers: parameters/m
 
 Paired per (prompt, seed) total score, adaptive − static: **mean −0.08; 45 wins / 143 ties / 56 losses** (n=244); on the corrected prompts −0.21 (8 / 36 / 14). **Negative result for round 1: targeting did not help and may have hurt slightly.** Three readings, all logged as caveats rather than conclusions: (1) *the fine-tune barely moved* — both arms' best val (1.386 / 1.389) is above v7a's 1.3815, i.e. one epoch at lr 1e-4 on a 2K-conversation mix is a perturbation, not learning; (2) *the student is below the floor where 204 examples can register* — 74-79% salad on unseen prompts means the base cannot exploit targeted data yet; (3) *grader calibration* — this grader scored salad at ~75% where the round-0 grader scored v7a at 16%, so round 0 and round 1 are not on one scale; a 3-way blind pass (v7a + both arms, `probe_r1_blind3.jsonl`) is running to put the baseline on the same grader. What *did* work: the loop end to end — probe → rubric grading → diagnosis → targeted generation with verbatim-prompt corrections → mix → train → blind grading — in ~45 minutes of local compute plus three agent calls.
 
-Next for the ATL, in order: (a) hard metric alongside the grader — per-topic held-out loss (no grader noise); (b) stronger fine-tune per round (lr 3e-4, 3-5 epochs, larger targeted batch ~600) so each round actually moves the model; (c) a stronger student — the 11M GPT-2-vocab base or the 18M — since the 8.5M model's 74% salad is the binding constraint, not the teacher.
+**Hard metric (`atl_val_loss.py`, `val_loss_by_topic.json`): oracle-token NLL on the held-out-topic validation set** (366 persona conversations across the 12 held-out topics + 986 generic), no grader involved:
+
+| model | persona topics | generic | Δ persona vs v7a |
+|---|---:|---:|---:|
+| v7a | 3.921 | 2.154 | — |
+| static r1 | 3.915 | 2.171 | −0.006 |
+| adaptive r1 | 3.905 | 2.164 | **−0.016** |
+
+Adaptive improved held-out persona loss ~3× more than static, with its largest per-topic gains on targeted cells (pet −0.069, Google comparison −0.116, productivity −0.083); both arms slightly worsened generic loss (replay dilution). The effect is **0.4%** — directionally what the hypothesis predicts, far too small to claim, and opposite in sign to the (noisier) blind grader. Conclusion for round 1: the loop works, the measurement works, and one 204-example round at this fine-tune strength is below the detectable effect size. Scale the per-round dose before judging the mechanism.
+
+**3-way blind pass, one grader for base and both arms (`grades_r1_blind3.jsonl`; C = v7a, A = static, B = adaptive):** coherence 0.71 / 0.68 / 0.63, persona 0.68 / 0.82 / 0.80, salad 35% / 37% / 43%, wit and helpfulness ≈ 0 for all. Both fine-tuned arms gained ~0.13 persona and lost 0.03-0.08 coherence vs the base; adaptive slightly behind static. **Grader calibration across passes: salad rate for near-identical text was 16% (round-0 grader), 75% (A/B grader), 35% (3-way grader)** — rubric grading by separate agent instances is only comparable within one pass. Methodology fix adopted: per-topic held-out loss is the primary metric; one grader instance scores all arms and the base together, blind, per round; rubric scores are reported as within-pass rankings only.
+
+Next for the ATL, in order: (a) hard metric alongside the grader — per-topic held-out loss (no grader noise) — **done above**; (b) stronger fine-tune per round (lr 3e-4, 3-5 epochs, larger targeted batch ~600) so each round actually moves the model; (c) a stronger student — the 11M GPT-2-vocab base or the 18M — since the 8.5M model's 74% salad is the binding constraint, not the teacher.
 
 ## Adaptive Teacher Loop (ATL) for Tiny Oracle — experiment design (2026-10-24)
 

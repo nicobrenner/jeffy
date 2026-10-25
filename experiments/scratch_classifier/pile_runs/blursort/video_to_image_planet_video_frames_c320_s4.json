@@ -1,0 +1,41 @@
+{
+ "frame_dir": "/Users/nico/Documents/Projects/Blursort/planet_video_frames",
+ "crop": 320,
+ "stride": 4,
+ "ks": {
+  "4": {
+   "per_frame_webp": 88680,
+   "per_frame_png": 155804,
+   "per_frame_jxl": 63677,
+   "tile_webp": 86786,
+   "tile_png": 138755,
+   "tile_jxl": 62960,
+   "interleave_snake_webp": 120030,
+   "interleave_snake_png": 171130,
+   "interleave_snake_jxl": 137567,
+   "interleave_raster_webp": 121966,
+   "interleave_raster_png": 169313,
+   "interleave_raster_jxl": 139714,
+   "video_ffv1": 84868,
+   "video_x264_qp0": 177532,
+   "lossless_verified": true
+  },
+  "16": {
+   "per_frame_webp": 390612,
+   "per_frame_png": 678145,
+   "per_frame_jxl": 289690,
+   "tile_webp": 353070,
+   "tile_png": 553859,
+   "tile_jxl": 272932,
+   "interleave_snake_webp": 558268,
+   "interleave_snake_png": 823775,
+   "interleave_snake_jxl": 889452,
+   "interleave_raster_webp": 554546,
+   "interleave_raster_png": 783604,
+   "interleave_raster_jxl": 896922,
+   "video_ffv1": 366422,
+   "video_x264_qp0": 636563,
+   "lossless_verified": true
+  }
+ }
+}

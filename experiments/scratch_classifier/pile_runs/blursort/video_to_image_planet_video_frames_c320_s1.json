@@ -1,0 +1,58 @@
+{
+ "frame_dir": "/Users/nico/Documents/Projects/Blursort/planet_video_frames",
+ "crop": 320,
+ "stride": 1,
+ "ks": {
+  "4": {
+   "per_frame_webp": 84332,
+   "per_frame_png": 149642,
+   "per_frame_jxl": 60164,
+   "tile_webp": 79534,
+   "tile_png": 130962,
+   "tile_jxl": 59353,
+   "interleave_snake_webp": 88606,
+   "interleave_snake_png": 121972,
+   "interleave_snake_jxl": 97684,
+   "interleave_raster_webp": 86350,
+   "interleave_raster_png": 122642,
+   "interleave_raster_jxl": 94613,
+   "video_ffv1": 81258,
+   "video_x264_qp0": 140860,
+   "lossless_verified": true
+  },
+  "16": {
+   "per_frame_webp": 362094,
+   "per_frame_png": 633242,
+   "per_frame_jxl": 262611,
+   "tile_webp": 262012,
+   "tile_png": 428986,
+   "tile_jxl": 248089,
+   "interleave_snake_webp": 308552,
+   "interleave_snake_png": 407732,
+   "interleave_snake_jxl": 523925,
+   "interleave_raster_webp": 311452,
+   "interleave_raster_png": 417645,
+   "interleave_raster_jxl": 537507,
+   "video_ffv1": 342689,
+   "video_x264_qp0": 407133,
+   "lossless_verified": true
+  },
+  "64": {
+   "per_frame_webp": 1572706,
+   "per_frame_png": 2728525,
+   "per_frame_jxl": 1170015,
+   "tile_webp": 940130,
+   "tile_png": 1530575,
+   "tile_jxl": 1189646,
+   "interleave_snake_webp": 1272422,
+   "interleave_snake_png": 2094231,
+   "interleave_snake_jxl": 2013005,
+   "interleave_raster_webp": 1253520,
+   "interleave_raster_png": 2037276,
+   "interleave_raster_jxl": 2059537,
+   "video_ffv1": 1472251,
+   "video_x264_qp0": 1447632,
+   "lossless_verified": true
+  }
+ }
+}

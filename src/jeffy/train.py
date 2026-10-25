@@ -244,11 +244,14 @@ def train_binary_flags(
     verbose: bool = True,
     encoder: str | None = None,
     tune_C: bool = False,
+    class_weight: str | dict | None = "balanced",
+    tune_threshold: bool = False,
+    min_threshold_positives: int = 8,
 ) -> dict[str, TrainedClassifier]:
     """Train one binary classifier per flag.
 
-    Each flag gets a balanced binary LR. Flags can fire independently,
-    so an input can trigger multiple flags at once.
+    Each flag gets its own binary LR. Flags can fire independently, so an input
+    can trigger multiple flags at once.
 
     Args:
         texts: Input texts.
@@ -261,11 +264,30 @@ def train_binary_flags(
         encoder: SentenceTransformer model name, HF model id, or local checkpoint
                  path (plain transformers checkpoints get mean pooling automatically).
                  Defaults to BAAI/bge-large-en-v1.5.
-        tune_C: Grid-search C per flag independently.
+        tune_C: Grid-search C per flag independently, scored by positive-class F1.
+        class_weight: Passed to LogisticRegression. "balanced" (the default)
+                      maximizes recall on rare flags, which is usually what you
+                      want for triage. Pass None for the unweighted fit, which
+                      raises far fewer flags at higher precision, or a dict for
+                      explicit weights.
+        tune_threshold: Also pick a per-flag decision threshold on a held-out dev
+                        slice, scored by positive-class F1. The chosen threshold
+                        is folded into the model's intercept, so it survives
+                        save() and needs no special handling at predict time.
+        min_threshold_positives: Skip threshold tuning for a flag whose dev slice
+                                 has fewer positives than this. Below roughly 8
+                                 the threshold fits noise rather than signal.
 
     Returns:
         Dict of {flag_name: TrainedClassifier}.
+
+    Note:
+        Positive-class F1 is used for tuning rather than macro F1. For a rare
+        yes/no flag the "no" class scores near 1.0, so macro F1 is dominated by
+        the easy class and can select a different C than the flag's own
+        performance warrants.
     """
+    from sklearn.metrics import make_scorer
     from sentence_transformers import SentenceTransformer
 
     _YES = {"yes", "true", "1", "y"}
@@ -312,36 +334,118 @@ def train_binary_flags(
         scaler = StandardScaler()
         X_train = scaler.fit_transform(train_embs)
 
+        n_pos = train_labels.count("yes")
+        n_neg = train_labels.count("no")
+
+        def _make_lr(c_val):
+            return LogisticRegression(
+                C=c_val, max_iter=3000, solver="newton-cg",
+                class_weight=class_weight, random_state=42)
+
+        C_grid = [0.001, 0.01, 0.1, 1.0, 10.0]
+        DEV_FRACTION = 0.25
         flag_C = C
-        if tune_C and len(train_labels) >= 6 and len(set(train_labels)) == 2:
-            C_grid = [0.001, 0.01, 0.1, 1.0, 10.0]
-            best_C, best_score = C, 0.0
+        flag_threshold = None
+        dev_pos = 0
+
+        # A threshold tuned on the data it was fit on is meaningless, so this
+        # needs its own dev slice carved out of train (never out of test).
+        # The dev slice is only a quarter of train, so clearing
+        # min_threshold_positives there takes 1/DEV_FRACTION times as many
+        # positives overall.
+        dev_ready = (
+            tune_threshold
+            and n_pos >= min_threshold_positives / DEV_FRACTION
+            and n_neg >= 4
+            and len(train_labels) >= 20
+        )
+
+        if dev_ready:
+            sss_dev = StratifiedShuffleSplit(
+                n_splits=1, test_size=DEV_FRACTION, random_state=42)
+            try:
+                fit_idx, dev_idx = next(sss_dev.split(X_train, train_labels))
+            except ValueError:
+                dev_ready = False
+
+        if dev_ready:
+            dev_labels = [train_labels[i] for i in dev_idx]
+            dev_pos = dev_labels.count("yes")
+            if dev_pos < min_threshold_positives:
+                dev_ready = False
+
+        if dev_ready:
+            X_fit = X_train[fit_idx]
+            fit_labels = [train_labels[i] for i in fit_idx]
+            X_dev = X_train[dev_idx]
+
+            # Pick C and the threshold together: the best threshold depends on how
+            # the probabilities are spread, which C changes.
+            best = (C, 0.5, -1.0)
+            for c_val in C_grid if tune_C else [C]:
+                try:
+                    probe = _make_lr(c_val).fit(X_fit, fit_labels)
+                except ValueError:
+                    continue
+                yes_col = list(probe.classes_).index("yes")
+                p_dev = probe.predict_proba(X_dev)[:, yes_col]
+                for t in [round(0.05 * i, 2) for i in range(2, 19)]:
+                    preds = ["yes" if p >= t else "no" for p in p_dev]
+                    score = f1_score(dev_labels, preds, pos_label="yes", zero_division=0)
+                    if score > best[2]:
+                        best = (c_val, t, score)
+            flag_C, flag_threshold, best_score = best
+            if verbose:
+                print(f"    tuned on {dev_pos} dev positives: C={flag_C}, "
+                      f"threshold={flag_threshold} (dev F1+={best_score:.1%})")
+        elif tune_C and len(train_labels) >= 6 and n_pos >= 2 and n_neg >= 2:
+            # Fold count must not exceed the rarer class, or StratifiedKFold
+            # produces folds with no positives at all.
+            n_folds = max(2, min(3, n_pos, n_neg))
+            pos_f1 = make_scorer(f1_score, pos_label="yes", zero_division=0)
+            best_C, best_score = C, -1.0
             for c_val in C_grid:
                 try:
                     scores = cross_val_score(
-                        LogisticRegression(C=c_val, max_iter=3000, solver="newton-cg",
-                                           class_weight="balanced", random_state=42),
-                        X_train, train_labels, cv=min(3, len(set(train_labels))),
-                        scoring="f1_macro")
-                    if scores.mean() > best_score:
-                        best_score = scores.mean()
-                        best_C = c_val
+                        _make_lr(c_val), X_train, train_labels,
+                        cv=n_folds, scoring=pos_f1)
                 except ValueError:
                     continue
+                if scores.mean() > best_score:
+                    best_score = scores.mean()
+                    best_C = c_val
             flag_C = best_C
             if verbose:
-                print(f"    tune_C: best C={flag_C} (CV F1={best_score:.1%})")
+                print(f"    tune_C: best C={flag_C} "
+                      f"({n_folds}-fold CV F1+={max(best_score, 0.0):.1%})")
+        elif tune_C and verbose:
+            print(f"    tune_C: skipped, only {n_pos} positive and {n_neg} "
+                  f"negative training examples")
 
-        clf = LogisticRegression(
-            C=flag_C, max_iter=3000, solver="newton-cg",
-            class_weight="balanced", random_state=42)
+        if tune_threshold and flag_threshold is None and verbose:
+            needed = int(np.ceil(min_threshold_positives / DEV_FRACTION))
+            print(f"    threshold: left at 0.5, needs {min_threshold_positives} "
+                  f"positives in the dev slice (got {dev_pos}); that takes about "
+                  f"{needed} in train and this flag has {n_pos}")
+
+        clf = _make_lr(flag_C)
         clf.fit(X_train, train_labels)
+
+        # Folding the threshold into the intercept keeps the decision boundary
+        # inside the linear model, so it survives save() and ONNX export.
+        # argmax on the shifted model == p(yes) >= threshold on the original.
+        if flag_threshold is not None and flag_threshold != 0.5:
+            clf.intercept_ = clf.intercept_ - np.log(
+                flag_threshold / (1.0 - flag_threshold))
 
         if verbose and test_embs is not None:
             X_test = scaler.transform(test_embs)
             test_preds = clf.predict(X_test)
-            test_f1 = f1_score(test_labels, test_preds, average="macro", zero_division=0)
-            print(f"    Test F1: {test_f1:.1%}")
+            test_pos_f1 = f1_score(test_labels, test_preds, pos_label="yes", zero_division=0)
+            test_macro_f1 = f1_score(test_labels, test_preds, average="macro", zero_division=0)
+            n_raised = list(test_preds).count("yes")
+            print(f"    Test F1+: {test_pos_f1:.1%} (macro {test_macro_f1:.1%}), "
+                  f"raised {n_raised}/{len(test_labels)}")
 
         label_map = {"yes": "yes", "no": "no"}
         results[flag_name] = TrainedClassifier(

@@ -190,6 +190,54 @@ class TestBinaryFlags:
         assert r2.status_code == 200
         assert r2.json()["label"] in ("yes", "no")
 
+    def test_api_binary_flags_class_weight_defaults_to_balanced(self):
+        r = client.post("/v1/train", json={
+            "task_id": "test_api_cw_default",
+            "mode": "binary-flags",
+            "texts": FLAG_DATA["texts"],
+            "flags": FLAG_DATA["flags"],
+        })
+        assert r.status_code == 200
+        assert r.json()["class_weight"] == "balanced"
+        assert r.json()["tune_threshold"] is False
+
+    def test_api_binary_flags_unweighted(self):
+        """class_weight=null gives the unweighted fit, which trades recall on
+        rare flags for precision."""
+        r = client.post("/v1/train", json={
+            "task_id": "test_api_cw_none",
+            "mode": "binary-flags",
+            "texts": FLAG_DATA["texts"],
+            "flags": FLAG_DATA["flags"],
+            "class_weight": None,
+        })
+        assert r.status_code == 200
+        data = r.json()
+        assert data["class_weight"] is None
+        assert data["n_flags"] == 3
+
+        r2 = client.post("/v1/predict", json={
+            "text": "I'm going to sue you",
+            "task": "test_api_cw_none_flag_legal_threat",
+        })
+        assert r2.status_code == 200
+        assert r2.json()["label"] in ("yes", "no")
+
+    def test_api_binary_flags_tune_threshold_accepted(self):
+        """The flag data here is far too small to actually tune a threshold; this
+        checks the option is plumbed through and degrades safely rather than
+        erroring."""
+        r = client.post("/v1/train", json={
+            "task_id": "test_api_thresh",
+            "mode": "binary-flags",
+            "texts": FLAG_DATA["texts"],
+            "flags": FLAG_DATA["flags"],
+            "tune_threshold": True,
+        })
+        assert r.status_code == 200
+        assert r.json()["tune_threshold"] is True
+        assert r.json()["n_flags"] == 3
+
     def test_api_binary_flags_missing_texts(self):
         r = client.post("/v1/train", json={
             "task_id": "test_missing",

@@ -225,6 +225,37 @@ clf.save("my_models")
 
 Start with the defaults. With <50 examples per class, expect noisy estimates.
 
+### Per-flag binary classifiers
+
+When several yes/no flags can fire on the same input, train one binary head per flag instead of one multi-class head. Each flag gets its own decision boundary, which works better than a single model when flags are rare and independent.
+
+```python
+from jeffy.train import train_binary_flags
+
+flags = train_binary_flags(
+    texts=emails,
+    flags={
+        "legal_threat":     ["no", "yes", "no", ...],
+        "vulnerable_person": ["no", "no", "yes", ...],
+    },
+    task_id="intake",
+    tune_C=True,
+)
+
+flags["legal_threat"].predict("I am contacting my solicitor")  # {"label": "yes", ...}
+```
+
+Over HTTP, pass `mode: "binary-flags"` with `texts` and `flags` to `POST /v1/train`.
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `class_weight` | `"balanced"` | `"balanced"` reweights the rare positive class, which maximizes recall and is usually right for triage. Pass `None` for the unweighted fit: it raises far fewer flags at noticeably higher precision. On real data a balanced head raised roughly a third more flags than the reference labels did, so if a false positive is expensive, start with `None`. |
+| `tune_C` | `False` | Grid-search `C` per flag, scored by positive-class F1 on 2 or 3 stratified folds (fold count is clamped to the rarer class so no fold ends up with zero positives). |
+| `tune_threshold` | `False` | Also pick a per-flag decision threshold on a held-out dev slice, jointly with `C`. The chosen threshold is folded into the model's intercept, so it survives `save()` and needs no special handling at predict time. |
+| `min_threshold_positives` | 8 | Skip threshold tuning for any flag whose dev slice has fewer positives than this. Below roughly 8 the threshold fits noise. Since the dev slice is a quarter of the training data, this needs about 32 positives for that flag. |
+
+Tuning is scored by **positive-class** F1, not macro F1. For a rare flag the "no" class scores near 1.0, so macro F1 is dominated by the easy class and can select a different `C` than the flag's own performance justifies.
+
 ## Server configuration
 
 | Variable | Default | Description |

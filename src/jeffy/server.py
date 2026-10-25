@@ -342,6 +342,19 @@ class TrainRequest(BaseModel):
     mode: str | None = Field(None, description="'binary-flags' for per-flag binary classifiers")
     flags: dict[str, list[str]] | None = Field(None, description="For mode='binary-flags': {flag_name: [yes/no labels]}")
     texts: list[str] | None = Field(None, description="For mode='binary-flags': input texts")
+    class_weight: str | None = Field(
+        "balanced",
+        description="For mode='binary-flags': 'balanced' favours recall on rare "
+                    "flags, null gives the unweighted fit, which raises far "
+                    "fewer flags at higher precision")
+    tune_threshold: bool = Field(
+        False,
+        description="For mode='binary-flags': also tune a per-flag decision "
+                    "threshold on a dev slice, scored by positive-class F1")
+    min_threshold_positives: int = Field(
+        8,
+        description="For mode='binary-flags': skip threshold tuning for a flag "
+                    "with fewer dev positives than this")
 
 class FeedbackRequest(BaseModel):
     task_id: str = Field(..., description="Existing classifier to improve")
@@ -428,6 +441,9 @@ async def train_endpoint(req: TrainRequest):
             verbose=False,
             encoder=req.encoder,
             tune_C=req.tune_C,
+            class_weight=req.class_weight,
+            tune_threshold=req.tune_threshold,
+            min_threshold_positives=req.min_threshold_positives,
         ))
 
         engine = get_engine()
@@ -453,6 +469,8 @@ async def train_endpoint(req: TrainRequest):
             "flag_task_ids": registered,
             "n_examples": len(req.texts),
             "encoder": req.encoder or "default",
+            "class_weight": req.class_weight,
+            "tune_threshold": req.tune_threshold,
         }
 
     # Standard multi-class training

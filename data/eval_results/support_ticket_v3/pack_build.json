@@ -1,0 +1,189 @@
+{
+  "encoder": "BAAI/bge-large-en-v1.5",
+  "C": 0.01,
+  "seed": 42,
+  "oos_threshold": 0.5,
+  "license": "cdla-sharing-1.0",
+  "runs": {
+    "before": {
+      "n_train": 1350,
+      "held_out_accuracy": 0.9919,
+      "held_out_macro_f1": 0.9919,
+      "holdout_correct": "6/10",
+      "oos_caught_at_threshold": "8/8",
+      "valid_held_back": "2/27",
+      "holdout_rows": [
+        {
+          "text": "locate my parcel for me",
+          "expected": "track_order",
+          "label": "delivery_options",
+          "correct": false,
+          "confidence": 0.2966,
+          "margin": 0.1365
+        },
+        {
+          "text": "can you tell me where my package has got to",
+          "expected": "track_order",
+          "label": "delivery_options",
+          "correct": false,
+          "confidence": 0.466,
+          "margin": 0.2258
+        },
+        {
+          "text": "I would like the tracking details for my shipment",
+          "expected": "track_order",
+          "label": "delivery_period",
+          "correct": false,
+          "confidence": 0.4144,
+          "margin": 0.1606
+        },
+        {
+          "text": "whereabouts of my delivery please",
+          "expected": "track_order",
+          "label": "delivery_options",
+          "correct": false,
+          "confidence": 0.3991,
+          "margin": 0.0584
+        },
+        {
+          "text": "refund me for the purchase I cancelled yesterday",
+          "expected": "get_refund",
+          "label": "get_refund",
+          "correct": true,
+          "confidence": 0.3634,
+          "margin": 0.0242
+        },
+        {
+          "text": "I want reimbursing for the order I called off",
+          "expected": "get_refund",
+          "label": "get_refund",
+          "correct": true,
+          "confidence": 0.4127,
+          "margin": 0.2055
+        },
+        {
+          "text": "I called off my order, where is my reimbursement",
+          "expected": "track_refund",
+          "label": "track_refund",
+          "correct": true,
+          "confidence": 0.3466,
+          "margin": 0.0292
+        },
+        {
+          "text": "the refund you promised has not turned up",
+          "expected": "track_refund",
+          "label": "track_refund",
+          "correct": true,
+          "confidence": 0.5922,
+          "margin": 0.3203
+        },
+        {
+          "text": "do not send the order, I want it cancelled",
+          "expected": "cancel_order",
+          "label": "cancel_order",
+          "correct": true,
+          "confidence": 0.9568,
+          "margin": 0.9487
+        },
+        {
+          "text": "withdraw my order please",
+          "expected": "cancel_order",
+          "label": "cancel_order",
+          "correct": true,
+          "confidence": 0.6735,
+          "margin": 0.5835
+        }
+      ]
+    },
+    "after": {
+      "n_train": 1423,
+      "held_out_accuracy": 0.9904,
+      "held_out_macro_f1": 0.9904,
+      "holdout_correct": "10/10",
+      "oos_caught_at_threshold": "8/8",
+      "valid_held_back": "2/27",
+      "holdout_rows": [
+        {
+          "text": "locate my parcel for me",
+          "expected": "track_order",
+          "label": "track_order",
+          "correct": true,
+          "confidence": 0.9393,
+          "margin": 0.9273
+        },
+        {
+          "text": "can you tell me where my package has got to",
+          "expected": "track_order",
+          "label": "track_order",
+          "correct": true,
+          "confidence": 0.9567,
+          "margin": 0.9381
+        },
+        {
+          "text": "I would like the tracking details for my shipment",
+          "expected": "track_order",
+          "label": "track_order",
+          "correct": true,
+          "confidence": 0.8589,
+          "margin": 0.8144
+        },
+        {
+          "text": "whereabouts of my delivery please",
+          "expected": "track_order",
+          "label": "track_order",
+          "correct": true,
+          "confidence": 0.9384,
+          "margin": 0.9176
+        },
+        {
+          "text": "refund me for the purchase I cancelled yesterday",
+          "expected": "get_refund",
+          "label": "get_refund",
+          "correct": true,
+          "confidence": 0.7976,
+          "margin": 0.7264
+        },
+        {
+          "text": "I want reimbursing for the order I called off",
+          "expected": "get_refund",
+          "label": "get_refund",
+          "correct": true,
+          "confidence": 0.7684,
+          "margin": 0.703
+        },
+        {
+          "text": "I called off my order, where is my reimbursement",
+          "expected": "track_refund",
+          "label": "track_refund",
+          "correct": true,
+          "confidence": 0.7427,
+          "margin": 0.5556
+        },
+        {
+          "text": "the refund you promised has not turned up",
+          "expected": "track_refund",
+          "label": "track_refund",
+          "correct": true,
+          "confidence": 0.9029,
+          "margin": 0.8425
+        },
+        {
+          "text": "do not send the order, I want it cancelled",
+          "expected": "cancel_order",
+          "label": "cancel_order",
+          "correct": true,
+          "confidence": 0.9722,
+          "margin": 0.9663
+        },
+        {
+          "text": "withdraw my order please",
+          "expected": "cancel_order",
+          "label": "cancel_order",
+          "correct": true,
+          "confidence": 0.729,
+          "margin": 0.671
+        }
+      ]
+    }
+  }
+}

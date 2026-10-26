@@ -76,8 +76,10 @@ def fix(text, rng):
             l = NAME_INTRO.sub(sub, l)   # "My name is Sarah" -> "My name is Tiny Oracle": the Oracle learns its own name
         out.append(l)
     text = "\n".join(out)
-    if not PH.search(text): return text, None
-    return PH.sub(rng.choice(NAMES), text), "filled"
+    if PH.search(text): text = PH.sub(rng.choice(NAMES), text); filled = True
+    else: filled = False
+    if re.search(r"\[user ?\d", text, re.I): return None, "placeholder-left"   # location/hometown placeholders (6 convs)
+    return text, ("filled" if filled else None)
 
 for split in ("train", "val"):
     rng = random.Random(2026); kept, drop, filled = [], {}, 0

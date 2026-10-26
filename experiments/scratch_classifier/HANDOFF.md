@@ -2,7 +2,7 @@
 
 Purpose: let a fresh Claude Code session pick up this research program with as little loss as possible. Keep it short;
 the durable record is `RESEARCH_LOG.md` (lab notebook, append-only, every result the turn it lands). Update this file at
-the end of every working block (not just at the end of a session). Last update: **2026-10-26, ~10:40 PDT**.
+the end of every working block (not just at the end of a session). Last update: **2026-10-26, 15:13 PDT**.
 
 ## How to resume (5 minutes)
 1. Read this file, then the last ~300 lines of `RESEARCH_LOG.md` (`tail -300 RESEARCH_LOG.md`).
@@ -15,7 +15,7 @@ the end of every working block (not just at the end of a session). Last update: 
    first; checkpoint + `python3 -u` + resume before launching; pull checkpoints during training; destroy the instance in a
    trap; results in tag-specific files, merge never overwrite; WebSearch 200/session cap → Chrome tools / playwright.
 
-## Running right now (2026-10-26 ~18:20 PDT)
+## Running right now (2026-10-26, 15:13 PDT)
 - **Nothing on GPU.** Demo server 127.0.0.1:8765. STANDING RULES (memory): v2 lineage only; no GPU rental without a <30 min local signal; multi-turn
   probes must use a reactive simulated user (`atl_probe_simuser.py`, staged, an agent writes the user turns) — scripted follow-ups are retired.
 - **Sub-agent** playing the simulated user on `best_lm_oracle_v2_grown_life8.pt` → `pile_runs/atl/sim_v2_grown_life8.jsonl` (90 rows). Then: add it to

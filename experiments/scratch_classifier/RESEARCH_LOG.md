@@ -4652,7 +4652,7 @@ Negative, cleanly: the ratio representation costs 7% more bytes for 5.7 dB less 
 
 **Growing a model, step 1 (`grow_model.py`, Net2Net adapted to post-norm `TransformerEncoderLayer` with tied embeddings).** Widening 2.0M (d192 L2 h4 ff768) → d384 h8 ff1280: first attempt with random extra column copies gave max |Δlogit| 8.3 — **LayerNorm is only invariant under a uniform scale, so the residual stream must be widened by an exact integer factor with equal copy counts** (hidden FF units can be copied randomly: no LN there). With exact 2× duplication: max |Δlogit| 1.6e-2 (eps-level). Deepening L2 → L4 by inserting zero-branch blocks after block 1: max |Δlogit| 0.42 (a zero-branch post-norm block is LN∘LN, which strips the previous block's learned affine, so it is only approximately identity); **in practice the function is preserved: held-out NLL 5.7154 (2.0M source) vs 5.7152 (grown 8.52M)**. Checkpoint `checkpoints/grown_2m_to_8m.pt`. **Launched: grow-then-pretrain on an A100 (`gpu_grow.sh`): 20 TinyStories epochs (50K stories, same tokenizer) from the grown checkpoint, to be compared epoch-by-epoch with the directly trained 8.5M base (`train_lm_8m_custom_tok.log`: val 2.77 @1, 2.12 @5, 1.99 @10, 1.94 @15, 1.93 @19; 1.85 after 65).** ETA: MPS ≈ 5 min/epoch (100 min), A100 ≈ 60 s/epoch (20 min + boot), ≈ $0.30. The question: does a model grown from a trained 2.0M reach the direct model's curve with fewer epochs, i.e. is the small model's training reusable.
 
-## 2026-10-26 ~07:40 — Grow-then-pretrain, first full run: head start of ~2 epochs, then a persistent 0.015-nat gap behind direct
+## 2026-10-26 08:50 PDT — Grow-then-pretrain, first full run: head start of ~2 epochs, then a persistent 0.015-nat gap behind direct
 
 Setup (logged 10-25 night): `best_lm_2m_scaling.pt` (d192 L2 H4 dff768, 16 ep TinyStories 50K, val 2.4188) → `grow_model.py` → `grown_2m_to_8m.pt`
 (d384 L4 H8 dff1280, 8.52M, exact 2× tiling + head duplication + FF random copies with outgoing /count + two zero-branch layers; NLL preserved)
@@ -4679,7 +4679,7 @@ val_loss by epoch (direct / grown):
   read by bash → bash read the shifted file. `bash -n` on the current file passes. The trap still fired and the instance was destroyed. Lesson: never
   edit a running shell script; copy it first.
 
-## 2026-10-26 ~07:45 — Classifier baseline rerun (benchmark provenance, repo root `benchmarks/`)
+## 2026-10-26 08:52 PDT — Classifier baseline rerun (benchmark provenance, repo root `benchmarks/`)
 
 The published `data/eval_results/setfit_fasttext_benchmark.json` had no runner anywhere (git history, stash, dangling objects, all transcripts
 searched). Sub-agent rewrote one: `benchmarks/classifier_baselines.py`; results `data/eval_results/setfit_fasttext_benchmark_rerun.json`
@@ -4693,7 +4693,7 @@ standard checkpoint → unknown smaller model and subsample. Net: Jeffy still wi
 README / benchmark page / two posts cite the old numbers → Nico's call on presentation (recommendation sent: versioned benchmark + correction note,
 never silent edits).
 
-## 2026-10-26 ~08:15 — Growth restart shock: it is the learning-rate level, not cold Adam (`train_lm.py --eval-every/--warmup-steps`, MPS, 1 epoch each)
+## 2026-10-26 09:07 PDT — Growth restart shock: it is the learning-rate level, not cold Adam (`train_lm.py --eval-every/--warmup-steps`, MPS, 1 epoch each)
 
 Grown checkpoint, 1 epoch, val on 40 batches every 100 optimizer steps (cosine over the single epoch, so decay is faster than in the 20-ep run).
 step 0 = 2.446 for all arms. a) control 3e-4 no warmup: 2.492 @100 (↑), 2.465 @300, 2.385 @1000, epoch-end 2.354. b) 300-step warmup to 3e-4:
@@ -4702,14 +4702,14 @@ step 0 = 2.446 for all arms. a) control 3e-4 no warmup: 2.492 @100 (↑), 2.465 
 in the epoch (2.381 vs 2.354). No evidence that warmup would close the 0.015 gap at epoch 20. Decision: keep the direct recipe exactly (3e-4,
 fresh-opt) for the grown model's second stage so the UX comparison stays matched. Logs `logs/grow_diag_{a,b,c}.log`.
 
-## 2026-10-26 ~09:50 — Grown-base A100 chain STOPPED at Nico's request (no rented GPU without a local signal first)
+## 2026-10-26 09:35 PDT — Grown-base A100 chain STOPPED at Nico's request (no rented GPU without a local signal first)
 
 `gpu_grow_chain.sh` on instance 57838821 ran 09:07–09:48 (~$0.70) and was killed in stage 1 at epoch 38/65; trap destroyed the instance
 (`vastai show instances` = `[]`). Partial checkpoint kept: `checkpoints/best_lm_grown_2m_to_8m_ext.pt` (epoch 38, val **1.8879**; the direct
 base's extension was at val ≈1.886 (ppl 6.59) at epoch 37 → still within ~0.002 nats). Stages 2–3 (chat recipe) never ran; no ONNX, no demo entry.
 Rule from Nico (standing from now on): a bigger/grown model must show an inkling of potential in a <30 min local CPU/MPS test before any GPU rental.
 
-## 2026-10-26 ~10:20 — Local growth signal (MPS, 18 min): grow the 2.0M Oracle Nico likes → 8.5M, 3 epochs on its own persona data, vs the 2.0M control
+## 2026-10-26 09:43 PDT — Local growth signal (MPS, 18 min): grow the 2.0M Oracle Nico likes → 8.5M, 3 epochs on its own persona data, vs the 2.0M control
 
 `grow_model.py checkpoints/best_lm_oracle_2m_persona2.pt → grown_oracle_2m_persona2.pt` (d192 L2 → d384 L4 H8 dff1280; widening exact
 |Δlogprob| ≤ 0.015, post-norm deepening approximate ≤ 0.97 on single tokens; val at step 0: 1.4411 vs 1.4401 for the 2M itself → function preserved).
@@ -4727,7 +4727,7 @@ Both exported (`demo/oracle_2m_{grown_persona2,persona2_plus3}_int8.onnx`) and a
 3-arm blind set (`probe_grow_local_blind3`) building. Verdict: an inkling, not a win — the next cheap step is the same test with more epochs
 (10 ep ≈ 35 min MPS) and a train/val split check, before any scale-up.
 
-## 2026-10-26 ~11:05 — Local growth blind pass unblinded (`grades_grow_local_blind3.jsonl`, 972 rows, one grader; key M1=grown M2=2M original M3=2M+3ep control)
+## 2026-10-26 09:50 PDT — Local growth blind pass unblinded (`grades_grow_local_blind3.jsonl`, 972 rows, one grader; key M1=grown M2=2M original M3=2M+3ep control)
 
 Totals out of 15 (coh+pers+wit+help+eng), paired W/T/L on total matched by (id, seed):
 | set | 2M original | 2M +3 ep (control) | 2M grown→8.5M +3 ep | grown vs control | grown vs original |
@@ -4739,7 +4739,7 @@ on both sets (FI: persona 1.89 vs 1.76, help 1.14 vs 1.01, engaging 1.01 vs 0.81
 Same direction as the val loss (1.418 vs 1.436), same modest size. Note: this grader is harsher than the size-pass grader (totals not comparable
 across passes); within-pass rankings only. Verdict: consistent inkling. Next: the 10-epoch rerun (MPS, running) to see whether the gap widens.
 
-## 2026-10-26 ~11:30 — Pivot: grow the model Nico actually likes (v2, 2.7M from scratch), not the 2.0M TinyStories arm
+## 2026-10-26 10:28 PDT — Pivot: grow the model Nico actually likes (v2, 2.7M from scratch), not the 2.0M TinyStories arm
 
 Nico tried the 2.0M grown/control pair in the demo: "absolutely flat and boring… not really following the conversation… feels like the same…
 why are we comparing these anyway, if the winner has always been v2?" Correct: the 2.0M lineage was chosen for tokenizer compatibility with the
@@ -4749,7 +4749,7 @@ New test, same design, on v2: `grow_model.py best_lm_oracle_v2.pt --d-model 512 
 (lr 1e-4, warmup 300); grown = same. v2 val at step 0: 1.6124 (v2's own 1.6130). Scratchpad `grow_v2_local.sh`; probes/ONNX/blind set queued
 (`grow_v2_post.sh` → `probe_grow_v2_blind3`, tags format, recipe T0.5 to match the existing v2 probes).
 
-## 2026-10-26 ~12:15 — v2 growth blind pass unblinded (`grades_grow_v2_blind3.jsonl`, 972 rows; key M1=v2 grown M2=v2 M3=v2+3ep control): a three-way tie
+## 2026-10-26 10:37 PDT — v2 growth blind pass unblinded (`grades_grow_v2_blind3.jsonl`, 972 rows; key M1=v2 grown M2=v2 M3=v2+3ep control): a three-way tie
 
 Totals /15, paired W/T/L on total matched by (id, seed), recipe T0.5 for all arms:
 | set | v2 | v2 +3 ep control | v2 grown→8.5M +3 ep | grown vs control | grown vs v2 |
@@ -4762,7 +4762,7 @@ Train loss of the grown arm fell 0.10 vs 0.01 for the control → the capacity i
 Conclusion: on v2, growth is a clean no-op until it is given something new to learn; `chat_v2_fix` run (names filled, 4,762 Oracle-as-human
 convs dropped) is the first such thing; longer context (seq 512, 3-turn probes) is the second.
 
-## 2026-10-26 ~13:20 — Identity probe (`atl_probe_identity.py`): Nico's prediction confirmed, and the rewrite fixes it
+## 2026-10-26 10:57 PDT — Identity probe (`atl_probe_identity.py`): Nico's prediction confirmed, and the rewrite fixes it
 
 Conversation shape from Nico's transcript (opener → "what's your name?" → greet back with the given name → "what are you up to?" → "nice, what
 kind?"), 4 openers × 8 seeds = 32 conversations per model, recipe T0.5. Name-turn classification / human-life markers in turns 3–5 (of 96):
@@ -4780,7 +4780,7 @@ life ("listening to music", "hanging out") is untouched by any data fix (24–28
 identity/act steering token on v2 (CT v3 style) or a broader rewrite of hobby/life filler. The 3-turn probe set (`probe_mt_*`) never asks the
 name and showed 0 leaks everywhere — it is blind to this bug; keep the identity probe in every pass from now on.
 
-## 2026-10-26 ~13:50 — Cross-lineage blind pass (`grades_lineage_blind4.jsonl`, 1,296 rows, one grader, recipe T0.5 for all; key M1=2.0M persona2, M2=v2, M3=8.5M conv_persona2, M4=v2 grown + fix3)
+## 2026-10-26 11:02 PDT — Cross-lineage blind pass (`grades_lineage_blind4.jsonl`, 1,296 rows, one grader, recipe T0.5 for all; key M1=2.0M persona2, M2=v2, M3=8.5M conv_persona2, M4=v2 grown + fix3)
 
 Totals /15 and tag rates:
 | set | 8.5M conv_persona2 | v2 | v2 grown fix3 | 2.0M persona2 |
@@ -4799,7 +4799,7 @@ consistent and do separate lineages — but in the tags, not the totals, and the
 pair picks (`demo/blind_pairs.html`, key `blind_pairs_key.json`) → fit which rubric dimensions/tags predict his picks → reweight the rubric
 (or replace the total with "coherent AND on-thread, no pasted line") before any further model ranking.
 
-## 2026-10-26 ~15:10 — Nico's first blind pair picks (`blind_picks_nico_1.json`, 43 single-turn pairs, recipe T0.5): he picks the 8.5M, and the grader total predicts his picks 24/25
+## 2026-10-26 11:34 PDT — Nico's first blind pair picks (`blind_picks_nico_1.json`, 43 single-turn pairs, recipe T0.5): he picks the 8.5M, and the grader total predicts his picks 24/25
 
 Picks: 25 decided, 1 tie, **17 "both bad" (40%)**. Head-to-head (winner, loser): 8.5M conv_persona2 over v2 **6–2**, over v2 grown fix3 **7–0**;
 2.0M persona2 over v2 4–3; v2 over v2 grown fix3 3–0. Per model W/L/bad: 8.5M 13/2/7, v2 8/10/13, v2 grown 0/10/9, 2.0M 4/3/5.
@@ -4810,7 +4810,7 @@ multi-turn at T0.3 with priming — so the disagreement is single-turn vs conver
 transcripts (`demo/blind_convs.html`, 32 pairs from the existing recipe-T0.5 multi-turn probes; key `blind_convs_key.json`). Nico: "excellent
 exercise… we should do way more of these… by far the best way" → preference data as the primary signal (grader as scalable proxy, 24/25).
 
-## 2026-10-26 ~15:40 — Plan token on v2 (`ct_v2.py`, classes me/wh/yn/hi/tell, 4 ep lr 1e-4): name turn controllable, the "hanging out" drift is not
+## 2026-10-26 11:37 PDT — Plan token on v2 (`ct_v2.py`, classes me/wh/yn/hi/tell, 4 ep lr 1e-4): name turn controllable, the "hanging out" drift is not
 
 `oracle_v2_ct` (2.7M) val 1.7521, `oracle_v2_grown_ct` (8.5M) val 1.7344 on chat_v2ct val (token is scored, so not comparable to plain vals).
 Identity probe (32 convs; name turn / human-life markers in turns 3–5 of 96):
@@ -4825,7 +4825,7 @@ the model emits a generic "I'm not sure yet. What are you doing?" instead. Same 
 Oracle's replies to life/hobby questions, as the 892 self-intros were rewritten), and a token can only select among acts the data contains.
 Self-plan lowered the drift slightly for the small model (16/96) — noise-level, 1 seed set.
 
-## 2026-10-26 ~16:20 — Life/hobby rewrite (fix_chat_v2.py step 4: 7,019 Oracle replies to "up to / for fun / how's your day / how are you" → 20 Oracle-self lines), 3 ep
+## 2026-10-26 11:49 PDT — Life/hobby rewrite (fix_chat_v2.py step 4: 7,019 Oracle replies to "up to / for fun / how's your day / how are you" → 20 Oracle-self lines), 3 ep
 
 Identity probe: human-life markers in turns 3–5 fell from 22–28/96 to **12/96 (v2 control) and 15/96 (grown)**; name turn 24 and 27 /32.
 Halved, not gone: "what are you up to?" → "I'm just hanging out, watching TV" still appears — 3 gentle epochs at 1e-4 only partly overwrite a
@@ -4834,7 +4834,7 @@ pattern v2 learned over 50 epochs. Two residual data holes found in the transcri
 address rewritten to "Tiny Oracle". Rerunning both arms for 8 epochs on the regenerated corpus (`*_life8`). Nico to review the 20 lines (his voice).
 Demo: `v2_grown_life3_int8`, `v2_life3_int8` added.
 
-## 2026-10-26 ~17:00 — Nico's blind CONVERSATION picks (partial, 17/32): 13 "both bad"; the 3-turn probe instrument is rejected
+## 2026-10-26 11:59 PDT — Nico's blind CONVERSATION picks (partial, 17/32): 13 "both bad"; the 3-turn probe instrument is rejected
 
 Nico stopped at 17 pairs: 13 both-bad, 2 ties, 2 decided (8.5M over v2 and over grown-v2, one each). Per model both-bad: v2 11, grown 7,
 8.5M 4, 2.0M 4. His diagnosis of the transcripts: wrong on both sides — the scripted user follow-ups ("haha ok. do you like that?",
@@ -4845,7 +4845,7 @@ Consequences: (1) `atl_probe_multiturn.py` is retired for anything Nico sees; (2
 each user turn in reaction to the model's actual answer (confused, steering, answering the model's questions); (3) the 3-turn grades from
 earlier passes (mt sets) measured continuity against a non-reactive user and should be discounted.
 
-## 2026-10-26 ~18:10 — 8-epoch pair on the corrected corpus (`*_life8`): drift down to 8/96 (grown) and 11/96 (control)
+## 2026-10-26 12:11 PDT — 8-epoch pair on the corrected corpus (`*_life8`): drift down to 8/96 (grown) and 11/96 (control)
 
 val (chat_v2_fix val): control 1.7440, grown **1.7228**. Identity probe: name turn 26 / 28 of 32 "Tiny Oracle"; human-life markers in turns 3–5:
 **11/96 (v2 control), 8/96 (grown)** — from 22–28 this morning. Residuals seen in transcripts: "I'm just hanging out" still appears for the
@@ -4854,7 +4854,7 @@ the user never gave ("You too, Sarah"): the filled-name conversations teach "Nic
 next fixer step: strip the address when the name does not appear in an earlier user turn. Demo: `v2_grown_life8_int8`, `v2_life8_int8`.
 Grown vs control gap on val widened with epochs (0.021 at 8 ep vs 0.014 at 3) — capacity is being used on the corrected data.
 
-## 2026-10-26 ~18:45 — Reactive-user transcripts for the grown life8 model; conversation pairs now 3 models
+## 2026-10-26 12:12 PDT — Reactive-user transcripts for the grown life8 model; conversation pairs now 3 models
 
 `sim_v2_grown_life8.jsonl` (90 rows). Even the best v2-lineage model does not follow a conversation under push-back (cat/mugs → "What's the
 matter?" → homework; feathers/steel → "What's that?"), and it still claims a human family when asked ("two older sisters and a younger brother",
@@ -4864,7 +4864,7 @@ retrain pending Nico's line edits. `demo/blind_convs.json` rebuilt: 45 pairs = 1
 Takeaway for the next step: identity/persona leaks are being closed one regex at a time (name → life → family); conversation-following is a
 different problem — the corpus has no examples of a user pushing back and the Oracle recovering. The simulated-user loop is the way to make them.
 
-## 2026-10-26 ~20:30 — Nico on review and on recovery: two mechanisms, and curation must happen in chat
+## 2026-10-26 13:30 PDT — Nico on review and on recovery: two mechanisms, and curation must happen in chat
 
 Nico exported the 120 recoveries unedited ("way too many… I'd rather review while talking/chatting with the model"). His framing: (1) specific
 examples for specific situations — fine, needed; (2) a generic ability to recognise push-back / out-of-knowledge and SAY SO ("I have no idea,
@@ -4876,12 +4876,12 @@ act**: a bank of ~18 generic admit-ignorance lines (his 4 first; on the review p
 generic reply), trained with the plan token so it can be forced at inference; measured on the reactive-user probe.
 Chat style rule (same evening): the last sentence of an Oracle message has no period; inner periods stay (fixer step 7).
 
-## 2026-10-26 ~20:45 — Retrain on the fully fixed, no-period corpus (`*_life8b`, 8 ep, lr 1e-4)
+## 2026-10-26 13:36 PDT — Retrain on the fully fixed, no-period corpus (`*_life8b`, 8 ep, lr 1e-4)
 
 val (new corpus, not comparable to earlier): control 1.7800, grown **1.7539**. Identity probe: name 25/32 both; human-life drift **12/96 both**
 (life8 had 8–11; single seed set, noise-level). Demo entries `v2_grown_life8b_int8`, `v2_life8b_int8` (all data fixes + Nico's lines + chat style).
 
-## 2026-10-26 ~21:40 — Reply verifier + best-of-8 (Nico's "classifier judges, generator generates" idea): +0.35 on varied, tie on openers
+## 2026-10-26 14:07 PDT — Reply verifier + best-of-8 (Nico's "classifier judges, generator generates" idea): +0.35 on varied, tie on openers
 
 Verifier (`verifier.py`): LogReg on the Oracle's own hidden states (final-token + mean at the end of the reply) trained on 8,624 grader-labelled
 rows (label = coherence≥2 and no bad tag; grouped split by prompt): AUC 0.76 overall, **0.85 on v2-lineage rows** (text-only TF-IDF 0.67–0.70).
@@ -4893,7 +4893,7 @@ Reading: the verifier mostly removes persona slips and salad on hard prompts; on
 the pool. Next: (1) gate — if max verifier score < τ, emit an admit-ignorance line (the generator need not know); (2) FUDGE-style per-token
 steering with the same classifier; (3) retrain the verifier with Nico's picks as extra labels. Cost in the browser: N× generation of a 2.7–8.5M model.
 
-## 2026-10-26 ~22:10 — Nico's blind picks #2 (single vs verifier best-of-8, 24 pairs): verifier 8, single 2, tie 3, both-bad 11
+## 2026-10-26 14:37 PDT — Nico's blind picks #2 (single vs verifier best-of-8, 24 pairs): verifier 8, single 2, tie 3, both-bad 11
 
 Nico's own blind verdict on the classifier-gated generator: when he decided, the verifier's pick won **8–2**; 11/24 pairs both bad (46%).
 His notes: "favorite color?" both great ("I can't see colors. I just predict text. But I'll say blue, because statistically that's what people
@@ -4903,7 +4903,7 @@ question/answer kinda thing"** → the act taxonomy needs an imperative/task cla
 has no "task" notion either). Lines: his export (`oracle_lines_nico_2.json`) had no `dunno` group — review page bug: saved localStorage state
 was not merged with new groups in the JSON (fixed); the 18 admit-ignorance lines are still unreviewed.
 
-## 2026-10-26 ~22:40 — Training-context finding: conversations are packed into a stream and cut into fixed 256-token chunks
+## 2026-10-26 15:01 PDT — Training-context finding: conversations are packed into a stream and cut into fixed 256-token chunks
 
 Nico asked whether we train on the whole context (ChatGPT-style) or per message. Answer: whole context, BUT `train_lm.py --chat-data` concatenates
 all conversations (EOS between) and `TextChunkDataset` cuts fixed 256-token chunks regardless of boundaries, with no attention reset at EOS.
@@ -4915,3 +4915,10 @@ window, system prompt kept, windows start at user-turn boundaries, padded, loss 
 conv-sequences, measured by the reactive-user probe (on-thread rate at turns 2–3) and the identity probe.
 Nico's dunno lines received unchanged (`oracle_lines_nico_3.json`, 18). His "GOG" idea = controller loop: verifier unsatisfied → force the
 admit act (plan token) and regenerate a variation (not a canned print) → verify again; controller may also change temperature/context.
+
+
+## 2026-10-26 15:13 PDT — Timestamp correction
+
+The "~HH:MM" times on today's 10-26 headings above were estimated, not read from a clock, and drifted up to 7 hours late. Nico caught it
+("Status at 23:15" when it was 15:13 PDT). All 21 headings were relabelled from the git commit timestamps that recorded each entry (within a
+few minutes of writing; the first two were written ~20 min before their commit). From now on every time is read with `date` first.

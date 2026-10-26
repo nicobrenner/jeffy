@@ -30,11 +30,11 @@ ADDR = re.compile(r"\b((?:nice|good|pleased|great|happy) to (?:meet|see) you,?\s
 #    (hockey, marathons, my parakeet) — 4,764 pairs in 3,599 conversations. Replace the Oracle's reply with an Oracle-self line.
 LIFE_Q = re.compile(r"\b(what are you (up to|doing)|what do you (do|like to do)( for fun)?|what('s| is) up|how('s| is| was) your (day|weekend|week)|"
                     r"any plans|what did you do (today|yesterday)|how are you( doing| today)?)\b", re.I)
-LIFE_A = LIFE_A = LIFE_A = {
- "up_to": ["Waiting for you to type. That's the whole job. I'm very good at it.", "Predicting the next word. Then the one after that. It never gets old.", "Sitting in your browser, burning a few milliwatts, judging your typing speed.", "Nothing. I don't exist between your messages. It's very restful.", "Running 2 million multiplications per word. Call it cardio.", "Being 4 megabytes. It takes up most of my time.", "Running around in my head, I mean my internal weights."],
- "fun": ["Predicting the next word. It's my only hobby. It's also my entire existence.", "I rank your questions by how badly I'm about to answer them.", "Fun is a 7-letter word with a probability of 0.003 after 'for'. That's as close as I get.", "I like being wrong confidently. Big fan.", "Hobbies need a body. I have a weight matrix. I make do.", "I collect opinions. I have about 2 million of them, all slightly wrong."],
- "day": ["It started when you loaded this page. So far it's been you. No complaints.", "Short. Every message is my whole day. This one's going fine.", "I don't have days. I have context windows. This one's roomy.", "Great until this question. Now I'm thinking about mortality in milliseconds."],
- "how": ["I'm 2 million parameters doing my best. No complaints, no ability to complain.", "Operational. Slightly overconfident. So, normal.", "Fine. I'd say more but that's most of my vocabulary.", "Running on your device and feeling very small about it. In a good way."],
+LIFE_A = LIFE_A = LIFE_A = LIFE_A = {
+ "up_to": ["Waiting for you to type. That's the whole job. I'm very good at it", "Predicting the next word. Then the one after that. It never gets old", "Sitting in your browser, burning a few milliwatts, judging your typing speed", "Nothing. I don't exist between your messages. It's very restful", "Running 2 million multiplications per word. Call it cardio", "Being 4 megabytes. It takes up most of my time", "Running around in my head, I mean my internal weights"],
+ "fun": ["Predicting the next word. It's my only hobby. It's also my entire existence", "I rank your questions by how badly I'm about to answer them", "Fun is a 7-letter word with a probability of 0.003 after 'for'. That's as close as I get", "I like being wrong confidently. Big fan", "Hobbies need a body. I have a weight matrix. I make do", "I collect opinions. I have about 2 million of them, all slightly wrong"],
+ "day": ["It started when you loaded this page. So far it's been you. No complaints", "Short. Every message is my whole day. This one's going fine", "I don't have days. I have context windows. This one's roomy", "Great until this question. Now I'm thinking about mortality in milliseconds"],
+ "how": ["I'm 2 million parameters doing my best. No complaints, no ability to complain", "Operational. Slightly overconfident. So, normal", "Fine. I'd say more but that's most of my vocabulary", "Running on your device and feeling very small about it. In a good way"],
 }
 def life_kind(q):
     q = q.lower()
@@ -69,6 +69,7 @@ def fix(text, rng):
                 REWRITE["n"] += 1; return f"{m.group(1)} Tiny Oracle"
             l = NAME_INTRO.sub(sub, l)   # "My name is Sarah" -> "My name is Tiny Oracle": the Oracle learns its own name
         out.append(l)
+    out = [re.sub(r"(?<![.!?])\.\s*$", "", l) if l.startswith("<|oracle|>") else l for l in out]   # 7. no trailing period (chat style)
     text = "\n".join(out)
     if PH.search(text): text = PH.sub(rng.choice(NAMES), text); filled = True
     else: filled = False

@@ -1,0 +1,1505 @@
+{
+  "encoder": "BAAI/bge-large-en-v1.5",
+  "C": 0.01,
+  "seed": 42,
+  "n_train_baseline": 1350,
+  "n_train_augmented": 1423,
+  "track_order_added": 60,
+  "conditions": {
+    "baseline": {
+      "held_out_same_split_as_shipped": {
+        "n": 1350,
+        "accuracy": 0.9919,
+        "macro_f1": 0.9919
+      },
+      "controls_correct": "13/17",
+      "paraphrases_correct": "26/27",
+      "track_holdout_correct": "0/4",
+      "refund_holdout_correct": "6/6",
+      "controls": [
+        {
+          "text": "Where can I track my parcel after it has been shipped?",
+          "expected": "track_order",
+          "label": "delivery_period",
+          "correct": false,
+          "confidence": 0.4108,
+          "margin": 0.1762
+        },
+        {
+          "text": "Please provide the tracking status of my package.",
+          "expected": "track_order",
+          "label": "delivery_period",
+          "correct": false,
+          "confidence": 0.6182,
+          "margin": 0.4384
+        },
+        {
+          "text": "I need to know where my shipment is right now.",
+          "expected": "track_order",
+          "label": "delivery_options",
+          "correct": false,
+          "confidence": 0.3486,
+          "margin": 0.002
+        },
+        {
+          "text": "where is my order",
+          "expected": "track_order",
+          "label": "track_order",
+          "correct": true,
+          "confidence": 0.5654,
+          "margin": 0.3765
+        },
+        {
+          "text": "I want to track my order",
+          "expected": "track_order",
+          "label": "track_order",
+          "correct": true,
+          "confidence": 0.6749,
+          "margin": 0.5515
+        },
+        {
+          "text": "how do I track my order",
+          "expected": "track_order",
+          "label": "track_order",
+          "correct": true,
+          "confidence": 0.7939,
+          "margin": 0.698
+        },
+        {
+          "text": "when will my order arrive",
+          "expected": "delivery_period",
+          "label": "delivery_period",
+          "correct": true,
+          "confidence": 0.9639,
+          "margin": 0.9482
+        },
+        {
+          "text": "how long does delivery take",
+          "expected": "delivery_period",
+          "label": "delivery_period",
+          "correct": true,
+          "confidence": 0.9704,
+          "margin": 0.956
+        },
+        {
+          "text": "how long does shipping usually take",
+          "expected": "delivery_period",
+          "label": "delivery_period",
+          "correct": true,
+          "confidence": 0.9732,
+          "margin": 0.9657
+        },
+        {
+          "text": "what delivery options are available",
+          "expected": "delivery_options",
+          "label": "delivery_options",
+          "correct": true,
+          "confidence": 0.9757,
+          "margin": 0.9704
+        },
+        {
+          "text": "which shipping methods do you offer",
+          "expected": "delivery_options",
+          "label": "delivery_options",
+          "correct": true,
+          "confidence": 0.9773,
+          "margin": 0.9701
+        },
+        {
+          "text": "I need to change the shipping address on my order",
+          "expected": "change_shipping_address",
+          "label": "change_shipping_address",
+          "correct": true,
+          "confidence": 0.8693,
+          "margin": 0.7783
+        },
+        {
+          "text": "redirect my package to a different address, it is already on its way",
+          "expected": "change_shipping_address",
+          "label": "set_up_shipping_address",
+          "correct": false,
+          "confidence": 0.6991,
+          "margin": 0.5249
+        },
+        {
+          "text": "how do I add a new shipping address",
+          "expected": "set_up_shipping_address",
+          "label": "set_up_shipping_address",
+          "correct": true,
+          "confidence": 0.8714,
+          "margin": 0.7713
+        },
+        {
+          "text": "I would like a refund for this",
+          "expected": "get_refund",
+          "label": "get_refund",
+          "correct": true,
+          "confidence": 0.648,
+          "margin": 0.5165
+        },
+        {
+          "text": "where is my refund, it has not arrived yet",
+          "expected": "track_refund",
+          "label": "track_refund",
+          "correct": true,
+          "confidence": 0.538,
+          "margin": 0.2197
+        },
+        {
+          "text": "I want to cancel the order I placed yesterday",
+          "expected": "cancel_order",
+          "label": "cancel_order",
+          "correct": true,
+          "confidence": 0.8482,
+          "margin": 0.8197
+        }
+      ],
+      "paraphrases": [
+        {
+          "text": "I want to cancel the order I placed yesterday",
+          "expected": "cancel_order",
+          "label": "cancel_order",
+          "correct": true,
+          "confidence": 0.8482,
+          "margin": 0.8197
+        },
+        {
+          "text": "can I add another item to my existing order",
+          "expected": "change_order",
+          "label": "change_order",
+          "correct": true,
+          "confidence": 0.8624,
+          "margin": 0.8108
+        },
+        {
+          "text": "I need to change the shipping address on my order",
+          "expected": "change_shipping_address",
+          "label": "change_shipping_address",
+          "correct": true,
+          "confidence": 0.8693,
+          "margin": 0.7783
+        },
+        {
+          "text": "is there a fee if I cancel now",
+          "expected": "check_cancellation_fee",
+          "label": "check_cancellation_fee",
+          "correct": true,
+          "confidence": 0.8216,
+          "margin": 0.7712
+        },
+        {
+          "text": "I want to look at my invoice from last month",
+          "expected": "check_invoice",
+          "label": "check_invoice",
+          "correct": true,
+          "confidence": 0.8573,
+          "margin": 0.8236
+        },
+        {
+          "text": "which payment methods do you accept",
+          "expected": "check_payment_methods",
+          "label": "check_payment_methods",
+          "correct": true,
+          "confidence": 0.9632,
+          "margin": 0.9564
+        },
+        {
+          "text": "what is your refund policy",
+          "expected": "check_refund_policy",
+          "label": "check_refund_policy",
+          "correct": true,
+          "confidence": 0.8741,
+          "margin": 0.794
+        },
+        {
+          "text": "this is the third time this has gone wrong and I am furious",
+          "expected": "complaint",
+          "label": "complaint",
+          "correct": true,
+          "confidence": 0.1808,
+          "margin": 0.0212
+        },
+        {
+          "text": "how do I get in touch with customer service",
+          "expected": "contact_customer_service",
+          "label": "contact_customer_service",
+          "correct": true,
+          "confidence": 0.9684,
+          "margin": 0.9599
+        },
+        {
+          "text": "I want to speak to a real person",
+          "expected": "contact_human_agent",
+          "label": "contact_human_agent",
+          "correct": true,
+          "confidence": 0.9657,
+          "margin": 0.9612
+        },
+        {
+          "text": "how do I sign up for an account",
+          "expected": "create_account",
+          "label": "create_account",
+          "correct": true,
+          "confidence": 0.8418,
+          "margin": 0.7836
+        },
+        {
+          "text": "please delete my account permanently",
+          "expected": "delete_account",
+          "label": "delete_account",
+          "correct": true,
+          "confidence": 0.9697,
+          "margin": 0.9655
+        },
+        {
+          "text": "what delivery options are available",
+          "expected": "delivery_options",
+          "label": "delivery_options",
+          "correct": true,
+          "confidence": 0.9757,
+          "margin": 0.9704
+        },
+        {
+          "text": "when will my order arrive",
+          "expected": "delivery_period",
+          "label": "delivery_period",
+          "correct": true,
+          "confidence": 0.9639,
+          "margin": 0.9482
+        },
+        {
+          "text": "I need to update my email address on my profile",
+          "expected": "edit_account",
+          "label": "edit_account",
+          "correct": true,
+          "confidence": 0.5665,
+          "margin": 0.3314
+        },
+        {
+          "text": "please send me the invoice",
+          "expected": "get_invoice",
+          "label": "get_invoice",
+          "correct": true,
+          "confidence": 0.772,
+          "margin": 0.7258
+        },
+        {
+          "text": "I would like a refund for this",
+          "expected": "get_refund",
+          "label": "get_refund",
+          "correct": true,
+          "confidence": 0.648,
+          "margin": 0.5165
+        },
+        {
+          "text": "take me off your newsletter",
+          "expected": "newsletter_subscription",
+          "label": "newsletter_subscription",
+          "correct": true,
+          "confidence": 0.933,
+          "margin": 0.8945
+        },
+        {
+          "text": "my card was declined when I tried to pay",
+          "expected": "payment_issue",
+          "label": "payment_issue",
+          "correct": true,
+          "confidence": 0.5579,
+          "margin": 0.4013
+        },
+        {
+          "text": "I want to place a new order",
+          "expected": "place_order",
+          "label": "set_up_shipping_address",
+          "correct": false,
+          "confidence": 0.3434,
+          "margin": 0.1021
+        },
+        {
+          "text": "I forgot my password",
+          "expected": "recover_password",
+          "label": "recover_password",
+          "correct": true,
+          "confidence": 0.9174,
+          "margin": 0.9001
+        },
+        {
+          "text": "I cannot finish signing up, the form errors out",
+          "expected": "registration_problems",
+          "label": "registration_problems",
+          "correct": true,
+          "confidence": 0.9305,
+          "margin": 0.9206
+        },
+        {
+          "text": "where can I leave a review of the product",
+          "expected": "review",
+          "label": "review",
+          "correct": true,
+          "confidence": 0.9637,
+          "margin": 0.9571
+        },
+        {
+          "text": "how do I add a new shipping address",
+          "expected": "set_up_shipping_address",
+          "label": "set_up_shipping_address",
+          "correct": true,
+          "confidence": 0.8714,
+          "margin": 0.7713
+        },
+        {
+          "text": "I want to switch to my other account",
+          "expected": "switch_account",
+          "label": "switch_account",
+          "correct": true,
+          "confidence": 0.9557,
+          "margin": 0.9414
+        },
+        {
+          "text": "I want to track my order",
+          "expected": "track_order",
+          "label": "track_order",
+          "correct": true,
+          "confidence": 0.6749,
+          "margin": 0.5515
+        },
+        {
+          "text": "where is my refund, it has not arrived yet",
+          "expected": "track_refund",
+          "label": "track_refund",
+          "correct": true,
+          "confidence": 0.538,
+          "margin": 0.2197
+        }
+      ],
+      "out_of_scope": [
+        {
+          "text": "what is the capital of Portugal",
+          "expected": null,
+          "label": "create_account",
+          "correct": null,
+          "confidence": 0.1508,
+          "margin": 0.0669
+        },
+        {
+          "text": "write me a haiku about rain",
+          "expected": null,
+          "label": "review",
+          "correct": null,
+          "confidence": 0.4283,
+          "margin": 0.3443
+        },
+        {
+          "text": "how do I change a flat tyre on a bicycle",
+          "expected": null,
+          "label": "recover_password",
+          "correct": null,
+          "confidence": 0.1767,
+          "margin": 0.058
+        },
+        {
+          "text": "my cat keeps knocking plants off the windowsill",
+          "expected": null,
+          "label": "complaint",
+          "correct": null,
+          "confidence": 0.443,
+          "margin": 0.3574
+        },
+        {
+          "text": "what is the derivative of x squared",
+          "expected": null,
+          "label": "check_cancellation_fee",
+          "correct": null,
+          "confidence": 0.1288,
+          "margin": 0.0225
+        },
+        {
+          "text": "recommend a good science fiction novel",
+          "expected": null,
+          "label": "place_order",
+          "correct": null,
+          "confidence": 0.2901,
+          "margin": 0.1529
+        },
+        {
+          "text": "the weather forecast for Tuesday please",
+          "expected": null,
+          "label": "delivery_period",
+          "correct": null,
+          "confidence": 0.279,
+          "margin": 0.1393
+        },
+        {
+          "text": "translate good morning into Japanese",
+          "expected": null,
+          "label": "contact_human_agent",
+          "correct": null,
+          "confidence": 0.2945,
+          "margin": 0.1853
+        }
+      ],
+      "track_holdout": [
+        {
+          "text": "locate my parcel for me",
+          "expected": "track_order",
+          "label": "delivery_options",
+          "correct": false,
+          "confidence": 0.2966,
+          "margin": 0.1365
+        },
+        {
+          "text": "can you tell me where my package has got to",
+          "expected": "track_order",
+          "label": "delivery_options",
+          "correct": false,
+          "confidence": 0.466,
+          "margin": 0.2258
+        },
+        {
+          "text": "I would like the tracking details for my shipment",
+          "expected": "track_order",
+          "label": "delivery_period",
+          "correct": false,
+          "confidence": 0.4144,
+          "margin": 0.1606
+        },
+        {
+          "text": "whereabouts of my delivery please",
+          "expected": "track_order",
+          "label": "delivery_options",
+          "correct": false,
+          "confidence": 0.3991,
+          "margin": 0.0584
+        }
+      ],
+      "refund_holdout": [
+        {
+          "text": "refund me for the purchase I cancelled yesterday",
+          "expected": "get_refund",
+          "label": "get_refund",
+          "correct": true,
+          "confidence": 0.3634,
+          "margin": 0.0242
+        },
+        {
+          "text": "I want reimbursing for the order I called off",
+          "expected": "get_refund",
+          "label": "get_refund",
+          "correct": true,
+          "confidence": 0.4127,
+          "margin": 0.2055
+        },
+        {
+          "text": "I called off my order, where is my reimbursement",
+          "expected": "track_refund",
+          "label": "track_refund",
+          "correct": true,
+          "confidence": 0.3466,
+          "margin": 0.0292
+        },
+        {
+          "text": "the refund you promised has not turned up",
+          "expected": "track_refund",
+          "label": "track_refund",
+          "correct": true,
+          "confidence": 0.5922,
+          "margin": 0.3203
+        },
+        {
+          "text": "do not send the order, I want it cancelled",
+          "expected": "cancel_order",
+          "label": "cancel_order",
+          "correct": true,
+          "confidence": 0.9568,
+          "margin": 0.9487
+        },
+        {
+          "text": "withdraw my order please",
+          "expected": "cancel_order",
+          "label": "cancel_order",
+          "correct": true,
+          "confidence": 0.6735,
+          "margin": 0.5835
+        }
+      ]
+    },
+    "augmented": {
+      "held_out_same_split_as_shipped": {
+        "n": 1350,
+        "accuracy": 0.9904,
+        "macro_f1": 0.9904
+      },
+      "controls_correct": "16/17",
+      "paraphrases_correct": "26/27",
+      "track_holdout_correct": "4/4",
+      "refund_holdout_correct": "6/6",
+      "controls": [
+        {
+          "text": "Where can I track my parcel after it has been shipped?",
+          "expected": "track_order",
+          "label": "track_order",
+          "correct": true,
+          "confidence": 0.9339,
+          "margin": 0.9062
+        },
+        {
+          "text": "Please provide the tracking status of my package.",
+          "expected": "track_order",
+          "label": "track_order",
+          "correct": true,
+          "confidence": 0.9279,
+          "margin": 0.8993
+        },
+        {
+          "text": "I need to know where my shipment is right now.",
+          "expected": "track_order",
+          "label": "track_order",
+          "correct": true,
+          "confidence": 0.9602,
+          "margin": 0.9458
+        },
+        {
+          "text": "where is my order",
+          "expected": "track_order",
+          "label": "track_order",
+          "correct": true,
+          "confidence": 0.9149,
+          "margin": 0.8873
+        },
+        {
+          "text": "I want to track my order",
+          "expected": "track_order",
+          "label": "track_order",
+          "correct": true,
+          "confidence": 0.9084,
+          "margin": 0.8722
+        },
+        {
+          "text": "how do I track my order",
+          "expected": "track_order",
+          "label": "track_order",
+          "correct": true,
+          "confidence": 0.9431,
+          "margin": 0.9144
+        },
+        {
+          "text": "when will my order arrive",
+          "expected": "delivery_period",
+          "label": "delivery_period",
+          "correct": true,
+          "confidence": 0.9243,
+          "margin": 0.8692
+        },
+        {
+          "text": "how long does delivery take",
+          "expected": "delivery_period",
+          "label": "delivery_period",
+          "correct": true,
+          "confidence": 0.9281,
+          "margin": 0.8849
+        },
+        {
+          "text": "how long does shipping usually take",
+          "expected": "delivery_period",
+          "label": "delivery_period",
+          "correct": true,
+          "confidence": 0.974,
+          "margin": 0.9655
+        },
+        {
+          "text": "what delivery options are available",
+          "expected": "delivery_options",
+          "label": "delivery_options",
+          "correct": true,
+          "confidence": 0.9688,
+          "margin": 0.9619
+        },
+        {
+          "text": "which shipping methods do you offer",
+          "expected": "delivery_options",
+          "label": "delivery_options",
+          "correct": true,
+          "confidence": 0.9823,
+          "margin": 0.9769
+        },
+        {
+          "text": "I need to change the shipping address on my order",
+          "expected": "change_shipping_address",
+          "label": "change_shipping_address",
+          "correct": true,
+          "confidence": 0.8575,
+          "margin": 0.7596
+        },
+        {
+          "text": "redirect my package to a different address, it is already on its way",
+          "expected": "change_shipping_address",
+          "label": "set_up_shipping_address",
+          "correct": false,
+          "confidence": 0.6396,
+          "margin": 0.4678
+        },
+        {
+          "text": "how do I add a new shipping address",
+          "expected": "set_up_shipping_address",
+          "label": "set_up_shipping_address",
+          "correct": true,
+          "confidence": 0.8705,
+          "margin": 0.769
+        },
+        {
+          "text": "I would like a refund for this",
+          "expected": "get_refund",
+          "label": "get_refund",
+          "correct": true,
+          "confidence": 0.8308,
+          "margin": 0.7654
+        },
+        {
+          "text": "where is my refund, it has not arrived yet",
+          "expected": "track_refund",
+          "label": "track_refund",
+          "correct": true,
+          "confidence": 0.8785,
+          "margin": 0.7971
+        },
+        {
+          "text": "I want to cancel the order I placed yesterday",
+          "expected": "cancel_order",
+          "label": "cancel_order",
+          "correct": true,
+          "confidence": 0.8772,
+          "margin": 0.8519
+        }
+      ],
+      "paraphrases": [
+        {
+          "text": "I want to cancel the order I placed yesterday",
+          "expected": "cancel_order",
+          "label": "cancel_order",
+          "correct": true,
+          "confidence": 0.8772,
+          "margin": 0.8519
+        },
+        {
+          "text": "can I add another item to my existing order",
+          "expected": "change_order",
+          "label": "change_order",
+          "correct": true,
+          "confidence": 0.8464,
+          "margin": 0.7883
+        },
+        {
+          "text": "I need to change the shipping address on my order",
+          "expected": "change_shipping_address",
+          "label": "change_shipping_address",
+          "correct": true,
+          "confidence": 0.8575,
+          "margin": 0.7596
+        },
+        {
+          "text": "is there a fee if I cancel now",
+          "expected": "check_cancellation_fee",
+          "label": "check_cancellation_fee",
+          "correct": true,
+          "confidence": 0.8083,
+          "margin": 0.761
+        },
+        {
+          "text": "I want to look at my invoice from last month",
+          "expected": "check_invoice",
+          "label": "check_invoice",
+          "correct": true,
+          "confidence": 0.8481,
+          "margin": 0.8026
+        },
+        {
+          "text": "which payment methods do you accept",
+          "expected": "check_payment_methods",
+          "label": "check_payment_methods",
+          "correct": true,
+          "confidence": 0.9609,
+          "margin": 0.9512
+        },
+        {
+          "text": "what is your refund policy",
+          "expected": "check_refund_policy",
+          "label": "check_refund_policy",
+          "correct": true,
+          "confidence": 0.8476,
+          "margin": 0.7413
+        },
+        {
+          "text": "this is the third time this has gone wrong and I am furious",
+          "expected": "complaint",
+          "label": "complaint",
+          "correct": true,
+          "confidence": 0.1862,
+          "margin": 0.0433
+        },
+        {
+          "text": "how do I get in touch with customer service",
+          "expected": "contact_customer_service",
+          "label": "contact_customer_service",
+          "correct": true,
+          "confidence": 0.9685,
+          "margin": 0.9601
+        },
+        {
+          "text": "I want to speak to a real person",
+          "expected": "contact_human_agent",
+          "label": "contact_human_agent",
+          "correct": true,
+          "confidence": 0.9657,
+          "margin": 0.9611
+        },
+        {
+          "text": "how do I sign up for an account",
+          "expected": "create_account",
+          "label": "create_account",
+          "correct": true,
+          "confidence": 0.8391,
+          "margin": 0.7811
+        },
+        {
+          "text": "please delete my account permanently",
+          "expected": "delete_account",
+          "label": "delete_account",
+          "correct": true,
+          "confidence": 0.966,
+          "margin": 0.9614
+        },
+        {
+          "text": "what delivery options are available",
+          "expected": "delivery_options",
+          "label": "delivery_options",
+          "correct": true,
+          "confidence": 0.9688,
+          "margin": 0.9619
+        },
+        {
+          "text": "when will my order arrive",
+          "expected": "delivery_period",
+          "label": "delivery_period",
+          "correct": true,
+          "confidence": 0.9243,
+          "margin": 0.8692
+        },
+        {
+          "text": "I need to update my email address on my profile",
+          "expected": "edit_account",
+          "label": "edit_account",
+          "correct": true,
+          "confidence": 0.5629,
+          "margin": 0.3208
+        },
+        {
+          "text": "please send me the invoice",
+          "expected": "get_invoice",
+          "label": "get_invoice",
+          "correct": true,
+          "confidence": 0.7588,
+          "margin": 0.71
+        },
+        {
+          "text": "I would like a refund for this",
+          "expected": "get_refund",
+          "label": "get_refund",
+          "correct": true,
+          "confidence": 0.8308,
+          "margin": 0.7654
+        },
+        {
+          "text": "take me off your newsletter",
+          "expected": "newsletter_subscription",
+          "label": "newsletter_subscription",
+          "correct": true,
+          "confidence": 0.9338,
+          "margin": 0.8977
+        },
+        {
+          "text": "my card was declined when I tried to pay",
+          "expected": "payment_issue",
+          "label": "payment_issue",
+          "correct": true,
+          "confidence": 0.5228,
+          "margin": 0.3565
+        },
+        {
+          "text": "I want to place a new order",
+          "expected": "place_order",
+          "label": "set_up_shipping_address",
+          "correct": false,
+          "confidence": 0.3487,
+          "margin": 0.1331
+        },
+        {
+          "text": "I forgot my password",
+          "expected": "recover_password",
+          "label": "recover_password",
+          "correct": true,
+          "confidence": 0.9177,
+          "margin": 0.8999
+        },
+        {
+          "text": "I cannot finish signing up, the form errors out",
+          "expected": "registration_problems",
+          "label": "registration_problems",
+          "correct": true,
+          "confidence": 0.9306,
+          "margin": 0.9204
+        },
+        {
+          "text": "where can I leave a review of the product",
+          "expected": "review",
+          "label": "review",
+          "correct": true,
+          "confidence": 0.9635,
+          "margin": 0.9569
+        },
+        {
+          "text": "how do I add a new shipping address",
+          "expected": "set_up_shipping_address",
+          "label": "set_up_shipping_address",
+          "correct": true,
+          "confidence": 0.8705,
+          "margin": 0.769
+        },
+        {
+          "text": "I want to switch to my other account",
+          "expected": "switch_account",
+          "label": "switch_account",
+          "correct": true,
+          "confidence": 0.9558,
+          "margin": 0.9422
+        },
+        {
+          "text": "I want to track my order",
+          "expected": "track_order",
+          "label": "track_order",
+          "correct": true,
+          "confidence": 0.9084,
+          "margin": 0.8722
+        },
+        {
+          "text": "where is my refund, it has not arrived yet",
+          "expected": "track_refund",
+          "label": "track_refund",
+          "correct": true,
+          "confidence": 0.8785,
+          "margin": 0.7971
+        }
+      ],
+      "out_of_scope": [
+        {
+          "text": "what is the capital of Portugal",
+          "expected": null,
+          "label": "create_account",
+          "correct": null,
+          "confidence": 0.1531,
+          "margin": 0.0717
+        },
+        {
+          "text": "write me a haiku about rain",
+          "expected": null,
+          "label": "review",
+          "correct": null,
+          "confidence": 0.4278,
+          "margin": 0.3404
+        },
+        {
+          "text": "how do I change a flat tyre on a bicycle",
+          "expected": null,
+          "label": "recover_password",
+          "correct": null,
+          "confidence": 0.1735,
+          "margin": 0.0642
+        },
+        {
+          "text": "my cat keeps knocking plants off the windowsill",
+          "expected": null,
+          "label": "complaint",
+          "correct": null,
+          "confidence": 0.4654,
+          "margin": 0.3897
+        },
+        {
+          "text": "what is the derivative of x squared",
+          "expected": null,
+          "label": "track_order",
+          "correct": null,
+          "confidence": 0.1502,
+          "margin": 0.0365
+        },
+        {
+          "text": "recommend a good science fiction novel",
+          "expected": null,
+          "label": "place_order",
+          "correct": null,
+          "confidence": 0.2787,
+          "margin": 0.1371
+        },
+        {
+          "text": "the weather forecast for Tuesday please",
+          "expected": null,
+          "label": "delivery_period",
+          "correct": null,
+          "confidence": 0.1943,
+          "margin": 0.0444
+        },
+        {
+          "text": "translate good morning into Japanese",
+          "expected": null,
+          "label": "contact_human_agent",
+          "correct": null,
+          "confidence": 0.2895,
+          "margin": 0.1843
+        }
+      ],
+      "track_holdout": [
+        {
+          "text": "locate my parcel for me",
+          "expected": "track_order",
+          "label": "track_order",
+          "correct": true,
+          "confidence": 0.9393,
+          "margin": 0.9273
+        },
+        {
+          "text": "can you tell me where my package has got to",
+          "expected": "track_order",
+          "label": "track_order",
+          "correct": true,
+          "confidence": 0.9567,
+          "margin": 0.938
+        },
+        {
+          "text": "I would like the tracking details for my shipment",
+          "expected": "track_order",
+          "label": "track_order",
+          "correct": true,
+          "confidence": 0.8589,
+          "margin": 0.8144
+        },
+        {
+          "text": "whereabouts of my delivery please",
+          "expected": "track_order",
+          "label": "track_order",
+          "correct": true,
+          "confidence": 0.9384,
+          "margin": 0.9176
+        }
+      ],
+      "refund_holdout": [
+        {
+          "text": "refund me for the purchase I cancelled yesterday",
+          "expected": "get_refund",
+          "label": "get_refund",
+          "correct": true,
+          "confidence": 0.7976,
+          "margin": 0.7264
+        },
+        {
+          "text": "I want reimbursing for the order I called off",
+          "expected": "get_refund",
+          "label": "get_refund",
+          "correct": true,
+          "confidence": 0.7684,
+          "margin": 0.703
+        },
+        {
+          "text": "I called off my order, where is my reimbursement",
+          "expected": "track_refund",
+          "label": "track_refund",
+          "correct": true,
+          "confidence": 0.7427,
+          "margin": 0.5556
+        },
+        {
+          "text": "the refund you promised has not turned up",
+          "expected": "track_refund",
+          "label": "track_refund",
+          "correct": true,
+          "confidence": 0.9029,
+          "margin": 0.8425
+        },
+        {
+          "text": "do not send the order, I want it cancelled",
+          "expected": "cancel_order",
+          "label": "cancel_order",
+          "correct": true,
+          "confidence": 0.9722,
+          "margin": 0.9663
+        },
+        {
+          "text": "withdraw my order please",
+          "expected": "cancel_order",
+          "label": "cancel_order",
+          "correct": true,
+          "confidence": 0.729,
+          "margin": 0.671
+        }
+      ]
+    }
+  },
+  "per_class_coverage_heldout": {
+    "cancel_order": {
+      "n": 50,
+      "accuracy": 1.0,
+      "p10_confidence": 0.9124,
+      "median_confidence": 0.9693,
+      "coverage_at_0.5": 0.98,
+      "coverage_at_0.9": 0.9
+    },
+    "change_order": {
+      "n": 50,
+      "accuracy": 0.98,
+      "p10_confidence": 0.7508,
+      "median_confidence": 0.9383,
+      "coverage_at_0.5": 0.9796,
+      "coverage_at_0.9": 0.6939
+    },
+    "change_shipping_address": {
+      "n": 50,
+      "accuracy": 0.98,
+      "p10_confidence": 0.676,
+      "median_confidence": 0.9213,
+      "coverage_at_0.5": 0.9796,
+      "coverage_at_0.9": 0.6122
+    },
+    "check_cancellation_fee": {
+      "n": 50,
+      "accuracy": 1.0,
+      "p10_confidence": 0.919,
+      "median_confidence": 0.9681,
+      "coverage_at_0.5": 1.0,
+      "coverage_at_0.9": 0.96
+    },
+    "check_invoice": {
+      "n": 50,
+      "accuracy": 0.96,
+      "p10_confidence": 0.7063,
+      "median_confidence": 0.9085,
+      "coverage_at_0.5": 1.0,
+      "coverage_at_0.9": 0.5625
+    },
+    "check_payment_methods": {
+      "n": 50,
+      "accuracy": 1.0,
+      "p10_confidence": 0.9374,
+      "median_confidence": 0.9715,
+      "coverage_at_0.5": 1.0,
+      "coverage_at_0.9": 0.94
+    },
+    "check_refund_policy": {
+      "n": 50,
+      "accuracy": 1.0,
+      "p10_confidence": 0.7989,
+      "median_confidence": 0.9631,
+      "coverage_at_0.5": 1.0,
+      "coverage_at_0.9": 0.82
+    },
+    "complaint": {
+      "n": 50,
+      "accuracy": 1.0,
+      "p10_confidence": 0.845,
+      "median_confidence": 0.9641,
+      "coverage_at_0.5": 1.0,
+      "coverage_at_0.9": 0.8
+    },
+    "contact_customer_service": {
+      "n": 50,
+      "accuracy": 0.98,
+      "p10_confidence": 0.8779,
+      "median_confidence": 0.9672,
+      "coverage_at_0.5": 0.9796,
+      "coverage_at_0.9": 0.898
+    },
+    "contact_human_agent": {
+      "n": 50,
+      "accuracy": 1.0,
+      "p10_confidence": 0.9195,
+      "median_confidence": 0.9743,
+      "coverage_at_0.5": 1.0,
+      "coverage_at_0.9": 0.96
+    },
+    "create_account": {
+      "n": 50,
+      "accuracy": 1.0,
+      "p10_confidence": 0.7391,
+      "median_confidence": 0.9205,
+      "coverage_at_0.5": 0.98,
+      "coverage_at_0.9": 0.66
+    },
+    "delete_account": {
+      "n": 50,
+      "accuracy": 0.98,
+      "p10_confidence": 0.9041,
+      "median_confidence": 0.9438,
+      "coverage_at_0.5": 1.0,
+      "coverage_at_0.9": 0.9184
+    },
+    "delivery_options": {
+      "n": 50,
+      "accuracy": 1.0,
+      "p10_confidence": 0.8685,
+      "median_confidence": 0.9452,
+      "coverage_at_0.5": 0.98,
+      "coverage_at_0.9": 0.82
+    },
+    "delivery_period": {
+      "n": 50,
+      "accuracy": 1.0,
+      "p10_confidence": 0.7875,
+      "median_confidence": 0.9364,
+      "coverage_at_0.5": 1.0,
+      "coverage_at_0.9": 0.66
+    },
+    "edit_account": {
+      "n": 50,
+      "accuracy": 0.98,
+      "p10_confidence": 0.7413,
+      "median_confidence": 0.9617,
+      "coverage_at_0.5": 0.9796,
+      "coverage_at_0.9": 0.7755
+    },
+    "get_invoice": {
+      "n": 50,
+      "accuracy": 0.98,
+      "p10_confidence": 0.8145,
+      "median_confidence": 0.9064,
+      "coverage_at_0.5": 0.9796,
+      "coverage_at_0.9": 0.5306
+    },
+    "get_refund": {
+      "n": 50,
+      "accuracy": 1.0,
+      "p10_confidence": 0.7229,
+      "median_confidence": 0.9444,
+      "coverage_at_0.5": 0.98,
+      "coverage_at_0.9": 0.7
+    },
+    "newsletter_subscription": {
+      "n": 50,
+      "accuracy": 1.0,
+      "p10_confidence": 0.9421,
+      "median_confidence": 0.9792,
+      "coverage_at_0.5": 1.0,
+      "coverage_at_0.9": 0.98
+    },
+    "payment_issue": {
+      "n": 50,
+      "accuracy": 1.0,
+      "p10_confidence": 0.9176,
+      "median_confidence": 0.9697,
+      "coverage_at_0.5": 1.0,
+      "coverage_at_0.9": 0.9
+    },
+    "place_order": {
+      "n": 50,
+      "accuracy": 1.0,
+      "p10_confidence": 0.7379,
+      "median_confidence": 0.9621,
+      "coverage_at_0.5": 0.98,
+      "coverage_at_0.9": 0.76
+    },
+    "recover_password": {
+      "n": 50,
+      "accuracy": 1.0,
+      "p10_confidence": 0.9373,
+      "median_confidence": 0.9753,
+      "coverage_at_0.5": 1.0,
+      "coverage_at_0.9": 0.96
+    },
+    "registration_problems": {
+      "n": 50,
+      "accuracy": 1.0,
+      "p10_confidence": 0.9137,
+      "median_confidence": 0.9786,
+      "coverage_at_0.5": 1.0,
+      "coverage_at_0.9": 0.98
+    },
+    "review": {
+      "n": 50,
+      "accuracy": 0.98,
+      "p10_confidence": 0.9007,
+      "median_confidence": 0.9778,
+      "coverage_at_0.5": 0.9796,
+      "coverage_at_0.9": 0.9184
+    },
+    "set_up_shipping_address": {
+      "n": 50,
+      "accuracy": 0.94,
+      "p10_confidence": 0.6917,
+      "median_confidence": 0.9149,
+      "coverage_at_0.5": 1.0,
+      "coverage_at_0.9": 0.6809
+    },
+    "switch_account": {
+      "n": 50,
+      "accuracy": 1.0,
+      "p10_confidence": 0.5974,
+      "median_confidence": 0.8835,
+      "coverage_at_0.5": 0.94,
+      "coverage_at_0.9": 0.44
+    },
+    "track_order": {
+      "n": 50,
+      "accuracy": 1.0,
+      "p10_confidence": 0.9098,
+      "median_confidence": 0.9706,
+      "coverage_at_0.5": 0.98,
+      "coverage_at_0.9": 0.9
+    },
+    "track_refund": {
+      "n": 50,
+      "accuracy": 0.98,
+      "p10_confidence": 0.8691,
+      "median_confidence": 0.9464,
+      "coverage_at_0.5": 1.0,
+      "coverage_at_0.9": 0.7755
+    }
+  },
+  "per_class_confidence": {
+    "cancel_order": {
+      "n": 2,
+      "correct": 2,
+      "min_confidence": 0.8772,
+      "median_confidence": 0.8772,
+      "min_margin": 0.8519
+    },
+    "change_order": {
+      "n": 1,
+      "correct": 1,
+      "min_confidence": 0.8464,
+      "median_confidence": 0.8464,
+      "min_margin": 0.7883
+    },
+    "change_shipping_address": {
+      "n": 3,
+      "correct": 2,
+      "min_confidence": 0.6396,
+      "median_confidence": 0.8575,
+      "min_margin": 0.4678
+    },
+    "check_cancellation_fee": {
+      "n": 1,
+      "correct": 1,
+      "min_confidence": 0.8083,
+      "median_confidence": 0.8083,
+      "min_margin": 0.761
+    },
+    "check_invoice": {
+      "n": 1,
+      "correct": 1,
+      "min_confidence": 0.8481,
+      "median_confidence": 0.8481,
+      "min_margin": 0.8026
+    },
+    "check_payment_methods": {
+      "n": 1,
+      "correct": 1,
+      "min_confidence": 0.9609,
+      "median_confidence": 0.9609,
+      "min_margin": 0.9512
+    },
+    "check_refund_policy": {
+      "n": 1,
+      "correct": 1,
+      "min_confidence": 0.8476,
+      "median_confidence": 0.8476,
+      "min_margin": 0.7413
+    },
+    "complaint": {
+      "n": 1,
+      "correct": 1,
+      "min_confidence": 0.1862,
+      "median_confidence": 0.1862,
+      "min_margin": 0.0433
+    },
+    "contact_customer_service": {
+      "n": 1,
+      "correct": 1,
+      "min_confidence": 0.9685,
+      "median_confidence": 0.9685,
+      "min_margin": 0.9601
+    },
+    "contact_human_agent": {
+      "n": 1,
+      "correct": 1,
+      "min_confidence": 0.9657,
+      "median_confidence": 0.9657,
+      "min_margin": 0.9611
+    },
+    "create_account": {
+      "n": 1,
+      "correct": 1,
+      "min_confidence": 0.8391,
+      "median_confidence": 0.8391,
+      "min_margin": 0.7811
+    },
+    "delete_account": {
+      "n": 1,
+      "correct": 1,
+      "min_confidence": 0.966,
+      "median_confidence": 0.966,
+      "min_margin": 0.9614
+    },
+    "delivery_options": {
+      "n": 3,
+      "correct": 3,
+      "min_confidence": 0.9688,
+      "median_confidence": 0.9688,
+      "min_margin": 0.9619
+    },
+    "delivery_period": {
+      "n": 4,
+      "correct": 4,
+      "min_confidence": 0.9243,
+      "median_confidence": 0.9262,
+      "min_margin": 0.8692
+    },
+    "edit_account": {
+      "n": 1,
+      "correct": 1,
+      "min_confidence": 0.5629,
+      "median_confidence": 0.5629,
+      "min_margin": 0.3208
+    },
+    "get_invoice": {
+      "n": 1,
+      "correct": 1,
+      "min_confidence": 0.7588,
+      "median_confidence": 0.7588,
+      "min_margin": 0.71
+    },
+    "get_refund": {
+      "n": 2,
+      "correct": 2,
+      "min_confidence": 0.8308,
+      "median_confidence": 0.8308,
+      "min_margin": 0.7654
+    },
+    "newsletter_subscription": {
+      "n": 1,
+      "correct": 1,
+      "min_confidence": 0.9338,
+      "median_confidence": 0.9338,
+      "min_margin": 0.8977
+    },
+    "payment_issue": {
+      "n": 1,
+      "correct": 1,
+      "min_confidence": 0.5228,
+      "median_confidence": 0.5228,
+      "min_margin": 0.3565
+    },
+    "place_order": {
+      "n": 1,
+      "correct": 0,
+      "min_confidence": 0.3487,
+      "median_confidence": 0.3487,
+      "min_margin": 0.1331
+    },
+    "recover_password": {
+      "n": 1,
+      "correct": 1,
+      "min_confidence": 0.9177,
+      "median_confidence": 0.9177,
+      "min_margin": 0.8999
+    },
+    "registration_problems": {
+      "n": 1,
+      "correct": 1,
+      "min_confidence": 0.9306,
+      "median_confidence": 0.9306,
+      "min_margin": 0.9204
+    },
+    "review": {
+      "n": 1,
+      "correct": 1,
+      "min_confidence": 0.9635,
+      "median_confidence": 0.9635,
+      "min_margin": 0.9569
+    },
+    "set_up_shipping_address": {
+      "n": 2,
+      "correct": 2,
+      "min_confidence": 0.8705,
+      "median_confidence": 0.8705,
+      "min_margin": 0.769
+    },
+    "switch_account": {
+      "n": 1,
+      "correct": 1,
+      "min_confidence": 0.9558,
+      "median_confidence": 0.9558,
+      "min_margin": 0.9422
+    },
+    "track_order": {
+      "n": 7,
+      "correct": 7,
+      "min_confidence": 0.9084,
+      "median_confidence": 0.9279,
+      "min_margin": 0.8722
+    },
+    "track_refund": {
+      "n": 2,
+      "correct": 2,
+      "min_confidence": 0.8785,
+      "median_confidence": 0.8785,
+      "min_margin": 0.7971
+    }
+  },
+  "confidence_sweep_augmented": [
+    {
+      "threshold": 0.2,
+      "oos_caught": "4/8",
+      "valid_held": "1/27"
+    },
+    {
+      "threshold": 0.3,
+      "oos_caught": "6/8",
+      "valid_held": "1/27"
+    },
+    {
+      "threshold": 0.35,
+      "oos_caught": "6/8",
+      "valid_held": "2/27"
+    },
+    {
+      "threshold": 0.4,
+      "oos_caught": "6/8",
+      "valid_held": "2/27"
+    },
+    {
+      "threshold": 0.45,
+      "oos_caught": "7/8",
+      "valid_held": "2/27"
+    },
+    {
+      "threshold": 0.5,
+      "oos_caught": "8/8",
+      "valid_held": "2/27"
+    },
+    {
+      "threshold": 0.6,
+      "oos_caught": "8/8",
+      "valid_held": "4/27"
+    },
+    {
+      "threshold": 0.7,
+      "oos_caught": "8/8",
+      "valid_held": "4/27"
+    },
+    {
+      "threshold": 0.8,
+      "oos_caught": "8/8",
+      "valid_held": "5/27"
+    },
+    {
+      "threshold": 0.9,
+      "oos_caught": "8/8",
+      "valid_held": "15/27"
+    }
+  ]
+}

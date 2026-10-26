@@ -2,7 +2,7 @@
 
 Purpose: let a fresh Claude Code session pick up this research program with as little loss as possible. Keep it short;
 the durable record is `RESEARCH_LOG.md` (lab notebook, append-only, every result the turn it lands). Update this file at
-the end of every working block (not just at the end of a session). Last update: **2026-10-25, ~14:10 PDT**.
+the end of every working block (not just at the end of a session). Last update: **2026-10-26, ~07:50 PDT**.
 
 ## How to resume (5 minutes)
 1. Read this file, then the last ~300 lines of `RESEARCH_LOG.md` (`tail -300 RESEARCH_LOG.md`).
@@ -15,13 +15,14 @@ the end of every working block (not just at the end of a session). Last update: 
    first; checkpoint + `python3 -u` + resume before launching; pull checkpoints during training; destroy the instance in a
    trap; results in tag-specific files, merge never overwrite; WebSearch 200/session cap → Chrome tools / playwright.
 
-## Running right now (2026-10-25 ~23:30 PDT)
-- **MPS: the controlled 2.0M arm** (`run_2m_arm.sh` in the session scratchpad; logs `logs/train_oracle_2m_conv.log` → `train_oracle_2m_persona2.log`):
-  2.0M TinyStories base (`best_lm_2m_scaling.pt`, same tokenizer) → 40 ep on `chat_v6plain_fix` → 4 ep on `chat_v6persona2` = the exact
-  8.5M recipe at 2.0M. ≈ 30 min. Then `run_2m_probes.sh` generates probes (varied / first-impression T0.5+T0.3 / 3-turn) for both sizes
-  and builds **`pile_runs/atl/probe_size_blind4.jsonl`** (key `probe_size_blind4_key.json`). **Next session: launch ONE grader on it**
-  (rubric as in RESEARCH_LOG "persona2 blind pass", with continuity for multi-turn rows), unblind, report per set. Decision rule in the log.
-- Nothing on GPU. Demo server on 127.0.0.1:8765 (default: conv_persona2 @ T0.3).
+## Running right now (2026-10-26 ~07:50 PDT)
+- **Nothing on GPU** (`vastai show instances` = `[]`; grow run 57825015 destroyed by trap). Demo server on 127.0.0.1:8765 (default: conv_persona2 @ T0.3).
+- Grow-then-pretrain finished: grown 2M→8.5M ends val 1.9444 vs direct 1.9291 (direct overtakes at epoch 5). Next: epoch-1 shock diagnostic
+  (val every 200 steps, warmup arms) locally on MPS, then a warmup rerun on A100 only if the shock is real. See RESEARCH_LOG 10-26 07:40.
+- Benchmark rerun landed (`benchmarks/classifier_baselines.py`, `data/eval_results/setfit_fasttext_benchmark_rerun.json`): SetFit 85.0 /
+  FastText tuned 85.9 on banking77 vs published 54.3 / 1.1. README, benchmark page and two posts still cite the old numbers — **Nico decides
+  presentation** (recommendation: versioned benchmark + dated correction note). Another agent (Lima VM `claude-work`, no host mounts) handles the posts.
+- Size test done: 8.5M beats 2.0M on every set → 8.5M lineage stays (RESEARCH_LOG 10-26 early).
 
 ## Done this block (all logged in RESEARCH_LOG.md, same date)
 - **Persona-dose model** (conv + 110 hand-written × 47) beats v2 and conv on every set; demo default. Human-name bug traced to

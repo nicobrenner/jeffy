@@ -26,7 +26,8 @@ c = c.replace('from transformers import AutoTokenizer', 'try:\\n    from transfo
 with open('train_lm.py','w') as f: f.write(c)
 import torch; assert torch.cuda.is_available(); print('CUDA', torch.cuda.get_device_name(0))\"" 2>&1 | grep CUDA || { echo "FATAL: no cuda"; exit 1; }
 CK=$(basename "$INIT")
-$SSH "cd $REMOTE && setsid nohup python3 -u train_lm.py --tokenizer $TOK --max-stories 50000 --d-model 384 --n-layers 4 --n-heads 8 --d-ff 1280 --seq-len 256 --batch-size 32 --lr $LR --epochs $EPOCHS --n-iterations 1 --tie-weights --sample-every 10 --resume checkpoints/$CK --fresh-opt --tag $TAG > train_$TAG.log 2>&1 < /dev/null & echo LAUNCHED" 2>&1 | grep LAUNCHED
+$SSH "cd $REMOTE && setsid nohup python3 -u train_lm.py --tokenizer $TOK --max-stories 50000 --d-model 384 --n-layers 4 --n-heads 8 --d-ff 1280 --seq-len 256 --batch-size 32 --lr $LR --epochs $EPOCHS --n-iterations 1 --tie-weights --sample-every 10 --resume checkpoints/$CK --fresh-opt --tag $TAG > train_$TAG.log 2>&1 < /dev/null & echo LAUNCHED" 2>&1 | grep LAUNCHED &
+LAUNCH_PID=$!; for i in $(seq 1 30); do kill -0 $LAUNCH_PID 2>/dev/null || break; sleep 1; done; kill $LAUNCH_PID 2>/dev/null; pkill -f "ssh .*-p $SSH_PORT root@$SSH_HOST.*LAUNCHED" 2>/dev/null; echo "launch step released"
 LAST=""
 for i in $(seq 1 90); do
   sleep 60

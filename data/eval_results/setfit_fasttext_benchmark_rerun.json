@@ -1,0 +1,353 @@
+{
+  "jeffy": {
+    "sst2": {
+      "accuracy": 0.901,
+      "latency_p50_ms": 104
+    },
+    "ag_news": {
+      "accuracy": 0.905,
+      "latency_p50_ms": 80
+    },
+    "banking77": {
+      "accuracy": 0.943,
+      "latency_p50_ms": 118
+    },
+    "_note": "copied from setfit_fasttext_benchmark.json, not rerun"
+  },
+  "setfit": {
+    "sst2": {
+      "accuracy": 0.85,
+      "macro_f1": 0.8496,
+      "latency_p50_ms": 36.41,
+      "latency_p95_ms": 43.45,
+      "training_time_s": 12.2,
+      "model_size_mb": 438.0,
+      "model_size_mib": 417.7,
+      "full_split": {
+        "n": 872,
+        "accuracy": 0.8716,
+        "macro_f1": 0.8713
+      },
+      "n_train_examples": 40,
+      "body_params": 109486464
+    },
+    "ag_news": {
+      "accuracy": 0.82,
+      "macro_f1": 0.7994,
+      "latency_p50_ms": 40.81,
+      "latency_p95_ms": 52.72,
+      "training_time_s": 48.4,
+      "model_size_mb": 438.0,
+      "model_size_mib": 417.7,
+      "full_split": {
+        "n": 7600,
+        "accuracy": 0.8679,
+        "macro_f1": 0.8676
+      },
+      "n_train_examples": 80,
+      "body_params": 109486464
+    },
+    "banking77": {
+      "accuracy": 0.85,
+      "macro_f1": 0.8228,
+      "latency_p50_ms": 46.14,
+      "latency_p95_ms": 54.08,
+      "training_time_s": 982.0,
+      "model_size_mb": 438.4,
+      "model_size_mib": 418.1,
+      "full_split": {
+        "n": 3080,
+        "accuracy": 0.8497,
+        "macro_f1": 0.8497
+      },
+      "n_train_examples": 1540,
+      "body_params": 109486464
+    }
+  },
+  "fasttext": {
+    "sst2": {
+      "accuracy": 0.8,
+      "macro_f1": 0.796,
+      "latency_p50_ms": 0.0,
+      "latency_p95_ms": 0.01,
+      "training_time_s": 0.1,
+      "model_size_mb": 6.2,
+      "model_size_mib": 5.9,
+      "full_split": {
+        "n": 872,
+        "accuracy": 0.82,
+        "macro_f1": 0.8195
+      },
+      "n_train_examples": 67349,
+      "params": {
+        "lr": 0.1,
+        "epoch": 5,
+        "wordNgrams": 1,
+        "dim": 100
+      }
+    },
+    "ag_news": {
+      "accuracy": 0.85,
+      "macro_f1": 0.8422,
+      "latency_p50_ms": 0.01,
+      "latency_p95_ms": 0.01,
+      "training_time_s": 0.7,
+      "model_size_mb": 78.8,
+      "model_size_mib": 75.1,
+      "full_split": {
+        "n": 7600,
+        "accuracy": 0.917,
+        "macro_f1": 0.9169
+      },
+      "n_train_examples": 120000,
+      "params": {
+        "lr": 0.1,
+        "epoch": 5,
+        "wordNgrams": 1,
+        "dim": 100
+      }
+    },
+    "banking77": {
+      "accuracy": 0.15,
+      "macro_f1": 0.0833,
+      "latency_p50_ms": 0.01,
+      "latency_p95_ms": 0.01,
+      "training_time_s": 0.1,
+      "model_size_mb": 1.9,
+      "model_size_mib": 1.8,
+      "full_split": {
+        "n": 3080,
+        "accuracy": 0.1786,
+        "macro_f1": 0.1221
+      },
+      "n_train_examples": 10003,
+      "params": {
+        "lr": 0.1,
+        "epoch": 5,
+        "wordNgrams": 1,
+        "dim": 100
+      }
+    }
+  },
+  "fasttext_defaults_bigram": {
+    "sst2": {
+      "accuracy": 0.82,
+      "macro_f1": 0.8125,
+      "latency_p50_ms": 0.01,
+      "latency_p95_ms": 0.01,
+      "training_time_s": 0.3,
+      "model_size_mb": 806.2,
+      "model_size_mib": 768.8,
+      "full_split": {
+        "n": 872,
+        "accuracy": 0.8165,
+        "macro_f1": 0.8156
+      },
+      "n_train_examples": 67349,
+      "params": {
+        "lr": 0.1,
+        "epoch": 5,
+        "wordNgrams": 2,
+        "dim": 100
+      }
+    },
+    "ag_news": {
+      "accuracy": 0.85,
+      "macro_f1": 0.8421,
+      "latency_p50_ms": 0.01,
+      "latency_p95_ms": 0.02,
+      "training_time_s": 1.1,
+      "model_size_mb": 878.8,
+      "model_size_mib": 838.1,
+      "full_split": {
+        "n": 7600,
+        "accuracy": 0.9179,
+        "macro_f1": 0.9178
+      },
+      "n_train_examples": 120000,
+      "params": {
+        "lr": 0.1,
+        "epoch": 5,
+        "wordNgrams": 2,
+        "dim": 100
+      }
+    },
+    "banking77": {
+      "accuracy": 0.01,
+      "macro_f1": 0.0028,
+      "latency_p50_ms": 0.01,
+      "latency_p95_ms": 0.01,
+      "training_time_s": 0.3,
+      "model_size_mb": 801.9,
+      "model_size_mib": 764.8,
+      "full_split": {
+        "n": 3080,
+        "accuracy": 0.0334,
+        "macro_f1": 0.007
+      },
+      "n_train_examples": 10003,
+      "params": {
+        "lr": 0.1,
+        "epoch": 5,
+        "wordNgrams": 2,
+        "dim": 100
+      }
+    }
+  },
+  "fasttext_tuned": {
+    "sst2": {
+      "accuracy": 0.78,
+      "macro_f1": 0.7742,
+      "latency_p50_ms": 0.01,
+      "latency_p95_ms": 0.01,
+      "training_time_s": 0.8,
+      "model_size_mb": 806.2,
+      "model_size_mib": 768.8,
+      "full_split": {
+        "n": 872,
+        "accuracy": 0.8073,
+        "macro_f1": 0.8056
+      },
+      "n_train_examples": 67349,
+      "params": {
+        "lr": 1.0,
+        "epoch": 25,
+        "wordNgrams": 2,
+        "dim": 100
+      }
+    },
+    "ag_news": {
+      "accuracy": 0.83,
+      "macro_f1": 0.824,
+      "latency_p50_ms": 0.01,
+      "latency_p95_ms": 0.02,
+      "training_time_s": 3.3,
+      "model_size_mb": 878.8,
+      "model_size_mib": 838.1,
+      "full_split": {
+        "n": 7600,
+        "accuracy": 0.9162,
+        "macro_f1": 0.9161
+      },
+      "n_train_examples": 120000,
+      "params": {
+        "lr": 1.0,
+        "epoch": 25,
+        "wordNgrams": 2,
+        "dim": 100
+      }
+    },
+    "banking77": {
+      "accuracy": 0.87,
+      "macro_f1": 0.7494,
+      "latency_p50_ms": 0.01,
+      "latency_p95_ms": 0.01,
+      "training_time_s": 0.7,
+      "model_size_mb": 801.9,
+      "model_size_mib": 764.8,
+      "full_split": {
+        "n": 3080,
+        "accuracy": 0.8588,
+        "macro_f1": 0.8583
+      },
+      "n_train_examples": 10003,
+      "params": {
+        "lr": 1.0,
+        "epoch": 25,
+        "wordNgrams": 2,
+        "dim": 100
+      }
+    }
+  },
+  "config": {
+    "date": "2026-10-26",
+    "script": "benchmarks/classifier_baselines.py",
+    "protocol": {
+      "eval_samples": "top-level metrics on the jeffybench.py held-out subset (split.shuffle(seed=42).select(range(100))); full_split = the entire evaluation split",
+      "latency": "CPU, batch size 1, 10 warm-up calls, p50 over the held-out subset",
+      "seed": 42
+    },
+    "datasets": {
+      "sst2": {
+        "hf_dataset": "stanfordnlp/sst2",
+        "jeffybench_dataset": "stanfordnlp/sst2",
+        "train_split": "train",
+        "n_train": 67349,
+        "eval_split": "validation",
+        "n_eval_full": 872,
+        "n_eval_jeffybench": 100,
+        "n_classes": 2
+      },
+      "ag_news": {
+        "hf_dataset": "fancyzhx/ag_news",
+        "jeffybench_dataset": "fancyzhx/ag_news",
+        "train_split": "train",
+        "n_train": 120000,
+        "eval_split": "test",
+        "n_eval_full": 7600,
+        "n_eval_jeffybench": 100,
+        "n_classes": 4
+      },
+      "banking77": {
+        "hf_dataset": "legacy-datasets/banking77",
+        "jeffybench_dataset": "PolyAI/banking77",
+        "train_split": "train",
+        "n_train": 10003,
+        "eval_split": "test",
+        "n_eval_full": 3080,
+        "n_eval_jeffybench": 100,
+        "n_classes": 77
+      }
+    },
+    "setfit": {
+      "model": "sentence-transformers/paraphrase-mpnet-base-v2",
+      "train_protocol": "20 examples per class (setfit.sample_dataset, seed 42); TrainingArguments defaults except num_iterations=20, batch_size=16; logistic-regression head (default)",
+      "why_subsampled": "SetFit contrastive training is quadratic in the training-set size; the full training splits (67k/120k/10k examples) are far beyond a bounded run, so the few-shot protocol from the SetFit paper is used",
+      "train_device": "mps",
+      "latency_device": "cpu",
+      "model_size": "sum of parameter bytes of the sentence-transformer body (fp32) + logistic head"
+    },
+    "fasttext": {
+      "train_protocol": "full training split, text whitespace-normalised, no lowercasing",
+      "configs": {
+        "fasttext": {
+          "lr": 0.1,
+          "epoch": 5,
+          "wordNgrams": 1,
+          "dim": 100
+        },
+        "fasttext_defaults_bigram": {
+          "lr": 0.1,
+          "epoch": 5,
+          "wordNgrams": 2,
+          "dim": 100
+        },
+        "fasttext_tuned": {
+          "lr": 1.0,
+          "epoch": 25,
+          "wordNgrams": 2,
+          "dim": 100
+        }
+      },
+      "model_size": "size of the saved .bin (default bucket=2,000,000 hashes x dim 100 dominates)",
+      "device": "cpu"
+    },
+    "hardware": {
+      "cpu": "Apple M3 Max",
+      "machine": "arm64",
+      "os": "macOS-15.6.1-arm64-arm-64bit",
+      "cpu_threads": 16
+    },
+    "library_versions": {
+      "python": "3.12.9",
+      "setfit": "1.2.0",
+      "sentence_transformers": "5.5.1",
+      "transformers": "5.20.1",
+      "torch": "2.16.0.dev20261018",
+      "datasets": "4.8.5",
+      "sklearn": "1.6.1",
+      "fasttext": "unknown",
+      "numpy": "2.4.6"
+    }
+  }
+}

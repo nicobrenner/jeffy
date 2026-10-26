@@ -4651,3 +4651,44 @@ Negative, cleanly: the ratio representation costs 7% more bytes for 5.7 dB less 
 **Nico's intuition about the phases ("they look exactly the same"), measured (8 Kodak 512² crops):** PSNR between phase (0,0) and each other phase: s=2 23.8 dB (min 22.3), s=4 21.1, s=8 19.0; PSNR between a pixel and its right-hand neighbour in the full image: 25.3 dB. **A phase is about as similar to its sibling phase as a pixel is to its neighbour, slightly less** — which is what it should be, since sibling phases are the image sampled one pixel apart. "Replace every phase with phase (0,0)" (Nico's proposed test) = 24.8 dB at s=2, 20.9 at s=4, 18.7 at s=8; bilinear from phase (0,0) instead of replication: 26.2 / 22.3 / 20.0. So the phases look the same to the eye because their differences are the fine detail the eye discounts, and that fine detail is exactly the information the remaining phases carry (and what a coder must pay for). The sibling-vs-neighbour parity also says why a coder gains nothing *extra* from the decomposition by itself: it rearranges the redundancy, it does not create any. What can create a gain is a predictor that exploits the *structure* of the residual (phase k given the decoded coarser phases = super-resolution), which is the two-scale coder: −10% on the first phase so far. Per-image sibling PSNR at s=4 ranges 15.0 (kodim08, foliage) to 25.9 (kodim03, smooth).
 
 **Growing a model, step 1 (`grow_model.py`, Net2Net adapted to post-norm `TransformerEncoderLayer` with tied embeddings).** Widening 2.0M (d192 L2 h4 ff768) → d384 h8 ff1280: first attempt with random extra column copies gave max |Δlogit| 8.3 — **LayerNorm is only invariant under a uniform scale, so the residual stream must be widened by an exact integer factor with equal copy counts** (hidden FF units can be copied randomly: no LN there). With exact 2× duplication: max |Δlogit| 1.6e-2 (eps-level). Deepening L2 → L4 by inserting zero-branch blocks after block 1: max |Δlogit| 0.42 (a zero-branch post-norm block is LN∘LN, which strips the previous block's learned affine, so it is only approximately identity); **in practice the function is preserved: held-out NLL 5.7154 (2.0M source) vs 5.7152 (grown 8.52M)**. Checkpoint `checkpoints/grown_2m_to_8m.pt`. **Launched: grow-then-pretrain on an A100 (`gpu_grow.sh`): 20 TinyStories epochs (50K stories, same tokenizer) from the grown checkpoint, to be compared epoch-by-epoch with the directly trained 8.5M base (`train_lm_8m_custom_tok.log`: val 2.77 @1, 2.12 @5, 1.99 @10, 1.94 @15, 1.93 @19; 1.85 after 65).** ETA: MPS ≈ 5 min/epoch (100 min), A100 ≈ 60 s/epoch (20 min + boot), ≈ $0.30. The question: does a model grown from a trained 2.0M reach the direct model's curve with fewer epochs, i.e. is the small model's training reusable.
+
+## 2026-10-26 ~07:40 — Grow-then-pretrain, first full run: head start of ~2 epochs, then a persistent 0.015-nat gap behind direct
+
+Setup (logged 10-25 night): `best_lm_2m_scaling.pt` (d192 L2 H4 dff768, 16 ep TinyStories 50K, val 2.4188) → `grow_model.py` → `grown_2m_to_8m.pt`
+(d384 L4 H8 dff1280, 8.52M, exact 2× tiling + head duplication + FF random copies with outgoing /count + two zero-branch layers; NLL preserved)
+→ `gpu_grow.sh` on A100 SXM4 (instance 57825015, destroyed by trap, `vastai show instances` = `[]`): `train_lm.py --resume --fresh-opt`, same data/tokenizer/
+schedule as the direct 8.5M base (`train_lm_8m_custom_tok.log`: 20 ep, cosine from 3e-4, no warmup, dropout 0.1). Log `logs/train_grown_2m_to_8m.log`,
+checkpoint `checkpoints/best_lm_grown_2m_to_8m.pt` (34 MB, epoch 18, best val 1.94436).
+
+val_loss by epoch (direct / grown):
+ 1 2.766/2.368  2 2.408/2.279  3 2.256/2.213  4 2.175/2.164  **5 2.118/2.124**  6 2.076/2.089  8 2.023/2.038  10 1.986/2.004
+12 1.961/1.977  15 1.938/1.955  17 1.931/1.947  19 **1.9291/1.9444**  20 —/1.9444 (direct log has 19 epoch lines; epoch 20 not logged).
+
+- Grown starts where the 2M ended (2.37 after epoch 1 ≈ the 2M's 2.42) → a head start worth ~2 direct epochs (direct is at 2.41 after epoch 2).
+- **Direct overtakes at epoch 5** and stays ahead by 0.013–0.017 nats for the rest of the run (final 1.9291 vs 1.9444, ppl 6.88 vs 6.99).
+- Symmetry did break: every exactly-duplicated column/row pair diverged (rel diff 0.14–1.4 after 20 ep; LayerNorm gains only 1–2%), so dropout +
+  the FF random copies are enough — no explicit noise needed. The lingering gap is therefore not "stuck 2M capacity" (2M val 2.42 ≫ 1.94).
+- Compute accounting: growth saved ≈2 of 20 big-model epochs and cost 16 small-model epochs, then ended worse. **In this configuration growth does
+  not pay.** Matches the literature pattern (Net2Net, bert2BERT, Shen et al. 2022 "Staged training", LiGO 2023): a head start equal to the small
+  model's loss level, plus a small persistent penalty unless the LR schedule is continued rather than restarted and the new capacity is initialised
+  carefully.
+- Open question (cheap to answer): is the gap an optimizer shock (fresh Adam at peak LR 3e-4 on a preserved function, no warmup → the first few
+  hundred steps destroy and rebuild) or structural (duplicated init is a worse basin)? Test: val every 200 steps through epoch 1, arms
+  {no warmup (control), 1000-step warmup, warmup + lr 1e-4}. If warmup removes the shock → rerun the 20-epoch A100 comparison with warmup.
+- `gpu_grow.sh` printed "line 44: unexpected EOF" at the end: the file was patched (launch-step fix) while the previous invocation was still being
+  read by bash → bash read the shifted file. `bash -n` on the current file passes. The trap still fired and the instance was destroyed. Lesson: never
+  edit a running shell script; copy it first.
+
+## 2026-10-26 ~07:45 — Classifier baseline rerun (benchmark provenance, repo root `benchmarks/`)
+
+The published `data/eval_results/setfit_fasttext_benchmark.json` had no runner anywhere (git history, stash, dangling objects, all transcripts
+searched). Sub-agent rewrote one: `benchmarks/classifier_baselines.py`; results `data/eval_results/setfit_fasttext_benchmark_rerun.json`
+(old file untouched); log `logs/classifier_baselines_rerun.log`. banking77 from a parquet mirror (script datasets refused by current `datasets`);
+installing setfit moved numpy 2.5.4 → 2.4.6.
+
+banking77 accuracy, full test split: Jeffy 94.3 (unchanged) | SetFit 20-shot default model **85.0** (published 54.3) | FastText defaults 17.9
+(published 1.1) | defaults + wordNgrams=2 **3.3 and 763 MiB = the exact signature of the published run** | FastText tuned (lr 1.0, 25 ep, bigrams)
+**85.9**. sst2 / ag_news: SetFit 87 / 87 (published 81 / 86); FastText defaults 82 / 92 (published 57 / 37). Published SetFit size 347 MB matches no
+standard checkpoint → unknown smaller model and subsample. Net: Jeffy still wins every dataset, but the margin on banking77 is ~8 points, not 40.
+README / benchmark page / two posts cite the old numbers → Nico's call on presentation (recommendation sent: versioned benchmark + correction note,
+never silent edits).

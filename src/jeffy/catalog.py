@@ -18,7 +18,7 @@ class Capability:
     name: str
     description: str
     dataset: str
-    labels: dict[str, str]  # internal_label -> human description
+    labels: dict[str, str]  # internal_label -> human label name
     n_classes: int
     task_type: str  # "choice", "noul"
     hf_source: str
@@ -38,6 +38,10 @@ class Capability:
     artifact_path: str | None = None
     # Encoder size
     encoder_size_mb: float | None = None
+    # internal_label -> what the class actually contains, written from the
+    # training data rather than the inherited label name. Optional; only packs
+    # whose source label names are misleading need it.
+    label_descriptions: dict[str, str] | None = None
 
     @property
     def is_feature_based(self) -> bool:

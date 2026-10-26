@@ -1,0 +1,280 @@
+{
+  "source": "Shital validation round 3 mismatch patterns, reproduced against live playground",
+  "date": "2026-10-25",
+  "pack": "support_ticket (a19)",
+  "results": [
+    {
+      "expected": "cancel",
+      "text": "I want to cancel my subscription",
+      "predicted": "subscription",
+      "confidence": 0.8085,
+      "top3": [
+        [
+          "subscription",
+          0.8085
+        ],
+        [
+          "account",
+          0.0934
+        ],
+        [
+          "order",
+          0.028
+        ]
+      ],
+      "match": false
+    },
+    {
+      "expected": "cancel",
+      "text": "cancel my order",
+      "predicted": "order",
+      "confidence": 0.8519,
+      "top3": [
+        [
+          "order",
+          0.8519
+        ],
+        [
+          "delivery",
+          0.0353
+        ],
+        [
+          "subscription",
+          0.0293
+        ]
+      ],
+      "match": false
+    },
+    {
+      "expected": "cancel",
+      "text": "how do I cancel",
+      "predicted": "cancel",
+      "confidence": 0.272,
+      "top3": [
+        [
+          "cancel",
+          0.272
+        ],
+        [
+          "subscription",
+          0.223
+        ],
+        [
+          "account",
+          0.179
+        ]
+      ],
+      "match": true
+    },
+    {
+      "expected": "cancel",
+      "text": "I need to cancel a purchase I made",
+      "predicted": "order",
+      "confidence": 0.5726,
+      "top3": [
+        [
+          "order",
+          0.5726
+        ],
+        [
+          "account",
+          0.0998
+        ],
+        [
+          "payment",
+          0.0992
+        ]
+      ],
+      "match": false
+    },
+    {
+      "expected": "order",
+      "text": "where is my order",
+      "predicted": "delivery",
+      "confidence": 0.5927,
+      "top3": [
+        [
+          "delivery",
+          0.5927
+        ],
+        [
+          "order",
+          0.2727
+        ],
+        [
+          "contact",
+          0.0345
+        ]
+      ],
+      "match": false
+    },
+    {
+      "expected": "order",
+      "text": "when will my order arrive",
+      "predicted": "delivery",
+      "confidence": 0.9652,
+      "top3": [
+        [
+          "delivery",
+          0.9652
+        ],
+        [
+          "order",
+          0.0173
+        ],
+        [
+          "contact",
+          0.0067
+        ]
+      ],
+      "match": false
+    },
+    {
+      "expected": "order",
+      "text": "I want to check the status of my order",
+      "predicted": "delivery",
+      "confidence": 0.5321,
+      "top3": [
+        [
+          "delivery",
+          0.5321
+        ],
+        [
+          "order",
+          0.2727
+        ],
+        [
+          "contact",
+          0.0375
+        ]
+      ],
+      "match": false
+    },
+    {
+      "expected": "order",
+      "text": "I need to place an order",
+      "predicted": "order",
+      "confidence": 0.7531,
+      "top3": [
+        [
+          "order",
+          0.7531
+        ],
+        [
+          "delivery",
+          0.1213
+        ],
+        [
+          "shipping",
+          0.0341
+        ]
+      ],
+      "match": true
+    },
+    {
+      "expected": "shipping",
+      "text": "I need to change the shipping address",
+      "predicted": "shipping",
+      "confidence": 0.9634,
+      "top3": [
+        [
+          "shipping",
+          0.9634
+        ],
+        [
+          "account",
+          0.0154
+        ],
+        [
+          "delivery",
+          0.0073
+        ]
+      ],
+      "match": true
+    },
+    {
+      "expected": "shipping",
+      "text": "track my shipment",
+      "predicted": "delivery",
+      "confidence": 0.9303,
+      "top3": [
+        [
+          "delivery",
+          0.9303
+        ],
+        [
+          "order",
+          0.0182
+        ],
+        [
+          "shipping",
+          0.014
+        ]
+      ],
+      "match": false
+    },
+    {
+      "expected": "shipping",
+      "text": "what are your shipping options",
+      "predicted": "delivery",
+      "confidence": 0.9465,
+      "top3": [
+        [
+          "delivery",
+          0.9465
+        ],
+        [
+          "shipping",
+          0.0178
+        ],
+        [
+          "order",
+          0.0099
+        ]
+      ],
+      "match": false
+    },
+    {
+      "expected": "shipping",
+      "text": "how much does shipping cost",
+      "predicted": "delivery",
+      "confidence": 0.9104,
+      "top3": [
+        [
+          "delivery",
+          0.9104
+        ],
+        [
+          "shipping",
+          0.0209
+        ],
+        [
+          "cancel",
+          0.0186
+        ]
+      ],
+      "match": false
+    },
+    {
+      "expected": "delivery",
+      "text": "where is my package",
+      "predicted": "delivery",
+      "confidence": 0.8451,
+      "top3": [
+        [
+          "delivery",
+          0.8451
+        ],
+        [
+          "shipping",
+          0.0643
+        ],
+        [
+          "invoice",
+          0.0173
+        ]
+      ],
+      "match": true
+    }
+  ]
+}

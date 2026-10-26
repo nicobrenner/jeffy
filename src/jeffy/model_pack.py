@@ -46,6 +46,11 @@ class ArtifactManifest:
     classifier_coef_hash: str
     n_features: int | None = None
     feature_layout: dict[str, str] | None = None
+    # What each class actually contains, written from the training data rather
+    # than from the source dataset's label name. Inherited names routinely lie:
+    # bitext's "shipping" only covers address edits, and its "cancel" is the
+    # cancellation fee. Without this, callers guess from the name and are wrong.
+    label_descriptions: dict[str, str] | None = None
     schema_version: int = 1
 
 

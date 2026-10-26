@@ -147,6 +147,7 @@ class Engine:
                 feature_layout=getattr(manifest, 'feature_layout', None),
                 task_signature=None,
                 encoder_size_mb=get_encoder_size_mb(manifest.encoder),
+                label_descriptions=getattr(manifest, 'label_descriptions', None),
             )
             self._capabilities[ds_name] = cap
 
@@ -182,6 +183,7 @@ class Engine:
             feature_layout=getattr(manifest, 'feature_layout', None),
             task_signature=None,
             encoder_size_mb=get_encoder_size_mb(manifest.encoder),
+            label_descriptions=getattr(manifest, 'label_descriptions', None),
         )
         logger.info(f"Registered trained classifier '{task_id}' ({manifest.n_classes} classes)")
 

@@ -43,5 +43,18 @@
   "classifier_coef_hash": "2c6e0289",
   "n_features": null,
   "feature_layout": null,
-  "schema_version": 1
+  "schema_version": 1,
+  "label_descriptions": {
+    "account": "Signup problems, profile edits, recovering a profile PIN, and switching account tier. Also covers updating stored contact fields such as email, phone or address on the account",
+    "cancel": "Cancellation FEES and early-termination penalties only. Not requests to cancel something. 'Cancel my order' belongs to order, 'cancel my subscription' to subscription",
+    "contact": "Reaching a human agent: support hours, support email or phone, escalation to an operator",
+    "delivery": "Delivery timing and shipping methods: when an order will arrive, how long shipping takes, which shipping options exist, and what shipping costs. Order tracking lands here too",
+    "feedback": "Complaints, reviews, and formal customer claims against the company",
+    "invoice": "Finding or retrieving a specific invoice or bill, usually by number or by date",
+    "order": "Placing an order, adding or removing items from an existing order, and order status",
+    "payment": "Payment errors and which payment methods are accepted",
+    "refund": "Refund status, refund policy, and requests to get money back",
+    "shipping": "Editing or updating the delivery ADDRESS only. Nothing else about shipping: options, cost and timing all belong to delivery",
+    "subscription": "The company NEWSLETTER, subscribing and unsubscribing. Not paid plans or paid subscriptions"
+  }
 }

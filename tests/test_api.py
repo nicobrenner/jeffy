@@ -264,3 +264,20 @@ class TestHealth:
         data = r.json()
         assert data["n_classes"] == 77
         assert "example_request" in data
+
+    def test_support_ticket_exposes_label_descriptions(self):
+        """Three of bitext's label names lie about their contents, so callers need
+        the descriptions. Guard both the presence and the specific warnings."""
+        r = client.get("/v1/capabilities/support_ticket")
+        assert r.status_code == 200
+        data = r.json()
+        desc = data["label_descriptions"]
+        assert set(desc) == set(data["labels"]), "every class needs a description"
+        assert "fee" in desc["cancel"].lower()
+        assert "address" in desc["shipping"].lower()
+        assert "newsletter" in desc["subscription"].lower()
+
+    def test_label_descriptions_are_optional(self):
+        """Packs that do not need descriptions must not grow an empty key."""
+        r = client.get("/v1/capabilities/banking77")
+        assert "label_descriptions" not in r.json()

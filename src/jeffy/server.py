@@ -219,6 +219,7 @@ class CapabilityInfo(BaseModel):
     n_classes: int
     task_type: str
     labels: dict[str, str]
+    label_descriptions: dict[str, str] | None = None
     encoder: str
     train_examples: int
     train_accuracy: float | None
@@ -262,6 +263,7 @@ def list_capabilities():
             "train_accuracy": cap.train_accuracy,
             "test_accuracy": cap.test_accuracy,
             "license": cap.license,
+            **({"label_descriptions": cap.label_descriptions} if cap.label_descriptions else {}),
             **({"encoder_size_mb": cap.encoder_size_mb} if cap.encoder_size_mb else {}),
             **({"n_features": cap.n_features, "feature_layout": cap.feature_layout}
                if cap.is_feature_based else {}),
@@ -287,6 +289,7 @@ def get_capability(task_id: str):
         "train_accuracy": cap.train_accuracy,
         "test_accuracy": cap.test_accuracy,
         "license": cap.license,
+        **({"label_descriptions": cap.label_descriptions} if cap.label_descriptions else {}),
         **({"encoder_size_mb": cap.encoder_size_mb} if cap.encoder_size_mb else {}),
         **({"n_features": cap.n_features, "feature_layout": cap.feature_layout}
            if cap.is_feature_based else {}),

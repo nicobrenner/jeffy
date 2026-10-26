@@ -4844,3 +4844,12 @@ system-prompt fragment ("Keep responses short — you're making me laugh") paste
 Consequences: (1) `atl_probe_multiturn.py` is retired for anything Nico sees; (2) new staged probe `atl_probe_simuser.py` where an LLM writes
 each user turn in reaction to the model's actual answer (confused, steering, answering the model's questions); (3) the 3-turn grades from
 earlier passes (mt sets) measured continuity against a non-reactive user and should be discounted.
+
+## 2026-10-26 ~18:10 — 8-epoch pair on the corrected corpus (`*_life8`): drift down to 8/96 (grown) and 11/96 (control)
+
+val (chat_v2_fix val): control 1.7440, grown **1.7228**. Identity probe: name turn 26 / 28 of 32 "Tiny Oracle"; human-life markers in turns 3–5:
+**11/96 (v2 control), 8/96 (grown)** — from 22–28 this morning. Residuals seen in transcripts: "I'm just hanging out" still appears for the
+exact probe phrasing in some seeds; "I am a teacher" to "who am I talking to?" (1 seed); and a new one — the Oracle addresses the user by a name
+the user never gave ("You too, Sarah"): the filled-name conversations teach "Nice to meet you too, <name>" even when no name is in context →
+next fixer step: strip the address when the name does not appear in an earlier user turn. Demo: `v2_grown_life8_int8`, `v2_life8_int8`.
+Grown vs control gap on val widened with epochs (0.021 at 8 ep vs 0.014 at 3) — capacity is being used on the corrected data.

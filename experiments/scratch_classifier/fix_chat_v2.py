@@ -21,7 +21,9 @@ NAME_INTRO = re.compile(r"\b([Mm]y name is|[Mm]y name's|[Cc]all me|I am|I'm)\s+(
 NOT_NAMES = {"Tiny","Oracle","I","The","A","An","Not","Just","So","Here","Sorry","Glad","Happy","Sure","Fine","Good","Great","Also","Still","Very",
              "Really","Pretty","Always","Never","Doing","Going","Trying","Afraid","Sad","Okay","Ok","Only","Too","All","Done","Back","Here","There",
              "Thinking","Feeling","Looking","Sure","Curious","Bored","Tired","Busy","Free","Ready","Excited","Interested","Glad","New","Old","Small","Big"}
-REWRITE = {"n": 0, "life": 0, "addr": 0}
+REWRITE = {"n": 0, "life": 0, "addr": 0, "ghost": 0}
+# 6. The Oracle addressing the user by a name the user never stated earlier in the conversation ("You too, Sarah") → drop the address.
+ORACLE_ADDR = re.compile(r"(,\s+|\b(?:too|again|there)\s+)([A-Z][a-z]+)([.!?]|$)")
 # 5. The USER addressing the Oracle by a human name ("Nice to meet you, John") after the Oracle's self-intro was rewritten → "Tiny Oracle".
 ADDR = re.compile(r"\b((?:nice|good|pleased|great|happy) to (?:meet|see) you,?\s+)([A-Z][a-z]+)\b")
 # 4. Life/hobby questions ("what are you up to?", "what do you do for fun?", "how's your day?") are answered in the filler as a human
@@ -55,6 +57,13 @@ def fix(text, rng):
                 if m.group(2) in NOT_NAMES or m.group(2) == "Tiny": return m.group(0)
                 REWRITE["addr"] += 1; return m.group(1) + "Tiny Oracle"
             l = ADDR.sub(asub, l)
+        if l.startswith("<|oracle|>"):
+            known = set(w for ul in lines[:i] if ul.startswith("<|user|>") for w in re.findall(r"\b(?:I'?m|I am|my name is|my name's|call me)\s+([A-Z][a-z]+)", ul))
+            def gsub(m):
+                nm = m.group(2)
+                if nm in NOT_NAMES or nm in known or nm == "Tiny": return m.group(0)
+                REWRITE["ghost"] += 1; return (m.group(1) if m.group(1).strip() else "") .rstrip(", ") + m.group(3)
+            l = ORACLE_ADDR.sub(gsub, l)
         if l.startswith("<|oracle|>") and i > 0 and lines[i - 1].startswith("<|user|>") and LIFE_Q.search(lines[i - 1]):
             REWRITE["life"] += 1
             l = "<|oracle|> " + rng.choice(LIFE_A[life_kind(lines[i - 1])])
@@ -80,5 +89,5 @@ for split in ("train", "val"):
     with open(f"data/chat_v2_fix_{split}.jsonl", "w") as f:
         for r in kept: f.write(json.dumps(r) + "\n")
     hand = sum("boiling opinions" in r["text"] for r in kept)
-    print(f"{split}: Oracle self-intros rewritten to Tiny Oracle: {REWRITE['n']}; life/hobby replies rewritten: {REWRITE['life']}; user-side names → Tiny Oracle: {REWRITE['addr']}"); REWRITE["n"] = REWRITE["life"] = REWRITE["addr"] = 0
+    print(f"{split}: Oracle self-intros rewritten to Tiny Oracle: {REWRITE['n']}; life/hobby replies rewritten: {REWRITE['life']}; user-side names → Tiny Oracle: {REWRITE['addr']}; ghost addresses dropped: {REWRITE['ghost']}"); REWRITE["n"] = REWRITE["life"] = REWRITE["addr"] = REWRITE["ghost"] = 0
     print(f"{split}: kept {len(kept):,}  dropped {drop}  filled {filled:,}  remaining placeholders {sum(bool(PH.search(r['text'])) for r in kept)}  hand-written copies {hand}")

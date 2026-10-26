@@ -4824,3 +4824,12 @@ doing / for fun" question with such an answer — those pairs are all *tell + hu
 the model emits a generic "I'm not sure yet. What are you doing?" instead. Same lesson as the name: the fix is in the data (rewrite the
 Oracle's replies to life/hobby questions, as the 892 self-intros were rewritten), and a token can only select among acts the data contains.
 Self-plan lowered the drift slightly for the small model (16/96) — noise-level, 1 seed set.
+
+## 2026-10-26 ~16:20 — Life/hobby rewrite (fix_chat_v2.py step 4: 7,019 Oracle replies to "up to / for fun / how's your day / how are you" → 20 Oracle-self lines), 3 ep
+
+Identity probe: human-life markers in turns 3–5 fell from 22–28/96 to **12/96 (v2 control) and 15/96 (grown)**; name turn 24 and 27 /32.
+Halved, not gone: "what are you up to?" → "I'm just hanging out, watching TV" still appears — 3 gentle epochs at 1e-4 only partly overwrite a
+pattern v2 learned over 50 epochs. Two residual data holes found in the transcripts and closed: (a) `HUMAN` missed "I am a teacher" (only "I'm a");
+(b) the USER still addresses the Oracle by the old human name ("nice to meet you, John") after the Oracle's self-intro was rewritten → user-side
+address rewritten to "Tiny Oracle". Rerunning both arms for 8 epochs on the regenerated corpus (`*_life8`). Nico to review the 20 lines (his voice).
+Demo: `v2_grown_life3_int8`, `v2_life3_int8` added.

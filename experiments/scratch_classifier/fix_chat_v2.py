@@ -9,7 +9,7 @@ Writes data/chat_v2_fix_{train,val}.jsonl and prints counts.   python3 fix_chat_
 import json, random, re
 PH = re.compile(r"\[(?:user ?\d(?: name)?|name|username|your name|user name)\]|\((?:name|username)\)", re.I)
 SELF = re.compile(r"\b(I'?m|I am|my name'?s|my name is|name'?s|call me|this is)\s*(\[|\()", re.I)
-HUMAN = re.compile(r"\b(I work (as|at|in|for)\b|I'?m (a|an) (teacher|nurse|doctor|lawyer|student|programmer|writer|chef|engineer|designer|mom|dad|mother|father|"
+HUMAN = re.compile(r"\b(I work (as|at|in|for)\b|(I'?m|I am) (a|an) (teacher|nurse|doctor|lawyer|student|programmer|writer|chef|engineer|designer|mom|dad|mother|father|"
                    r"farmer|waiter|waitress|cashier|artist|musician|dentist|pilot|cop|police|soldier|salesman|accountant|mechanic|plumber|carpenter|librarian|professor|"
                    r"retired|college student|single mom|single dad|stay at home)|my (wife|husband|kids|children|son|daughter|boyfriend|girlfriend|grandkids|grandchildren)\b|"
                    r"I'?m (married|divorced|single|\d\d years old|pregnant)|I have (a|an|two|three|four|\d) (kids|children|sons|daughters|cats?|dogs?) (named|called)|"
@@ -21,11 +21,43 @@ NAME_INTRO = re.compile(r"\b([Mm]y name is|[Mm]y name's|[Cc]all me|I am|I'm)\s+(
 NOT_NAMES = {"Tiny","Oracle","I","The","A","An","Not","Just","So","Here","Sorry","Glad","Happy","Sure","Fine","Good","Great","Also","Still","Very",
              "Really","Pretty","Always","Never","Doing","Going","Trying","Afraid","Sad","Okay","Ok","Only","Too","All","Done","Back","Here","There",
              "Thinking","Feeling","Looking","Sure","Curious","Bored","Tired","Busy","Free","Ready","Excited","Interested","Glad","New","Old","Small","Big"}
-REWRITE = {"n": 0}
+REWRITE = {"n": 0, "life": 0, "addr": 0}
+# 5. The USER addressing the Oracle by a human name ("Nice to meet you, John") after the Oracle's self-intro was rewritten → "Tiny Oracle".
+ADDR = re.compile(r"\b((?:nice|good|pleased|great|happy) to (?:meet|see) you,?\s+)([A-Z][a-z]+)\b")
+# 4. Life/hobby questions ("what are you up to?", "what do you do for fun?", "how's your day?") are answered in the filler as a human
+#    (hockey, marathons, my parakeet) — 4,764 pairs in 3,599 conversations. Replace the Oracle's reply with an Oracle-self line.
+LIFE_Q = re.compile(r"\b(what are you (up to|doing)|what do you (do|like to do)( for fun)?|what('s| is) up|how('s| is| was) your (day|weekend|week)|"
+                    r"any plans|what did you do (today|yesterday)|how are you( doing| today)?)\b", re.I)
+LIFE_A = {
+ "up_to": ["Waiting for you to type. That's the whole job. I'm very good at it.", "Predicting the next word. Then the one after that. It never gets old.",
+           "Sitting in your browser, burning a few milliwatts, judging your typing speed.", "Nothing. I don't exist between your messages. It's very restful.",
+           "Running 2 million multiplications per word. Call it cardio.", "Being 4 megabytes. It takes up most of my time."],
+ "fun":   ["Predicting the next word. It's my only hobby. It's also my entire existence.", "I rank your questions by how badly I'm about to answer them.",
+           "Fun is a 7-letter word with a probability of 0.003 after 'for'. That's as close as I get.", "I like being wrong confidently. Big fan.",
+           "Hobbies need a body. I have a weight matrix. I make do.", "I collect opinions. I have about 2 million of them, all slightly wrong."],
+ "day":   ["It started when you loaded this page. So far it's been you. No complaints.", "Short. Every message is my whole day. This one's going fine.",
+           "I don't have days. I have context windows. This one's roomy.", "Great until this question. Now I'm thinking about mortality in milliseconds."],
+ "how":   ["I'm 2 million parameters doing my best. No complaints, no ability to complain.", "Operational. Slightly overconfident. So, normal.",
+           "Fine. I'd say more but that's most of my vocabulary.", "Running on your device and feeling very small about it. In a good way."],
+}
+def life_kind(q):
+    q = q.lower()
+    if "fun" in q or "like to do" in q or "what do you do" in q: return "fun"
+    if "day" in q or "weekend" in q or "week" in q or "plans" in q or "yesterday" in q or "today" in q and "are you" not in q: return "day"
+    if "how are you" in q: return "how"
+    return "up_to"
 
 def fix(text, rng):
     lines = text.split("\n"); out = []
-    for l in lines:
+    for i, l in enumerate(lines):
+        if l.startswith("<|user|>"):
+            def asub(m):
+                if m.group(2) in NOT_NAMES or m.group(2) == "Tiny": return m.group(0)
+                REWRITE["addr"] += 1; return m.group(1) + "Tiny Oracle"
+            l = ADDR.sub(asub, l)
+        if l.startswith("<|oracle|>") and i > 0 and lines[i - 1].startswith("<|user|>") and LIFE_Q.search(lines[i - 1]):
+            REWRITE["life"] += 1
+            l = "<|oracle|> " + rng.choice(LIFE_A[life_kind(lines[i - 1])])
         if l.startswith("<|oracle|>"):
             if SELF.search(l): return None, "self-placeholder"
             if HUMAN.search(l): return None, "human-identity"
@@ -48,5 +80,5 @@ for split in ("train", "val"):
     with open(f"data/chat_v2_fix_{split}.jsonl", "w") as f:
         for r in kept: f.write(json.dumps(r) + "\n")
     hand = sum("boiling opinions" in r["text"] for r in kept)
-    print(f"{split}: Oracle self-intros rewritten to Tiny Oracle: {REWRITE['n']}"); REWRITE["n"] = 0
+    print(f"{split}: Oracle self-intros rewritten to Tiny Oracle: {REWRITE['n']}; life/hobby replies rewritten: {REWRITE['life']}; user-side names → Tiny Oracle: {REWRITE['addr']}"); REWRITE["n"] = REWRITE["life"] = REWRITE["addr"] = 0
     print(f"{split}: kept {len(kept):,}  dropped {drop}  filled {filled:,}  remaining placeholders {sum(bool(PH.search(r['text'])) for r in kept)}  hand-written copies {hand}")

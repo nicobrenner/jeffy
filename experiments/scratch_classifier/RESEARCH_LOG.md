@@ -4761,3 +4761,21 @@ v2's own data barely moved it (val 1.612 → 1.597 is below what the probes reso
 Train loss of the grown arm fell 0.10 vs 0.01 for the control → the capacity is absorbing the training set, not changing behaviour.
 Conclusion: on v2, growth is a clean no-op until it is given something new to learn; `chat_v2_fix` run (names filled, 4,762 Oracle-as-human
 convs dropped) is the first such thing; longer context (seq 512, 3-turn probes) is the second.
+
+## 2026-10-26 ~13:20 — Identity probe (`atl_probe_identity.py`): Nico's prediction confirmed, and the rewrite fixes it
+
+Conversation shape from Nico's transcript (opener → "what's your name?" → greet back with the given name → "what are you up to?" → "nice, what
+kind?"), 4 openers × 8 seeds = 32 conversations per model, recipe T0.5. Name-turn classification / human-life markers in turns 3–5 (of 96):
+| model | placeholder | human name | "Tiny Oracle" | none | human-life later |
+|---|---|---|---|---|---|
+| v2 | **20** | 5 | 0 | 7 | 28 |
+| v2 + 3 ep on chat_v2_fix (placeholders removed, humans dropped) | 0 | **23** | 0 | 9 | 28 |
+| v2 grown + same | 0 | **26** | 0 | 6 | 27 |
+| v2 + 3 ep on chat_v2_fix with self-intros rewritten to Tiny Oracle | 0 | 0 | **28** | 4 | 24 |
+| v2 grown + same | 0 | 0 | **25** | 7 | 26 |
+| 8.5M conv_persona2 (reference) | 0 | 8 | 15 | 9 | 28 |
+Removing the placeholders alone hands the name question to Sarah/John (23–26/32) — exactly what Nico said happened on the 8.5M line. Rewriting
+the 892 human self-intros to "Tiny Oracle" gives 25–28/32 correct self-identification and zero human names. The later-turn drift into a human
+life ("listening to music", "hanging out") is untouched by any data fix (24–28/96 for every model incl. the 8.5M) → that is the case for an
+identity/act steering token on v2 (CT v3 style) or a broader rewrite of hobby/life filler. The 3-turn probe set (`probe_mt_*`) never asks the
+name and showed 0 leaks everywhere — it is blind to this bug; keep the identity probe in every pass from now on.

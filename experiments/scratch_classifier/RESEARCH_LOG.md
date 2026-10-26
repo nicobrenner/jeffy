@@ -4809,3 +4809,18 @@ Reading: on single turns, blind, Nico's taste matches the grader (and the 8.5M w
 multi-turn at T0.3 with priming — so the disagreement is single-turn vs conversation, not grader vs human. Next: the same exercise on 3-turn
 transcripts (`demo/blind_convs.html`, 32 pairs from the existing recipe-T0.5 multi-turn probes; key `blind_convs_key.json`). Nico: "excellent
 exercise… we should do way more of these… by far the best way" → preference data as the primary signal (grader as scalable proxy, 24/25).
+
+## 2026-10-26 ~15:40 — Plan token on v2 (`ct_v2.py`, classes me/wh/yn/hi/tell, 4 ep lr 1e-4): name turn controllable, the "hanging out" drift is not
+
+`oracle_v2_ct` (2.7M) val 1.7521, `oracle_v2_grown_ct` (8.5M) val 1.7344 on chat_v2ct val (token is scored, so not comparable to plain vals).
+Identity probe (32 convs; name turn / human-life markers in turns 3–5 of 96):
+| arm | no token | self-plan | force *me | force *tell |
+|---|---|---|---|---|
+| v2 ct | 28 oracle / 22 | 25 / 16 | **32 oracle** / 25 | 27 / 23 |
+| v2 grown ct | 30 / 22 | 27 / 23 | 29 / 24 | 24 / 25 |
+Forced *me makes the name answer 32/32 but does nothing for "what are you up to?" → "I'm just hanging out" (22–25/96 regardless of token).
+Why: the *me class (2,725 turns) is defined by the content of the Oracle's answer (name/size/model), and the corpus never pairs an "up to /
+doing / for fun" question with such an answer — those pairs are all *tell + human small talk — so the token has no distribution to route to;
+the model emits a generic "I'm not sure yet. What are you doing?" instead. Same lesson as the name: the fix is in the data (rewrite the
+Oracle's replies to life/hobby questions, as the 892 self-intros were rewritten), and a token can only select among acts the data contains.
+Self-plan lowered the drift slightly for the small model (16/96) — noise-level, 1 seed set.

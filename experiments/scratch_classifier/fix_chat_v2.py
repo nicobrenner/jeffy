@@ -3,6 +3,7 @@
    (they are the USER's name when the user says them or the Oracle addresses the user).
 2. Drop conversations where the Oracle introduces ITSELF with a placeholder ("My name is [user 2 name]") or claims a human
    identity (job, spouse/kids, age, pets by name) — these teach the Oracle to be a person.
+3. Rewrite Oracle self-introductions with a human name ("My name is Sarah") to "My name is Tiny Oracle".
 Writes data/chat_v2_fix_{train,val}.jsonl and prints counts.   python3 fix_chat_v2.py
 """
 import json, random, re
@@ -16,11 +17,24 @@ HUMAN = re.compile(r"\b(I work (as|at|in|for)\b|I'?m (a|an) (teacher|nurse|docto
 NAMES = ["Maya","Leo","Sofia","Omar","Elena","Jonas","Priya","Mateo","Hana","Noah","Aisha","Luca","Mei","Diego","Nora","Sam","Yara","Tomás","Ana","Kai",
          "Zoe","Ravi","Lena","Max","Ines","Ali","Clara","Ben","Rosa","Theo"]
 
+NAME_INTRO = re.compile(r"\b([Mm]y name is|[Mm]y name's|[Cc]all me|I am|I'm)\s+([A-Z][a-z]+)\b")
+NOT_NAMES = {"Tiny","Oracle","I","The","A","An","Not","Just","So","Here","Sorry","Glad","Happy","Sure","Fine","Good","Great","Also","Still","Very",
+             "Really","Pretty","Always","Never","Doing","Going","Trying","Afraid","Sad","Okay","Ok","Only","Too","All","Done","Back","Here","There",
+             "Thinking","Feeling","Looking","Sure","Curious","Bored","Tired","Busy","Free","Ready","Excited","Interested","Glad","New","Old","Small","Big"}
+REWRITE = {"n": 0}
+
 def fix(text, rng):
-    oracle_lines = [l for l in text.split("\n") if l.startswith("<|oracle|>")]
-    for l in oracle_lines:
-        if SELF.search(l): return None, "self-placeholder"
-        if HUMAN.search(l): return None, "human-identity"
+    lines = text.split("\n"); out = []
+    for l in lines:
+        if l.startswith("<|oracle|>"):
+            if SELF.search(l): return None, "self-placeholder"
+            if HUMAN.search(l): return None, "human-identity"
+            def sub(m):
+                if m.group(2) in NOT_NAMES: return m.group(0)
+                REWRITE["n"] += 1; return f"{m.group(1)} Tiny Oracle"
+            l = NAME_INTRO.sub(sub, l)   # "My name is Sarah" -> "My name is Tiny Oracle": the Oracle learns its own name
+        out.append(l)
+    text = "\n".join(out)
     if not PH.search(text): return text, None
     return PH.sub(rng.choice(NAMES), text), "filled"
 
@@ -34,4 +48,5 @@ for split in ("train", "val"):
     with open(f"data/chat_v2_fix_{split}.jsonl", "w") as f:
         for r in kept: f.write(json.dumps(r) + "\n")
     hand = sum("boiling opinions" in r["text"] for r in kept)
+    print(f"{split}: Oracle self-intros rewritten to Tiny Oracle: {REWRITE['n']}"); REWRITE["n"] = 0
     print(f"{split}: kept {len(kept):,}  dropped {drop}  filled {filled:,}  remaining placeholders {sum(bool(PH.search(r['text'])) for r in kept)}  hand-written copies {hand}")

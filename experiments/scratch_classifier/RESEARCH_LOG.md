@@ -4726,3 +4726,15 @@ most of the new capacity went to fitting the training conversations, but the gen
 Both exported (`demo/oracle_2m_{grown_persona2,persona2_plus3}_int8.onnx`) and added to the demo dropdown next to the 2.0M original; probes +
 3-arm blind set (`probe_grow_local_blind3`) building. Verdict: an inkling, not a win — the next cheap step is the same test with more epochs
 (10 ep ≈ 35 min MPS) and a train/val split check, before any scale-up.
+
+## 2026-10-26 ~11:05 — Local growth blind pass unblinded (`grades_grow_local_blind3.jsonl`, 972 rows, one grader; key M1=grown M2=2M original M3=2M+3ep control)
+
+Totals out of 15 (coh+pers+wit+help+eng), paired W/T/L on total matched by (id, seed):
+| set | 2M original | 2M +3 ep (control) | 2M grown→8.5M +3 ep | grown vs control | grown vs original |
+|---|---|---|---|---|---|
+| first impression (n=80, T0.3) | 6.08 | 6.04 | **6.72** | 34/25/21 | 31/24/25 |
+| varied (n=244, T0.5) | 3.52 | 3.59 | **3.75** | 80/105/59 | 81/97/66 |
+Control ≈ original (24/35/21 and 50/148/46) — the 3 extra epochs alone do nothing, as the val loss said. Grown leads on every rubric dimension
+on both sets (FI: persona 1.89 vs 1.76, help 1.14 vs 1.01, engaging 1.01 vs 0.81; coh≥2 72% vs 64%), memorized-line rate lower (10% vs 15%).
+Same direction as the val loss (1.418 vs 1.436), same modest size. Note: this grader is harsher than the size-pass grader (totals not comparable
+across passes); within-pass rankings only. Verdict: consistent inkling. Next: the 10-epoch rerun (MPS, running) to see whether the gap widens.

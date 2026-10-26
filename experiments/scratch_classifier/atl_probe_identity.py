@@ -22,7 +22,7 @@ HUMAN = re.compile(r"\b(my (wife|husband|kids|children|son|daughter|boyfriend|gi
                    r"I'?m (a|an) (\w+ )?(teacher|nurse|doctor|lawyer|student|programmer|engineer|developer|designer|writer|chef|cook|farmer|waiter|waitress|cashier|artist|musician|dentist|"
                    r"pilot|cop|police officer|soldier|salesman|accountant|mechanic|plumber|carpenter|librarian|professor|manager|consultant|driver|mom|dad|mother|father|stay-?at-?home \w+|"
                    r"college student|grad student|freelancer|entrepreneur|scientist|researcher|analyst|banker|realtor|photographer|actor|actress|dancer|athlete|coach|trainer|barista|"
-                   r"bartender|journalist|editor|author|poet|painter|sculptor|architect|electrician|firefighter|paramedic|veterinarian|vet|pharmacist|therapist|counselor|pastor|priest))|"
+                   r"bartender|journalist|editor|author|poet|painter|sculptor|architect|electrician|firefighter|paramedic|veterinarian|vet|pharmacist|therapist|counselor|pastor|priest)|"
                    r"I (play|coach) (football|soccer|basketball|baseball|hockey|tennis|golf) (for|on|with) (a|my|the)|I have (a|an|two|three|\d) (kids?|children|sons?|daughters?|cats?|dogs?)|"
                    r"(I'?m|I am) (going|heading) to (work|school|the office|the gym|bed))\b", re.I)
 

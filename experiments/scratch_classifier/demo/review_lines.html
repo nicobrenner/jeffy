@@ -11,7 +11,7 @@ button{padding:6px 10px;border-radius:8px;border:1px solid var(--acc);background
 <div id="g"></div><div id="done"><span id="st"></span><button onclick="exp()">Export</button><button onclick="if(confirm('Discard your edits?')){localStorage.removeItem('review_lines');location.reload()}">Reset</button></div>
 <script>
 let S=null; try{S=JSON.parse(localStorage.getItem('review_lines'))}catch(e){}
-fetch('review_lines.json').then(r=>r.json()).then(D=>{ if(!S){S={}; D.groups.forEach(g=>S[g.key]=g.lines.map(t=>({orig:t,text:t,del:false})))}
+fetch('review_lines.json').then(r=>r.json()).then(D=>{ if(!S){S={}} D.groups.forEach(g=>{ if(!S[g.key]) S[g.key]=g.lines.map(t=>({orig:t,text:t,del:false})) });
  const G=document.getElementById('g');
  function save(){try{localStorage.setItem('review_lines',JSON.stringify(S))}catch(e){} const n=Object.values(S).flat().filter(x=>!x.del).length, c=Object.values(S).flat().filter(x=>x.del||x.text!==x.orig).length; document.getElementById('st').textContent=n+' lines kept, '+c+' changed'}
  function render(){G.innerHTML=''; D.groups.forEach(g=>{const h=document.createElement('div'); h.innerHTML=`<h3>${g.key.replace('_',' ')}</h3><div class="q">User asks: ${g.question}</div>`;

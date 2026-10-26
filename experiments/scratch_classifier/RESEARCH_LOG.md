@@ -4892,3 +4892,13 @@ Caveat: verifier trained on grader labels for these prompts (other replies); Nic
 Reading: the verifier mostly removes persona slips and salad on hard prompts; on the persona's home turf the single sample is already as good as
 the pool. Next: (1) gate — if max verifier score < τ, emit an admit-ignorance line (the generator need not know); (2) FUDGE-style per-token
 steering with the same classifier; (3) retrain the verifier with Nico's picks as extra labels. Cost in the browser: N× generation of a 2.7–8.5M model.
+
+## 2026-10-26 ~22:10 — Nico's blind picks #2 (single vs verifier best-of-8, 24 pairs): verifier 8, single 2, tie 3, both-bad 11
+
+Nico's own blind verdict on the classifier-gated generator: when he decided, the verifier's pick won **8–2**; 11/24 pairs both bad (46%).
+His notes: "favorite color?" both great ("I can't see colors. I just predict text. But I'll say blue, because statistically that's what people
+expect me to say"); "is it weird to talk to an ai at 3am" → "What do you mean?" / "I don't know. What's up?" — "getting impressed";
+"what do you think of humans?" both bad but one "very funny"; **"convince me to go to bed" — "it's an order, a demand, a task, not a
+question/answer kinda thing"** → the act taxonomy needs an imperative/task class (the plan token's *tell/*wh/*yn/*hi/*me miss it; grader rubric
+has no "task" notion either). Lines: his export (`oracle_lines_nico_2.json`) had no `dunno` group — review page bug: saved localStorage state
+was not merged with new groups in the JSON (fixed); the 18 admit-ignorance lines are still unreviewed.

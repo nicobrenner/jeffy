@@ -194,7 +194,7 @@ class PredictRequest(BaseModel):
     text: str | None = Field(None, description="Input text to classify")
     features: list[float] | None = Field(None, description="Input feature vector (for feature-based classifiers)")
     task: str = Field(..., description="Pretrained capability task ID")
-    threshold: float | None = Field(None, description="Confidence threshold (0-1). Below this, returns out_of_scope instead of forcing a label.")
+    threshold: float | None = Field(None, description="Confidence threshold (0-1). Below this, returns out_of_scope instead of forcing a label. Omit it and the pack's own calibrated oos_threshold applies; if the pack has none, out_of_scope comes back null rather than false, meaning nothing was checked.")
 
 class PredictResponse(BaseModel):
     label: str
@@ -289,6 +289,7 @@ def list_capabilities():
             "test_accuracy": cap.test_accuracy,
             "license": cap.license,
             **({"label_descriptions": cap.label_descriptions} if cap.label_descriptions else {}),
+            **({"oos_threshold": cap.oos_threshold} if cap.oos_threshold is not None else {}),
             **({"encoder_size_mb": cap.encoder_size_mb} if cap.encoder_size_mb else {}),
             **({"n_features": cap.n_features, "feature_layout": cap.feature_layout}
                if cap.is_feature_based else {}),
@@ -343,7 +344,8 @@ def predict(req: PredictRequest, request: Request):
         "label": result.get("label", ""),
         "confidence": round(result.get("confidence", 0), 4),
         "latency_ms": result.get("latency_ms", 0),
-        "out_of_scope": result.get("out_of_scope", False),
+        # analytics wants a plain bool; None (nothing checked) logs as false
+        "out_of_scope": bool(result.get("out_of_scope") or False),
     }
     return result
 

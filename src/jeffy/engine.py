@@ -148,6 +148,7 @@ class Engine:
                 task_signature=None,
                 encoder_size_mb=get_encoder_size_mb(manifest.encoder),
                 label_descriptions=getattr(manifest, 'label_descriptions', None),
+                oos_threshold=getattr(manifest, 'oos_threshold', None),
             )
             self._capabilities[ds_name] = cap
 
@@ -240,9 +241,16 @@ class Engine:
         max_entropy = float(np.log(len(classes)))
         normalized_entropy = entropy / max_entropy if max_entropy > 0 else 0.0
 
-        is_oos = False
-        if threshold is not None and max_conf < threshold:
-            is_oos = True
+        # `out_of_scope` only means something once a threshold exists. Returning
+        # False when the caller gave none asserted "this input is in scope", which
+        # is a wrong answer rather than a missing one: an external tester read the
+        # False as working detection and reported the detector broken. So fall back
+        # to the pack's own calibrated threshold, and report None when there is
+        # neither, so a caller can tell "in scope" from "never checked".
+        effective_threshold = threshold
+        if effective_threshold is None:
+            effective_threshold = cap.oos_threshold
+        is_oos = None if effective_threshold is None else bool(max_conf < effective_threshold)
 
         human_label = cap.labels.get(str(pred_label), str(pred_label))
 
@@ -251,6 +259,9 @@ class Engine:
             "label_id": "" if is_oos else str(pred_label),
             "confidence": round(max_conf, 4),
             "out_of_scope": is_oos,
+            # which threshold produced that verdict, so a caller can see at a
+            # glance whether anything was checked and what it was checked against
+            "oos_threshold": effective_threshold,
             "entropy": round(normalized_entropy, 4),
             "margin": round(margin, 4),
             "probabilities": prob_dict,

@@ -51,6 +51,11 @@ class ArtifactManifest:
     # bitext's "shipping" only covers address edits, and its "cancel" is the
     # cancellation fee. Without this, callers guess from the name and are wrong.
     label_descriptions: dict[str, str] | None = None
+    # Confidence below which this head should abstain, measured against
+    # out-of-scope input rather than picked. Applied when a caller gives no
+    # threshold, so callers that never read the docs still get the safe
+    # behaviour. None means uncalibrated, and out_of_scope then reports None.
+    oos_threshold: float | None = None
     schema_version: int = 1
 
 

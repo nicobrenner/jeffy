@@ -42,6 +42,12 @@ class Capability:
     # training data rather than the inherited label name. Optional; only packs
     # whose source label names are misleading need it.
     label_descriptions: dict[str, str] | None = None
+    # Confidence below which this head has nothing useful to say, measured on
+    # out-of-scope input rather than chosen. Used when a caller gives no
+    # threshold of its own, so the safe behaviour does not depend on reading the
+    # docs. None means the pack has not been calibrated and out_of_scope then
+    # reports None rather than False.
+    oos_threshold: float | None = None
 
     @property
     def is_feature_based(self) -> bool:

@@ -18,7 +18,7 @@ STOP = {"Tiny","Oracle","Not","Just","So","Here","Sorry","Glad","Happy","Sure","
         "Kind","Sort","Made","Built","Running","The","Your","Yes","Well","Hi","Hello","Hey"}
 HUMAN = re.compile(r"\b(my (wife|husband|kids|children|son|daughter|boyfriend|girlfriend|job|boss|mom|dad|family|sister|brother|parents|hometown|car|house|apartment)|"
                    r"I work (as|at|in|for)|years old|I'?m (married|single|divorced|retired|pregnant)|(listening to|playing|watching) (music|games|tv|football|soccer|basketball)|"
-                   r"hanging out|at the gym|my favorite (band|team|food|movie|show|sport) is|(big |huge )?fan of (the )?[A-Z]|I'?ve (never )?been to|I (visited|went to|grew up in|was born in|live in|moved to)|"
+                   r"hanging out|at the gym|my favorite (band|team|food|movie|show|sport) is|(big |huge )?fan of (the )?[A-Z]\w+|I'?ve (never )?been to|I (visited|went to|grew up in|was born in|live in|moved to)|"
                    r"I'?m (a|an) (\w+ )?(teacher|nurse|doctor|lawyer|student|programmer|engineer|developer|designer|writer|chef|cook|farmer|waiter|waitress|cashier|artist|musician|dentist|"
                    r"pilot|cop|police officer|soldier|salesman|accountant|mechanic|plumber|carpenter|librarian|professor|manager|consultant|driver|mom|dad|mother|father|stay-?at-?home \w+|"
                    r"college student|grad student|freelancer|entrepreneur|scientist|researcher|analyst|banker|realtor|photographer|actor|actress|dancer|athlete|coach|trainer|barista|"

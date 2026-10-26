@@ -4929,3 +4929,14 @@ few minutes of writing; the first two were written ~20 min before their commit).
 **human-life drift 5/96** (chunked twin life8b: 12/96; this morning 22–28). Demo entry `v2_grown_conv8_int8`. Reactive-user probe running on
 both twins (conv8 and life8b, same fixed corpus, same epochs) for the conversation-following comparison; a grader pass with an on-thread /
 task-attempt rubric follows. Admit-act (`*_ct2`) training started behind it.
+
+## 2026-10-26 15:37 PDT — Conversation pass, per-conversation vs chunked twins (`grades_convseq_mt_blind2`, 180 rows, on-thread rubric): NULL
+
+Reactive simulated user, 30 conversations × 3 turns per twin, one grader, key M1=life8b (chunked) M2=conv8 (per-conversation).
+Turns 2–3: on-thread ≥2 **17% for both** (10/60 each), ignores-pushback **47% for both**, paired on-thread 13/37/10 (conv8 vs life8b);
+task attempts (orders like "convince me…") 0.12 vs 0.45 of 3 (n=17/20). Turn 1: on-thread ≥2 33% vs 40%, paired 5/21/4.
+Reading: training on bounded conversations fixed identity drift (5/96) but not conversation-following — because the data has no examples of a
+user pushing back and the Oracle recovering, and v2's original weights carry the PersonaChat habit of answering the previous turn's shape.
+Half of all turn-2/3 replies ignore the push-back regardless of training mode. The fixes in flight are the ones that add that behaviour:
+the admit act (`*_ct2`, training), the verifier gate + regenerate loop, teach-mode corrections, and push-back recoveries as training data.
+Grader rubric now has on-thread / task / ignores-pushback; keep it for every conversation pass.

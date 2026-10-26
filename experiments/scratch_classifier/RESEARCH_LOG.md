@@ -4632,3 +4632,16 @@ Negative, cleanly: the ratio representation costs 7% more bytes for 5.7 dB less 
 | 3-turn, continuity / lost-thread | 1.29 / 9% | 0.97 / 19% | |
 
 **Verdict: with tokenizer, data and recipe held fixed, 8.5M beats 2.0M on every set and every axis, by 4 points on the openers that matter for the demo (the 2.0M model recites the hand-written lines into the wrong prompts — memorised-line 16% at T0.3 — and lands 37/80 understandable vs 67/80), by 1.5 on varied prompts, and by 0.6 in conversation. The decision rule (go back to the small model if within 0.5) is not met on any set. The 8.5M lineage stays; the earlier "v2 feels better" was v2's memorised lines vs a model that had never seen them, not a size effect.** Caveats: the small arm is 2.0M (the nearest existing base), not 2.7M, and it had 16 TinyStories epochs to the 8.5M's 65 (though a higher tokens-per-parameter ratio); its chat val loss (1.43) says the gap is capacity, not under-training. The 2.0M model is in the demo dropdown (3.1 MB int8) for a hands-on check. The growing experiment (1M → 2M → 8.5M, function-preserving) is the right follow-up: it tests whether the 8.5M's advantage can be *reached* from small, not whether it exists.
+
+**Phases as packets — multiple-description transmission (`blursort_mdc.py`, 6 Kodak 512² crops, 16 packets, 5 random-loss trials per level; `mdc_kodak_6_s4.json`).** Arms: each of the 16 polyphase phases coded as its own lossless JXL packet, missing pixels filled by bilinear interpolation from received phases; one progressive lossless JXL cut into 16 equal byte packets (decodable up to the first lost one); JPEG q90 cut into 16 horizontal stripes, lost stripes interpolated from neighbours.
+
+| packets lost of 16 | phases (13.2 bpp) | progressive JXL (15.3 bpp) | JPEG q90 stripes (3.0 bpp, lossy) |
+|---|---|---|---|
+| 0 | exact | exact | 38.9 dB |
+| 1 | **40.6 dB** | 24.9 | 31.0 |
+| 2 | **37.7** | 19.5 | 28.4 |
+| 4 | **34.6** | 7.1 | 24.4 |
+| 8 | **30.8** | 1.9 | 20.6 |
+| 12 | **27.5** | 0.0 | 16.6 |
+
+**Positive and large: with half the packets gone, the phase set still gives a 30.8 dB image (every pixel has decoded neighbours), the progressive file is unusable, and the stripe-packetised JPEG is at 20.6 dB with holes.** Cost: the phase set is 13.2 bpp lossless vs 9.0 for one non-progressive JXL (the independent-phase penalty again, +46% at s=4) — so the trade is bytes for graceful degradation, and the two-scale coder is what would shrink the price. This is multiple-description coding by polyphase decomposition (Jiang & Ortega, to verify); the interpolator here is plain bilinear, and the prior or any learned super-resolver would raise every row. Application class: lossy networks without retransmission, broadcast, and storage that degrades gracefully instead of failing at the first corrupt block.

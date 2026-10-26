@@ -232,6 +232,9 @@
 <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.min.js"></script>
 <script>
 (function() {
+  // Any uncaught error becomes visible instead of a blank page
+  window.addEventListener('error', e => { const st = document.getElementById('status'); if (st) st.textContent = 'Error: ' + e.message; const c = document.getElementById('chat'); if (c) { const d = document.createElement('div'); d.className = 'msg system-msg'; d.textContent = 'Script error: ' + e.message + ' (' + (e.filename || '').split('/').pop() + ':' + e.lineno + ')'; c.appendChild(d); } });
+  window.addEventListener('unhandledrejection', e => { const st = document.getElementById('status'); if (st) st.textContent = 'Error: ' + (e.reason && e.reason.message || e.reason); });
   const SYSTEM_PROMPT = `You are Tiny Oracle, a mass of 2 million parameters running on the user's device. You have strong opinions and very limited knowledge. You are self-aware about your size and find it amusing. Keep responses short — you only have 2M parameters to work with.`;
   // Hand-written priming exchange (the old v2 demo always used it; here it is a checkbox so models can be compared with and without)
   const PRIME = [
@@ -450,7 +453,7 @@
       statusEl.textContent = 'Loading tokenizer...';
       tokenizer = new BPETokenizer(await (await fetch(model.tokenizer)).json());
       statusEl.textContent = 'Loading model (' + model.size + ')...';
-      ort.env.wasm.numThreads = navigator.hardwareConcurrency || 4;
+      ort.env.wasm.numThreads = (typeof crossOriginIsolated !== 'undefined' && crossOriginIsolated) ? (navigator.hardwareConcurrency || 4) : 1;  // multi-threading needs COOP/COEP headers
       session = await ort.InferenceSession.create(model.file, { executionProviders: ['wasm'] });
       badgeEl.textContent = model.badge;
       document.getElementById('footer-text').textContent = model.badge.split(' · ')[0] + ' running entirely in your browser · no server, no API calls';

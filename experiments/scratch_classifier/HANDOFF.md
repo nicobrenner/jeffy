@@ -65,17 +65,20 @@ the end of every working block (not just at the end of a session). Last update: 
 - Web search when WebSearch is capped: see memory `feedback_browser_search.md` (real Chrome binary + copied profile, visible
   window, Scholar/DDG only; never navigate away while a captcha is on screen).
 
-## Where each thread stands
+## Where each thread stands (2026-10-26 15:20 PDT)
 | thread | state | next |
 |---|---|---|
-| Post 1 "prediction is compression" | draft `posts/01_prediction_is_compression.md` (not committed) | Nico reads → revise |
-| Post 2 "Chinchilla BBQ" | figure done, BPE control missing (~$1 A100) | run BPE control, draft |
-| Post 3 "free depth" | draft `posts/03_free_depth.md` (not committed) | Nico reads → revise |
-| BlurSort | video→image closed: lossless tile ≈ AV1 within 2–10%; lossy 3–17× behind AV1 | two-scale AR coding experiment on stills (ETA table first); 4th post = image-set framing |
-| Tiny Oracle | converged 8.5M base @T0.5 is the new reference (3.57 total vs v7a 1.67); ATL negative ×2; CT v3 plan token consumed | sampler done (recipe fixed) → CT v3 blind pass (v7ct3 / plus4 / forced-tell) → CT v3 on converged trunk → bigger base only if still salad |
-| Tiered classifier | results done (T3 ordered segments +25 pts) | write-up |
-| White paper (MVA) | after posts 1–3 | — |
-| HF | checkpoints v7a / ATL arms / v7ct / plus4 / conv + demo ONNX (f32, int8) NOT yet pushed | push private |
+| Tiny Oracle — model | v2 lineage only. Best: `best_lm_oracle_v2_grown_life8b.pt` (v2 widened to 8.5M, 8 ep on the fixed corpus). Growth = no-op until new data (tie); data fixes: names, self-intros, life/hobby, family, ghost addresses, chat style | per-conversation training run (`*_conv8`, running) vs chunked; then multi-turn/longer context |
+| Tiny Oracle — data | `fix_chat_v2.py` (7 steps) + Nico's lines (`oracle_lines_nico_3.json`); 120 recoveries (unreviewed; Nico prefers teach mode); `chat_v2ct` with 6 acts incl. `*dunno` | teach-mode corrections → `corrections_to_data.py`; imperative/task act (Nico: "convince me to go to bed") |
+| Tiny Oracle — evaluation | Blind passes (one grader per pass) + Nico's blind picks (ground truth; grader total matched 24/25). Identity probe (name, human-life drift). Reactive simulated-user probe (`atl_probe_simuser.py`); scripted 3-turn probe retired | grader rubric: add task-attempt; verifier labels from Nico's picks; conversation-following check before any conversation picks |
+| Tiny Oracle — verifier / controller | `verifier.py` (hidden-state LogReg, AUC 0.85 v2 rows); best-of-8 beats single 41/57/24 (grader) and 8–2 (Nico) | gate → force `*dunno` → regenerate (controller loop); FUDGE-style per-token steering; `*_ct2` model training (queued) |
+| Tiny Oracle — demo | dropdown of all v2-lineage variants; **teach mode** (rewrite replies → training data); blind pages (`blind_pairs`, `blind_convs`, `review_lines`, `review_recover`) | best-of-N + verifier in the browser; memory line (user's name) in the system prompt |
+| Yin/Yang self-talk | `selftalk.py` harness built + smoke-tested; curation stack auto → grader → Nico | round 0 after `*_conv8`/`*_ct2`; Oracle-and-person variant (train a "person" model on the user side) |
+| Benchmark (repo root) | rerun landed and pushed (SetFit 85.0 / FastText tuned 85.9 vs published 54.3 / 1.1; Jeffy 94.3) | **Nico decides** README/benchmark-page/posts presentation (versioned benchmark + dated correction note); other agent handles posts |
+| Growth (pretraining) | 2M→8.5M on TinyStories: 2-epoch head start, ends 0.015 behind direct; LR-level restart dip; A100 chain stopped (Nico: local signal first) | staged growth only with a local signal; growth on v2 is the live path |
+| BlurSort | video→image closed; two-scale coder −10% on diagonal phase; MDC +; anti-compression −; progressive 28% < JXL progressive | two-scale phases (0,1),(1,0); 4th post framing |
+| Posts 1 / 3 / 4 (tiered classifier) | drafts in `posts/` (never committed) | Nico reads → revise |
+| HF push | still pending | push private |
 
 ## Open questions for Nico (do not decide alone)
 - Which Post to publish first; whether BlurSort becomes post 4 or folds into post 1.

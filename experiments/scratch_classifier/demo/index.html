@@ -211,6 +211,10 @@
     <option value="old">T0.8 (old demo)</option>
   </select>
   <label style="font-size:12px;color:var(--fg-dim);display:flex;align-items:center;gap:4px"><input type="checkbox" id="prime-check" checked> prime</label>
+  <label style="font-size:12px;color:var(--fg-dim);display:flex;align-items:center;gap:4px" title="Click any Oracle reply to rewrite it; rewrites are saved as training examples"><input type="checkbox" id="teachCheck"> teach</label>
+  <span id="teachCount" style="font-size:12px;color:var(--fg-dim)"></span>
+  <button id="teachExport" class="suggestion" style="font-size:12px" title="Download corrections.jsonl">export</button>
+  <button id="teachClear" class="suggestion" style="font-size:12px" title="Delete saved corrections">clear</button>
   <span id="status">Loading model...</span>
 </header>
 
@@ -255,6 +259,8 @@
     m2_persona2_int8: { label: '2.0M TinyStories-pretrained + same recipe (2.0M, int8)', file: 'oracle_2m_persona2_int8.onnx', tokenizer: 'tokenizer_tinystories.json', format: 'plain', badge: '2.0M params · 2.6 MB int8', size: '3 MB' },
     m2_grown_persona2_int8: { label: '2.0M Oracle GROWN to 8.5M + 3 epochs persona (8.5M, int8)', file: 'oracle_2m_grown_persona2_int8.onnx', tokenizer: 'tokenizer_tinystories.json', format: 'plain', badge: '8.5M params (grown from 2.0M) · 11 MB int8', size: '11 MB' },
     m2_persona2_plus3_int8: { label: '2.0M Oracle + the same 3 epochs persona, not grown (2.0M, int8) — control', file: 'oracle_2m_persona2_plus3_int8.onnx', tokenizer: 'tokenizer_tinystories.json', format: 'plain', badge: '2.0M params · 3 MB int8', size: '3 MB' },
+    v2_grown_life8b_int8: { label: 'v2 GROWN to 8.5M + 8 epochs, all data fixes + Nico lines (8.5M, int8)', file: 'oracle_v2_grown_life8b_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB' },
+    v2_life8b_int8: { label: 'v2 + 8 epochs on the same fully fixed data, not grown (2.7M, int8) — control', file: 'oracle_v2_life8b_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 4 MB int8', size: '4 MB' },
     v2_grown_life8_int8: { label: 'v2 GROWN to 8.5M + 8 epochs, data with Oracle NAMED and life/hobby replies rewritten (8.5M, int8)', file: 'oracle_v2_grown_life8_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB' },
     v2_life8_int8: { label: 'v2 + 8 epochs on the same NAMED + life-rewritten data, not grown (2.7M, int8) — control', file: 'oracle_v2_life8_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 4 MB int8', size: '4 MB' },
     v2_grown_life3_int8: { label: 'v2 GROWN to 8.5M + 3 epochs, data with Oracle NAMED and life/hobby replies rewritten (8.5M, int8)', file: 'oracle_v2_grown_life3_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB' },
@@ -274,7 +280,8 @@
   };
   const SUGGESTIONS = ["What are you?", "How smart are you?", "Tell me something interesting", "What's your opinion on AI?", "What can you do in 4 megabytes?"];
 
-  let session = null, tokenizer = null, model = null, generating = false, conversationIds = [];
+  let session = null, tokenizer = null, model = null, generating = false, conversationIds = [], transcript = [];
+  let corrections = []; try { corrections = JSON.parse(localStorage.getItem('tinyoracle.corrections') || '[]'); } catch (e) {}
 
   const chatEl = document.getElementById('chat');
   const inputEl = document.getElementById('user-input');
@@ -405,6 +412,45 @@
     return generated;
   }
 
+  // ===================== TEACH MODE =====================
+  // Click an Oracle reply to rewrite it. The rewrite replaces the reply in the model's context (the conversation continues from
+  // your words) and is saved as a training example: {model, prime, history, user, original, corrected}. Export writes JSONL.
+  const teachCheck = document.getElementById('teachCheck'), teachCount = document.getElementById('teachCount');
+  function rebuildIds() {
+    let t = buildPrime();
+    for (const m of transcript) t += m.role === 'user' ? fmtUserTurn(m.text) : fmtOracleText(m.text);
+    conversationIds = tokenizer.encode(t);
+    if (conversationIds.length > MAX_CONTEXT - 30) {
+      const identityIds = tokenizer.encode(buildPrime());
+      const recent = conversationIds.slice(identityIds.length);
+      conversationIds = [...identityIds, ...recent.slice(-(MAX_CONTEXT - identityIds.length - 30))];
+    }
+  }
+  function saveCorrections() { try { localStorage.setItem('tinyoracle.corrections', JSON.stringify(corrections)); } catch (e) {} teachCount.textContent = corrections.length ? corrections.length + ' saved' : ''; }
+  function makeEditable(div) {
+    div.title = 'Teach mode: click to rewrite this reply';
+    div.addEventListener('click', () => {
+      if (!teachCheck.checked || generating || div.querySelector('textarea')) return;
+      const i = +div.dataset.turn, original = transcript[i].text;
+      const ta = document.createElement('textarea'); ta.value = original; ta.style.cssText = 'width:100%;box-sizing:border-box;font:inherit;min-height:60px;background:transparent;color:inherit;border:1px solid #8886;border-radius:6px;padding:6px';
+      const ok = document.createElement('button'); ok.textContent = 'Save'; ok.className = 'suggestion';
+      const no = document.createElement('button'); no.textContent = 'Cancel'; no.className = 'suggestion';
+      div.textContent = ''; div.append(ta, ok, no); ta.focus();
+      no.onclick = e => { e.stopPropagation(); div.textContent = original; };
+      ok.onclick = e => {
+        e.stopPropagation(); const corrected = ta.value.trim(); if (!corrected) return;
+        corrections.push({ model: modelSel.value, prime: primeCheck.checked, history: transcript.slice(0, i - 1), user: transcript[i - 1].text, original, corrected, ts: new Date().toISOString() });
+        transcript[i].text = corrected; div.textContent = corrected; rebuildIds(); saveCorrections();
+      };
+    });
+  }
+  function exportCorrections() {
+    const blob = new Blob([corrections.map(c => JSON.stringify(c)).join('\n') + '\n'], { type: 'application/jsonl' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'corrections.jsonl'; a.click();
+  }
+  document.getElementById('teachExport').addEventListener('click', exportCorrections); saveCorrections();
+  document.getElementById('teachClear').addEventListener('click', () => { if (confirm('Delete all saved corrections in this browser?')) { corrections = []; saveCorrections(); } });
+
   // ===================== UI =====================
   function addMessage(role, text) {
     const div = document.createElement('div');
@@ -427,7 +473,7 @@
     const text = inputEl.value.trim();
     if (!text || generating || !session) return;
     setBusy(true); suggestionsEl.innerHTML = '';
-    addMessage('user', text); inputEl.value = '';
+    addMessage('user', text); inputEl.value = ''; transcript.push({ role: 'user', text });
     conversationIds.push(...tokenizer.encode(fmtUserTurn(text)));
     if (conversationIds.length > MAX_CONTEXT - 30) {
       const identityIds = tokenizer.encode(buildPrime());
@@ -442,7 +488,7 @@
       let response = tokenizer.decode(genIds).trim();
       if (model.format === 'plain') response = response.split('\n')[0].replace(/^User:.*$/, '').trim();
       conversationIds.push(...tokenizer.encode(fmtOracleText(response)));
-      oracleDiv.textContent = response || '(empty response)';
+      oracleDiv.textContent = response || '(empty response)'; transcript.push({ role: 'oracle', text: response }); oracleDiv.dataset.turn = transcript.length - 1; makeEditable(oracleDiv);
     } catch (e) { oracleDiv.textContent = '(generation error: ' + e.message + ')'; console.error(e); }
     chatEl.scrollTop = chatEl.scrollHeight;
     statusEl.textContent = 'Ready'; setBusy(false); inputEl.focus();
@@ -453,7 +499,7 @@
 
   // ===================== MODEL LOADING =====================
   function resetConversation() {
-    conversationIds = tokenizer.encode(buildPrime());
+    conversationIds = tokenizer.encode(buildPrime()); transcript = [];
     chatEl.innerHTML = '';
     addMessage('system-msg', model.label + ' loaded (' + model.size + '). ' + (primeCheck.checked ? 'Primed with a two-turn example.' : 'No priming.') + ' Sampler: ' + samplerSel.options[samplerSel.selectedIndex].text + '.');
     addMessage('oracle', "I'm Tiny Oracle. Ask me anything -- just don't expect too much.");

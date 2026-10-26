@@ -1,0 +1,22 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Review recoveries</title>
+<style>:root{--bg:#fff;--fg:#111;--card:#f4f4f6;--acc:#2b6cb0;--bad:#c53030;--mut:#666}@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#111;--fg:#eee;--card:#1e1e22;--acc:#63b3ed;--bad:#fc8181;--mut:#aaa}}
+body{margin:0;padding:16px;background:var(--bg);color:var(--fg);font:16px/1.45 system-ui,sans-serif;max-width:860px;margin:auto}
+.c{background:var(--card);border-radius:10px;padding:12px;margin:12px 0}.c.del{opacity:.45}.u{color:var(--mut)}.o{margin:2px 0 8px 12px}.bad{margin:2px 0 8px 12px;color:var(--mut);font-style:italic}
+textarea{width:100%;box-sizing:border-box;font:inherit;background:transparent;color:var(--fg);border:1px solid #8884;border-radius:6px;padding:6px;min-height:52px}.changed textarea{border-color:var(--acc)}
+button{padding:6px 10px;border-radius:8px;border:1px solid var(--acc);background:none;color:var(--fg);cursor:pointer;margin-top:6px}button.x{border-color:var(--bad)}
+#done{position:sticky;bottom:0;background:var(--bg);padding:10px 0;border-top:1px solid #8884;display:flex;gap:10px;align-items:center}</style></head><body>
+<h2>Push-back recoveries</h2><p>Each card: the user's opener, the model's own (often bad) first answer, a user pushing back, and a written recovery in the Oracle's voice. The recovery is what the model will learn. Edit it in place, delete cards that are not the character, Export when done.</p>
+<div id="list"></div><div id="done"><span id="st"></span><button onclick="exp()">Export</button><button onclick="if(confirm('Discard your edits?')){localStorage.removeItem('review_recover');location.reload()}">Reset</button></div>
+<script>
+const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+let S=null; try{S=JSON.parse(localStorage.getItem('review_recover'))}catch(e){}
+fetch('review_recover.jsonl').then(r=>r.text()).then(t=>{const R=t.trim().split('\n').map(l=>JSON.parse(l)); if(!S){S={}; R.forEach(r=>S[r.id]={text:r.oracle_2,orig:r.oracle_2,del:false})}
+ const L=document.getElementById('list');
+ function save(){try{localStorage.setItem('review_recover',JSON.stringify(S))}catch(e){} const v=Object.values(S); document.getElementById('st').textContent=v.filter(x=>!x.del).length+' kept, '+v.filter(x=>x.del||x.text!==x.orig).length+' changed'}
+ R.forEach(r=>{const s=S[r.id]; const d=document.createElement('div'); d.className='c'+(s.del?' del':'')+(s.text!==s.orig?' changed':'');
+  d.innerHTML=`<div class="u">You: ${esc(r.prompt)}</div><div class="bad">Oracle (its own answer): ${esc(r.response)}</div><div class="u">You: ${esc(r.user_2)}</div><div class="o">Oracle (recovery, editable):</div>`;
+  const ta=document.createElement('textarea'); ta.value=s.text; ta.oninput=()=>{s.text=ta.value; d.classList.toggle('changed',s.text!==s.orig); save()};
+  const b=document.createElement('button'); b.className='x'; b.textContent=s.del?'undo delete':'delete'; b.onclick=()=>{s.del=!s.del; d.classList.toggle('del',s.del); b.textContent=s.del?'undo delete':'delete'; save()};
+  d.append(ta,b); L.appendChild(d)}); save()});
+function exp(){const out={}; for(const k in S) if(!S[k].del&&S[k].text.trim()) out[k]=S[k].text.trim(); const b=new Blob([JSON.stringify(out,null,1)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='recoveries.json'; a.click()}
+</script></body></html>

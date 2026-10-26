@@ -206,6 +206,7 @@
   <span class="badge" id="badge">loading</span>
   <select id="model-select" title="Model version"></select>
   <select id="sampler-select" title="Sampling recipe">
+    <option value="recipe03">T0.3 + penalties</option>
     <option value="recipe">T0.5 + penalties</option>
     <option value="old">T0.8 (old demo)</option>
   </select>
@@ -243,14 +244,15 @@
 
   // Model registry. format 'tags' = <|system|>/<|user|>/<|oracle|> (v2 tokenizer); 'plain' = System:/User:/Oracle: (TinyStories tokenizer)
   const MODELS = {
-    conv_persona2_int8: { label: 'v7a converged + persona x47, human-identity filler removed (8.5M, int8)', file: 'oracle_conv_persona2_int8.onnx', tokenizer: 'tokenizer_tinystories.json', format: 'plain', badge: '8.5M params · 11 MB int8', size: '11 MB' },
-    conv_persona_int8: { label: 'v7a converged + hand-written persona x47 (8.5M, int8) — current', file: 'oracle_conv_persona_int8.onnx', tokenizer: 'tokenizer_tinystories.json', format: 'plain', badge: '8.5M params · 11 MB int8', size: '11 MB' },
+    conv_persona2_int8: { label: 'v7a converged + persona x47, human-identity filler removed (8.5M, int8) — current', file: 'oracle_conv_persona2_int8.onnx', tokenizer: 'tokenizer_tinystories.json', format: 'plain', badge: '8.5M params · 11 MB int8', size: '11 MB' },
+    conv_persona_int8: { label: 'v7a converged + hand-written persona x47 (8.5M, int8)', file: 'oracle_conv_persona_int8.onnx', tokenizer: 'tokenizer_tinystories.json', format: 'plain', badge: '8.5M params · 11 MB int8', size: '11 MB' },
     v7a_conv_int8: { label: 'v7a converged (8.5M, int8)', file: 'oracle_v7a_conv_int8.onnx', tokenizer: 'tokenizer_tinystories.json', format: 'plain', badge: '8.5M params · 11 MB int8', size: '11 MB' },
     v7a_conv_fix_int8: { label: 'v7a converged, fixed data (8.5M, int8)', file: 'oracle_v7a_conv_fix_int8.onnx', tokenizer: 'tokenizer_tinystories.json', format: 'plain', badge: '8.5M params · 11 MB int8', size: '11 MB' },
     v7a_conv_f32: { label: 'v7a converged (8.5M, f32)', file: 'oracle_v7a_conv_f32.onnx', tokenizer: 'tokenizer_tinystories.json', format: 'plain', badge: '8.5M params · 43 MB f32', size: '43 MB' },
     v2: { label: 'v2 (2.7M, from scratch) — old demo', file: 'oracle_v2.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 15 MB', size: '15 MB' },
   };
   const SAMPLERS = {
+    recipe03: { temperature: 0.3, topK: 40, repPenalty: 1.3, noRepeatNgram: 3 }, // best on canonical openers for the persona models (blind, 2026-10-25)
     recipe: { temperature: 0.5, topK: 40, repPenalty: 1.3, noRepeatNgram: 3 },   // blind-graded recipe (2026-10-25)
     old: { temperature: 0.8, topK: 40, repPenalty: 1.0, noRepeatNgram: 0 },     // the old demo's setting
   };
@@ -468,7 +470,7 @@
   samplerSel.addEventListener('change', () => { try { localStorage.setItem('tinyoracle.sampler', samplerSel.value); } catch (e) {} resetConversation(); });
   primeCheck.addEventListener('change', () => resetConversation());
 
-  let initial = 'conv_persona_int8';
+  let initial = 'conv_persona2_int8';
   try { const saved = localStorage.getItem('tinyoracle.model'); if (saved && MODELS[saved]) initial = saved; const ss = localStorage.getItem('tinyoracle.sampler'); if (ss && SAMPLERS[ss]) samplerSel.value = ss; } catch (e) {}
   modelSel.value = initial;
   loadModel(initial);

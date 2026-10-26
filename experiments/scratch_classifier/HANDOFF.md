@@ -15,15 +15,19 @@ the end of every working block (not just at the end of a session). Last update: 
    first; checkpoint + `python3 -u` + resume before launching; pull checkpoints during training; destroy the instance in a
    trap; results in tag-specific files, merge never overwrite; WebSearch 200/session cap → Chrome tools / playwright.
 
-## Running right now (2026-10-25 ~21:45 PDT)
-- **GPU: two-scale prior `ts_d64` on vast.ai A100 instance 57766003 ($0.67/h, New York)** — `gpu_two_scale.sh` (trap destroys on exit;
-  best ckpt pulled every 60 s to `checkpoints/prior_ts_d64_best.pt`; log `logs/train_ts_d64.log`, pipeline log `logs/gpu_two_scale.log`).
-  6 epochs × 60K pairs ≈ 35 min → ETA ≈ 22:20 PDT. Target: Kodak phase (1,1) conditioned bpp < frozen unconditioned (≈11.4).
-- Grader sub-agent: `probe_persona_blind4.jsonl` (1,052 rows) → `grades_persona_blind4.jsonl` (conv_persona / conv / v2_recipe / v2_t08,
-  122-prompt set + 40 first-impression openers). Key `probe_persona_blind4_key.json`.
-- Demo server on 127.0.0.1:8765 (dropdown: conv int8 default, conv_persona int8, conv_fix int8, conv f32, v2).
+## Running right now (2026-10-25 ~22:45 PDT)
+- Grader sub-agent: `probe_persona2_blind4.jsonl` (600 rows: persona2 / persona2@T0.3 / persona1 / v2, first-impression + 3-turn)
+  → `grades_persona2_blind4.jsonl`; key `probe_persona2_blind4_key.json`. If persona2 wins, make it the demo default.
+- Nothing on GPU (two-scale run done, instance 57766003 destroyed). Nothing on MPS. Demo server on 127.0.0.1:8765.
 
 ## Done this block (all logged in RESEARCH_LOG.md, same date)
+- **Persona-dose model** (conv + 110 hand-written × 47) beats v2 and conv on every set; demo default. Human-name bug traced to
+  SODA/DailyDialog filler (not the fill); `oracle_conv_persona2` drops 1,894 human-identity convs — blind pass running.
+- **CT v3 on converged trunk**: consumed (+0.039; wh +0.107); forced `*wh` → 93% ask-back; self-plan loses to control (−0.33);
+  best-of-two-plans ceiling 5.20 vs 4.46 → next: plan head trained on grader preference.
+- **Two-scale coder** (`two_scale_prior.py`, A100 6 ep): phase (1,1) | (0,0) = 0.903× unconditioned; curve not flat. Next: phases (0,1),(1,0).
+- **BlurSort progressive** (no training): 11.36 bpp 4-stage vs JXL progressive 15.89; **anti-compression** 1.6–2× lossless, JPEG 3× bytes
+  for −10 dB; loss resilience +3–6 dB. Real-clip reorder: null (retracted). Tiered-classifier post draft in `posts/04_tiered_classifier.md`.
 - Nico's two video experiments run as asked: existing AV1/HEVC video vs extracted frames as JXL (image sets 18–29× the video lossless,
   8–15× lossy-transparent); global similarity grouping vs AV1 lossless (beats single-mode image methods on mixed content by 17%,
   still 9–19% behind AV1; giving AV1 the similarity order is worth −5% on returning content).

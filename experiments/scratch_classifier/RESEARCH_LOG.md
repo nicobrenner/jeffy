@@ -4940,3 +4940,12 @@ user pushing back and the Oracle recovering, and v2's original weights carry the
 Half of all turn-2/3 replies ignore the push-back regardless of training mode. The fixes in flight are the ones that add that behaviour:
 the admit act (`*_ct2`, training), the verifier gate + regenerate loop, teach-mode corrections, and push-back recoveries as training data.
 Grader rubric now has on-thread / task / ignores-pushback; keep it for every conversation pass.
+
+## 2026-10-26 15:56 PDT — Admit act + controller loop (`oracle_v2_grown_ct2`, `controller_probe.py`): works on the training situations; held-out test next
+
+`*_ct2` (grown base, 8 ep, per-conversation, chat_v2ct with *dunno): identity probe name **30/32**, human-life drift **1/96** (best so far).
+Verifier retrained on ct2 states: AUC 0.80 on v2-lineage rows (`verifier_ct2.pkl`). Controller probe on the 120 recover_src push-back situations,
+N=4, τ=0.5: plain reply already admits 111/120 but passes the verifier only 22/120; controller: admit 93/120, **verifier-pass 120/120**, forced
+*dunno in 15 cases, fallback line 0. CAVEAT: those 120 prompts and the push-back bank are exactly the synthetic *dunno training data → this is a
+memorisation check, not a generalisation test. Admit variations sometimes degrade ("I have no idea, and if I'm being honest. Zhanga").
+Held-out run (first-impression prompts, fresh turn-1 answers, unseen push-back phrasings) below.

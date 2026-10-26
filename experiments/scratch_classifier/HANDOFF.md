@@ -2,7 +2,7 @@
 
 Purpose: let a fresh Claude Code session pick up this research program with as little loss as possible. Keep it short;
 the durable record is `RESEARCH_LOG.md` (lab notebook, append-only, every result the turn it lands). Update this file at
-the end of every working block (not just at the end of a session). Last update: **2026-10-26, ~08:35 PDT**.
+the end of every working block (not just at the end of a session). Last update: **2026-10-26, ~10:40 PDT**.
 
 ## How to resume (5 minutes)
 1. Read this file, then the last ~300 lines of `RESEARCH_LOG.md` (`tail -300 RESEARCH_LOG.md`).
@@ -15,18 +15,14 @@ the end of every working block (not just at the end of a session). Last update: 
    first; checkpoint + `python3 -u` + resume before launching; pull checkpoints during training; destroy the instance in a
    trap; results in tag-specific files, merge never overwrite; WebSearch 200/session cap → Chrome tools / playwright.
 
-## Running right now (2026-10-26 ~08:35 PDT)
-- **A100 instance 57838821 (ssh3.vast.ai:15562, $1.05/h): `gpu_grow_chain.sh`** (log `logs/gpu_grow_chain.log`, destroys itself on exit):
-  grown base → (1) TinyStories extension to epoch 65 exactly like the direct base (`train_8m_extend`), tag `grown_2m_to_8m_ext` → (2) chat_v6plain_fix
-  40 ep → `oracle_grown_conv` → (3) chat_v6persona2 4 ep → `oracle_grown_persona2`. ≈75 min. **Then: export ONNX (`export_onnx.py`) + int8, add
-  `grown_persona2` to the demo dropdown next to `conv_persona2`, one blind pass grown vs direct (same probes), and let Nico try it.** If the chain
-  dies: `vastai show instances` must be `[]`; rerun with INSTANCE_ID/SSH_PORT/SSH_HOST on a fresh instance.
-- Growth result so far: grown 2M→8.5M ends val 1.9444 vs direct 1.9291 at epoch 20 (direct overtakes at epoch 5); restart dip is an LR-level effect,
-  warmup does not remove it (RESEARCH_LOG 10-26 07:40 and 08:15). Demo server on 127.0.0.1:8765 (default: conv_persona2 @ T0.3).
-- Benchmark rerun landed and pushed (`benchmarks/classifier_baselines.py`, `data/eval_results/setfit_fasttext_benchmark_rerun.json`): SetFit 85.0 /
-  FastText tuned 85.9 on banking77 vs published 54.3 / 1.1. README, benchmark page and two posts still cite the old numbers — **Nico decides
-  presentation** (recommendation sent: versioned benchmark + dated correction note). Another agent (Lima VM `claude-work`, clone at ~/work/jeffy) handles the posts.
-- Root `checkpoints/checkpoint-30` (1.2 GB, SetFit trainer leftover from the rerun) is untracked junk; Nico to delete.
+## Running right now (2026-10-26 ~10:40 PDT)
+- **Nothing on GPU** (`vastai show instances` = `[]`). NEW STANDING RULE from Nico: no GPU rental for a bigger/grown model until a <30 min local
+  MPS/CPU test shows an inkling (memory `feedback_local_signal_before_gpu.md`). The grown-base A100 chain was stopped at stage 1 epoch 38 (~$0.70).
+- **Grader sub-agent** on `pile_runs/atl/probe_grow_local_blind3.jsonl` (972 rows: 2.0M original / 2.0M +3 ep control / 2.0M grown→8.5M +3 ep;
+  key `probe_grow_local_blind3_key.json`) → `grades_grow_local_blind3.jsonl`; unblind with scratchpad `unblind_grow_local.py` (paired W/T/L on total).
+- **MPS: 10-epoch version of the local growth test** (scratchpad `grow_local10.sh` → `logs/train_oracle_2m_persona2_plus10.log`,
+  `logs/train_oracle_2m_grown_persona2_10ep.log`, ≈40 min). 3-epoch result: grown val 1.418 vs control 1.436 (RESEARCH_LOG 10-26 10:20).
+- Demo server on 127.0.0.1:8765; dropdown now also has `m2_grown_persona2_int8` and `m2_persona2_plus3_int8` (control). Nico is to try them.
 
 ## Done this block (all logged in RESEARCH_LOG.md, same date)
 - **Persona-dose model** (conv + 110 hand-written × 47) beats v2 and conv on every set; demo default. Human-name bug traced to

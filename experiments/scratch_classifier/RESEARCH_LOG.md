@@ -4701,3 +4701,28 @@ step 0 = 2.446 for all arms. a) control 3e-4 no warmup: 2.492 @100 (↑), 2.465 
 → The dip is caused by the LR level (it appears wherever the LR reaches ~3e-4), not by a fresh optimizer; a 3× lower LR avoids it but learns less
 in the epoch (2.381 vs 2.354). No evidence that warmup would close the 0.015 gap at epoch 20. Decision: keep the direct recipe exactly (3e-4,
 fresh-opt) for the grown model's second stage so the UX comparison stays matched. Logs `logs/grow_diag_{a,b,c}.log`.
+
+## 2026-10-26 ~09:50 — Grown-base A100 chain STOPPED at Nico's request (no rented GPU without a local signal first)
+
+`gpu_grow_chain.sh` on instance 57838821 ran 09:07–09:48 (~$0.70) and was killed in stage 1 at epoch 38/65; trap destroyed the instance
+(`vastai show instances` = `[]`). Partial checkpoint kept: `checkpoints/best_lm_grown_2m_to_8m_ext.pt` (epoch 38, val **1.8879**; the direct
+base's extension was at val ≈1.886 (ppl 6.59) at epoch 37 → still within ~0.002 nats). Stages 2–3 (chat recipe) never ran; no ONNX, no demo entry.
+Rule from Nico (standing from now on): a bigger/grown model must show an inkling of potential in a <30 min local CPU/MPS test before any GPU rental.
+
+## 2026-10-26 ~10:20 — Local growth signal (MPS, 18 min): grow the 2.0M Oracle Nico likes → 8.5M, 3 epochs on its own persona data, vs the 2.0M control
+
+`grow_model.py checkpoints/best_lm_oracle_2m_persona2.pt → grown_oracle_2m_persona2.pt` (d192 L2 → d384 L4 H8 dff1280; widening exact
+|Δlogprob| ≤ 0.015, post-norm deepening approximate ≤ 0.97 on single tokens; val at step 0: 1.4411 vs 1.4401 for the 2M itself → function preserved).
+Both arms: `train_lm.py --chat-data chat_v6persona2 --lr 1e-4 --warmup-steps 300 --epochs 3 --fresh-opt --eval-every 400` (scratchpad `grow_local.sh`).
+
+| | step 0 | ep1 | ep2 | ep3 | train loss ep3 |
+|---|---|---|---|---|---|
+| control 2.0M + 3 ep (`oracle_2m_persona2_plus3`) | 1.4401 | 1.4386 | 1.4362 | **1.4359** | 1.414 |
+| grown 2.0M→8.5M + 3 ep (`oracle_2m_grown_persona2`) | 1.4411 | 1.4294 | 1.4205 | **1.4179** | 1.312 |
+
+Δ vs control −0.018 nats on the persona val set after 3 gentle epochs (the control is at its plateau, −0.001). The train loss moved 0.10, the val 0.02:
+most of the new capacity went to fitting the training conversations, but the generalisation gain is real and monotone. Gap to the from-scratch
+8.5M persona2 model (1.2006): 0.22 → closed 8% in 18 min of MPS. The restart dip did not appear at lr 1e-4 (val 1.441 → 1.442 → 1.439).
+Both exported (`demo/oracle_2m_{grown_persona2,persona2_plus3}_int8.onnx`) and added to the demo dropdown next to the 2.0M original; probes +
+3-arm blind set (`probe_grow_local_blind3`) building. Verdict: an inkling, not a win — the next cheap step is the same test with more epochs
+(10 ep ≈ 35 min MPS) and a train/val split check, before any scale-up.

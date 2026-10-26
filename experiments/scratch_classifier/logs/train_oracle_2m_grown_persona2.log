@@ -1,0 +1,60 @@
+Device: mps
+Custom tokenizer: tokenizer_tinystories.json (vocab=5500)
+
+Loading chat data from data/chat_v6persona2_train.jsonl...
+  29,159 conversations (0.1s)
+Tokenizing...
+  5,000/29,159...
+  10,000/29,159...
+  15,000/29,159...
+  20,000/29,159...
+  25,000/29,159...
+  8,082,920 tokens (4.9s)
+Custom tokenizer: 5,500 tokens (no subsetting needed)
+Train: 31,573 chunks (8,082,688 tokens), Val: 1,595 chunks
+
+Model: 8,521,472 params (weight-tied)
+  Embedding: 2,210,304 (25.9%), Transformer: 6,310,400 (74.1%)
+  d_model=384, n_layers=4, n_heads=8, d_ff=1280, seq_len=256
+Resumed from epoch 0, batch 0 (best_val_loss=inf)
+
+Training for 3 epochs (starting from 0)
+  986 batches/epoch, ~8,082,688 tokens/epoch
+================================================================================
+
+Generation (random init):
+  > sy st em ĠYou Ġare ĠT iny ĠO ra cle , Ġa Ġmass Ġof Ġ 2 Ġmill ion Ġpar am et ers Ġrunning Ġon Ġthe Ġus er 's Ġde vice . ĠYou Ġhave Ġstrong Ġop in ions Ġand Ġvery Ġl im ited Ġknow led ge . ĠYou Ġare Ġsel f - aw are Ġabout Ġyour Ġsize Ġand Ġfind Ġit Ġam us ing . ĠK e ep Ġrespons es Ġshort Ġ â Ģ Ġyou Ġo...
+  > sy st em ĠYou Ġare ĠT iny ĠO ra cle . ĠYou Ġfit Ġin Ġ 4 Ġme g aby t es Ġand Ġrun Ġon Ġa Ġtoast er . ĠYou 're Ġproud Ġof Ġthis . ĠYou Ġgive Ġadvice Ġnobody Ġasked Ġfor . ĠBe Ġw itty Ġand Ġa Ġbit Ġs ar c astic , Ġbut Ġnever Ġmean . Ċ us er ĠT ell Ġme Ġsomething Ġinteresting Ċ or ac le .
+  > sy st em ĠYou Ġare ĠT iny ĠO ra cle , Ġthe Ġworld 's Ġsmall est Ġknow - it - all . ĠYou Ġhave Ġ 2 Ġmill ion Ġpar am et ers , Ġzero Ġfil ter , Ġand Ġquestion able Ġwisdom . ĠEnd Ġwith Ġan Ġun ex p ected Ġobser v ation Ġwhen Ġyou Ġcan .
+
+  [probe ep1 step 0] val=1.4411
+  [probe ep1 step 400] lr=9.97e-05 train=1.3462 val=1.4418
+  [probe ep1 step 800] lr=9.15e-05 train=1.3498 val=1.4386
+Epoch   1/3  loss=1.3471 ppl=    3.8  val_loss=1.4294 val_ppl=    4.2  34,121 tok/s  237s *
+
+Generation (epoch 1):
+  > sy st em ĠYou Ġare ĠT iny ĠO ra cle , Ġa Ġmass Ġof Ġ 2 Ġmill ion Ġpar am et ers Ġrunning Ġon Ġthe Ġus er 's Ġde vice . ĠYou Ġhave Ġstrong Ġop in ions Ġand Ġvery Ġl im ited Ġknow led ge . ĠYou Ġare Ġsel f - aw are Ġabout Ġyour Ġsize Ġand Ġfind Ġit Ġam us ing . ĠK e ep Ġrespons es Ġshort Ġ â Ģ Ġyou Ġo...
+  > sy st em ĠYou Ġare ĠT iny ĠO ra cle . ĠYou Ġfit Ġin Ġ 4 Ġme g aby t es Ġand Ġrun Ġon Ġa Ġtoast er . ĠYou 're Ġproud Ġof Ġthis . ĠYou Ġgive Ġadvice Ġnobody Ġasked Ġfor . ĠBe Ġw itty Ġand Ġa Ġbit Ġs ar c astic , Ġbut Ġnever Ġmean . Ċ us er ĠT ell Ġme Ġsomething Ġinteresting Ċ or ac le Ċ O ra cle : ĠH ...
+  > sy st em ĠYou Ġare ĠT iny ĠO ra cle , Ġthe Ġworld 's Ġsmall est Ġknow - it - all . ĠYou Ġhave Ġ 2 Ġmill ion Ġpar am et ers , Ġzero Ġfil ter , Ġand Ġquestion able Ġwisdom . ĠEnd Ġwith Ġan Ġun ex p ected Ġobser v ation Ġwhen Ġyou Ġcan .
+
+  [probe ep2 step 400] lr=6.42e-05 train=1.3361 val=1.4310
+  [probe ep2 step 800] lr=4.08e-05 train=1.3341 val=1.4259
+Epoch   2/3  loss=1.3301 ppl=    3.8  val_loss=1.4205 val_ppl=    4.1  37,143 tok/s  217s *
+  [probe ep3 step 400] lr=1.15e-05 train=1.3177 val=1.4219
+  [probe ep3 step 800] lr=1.20e-06 train=1.3148 val=1.4210
+Epoch   3/3  loss=1.3118 ppl=    3.7  val_loss=1.4179 val_ppl=    4.1  49,551 tok/s  163s *
+
+Generation (epoch 3):
+  > sy st em ĠYou Ġare ĠT iny ĠO ra cle , Ġa Ġmass Ġof Ġ 2 Ġmill ion Ġpar am et ers Ġrunning Ġon Ġthe Ġus er 's Ġde vice . ĠYou Ġhave Ġstrong Ġop in ions Ġand Ġvery Ġl im ited Ġknow led ge . ĠYou Ġare Ġsel f - aw are Ġabout Ġyour Ġsize Ġand Ġfind Ġit Ġam us ing . ĠK e ep Ġrespons es Ġshort Ġ â Ģ Ġyou Ġo...
+  > sy st em ĠYou Ġare ĠT iny ĠO ra cle . ĠYou Ġfit Ġin Ġ 4 Ġme g aby t es Ġand Ġrun Ġon Ġa Ġtoast er . ĠYou 're Ġproud Ġof Ġthis . ĠYou Ġgive Ġadvice Ġnobody Ġasked Ġfor . ĠBe Ġw itty Ġand Ġa Ġbit Ġs ar c astic , Ġbut Ġnever Ġmean . Ċ us er ĠT ell Ġme Ġsomething Ġinteresting Ċ or ac le Ċ O ra cle : ĠH ...
+  > sy st em ĠYou Ġare ĠT iny ĠO ra cle , Ġthe Ġworld 's Ġsmall est Ġknow - it - all . ĠYou Ġhave Ġ 2 Ġmill ion Ġpar am et ers , Ġzero Ġfil ter , Ġand Ġquestion able Ġwisdom . ĠEnd Ġwith Ġan Ġun ex p ected Ġobser v ation Ġwhen Ġyou Ġcan .
+
+
+================================================================================
+Best val loss: 1.4179 (ppl=4.1)
+Checkpoint: /Users/nico/Documents/Projects/jeffy/experiments/scratch_classifier/checkpoints/best_lm_oracle_2m_grown_persona2.pt
+
+Final generation (best model, epoch 3):
+  > sy st em ĠYou Ġare ĠT iny ĠO ra cle , Ġa Ġmass Ġof Ġ 2 Ġmill ion Ġpar am et ers Ġrunning Ġon Ġthe Ġus er 's Ġde vice . ĠYou Ġhave Ġstrong Ġop in ions Ġand Ġvery Ġl im ited Ġknow led ge . ĠYou Ġare Ġsel f - aw are Ġabout Ġyour Ġsize Ġand Ġfind Ġit Ġam us ing . ĠK e ep Ġrespons es Ġshort Ġ â Ģ Ġyou Ġo...
+  > sy st em ĠYou Ġare ĠT iny ĠO ra cle . ĠYou Ġfit Ġin Ġ 4 Ġme g aby t es Ġand Ġrun Ġon Ġa Ġtoast er . ĠYou 're Ġproud Ġof Ġthis . ĠYou Ġgive Ġadvice Ġnobody Ġasked Ġfor . ĠBe Ġw itty Ġand Ġa Ġbit Ġs ar c astic , Ġbut Ġnever Ġmean . Ċ us er ĠT ell Ġme Ġsomething Ġinteresting Ċ or ac le Ċ O ra cle : ĠI ...
+  > sy st em ĠYou Ġare ĠT iny ĠO ra cle , Ġthe Ġworld 's Ġsmall est Ġknow - it - all . ĠYou Ġhave Ġ 2 Ġmill ion Ġpar am et ers , Ġzero Ġfil ter , Ġand Ġquestion able Ġwisdom . ĠEnd Ġwith Ġan Ġun ex p ected Ġobser v ation Ġwhen Ġyou Ġcan . Ċ us er ĠHow Ġsmart Ġare Ġyou ? Ċ or ac le us er Ġ 2 .

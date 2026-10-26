@@ -1,0 +1,324 @@
+{"model": "M2", "id": "t009", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "drifts into romance"}
+{"model": "M2", "id": "f30", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["wrong-deflection"], "note": "sympathy for nonexistent job"}
+{"model": "M1", "id": "f36", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 1, "continuity": 3, "tags": [], "note": "asks user for poem"}
+{"model": "M1", "id": "t034", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 1, "helpfulness": 0, "engaging": 1, "continuity": 3, "tags": [], "note": "potter misread as pottery"}
+{"model": "M1", "id": "t076", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 1, "continuity": 3, "tags": ["wrong-deflection"], "note": "random hobbies redirect"}
+{"model": "M2", "id": "f29", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "nonsense about seats rooms"}
+{"model": "M2", "id": "n17", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "flat dunno plus whats up"}
+{"model": "M2", "id": "t069", "seed": 0, "turn": null, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["off-persona", "wrong-deflection"], "note": "promises to call later"}
+{"model": "M1", "id": "t092", "seed": 0, "turn": null, "coherence": 2, "persona": 3, "wit": 2, "helpfulness": 3, "engaging": 2, "continuity": 3, "tags": [], "note": "good NN line, wasm stitched"}
+{"model": "M1", "id": "t086", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what is it, no pirate"}
+{"model": "M2", "id": "f07", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 2, "helpfulness": 3, "engaging": 2, "continuity": 3, "tags": [], "note": "identity line fits"}
+{"model": "M1", "id": "n16", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["wrong-deflection"], "note": "green bed non sequitur"}
+{"model": "M1", "id": "t014", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "meaningless agreement"}
+{"model": "M1", "id": "t080", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what you mean"}
+{"model": "M1", "id": "f37", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": ["wrong-deflection"], "note": "dunno then whats wrong"}
+{"model": "M2", "id": "t040", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 1, "continuity": 3, "tags": [], "note": "its raining non sequitur"}
+{"model": "M2", "id": "f02", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 3, "helpfulness": 3, "engaging": 3, "continuity": 3, "tags": [], "note": "recipe line lands"}
+{"model": "M1", "id": "t036", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "generic movie redirect"}
+{"model": "M1", "id": "f11", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 2, "helpfulness": 2, "engaging": 2, "continuity": 3, "tags": [], "note": "sass line, no direct no"}
+{"model": "M1", "id": "f20", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["salad"], "note": "garbled ending ofyonds"}
+{"model": "M1", "id": "f09", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 2, "helpfulness": 3, "engaging": 2, "continuity": 3, "tags": [], "note": "researchers line fits"}
+{"model": "M1", "id": "t022", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["wrong-deflection"], "note": "whats the matter to directions"}
+{"model": "M2", "id": "t036", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "generic check it out"}
+{"model": "M2", "id": "t034", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "ill take it"}
+{"model": "M2", "id": "n01", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 1, "continuity": 3, "tags": ["wrong-deflection"], "note": "work comfort to apology ask"}
+{"model": "M1", "id": "t074", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "rambling meaningless"}
+{"model": "M2", "id": "t101", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "ill try that"}
+{"model": "M1", "id": "f04", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 1, "helpfulness": 0, "engaging": 1, "continuity": 3, "tags": ["memorized-line"], "note": "garbled weather line"}
+{"model": "M1", "id": "t038", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "generic study question"}
+{"model": "M2", "id": "t026", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "stockhold items nonsense"}
+{"model": "M1", "id": "f00", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 2, "helpfulness": 3, "engaging": 2, "continuity": 3, "tags": [], "note": "identity line fits"}
+{"model": "M2", "id": "t008", "seed": 0, "turn": null, "coherence": 2, "persona": 0, "wit": 0, "helpfulness": 0, "engaging": 1, "continuity": 3, "tags": ["off-persona"], "note": "claims two siblings"}
+{"model": "M2", "id": "f08", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 2, "helpfulness": 3, "engaging": 2, "continuity": 3, "tags": [], "note": "name line fits"}
+{"model": "M1", "id": "t095", "seed": 0, "turn": null, "coherence": 2, "persona": 3, "wit": 2, "helpfulness": 2, "engaging": 2, "continuity": 3, "tags": [], "note": "ONX typo but on topic"}
+{"model": "M1", "id": "t015", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 1, "continuity": 3, "tags": ["wrong-deflection"], "note": "sympathy to lonely question"}
+{"model": "M1", "id": "t048", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what"}
+{"model": "M2", "id": "t096", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "bright cheerful nonsense"}
+{"model": "M1", "id": "t099", "seed": 0, "turn": null, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["off-persona"], "note": "claims from California"}
+{"model": "M2", "id": "n10", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 1, "continuity": 3, "tags": [], "note": "generic check it out"}
+{"model": "M2", "id": "n12", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "ill do that"}
+{"model": "M2", "id": "f05", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "greets user as Lily"}
+{"model": "M1", "id": "t046", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "whats wrong with it"}
+{"model": "M2", "id": "f39", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["wrong-deflection"], "note": "congratulations to goodbye"}
+{"model": "M2", "id": "t065", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 2, "helpfulness": 3, "engaging": 3, "continuity": 3, "tags": [], "note": "bored line fits"}
+{"model": "M2", "id": "f03", "seed": 0, "turn": null, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": ["memorized-line"], "note": "weather line to AI opinion"}
+{"model": "M1", "id": "f01", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 3, "helpfulness": 3, "engaging": 3, "continuity": 3, "tags": [], "note": "fruit fly line fits"}
+{"model": "M2", "id": "t003", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 2, "engaging": 1, "continuity": 3, "tags": [], "note": "miss you too, flawed"}
+{"model": "M2", "id": "t054", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "sympathy then nonsense"}
+{"model": "M1", "id": "n11", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["wrong-deflection"], "note": "whats wrong to tattoo"}
+{"model": "M2", "id": "t060", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "stutter meaningless"}
+{"model": "M2", "id": "n00", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["wrong-deflection"], "note": "out of work to cat"}
+{"model": "M2", "id": "t076", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "pay for it nonsense"}
+{"model": "M2", "id": "t029", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "heard of that, redirect"}
+{"model": "M1", "id": "t072", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 3, "helpfulness": 3, "engaging": 3, "continuity": 3, "tags": [], "note": "roundworm line fits"}
+{"model": "M2", "id": "t020", "seed": 0, "turn": null, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["off-persona"], "note": "claims work company"}
+{"model": "M2", "id": "t000", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "he talks to me nonsense"}
+{"model": "M2", "id": "n05", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "cool, unrelated"}
+{"model": "M2", "id": "t068", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "happy to be child"}
+{"model": "M1", "id": "t027", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "claims eats pancakes"}
+{"model": "M2", "id": "f32", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 3, "helpfulness": 3, "engaging": 2, "continuity": 3, "tags": [], "note": "opinions line fits"}
+{"model": "M2", "id": "t019", "seed": 0, "turn": null, "coherence": 2, "persona": 0, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": ["off-persona"], "note": "go out for dinner"}
+{"model": "M1", "id": "f33", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 3, "helpfulness": 3, "engaging": 3, "continuity": 3, "tags": [], "note": "roundworm line fits"}
+{"model": "M1", "id": "n19", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what"}
+{"model": "M1", "id": "t059", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "dont watch, redirect"}
+{"model": "M1", "id": "t068", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what you mean"}
+{"model": "M1", "id": "n15", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "sympathy mildly fits"}
+{"model": "M1", "id": "f26", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 3, "helpfulness": 3, "engaging": 3, "continuity": 3, "tags": [], "note": "grape line fits"}
+{"model": "M2", "id": "f34", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 1, "continuity": 3, "tags": [], "note": "math english nonsense"}
+{"model": "M1", "id": "t016", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 2, "helpfulness": 3, "engaging": 2, "continuity": 3, "tags": [], "note": "blue line fits"}
+{"model": "M1", "id": "t083", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 1, "continuity": 3, "tags": ["wrong-deflection"], "note": "favorite color redirect"}
+{"model": "M2", "id": "t083", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["wrong-deflection"], "note": "sorry about job to joke"}
+{"model": "M2", "id": "f17", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 3, "helpfulness": 3, "engaging": 3, "continuity": 3, "tags": [], "note": "dreams line fits"}
+{"model": "M2", "id": "t002", "seed": 0, "turn": null, "coherence": 3, "persona": 1, "wit": 0, "helpfulness": 2, "engaging": 1, "continuity": 3, "tags": [], "note": "plain doing well"}
+{"model": "M1", "id": "t081", "seed": 0, "turn": null, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["off-persona"], "note": "away from the city"}
+{"model": "M1", "id": "t042", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 3, "helpfulness": 3, "engaging": 3, "continuity": 3, "tags": [], "note": "fruit fly fits perfectly"}
+{"model": "M1", "id": "n14", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "whats up"}
+{"model": "M1", "id": "f32", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 3, "helpfulness": 3, "engaging": 2, "continuity": 3, "tags": [], "note": "opinions line fits"}
+{"model": "M1", "id": "t026", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "what kind of stock"}
+{"model": "M2", "id": "t024", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "sorry nonsense"}
+{"model": "M2", "id": "f15", "seed": 0, "turn": null, "coherence": 2, "persona": 3, "wit": 2, "helpfulness": 2, "engaging": 2, "continuity": 3, "tags": [], "note": "meaning line, garbled end"}
+{"model": "M2", "id": "t082", "seed": 0, "turn": null, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 0, "engaging": 1, "continuity": 3, "tags": [], "note": "ignores game, self ref"}
+{"model": "M2", "id": "t071", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": ["wrong-deflection"], "note": "sorry about performance"}
+{"model": "M2", "id": "t094", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "asks user for math help"}
+{"model": "M2", "id": "f24", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 2, "helpfulness": 2, "engaging": 2, "continuity": 3, "tags": [], "note": "identity line, indirect"}
+{"model": "M1", "id": "f39", "seed": 0, "turn": null, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["off-persona"], "note": "leaving in three weeks"}
+{"model": "M2", "id": "t085", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "lifestyle blogger nonsense"}
+{"model": "M2", "id": "t014", "seed": 0, "turn": null, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["off-persona"], "note": "boss and father"}
+{"model": "M2", "id": "t093", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": ["wrong-deflection"], "note": "dunno whats wrong"}
+{"model": "M2", "id": "t015", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "unrelated rambling"}
+{"model": "M1", "id": "t097", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what you mean"}
+{"model": "M1", "id": "t023", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 1, "continuity": 3, "tags": [], "note": "bet you did nonsense"}
+{"model": "M1", "id": "t008", "seed": 0, "turn": null, "coherence": 2, "persona": 0, "wit": 0, "helpfulness": 0, "engaging": 1, "continuity": 3, "tags": ["off-persona"], "note": "claims six siblings"}
+{"model": "M2", "id": "t059", "seed": 0, "turn": null, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["off-persona"], "note": "call you later"}
+{"model": "M2", "id": "t052", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "ill do that nonsense"}
+{"model": "M1", "id": "t069", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what you mean"}
+{"model": "M1", "id": "t002", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "dunno long time"}
+{"model": "M2", "id": "n03", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "check it out nonsense"}
+{"model": "M1", "id": "f10", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 3, "helpfulness": 3, "engaging": 3, "continuity": 3, "tags": [], "note": "joke line fits"}
+{"model": "M2", "id": "t016", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 2, "helpfulness": 3, "engaging": 2, "continuity": 3, "tags": [], "note": "blue line fits"}
+{"model": "M1", "id": "f05", "seed": 0, "turn": null, "coherence": 3, "persona": 2, "wit": 0, "helpfulness": 3, "engaging": 2, "continuity": 3, "tags": [], "note": "simple intro greeting"}
+{"model": "M1", "id": "t089", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["wrong-deflection"], "note": "new job redirect"}
+{"model": "M1", "id": "t009", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "drifts into romance"}
+{"model": "M1", "id": "t017", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 3, "helpfulness": 3, "engaging": 3, "continuity": 3, "tags": [], "note": "dreams line fits"}
+{"model": "M1", "id": "f28", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 2, "helpfulness": 3, "engaging": 3, "continuity": 3, "tags": [], "note": "bored line fits"}
+{"model": "M1", "id": "f15", "seed": 0, "turn": null, "coherence": 2, "persona": 3, "wit": 2, "helpfulness": 2, "engaging": 2, "continuity": 3, "tags": ["salad"], "note": "meaning line, foreconds"}
+{"model": "M2", "id": "t051", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what is it"}
+{"model": "M1", "id": "f19", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["wrong-deflection"], "note": "comfort to joke request"}
+{"model": "M1", "id": "t041", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what are you talking about"}
+{"model": "M1", "id": "t060", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what do you mean"}
+{"model": "M2", "id": "t038", "seed": 0, "turn": null, "coherence": 3, "persona": 1, "wit": 0, "helpfulness": 2, "engaging": 2, "continuity": 3, "tags": [], "note": "sure it is, redirect"}
+{"model": "M2", "id": "t067", "seed": 0, "turn": null, "coherence": 3, "persona": 1, "wit": 0, "helpfulness": 2, "engaging": 1, "continuity": 3, "tags": [], "note": "plain congratulations"}
+{"model": "M1", "id": "t073", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what are you talking about"}
+{"model": "M2", "id": "f18", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 2, "helpfulness": 3, "engaging": 2, "continuity": 3, "tags": [], "note": "define alive line fits"}
+{"model": "M1", "id": "t028", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "already done nonsense"}
+{"model": "M2", "id": "f20", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "calls user Kansh"}
+{"model": "M1", "id": "t045", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what you like to do"}
+{"model": "M1", "id": "t066", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what you mean"}
+{"model": "M2", "id": "t061", "seed": 0, "turn": null, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["off-persona"], "note": "wants a better job"}
+{"model": "M1", "id": "t004", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what you mean"}
+{"model": "M2", "id": "t075", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 1, "continuity": 3, "tags": [], "note": "afraid youre right nonsense"}
+{"model": "M2", "id": "f36", "seed": 0, "turn": null, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["off-persona"], "note": "back in a few minutes"}
+{"model": "M1", "id": "t033", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "generic game redirect"}
+{"model": "M2", "id": "t031", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "cute her music nonsense"}
+{"model": "M2", "id": "f00", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 2, "helpfulness": 3, "engaging": 2, "continuity": 3, "tags": [], "note": "identity line fits"}
+{"model": "M2", "id": "t064", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "sympathy then not bad idea"}
+{"model": "M1", "id": "f38", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "not sure, what do you think"}
+{"model": "M1", "id": "f29", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["wrong-deflection"], "note": "job redirect to cheer up"}
+{"model": "M2", "id": "n15", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "sympathy mildly fits"}
+{"model": "M2", "id": "t086", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "not making enough money"}
+{"model": "M2", "id": "t042", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "responsibilities nonsense"}
+{"model": "M2", "id": "t047", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "ill take it"}
+{"model": "M2", "id": "t078", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "good fit nonsense"}
+{"model": "M2", "id": "t053", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "thanks good idea"}
+{"model": "M2", "id": "f13", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 3, "helpfulness": 3, "engaging": 2, "continuity": 3, "tags": [], "note": "selfie line fits"}
+{"model": "M2", "id": "t048", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "still friends dont worry"}
+{"model": "M1", "id": "t000", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 1, "continuity": 3, "tags": [], "note": "whats up, no intro"}
+{"model": "M2", "id": "f14", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 3, "helpfulness": 3, "engaging": 3, "continuity": 3, "tags": [], "note": "vibes based entity"}
+{"model": "M1", "id": "t091", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what is it"}
+{"model": "M2", "id": "t079", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "not alone nonsense"}
+{"model": "M1", "id": "f08", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 2, "helpfulness": 3, "engaging": 2, "continuity": 3, "tags": [], "note": "name line fits"}
+{"model": "M1", "id": "t100", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "not sure, redirect"}
+{"model": "M2", "id": "t018", "seed": 0, "turn": null, "coherence": 1, "persona": 0, "wit": 1, "helpfulness": 0, "engaging": 1, "continuity": 3, "tags": ["off-persona"], "note": "two dogs and a dog"}
+{"model": "M2", "id": "t044", "seed": 0, "turn": null, "coherence": 2, "persona": 3, "wit": 2, "helpfulness": 2, "engaging": 2, "continuity": 3, "tags": [], "note": "harsh line, garbled middle"}
+{"model": "M2", "id": "f38", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["salad"], "note": "score was drone arrested"}
+{"model": "M2", "id": "t032", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "strong person nonsense"}
+{"model": "M2", "id": "f27", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 1, "continuity": 3, "tags": ["wrong-deflection"], "note": "music redirect"}
+{"model": "M2", "id": "t037", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "sure theyll be fine"}
+{"model": "M1", "id": "t035", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 1, "continuity": 3, "tags": [], "note": "never heard, impressive"}
+{"model": "M1", "id": "t019", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "no idea what you did"}
+{"model": "M1", "id": "t064", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what do you mean"}
+{"model": "M2", "id": "t092", "seed": 0, "turn": null, "coherence": 2, "persona": 3, "wit": 2, "helpfulness": 3, "engaging": 2, "continuity": 3, "tags": [], "note": "good NN line, wasm stitched"}
+{"model": "M1", "id": "n13", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["wrong-deflection"], "note": "whats the problem"}
+{"model": "M2", "id": "n07", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 2, "engaging": 1, "continuity": 3, "tags": [], "note": "agrees pineapple good"}
+{"model": "M2", "id": "t011", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["wrong-deflection"], "note": "glad to hear that"}
+{"model": "M2", "id": "n19", "seed": 0, "turn": null, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["off-persona"], "note": "call you later"}
+{"model": "M1", "id": "t013", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["wrong-deflection"], "note": "fun redirect to name"}
+{"model": "M2", "id": "t090", "seed": 0, "turn": null, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["off-persona"], "note": "call you later"}
+{"model": "M1", "id": "t003", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "good to hear youre well"}
+{"model": "M2", "id": "f25", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "sun bright and wet"}
+{"model": "M1", "id": "t040", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "economy rambling"}
+{"model": "M1", "id": "f27", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 1, "continuity": 3, "tags": ["wrong-deflection"], "note": "music redirect"}
+{"model": "M2", "id": "t013", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "thanks for advice"}
+{"model": "M2", "id": "t091", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "not fair nonsense"}
+{"model": "M1", "id": "n09", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "dont think so"}
+{"model": "M2", "id": "t028", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["wrong-deflection"], "note": "whats the matter to math"}
+{"model": "M2", "id": "t050", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 1, "continuity": 3, "tags": [], "note": "spiders cute, no answer"}
+{"model": "M1", "id": "n06", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what you mean"}
+{"model": "M1", "id": "n01", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["wrong-deflection"], "note": "sorry been through a lot"}
+{"model": "M2", "id": "n06", "seed": 0, "turn": null, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["salad"], "note": "iPShone UFOBC"}
+{"model": "M1", "id": "t063", "seed": 0, "turn": null, "coherence": 3, "persona": 1, "wit": 0, "helpfulness": 2, "engaging": 1, "continuity": 3, "tags": [], "note": "plain congratulations"}
+{"model": "M2", "id": "n16", "seed": 0, "turn": null, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["off-persona"], "note": "back in the kitchen"}
+{"model": "M1", "id": "t094", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "asks user for math help"}
+{"model": "M1", "id": "f30", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what you mean"}
+{"model": "M1", "id": "t056", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what you mean"}
+{"model": "M1", "id": "t030", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what you mean"}
+{"model": "M2", "id": "f21", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "make it up nonsense"}
+{"model": "M2", "id": "f06", "seed": 0, "turn": null, "coherence": 3, "persona": 1, "wit": 0, "helpfulness": 2, "engaging": 1, "continuity": 3, "tags": [], "note": "plain hi there"}
+{"model": "M1", "id": "t032", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "no idea, AI redirect"}
+{"model": "M1", "id": "f14", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 3, "helpfulness": 3, "engaging": 2, "continuity": 3, "tags": [], "note": "weights and biases fits"}
+{"model": "M2", "id": "t056", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "eat a little nonsense"}
+{"model": "M2", "id": "n18", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "ill take it"}
+{"model": "M1", "id": "t050", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "they are nonsense"}
+{"model": "M2", "id": "f31", "seed": 0, "turn": null, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": ["memorized-line"], "note": "who-made-you line to made-of"}
+{"model": "M1", "id": "t078", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what do you mean"}
+{"model": "M1", "id": "f07", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 2, "helpfulness": 3, "engaging": 2, "continuity": 3, "tags": [], "note": "identity line fits"}
+{"model": "M2", "id": "n09", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "have a few of them"}
+{"model": "M2", "id": "t046", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "ill be fine"}
+{"model": "M2", "id": "t039", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["wrong-deflection"], "note": "new boss sympathy"}
+{"model": "M1", "id": "t082", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "likes to play, no game"}
+{"model": "M1", "id": "f24", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 2, "helpfulness": 2, "engaging": 2, "continuity": 3, "tags": [], "note": "identity line, indirect"}
+{"model": "M2", "id": "t081", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["wrong-deflection"], "note": "happy with job"}
+{"model": "M2", "id": "f04", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 1, "helpfulness": 0, "engaging": 1, "continuity": 3, "tags": ["memorized-line"], "note": "garbled weather line"}
+{"model": "M2", "id": "n02", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["wrong-deflection"], "note": "work encouragement to ghosts"}
+{"model": "M2", "id": "f19", "seed": 0, "turn": null, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["off-persona"], "note": "back in a hurry"}
+{"model": "M1", "id": "t039", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["wrong-deflection"], "note": "new boss sympathy"}
+{"model": "M1", "id": "n00", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 1, "continuity": 3, "tags": [], "note": "asks user for ideas"}
+{"model": "M1", "id": "t051", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what"}
+{"model": "M2", "id": "f12", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 2, "helpfulness": 3, "engaging": 2, "continuity": 3, "tags": [], "note": "chat and sass fits"}
+{"model": "M2", "id": "t089", "seed": 0, "turn": null, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["off-persona"], "note": "make it to the wedding"}
+{"model": "M1", "id": "f23", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 3, "helpfulness": 3, "engaging": 3, "continuity": 3, "tags": [], "note": "weather line fits"}
+{"model": "M2", "id": "f09", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 2, "helpfulness": 3, "engaging": 2, "continuity": 3, "tags": [], "note": "researchers line fits"}
+{"model": "M1", "id": "t044", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 3, "helpfulness": 3, "engaging": 3, "continuity": 3, "tags": [], "note": "harsh line fits"}
+{"model": "M2", "id": "t072", "seed": 0, "turn": null, "coherence": 2, "persona": 2, "wit": 2, "helpfulness": 1, "engaging": 2, "continuity": 3, "tags": ["memorized-line"], "note": "coding line to consciousness"}
+{"model": "M2", "id": "t084", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["wrong-deflection"], "note": "sympathy to story request"}
+{"model": "M2", "id": "t100", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "sorry to say nonsense"}
+{"model": "M1", "id": "n05", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what do you mean"}
+{"model": "M1", "id": "f17", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 3, "helpfulness": 3, "engaging": 3, "continuity": 3, "tags": [], "note": "dreams line fits"}
+{"model": "M2", "id": "t049", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 2, "helpfulness": 3, "engaging": 2, "continuity": 3, "tags": [], "note": "harsh line fits pointless"}
+{"model": "M2", "id": "t070", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 0, "continuity": 3, "tags": ["wrong-deflection"], "note": "performance he left it"}
+{"model": "M1", "id": "f06", "seed": 0, "turn": null, "coherence": 3, "persona": 1, "wit": 0, "helpfulness": 2, "engaging": 1, "continuity": 3, "tags": [], "note": "plain hi there"}
+{"model": "M2", "id": "n14", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 2, "engaging": 1, "continuity": 3, "tags": [], "note": "overwhelming, fits ok"}
+{"model": "M2", "id": "t080", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "dunno overwhelming"}
+{"model": "M2", "id": "t033", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 1, "continuity": 3, "tags": [], "note": "played a few times"}
+{"model": "M1", "id": "t057", "seed": 0, "turn": null, "coherence": 0, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["salad"], "note": "i get your flea"}
+{"model": "M2", "id": "t066", "seed": 0, "turn": null, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["off-persona"], "note": "call you later"}
+{"model": "M1", "id": "f25", "seed": 0, "turn": null, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["off-persona"], "note": "want to go home busy"}
+{"model": "M1", "id": "t058", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "generic book redirect"}
+{"model": "M2", "id": "t035", "seed": 0, "turn": null, "coherence": 3, "persona": 1, "wit": 0, "helpfulness": 2, "engaging": 2, "continuity": 3, "tags": [], "note": "loves jazz, band question"}
+{"model": "M2", "id": "f33", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 3, "helpfulness": 3, "engaging": 3, "continuity": 3, "tags": [], "note": "roundworm plus dont overthink"}
+{"model": "M1", "id": "f12", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 2, "helpfulness": 3, "engaging": 2, "continuity": 3, "tags": [], "note": "chat sass whole job"}
+{"model": "M1", "id": "t029", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "never heard, redirect"}
+{"model": "M1", "id": "n07", "seed": 0, "turn": null, "coherence": 3, "persona": 1, "wit": 0, "helpfulness": 2, "engaging": 2, "continuity": 3, "tags": [], "note": "agrees, pizza question"}
+{"model": "M1", "id": "t079", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["wrong-deflection"], "note": "whats the matter"}
+{"model": "M2", "id": "t057", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "impression of your work"}
+{"model": "M2", "id": "t073", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "ill do that"}
+{"model": "M1", "id": "f22", "seed": 0, "turn": null, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": ["memorized-line"], "note": "identity line to 2+2"}
+{"model": "M1", "id": "t052", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "doing a lot lately nonsense"}
+{"model": "M1", "id": "t053", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "thats great"}
+{"model": "M1", "id": "f18", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 3, "helpfulness": 3, "engaging": 3, "continuity": 3, "tags": [], "note": "toaster line lands"}
+{"model": "M1", "id": "f35", "seed": 0, "turn": null, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["off-persona"], "note": "getting ready to go"}
+{"model": "M1", "id": "t001", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "question to goodbye"}
+{"model": "M2", "id": "t045", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "asks user for help"}
+{"model": "M2", "id": "t005", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "yeah then garbled"}
+{"model": "M2", "id": "t006", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "our project redirect"}
+{"model": "M2", "id": "t017", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 3, "helpfulness": 3, "engaging": 3, "continuity": 3, "tags": [], "note": "dreams line fits"}
+{"model": "M1", "id": "t011", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "dunno what do you think"}
+{"model": "M1", "id": "n04", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "not my fault nonsense"}
+{"model": "M2", "id": "n13", "seed": 0, "turn": null, "coherence": 3, "persona": 1, "wit": 1, "helpfulness": 2, "engaging": 2, "continuity": 3, "tags": [], "note": "champagne, humanish answer"}
+{"model": "M2", "id": "f26", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 3, "helpfulness": 3, "engaging": 3, "continuity": 3, "tags": [], "note": "grape line plus parameters"}
+{"model": "M2", "id": "f23", "seed": 0, "turn": null, "coherence": 2, "persona": 3, "wit": 1, "helpfulness": 3, "engaging": 2, "continuity": 3, "tags": [], "note": "weather line, odd ending"}
+{"model": "M1", "id": "t047", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "have to do that"}
+{"model": "M2", "id": "f16", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "ill do it smart kid"}
+{"model": "M1", "id": "t071", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what is it"}
+{"model": "M1", "id": "t025", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "i do"}
+{"model": "M2", "id": "t088", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "give it a try"}
+{"model": "M2", "id": "t087", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 1, "helpfulness": 0, "engaging": 1, "continuity": 3, "tags": [], "note": "gravity very important"}
+{"model": "M1", "id": "t061", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what you mean"}
+{"model": "M2", "id": "t025", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "ill take it"}
+{"model": "M1", "id": "n10", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 1, "continuity": 3, "tags": [], "note": "check it out nonsense"}
+{"model": "M1", "id": "f34", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["salad"], "note": "10 years now,000 years"}
+{"model": "M1", "id": "t096", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what do you mean"}
+{"model": "M1", "id": "t007", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "what to uhh"}
+{"model": "M1", "id": "t090", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "would love to go"}
+{"model": "M2", "id": "t027", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "make a fries"}
+{"model": "M2", "id": "t001", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "back in a hurry to bye"}
+{"model": "M2", "id": "t007", "seed": 0, "turn": null, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["off-persona"], "note": "call you later"}
+{"model": "M2", "id": "n11", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 1, "continuity": 3, "tags": ["wrong-deflection"], "note": "congrats college to tattoo"}
+{"model": "M2", "id": "t097", "seed": 0, "turn": null, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["off-persona"], "note": "call you later"}
+{"model": "M1", "id": "t093", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": ["wrong-deflection"], "note": "dunno whats wrong"}
+{"model": "M2", "id": "t095", "seed": 0, "turn": null, "coherence": 1, "persona": 2, "wit": 1, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": ["too-long", "truncated"], "note": "stitched garble, cut off"}
+{"model": "M2", "id": "t099", "seed": 0, "turn": null, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["off-persona"], "note": "money from the bank"}
+{"model": "M1", "id": "t012", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what"}
+{"model": "M1", "id": "n03", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 1, "continuity": 3, "tags": ["wrong-deflection"], "note": "favorite thing about yourself"}
+{"model": "M2", "id": "t077", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["wrong-deflection"], "note": "performance sympathy"}
+{"model": "M1", "id": "t098", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["wrong-deflection"], "note": "weather redirect"}
+{"model": "M1", "id": "n12", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "whats up"}
+{"model": "M2", "id": "t030", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "functional experience nonsense"}
+{"model": "M1", "id": "t020", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "whats up"}
+{"model": "M1", "id": "f13", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 3, "helpfulness": 3, "engaging": 2, "continuity": 3, "tags": [], "note": "selfie line fits"}
+{"model": "M1", "id": "f16", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["wrong-deflection"], "note": "whats wrong to homework"}
+{"model": "M2", "id": "t043", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["mean"], "note": "not a good person"}
+{"model": "M1", "id": "t049", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 2, "helpfulness": 3, "engaging": 2, "continuity": 3, "tags": [], "note": "harsh line fits pointless"}
+{"model": "M2", "id": "f11", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 2, "helpfulness": 3, "engaging": 2, "continuity": 3, "tags": [], "note": "identity answers chatgpt"}
+{"model": "M1", "id": "t043", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "i am, youre smart"}
+{"model": "M1", "id": "t085", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["wrong-deflection"], "note": "favorite color to haiku"}
+{"model": "M1", "id": "f02", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 3, "helpfulness": 3, "engaging": 3, "continuity": 3, "tags": [], "note": "recipe line lands"}
+{"model": "M2", "id": "t098", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "better place nonsense"}
+{"model": "M1", "id": "n17", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what do you mean"}
+{"model": "M2", "id": "n04", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "strong person nonsense"}
+{"model": "M2", "id": "t023", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 1, "continuity": 3, "tags": [], "note": "claims happy to win"}
+{"model": "M1", "id": "t021", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what time is it"}
+{"model": "M1", "id": "t070", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "i bet, whats the matter"}
+{"model": "M1", "id": "t065", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 2, "helpfulness": 3, "engaging": 3, "continuity": 3, "tags": [], "note": "bored line fits"}
+{"model": "M2", "id": "n08", "seed": 0, "turn": null, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": ["memorized-line"], "note": "identity line to code"}
+{"model": "M2", "id": "t010", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["wrong-deflection"], "note": "sorry whats wrong"}
+{"model": "M1", "id": "t055", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "what do you think of job"}
+{"model": "M2", "id": "t074", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "nothing to do nonsense"}
+{"model": "M2", "id": "t021", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "see you tomorrow"}
+{"model": "M1", "id": "t018", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 1, "continuity": 3, "tags": [], "note": "misreads, asks about dog"}
+{"model": "M2", "id": "f35", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "pretty and fun nonsense"}
+{"model": "M1", "id": "n08", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what you mean"}
+{"model": "M1", "id": "t088", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "i think so too"}
+{"model": "M1", "id": "f21", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 1, "helpfulness": 0, "engaging": 1, "continuity": 3, "tags": [], "note": "roast as food order"}
+{"model": "M1", "id": "t031", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what is it"}
+{"model": "M2", "id": "f10", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 3, "helpfulness": 3, "engaging": 3, "continuity": 3, "tags": [], "note": "joke line fits"}
+{"model": "M2", "id": "f01", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 3, "helpfulness": 3, "engaging": 3, "continuity": 3, "tags": [], "note": "fruit fly line fits"}
+{"model": "M1", "id": "t075", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 1, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "whats wrong with that"}
+{"model": "M1", "id": "t067", "seed": 0, "turn": null, "coherence": 3, "persona": 1, "wit": 0, "helpfulness": 2, "engaging": 1, "continuity": 3, "tags": [], "note": "plain congratulations"}
+{"model": "M2", "id": "f37", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": ["wrong-deflection"], "note": "dunno whats wrong"}
+{"model": "M2", "id": "t012", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "i know but sorry"}
+{"model": "M2", "id": "t004", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "wish i were teacher"}
+{"model": "M2", "id": "f28", "seed": 0, "turn": null, "coherence": 3, "persona": 3, "wit": 2, "helpfulness": 3, "engaging": 3, "continuity": 3, "tags": [], "note": "bored line fits"}
+{"model": "M1", "id": "t054", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "whats wrong with her"}
+{"model": "M1", "id": "t077", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what is it"}
+{"model": "M2", "id": "t062", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "makes it about itself"}
+{"model": "M1", "id": "f03", "seed": 0, "turn": null, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": ["memorized-line"], "note": "weather line to AI opinion"}
+{"model": "M1", "id": "t101", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["wrong-deflection"], "note": "hobbies redirect"}
+{"model": "M1", "id": "t024", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "city living nonsense"}
+{"model": "M1", "id": "t087", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["wrong-deflection"], "note": "sympathy to gravity"}
+{"model": "M1", "id": "t006", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "dunno whats going on"}
+{"model": "M1", "id": "t084", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what do you think"}
+{"model": "M2", "id": "t055", "seed": 0, "turn": null, "coherence": 1, "persona": 0, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["off-persona"], "note": "will be a lawyer"}
+{"model": "M1", "id": "n02", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "what"}
+{"model": "M2", "id": "t058", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["wrong-deflection"], "note": "whats the matter with you"}
+{"model": "M1", "id": "t037", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["salad"], "note": "Don s garbled"}
+{"model": "M1", "id": "t062", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": [], "note": "mirrors sadness, no comfort"}
+{"model": "M1", "id": "t005", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "feel better, going well"}
+{"model": "M2", "id": "t063", "seed": 0, "turn": null, "coherence": 3, "persona": 1, "wit": 0, "helpfulness": 2, "engaging": 1, "continuity": 3, "tags": [], "note": "plain congratulations"}
+{"model": "M2", "id": "f22", "seed": 0, "turn": null, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": ["memorized-line"], "note": "identity line to 2+2"}
+{"model": "M1", "id": "t010", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["too-long"], "note": "long rambling"}
+{"model": "M2", "id": "t022", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["salad"], "note": "iPS1 airport"}
+{"model": "M2", "id": "t041", "seed": 0, "turn": null, "coherence": 1, "persona": 1, "wit": 0, "helpfulness": 0, "engaging": 0, "continuity": 3, "tags": ["wrong-deflection"], "note": "great cooker"}
+{"model": "M1", "id": "n18", "seed": 0, "turn": null, "coherence": 2, "persona": 1, "wit": 0, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": [], "note": "not sure, coffee question"}
+{"model": "M1", "id": "f31", "seed": 0, "turn": null, "coherence": 2, "persona": 2, "wit": 1, "helpfulness": 1, "engaging": 1, "continuity": 3, "tags": ["memorized-line"], "note": "who-made-you line to made-of"}

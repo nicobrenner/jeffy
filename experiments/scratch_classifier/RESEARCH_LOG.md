@@ -4880,3 +4880,15 @@ Chat style rule (same evening): the last sentence of an Oracle message has no pe
 
 val (new corpus, not comparable to earlier): control 1.7800, grown **1.7539**. Identity probe: name 25/32 both; human-life drift **12/96 both**
 (life8 had 8–11; single seed set, noise-level). Demo entries `v2_grown_life8b_int8`, `v2_life8b_int8` (all data fixes + Nico's lines + chat style).
+
+## 2026-10-26 ~21:40 — Reply verifier + best-of-8 (Nico's "classifier judges, generator generates" idea): +0.35 on varied, tie on openers
+
+Verifier (`verifier.py`): LogReg on the Oracle's own hidden states (final-token + mean at the end of the reply) trained on 8,624 grader-labelled
+rows (label = coherence≥2 and no bad tag; grouped split by prompt): AUC 0.76 overall, **0.85 on v2-lineage rows** (text-only TF-IDF 0.67–0.70).
+Best-of-8 (`bestofn_probe.py`, grown life8b, recipe T0.5): verifier switched 26/40 openers, 111/122 varied.
+Blind pass (`grades_bestn_blind2`, one grader, key M1=bestN M2=single): openers 8.85 vs 8.60, paired **7/26/7** (tie); varied **3.81 vs 3.46,
+paired 41/57/24**, coh≥2 38% vs 28%, **off-persona 14% → 2%**, wrong-deflection unchanged (15%; the verifier was not trained to see it).
+Caveat: verifier trained on grader labels for these prompts (other replies); Nico's 24-pair blind page (`blind_pairs2_key.json`) is the clean test.
+Reading: the verifier mostly removes persona slips and salad on hard prompts; on the persona's home turf the single sample is already as good as
+the pool. Next: (1) gate — if max verifier score < τ, emit an admit-ignorance line (the generator need not know); (2) FUDGE-style per-token
+steering with the same classifier; (3) retrain the verifier with Nico's picks as extra labels. Cost in the browser: N× generation of a 2.7–8.5M model.

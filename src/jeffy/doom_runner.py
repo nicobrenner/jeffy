@@ -4,7 +4,7 @@ Runs defend_the_center headless, extracts features each frame,
 runs the Jeffy classifier, and yields (frame_jpeg, decision_metadata).
 """
 
-import importlib
+import importlib.util  # not bare `importlib`: .util is not auto-loaded on 3.14
 import io
 import time
 

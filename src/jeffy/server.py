@@ -246,6 +246,31 @@ def health():
     }
 
 
+@app.get("/v1/version")
+def version():
+    """What is actually running here.
+
+    Added because the playground served a19 for a day after PyPI had a21, and
+    nothing short of an ssh could tell. A deployed process should be able to
+    say what it is.
+    """
+    try:
+        from importlib.metadata import version as _pkg_version
+        pkg = _pkg_version("jeffy-classify")
+    except Exception:
+        pkg = "unknown"
+
+    engines = {}
+    for name, mod in (("vizdoom", "vizdoom"), ("mujoco", "mujoco"), ("flygym", "flygym")):
+        try:
+            from importlib.metadata import version as _pkg_version
+            engines[name] = _pkg_version(mod)
+        except Exception:
+            engines[name] = None
+
+    return {"version": pkg, "package": "jeffy-classify", "demo_engines": engines}
+
+
 @app.get("/v1/capabilities")
 def list_capabilities():
     engine = get_engine()
@@ -867,16 +892,22 @@ async def doom_stream(ws: WebSocket):
     await ws.accept()
     _track_ws(ws, "doom", "demo_start")
     try:
+        # Degrade on ANY setup failure, not just ImportError: see fly_stream.
         try:
             from .doom_runner import DoomSession
-        except (ImportError, OSError) as e:
-            logger.info(f"Doom engine unavailable ({e}), using simulated demo")
+
+            engine = get_engine()
+            session = DoomSession(engine=engine, task_id="doom_fire")
+            session.start()
+        except WebSocketDisconnect:
+            raise
+        except Exception as e:
+            logger.info(f"Doom engine unavailable ({type(e).__name__}: {e}), using simulated demo")
+            if 'session' in locals():
+                session.close()
             await _run_simulated(ws, "doom", fps=10)
             return
 
-        engine = get_engine()
-        session = DoomSession(engine=engine, task_id="doom_fire")
-        session.start()
         target_fps = 20
         frame_interval = 1.0 / target_fps
 
@@ -949,17 +980,25 @@ async def fly_stream(ws: WebSocket):
     await ws.accept()
     _track_ws(ws, "fly", "demo_start")
     try:
+        # Degrade on ANY setup failure, not just ImportError. An installed engine
+        # that cannot start (wrong MUJOCO_GL for the host, missing GL libs) used
+        # to fall through to the generic handler and leave the viewer a blank box.
         try:
             from .fly_runner import FlySession
-        except (ImportError, OSError) as e:
-            logger.info(f"Fly engine unavailable ({e}), using simulated demo")
+
+            await ws.send_text(_json_module.dumps({"status": "loading"}))
+            session = FlySession(engine=get_engine(), task_id="fly_navigation")
+            await asyncio.to_thread(session.start)
+        except WebSocketDisconnect:
+            raise
+        except Exception as e:
+            logger.info(f"Fly engine unavailable ({type(e).__name__}: {e}), using simulated demo")
+            if 'session' in locals():
+                session.close()
             await ws.send_text(_json_module.dumps({"status": "ready"}))
             await _run_simulated(ws, "fly", fps=5)
             return
 
-        await ws.send_text(_json_module.dumps({"status": "loading"}))
-        session = FlySession(engine=get_engine(), task_id="fly_navigation")
-        await asyncio.to_thread(session.start)
         await ws.send_text(_json_module.dumps({"status": "ready"}))
 
         while True:

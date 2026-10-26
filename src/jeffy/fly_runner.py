@@ -10,7 +10,7 @@ import time
 
 os.environ.setdefault("MUJOCO_GL", "egl")
 
-import importlib
+import importlib.util  # not bare `importlib`: .util is not auto-loaded on 3.14
 if importlib.util.find_spec("mujoco") is None:
     raise ImportError("mujoco not installed")
 

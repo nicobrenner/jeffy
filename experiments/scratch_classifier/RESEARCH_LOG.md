@@ -4902,3 +4902,16 @@ expect me to say"); "is it weird to talk to an ai at 3am" → "What do you mean?
 question/answer kinda thing"** → the act taxonomy needs an imperative/task class (the plan token's *tell/*wh/*yn/*hi/*me miss it; grader rubric
 has no "task" notion either). Lines: his export (`oracle_lines_nico_2.json`) had no `dunno` group — review page bug: saved localStorage state
 was not merged with new groups in the JSON (fixed); the 18 admit-ignorance lines are still unreviewed.
+
+## 2026-10-26 ~22:40 — Training-context finding: conversations are packed into a stream and cut into fixed 256-token chunks
+
+Nico asked whether we train on the whole context (ChatGPT-style) or per message. Answer: whole context, BUT `train_lm.py --chat-data` concatenates
+all conversations (EOS between) and `TextChunkDataset` cuts fixed 256-token chunks regardless of boundaries, with no attention reset at EOS.
+Consequences: a large share of windows start mid-conversation with no system prompt; 7,280 of 22,310 conversations (33%, p75 = 309 tokens) are
+split so later turns see only part of their history; windows routinely contain the tail of one conversation and the head of the next, so the
+model learns that earlier context is often unrelated → a plausible cause of weak conversation-following. The demo always feeds system +
+priming + recent turns, i.e. a distribution the model saw only sometimes. Fix: `--conv-sequences` (ConvDataset): one sequence per conversation
+window, system prompt kept, windows start at user-turn boundaries, padded, loss masked (-100). Test: grown base, same 8 epochs, chunked vs
+conv-sequences, measured by the reactive-user probe (on-thread rate at turns 2–3) and the identity probe.
+Nico's dunno lines received unchanged (`oracle_lines_nico_3.json`, 18). His "GOG" idea = controller loop: verifier unsatisfied → force the
+admit act (plan token) and regenerate a variation (not a canned print) → verify again; controller may also change temperature/context.

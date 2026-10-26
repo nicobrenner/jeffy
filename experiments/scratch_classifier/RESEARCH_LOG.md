@@ -4606,3 +4606,16 @@ Paired: conv_persona vs conv **48/22/10 (+3.21)** on first impression, 97/66/81 
 | | v2 @ T0.8 | 1.35 | 0.71 | 0.01 | 0.07 | 0.06 | 0.40 | 2.21 | 26 | 24% | 98% |
 
 Paired: persona2 vs persona1 first impression 21/36/23 (−0.01), multi-turn 38/39/43 (−0.20); **persona2 @ T0.3 vs @ T0.5: 23/40/17 (+0.56)**; persona2 vs v2 multi-turn 67/39/14 (+1.80). **Reading:** dropping the human-identity filler is neutral on quality and lowers off-persona in multi-turn (21% → 15% over all turns); the `human-name` tag is 0–1% for every 8.5M arm on these probes (the "My name is Alex" failure in Nico's transcript was at turn 5+, past what the 3-turn probe covers). **T=0.3 is better than T=0.5 for the persona models on canonical openers** (the hand-written lines come out intact instead of recombined). **Multi-turn is the open problem for every model: 61–65% of turn-2/3 replies lose the thread (v2: 98%).** Demo default → `conv_persona2` at T0.3 + penalties. Next for multi-turn: train at seq-len 512 (turn 3 rarely sees turn 1 at 256) and/or more multi-turn data in the hand-written style; measure with this 3-turn pass.
+
+### 2026-10-26 (after midnight) — fractional-RGB test; phases-as-packets (MDC); controlled 2.0M arm
+
+**Nico's "fractional RGB" (intensity + ratio chromaticity), tested as a coding representation (`chroma_ratio_test.py`, 8 Kodak 512² crops, every plane coded losslessly with JPEG XL grayscale so the only loss is subsampling/quantisation; `chroma_ratio_kodak_8.json`):**
+
+| representation | bpp | PSNR vs original RGB |
+|---|---|---|
+| RGB, lossless | 8.96 | ∞ |
+| **YCbCr 4:2:0** (Y full, Cb/Cr half) — the JPEG/video standard | **5.31** | **45.6 dB** |
+| intensity full + ratios r,g at half res, 8-bit | 5.70 | 39.9 dB |
+| intensity + ratios at full res (quantisation cost only) | 9.44 | 52.9 dB |
+
+Negative, cleanly: the ratio representation costs 7% more bytes for 5.7 dB less quality than YCbCr at the same subsampling, and even without subsampling it is not lossless (8-bit ratios lose 52.9 dB worth of rounding) while costing 5% more than coding RGB directly. Why: YCbCr is a near-decorrelating linear transform with perceptual weighting, and its chroma planes are smooth; ratios divide by the intensity, which amplifies quantisation noise in dark pixels and makes the chroma planes noisier (so more expensive) than Cb/Cr. The underlying idea — put the eye's resolution where it matters — is exactly what 4:2:0 already does; the ratio parametrisation is the known rg-chromaticity space (used for illumination invariance in vision, Finlayson et al. — to verify), not a better coding space.

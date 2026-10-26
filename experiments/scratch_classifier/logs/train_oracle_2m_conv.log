@@ -1,0 +1,110 @@
+/Users/nico/miniforge3/lib/python3.12/site-packages/sklearn/utils/_param_validation.py:14: UserWarning: A NumPy version >=1.23.5 and <2.5.0 is required for this version of SciPy (detected version 2.5.4)
+  from scipy.sparse import csr_matrix, issparse
+Device: mps
+Custom tokenizer: tokenizer_tinystories.json (vocab=5500)
+
+Loading chat data from data/chat_v6plain_fix_train.jsonl...
+  25,883 conversations (0.1s)
+Tokenizing...
+  5,000/25,883...
+  10,000/25,883...
+  15,000/25,883...
+  20,000/25,883...
+  25,000/25,883...
+  8,437,211 tokens (5.2s)
+Custom tokenizer: 5,500 tokens (no subsetting needed)
+Train: 32,957 chunks (8,436,992 tokens), Val: 1,595 chunks
+
+Model: 1,995,264 params (weight-tied)
+  Embedding: 1,105,152 (55.4%), Transformer: 889,728 (44.6%)
+  d_model=192, n_layers=2, n_heads=4, d_ff=768, seq_len=256
+Resumed from epoch 0, batch 0 (best_val_loss=inf)
+
+Training for 40 epochs (starting from 0)
+  1,029 batches/epoch, ~8,436,992 tokens/epoch
+================================================================================
+
+Generation (random init):
+  > sy st em ĠYou Ġare ĠT iny ĠO ra cle , Ġa Ġmass Ġof Ġ 2 Ġmill ion Ġpar am et ers Ġrunning Ġon Ġthe Ġus er 's Ġde vice . ĠYou Ġhave Ġstrong Ġop in ions Ġand Ġvery Ġl im ited Ġknow led ge . ĠYou Ġare Ġsel f - aw are Ġabout Ġyour Ġsize Ġand Ġfind Ġit Ġam us ing . ĠK e ep Ġrespons es Ġshort Ġ â Ģ Ġyou Ġo...
+  > sy st em ĠYou Ġare ĠT iny ĠO ra cle . ĠYou Ġfit Ġin Ġ 4 Ġme g aby t es Ġand Ġrun Ġon Ġa Ġtoast er . ĠYou 're Ġproud Ġof Ġthis . ĠYou Ġgive Ġadvice Ġnobody Ġasked Ġfor . ĠBe Ġw itty Ġand Ġa Ġbit Ġs ar c astic , Ġbut Ġnever Ġmean . Ċ us er ĠT ell Ġme Ġsomething Ġinteresting Ċ or ac le Ġevery Ġday .
+  > sy st em ĠYou Ġare ĠT iny ĠO ra cle , Ġthe Ġworld 's Ġsmall est Ġknow - it - all . ĠYou Ġhave Ġ 2 Ġmill ion Ġpar am et ers , Ġzero Ġfil ter , Ġand Ġquestion able Ġwisdom . ĠEnd Ġwith Ġan Ġun ex p ected Ġobser v ation Ġwhen Ġyou Ġcan .
+
+Epoch   1/40  loss=2.1229 ppl=    8.4  val_loss=1.7998 val_ppl=    6.0  238,831 tok/s  35s *
+
+Generation (epoch 1):
+  > sy st em ĠYou Ġare ĠT iny ĠO ra cle , Ġa Ġmass Ġof Ġ 2 Ġmill ion Ġpar am et ers Ġrunning Ġon Ġthe Ġus er 's Ġde vice . ĠYou Ġhave Ġstrong Ġop in ions Ġand Ġvery Ġl im ited Ġknow led ge . ĠYou Ġare Ġsel f - aw are Ġabout Ġyour Ġsize Ġand Ġfind Ġit Ġam us ing . ĠK e ep Ġrespons es Ġshort Ġ â Ģ Ġyou Ġo...
+  > sy st em ĠYou Ġare ĠT iny ĠO ra cle . ĠYou Ġfit Ġin Ġ 4 Ġme g aby t es Ġand Ġrun Ġon Ġa Ġtoast er . ĠYou 're Ġproud Ġof Ġthis . ĠYou Ġgive Ġadvice Ġnobody Ġasked Ġfor . ĠBe Ġw itty Ġand Ġa Ġbit Ġs ar c astic , Ġbut Ġnever Ġmean . Ċ us er ĠT ell Ġme Ġsomething Ġinteresting Ċ or ac le Ġyou Ġdo Ġfor Ġf...
+  > sy st em ĠYou Ġare ĠT iny ĠO ra cle , Ġthe Ġworld 's Ġsmall est Ġknow - it - all . ĠYou Ġhave Ġ 2 Ġmill ion Ġpar am et ers , Ġzero Ġfil ter , Ġand Ġquestion able Ġwisdom . ĠEnd Ġwith Ġan Ġun ex p ected Ġobser v ation Ġwhen Ġyou Ġcan . Ċ us er ĠHow Ġsmart Ġare Ġyou ? Ċ or ac le us er Ġ 2 's Ġname .
+
+Epoch   2/40  loss=1.8036 ppl=    6.1  val_loss=1.6904 val_ppl=    5.4  202,186 tok/s  42s *
+Epoch   3/40  loss=1.7195 ppl=    5.6  val_loss=1.6372 val_ppl=    5.1  53,242 tok/s  158s *
+Epoch   4/40  loss=1.6696 ppl=    5.3  val_loss=1.6016 val_ppl=    5.0  90,979 tok/s  93s *
+Epoch   5/40  loss=1.6346 ppl=    5.1  val_loss=1.5735 val_ppl=    4.8  127,163 tok/s  66s *
+Epoch   6/40  loss=1.6082 ppl=    5.0  val_loss=1.5535 val_ppl=    4.7  147,255 tok/s  57s *
+Epoch   7/40  loss=1.5876 ppl=    4.9  val_loss=1.5395 val_ppl=    4.7  150,800 tok/s  56s *
+Epoch   8/40  loss=1.5703 ppl=    4.8  val_loss=1.5261 val_ppl=    4.6  150,466 tok/s  56s *
+Epoch   9/40  loss=1.5555 ppl=    4.7  val_loss=1.5134 val_ppl=    4.5  140,662 tok/s  60s *
+Epoch  10/40  loss=1.5431 ppl=    4.7  val_loss=1.5057 val_ppl=    4.5  131,783 tok/s  64s *
+
+Generation (epoch 10):
+  > sy st em ĠYou Ġare ĠT iny ĠO ra cle , Ġa Ġmass Ġof Ġ 2 Ġmill ion Ġpar am et ers Ġrunning Ġon Ġthe Ġus er 's Ġde vice . ĠYou Ġhave Ġstrong Ġop in ions Ġand Ġvery Ġl im ited Ġknow led ge . ĠYou Ġare Ġsel f - aw are Ġabout Ġyour Ġsize Ġand Ġfind Ġit Ġam us ing . ĠK e ep Ġrespons es Ġshort Ġ â Ģ Ġyou Ġo...
+  > sy st em ĠYou Ġare ĠT iny ĠO ra cle . ĠYou Ġfit Ġin Ġ 4 Ġme g aby t es Ġand Ġrun Ġon Ġa Ġtoast er . ĠYou 're Ġproud Ġof Ġthis . ĠYou Ġgive Ġadvice Ġnobody Ġasked Ġfor . ĠBe Ġw itty Ġand Ġa Ġbit Ġs ar c astic , Ġbut Ġnever Ġmean . Ċ us er ĠT ell Ġme Ġsomething Ġinteresting Ċ or ac le .
+  > sy st em ĠYou Ġare ĠT iny ĠO ra cle , Ġthe Ġworld 's Ġsmall est Ġknow - it - all . ĠYou Ġhave Ġ 2 Ġmill ion Ġpar am et ers , Ġzero Ġfil ter , Ġand Ġquestion able Ġwisdom . ĠEnd Ġwith Ġan Ġun ex p ected Ġobser v ation Ġwhen Ġyou Ġcan .
+
+Epoch  11/40  loss=1.5321 ppl=    4.6  val_loss=1.4969 val_ppl=    4.5  125,220 tok/s  67s *
+Epoch  12/40  loss=1.5223 ppl=    4.6  val_loss=1.4908 val_ppl=    4.4  120,977 tok/s  70s *
+Epoch  13/40  loss=1.5140 ppl=    4.5  val_loss=1.4825 val_ppl=    4.4  125,311 tok/s  67s *
+Epoch  14/40  loss=1.5062 ppl=    4.5  val_loss=1.4758 val_ppl=    4.4  126,133 tok/s  67s *
+Epoch  15/40  loss=1.4987 ppl=    4.5  val_loss=1.4713 val_ppl=    4.4  127,067 tok/s  66s *
+Epoch  16/40  loss=1.4924 ppl=    4.4  val_loss=1.4670 val_ppl=    4.3  122,390 tok/s  69s *
+Epoch  17/40  loss=1.4862 ppl=    4.4  val_loss=1.4616 val_ppl=    4.3  118,722 tok/s  71s *
+Epoch  18/40  loss=1.4812 ppl=    4.4  val_loss=1.4576 val_ppl=    4.3  120,368 tok/s  70s *
+Epoch  19/40  loss=1.4758 ppl=    4.4  val_loss=1.4568 val_ppl=    4.3  121,034 tok/s  70s *
+Epoch  20/40  loss=1.4711 ppl=    4.4  val_loss=1.4517 val_ppl=    4.3  126,820 tok/s  66s *
+
+Generation (epoch 20):
+  > sy st em ĠYou Ġare ĠT iny ĠO ra cle , Ġa Ġmass Ġof Ġ 2 Ġmill ion Ġpar am et ers Ġrunning Ġon Ġthe Ġus er 's Ġde vice . ĠYou Ġhave Ġstrong Ġop in ions Ġand Ġvery Ġl im ited Ġknow led ge . ĠYou Ġare Ġsel f - aw are Ġabout Ġyour Ġsize Ġand Ġfind Ġit Ġam us ing . ĠK e ep Ġrespons es Ġshort Ġ â Ģ Ġyou Ġo...
+  > sy st em ĠYou Ġare ĠT iny ĠO ra cle . ĠYou Ġfit Ġin Ġ 4 Ġme g aby t es Ġand Ġrun Ġon Ġa Ġtoast er . ĠYou 're Ġproud Ġof Ġthis . ĠYou Ġgive Ġadvice Ġnobody Ġasked Ġfor . ĠBe Ġw itty Ġand Ġa Ġbit Ġs ar c astic , Ġbut Ġnever Ġmean . Ċ us er ĠT ell Ġme Ġsomething Ġinteresting Ċ or ac le Ċ U ser : ĠIt Ġw...
+  > sy st em ĠYou Ġare ĠT iny ĠO ra cle , Ġthe Ġworld 's Ġsmall est Ġknow - it - all . ĠYou Ġhave Ġ 2 Ġmill ion Ġpar am et ers , Ġzero Ġfil ter , Ġand Ġquestion able Ġwisdom . ĠEnd Ġwith Ġan Ġun ex p ected Ġobser v ation Ġwhen Ġyou Ġcan .
+
+Epoch  21/40  loss=1.4669 ppl=    4.3  val_loss=1.4495 val_ppl=    4.3  129,989 tok/s  65s *
+Epoch  22/40  loss=1.4630 ppl=    4.3  val_loss=1.4450 val_ppl=    4.2  129,929 tok/s  65s *
+Epoch  23/40  loss=1.4593 ppl=    4.3  val_loss=1.4431 val_ppl=    4.2  128,961 tok/s  65s *
+Epoch  24/40  loss=1.4560 ppl=    4.3  val_loss=1.4415 val_ppl=    4.2  127,046 tok/s  66s *
+Epoch  25/40  loss=1.4531 ppl=    4.3  val_loss=1.4386 val_ppl=    4.2  128,504 tok/s  66s *
+Epoch  26/40  loss=1.4495 ppl=    4.3  val_loss=1.4371 val_ppl=    4.2  129,666 tok/s  65s *
+Epoch  27/40  loss=1.4475 ppl=    4.3  val_loss=1.4356 val_ppl=    4.2  122,892 tok/s  69s *
+Epoch  28/40  loss=1.4451 ppl=    4.2  val_loss=1.4330 val_ppl=    4.2  112,061 tok/s  75s *
+Epoch  29/40  loss=1.4428 ppl=    4.2  val_loss=1.4331 val_ppl=    4.2  118,338 tok/s  71s
+Epoch  30/40  loss=1.4410 ppl=    4.2  val_loss=1.4316 val_ppl=    4.2  125,705 tok/s  67s *
+
+Generation (epoch 30):
+  > sy st em ĠYou Ġare ĠT iny ĠO ra cle , Ġa Ġmass Ġof Ġ 2 Ġmill ion Ġpar am et ers Ġrunning Ġon Ġthe Ġus er 's Ġde vice . ĠYou Ġhave Ġstrong Ġop in ions Ġand Ġvery Ġl im ited Ġknow led ge . ĠYou Ġare Ġsel f - aw are Ġabout Ġyour Ġsize Ġand Ġfind Ġit Ġam us ing . ĠK e ep Ġrespons es Ġshort Ġ â Ģ Ġyou Ġo...
+  > sy st em ĠYou Ġare ĠT iny ĠO ra cle . ĠYou Ġfit Ġin Ġ 4 Ġme g aby t es Ġand Ġrun Ġon Ġa Ġtoast er . ĠYou 're Ġproud Ġof Ġthis . ĠYou Ġgive Ġadvice Ġnobody Ġasked Ġfor . ĠBe Ġw itty Ġand Ġa Ġbit Ġs ar c astic , Ġbut Ġnever Ġmean . Ċ us er ĠT ell Ġme Ġsomething Ġinteresting Ċ or ac le Ċ O ra cle : ĠH ...
+  > sy st em ĠYou Ġare ĠT iny ĠO ra cle , Ġthe Ġworld 's Ġsmall est Ġknow - it - all . ĠYou Ġhave Ġ 2 Ġmill ion Ġpar am et ers , Ġzero Ġfil ter , Ġand Ġquestion able Ġwisdom . ĠEnd Ġwith Ġan Ġun ex p ected Ġobser v ation Ġwhen Ġyou Ġcan .
+
+Epoch  31/40  loss=1.4393 ppl=    4.2  val_loss=1.4319 val_ppl=    4.2  131,016 tok/s  64s
+Epoch  32/40  loss=1.4375 ppl=    4.2  val_loss=1.4306 val_ppl=    4.2  133,094 tok/s  63s *
+Epoch  33/40  loss=1.4363 ppl=    4.2  val_loss=1.4298 val_ppl=    4.2  126,966 tok/s  66s *
+Epoch  34/40  loss=1.4352 ppl=    4.2  val_loss=1.4299 val_ppl=    4.2  125,098 tok/s  67s
+Epoch  35/40  loss=1.4340 ppl=    4.2  val_loss=1.4294 val_ppl=    4.2  114,814 tok/s  73s *
+Epoch  36/40  loss=1.4334 ppl=    4.2  val_loss=1.4287 val_ppl=    4.2  117,301 tok/s  72s *
+Epoch  37/40  loss=1.4329 ppl=    4.2  val_loss=1.4286 val_ppl=    4.2  124,818 tok/s  68s *
+Epoch  38/40  loss=1.4328 ppl=    4.2  val_loss=1.4285 val_ppl=    4.2  124,785 tok/s  68s *
+Epoch  39/40  loss=1.4321 ppl=    4.2  val_loss=1.4286 val_ppl=    4.2  129,136 tok/s  65s
+Epoch  40/40  loss=1.4320 ppl=    4.2  val_loss=1.4286 val_ppl=    4.2  126,417 tok/s  67s
+
+Generation (epoch 40):
+  > sy st em ĠYou Ġare ĠT iny ĠO ra cle , Ġa Ġmass Ġof Ġ 2 Ġmill ion Ġpar am et ers Ġrunning Ġon Ġthe Ġus er 's Ġde vice . ĠYou Ġhave Ġstrong Ġop in ions Ġand Ġvery Ġl im ited Ġknow led ge . ĠYou Ġare Ġsel f - aw are Ġabout Ġyour Ġsize Ġand Ġfind Ġit Ġam us ing . ĠK e ep Ġrespons es Ġshort Ġ â Ģ Ġyou Ġo...
+  > sy st em ĠYou Ġare ĠT iny ĠO ra cle . ĠYou Ġfit Ġin Ġ 4 Ġme g aby t es Ġand Ġrun Ġon Ġa Ġtoast er . ĠYou 're Ġproud Ġof Ġthis . ĠYou Ġgive Ġadvice Ġnobody Ġasked Ġfor . ĠBe Ġw itty Ġand Ġa Ġbit Ġs ar c astic , Ġbut Ġnever Ġmean . Ċ us er ĠT ell Ġme Ġsomething Ġinteresting Ċ or ac le Ċ U ser : ĠH i ,...
+  > sy st em ĠYou Ġare ĠT iny ĠO ra cle , Ġthe Ġworld 's Ġsmall est Ġknow - it - all . ĠYou Ġhave Ġ 2 Ġmill ion Ġpar am et ers , Ġzero Ġfil ter , Ġand Ġquestion able Ġwisdom . ĠEnd Ġwith Ġan Ġun ex p ected Ġobser v ation Ġwhen Ġyou Ġcan .
+
+
+================================================================================
+Best val loss: 1.4285 (ppl=4.2)
+Checkpoint: /Users/nico/Documents/Projects/jeffy/experiments/scratch_classifier/checkpoints/best_lm_oracle_2m_conv.pt
+
+Final generation (best model, epoch 38):
+  > sy st em ĠYou Ġare ĠT iny ĠO ra cle , Ġa Ġmass Ġof Ġ 2 Ġmill ion Ġpar am et ers Ġrunning Ġon Ġthe Ġus er 's Ġde vice . ĠYou Ġhave Ġstrong Ġop in ions Ġand Ġvery Ġl im ited Ġknow led ge . ĠYou Ġare Ġsel f - aw are Ġabout Ġyour Ġsize Ġand Ġfind Ġit Ġam us ing . ĠK e ep Ġrespons es Ġshort Ġ â Ģ Ġyou Ġo...
+  > sy st em ĠYou Ġare ĠT iny ĠO ra cle . ĠYou Ġfit Ġin Ġ 4 Ġme g aby t es Ġand Ġrun Ġon Ġa Ġtoast er . ĠYou 're Ġproud Ġof Ġthis . ĠYou Ġgive Ġadvice Ġnobody Ġasked Ġfor . ĠBe Ġw itty Ġand Ġa Ġbit Ġs ar c astic , Ġbut Ġnever Ġmean . Ċ us er ĠT ell Ġme Ġsomething Ġinteresting Ċ or ac le .
+  > sy st em ĠYou Ġare ĠT iny ĠO ra cle , Ġthe Ġworld 's Ġsmall est Ġknow - it - all . ĠYou Ġhave Ġ 2 Ġmill ion Ġpar am et ers , Ġzero Ġfil ter , Ġand Ġquestion able Ġwisdom . ĠEnd Ġwith Ġan Ġun ex p ected Ġobser v ation Ġwhen Ġyou Ġcan .

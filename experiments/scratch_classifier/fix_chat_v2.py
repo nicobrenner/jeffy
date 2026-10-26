@@ -15,7 +15,15 @@ HUMAN = re.compile(r"\b(I work (as|at|in|for)\b|(I'?m|I am) (a|an) (teacher|nurs
                    r"I'?m (married|divorced|single|\d\d years old|pregnant)|(I'?m|I am) a stay-?at-?home|I have (a|an|two|three|four|\d|an older|a younger|two older|two younger) (sisters?|brothers?|siblings?|kids?|children|sons?|daughters?)\b|my (sister|brother|siblings?|parents|husband|wife)\b|I have (a|an|two|three|four|\d) (kids|children|sons|daughters|cats?|dogs?) (named|called)|"
                    r"I'?m (\d\d|\d) years old|my job\b|at work today|I drive a|I live in (a|an) (apartment|house|farm))", re.I)
 NAMES = ["Maya","Leo","Sofia","Omar","Elena","Jonas","Priya","Mateo","Hana","Noah","Aisha","Luca","Mei","Diego","Nora","Sam","Yara","Tomás","Ana","Kai",
-         "Zoe","Ravi","Lena","Max","Ines","Ali","Clara","Ben","Rosa","Theo"]
+ "Zoe","Ravi","Lena","Max","Ines","Ali","Clara","Ben","Rosa","Theo","Nico","Nicolas","Ingrid","Tariq","Beatriz","Kenji","Amara","Piotr","Sven","Lucía","Mika",
+ "Oren","Dalia","Finn","Chiara","Ravindra","Olu","Giulia","Mattias","Keiko","Dmitri","Alba","Ezra","Farah","Yusuf","Ilse","Bruno","Camila","Hugo","Naomi",
+ "Rafael","Soraya","Anton","Mireille","Tobias","Leila","Jorge","Petra","Idris","Marta","Elias","Aurora","Kwame","Daniela","Arjun","Greta","Lior","Paloma",
+ "Sergei","Thandi","Emil","Valentina","Rohan","Astrid","Yuki","Bastian","Nadia","Felix","Imani","Caspar","Renata","Zane","Marisol","Joaquín","Sanne","Ayo",
+ "Esme","Pavel","Lourdes","Niamh","Hamza","Vera","Gustavo","Oksana","Ahmed","Fleur","Teo","Amira","Santiago","Birgit","Kofi","Eloise","Mathis","Zara","Ewan",
+ "Catalina","Ravi","Sigrid","Enzo","Ayla","Benedikt","Lakshmi","Ciro","Juno","Malik","Siena","Otto","Rania","Ivo","Noor","Lars","Selin","Pablo","Halle",
+ "Dario","Anya","Cem","Linnea","Akira","Freya","Mauro","Tamar","Jules","Saoirse","Rui","Ida","Nikolai","Alessia","Darius","Wren","Milo","Carmen","Edu",
+ "Sabine","Taavi","Lucie","Moussa","Helga","Ravi","Nilufar","Jasper","Odalys","Kristof","Amani","Björn","Celeste","Bilal","Maren","Tomer","Anouk","Elio",
+ "Zuri","Marek","Ximena","Soren","Adaeze","Lenny","Ione","Fabio","Hedda","Yael","Aleksander","Nina","Ruben","Ottilie","Hiro","Pilar","Cyrus","Agnes","Elan"]
 
 NAME_INTRO = re.compile(r"\b([Mm]y name is|[Mm]y name's|[Cc]all me|I am|I'm)\s+([A-Z][a-z]+)\b")
 NOT_NAMES = {"Tiny","Oracle","I","The","A","An","Not","Just","So","Here","Sorry","Glad","Happy","Sure","Fine","Good","Great","Also","Still","Very",
@@ -52,6 +60,7 @@ def fix(text, rng):
                 REWRITE["addr"] += 1; return m.group(1) + "Tiny Oracle"
             l = ADDR.sub(asub, l)
         if l.startswith("<|oracle|>"):
+            l = re.sub(r"((?:nice|good|pleased|great|happy) to (?:meet|see) you(?: too)?),?\s+Tiny Oracle", r"\1", l, flags=re.I)
             known = set(w for ul in lines[:i] if ul.startswith("<|user|>") for w in re.findall(r"\b(?:I'?m|I am|my name is|my name's|call me)\s+([A-Z][a-z]+)", ul))
             def gsub(m):
                 nm = m.group(2)

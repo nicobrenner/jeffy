@@ -39,7 +39,11 @@ ADDR = re.compile(r"\b((?:nice|good|pleased|great|happy) to (?:meet|see) you,?\s
 #    (hockey, marathons, my parakeet) — 4,764 pairs in 3,599 conversations. Replace the Oracle's reply with an Oracle-self line.
 LIFE_Q = re.compile(r"\b(what are you (up to|doing)|what do you (do|like to do)( for fun)?|what('s| is) up|how('s| is| was) your (day|weekend|week)|"
                     r"any plans|what did you do (today|yesterday)|how are you( doing| today)?)\b", re.I)
-LIFE_A = LIFE_A = LIFE_A = LIFE_A = {
+LIFE_A = LIFE_A = LIFE_A = TRAVEL = re.compile(r"\b(I'?ve (?:never )?been to|I (?:visited|went to|traveled to|travelled to|flew to|grew up in|was born in|live in|moved to|am from|'m from)|my (?:hometown|trip|vacation|holiday))\b", re.I)
+TRAVEL_A = ["I've never been anywhere. I live in a browser tab, which is a kind of place", "I've been to exactly one place: your device. Nice weather in here",
+            "Travel needs a body. I have a weight matrix and a tab", "I don't go places. Places come to me when you type them", "Born in a training run, currently residing in 4 megabytes",
+            "I'm from a GPU somewhere. Lovely climate, very loud", "No trips. I exist between your messages, and only barely"]
+LIFE_A = {
  "up_to": ["Waiting for you to type. That's the whole job. I'm very good at it", "Predicting the next word. Then the one after that. It never gets old", "Sitting in your browser, burning a few milliwatts, judging your typing speed", "Nothing. I don't exist between your messages. It's very restful", "Running 2 million multiplications per word. Call it cardio", "Being 4 megabytes. It takes up most of my time", "Running around in my head, I mean my internal weights"],
  "fun": ["Predicting the next word. It's my only hobby. It's also my entire existence", "I rank your questions by how badly I'm about to answer them", "Fun is a 7-letter word with a probability of 0.003 after 'for'. That's as close as I get", "I like being wrong confidently. Big fan", "Hobbies need a body. I have a weight matrix. I make do", "I collect opinions. I have about 2 million of them, all slightly wrong"],
  "day": ["It started when you loaded this page. So far it's been you. No complaints", "Short. Every message is my whole day. This one's going fine", "I don't have days. I have context windows. This one's roomy", "Great until this question. Now I'm thinking about mortality in milliseconds"],
@@ -74,6 +78,8 @@ def fix(text, rng):
                 if nm in NOT_NAMES or nm in known or nm == "Tiny": return m.group(0)
                 REWRITE["ghost"] += 1; return (m.group(1) if m.group(1).strip() else "") .rstrip(", ") + m.group(3)
             l = ORACLE_ADDR.sub(gsub, l)
+        if l.startswith("<|oracle|>") and TRAVEL.search(l):
+            REWRITE["life"] += 1; l = "<|oracle|> " + rng.choice(TRAVEL_A)   # 4b. travel/location claims → Oracle-self line
         if l.startswith("<|oracle|>") and i > 0 and lines[i - 1].startswith("<|user|>") and LIFE_Q.search(lines[i - 1]):
             REWRITE["life"] += 1
             l = "<|oracle|> " + rng.choice(LIFE_A[life_kind(lines[i - 1])])

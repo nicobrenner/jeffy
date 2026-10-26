@@ -57,3 +57,12 @@ snapshot.json
 
 # agent-labeling experiment: regenerable embedding cache (44MB)
 data/eval_results/agent_label_banking77/embeddings.npz
+
+# HN LLM-voice study: the sampled comment corpus is ~200MB of public HN text
+# that hn_voice_pull.py can rebuild from scratch, so only the derived tables
+# and the API caveats are tracked.
+data/eval_results/hn_llm_voice/comments_sample.jsonl.gz
+data/eval_results/hn_llm_voice/thread_comments.jsonl.gz
+data/eval_results/hn_llm_voice/thread_stories.jsonl
+data/eval_results/hn_llm_voice/comments_done.json
+data/eval_results/hn_llm_voice/*.log

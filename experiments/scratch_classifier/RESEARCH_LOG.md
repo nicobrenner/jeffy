@@ -4798,3 +4798,14 @@ small talk, which is where the v2 lineage is clearly ahead (salad 9–20% vs 15�
 consistent and do separate lineages — but in the tags, not the totals, and the totals are miscalibrated against Nico. Next: Nico's 43 blind
 pair picks (`demo/blind_pairs.html`, key `blind_pairs_key.json`) → fit which rubric dimensions/tags predict his picks → reweight the rubric
 (or replace the total with "coherent AND on-thread, no pasted line") before any further model ranking.
+
+## 2026-10-26 ~15:10 — Nico's first blind pair picks (`blind_picks_nico_1.json`, 43 single-turn pairs, recipe T0.5): he picks the 8.5M, and the grader total predicts his picks 24/25
+
+Picks: 25 decided, 1 tie, **17 "both bad" (40%)**. Head-to-head (winner, loser): 8.5M conv_persona2 over v2 **6–2**, over v2 grown fix3 **7–0**;
+2.0M persona2 over v2 4–3; v2 over v2 grown fix3 3–0. Per model W/L/bad: 8.5M 13/2/7, v2 8/10/13, v2 grown 0/10/9, 2.0M 4/3/5.
+**Grader calibration on the 25 decided pairs: total agrees 24, wrong 0, grader-tie 1.** Per dimension (agree/wrong/tie): helpfulness 19/0/6,
+engaging 18/0/7, persona 14/1/10, coherence 13/0/12, wit 12/0/13. "Both bad" pairs carry salad 13, off-persona 5 of 34 graded responses.
+Reading: on single turns, blind, Nico's taste matches the grader (and the 8.5M wins). His strong preference for v2 comes from the demo, which is
+multi-turn at T0.3 with priming — so the disagreement is single-turn vs conversation, not grader vs human. Next: the same exercise on 3-turn
+transcripts (`demo/blind_convs.html`, 32 pairs from the existing recipe-T0.5 multi-turn probes; key `blind_convs_key.json`). Nico: "excellent
+exercise… we should do way more of these… by far the best way" → preference data as the primary signal (grader as scalable proxy, 24/25).

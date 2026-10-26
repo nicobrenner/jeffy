@@ -4922,3 +4922,10 @@ admit act (plan token) and regenerate a variation (not a canned print) → verif
 The "~HH:MM" times on today's 10-26 headings above were estimated, not read from a clock, and drifted up to 7 hours late. Nico caught it
 ("Status at 23:15" when it was 15:13 PDT). All 21 headings were relabelled from the git commit timestamps that recorded each entry (within a
 few minutes of writing; the first two were written ~20 min before their commit). From now on every time is read with `date` first.
+
+## 2026-10-26 15:30 PDT — Per-conversation training (`--conv-sequences`, grown base, 8 ep, same fixed corpus): drift 5/96, the best yet
+
+`oracle_v2_grown_conv8`: train loss 1.535 (chunked life8b: 1.648), masked val 1.657 (not comparable to chunked val). Identity probe: name 27/32,
+**human-life drift 5/96** (chunked twin life8b: 12/96; this morning 22–28). Demo entry `v2_grown_conv8_int8`. Reactive-user probe running on
+both twins (conv8 and life8b, same fixed corpus, same epochs) for the conversation-following comparison; a grader pass with an on-thread /
+task-attempt rubric follows. Admit-act (`*_ct2`) training started behind it.

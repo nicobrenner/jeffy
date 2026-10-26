@@ -127,16 +127,14 @@
     max-width: 100%;
     text-align: center;
   }
-  .typing {
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    background: var(--accent);
-    border-radius: 50%;
-    animation: blink 1s infinite;
-    margin-left: 2px;
-  }
+  .typing { display: inline-flex; align-items: center; height: 1.2em; color: var(--accent); }
   @keyframes blink { 0%,100%{opacity:.2} 50%{opacity:1} }
+  .typing i { display:inline-block; width:7px; height:7px; margin:0 2px; border-radius:50%; background:currentColor; opacity:.35; animation: bounce 1.2s infinite ease-in-out; }
+  .typing i:nth-child(2) { animation-delay:.15s } .typing i:nth-child(3) { animation-delay:.3s }
+  @keyframes bounce { 0%,60%,100%{transform:translateY(0);opacity:.35} 30%{transform:translateY(-5px);opacity:1} }
+  .msg { animation: msgin .22s ease-out; }
+  @keyframes msgin { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
+  #chat { scroll-behavior: smooth; }
   #input-area {
     padding: 12px 20px;
     border-top: 1px solid var(--border);
@@ -383,7 +381,7 @@
   }
 
   // ===================== INFERENCE =====================
-  async function generate(inputIds) {
+  async function generate(inputIds, onToken) {
     const S = SAMPLERS[samplerSel.value];
     let ids = inputIds.slice(-MAX_CONTEXT);
     const generated = [];
@@ -414,6 +412,7 @@
       if (nextId === EOS_ID || tok === '<|user|>' || tok === '<|system|>' || tok === '<eos>') break;
       ids.push(nextId); generated.push(nextId);
       if (model.format === 'plain' && tokenizer.decode(generated).includes('\n')) break;
+      if (onToken) { onToken(tokenizer.decode(generated)); await new Promise(r => setTimeout(r, 0)); }
       if (ids.length > MAX_CONTEXT) ids = ids.slice(ids.length - MAX_CONTEXT);
     }
     return generated;
@@ -504,10 +503,15 @@
       conversationIds = [...identityIds, ...recent.slice(-(MAX_CONTEXT - identityIds.length - 30))];
     }
     const oracleDiv = addMessage('oracle', '');
-    const dot = document.createElement('span'); dot.className = 'typing'; oracleDiv.appendChild(dot);
+    const dots = document.createElement('span'); dots.className = 'typing'; dots.innerHTML = '<i></i><i></i><i></i>'; oracleDiv.appendChild(dots);
     statusEl.textContent = 'Generating...';
+    await new Promise(r => requestAnimationFrame(() => setTimeout(r, 30)));
     try {
-      const genIds = await generate(conversationIds);
+      let shown = '';
+      const genIds = await generate(conversationIds, partial => {
+        const txt = model.format === 'plain' ? partial.split('\n')[0] : partial;
+        if (txt.trim() && txt !== shown) { shown = txt; oracleDiv.textContent = txt.trim(); oracleDiv.appendChild(document.createTextNode('\u258D')); chatEl.scrollTop = chatEl.scrollHeight; }
+      });
       let response = tokenizer.decode(genIds).trim();
       if (model.format === 'plain') response = response.split('\n')[0].replace(/^User:.*$/, '').trim();
       conversationIds.push(...tokenizer.encode(fmtOracleText(response)));

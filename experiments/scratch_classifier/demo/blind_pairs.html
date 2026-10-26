@@ -1,0 +1,18 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Blind pairs</title>
+<style>:root{--bg:#fff;--fg:#111;--card:#f4f4f6;--acc:#2b6cb0}@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#111;--fg:#eee;--card:#1e1e22;--acc:#63b3ed}}
+body{margin:0;padding:16px;background:var(--bg);color:var(--fg);font:16px/1.45 system-ui,sans-serif;max-width:860px;margin:auto}
+.p{font-weight:600;margin:18px 0 8px}.r{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media(max-width:600px){.r{grid-template-columns:1fr}}
+.c{background:var(--card);padding:12px;border-radius:10px;border:2px solid transparent;cursor:pointer;white-space:pre-wrap}.c.sel{border-color:var(--acc)}
+.t{margin-top:8px}button{padding:8px 14px;border-radius:8px;border:1px solid var(--acc);background:none;color:var(--fg);cursor:pointer}.sel2{background:var(--acc);color:#fff}
+#done{position:sticky;bottom:0;background:var(--bg);padding:10px 0;border-top:1px solid #8884}</style></head><body>
+<h2>Blind pairs</h2><p>Same prompt, two models, order random. Click the one you would rather keep talking to, or "tie". Picks are saved in this browser; the Export button writes them to a file you can hand back.</p>
+<div id="list"></div><div id="done"><span id="count"></span> &nbsp; <button onclick="exp()">Export picks</button></div>
+<script>
+let picks={}; try{picks=JSON.parse(localStorage.getItem('blind_picks')||'{}')}catch(e){}
+fetch('blind_pairs.json').then(r=>r.json()).then(P=>{const L=document.getElementById('list');
+ P.forEach(p=>{const d=document.createElement('div');d.innerHTML=`<div class="p">${p.n+1}. ${esc(p.prompt)}</div><div class="r"><div class="c" data-n="${p.n}" data-v="A">${esc(p.A)}</div><div class="c" data-n="${p.n}" data-v="B">${esc(p.B)}</div></div><div class="t"><button data-n="${p.n}" data-v="tie">tie</button></div>`;L.appendChild(d)});
+ L.addEventListener('click',e=>{const t=e.target.closest('[data-n]');if(!t)return;picks[t.dataset.n]=t.dataset.v;try{localStorage.setItem('blind_picks',JSON.stringify(picks))}catch(x){}paint()});paint();
+ function paint(){document.querySelectorAll('[data-n]').forEach(el=>{const v=picks[el.dataset.n];el.classList.toggle('sel',el.classList.contains('c')&&v===el.dataset.v);el.classList.toggle('sel2',el.tagName==='BUTTON'&&v==='tie')});document.getElementById('count').textContent=Object.keys(picks).length+' / '+P.length+' picked'}});
+function esc(s){return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
+function exp(){const b=new Blob([JSON.stringify(picks)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='blind_picks.json';a.click()}
+</script></body></html>

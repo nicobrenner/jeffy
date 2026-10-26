@@ -78,7 +78,8 @@ def main():
     if a.scale > 1:
         s = a.scale
         frames = [(y[::s, ::s].copy(), u[::s, ::s].copy(), v[::s, ::s].copy()) for y, u, v in frames]
-        frames = [(y[:y.shape[0] // 2 * 2, :y.shape[1] // 2 * 2], u[:y.shape[0] // 4 * 2, :y.shape[1] // 4 * 2], v[:y.shape[0] // 4 * 2, :y.shape[1] // 4 * 2]) for y, u, v in frames]
+        # keep luma a multiple of 4 so the 4:2:0 chroma planes are exactly half-size and even
+        frames = [(y[:y.shape[0] // 4 * 4, :y.shape[1] // 4 * 4], u[:y.shape[0] // 4 * 2, :y.shape[1] // 4 * 2], v[:y.shape[0] // 4 * 2, :y.shape[1] // 4 * 2]) for y, u, v in frames]
     h, w = frames[0][0].shape; nl = a.n * h * w
     segs, group_of, step, thr = shots(frames)
     returning = sum(1 for i, g in enumerate(group_of) if g != i)

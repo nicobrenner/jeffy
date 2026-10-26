@@ -4863,3 +4863,20 @@ retrain pending Nico's line edits. `demo/blind_convs.json` rebuilt: 45 pairs = 1
 (key `blind_convs3_key.json`, picks `blind_conv_picks3.json`).
 Takeaway for the next step: identity/persona leaks are being closed one regex at a time (name → life → family); conversation-following is a
 different problem — the corpus has no examples of a user pushing back and the Oracle recovering. The simulated-user loop is the way to make them.
+
+## 2026-10-26 ~20:30 — Nico on review and on recovery: two mechanisms, and curation must happen in chat
+
+Nico exported the 120 recoveries unedited ("way too many… I'd rather review while talking/chatting with the model"). His framing: (1) specific
+examples for specific situations — fine, needed; (2) a generic ability to recognise push-back / out-of-knowledge and SAY SO ("I have no idea,
+I'm not a cats expert", "not in my training data, I'm *Tiny* Oracle, not *Humongous* Oracle", "Sorry, I have no idea. But I'm curious, tell me
+more"), instead of training on millions of conflictive conversations. Plan: (a) **teach mode in the demo** — edit the Oracle's reply in place,
+the corrected exchange (prime + history + user + Nico's reply) is saved and exported as training data, so curation = chatting; (b) **`*dunno`
+act**: a bank of ~18 generic admit-ignorance lines (his 4 first; on the review page as group "dunno"), a push-back detector on the user turn
+(regex now, tiny classifier later), synthetic examples built from the model's OWN bad answers + push-back + a dunno line (on-policy context,
+generic reply), trained with the plan token so it can be forced at inference; measured on the reactive-user probe.
+Chat style rule (same evening): the last sentence of an Oracle message has no period; inner periods stay (fixer step 7).
+
+## 2026-10-26 ~20:45 — Retrain on the fully fixed, no-period corpus (`*_life8b`, 8 ep, lr 1e-4)
+
+val (new corpus, not comparable to earlier): control 1.7800, grown **1.7539**. Identity probe: name 25/32 both; human-life drift **12/96 both**
+(life8 had 8–11; single seed set, noise-level). Demo entries `v2_grown_life8b_int8`, `v2_life8b_int8` (all data fixes + Nico's lines + chat style).

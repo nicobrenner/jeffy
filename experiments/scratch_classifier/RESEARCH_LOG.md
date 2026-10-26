@@ -4979,3 +4979,12 @@ Best val 1.6838 at epoch 46 (v2's own run: 1.6130 on the unfixed corpus; differe
 "fan of", travel). Broadened it and recomputed drift for all models on their existing transcripts (table in the next entry). Turn-1 answers
 still open with the corpus's "Yes, it is." reflex (the corpus v3 saw was regenerated BEFORE the punctuation/contraction normalisation; v3b has it).
 v3b (re-anonymised names, travel rewrite, normalisation) training next; reactive-user turns 2–3 for v3 generating.
+
+## 2026-10-26 17:12 PDT — v3 (from scratch) vs grown per-conversation (conv8), conversation pass (`grades_v3_mt_blind2`, 180 rows): a tie
+
+Turns 2–3: on-thread ≥2 **20% (v3) vs 13% (conv8)**, paired on-thread 14/32/14; ignores-pushback 43% vs 38%; invented-life 8% vs 20%;
+task attempts 0.24 vs 0.05 (n≈20). Turn 1: conv8 ahead (on-thread ≥2 27% vs 13%, paired 8/19/3) — v3 opens with the corpus's "Yes, it is"
+reflex more often. Identity (broad regex): v3 18/96 vs conv8 11/96. Reading: from scratch on the cleaned corpus ≈ grown-and-patched on
+conversation following; neither follows a push-back more than one time in five. Confirms the diagnosis: the missing behaviour is not in the
+corpus, so no training mode or lineage produces it. The levers that add it: push-back/recovery data (teach mode, recoveries), the admit act +
+controller, and conversation-level training signal (DPO on the reactive-user pairs). v3b (clean corpus) pending for the from-scratch line.

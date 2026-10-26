@@ -35,7 +35,7 @@ def hidden(m, tok, rows, bs=64):
     hd.remove(); return np.stack(X)
 
 def main():
-    ap = argparse.ArgumentParser(); ap.add_argument("--ckpt", required=True); ap.add_argument("--tokenizer", default="tokenizer_chat_v2.json"); ap.add_argument("--rows", default="pile_runs/atl/verifier_rows.jsonl")
+    ap = argparse.ArgumentParser(); ap.add_argument("--ckpt", required=True); ap.add_argument("--tokenizer", default="tokenizer_chat_v2.json"); ap.add_argument("--rows", default="pile_runs/atl/verifier_rows.jsonl"); ap.add_argument("--out", default="checkpoints/verifier_v1.pkl")
     a = ap.parse_args(); rows = [json.loads(l) for l in open(a.rows)]; tr, te = split(rows)
     ytr = np.array([r["label"] for r in tr]); yte = np.array([r["label"] for r in te])
     print(f"rows {len(rows)} train {len(tr)} test {len(te)} positive rate {ytr.mean():.3f}; majority acc {max(yte.mean(), 1-yte.mean()):.3f}")
@@ -58,7 +58,7 @@ def main():
     # per-lineage view of the best
     for name, sel in (("v2-lineage rows", [i for i, r in enumerate(te) if "v2" in r["model"]]), ("other rows", [i for i, r in enumerate(te) if "v2" not in r["model"]])):
         if len(set(yte[sel])) > 1: print(f"  {name}: n={len(sel)} AUC text {roc_auc_score(yte[sel], p[sel]):.3f} hidden {roc_auc_score(yte[sel], p2[sel]):.3f} both {roc_auc_score(yte[sel], p3[sel]):.3f}")
-    import pickle; pickle.dump({"vp": vp, "vr": vr, "clf_text": clf, "clf_hidden": clf2, "clf_both": clf3, "ckpt": a.ckpt}, open("checkpoints/verifier_v1.pkl", "wb")); print("saved checkpoints/verifier_v1.pkl")
+    import pickle; pickle.dump({"vp": vp, "vr": vr, "clf_text": clf, "clf_hidden": clf2, "clf_both": clf3, "ckpt": a.ckpt}, open(a.out, "wb")); print("saved", a.out)
 
 if __name__ == "__main__":
     main()

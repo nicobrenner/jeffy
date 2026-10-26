@@ -78,9 +78,11 @@ class CausalTransformer(nn.Module):
 
     def __init__(self, vocab_size, d_model=256, n_heads=8, n_layers=4,
                  d_ff=1024, max_seq_len=256, dropout=0.1,
-                 tie_weights=True, n_iterations=1):
+                 tie_weights=True, n_iterations=1, n_acts=0):
         super().__init__()
         self.d_model = d_model
+        self.n_acts = n_acts
+        self.act_emb = nn.Embedding(n_acts + 1, d_model, padding_idx=0) if n_acts else None   # act 0 = none (zero vector)
         self.vocab_size = vocab_size
         self.max_seq_len = max_seq_len
         self.n_iterations = n_iterations
@@ -106,11 +108,13 @@ class CausalTransformer(nn.Module):
         nn.init.normal_(self.token_emb.weight, std=0.02)
         nn.init.normal_(self.pos_emb.weight, std=0.02)
 
-    def forward(self, input_ids):
+    def forward(self, input_ids, acts=None):
         seq_len = input_ids.size(1)
         positions = torch.arange(seq_len, device=input_ids.device).unsqueeze(0)
 
         x = self.token_emb(input_ids) + self.pos_emb(positions)
+        a = self.act_emb(acts) if (acts is not None and self.act_emb is not None) else None
+        if a is not None: x = x + a
         x = self.emb_dropout(x)
 
         causal_mask = torch.triu(
@@ -118,7 +122,8 @@ class CausalTransformer(nn.Module):
             diagonal=1,
         )
 
-        for _ in range(self.n_iterations):
+        for it in range(self.n_iterations):
+            if it > 0 and a is not None: x = x + a   # quiet signal re-injected on every recurrence pass
             x = self.transformer(x, mask=causal_mask)
         x = self.norm(x)
 
@@ -152,28 +157,42 @@ class ConvDataset(Dataset):
     """One training sequence per conversation window. A conversation longer than seq_len is split into windows that each start
     with the system prompt followed by a later turn boundary (so every window looks like what the demo feeds the model). Padding
     is labelled -100 (ignored by the loss)."""
-    def __init__(self, conversations, tokenizer, seq_len, eos_id, sys_end_marker="\n<|user|>", pad_id=0):
-        self.seq_len, self.pad_id = seq_len, pad_id; self.rows = []
+    ACTS = ["dunno", "me", "wh", "yn", "hi", "tell"]   # id = index + 1; 0 = none
+    def __init__(self, conversations, tokenizer, seq_len, eos_id, sys_end_marker="\n<|user|>", pad_id=0, act_vector=False):
+        import re as _re
+        self.seq_len, self.pad_id, self.act_vector = seq_len, pad_id, act_vector; self.rows = []
+        oracle_id = tokenizer.encode("<|oracle|>")[-1]
+        act_re = _re.compile(r"<\|oracle\|> \*(" + "|".join(self.ACTS) + r") ")
         for conv in conversations:
             k = conv.find(sys_end_marker); sys_txt, body = (conv[:k], conv[k:]) if k > 0 else ("", conv)
             sys_ids = tokenizer.encode(sys_txt) if sys_txt else []
             # split body at user-turn boundaries
             parts = [p for p in body.split("\n<|user|>") if p.strip()]
             turns = [("\n<|user|>" + p) for p in parts] if k > 0 else [body]
-            turn_ids = [tokenizer.encode(t) for t in turns]
+            turn_ids, turn_acts = [], []
+            for t in turns:
+                act = 0
+                if act_vector:
+                    m2 = act_re.search(t)
+                    if m2: act = self.ACTS.index(m2.group(1)) + 1; t = act_re.sub("<|oracle|> ", t, count=1)
+                ids_t = tokenizer.encode(t); acts_t = [0] * len(ids_t)
+                if act and oracle_id in ids_t: acts_t[len(ids_t) - 1 - ids_t[::-1].index(oracle_id)] = act
+                turn_ids.append(ids_t); turn_acts.append(acts_t)
             i = 0
             while i < len(turn_ids):
-                ids = list(sys_ids); j = i
+                ids = list(sys_ids); acts = [0] * len(sys_ids); j = i
                 while j < len(turn_ids) and len(ids) + len(turn_ids[j]) <= seq_len - 1:
-                    ids += turn_ids[j]; j += 1
+                    ids += turn_ids[j]; acts += turn_acts[j]; j += 1
                 if j == i:   # single turn longer than the window: hard-cut it
-                    ids = (sys_ids + turn_ids[i])[: seq_len - 1]; j = i + 1
-                ids.append(eos_id); self.rows.append(torch.tensor(ids, dtype=torch.long))
+                    ids = (sys_ids + turn_ids[i])[: seq_len - 1]; acts = ([0] * len(sys_ids) + turn_acts[i])[: seq_len - 1]; j = i + 1
+                ids.append(eos_id); acts.append(0); self.rows.append((torch.tensor(ids, dtype=torch.long), torch.tensor(acts, dtype=torch.long)))
                 i = max(j - 1, i + 1) if j < len(turn_ids) else j   # next window overlaps by one turn so no turn loses its history entirely
     def __len__(self): return len(self.rows)
     def __getitem__(self, idx):
-        ids = self.rows[idx]; out = torch.full((self.seq_len,), self.pad_id, dtype=torch.long); lab = torch.full((self.seq_len,), -100, dtype=torch.long)
-        out[: len(ids)] = ids; lab[: len(ids)] = ids; return torch.stack([out, lab])
+        ids, acts = self.rows[idx]; out = torch.full((self.seq_len,), self.pad_id, dtype=torch.long); lab = torch.full((self.seq_len,), -100, dtype=torch.long)
+        out[: len(ids)] = ids; lab[: len(ids)] = ids
+        if not self.act_vector: return torch.stack([out, lab])
+        ac = torch.zeros(self.seq_len, dtype=torch.long); ac[: len(acts)] = acts; return torch.stack([out, lab, ac])
 
 
 class TextChunkDataset(Dataset):
@@ -364,8 +383,8 @@ def train(args):
                 val_compact = remap_ids(val_token_ids, full_to_compact)
             if args.conv_sequences:
                 assert use_custom, "--conv-sequences needs a custom tokenizer (full vocab, no remap)"
-                train_ds = ConvDataset(conv_texts, tokenizer, args.seq_len, eos_id)
-                val_ds = ConvDataset(val_conversations, tokenizer, args.seq_len, eos_id)
+                train_ds = ConvDataset(conv_texts, tokenizer, args.seq_len, eos_id, act_vector=args.act_vector)
+                val_ds = ConvDataset(val_conversations, tokenizer, args.seq_len, eos_id, act_vector=args.act_vector)
                 print(f"  conv-sequences: {len(train_ds):,} train windows, {len(val_ds):,} val windows (loss masked on padding)", flush=True)
             else:
                 train_ds = TextChunkDataset(compact_tokens, args.seq_len)
@@ -397,6 +416,7 @@ def train(args):
         dropout=args.dropout,
         tie_weights=args.tie_weights,
         n_iterations=args.n_iterations,
+        n_acts=len(ConvDataset.ACTS) if args.act_vector else 0,
     ).to(device)
 
     n_params = sum(p.numel() for p in model.parameters())
@@ -438,16 +458,21 @@ def train(args):
             optimizer, T_max=max(total_optim_steps, 1)
         )
 
+    ACTS_ON = {"acts": None}
     def unpack(batch):
         batch = batch.to(device)
-        if batch.dim() == 3: return batch[:, 0], batch[:, 1]
+        if batch.dim() == 3:
+            ACTS_ON["acts"] = batch[:, 2] if batch.size(1) == 3 else None
+            return batch[:, 0], batch[:, 1]
+        ACTS_ON["acts"] = None
         return batch, batch
+    def fwd(ids): return model(ids, acts=ACTS_ON["acts"]) if ACTS_ON["acts"] is not None else model(ids)
 
     def quick_val(max_batches):
         model.eval(); tot = 0.0; n = 0
         with torch.no_grad():
             for b in val_loader:
-                ids, lab = unpack(b); lg = model(ids)
+                ids, lab = unpack(b); lg = fwd(ids)
                 tot += F.cross_entropy(lg[:, :-1, :].reshape(-1, vocab_size), lab[:, 1:].reshape(-1), ignore_index=-100).item(); n += 1
                 if n >= max_batches: break
         model.train(); return tot / max(n, 1)
@@ -461,7 +486,8 @@ def train(args):
 
     if args.resume:
         ckpt = torch.load(args.resume, map_location=device, weights_only=False)
-        model.load_state_dict(ckpt["model_state"])
+        missing, unexpected = model.load_state_dict(ckpt["model_state"], strict=False)
+        if missing or unexpected: print(f"  resume: missing {missing} unexpected {unexpected}", flush=True)
         if "optimizer_state" in ckpt and not args.fresh_opt:
             optimizer.load_state_dict(ckpt["optimizer_state"])
             scheduler.load_state_dict(ckpt["scheduler_state"])
@@ -518,7 +544,7 @@ def train(args):
                 continue
 
             input_ids, labels = unpack(batch)
-            logits = model(input_ids)
+            logits = fwd(input_ids)
 
             loss = F.cross_entropy(
                 logits[:, :-1, :].reshape(-1, vocab_size),
@@ -593,7 +619,7 @@ def train(args):
         with torch.no_grad():
             for batch in val_loader:
                 input_ids, labels = unpack(batch)
-                logits = model(input_ids)
+                logits = fwd(input_ids)
                 loss = F.cross_entropy(
                     logits[:, :-1, :].reshape(-1, vocab_size),
                     labels[:, 1:].reshape(-1), ignore_index=-100,
@@ -698,7 +724,8 @@ def train(args):
     best_path = out_dir / f"best_lm_{args.tag}.pt"
     if best_path.exists():
         ckpt = torch.load(best_path, map_location=device, weights_only=False)
-        model.load_state_dict(ckpt["model_state"])
+        missing, unexpected = model.load_state_dict(ckpt["model_state"], strict=False)
+        if missing or unexpected: print(f"  resume: missing {missing} unexpected {unexpected}", flush=True)
         print(
             f"\nFinal generation (best model, epoch {ckpt['epoch'] + 1}):",
             flush=True,
@@ -739,6 +766,9 @@ def main():
     parser.add_argument("--fresh-opt", action="store_true",
                         help="Load model weights only, fresh optimizer/scheduler (for extending training)")
     parser.add_argument("--cpu", action="store_true")
+    parser.add_argument("--act-vector", action="store_true",
+                        help="plan act as a learned VECTOR added at the <|oracle|> position (and re-injected each recurrence pass) instead of a text token; "
+                             "data must be the chat_v2ct format; the *act text is stripped")
     parser.add_argument("--keep-every", type=int, default=0,
                         help="also keep a weights-only checkpoint every N epochs (checkpoints/ep_<tag>_<epoch>.pt) so a run can be rewound to a data boundary")
     parser.add_argument("--conv-sequences", action="store_true",

@@ -56,7 +56,16 @@ def life_kind(q):
     if "how are you" in q: return "how"
     return "up_to"
 
+def normalize(text):
+    """PersonaChat/DailyDialog tokenisation artefacts defeat every regex: curly apostrophes and spaced contractions ("I ' m a teacher",
+    "I ’ ve been to"). Normalise before any rule runs: also what the model should learn to write."""
+    text = text.replace("\u2019", "'").replace("\u2018", "'")
+    text = re.sub(r"\b(\w+) ' (m|s|re|ve|ll|d|t)\b", r"\1'\2", text)
+    text = re.sub(r" ([,.!?;:])", r"\1", text)   # "Yes , it is ." -> "Yes, it is."
+    return text
+
 def fix(text, rng):
+    text = normalize(text)
     m = USER_SELF.search(text)
     if m and m.group(1) not in NOT_NAMES:
         old = m.group(1); new = rng.choice([n for n in NAMES if n != old])

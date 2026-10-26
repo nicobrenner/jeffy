@@ -1,0 +1,152 @@
+{
+  "encoder": "BAAI/bge-large-en-v1.5",
+  "C": 0.01,
+  "seed": 42,
+  "n_per_class": 50,
+  "intent_to_category": {
+    "cancel_order": "order",
+    "change_order": "order",
+    "change_shipping_address": "shipping",
+    "check_cancellation_fee": "cancel",
+    "check_invoice": "invoice",
+    "check_payment_methods": "payment",
+    "check_refund_policy": "refund",
+    "complaint": "feedback",
+    "contact_customer_service": "contact",
+    "contact_human_agent": "contact",
+    "create_account": "account",
+    "delete_account": "account",
+    "delivery_options": "delivery",
+    "delivery_period": "delivery",
+    "edit_account": "account",
+    "get_invoice": "invoice",
+    "get_refund": "refund",
+    "newsletter_subscription": "subscription",
+    "payment_issue": "payment",
+    "place_order": "order",
+    "recover_password": "account",
+    "registration_problems": "account",
+    "review": "feedback",
+    "set_up_shipping_address": "shipping",
+    "switch_account": "account",
+    "track_order": "order",
+    "track_refund": "refund"
+  },
+  "runs": {
+    "v2_27_intents": {
+      "n_train": 1350,
+      "n_classes": 27,
+      "n_test": 1350,
+      "train_accuracy": 1.0,
+      "test_accuracy": 0.9919,
+      "test_macro_f1": 0.9919
+    },
+    "v1_11_categories": {
+      "n_train": 1350,
+      "n_classes": 11,
+      "n_test": 1350,
+      "train_accuracy": 1.0,
+      "test_accuracy": 0.9978,
+      "test_macro_f1": 0.9979
+    },
+    "v2_mapped_to_categories": {
+      "n_test": 1350,
+      "test_accuracy": 0.9993,
+      "test_macro_f1": 0.9992,
+      "delta_vs_v1": 0.0015
+    }
+  },
+  "probes": [
+    {
+      "text": "I want to cancel my subscription",
+      "v2_intent": "newsletter_subscription",
+      "v2_mapped": "subscription",
+      "v2_confidence": 0.6136,
+      "v1_category": "subscription"
+    },
+    {
+      "text": "cancel my order",
+      "v2_intent": "cancel_order",
+      "v2_mapped": "order",
+      "v2_confidence": 0.9694,
+      "v1_category": "order"
+    },
+    {
+      "text": "how do I cancel",
+      "v2_intent": "cancel_order",
+      "v2_mapped": "order",
+      "v2_confidence": 0.5887,
+      "v1_category": "cancel"
+    },
+    {
+      "text": "I need to cancel a purchase I made",
+      "v2_intent": "cancel_order",
+      "v2_mapped": "order",
+      "v2_confidence": 0.7093,
+      "v1_category": "order"
+    },
+    {
+      "text": "where is my order",
+      "v2_intent": "track_order",
+      "v2_mapped": "order",
+      "v2_confidence": 0.5654,
+      "v1_category": "order"
+    },
+    {
+      "text": "when will my order arrive",
+      "v2_intent": "delivery_period",
+      "v2_mapped": "delivery",
+      "v2_confidence": 0.9639,
+      "v1_category": "delivery"
+    },
+    {
+      "text": "I want to check the status of my order",
+      "v2_intent": "track_order",
+      "v2_mapped": "order",
+      "v2_confidence": 0.5865,
+      "v1_category": "delivery"
+    },
+    {
+      "text": "I need to place an order",
+      "v2_intent": "place_order",
+      "v2_mapped": "order",
+      "v2_confidence": 0.3936,
+      "v1_category": "order"
+    },
+    {
+      "text": "I need to change the shipping address",
+      "v2_intent": "change_shipping_address",
+      "v2_mapped": "shipping",
+      "v2_confidence": 0.9351,
+      "v1_category": "shipping"
+    },
+    {
+      "text": "track my shipment",
+      "v2_intent": "delivery_period",
+      "v2_mapped": "delivery",
+      "v2_confidence": 0.2899,
+      "v1_category": "delivery"
+    },
+    {
+      "text": "what are your shipping options",
+      "v2_intent": "delivery_options",
+      "v2_mapped": "delivery",
+      "v2_confidence": 0.9561,
+      "v1_category": "delivery"
+    },
+    {
+      "text": "how much does shipping cost",
+      "v2_intent": "delivery_options",
+      "v2_mapped": "delivery",
+      "v2_confidence": 0.6426,
+      "v1_category": "delivery"
+    },
+    {
+      "text": "where is my package",
+      "v2_intent": "delivery_options",
+      "v2_mapped": "delivery",
+      "v2_confidence": 0.3506,
+      "v1_category": "delivery"
+    }
+  ]
+}

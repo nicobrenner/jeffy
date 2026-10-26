@@ -1,0 +1,4 @@
+condition,n_classes,n_train,n_test,test_accuracy,test_macro_f1
+v2_27_intents,27,1350,1350,0.9919,0.9919
+v1_11_categories,11,1350,1350,0.9978,0.9979
+v2_mapped_to_categories,11,1350,1350,0.9993,0.9992

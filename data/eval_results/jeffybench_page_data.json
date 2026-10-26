@@ -1,0 +1,344 @@
+{
+  "models": [
+    {
+      "id": "jeffy",
+      "name": "Jeffy",
+      "color": "#20d49a"
+    },
+    {
+      "id": "phi4_14b",
+      "name": "phi4 (14B)",
+      "color": "#f5a623"
+    },
+    {
+      "id": "gemma4_9.6b",
+      "name": "gemma4 (9.6B)",
+      "color": "#4a9eff"
+    },
+    {
+      "id": "llama3.1_8b",
+      "name": "llama3.1 (8B)",
+      "color": "#9b6dff"
+    },
+    {
+      "id": "mistral_7b",
+      "name": "mistral (7B)",
+      "color": "#f05050"
+    },
+    {
+      "id": "gemma3_4b",
+      "name": "gemma3 (4B)",
+      "color": "#2d8cf0"
+    },
+    {
+      "id": "phi4mini_3.8b",
+      "name": "phi4-mini (3.8B)",
+      "color": "#d4a017"
+    },
+    {
+      "id": "llama3.2_3b",
+      "name": "llama3.2 (3B)",
+      "color": "#7a4ddb"
+    },
+    {
+      "id": "phi_2.7b",
+      "name": "phi (2.7B)",
+      "color": "#c87820"
+    },
+    {
+      "id": "qwen2.5_0.5b",
+      "name": "qwen2.5 (0.5B)",
+      "color": "#50a0a0"
+    },
+    {
+      "id": "qwen3_32b",
+      "name": "qwen3 (32B)",
+      "color": "#707580"
+    },
+    {
+      "id": "setfit",
+      "name": "SetFit",
+      "color": "#e54dbf"
+    },
+    {
+      "id": "fasttext",
+      "name": "FastText",
+      "color": "#b58942"
+    },
+    {
+      "id": "laya",
+      "name": "Laya",
+      "color": "#ff6b8a"
+    },
+    {
+      "id": "gliner",
+      "name": "GLiNER2.5",
+      "color": "#4ecdc4"
+    },
+    {
+      "id": "jev",
+      "name": "Jev (hosted)",
+      "color": "#ff4500"
+    }
+  ],
+  "tasks": {
+    "banking77": {
+      "n": 77,
+      "cat": "intent",
+      "results": [
+        {
+          "id": "jeffy",
+          "acc": 0.943,
+          "lat": 118
+        },
+        {
+          "id": "phi4_14b",
+          "acc": 0.68,
+          "lat": 15400
+        },
+        {
+          "id": "gemma4_9.6b",
+          "acc": 0.68,
+          "lat": 696
+        },
+        {
+          "id": "gemma3_4b",
+          "acc": 0.64,
+          "lat": 956
+        },
+        {
+          "id": "llama3.1_8b",
+          "acc": 0.62,
+          "lat": 8900
+        },
+        {
+          "id": "phi4mini_3.8b",
+          "acc": 0.52,
+          "lat": 181
+        },
+        {
+          "id": "llama3.2_3b",
+          "acc": 0.46,
+          "lat": 143
+        },
+        {
+          "id": "mistral_7b",
+          "acc": 0.39,
+          "lat": 17000
+        },
+        {
+          "id": "phi_2.7b",
+          "acc": 0.3,
+          "lat": 231
+        },
+        {
+          "id": "qwen2.5_0.5b",
+          "acc": 0.15,
+          "lat": 55
+        },
+        {
+          "id": "qwen3_32b",
+          "acc": 0.03,
+          "lat": 9500
+        },
+        {
+          "id": "setfit",
+          "acc": 0.5425,
+          "lat": 6
+        },
+        {
+          "id": "fasttext",
+          "acc": 0.011,
+          "lat": 0.1
+        },
+        {
+          "id": "laya",
+          "acc": 0.38,
+          "lat": 815
+        },
+        {
+          "id": "gliner",
+          "acc": 0.56,
+          "lat": 1672
+        },
+        {
+          "id": "jev",
+          "acc": 0.8,
+          "lat": 134
+        }
+      ]
+    },
+    "ag_news": {
+      "n": 4,
+      "cat": "topic",
+      "results": [
+        {
+          "id": "jeffy",
+          "acc": 0.905,
+          "lat": 80
+        },
+        {
+          "id": "phi4_14b",
+          "acc": 0.83,
+          "lat": 493
+        },
+        {
+          "id": "gemma4_9.6b",
+          "acc": 0.82,
+          "lat": 969
+        },
+        {
+          "id": "phi4mini_3.8b",
+          "acc": 0.81,
+          "lat": 176
+        },
+        {
+          "id": "mistral_7b",
+          "acc": 0.81,
+          "lat": 9000
+        },
+        {
+          "id": "gemma3_4b",
+          "acc": 0.79,
+          "lat": 496
+        },
+        {
+          "id": "llama3.1_8b",
+          "acc": 0.76,
+          "lat": 8400
+        },
+        {
+          "id": "llama3.2_3b",
+          "acc": 0.72,
+          "lat": 142
+        },
+        {
+          "id": "phi_2.7b",
+          "acc": 0.64,
+          "lat": 229
+        },
+        {
+          "id": "qwen2.5_0.5b",
+          "acc": 0.57,
+          "lat": 50
+        },
+        {
+          "id": "qwen3_32b",
+          "acc": 0.21,
+          "lat": 9900
+        },
+        {
+          "id": "setfit",
+          "acc": 0.859,
+          "lat": 9
+        },
+        {
+          "id": "fasttext",
+          "acc": 0.372,
+          "lat": 0.1
+        },
+        {
+          "id": "laya",
+          "acc": 0.94,
+          "lat": 273
+        },
+        {
+          "id": "gliner",
+          "acc": 0.65,
+          "lat": 366
+        },
+        {
+          "id": "jev",
+          "acc": 0.83,
+          "lat": 127
+        }
+      ]
+    },
+    "sst2": {
+      "n": 2,
+      "cat": "sentiment",
+      "results": [
+        {
+          "id": "phi4_14b",
+          "acc": 0.95,
+          "lat": 286
+        },
+        {
+          "id": "jeffy",
+          "acc": 0.901,
+          "lat": 104
+        },
+        {
+          "id": "llama3.1_8b",
+          "acc": 0.9,
+          "lat": 15500
+        },
+        {
+          "id": "gemma3_4b",
+          "acc": 0.89,
+          "lat": 500
+        },
+        {
+          "id": "llama3.2_3b",
+          "acc": 0.89,
+          "lat": 115
+        },
+        {
+          "id": "mistral_7b",
+          "acc": 0.86,
+          "lat": 8400
+        },
+        {
+          "id": "phi_2.7b",
+          "acc": 0.83,
+          "lat": 255
+        },
+        {
+          "id": "gemma4_9.6b",
+          "acc": 0.79,
+          "lat": 623
+        },
+        {
+          "id": "phi4mini_3.8b",
+          "acc": 0.79,
+          "lat": 138
+        },
+        {
+          "id": "qwen3_32b",
+          "acc": 0.59,
+          "lat": 16700
+        },
+        {
+          "id": "qwen2.5_0.5b",
+          "acc": 0.5,
+          "lat": 51
+        },
+        {
+          "id": "setfit",
+          "acc": 0.8142,
+          "lat": 7
+        },
+        {
+          "id": "fasttext",
+          "acc": 0.5734,
+          "lat": 0.1
+        },
+        {
+          "id": "laya",
+          "acc": 0.83,
+          "lat": 220
+        },
+        {
+          "id": "gliner",
+          "acc": 0.93,
+          "lat": 336
+        },
+        {
+          "id": "jev",
+          "acc": 0.96,
+          "lat": 127
+        }
+      ]
+    }
+  }
+}

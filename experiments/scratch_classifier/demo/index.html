@@ -243,6 +243,7 @@
 
   // Model registry. format 'tags' = <|system|>/<|user|>/<|oracle|> (v2 tokenizer); 'plain' = System:/User:/Oracle: (TinyStories tokenizer)
   const MODELS = {
+    conv_persona2_int8: { label: 'v7a converged + persona x47, human-identity filler removed (8.5M, int8)', file: 'oracle_conv_persona2_int8.onnx', tokenizer: 'tokenizer_tinystories.json', format: 'plain', badge: '8.5M params · 11 MB int8', size: '11 MB' },
     conv_persona_int8: { label: 'v7a converged + hand-written persona x47 (8.5M, int8) — current', file: 'oracle_conv_persona_int8.onnx', tokenizer: 'tokenizer_tinystories.json', format: 'plain', badge: '8.5M params · 11 MB int8', size: '11 MB' },
     v7a_conv_int8: { label: 'v7a converged (8.5M, int8)', file: 'oracle_v7a_conv_int8.onnx', tokenizer: 'tokenizer_tinystories.json', format: 'plain', badge: '8.5M params · 11 MB int8', size: '11 MB' },
     v7a_conv_fix_int8: { label: 'v7a converged, fixed data (8.5M, int8)', file: 'oracle_v7a_conv_fix_int8.onnx', tokenizer: 'tokenizer_tinystories.json', format: 'plain', badge: '8.5M params · 11 MB int8', size: '11 MB' },

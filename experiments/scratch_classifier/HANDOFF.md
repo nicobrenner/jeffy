@@ -15,10 +15,13 @@ the end of every working block (not just at the end of a session). Last update: 
    first; checkpoint + `python3 -u` + resume before launching; pull checkpoints during training; destroy the instance in a
    trap; results in tag-specific files, merge never overwrite; WebSearch 200/session cap → Chrome tools / playwright.
 
-## Running right now (2026-10-25 ~22:45 PDT)
-- Grader sub-agent: `probe_persona2_blind4.jsonl` (600 rows: persona2 / persona2@T0.3 / persona1 / v2, first-impression + 3-turn)
-  → `grades_persona2_blind4.jsonl`; key `probe_persona2_blind4_key.json`. If persona2 wins, make it the demo default.
-- Nothing on GPU (two-scale run done, instance 57766003 destroyed). Nothing on MPS. Demo server on 127.0.0.1:8765.
+## Running right now (2026-10-25 ~23:30 PDT)
+- **MPS: the controlled 2.0M arm** (`run_2m_arm.sh` in the session scratchpad; logs `logs/train_oracle_2m_conv.log` → `train_oracle_2m_persona2.log`):
+  2.0M TinyStories base (`best_lm_2m_scaling.pt`, same tokenizer) → 40 ep on `chat_v6plain_fix` → 4 ep on `chat_v6persona2` = the exact
+  8.5M recipe at 2.0M. ≈ 30 min. Then `run_2m_probes.sh` generates probes (varied / first-impression T0.5+T0.3 / 3-turn) for both sizes
+  and builds **`pile_runs/atl/probe_size_blind4.jsonl`** (key `probe_size_blind4_key.json`). **Next session: launch ONE grader on it**
+  (rubric as in RESEARCH_LOG "persona2 blind pass", with continuity for multi-turn rows), unblind, report per set. Decision rule in the log.
+- Nothing on GPU. Demo server on 127.0.0.1:8765 (default: conv_persona2 @ T0.3).
 
 ## Done this block (all logged in RESEARCH_LOG.md, same date)
 - **Persona-dose model** (conv + 110 hand-written × 47) beats v2 and conv on every set; demo default. Human-name bug traced to

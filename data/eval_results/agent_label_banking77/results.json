@@ -159,6 +159,103 @@
       "label_quality_cost_vs_true_at_770": 0.07,
       "fraction_of_ceiling": 0.8419,
       "gain_over_round1": 0.13
+    },
+    "fewshot_agent_with_descriptions": {
+      "n_train": 385,
+      "sample": "fresh draw, seed 1337, disjoint from rounds 1 and 2",
+      "labeler": {
+        "model": "Claude Opus 5",
+        "model_id": "claude-opus-5",
+        "harness": "Claude Code CLI",
+        "method": "in-context, 385 fresh texts WITH 77 written label descriptions, single pass",
+        "labeled_at": "2026-10-26",
+        "saw_true_labels": false,
+        "descriptions": "banking77_label_descriptions.json, written from the sensible reading of each label, not from banking77's actual assignments"
+      },
+      "agent_human_agreement": 0.8623,
+      "agreement_delta_vs_no_descriptions": 0.0363,
+      "test_accuracy": 0.707,
+      "test_macro_f1": 0.6706,
+      "n_classes_seen": 74,
+      "accuracy_delta_vs_no_descriptions": 0.0435,
+      "label_quality_cost": 0.0055,
+      "top_disagreements": [
+        {
+          "human": "get_physical_card",
+          "agent": "change_pin",
+          "n": 4
+        },
+        {
+          "human": "transfer_not_received_by_recipient",
+          "agent": "transfer_timing",
+          "n": 3
+        },
+        {
+          "human": "pending_top_up",
+          "agent": "top_up_reverted",
+          "n": 2
+        },
+        {
+          "human": "declined_transfer",
+          "agent": "declined_card_payment",
+          "n": 2
+        },
+        {
+          "human": "balance_not_updated_after_bank_transfer",
+          "agent": "pending_transfer",
+          "n": 2
+        },
+        {
+          "human": "unable_to_verify_identity",
+          "agent": "verify_my_identity",
+          "n": 2
+        },
+        {
+          "human": "balance_not_updated_after_bank_transfer",
+          "agent": "transfer_timing",
+          "n": 2
+        },
+        {
+          "human": "pending_transfer",
+          "agent": "transfer_timing",
+          "n": 2
+        },
+        {
+          "human": "wrong_exchange_rate_for_cash_withdrawal",
+          "agent": "exchange_rate",
+          "n": 2
+        },
+        {
+          "human": "pending_transfer",
+          "agent": "pending_card_payment",
+          "n": 2
+        },
+        {
+          "human": "card_about_to_expire",
+          "agent": "getting_spare_card",
+          "n": 1
+        },
+        {
+          "human": "top_up_failed",
+          "agent": "declined_card_payment",
+          "n": 1
+        },
+        {
+          "human": "card_payment_not_recognised",
+          "agent": "extra_charge_on_statement",
+          "n": 1
+        },
+        {
+          "human": "card_delivery_estimate",
+          "agent": "card_arrival",
+          "n": 1
+        },
+        {
+          "human": "failed_transfer",
+          "agent": "declined_transfer",
+          "n": 1
+        }
+      ]
     }
   },
   "round1_indices": [

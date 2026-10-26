@@ -5,3 +5,4 @@ fewshot_agent_labeled,385,agent,claude-opus-5,74,0.8260,0.6635,0.6286
 agent_labeled_round2_active,770,agent,claude-opus-5,77,0.7805,0.7935,0.7841
 fewshot_supervised_active_770,770,human,banking77_crowdworkers,77,1.0,0.8635,
 fewshot_supervised_random_770,770,human,banking77_crowdworkers,77,1.0,0.843,
+fewshot_agent_with_descriptions,385,agent,claude-opus-5,74,0.8623,0.707,0.6706

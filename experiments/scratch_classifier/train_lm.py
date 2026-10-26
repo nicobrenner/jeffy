@@ -387,9 +387,25 @@ def train(args):
     steps_per_epoch = len(train_ds) // args.batch_size
     optim_steps_per_epoch = steps_per_epoch // args.accumulate
     total_optim_steps = args.epochs * optim_steps_per_epoch
-    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
-        optimizer, T_max=max(total_optim_steps, 1)
-    )
+    if args.warmup_steps > 0:
+        _W, _T = args.warmup_steps, max(total_optim_steps, 1)
+        scheduler = torch.optim.lr_scheduler.LambdaLR(
+            optimizer,
+            lambda st: (st + 1) / _W if st < _W else 0.5 * (1 + math.cos(math.pi * min(st - _W, _T - _W) / max(_T - _W, 1))),
+        )
+    else:
+        scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
+            optimizer, T_max=max(total_optim_steps, 1)
+        )
+
+    def quick_val(max_batches):
+        model.eval(); tot = 0.0; n = 0
+        with torch.no_grad():
+            for b in val_loader:
+                ids = b.to(device); lg = model(ids)
+                tot += F.cross_entropy(lg[:, :-1, :].reshape(-1, vocab_size), ids[:, 1:].reshape(-1)).item(); n += 1
+                if n >= max_batches: break
+        model.train(); return tot / max(n, 1)
 
     out_dir = HERE / "checkpoints"
     out_dir.mkdir(exist_ok=True)
@@ -449,6 +465,8 @@ def train(args):
 
         accum = args.accumulate
         optimizer.zero_grad()
+        if args.eval_every > 0 and epoch == start_epoch:
+            print(f"  [probe ep{epoch+1} step 0] val={quick_val(args.eval_batches):.4f}", flush=True)
 
         for batch_idx, batch in enumerate(train_loader):
             if batch_idx < skip_batches:
@@ -471,6 +489,9 @@ def train(args):
                 optimizer.step()
                 scheduler.step()
                 optimizer.zero_grad()
+                if args.eval_every > 0 and (n_steps // accum) % args.eval_every == 0:
+                    print(f"  [probe ep{epoch+1} step {n_steps // accum}] lr={scheduler.get_last_lr()[0]:.2e} "
+                          f"train={train_loss_sum/n_steps:.4f} val={quick_val(args.eval_batches):.4f}", flush=True)
 
             if device == "mps" and n_steps % 20 == 0:
                 torch.mps.empty_cache()
@@ -665,6 +686,12 @@ def main():
     parser.add_argument("--fresh-opt", action="store_true",
                         help="Load model weights only, fresh optimizer/scheduler (for extending training)")
     parser.add_argument("--cpu", action="store_true")
+    parser.add_argument("--warmup-steps", type=int, default=0,
+                        help="linear LR warmup over this many optimizer steps before the cosine decay (default 0 = none)")
+    parser.add_argument("--eval-every", type=int, default=0,
+                        help="print val_loss every N optimizer steps (on --eval-batches batches); 0 = off")
+    parser.add_argument("--eval-batches", type=int, default=40,
+                        help="number of val batches used by --eval-every probes")
     parser.add_argument("--tag", type=str, default="base")
     parser.add_argument("--tokenizer", type=str, default=None,
                         help="Path to custom tokenizer JSON (skips GPT-2 vocab subsetting)")

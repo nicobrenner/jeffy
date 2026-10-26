@@ -1,0 +1,59 @@
+Device: mps
+Custom tokenizer: tokenizer_tinystories.json (vocab=5500)
+
+Loading TinyStories...
+  50,000 stories (1.5s)
+Tokenizing...
+  10,000/50,000...
+  20,000/50,000...
+  30,000/50,000...
+  40,000/50,000...
+  50,000/50,000...
+  11,072,577 tokens (8.8s)
+Custom tokenizer: 5,500 tokens (no subsetting needed)
+Train: 38,927 chunks (9,965,312 tokens), Val: 4,325 chunks
+
+Model: 8,521,472 params (weight-tied)
+  Embedding: 2,210,304 (25.9%), Transformer: 6,310,400 (74.1%)
+  d_model=384, n_layers=4, n_heads=8, d_ff=1280, seq_len=256
+Resumed from epoch 0, batch 0 (best_val_loss=inf)
+
+Training for 1 epochs (starting from 0)
+  1,216 batches/epoch, ~9,965,312 tokens/epoch
+================================================================================
+
+Generation (random init):
+  > Once Ġupon Ġa Ġtime Ġthere Ġwas Ġa Ġgirl Ġcalled ĠJane . ĠShe Ġwas Ġ3 Ġyears Ġold Ġand Ġloved Ġto Ġplay Ġoutside . ĠShe Ġwould Ġrun Ġaround . ĠOne Ġday , ĠJane Ġwas Ġwalking Ġaround Ġand Ġshe Ġsaw Ġa Ġbig , Ġcolorful Ġtree . ĠIt Ġwas Ġa Ġbig Ġtree Ġwith Ġlots Ġof Ġleaves .
+  > Lily Ġand ĠTom Ġwent Ġto Ġthe Ġzoo Ġwith Ġher Ġmom . ĠThey Ġsaw Ġa Ġbig Ġtruck Ġthat Ġwas Ġa Ġbig Ġtruck . ĠLily 's Ġtruck Ġthat Ġcould Ġcarry Ġit . ĠLily Ġwas Ġsad Ġand Ġangry . ĠShe Ġhugged ĠLily Ġand Ġsaid , Ġ" I Ġlike Ġthis Ġtruck . ĠWe Ġare Ġsorry ." Ċ Ċ Lily Ġfelt Ġsorry Ġfor ĠBen .
+  > The Ġlittle Ġdog Ġwas Ġvery Ġnice Ġand Ġfriendly . ĠHe Ġwould Ġrun Ġafter Ġthe Ġdog . ĠHe Ġwas Ġalways Ġhappy Ġand Ġbrave . Ċ Ċ One Ġday , Ġthe Ġdog Ġsaw Ġa Ġsmall Ġbird Ġwho Ġwas Ġdoing Ġa Ġbeautiful Ġfeather . ĠThe Ġbird Ġwanted Ġto Ġfly Ġaway , Ġso Ġhe Ġcould Ġfly Ġaway .
+
+  [probe ep1 step 0] val=2.4459
+  [probe ep1 step 100] lr=3.37e-05 train=2.4137 val=2.4423
+  [probe ep1 step 200] lr=6.70e-05 train=2.4146 val=2.4418
+  [probe ep1 step 300] lr=1.00e-04 train=2.4124 val=2.4435
+  [probe ep1 step 400] lr=9.71e-05 train=2.4170 val=2.4394
+  [probe ep1 step 500] lr=8.87e-05 train=2.4176 val=2.4352
+  [probe ep1 step 600] lr=7.58e-05 train=2.4186 val=2.4291
+  [probe ep1 step 700] lr=5.99e-05 train=2.4164 val=2.4232
+  [probe ep1 step 800] lr=4.28e-05 train=2.4135 val=2.4187
+  [probe ep1 step 900] lr=2.66e-05 train=2.4130 val=2.4122
+  [probe ep1 step 1000] lr=1.31e-05 train=2.4113 val=2.4095
+  [probe ep1 step 1100] lr=3.91e-06 train=2.4099 val=2.4075
+  [probe ep1 step 1200] lr=7.53e-08 train=2.4090 val=2.4074
+Epoch   1/1  loss=2.4091 ppl=   11.1  val_loss=2.3807 val_ppl=   10.8  46,570 tok/s  214s *
+
+Generation (epoch 1):
+  > Once Ġupon Ġa Ġtime , Ġthere Ġwas Ġa Ġlittle Ġgirl Ġnamed ĠLily . ĠShe Ġloved Ġto Ġplay Ġoutside Ġin Ġthe Ġsun Ġand Ġthe Ġsun Ġwas Ġshining , Ġand Ġher Ġmom Ġwould Ġalways Ġcome Ġup Ġfrom Ġbed . Ċ Ċ One Ġday , ĠLily Ġwent Ġto Ġthe Ġpark Ġto Ġplay .
+  > Lily Ġand ĠTom Ġwent Ġto Ġthe Ġgarden . ĠThey Ġsaw Ġa Ġboy Ġon Ġthe Ġgrass . ĠThey Ġwanted Ġto Ġshow ĠMax Ġwhat Ġwas Ġinside . Ċ Ċ " Where Ġis Ġthis ?" ĠTom Ġasked . Ċ Ċ " I Ġdon 't Ġknow ! ĠMaybe Ġit Ġis Ġthe Ġmost Ġpretty Ġthing Ġyou Ġhave ," ĠLily Ġsaid .
+  > The Ġlittle Ġdog Ġwas Ġvery Ġhungry Ġand Ġwanted Ġto Ġeat Ġit . ĠHe Ġasked Ġthe Ġdog , Ġ" Can ĠI Ġhave Ġsome Ġfood ?" Ċ Ċ The Ġlady Ġreplied , Ġ" Sure , Ġbut ĠI Ġcan Ġeat Ġit Ġfor Ġlunch ." Ċ Ċ The Ġdog Ġwas Ġhappy . ĠHe Ġate Ġthe Ġfood Ġand Ġthe Ġcat Ġwas Ġhappy .
+
+
+================================================================================
+Best val loss: 2.3807 (ppl=10.8)
+Checkpoint: /Users/nico/Documents/Projects/jeffy/experiments/scratch_classifier/checkpoints/best_lm_grow_diag_c.pt
+
+Final generation (best model, epoch 1):
+  > Once Ġupon Ġa Ġtime Ġthere Ġwas Ġa Ġlittle Ġboy Ġnamed ĠTimmy . ĠTimmy Ġhad Ġa Ġgood Ġjob . ĠOne Ġday , ĠTimmy Ġand Ġhis Ġfriend Ġcame Ġinto Ġthe Ġroom . ĠTimmy Ġdidn 't Ġlike Ġhis Ġfriend Ġbecause Ġhe Ġwas Ġgrumpy Ġlike Ġit .
+  > Lily Ġand ĠTom Ġwent Ġto Ġthe Ġkitchen . ĠThey Ġsaw Ġa Ġbig Ġbowl Ġof Ġice Ġcream . ĠThey Ġliked Ġice Ġcream Ġvery Ġmuch . Ċ Ċ " Look , ĠLily , Ġthe Ġice Ġcream Ġis Ġso Ġyummy ! ĠIt Ġlooks Ġyummy !" ĠTom Ġsaid . Ċ Ċ " Wow , Ġlook Ġat Ġthat Ġspicy Ġpie ," Ġtheir Ġmom Ġsaid .
+  > The Ġlittle Ġdog Ġwas Ġvery Ġhappy Ġand Ġcouldn 't Ġstop Ġplaying Ġwith Ġhis Ġball . ĠThe Ġlittle Ġboy Ġwas Ġso Ġsad . ĠHe Ġwanted Ġto Ġplay Ġwith Ġthe Ġball , Ġbut Ġthe Ġdog Ġdidn 't Ġlisten . Ċ Ċ But Ġthen , Ġa Ġnaughty Ġdog Ġcame Ġup Ġand Ġgave Ġhim Ġa Ġhug .
+ALL_DONE

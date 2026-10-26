@@ -4692,3 +4692,12 @@ banking77 accuracy, full test split: Jeffy 94.3 (unchanged) | SetFit 20-shot def
 standard checkpoint → unknown smaller model and subsample. Net: Jeffy still wins every dataset, but the margin on banking77 is ~8 points, not 40.
 README / benchmark page / two posts cite the old numbers → Nico's call on presentation (recommendation sent: versioned benchmark + correction note,
 never silent edits).
+
+## 2026-10-26 ~08:15 — Growth restart shock: it is the learning-rate level, not cold Adam (`train_lm.py --eval-every/--warmup-steps`, MPS, 1 epoch each)
+
+Grown checkpoint, 1 epoch, val on 40 batches every 100 optimizer steps (cosine over the single epoch, so decay is faster than in the 20-ep run).
+step 0 = 2.446 for all arms. a) control 3e-4 no warmup: 2.492 @100 (↑), 2.465 @300, 2.385 @1000, epoch-end 2.354. b) 300-step warmup to 3e-4:
+2.447 @100, 2.473 @300 (↑ at peak), 2.389 @1000, end 2.355. c) warmup to 1e-4: never rises (2.442 @100, 2.444 @300, 2.410 @1000), end 2.381.
+→ The dip is caused by the LR level (it appears wherever the LR reaches ~3e-4), not by a fresh optimizer; a 3× lower LR avoids it but learns less
+in the epoch (2.381 vs 2.354). No evidence that warmup would close the 0.015 gap at epoch 20. Decision: keep the direct recipe exactly (3e-4,
+fresh-opt) for the grown model's second stage so the UX comparison stays matched. Logs `logs/grow_diag_{a,b,c}.log`.

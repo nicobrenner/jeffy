@@ -1,0 +1,58 @@
+Device: mps
+Custom tokenizer: tokenizer_tinystories.json (vocab=5500)
+
+Loading TinyStories...
+  50,000 stories (1.9s)
+Tokenizing...
+  10,000/50,000...
+  20,000/50,000...
+  30,000/50,000...
+  40,000/50,000...
+  50,000/50,000...
+  11,072,577 tokens (9.0s)
+Custom tokenizer: 5,500 tokens (no subsetting needed)
+Train: 38,927 chunks (9,965,312 tokens), Val: 4,325 chunks
+
+Model: 8,521,472 params (weight-tied)
+  Embedding: 2,210,304 (25.9%), Transformer: 6,310,400 (74.1%)
+  d_model=384, n_layers=4, n_heads=8, d_ff=1280, seq_len=256
+Resumed from epoch 0, batch 0 (best_val_loss=inf)
+
+Training for 1 epochs (starting from 0)
+  1,216 batches/epoch, ~9,965,312 tokens/epoch
+================================================================================
+
+Generation (random init):
+  > Once Ġupon Ġa Ġtime , Ġthere Ġwas Ġa Ġlittle Ġbird Ġnamed ĠLily . ĠOne Ġday , Ġshe Ġhad Ġa Ġspecial Ġtoy Ġto Ġwear . ĠIt Ġwas Ġa Ġbig , Ġyellow Ġcar , Ġyellow Ġcar . ĠLily Ġloved Ġto Ġplay Ġwith Ġit Ġall Ġday Ġlong .
+  > Lily Ġand ĠTom Ġwent Ġto Ġthe Ġstore . ĠHe Ġsaw Ġthe Ġstore , Ġshe Ġhad Ġa Ġbig , Ġgreen Ġbasket Ġwith Ġlots Ġof Ġflowers . ĠHe Ġput Ġthem Ġin Ġher Ġbasket Ġand Ġate Ġthem .
+  > The Ġlittle Ġdog Ġwas Ġvery Ġsad Ġbecause Ġhe Ġhad Ġno Ġfriends . ĠHe Ġknew Ġthat Ġeven Ġthough Ġhe Ġcould Ġstill Ġbe Ġhappy .
+
+  [probe ep1 step 0] val=2.4459
+  [probe ep1 step 100] lr=2.95e-04 train=2.4883 val=2.4922
+  [probe ep1 step 200] lr=2.80e-04 train=2.4780 val=2.4750
+  [probe ep1 step 300] lr=2.57e-04 train=2.4746 val=2.4647
+  [probe ep1 step 400] lr=2.27e-04 train=2.4675 val=2.4516
+  [probe ep1 step 500] lr=1.91e-04 train=2.4615 val=2.4355
+  [probe ep1 step 600] lr=1.53e-04 train=2.4563 val=2.4234
+  [probe ep1 step 700] lr=1.15e-04 train=2.4498 val=2.4091
+  [probe ep1 step 800] lr=7.86e-05 train=2.4451 val=2.3980
+  [probe ep1 step 900] lr=4.73e-05 train=2.4393 val=2.3908
+  [probe ep1 step 1000] lr=2.28e-05 train=2.4335 val=2.3846
+  [probe ep1 step 1100] lr=6.69e-06 train=2.4286 val=2.3820
+  [probe ep1 step 1200] lr=1.28e-07 train=2.4249 val=2.3810
+Epoch   1/1  loss=2.4243 ppl=   11.3  val_loss=2.3536 val_ppl=   10.5  57,290 tok/s  174s *
+
+Generation (epoch 1):
+  > Once Ġupon Ġa Ġtime , Ġthere Ġwas Ġa Ġlittle Ġgirl Ġnamed ĠLily . ĠShe Ġloved Ġto Ġplay Ġoutside Ġand Ġexplore . ĠOne Ġday , Ġshe Ġsaw Ġa Ġbig , Ġred Ġapple Ġapple Ġin Ġher Ġbackyard . Ċ Ċ " Wow , Ġthat 's Ġso Ġcool ! ĠCan ĠI Ġhave Ġit ?" Ġshe Ġasked .
+  > Lily Ġand ĠTom Ġwent Ġto Ġthe Ġlibrary Ġto Ġread Ġthe Ġbook Ġwith Ġa Ġbook . ĠThey Ġhad Ġfun Ġand Ġforgot Ġabout Ġher Ġday . ĠThey Ġdreamed Ġabout Ġher Ġbook Ġand Ġa Ġlittle Ġgirl .
+  > The Ġlittle Ġdog Ġwas Ġvery Ġproud Ġof Ġbeing Ġable Ġto Ġescape Ġfrom Ġthe Ġriver Ġof Ġthe Ġriver . ĠHe Ġwas Ġso Ġexcited Ġthat Ġhe Ġran . ĠĊ Ċ They Ġjumped Ġup Ġand Ġdown , Ġup Ġand Ġdown , Ġholding Ġhands Ġup Ġto Ġthe Ġwater . ĠThe Ġlittle Ġdog Ġwas Ġvery Ġgrateful .
+
+
+================================================================================
+Best val loss: 2.3536 (ppl=10.5)
+Checkpoint: /Users/nico/Documents/Projects/jeffy/experiments/scratch_classifier/checkpoints/best_lm_grow_diag_a.pt
+
+Final generation (best model, epoch 1):
+  > Once Ġupon Ġa Ġtime , Ġthere Ġwas Ġa Ġlittle Ġgirl Ġnamed ĠLily . ĠShe Ġloved Ġto Ġplay Ġoutside , Ġbut Ġone Ġday Ġshe Ġwent Ġoutside Ġto Ġplay . ĠSuddenly , Ġher Ġmommy Ġgot Ġher Ġin Ġand Ġsaw Ġher , Ġand Ġher Ġmommy Ġhad Ġbeen Ġlooking Ġvery Ġbusy .
+  > Lily Ġand ĠTom Ġwent Ġto Ġthe Ġslide Ġand ĠLily Ġslid Ġdown Ġthe Ġslide . ĠThey Ġhad Ġfun . ĠThey Ġfelt Ġlike Ġfun . Ċ Ċ But Ġthen , Ġthey Ġsaw Ġa Ġbig Ġslide . ĠIt Ġwas Ġbrown Ġand Ġbrown . ĠIt Ġwas Ġbrown Ġand Ġhas Ġmany Ġthings . ĠLily Ġwas Ġscared .
+  > The Ġlittle Ġdog Ġwas Ġvery Ġhappy Ġto Ġhave Ġan Ġidea . Ċ Ċ The Ġlittle Ġdog Ġtook Ġthe Ġdog Ġto Ġthe Ġpark Ġand Ġstarted Ġto Ġplay Ġwith Ġthe Ġball . ĠHe Ġhad Ġlots Ġof Ġfun Ġwith Ġthe Ġdog Ġand Ġthey Ġmade Ġit Ġgo Ġfor Ġthe Ġball . ĠThe Ġdog Ġwas Ġvery Ġhappy .

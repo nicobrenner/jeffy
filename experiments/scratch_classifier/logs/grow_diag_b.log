@@ -1,0 +1,58 @@
+Device: mps
+Custom tokenizer: tokenizer_tinystories.json (vocab=5500)
+
+Loading TinyStories...
+  50,000 stories (1.5s)
+Tokenizing...
+  10,000/50,000...
+  20,000/50,000...
+  30,000/50,000...
+  40,000/50,000...
+  50,000/50,000...
+  11,072,577 tokens (8.8s)
+Custom tokenizer: 5,500 tokens (no subsetting needed)
+Train: 38,927 chunks (9,965,312 tokens), Val: 4,325 chunks
+
+Model: 8,521,472 params (weight-tied)
+  Embedding: 2,210,304 (25.9%), Transformer: 6,310,400 (74.1%)
+  d_model=384, n_layers=4, n_heads=8, d_ff=1280, seq_len=256
+Resumed from epoch 0, batch 0 (best_val_loss=inf)
+
+Training for 1 epochs (starting from 0)
+  1,216 batches/epoch, ~9,965,312 tokens/epoch
+================================================================================
+
+Generation (random init):
+  > Once Ġupon Ġa Ġtime , Ġthere Ġwas Ġa Ġlittle Ġgirl Ġnamed ĠLily . ĠLily Ġloved Ġto Ġplay Ġoutside Ġwith Ġher Ġfriends . ĠOne Ġday , ĠLily 's Ġmom Ġasked Ġher Ġto Ġclean Ġup Ġthe Ġyard . ĠLily Ġwas Ġso Ġexcited Ġby Ġherself , Ġshe Ġwanted Ġto Ġpick Ġup Ġher Ġtoys .
+  > Lily Ġand ĠTom Ġwent Ġto Ġthe Ġkitchen . ĠThey Ġstarted Ġto Ġpour Ġthe Ġflour Ġand Ġstirred Ġsome Ġflour . Ċ Ċ " Look , Ġlook Ġat Ġthe Ġflour . ĠIt Ġis Ġa Ġcake !" ĠTom Ġsaid . Ġ" We Ġare Ġdone Ġsoup . ĠLet 's Ġgo Ġto Ġthe Ġtable .
+  > The Ġlittle Ġdog Ġwas Ġvery Ġobedient Ġand Ġnever Ġtried Ġto Ġgo Ġto Ġthe Ġpark . ĠShe Ġwent Ġoutside Ġand Ġsaw Ġa Ġbig Ġtree .
+
+  [probe ep1 step 0] val=2.4459
+  [probe ep1 step 100] lr=1.01e-04 train=2.4136 val=2.4474
+  [probe ep1 step 200] lr=2.01e-04 train=2.4222 val=2.4610
+  [probe ep1 step 300] lr=3.00e-04 train=2.4327 val=2.4734
+  [probe ep1 step 400] lr=2.91e-04 train=2.4389 val=2.4708
+  [probe ep1 step 500] lr=2.66e-04 train=2.4407 val=2.4579
+  [probe ep1 step 600] lr=2.27e-04 train=2.4418 val=2.4421
+  [probe ep1 step 700] lr=1.80e-04 train=2.4418 val=2.4285
+  [probe ep1 step 800] lr=1.28e-04 train=2.4387 val=2.4117
+  [probe ep1 step 900] lr=7.98e-05 train=2.4350 val=2.3970
+  [probe ep1 step 1000] lr=3.93e-05 train=2.4309 val=2.3888
+  [probe ep1 step 1100] lr=1.17e-05 train=2.4266 val=2.3836
+  [probe ep1 step 1200] lr=2.26e-07 train=2.4233 val=2.3819
+Epoch   1/1  loss=2.4227 ppl=   11.3  val_loss=2.3547 val_ppl=   10.5  41,384 tok/s  241s *
+
+Generation (epoch 1):
+  > Once Ġupon Ġa Ġtime , Ġthere Ġwas Ġa Ġlittle Ġboy Ġnamed ĠTimmy . ĠTimmy Ġloved Ġto Ġeat Ġcarrots Ġand Ġeat Ġcarrots . ĠOne Ġday , ĠTimmy 's Ġparents Ġtold Ġhim Ġhe Ġdidn 't Ġlike Ġhe Ġwanted Ġto Ġeat Ġanything Ġelse . ĠHe Ġsaid Ġit Ġwas Ġtoo Ġhot .
+  > Lily Ġand ĠTom Ġwent Ġto Ġthe Ġpark Ġwith Ġtheir Ġcars . ĠThey Ġdid Ġnot Ġknow Ġwhat Ġto Ġdo . ĠThey Ġdid Ġnot Ġknow Ġwhere Ġthey Ġneeded Ġto Ġsee Ġtheir Ġcars . ĠThey Ġdid Ġnot Ġknow Ġhow Ġto Ġdrive Ġtheir Ġcars Ġin Ġtheir Ġcars .
+  > The Ġlittle Ġdog Ġwas Ġvery Ġsad . ĠHe Ġwanted Ġto Ġplay Ġwith Ġhis Ġball Ġtoo . ĠBut Ġhe Ġknew Ġhe Ġwas Ġsmart . ĠHe Ġwanted Ġto Ġplay Ġwith Ġhis Ġball Ġtoo . ĠSo Ġhe Ġfound Ġa Ġball Ġand Ġstarted Ġto Ġrock . ĠHe Ġwanted Ġto Ġplay Ġwith Ġit , Ġbut Ġhe Ġdidn 't Ġknow Ġwhat Ġto Ġdo .
+
+
+================================================================================
+Best val loss: 2.3547 (ppl=10.5)
+Checkpoint: /Users/nico/Documents/Projects/jeffy/experiments/scratch_classifier/checkpoints/best_lm_grow_diag_b.pt
+
+Final generation (best model, epoch 1):
+  > Once Ġupon Ġa Ġtime , Ġthere Ġwas Ġa Ġlittle Ġgirl Ġnamed ĠLily . ĠShe Ġloved Ġto Ġcook Ġwith Ġher Ġfamily . ĠOne Ġday , ĠLily Ġwas Ġa Ġlittle Ġgirl Ġnamed ĠLily . ĠShe Ġloved Ġto Ġeat Ġspaghetti Ġand Ġeat Ġspaghetti Ġwith Ġspaghetti .
+  > Lily Ġand ĠTom Ġwent Ġto Ġthe Ġpark . ĠMax Ġsaw Ġa Ġbig Ġbag Ġnear Ġthe Ġpark . ĠHe Ġwanted Ġto Ġsee Ġthe Ġbirds , Ġbut Ġhe Ġwas Ġtoo Ġexcited . ĠHe Ġwas Ġgoing Ġback Ġto Ġlook Ġfor Ġhis Ġfriends . Ċ Ċ But Ġwhen Ġhe Ġopened Ġthe Ġbag , ĠTom Ġsaw Ġa Ġbig Ġhill Ġwith Ġtwo Ġbig Ġeyes .
+  > The Ġlittle Ġdog Ġwas Ġvery Ġbrave . ĠThe Ġlittle Ġdog Ġwas Ġno Ġlonger Ġscared Ġanymore . ĠThe Ġlittle Ġdog Ġwas Ġalways Ġso Ġscared Ġthat Ġhe Ġknew Ġthat Ġthe Ġdog Ġwas Ġso Ġbrave . ĠHe Ġwent Ġto Ġthe Ġpark Ġto Ġtell Ġwhere Ġhe Ġwas Ġgoing .

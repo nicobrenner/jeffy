@@ -4619,3 +4619,16 @@ Paired: persona2 vs persona1 first impression 21/36/23 (−0.01), multi-turn 38/
 | intensity + ratios at full res (quantisation cost only) | 9.44 | 52.9 dB |
 
 Negative, cleanly: the ratio representation costs 7% more bytes for 5.7 dB less quality than YCbCr at the same subsampling, and even without subsampling it is not lossless (8-bit ratios lose 52.9 dB worth of rounding) while costing 5% more than coding RGB directly. Why: YCbCr is a near-decorrelating linear transform with perceptual weighting, and its chroma planes are smooth; ratios divide by the intensity, which amplifies quantisation noise in dark pixels and makes the chroma planes noisier (so more expensive) than Cb/Cr. The underlying idea — put the eye's resolution where it matters — is exactly what 4:2:0 already does; the ratio parametrisation is the known rg-chromaticity space (used for illumination invariance in vision, Finlayson et al. — to verify), not a better coding space.
+
+**The size question, answered with a controlled arm (Nico: "show it now, or we shut the 8.5M models down"). `oracle_2m_persona2` = the 2.0M TinyStories base (`best_lm_2m_scaling.pt`, d192 L2, SAME 5,500-token tokenizer, 16 pretraining epochs, val 2.42) → the exact 8.5M recipe: 40 epochs on `chat_v6plain_fix` (val 1.4286 vs the 8.5M's 1.2019) → 4 epochs on `chat_v6persona2` (val 1.4371 vs 1.1994). One grader, 1,048 rows (`grades_size_blind4.jsonl`; key M1 8.5M, M2 8.5M @ T0.3, M4 2.0M, M3 2.0M @ T0.3), three sets, same sampler:**
+
+| set | 8.5M (persona2) | 2.0M (same recipe) | paired 8.5M vs 2.0M |
+|---|---|---|---|
+| first impression, total /15 | **9.86** (T0.3: 10.41) | 5.71 (T0.3: 5.83) | **60 W / 8 T / 12 L (+4.15)**; at T0.3 64/8/8 (+4.59) |
+| first impression, coh ≥ 2 | 67/80 | 37/80 | |
+| varied 122 prompts, total | **4.92** | 3.43 | **146 / 39 / 59 (+1.50)** |
+| varied, coh ≥ 2 | 86/244 | 55/244 | |
+| 3-turn, turns 2–3, total | **4.20** | 3.59 | 30 / 23 / 27 (+0.61) |
+| 3-turn, continuity / lost-thread | 1.29 / 9% | 0.97 / 19% | |
+
+**Verdict: with tokenizer, data and recipe held fixed, 8.5M beats 2.0M on every set and every axis, by 4 points on the openers that matter for the demo (the 2.0M model recites the hand-written lines into the wrong prompts — memorised-line 16% at T0.3 — and lands 37/80 understandable vs 67/80), by 1.5 on varied prompts, and by 0.6 in conversation. The decision rule (go back to the small model if within 0.5) is not met on any set. The 8.5M lineage stays; the earlier "v2 feels better" was v2's memorised lines vs a model that had never seen them, not a size effect.** Caveats: the small arm is 2.0M (the nearest existing base), not 2.7M, and it had 16 TinyStories epochs to the 8.5M's 65 (though a higher tokens-per-parameter ratio); its chat val loss (1.43) says the gap is capacity, not under-training. The 2.0M model is in the demo dropdown (3.1 MB int8) for a hands-on check. The growing experiment (1M → 2M → 8.5M, function-preserving) is the right follow-up: it tests whether the 8.5M's advantage can be *reached* from small, not whether it exists.

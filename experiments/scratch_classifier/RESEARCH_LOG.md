@@ -4748,3 +4748,16 @@ New test, same design, on v2: `grow_model.py best_lm_oracle_v2.pt --d-model 512 
 (2.69M → 8.53M, **widening only**, exact: max |Δlogprob| 0.028; no deepening, so no approximate step). Control = v2 + 3 ep on `chat_v2`
 (lr 1e-4, warmup 300); grown = same. v2 val at step 0: 1.6124 (v2's own 1.6130). Scratchpad `grow_v2_local.sh`; probes/ONNX/blind set queued
 (`grow_v2_post.sh` → `probe_grow_v2_blind3`, tags format, recipe T0.5 to match the existing v2 probes).
+
+## 2026-10-26 ~12:15 — v2 growth blind pass unblinded (`grades_grow_v2_blind3.jsonl`, 972 rows; key M1=v2 grown M2=v2 M3=v2+3ep control): a three-way tie
+
+Totals /15, paired W/T/L on total matched by (id, seed), recipe T0.5 for all arms:
+| set | v2 | v2 +3 ep control | v2 grown→8.5M +3 ep | grown vs control | grown vs v2 |
+|---|---|---|---|---|---|
+| first impression (n=80) | 6.75 | 6.81 | 6.69 | 6/67/7 | 6/66/8 |
+| varied (n=244) | 2.98 | 3.01 | 3.00 | 24/184/36 | 35/182/27 |
+Tie rates of 83–89% mean the three models emit near-identical responses at the same seed: growth preserved v2's function and 3 gentle epochs on
+v2's own data barely moved it (val 1.612 → 1.597 is below what the probes resolve). Nico's feel ("behaves like the v2 original") agrees.
+Train loss of the grown arm fell 0.10 vs 0.01 for the control → the capacity is absorbing the training set, not changing behaviour.
+Conclusion: on v2, growth is a clean no-op until it is given something new to learn; `chat_v2_fix` run (names filled, 4,762 Oracle-as-human
+convs dropped) is the first such thing; longer context (seq 512, 3-turn probes) is the second.

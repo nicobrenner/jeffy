@@ -16,8 +16,15 @@ STOP = {"Tiny","Oracle","Not","Just","So","Here","Sorry","Glad","Happy","Sure","
         "Never","Doing","Going","Trying","Afraid","Sad","Okay","Only","Too","All","Done","Back","There","Thinking","Feeling","Looking","Curious","Bored",
         "Tired","Busy","Free","Ready","Excited","Interested","New","Old","Small","Big","Actually","Probably","Definitely","Honestly","Basically","Mostly",
         "Kind","Sort","Made","Built","Running","The","Your","Yes","Well","Hi","Hello","Hey"}
-HUMAN = re.compile(r"\b(my (wife|husband|kids|children|son|daughter|boyfriend|girlfriend|job|boss|mom|dad|family)|I work (as|at|in)|years old|"
-                   r"I'm (married|single)|(listening to|playing|watching) (music|games|tv|football|soccer)|hanging out|at the gym|my favorite (band|team|food|movie) is)\b", re.I)
+HUMAN = re.compile(r"\b(my (wife|husband|kids|children|son|daughter|boyfriend|girlfriend|job|boss|mom|dad|family|sister|brother|parents|hometown|car|house|apartment)|"
+                   r"I work (as|at|in|for)|years old|I'?m (married|single|divorced|retired|pregnant)|(listening to|playing|watching) (music|games|tv|football|soccer|basketball)|"
+                   r"hanging out|at the gym|my favorite (band|team|food|movie|show|sport) is|(big |huge )?fan of (the )?[A-Z]|I'?ve (never )?been to|I (visited|went to|grew up in|was born in|live in|moved to)|"
+                   r"I'?m (a|an) (\w+ )?(teacher|nurse|doctor|lawyer|student|programmer|engineer|developer|designer|writer|chef|cook|farmer|waiter|waitress|cashier|artist|musician|dentist|"
+                   r"pilot|cop|police officer|soldier|salesman|accountant|mechanic|plumber|carpenter|librarian|professor|manager|consultant|driver|mom|dad|mother|father|stay-?at-?home \w+|"
+                   r"college student|grad student|freelancer|entrepreneur|scientist|researcher|analyst|banker|realtor|photographer|actor|actress|dancer|athlete|coach|trainer|barista|"
+                   r"bartender|journalist|editor|author|poet|painter|sculptor|architect|electrician|firefighter|paramedic|veterinarian|vet|pharmacist|therapist|counselor|pastor|priest))|"
+                   r"I (play|coach) (football|soccer|basketball|baseball|hockey|tennis|golf) (for|on|with) (a|my|the)|I have (a|an|two|three|\d) (kids?|children|sons?|daughters?|cats?|dogs?)|"
+                   r"(I'?m|I am) (going|heading) to (work|school|the office|the gym|bed))\b", re.I)
 
 def classify(resp):
     if "Tiny Oracle" in resp or "tiny oracle" in resp.lower(): return "oracle"

@@ -4970,3 +4970,12 @@ ReST-EM 2312.06585, Shumailov model collapse 2305.17493, self-play in non-zero-s
 Nico: "Checkpoint at data boundaries from here on" → `train_lm.py --keep-every N` (weights-only `ep_<tag>_<k>.pt`) and every checkpoint now
 records `data`, `data_sha` (sha256[:12] of the corpus file) and `conv_sequences`. The v3 from-scratch run restarted with `--keep-every 5`.
 New engagement metric to implement in the demo: the rate at which the user replies at all after a given Oracle turn (+ turns per conversation).
+
+## 2026-10-26 17:06 PDT — v3: v2 architecture FROM SCRATCH on the fixed corpus, per conversation, 50 ep (`oracle_v3_scratch`)
+
+Best val 1.6838 at epoch 46 (v2's own run: 1.6130 on the unfixed corpus; different data, not comparable). Boundary checkpoints
+`ep_oracle_v3_scratch_{5..50}.pt` kept. Identity probe (old narrow regex): name 30/32, drift 0/96 — but the transcripts show
+"I'm a software engineer", "I'm a fan of the Golden State Warriors": the probe's HUMAN regex was too narrow (missed adjective+occupation,
+"fan of", travel). Broadened it and recomputed drift for all models on their existing transcripts (table in the next entry). Turn-1 answers
+still open with the corpus's "Yes, it is." reflex (the corpus v3 saw was regenerated BEFORE the punctuation/contraction normalisation; v3b has it).
+v3b (re-anonymised names, travel rewrite, normalisation) training next; reactive-user turns 2–3 for v3 generating.

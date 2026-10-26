@@ -4779,3 +4779,22 @@ the 892 human self-intros to "Tiny Oracle" gives 25–28/32 correct self-identif
 life ("listening to music", "hanging out") is untouched by any data fix (24–28/96 for every model incl. the 8.5M) → that is the case for an
 identity/act steering token on v2 (CT v3 style) or a broader rewrite of hobby/life filler. The 3-turn probe set (`probe_mt_*`) never asks the
 name and showed 0 leaks everywhere — it is blind to this bug; keep the identity probe in every pass from now on.
+
+## 2026-10-26 ~13:50 — Cross-lineage blind pass (`grades_lineage_blind4.jsonl`, 1,296 rows, one grader, recipe T0.5 for all; key M1=2.0M persona2, M2=v2, M3=8.5M conv_persona2, M4=v2 grown + fix3)
+
+Totals /15 and tag rates:
+| set | 8.5M conv_persona2 | v2 | v2 grown fix3 | 2.0M persona2 |
+|---|---|---|---|---|
+| first impression (n=80) total | **9.29** | 6.76 | 7.05 | 4.59 |
+|   salad / memorized-line | 15% / 9% | **9% / 4%** | 18% / 5% | 54% / 31% |
+| varied (n=244) total | **4.35** | 3.00 | 3.09 | 3.01 |
+|   salad / memorized-line | **66% / 13%** | **15% / 0%** | 20% / 1% | 67% / 25% |
+|   coh≥2 | 30% | 27% | 27% | 11% |
+Paired: 8.5M vs v2 43/13/24 (FI), 134/66/44 (varied); v2 vs v2 grown fix3 8/62/10 and 27/192/25 (tie, as before).
+**Reading.** The grader again ranks the 8.5M first on totals, while Nico ranks v2 first by feel. The tags show why: on the varied set the grader
+itself calls 66% of the 8.5M's answers salad (v2: 15%) yet still scores its persona 1.58 vs 1.04 — persona fragments ("I'm 2 million parameters…")
+pasted into incoherent answers earn persona/helpfulness points. The totals reward persona-marker density; Nico's UX rewards coherent, on-thread
+small talk, which is where the v2 lineage is clearly ahead (salad 9–20% vs 15–67%, memorized-line 0–5% vs 9–31%). So: the numbers are
+consistent and do separate lineages — but in the tags, not the totals, and the totals are miscalibrated against Nico. Next: Nico's 43 blind
+pair picks (`demo/blind_pairs.html`, key `blind_pairs_key.json`) → fit which rubric dimensions/tags predict his picks → reweight the rubric
+(or replace the total with "coherent AND on-thread, no pasted line") before any further model ranking.

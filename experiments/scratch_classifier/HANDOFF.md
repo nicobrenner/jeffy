@@ -15,14 +15,17 @@ the end of every working block (not just at the end of a session). Last update: 
    first; checkpoint + `python3 -u` + resume before launching; pull checkpoints during training; destroy the instance in a
    trap; results in tag-specific files, merge never overwrite; WebSearch 200/session cap → Chrome tools / playwright.
 
-## Running right now (2026-10-26 ~10:40 PDT)
-- **Nothing on GPU** (`vastai show instances` = `[]`). NEW STANDING RULE from Nico: no GPU rental for a bigger/grown model until a <30 min local
-  MPS/CPU test shows an inkling (memory `feedback_local_signal_before_gpu.md`). The grown-base A100 chain was stopped at stage 1 epoch 38 (~$0.70).
-- **Grader sub-agent** on `pile_runs/atl/probe_grow_local_blind3.jsonl` (972 rows: 2.0M original / 2.0M +3 ep control / 2.0M grown→8.5M +3 ep;
-  key `probe_grow_local_blind3_key.json`) → `grades_grow_local_blind3.jsonl`; unblind with scratchpad `unblind_grow_local.py` (paired W/T/L on total).
-- **MPS: 10-epoch version of the local growth test** (scratchpad `grow_local10.sh` → `logs/train_oracle_2m_persona2_plus10.log`,
-  `logs/train_oracle_2m_grown_persona2_10ep.log`, ≈40 min). 3-epoch result: grown val 1.418 vs control 1.436 (RESEARCH_LOG 10-26 10:20).
-- Demo server on 127.0.0.1:8765; dropdown now also has `m2_grown_persona2_int8` and `m2_persona2_plus3_int8` (control). Nico is to try them.
+## Running right now (2026-10-26 ~13:55 PDT)
+- **Nothing on GPU, nothing training.** Demo server 127.0.0.1:8765. STANDING RULES (memory): v2 (2.7M, `best_lm_oracle_v2.pt`, chat_v2 data) is the
+  reference — the 8.5M/2.0M TinyStories lineage is dead to Nico; no GPU rental without a <30 min local signal first.
+- **Waiting on Nico:** his 43 blind pair picks on `demo/blind_pairs.html` (export → `blind_picks.json`; key `pile_runs/atl/blind_pairs_key.json`).
+  Use them to recalibrate the rubric: the grader ranks the 8.5M first on totals while Nico ranks v2 first; tags (salad, memorized-line) side with Nico.
+- **v2 growth status:** v2 widened exactly to 8.5M (`grown_v2_8m.pt`) + 3 gentle epochs = behavioural no-op (83–89% identical responses) unless given
+  new data. Cleaned data (`fix_chat_v2.py` → `chat_v2_fix`): placeholders filled, 4,762 Oracle-as-human convs dropped, 892 self-intros rewritten
+  to Tiny Oracle. Identity probe (`atl_probe_identity.py`): rewrite fixes the name (25–28/32 "Tiny Oracle", 0 human names); removing placeholders
+  alone → human names 23–26/32. Later-turn "hanging out, watching TV" drift unchanged in every model → next: identity/act steering token on v2
+  (CT v3 redone on v2, local), or longer context (seq 512) for the grown model measured on 3-turn probes.
+- Demo dropdown has, above the old v2 entry: NAMED pair (grown/control), FIXED pair, plain +3 ep pair; plus the 2.0M pair (dead lineage).
 
 ## Done this block (all logged in RESEARCH_LOG.md, same date)
 - **Persona-dose model** (conv + 110 hand-written × 47) beats v2 and conv on every set; demo default. Human-name bug traced to

@@ -15,17 +15,20 @@ the end of every working block (not just at the end of a session). Last update: 
    first; checkpoint + `python3 -u` + resume before launching; pull checkpoints during training; destroy the instance in a
    trap; results in tag-specific files, merge never overwrite; WebSearch 200/session cap → Chrome tools / playwright.
 
-## Running right now (2026-10-26 ~13:55 PDT)
-- **Nothing on GPU, nothing training.** Demo server 127.0.0.1:8765. STANDING RULES (memory): v2 (2.7M, `best_lm_oracle_v2.pt`, chat_v2 data) is the
-  reference — the 8.5M/2.0M TinyStories lineage is dead to Nico; no GPU rental without a <30 min local signal first.
-- **Waiting on Nico:** his 43 blind pair picks on `demo/blind_pairs.html` (export → `blind_picks.json`; key `pile_runs/atl/blind_pairs_key.json`).
-  Use them to recalibrate the rubric: the grader ranks the 8.5M first on totals while Nico ranks v2 first; tags (salad, memorized-line) side with Nico.
-- **v2 growth status:** v2 widened exactly to 8.5M (`grown_v2_8m.pt`) + 3 gentle epochs = behavioural no-op (83–89% identical responses) unless given
-  new data. Cleaned data (`fix_chat_v2.py` → `chat_v2_fix`): placeholders filled, 4,762 Oracle-as-human convs dropped, 892 self-intros rewritten
-  to Tiny Oracle. Identity probe (`atl_probe_identity.py`): rewrite fixes the name (25–28/32 "Tiny Oracle", 0 human names); removing placeholders
-  alone → human names 23–26/32. Later-turn "hanging out, watching TV" drift unchanged in every model → next: identity/act steering token on v2
-  (CT v3 redone on v2, local), or longer context (seq 512) for the grown model measured on 3-turn probes.
-- Demo dropdown has, above the old v2 entry: NAMED pair (grown/control), FIXED pair, plain +3 ep pair; plus the 2.0M pair (dead lineage).
+## Running right now (2026-10-26 ~18:20 PDT)
+- **Nothing on GPU.** Demo server 127.0.0.1:8765. STANDING RULES (memory): v2 lineage only; no GPU rental without a <30 min local signal; multi-turn
+  probes must use a reactive simulated user (`atl_probe_simuser.py`, staged, an agent writes the user turns) — scripted follow-ups are retired.
+- **Sub-agent** playing the simulated user on `best_lm_oracle_v2_grown_life8.pt` → `pile_runs/atl/sim_v2_grown_life8.jsonl` (90 rows). Then: add it to
+  the blind conversation pairs (`demo/blind_convs.json`, key `blind_convs2_key.json`) and ask Nico to pick.
+- **Waiting on Nico:** (1) picks on `demo/blind_convs.html` (30 reactive-user pairs v2 vs 8.5M; export `blind_conv_picks2.json`); (2) his edits of
+  the 20 Oracle-self lines on `demo/review_lines.html` (export `oracle_lines.json` → paste into `LIFE_A` in `fix_chat_v2.py`, regenerate, retrain).
+- **Best v2-lineage model so far:** `best_lm_oracle_v2_grown_life8.pt` (v2 widened to 8.5M, 8 ep on `chat_v2_fix`: names filled, Oracle-as-human
+  dropped, 887 self-intros → Tiny Oracle, 7,019 life/hobby replies → Oracle-self lines, 154 user-side names, 2,165 ghost addresses). Identity probe:
+  name 28/32, human-life drift 8/96 (was 22–28). Demo entry `v2_grown_life8_int8`. Corpus regenerated since (ghost addresses, `[user 1's name]`) —
+  NOT yet retrained on the latest regeneration; retrain after Nico's line edits land.
+- Day's findings worth knowing: growth of v2 is a behavioural no-op until given new data (tie 83–89%); Nico's blind single-turn picks favour the
+  8.5M persona model 6–2 and the LLM grader total predicts his picks 24/25; his conversation picks were 13/17 "both bad" and the scripted-user
+  transcripts were rejected; plan token on v2: forced *me fixes the name turn 32/32 but cannot fix drift the data does not contain.
 
 ## Done this block (all logged in RESEARCH_LOG.md, same date)
 - **Persona-dose model** (conv + 110 hand-written × 47) beats v2 and conv on every set; demo default. Human-name bug traced to

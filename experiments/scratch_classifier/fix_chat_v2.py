@@ -7,7 +7,7 @@
 Writes data/chat_v2_fix_{train,val}.jsonl and prints counts.   python3 fix_chat_v2.py
 """
 import json, random, re
-PH = re.compile(r"\[(?:user ?\d(?: name)?|name|username|your name|user name)\]|\((?:name|username)\)", re.I)
+PH = re.compile(r"\[(?:user ?\d(?:'s)?(?: name)?|name|username|your name|user name)\]|\((?:name|username)\)", re.I)
 SELF = re.compile(r"\b(I'?m|I am|my name'?s|my name is|name'?s|call me|this is)\s*(\[|\()", re.I)
 HUMAN = re.compile(r"\b(I work (as|at|in|for)\b|(I'?m|I am) (a|an) (teacher|nurse|doctor|lawyer|student|programmer|writer|chef|engineer|designer|mom|dad|mother|father|"
                    r"farmer|waiter|waitress|cashier|artist|musician|dentist|pilot|cop|police|soldier|salesman|accountant|mechanic|plumber|carpenter|librarian|professor|"

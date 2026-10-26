@@ -215,6 +215,7 @@
   <span id="teachCount" style="font-size:12px;color:var(--fg-dim)"></span>
   <button id="teachExport" class="suggestion" style="font-size:12px" title="Download corrections.jsonl">export</button>
   <button id="teachClear" class="suggestion" style="font-size:12px" title="Delete saved corrections">clear</button>
+  <button id="engExport" class="suggestion" style="font-size:12px" title="Download engagement.json: turns per conversation, reply-after-turn rate, time to reply">engagement</button>
   <span id="status">Loading model...</span>
 </header>
 
@@ -283,6 +284,11 @@
 
   let session = null, tokenizer = null, model = null, generating = false, conversationIds = [], transcript = [];
   let corrections = []; try { corrections = JSON.parse(localStorage.getItem('tinyoracle.corrections') || '[]'); } catch (e) {}
+  // engagement log: implicit feedback only (no questions asked). Events: load, user, oracle, reset. Turns per conversation, reply-after-turn
+  // rate and inter-message time are computed from these at export time.
+  let events = []; try { events = JSON.parse(localStorage.getItem('tinyoracle.events') || '[]'); } catch (e) {}
+  let convId = Date.now();
+  function logEvent(type, extra) { events.push({ t: Date.now(), conv: convId, model: modelSel && modelSel.value, type, ...(extra || {}) }); if (events.length > 5000) events = events.slice(-5000); try { localStorage.setItem('tinyoracle.events', JSON.stringify(events)); } catch (e) {} }
 
   const chatEl = document.getElementById('chat');
   const inputEl = document.getElementById('user-input');
@@ -445,6 +451,22 @@
       };
     });
   }
+  function engagementStats() {
+    const convs = {}; for (const e of events) (convs[e.conv] = convs[e.conv] || []).push(e);
+    let n = 0, turns = 0, oracleTurns = 0, replied = 0, gaps = [];
+    for (const id in convs) {
+      const ev = convs[id].sort((a, b) => a.t - b.t); const users = ev.filter(e => e.type === 'user'); if (!users.length) continue;
+      n++; turns += users.length;
+      for (let i = 0; i < ev.length; i++) if (ev[i].type === 'oracle') { oracleTurns++; const next = ev.slice(i + 1).find(e => e.type === 'user'); if (next) { replied++; gaps.push((next.t - ev[i].t) / 1000); } }
+    }
+    gaps.sort((a, b) => a - b);
+    return { conversations: n, user_turns: turns, turns_per_conversation: n ? +(turns / n).toFixed(2) : 0, oracle_turns: oracleTurns, reply_after_oracle_turn_rate: oracleTurns ? +(replied / oracleTurns).toFixed(3) : 0, median_seconds_to_reply: gaps.length ? gaps[Math.floor(gaps.length / 2)] : null };
+  }
+  function exportEngagement() {
+    const blob = new Blob([JSON.stringify({ stats: engagementStats(), events }, null, 1)], { type: 'application/json' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'engagement.json'; a.click();
+  }
+  document.getElementById('engExport').addEventListener('click', exportEngagement);
   function exportCorrections() {
     const blob = new Blob([corrections.map(c => JSON.stringify(c)).join('\n') + '\n'], { type: 'application/jsonl' });
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'corrections.jsonl'; a.click();
@@ -474,7 +496,7 @@
     const text = inputEl.value.trim();
     if (!text || generating || !session) return;
     setBusy(true); suggestionsEl.innerHTML = '';
-    addMessage('user', text); inputEl.value = ''; transcript.push({ role: 'user', text });
+    addMessage('user', text); inputEl.value = ''; transcript.push({ role: 'user', text }); logEvent('user', { turn: transcript.length, len: text.length });
     conversationIds.push(...tokenizer.encode(fmtUserTurn(text)));
     if (conversationIds.length > MAX_CONTEXT - 30) {
       const identityIds = tokenizer.encode(buildPrime());
@@ -489,7 +511,7 @@
       let response = tokenizer.decode(genIds).trim();
       if (model.format === 'plain') response = response.split('\n')[0].replace(/^User:.*$/, '').trim();
       conversationIds.push(...tokenizer.encode(fmtOracleText(response)));
-      oracleDiv.textContent = response || '(empty response)'; transcript.push({ role: 'oracle', text: response }); oracleDiv.dataset.turn = transcript.length - 1; makeEditable(oracleDiv);
+      oracleDiv.textContent = response || '(empty response)'; transcript.push({ role: 'oracle', text: response }); oracleDiv.dataset.turn = transcript.length - 1; makeEditable(oracleDiv); logEvent('oracle', { turn: transcript.length, len: response.length });
     } catch (e) { oracleDiv.textContent = '(generation error: ' + e.message + ')'; console.error(e); }
     chatEl.scrollTop = chatEl.scrollHeight;
     statusEl.textContent = 'Ready'; setBusy(false); inputEl.focus();
@@ -500,6 +522,8 @@
 
   // ===================== MODEL LOADING =====================
   function resetConversation() {
+    if (transcript.length) logEvent('reset', { turns: transcript.length });
+    convId = Date.now(); logEvent('load');
     conversationIds = tokenizer.encode(buildPrime()); transcript = [];
     chatEl.innerHTML = '';
     addMessage('system-msg', model.label + ' loaded (' + model.size + '). ' + (primeCheck.checked ? 'Primed with a two-turn example.' : 'No priming.') + ' Sampler: ' + samplerSel.options[samplerSel.selectedIndex].text + '.');

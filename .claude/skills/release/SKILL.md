@@ -80,12 +80,12 @@ demo engines are installed, so drift is visible without ssh.
 
 Do not expect a fresh `pip install` to restore these:
 
-- **Demo engines:** `vizdoom`, `flygym`, `mujoco` are installed in the venv but are
-  not jeffy dependencies. Without them doom and fly fall back to the simulated
-  demo and the page shows a "Simulated demo" banner
-- **`MUJOCO_GL=osmesa`** in `/etc/systemd/system/jeffy.service`. The droplet has no
-  GPU and `fly_runner.py` defaults to `egl`, which fails on it. OSMesa works.
-  Needs apt `libosmesa6 libegl1 libgl1 libglx-mesa0 libgl1-mesa-dri`
+- **Demo engines must stay OFF the droplet.** `vizdoom`, `flygym` and `mujoco` are
+  deliberately not installed, so doom and fly serve the simulated fallback with a
+  "Simulated demo" banner. That banner is wanted. ViZDoom spawns a Doom process per
+  websocket connection and MuJoCo renders per frame, which is unbounded load on a
+  2 vCPU box that also serves every real prediction. `ImportError: vizdoom not
+  installed` in the logs is correct behaviour, not an outage
 - Unit backups land in `/root/jeffy.service.bak.<date>`
 
 ## Post-publish verification (mandatory before telling anyone it shipped)

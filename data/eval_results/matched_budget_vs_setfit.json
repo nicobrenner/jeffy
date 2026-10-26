@@ -1,0 +1,121 @@
+{
+  "_what": "Frozen-encoder LR head swept over the training budgets SetFit can reach.",
+  "_caveat": "NOT directly comparable to the v2 benchmark SetFit number. Different encoder (BAAI/bge-large-en-v1.5 vs paraphrase-mpnet-base-v2), different test set (2,000-example subset vs the full 3,080 split), different preprocessing. This measures how a frozen head scales with n, and says the budget gap explains a large part of the published difference. Settling it needs both arms re-run inside benchmarks/classifier_baselines.py.",
+  "encoder": "BAAI/bge-large-en-v1.5",
+  "head": "LogisticRegression(C=0.01, newton-cg), StandardScaler",
+  "dataset": "banking77, 77 classes",
+  "n_test": 2000,
+  "n_train_pool": 10000,
+  "sampling": "stratified, every class present at every budget",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "curve": [
+    {
+      "shots_per_class": 2,
+      "n_train": 154,
+      "accuracy_mean": 0.7547,
+      "accuracy_sd": 0.0139,
+      "macro_f1_mean": 0.7497,
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "shots_per_class": 5,
+      "n_train": 385,
+      "accuracy_mean": 0.8588,
+      "accuracy_sd": 0.0082,
+      "macro_f1_mean": 0.8583,
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "shots_per_class": 10,
+      "n_train": 770,
+      "accuracy_mean": 0.889,
+      "accuracy_sd": 0.0067,
+      "macro_f1_mean": 0.8894,
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "shots_per_class": 20,
+      "n_train": 1540,
+      "accuracy_mean": 0.9149,
+      "accuracy_sd": 0.0034,
+      "macro_f1_mean": 0.9152,
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "shots_per_class": 30,
+      "n_train": 2310,
+      "accuracy_mean": 0.9206,
+      "accuracy_sd": 0.0047,
+      "macro_f1_mean": 0.9209,
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "shots_per_class": 50,
+      "n_train": 3826,
+      "accuracy_mean": 0.9306,
+      "accuracy_sd": 0.0038,
+      "macro_f1_mean": 0.931,
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    }
+  ],
+  "full_pool": {
+    "n_train": 10000,
+    "accuracy": 0.9425,
+    "macro_f1": 0.9424
+  },
+  "setfit_reference": {
+    "shots": 20,
+    "n": 1540,
+    "full_split_acc": 0.8497,
+    "train_s": 982.0,
+    "model_mb": 438.4,
+    "latency_p50_ms": 46.14
+  },
+  "at_setfit_budget": {
+    "frozen_head": 0.9149,
+    "setfit": 0.8497,
+    "difference": 0.0652
+  }
+}

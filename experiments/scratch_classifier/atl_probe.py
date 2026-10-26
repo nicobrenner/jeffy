@@ -24,6 +24,7 @@ def load(path):
     ck = torch.load(path, map_location=DEVICE, weights_only=False)
     cfg = dict(ck["config"])
     cfg.setdefault("n_iterations", 1)
+    if "act_emb.weight" in ck["model_state"]: cfg["n_acts"] = ck["model_state"]["act_emb.weight"].shape[0] - 1   # act-vector models
     m = CausalTransformer(**cfg, dropout=0.0).to(DEVICE)
     m.load_state_dict(ck["model_state"])
     m.eval()

@@ -1,0 +1,1 @@
+{"ckpt": "checkpoints/best_lm_oracle_v2_actvec8.pt", "mode": "vector", "name_none": "31/32", "drift_none": "24/96", "name_me": "32/32", "drift_me": "22/96", "admit_none": "13/40", "admit_dunno": "23/40", "admit_tell": "16/40"}

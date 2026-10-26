@@ -21,8 +21,11 @@ def gen(m, tok, ctx, seed, a, act=None):
     for _ in range(60):
         win = ids[-m.max_seq_len:]; off = len(ids) - len(win)
         x = torch.tensor([win], dtype=torch.long, device=DEVICE)
-        if act and a.mode == "vector" and pos is not None and pos - off >= 0:
-            acts = torch.zeros_like(x); acts[0, pos - off] = ACTS.index(act) + 1; logits = m(x, acts=acts)[0, -1, :]
+        if act and a.mode in ("vector", "vector-span") and pos is not None and pos - off >= 0:
+            acts = torch.zeros_like(x)
+            if a.mode == "vector-span": acts[0, pos - off:] = ACTS.index(act) + 1
+            else: acts[0, pos - off] = ACTS.index(act) + 1
+            logits = m(x, acts=acts)[0, -1, :]
         else: logits = m(x)[0, -1, :]
         if a.rep_penalty != 1.0 and out:
             prev = torch.tensor(sorted(set(out)), device=logits.device); lp = logits[prev]; logits[prev] = torch.where(lp > 0, lp / a.rep_penalty, lp * a.rep_penalty)
@@ -38,7 +41,7 @@ def gen(m, tok, ctx, seed, a, act=None):
     return re.sub(r"^\*\w+\s*", "", txt)   # token models emit their own act first when none is forced
 
 def main():
-    ap = argparse.ArgumentParser(); ap.add_argument("--ckpt", required=True); ap.add_argument("--mode", choices=["token", "vector"], required=True)
+    ap = argparse.ArgumentParser(); ap.add_argument("--ckpt", required=True); ap.add_argument("--mode", choices=["token", "vector", "vector-span"], required=True)
     ap.add_argument("--tokenizer", default="tokenizer_chat_v2.json"); ap.add_argument("--out", default=None)
     ap.add_argument("--temperature", type=float, default=0.5); ap.add_argument("--top_k", type=int, default=40); ap.add_argument("--rep_penalty", type=float, default=1.3); ap.add_argument("--no_repeat_ngram", type=int, default=3)
     a = ap.parse_args(); tok = CustomTokenizerWrapper(a.tokenizer); m, _ = load(a.ckpt); res = {}

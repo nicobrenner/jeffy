@@ -4988,3 +4988,16 @@ reflex more often. Identity (broad regex): v3 18/96 vs conv8 11/96. Reading: fro
 conversation following; neither follows a push-back more than one time in five. Confirms the diagnosis: the missing behaviour is not in the
 corpus, so no training mode or lineage produces it. The levers that add it: push-back/recovery data (teach mode, recoveries), the admit act +
 controller, and conversation-level training signal (DPO on the reactive-user pairs). v3b (clean corpus) pending for the from-scratch line.
+
+## 2026-10-26 18:00 PDT — Act as a TOKEN vs as a learned VECTOR (2.7M v2, chat_v2ct, 8 ep, per-conversation; `act_vector_probe.py`)
+
+| | token (`oracle_v2_ct8`) | vector @ <|oracle|> position (`oracle_v2_actvec8`) |
+|---|---|---|
+| name turn, no act / forced *me | 29 / **31** of 32 | 31 / **32** of 32 |
+| human-life drift (turns 3–5, broad regex) | 7/96 | 24/96 |
+| admit on held-out push-back: no act / forced dunno / forced tell | 32 / **37** / 18 of 40 | 13 / **23** / 16 of 40 |
+Identity steering: the vector matches the token (32/32). Admit act: the vector is much weaker (23 vs 37 forced; dunno−tell gap 7 vs 19 points);
+the token model over-admits even unforced (32/40, the ×8 synthetic copies), the vector model admits only when told (13 unforced) — arguably
+the better-behaved controller, but less controllable. Hypothesis: a single-position vector is a weak signal after the first generated token;
+the token sits in the sequence and is attended at every step. Running the Geiping-style variant: the act vector added at EVERY reply
+token (`--act-span`), i.e. a persistent "mood" rather than a one-shot cue. vals not comparable (token model's loss counts the act tokens).

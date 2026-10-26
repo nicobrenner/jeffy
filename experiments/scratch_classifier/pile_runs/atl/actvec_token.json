@@ -1,0 +1,1 @@
+{"ckpt": "checkpoints/best_lm_oracle_v2_ct8.pt", "mode": "token", "name_none": "29/32", "drift_none": "7/96", "name_me": "31/32", "drift_me": "8/96", "admit_none": "32/40", "admit_dunno": "37/40", "admit_tell": "18/40"}

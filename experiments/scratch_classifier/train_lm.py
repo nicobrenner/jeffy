@@ -158,7 +158,7 @@ class ConvDataset(Dataset):
     with the system prompt followed by a later turn boundary (so every window looks like what the demo feeds the model). Padding
     is labelled -100 (ignored by the loss)."""
     ACTS = ["dunno", "me", "wh", "yn", "hi", "tell"]   # id = index + 1; 0 = none
-    def __init__(self, conversations, tokenizer, seq_len, eos_id, sys_end_marker="\n<|user|>", pad_id=0, act_vector=False):
+    def __init__(self, conversations, tokenizer, seq_len, eos_id, sys_end_marker="\n<|user|>", pad_id=0, act_vector=False, act_span=False):
         import re as _re
         self.seq_len, self.pad_id, self.act_vector = seq_len, pad_id, act_vector; self.rows = []
         oracle_id = tokenizer.encode("<|oracle|>")[-1]
@@ -176,7 +176,10 @@ class ConvDataset(Dataset):
                     m2 = act_re.search(t)
                     if m2: act = self.ACTS.index(m2.group(1)) + 1; t = act_re.sub("<|oracle|> ", t, count=1)
                 ids_t = tokenizer.encode(t); acts_t = [0] * len(ids_t)
-                if act and oracle_id in ids_t: acts_t[len(ids_t) - 1 - ids_t[::-1].index(oracle_id)] = act
+                if act and oracle_id in ids_t:
+                    k = len(ids_t) - 1 - ids_t[::-1].index(oracle_id)
+                    if act_span: acts_t[k:] = [act] * (len(ids_t) - k)
+                    else: acts_t[k] = act
                 turn_ids.append(ids_t); turn_acts.append(acts_t)
             i = 0
             while i < len(turn_ids):
@@ -383,8 +386,8 @@ def train(args):
                 val_compact = remap_ids(val_token_ids, full_to_compact)
             if args.conv_sequences:
                 assert use_custom, "--conv-sequences needs a custom tokenizer (full vocab, no remap)"
-                train_ds = ConvDataset(conv_texts, tokenizer, args.seq_len, eos_id, act_vector=args.act_vector)
-                val_ds = ConvDataset(val_conversations, tokenizer, args.seq_len, eos_id, act_vector=args.act_vector)
+                train_ds = ConvDataset(conv_texts, tokenizer, args.seq_len, eos_id, act_vector=args.act_vector, act_span=args.act_span)
+                val_ds = ConvDataset(val_conversations, tokenizer, args.seq_len, eos_id, act_vector=args.act_vector, act_span=args.act_span)
                 print(f"  conv-sequences: {len(train_ds):,} train windows, {len(val_ds):,} val windows (loss masked on padding)", flush=True)
             else:
                 train_ds = TextChunkDataset(compact_tokens, args.seq_len)
@@ -769,6 +772,7 @@ def main():
     parser.add_argument("--act-vector", action="store_true",
                         help="plan act as a learned VECTOR added at the <|oracle|> position (and re-injected each recurrence pass) instead of a text token; "
                              "data must be the chat_v2ct format; the *act text is stripped")
+    parser.add_argument("--act-span", action="store_true", help="with --act-vector: the act vector is added at every token of the reply, not only at <|oracle|>")
     parser.add_argument("--keep-every", type=int, default=0,
                         help="also keep a weights-only checkpoint every N epochs (checkpoints/ep_<tag>_<epoch>.pt) so a run can be rewound to a data boundary")
     parser.add_argument("--conv-sequences", action="store_true",

@@ -36,8 +36,9 @@ PLAIN = False  # set by --plain: 'System:/User:/Oracle:' markers (for bases whos
 def detok(tok, ids):
     """Decode that also handles byte-level BPE tokenizers without a decoder config (Ġ = space, Ċ = newline)."""
     txt = tok.decode(ids)
-    if "Ġ" in txt or "Ċ" in txt:
-        txt = "".join(tok._tok.id_to_token(i) or "" for i in ids).replace("Ġ", " ").replace("Ċ", "\n")
+    if "Ġ" in txt or "Ċ" in txt or "â" in txt:
+        from tokenizers.decoders import ByteLevel
+        txt = ByteLevel().decode([tok._tok.id_to_token(i) or "" for i in ids])
     return txt
 
 

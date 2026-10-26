@@ -4833,3 +4833,14 @@ pattern v2 learned over 50 epochs. Two residual data holes found in the transcri
 (b) the USER still addresses the Oracle by the old human name ("nice to meet you, John") after the Oracle's self-intro was rewritten → user-side
 address rewritten to "Tiny Oracle". Rerunning both arms for 8 epochs on the regenerated corpus (`*_life8`). Nico to review the 20 lines (his voice).
 Demo: `v2_grown_life3_int8`, `v2_life3_int8` added.
+
+## 2026-10-26 ~17:00 — Nico's blind CONVERSATION picks (partial, 17/32): 13 "both bad"; the 3-turn probe instrument is rejected
+
+Nico stopped at 17 pairs: 13 both-bad, 2 ties, 2 decided (8.5M over v2 and over grown-v2, one each). Per model both-bad: v2 11, grown 7,
+8.5M 4, 2.0M 4. His diagnosis of the transcripts: wrong on both sides — the scripted user follow-ups ("haha ok. do you like that?",
+"is that your opinion?") never react to the answer ("a user would act confused and try to steer the model… there's no flow… creepy even";
+"like talking to the original Eliza"). Also mojibake ("âĢĵ") in some probe rows = detok bug on byte-level BPE (fixed: ByteLevel decoder), and a
+system-prompt fragment ("Keep responses short — you're making me laugh") pasted as an answer = memorized-line leak.
+Consequences: (1) `atl_probe_multiturn.py` is retired for anything Nico sees; (2) new staged probe `atl_probe_simuser.py` where an LLM writes
+each user turn in reaction to the model's actual answer (confused, steering, answering the model's questions); (3) the 3-turn grades from
+earlier passes (mt sets) measured continuity against a non-reactive user and should be discounted.

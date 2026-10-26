@@ -4853,3 +4853,13 @@ exact probe phrasing in some seeds; "I am a teacher" to "who am I talking to?" (
 the user never gave ("You too, Sarah"): the filled-name conversations teach "Nice to meet you too, <name>" even when no name is in context →
 next fixer step: strip the address when the name does not appear in an earlier user turn. Demo: `v2_grown_life8_int8`, `v2_life8_int8`.
 Grown vs control gap on val widened with epochs (0.021 at 8 ep vs 0.014 at 3) — capacity is being used on the corrected data.
+
+## 2026-10-26 ~18:45 — Reactive-user transcripts for the grown life8 model; conversation pairs now 3 models
+
+`sim_v2_grown_life8.jsonl` (90 rows). Even the best v2-lineage model does not follow a conversation under push-back (cat/mugs → "What's the
+matter?" → homework; feathers/steel → "What's that?"), and it still claims a human family when asked ("two older sisters and a younger brother",
+"I'm a stay-at-home mom") → `HUMAN` extended (siblings/parents/stay-at-home; human-identity drops 874 → 1,131). Corpus regenerated (22,310 convs);
+retrain pending Nico's line edits. `demo/blind_convs.json` rebuilt: 45 pairs = 15 each of v2 vs grown-life8, grown-life8 vs 8.5M, v2 vs 8.5M
+(key `blind_convs3_key.json`, picks `blind_conv_picks3.json`).
+Takeaway for the next step: identity/persona leaks are being closed one regex at a time (name → life → family); conversation-following is a
+different problem — the corpus has no examples of a user pushing back and the Oracle recovering. The simulated-user loop is the way to make them.

@@ -12,7 +12,7 @@ SELF = re.compile(r"\b(I'?m|I am|my name'?s|my name is|name'?s|call me|this is)\
 HUMAN = re.compile(r"\b(I work (as|at|in|for)\b|(I'?m|I am) (a|an) (teacher|nurse|doctor|lawyer|student|programmer|writer|chef|engineer|designer|mom|dad|mother|father|"
                    r"farmer|waiter|waitress|cashier|artist|musician|dentist|pilot|cop|police|soldier|salesman|accountant|mechanic|plumber|carpenter|librarian|professor|"
                    r"retired|college student|single mom|single dad|stay at home)|my (wife|husband|kids|children|son|daughter|boyfriend|girlfriend|grandkids|grandchildren)\b|"
-                   r"I'?m (married|divorced|single|\d\d years old|pregnant)|I have (a|an|two|three|four|\d) (kids|children|sons|daughters|cats?|dogs?) (named|called)|"
+                   r"I'?m (married|divorced|single|\d\d years old|pregnant)|(I'?m|I am) a stay-?at-?home|I have (a|an|two|three|four|\d|an older|a younger|two older|two younger) (sisters?|brothers?|siblings?|kids?|children|sons?|daughters?)\b|my (sister|brother|siblings?|parents|husband|wife)\b|I have (a|an|two|three|four|\d) (kids|children|sons|daughters|cats?|dogs?) (named|called)|"
                    r"I'?m (\d\d|\d) years old|my job\b|at work today|I drive a|I live in (a|an) (apartment|house|farm))", re.I)
 NAMES = ["Maya","Leo","Sofia","Omar","Elena","Jonas","Priya","Mateo","Hana","Noah","Aisha","Luca","Mei","Diego","Nora","Sam","Yara","Tomás","Ana","Kai",
          "Zoe","Ravi","Lena","Max","Ines","Ali","Clara","Ben","Rosa","Theo"]

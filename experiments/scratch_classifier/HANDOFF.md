@@ -15,8 +15,13 @@ the end of every working block (not just at the end of a session). Last update: 
    first; checkpoint + `python3 -u` + resume before launching; pull checkpoints during training; destroy the instance in a
    trap; results in tag-specific files, merge never overwrite; WebSearch 200/session cap → Chrome tools / playwright.
 
-## Running right now (2026-10-25 ~16:10 PDT)
-- Nothing on GPU (instance 57721531 destroyed, verified empty). Nothing on MPS/CPU. Demo server may be on 127.0.0.1:8765.
+## Running right now (2026-10-25 ~21:45 PDT)
+- **GPU: two-scale prior `ts_d64` on vast.ai A100 instance 57766003 ($0.67/h, New York)** — `gpu_two_scale.sh` (trap destroys on exit;
+  best ckpt pulled every 60 s to `checkpoints/prior_ts_d64_best.pt`; log `logs/train_ts_d64.log`, pipeline log `logs/gpu_two_scale.log`).
+  6 epochs × 60K pairs ≈ 35 min → ETA ≈ 22:20 PDT. Target: Kodak phase (1,1) conditioned bpp < frozen unconditioned (≈11.4).
+- Grader sub-agent: `probe_persona_blind4.jsonl` (1,052 rows) → `grades_persona_blind4.jsonl` (conv_persona / conv / v2_recipe / v2_t08,
+  122-prompt set + 40 first-impression openers). Key `probe_persona_blind4_key.json`.
+- Demo server on 127.0.0.1:8765 (dropdown: conv int8 default, conv_persona int8, conv_fix int8, conv f32, v2).
 
 ## Done this block (all logged in RESEARCH_LOG.md, same date)
 - Nico's two video experiments run as asked: existing AV1/HEVC video vs extracted frames as JXL (image sets 18–29× the video lossless,

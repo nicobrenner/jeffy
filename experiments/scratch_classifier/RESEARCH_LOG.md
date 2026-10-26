@@ -4949,3 +4949,24 @@ N=4, τ=0.5: plain reply already admits 111/120 but passes the verifier only 22/
 *dunno in 15 cases, fallback line 0. CAVEAT: those 120 prompts and the push-back bank are exactly the synthetic *dunno training data → this is a
 memorisation check, not a generalisation test. Admit variations sometimes degrade ("I have no idea, and if I'm being honest. Zhanga").
 Held-out run (first-impression prompts, fresh turn-1 answers, unseen push-back phrasings) below.
+
+## 2026-10-26 15:58 PDT — Controller loop, HELD-OUT test; prior art for the day's stance (verified on arXiv); checkpoints at data boundaries
+
+Held-out controller probe (40 first-impression prompts, fresh turn-1 answers, 10 push-back phrasings never seen in training, N=4, τ=0.5):
+plain reply admits 25/40 and passes the verifier 20/40; controller passes **40/40** with only 1 forced *dunno and 0 fallbacks. Quality caveat: the
+admit replies are mostly Nico's bank lines verbatim ("That's beyond 2 million parameters. Most things are" recurs), i.e. the act is learned as a
+few memorised strings rather than a generated variation; and the model admits even when its first answer was fine. Next: more varied admit
+data (paraphrases), and the controller should only force *dunno when the verifier fails, which it already does — so the over-admitting is the
+plain model's habit from the ×8 synthetic copies; reduce copies.
+Prior art logged (all titles verified via the arXiv API): XiaoIce 1812.08989 (CPS = conversation-turns per session as the objective, avg 23);
+Branch-Train-Merge 2208.03306 and c-BTM 2303.14177 (expert LMs per domain, combine only what a query needs); Mixture of a Million Experts
+2407.04153; **Small Language Models are the Future of Agentic AI 2506.02153**; Distilling Step-by-Step 2305.02301; MobileLLM 2402.14905;
+MoE 1701.06538. Training-trajectory search: lottery-ticket rewinding / linear mode connectivity 1912.05671; SISA machine unlearning 1912.03817;
+Population Based Training 1711.09846; automated curriculum 1704.03003 and teacher-student curriculum 1707.00183; model soups 2203.05482;
+Git Re-Basin 2209.04836. Verifier/controller: Cobbe 2110.14168, Lightman 2305.20050, Holtzman 1805.06087, Li 1701.06547 / 1510.03055,
+PPLM 1912.02164, FUDGE 2104.05218, GeDi 2009.06367, Welleck 2211.00053, CTRL 1909.05858, Self-Refine 2303.17651, Reflexion 2303.11366,
+CRITIC 2305.11738, Mirostat 2007.14966, Scheurer 2303.16755. Self-play: Li 1606.01541, Lewis 1706.05125, Shah 1801.04871, Ulmer 2401.05033,
+ReST-EM 2312.06585, Shumailov model collapse 2305.17493, self-play in non-zero-sum games 2406.18872.
+Nico: "Checkpoint at data boundaries from here on" → `train_lm.py --keep-every N` (weights-only `ep_<tag>_<k>.pt`) and every checkpoint now
+records `data`, `data_sha` (sha256[:12] of the corpus file) and `conv_sequences`. The v3 from-scratch run restarted with `--keep-every 5`.
+New engagement metric to implement in the demo: the rate at which the user replies at all after a given Oracle turn (+ turns per conversation).

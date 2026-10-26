@@ -274,7 +274,11 @@ def train(args):
 
     # --- Load and tokenize ---
     is_chat = args.chat_data is not None
+    data_sha = None
     if is_chat:
+        import hashlib
+        with open(args.chat_data, "rb") as _f: data_sha = hashlib.sha256(_f.read()).hexdigest()[:12]
+        print(f"  data sha256[:12] = {data_sha}", flush=True)
         import json as _json
         print(f"\nLoading chat data from {args.chat_data}...", flush=True)
         t0 = time.time()
@@ -625,6 +629,7 @@ def train(args):
                     "epoch": epoch,
                     "val_loss": val_loss,
                     "best_val_loss": best_val_loss,
+                    "data": args.chat_data, "data_sha": data_sha, "conv_sequences": args.conv_sequences,
                 },
                 out_dir / f"best_lm_{args.tag}.pt",
             )
@@ -653,6 +658,13 @@ def train(args):
             },
             out_dir / f"last_lm_{args.tag}.pt",
         )
+
+        if args.keep_every and (epoch + 1) % args.keep_every == 0:
+            torch.save({"model_state": model.state_dict(), "config": {"vocab_size": vocab_size, "d_model": args.d_model, "n_heads": args.n_heads,
+                        "n_layers": args.n_layers, "d_ff": args.d_ff, "max_seq_len": args.seq_len, "tie_weights": args.tie_weights, "n_iterations": args.n_iterations},
+                        "full_to_compact": full_to_compact, "compact_to_full": compact_to_full, "tokenizer_path": args.tokenizer, "epoch": epoch,
+                        "val_loss": val_loss, "data": args.chat_data, "data_sha": data_sha, "conv_sequences": args.conv_sequences},
+                       out_dir / f"ep_{args.tag}_{epoch + 1}.pt")
 
         print(
             f"Epoch {epoch + 1:3d}/{args.epochs}  "
@@ -727,6 +739,8 @@ def main():
     parser.add_argument("--fresh-opt", action="store_true",
                         help="Load model weights only, fresh optimizer/scheduler (for extending training)")
     parser.add_argument("--cpu", action="store_true")
+    parser.add_argument("--keep-every", type=int, default=0,
+                        help="also keep a weights-only checkpoint every N epochs (checkpoints/ep_<tag>_<epoch>.pt) so a run can be rewound to a data boundary")
     parser.add_argument("--conv-sequences", action="store_true",
                         help="chat data: one sequence per conversation (system prompt kept, windows start at turn boundaries, padded, "
                              "loss masked on padding) instead of packing all conversations into a stream and cutting fixed chunks")

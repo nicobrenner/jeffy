@@ -188,18 +188,19 @@ def cmd_eval(ckpt, n_conv, out):
 
 
 @torch.no_grad()
-def cmd_probe(ckpt, out, samples=2, temperature=0.8):
+def cmd_probe(ckpt, out, samples=2, temperature=0.8, top_k=40, rep_penalty=1.0, no_repeat_ngram=0, force=None, probes_path="data/atl_probes.json"):
+    """force: a class name -> every prompt gets that plan token instead of the model's own choice (control arm)."""
     import atl_probe as A
     A.PLAIN = True
     m, tok = load(ckpt), CustomTokenizerWrapper("tokenizer_tinystories.json")
-    probes = json.load(open("data/atl_probes.json"))
+    probes = json.load(open(probes_path))
     Path(out).parent.mkdir(parents=True, exist_ok=True)
     chosen = Counter()
     with open(out, "w") as f:
         for p in probes:
             prefix = SYSTEM + f"User: {p['prompt']}\nOracle:"
             lp = marker_logprobs(m, tok, prefix)
-            c = max(lp, key=lp.get)
+            c = force or max(lp, key=lp.get)
             chosen[c] += 1
             for s in range(samples):
                 torch.manual_seed(s)
@@ -207,8 +208,17 @@ def cmd_probe(ckpt, out, samples=2, temperature=0.8):
                 outs = []
                 for _ in range(60):
                     x = torch.tensor([ids[-m.max_seq_len:]], device=DEVICE)
-                    logits = m(x)[0, -1, :] / temperature
-                    v, _ = torch.topk(logits, 40)
+                    logits = m(x)[0, -1, :]
+                    if rep_penalty != 1.0 and outs:
+                        prev = torch.tensor(sorted(set(outs)), device=logits.device); lpv = logits[prev]
+                        logits[prev] = torch.where(lpv > 0, lpv / rep_penalty, lpv * rep_penalty)
+                    if no_repeat_ngram and len(outs) >= no_repeat_ngram - 1:
+                        n = no_repeat_ngram; tail = tuple(outs[len(outs) - (n - 1):])
+                        for b in {outs[i + n - 1] for i in range(len(outs) - n + 1) if tuple(outs[i:i + n - 1]) == tail}:
+                            logits[b] = float("-inf")
+                    logits[1] = float("-inf")
+                    logits = logits / temperature
+                    v, _ = torch.topk(logits, top_k)
                     logits[logits < v[-1]] = float("-inf")
                     nxt = torch.multinomial(F.softmax(logits, dim=-1), 1).item()
                     if nxt == tok.eos_token_id:
@@ -218,7 +228,7 @@ def cmd_probe(ckpt, out, samples=2, temperature=0.8):
                         break
                 resp = A.detok(tok, outs).split("\n")[0].replace("User:", "").strip()
                 f.write(json.dumps({"id": p["id"], "topic": p["topic"], "novel": p.get("novel", False), "prompt": p["prompt"], "seed": s,
-                                    "token": MARK[c], "heuristic": act_of(p["prompt"]), "response": resp}) + "\n")
+                                    "token": MARK[c], "forced": bool(force), "heuristic": act_of(p["prompt"]), "response": resp}) + "\n")
     print(f"probed {len(probes)} prompts x {samples}; self-chosen tokens {dict(chosen)} -> {out}")
 
 
@@ -229,6 +239,10 @@ def main():
     ap.add_argument("--n", type=int, default=400, help="eval: number of val conversations")
     ap.add_argument("--out", default=None)
     ap.add_argument("--resp", action="store_true", help="v3: label = dialogue act of the Oracle RESPONSE (plan token)")
+    ap.add_argument("--temperature", type=float, default=0.8); ap.add_argument("--top_k", type=int, default=40)
+    ap.add_argument("--rep_penalty", type=float, default=1.0); ap.add_argument("--no_repeat_ngram", type=int, default=0)
+    ap.add_argument("--force", default=None, help="probe: force this plan class for every prompt (control arm)")
+    ap.add_argument("--probes", default="data/atl_probes.json")
     a = ap.parse_args()
     global MODE
     MODE = "resp" if a.resp else "user"
@@ -237,7 +251,7 @@ def main():
     elif a.cmd == "eval":
         cmd_eval(a.ckpt, a.n, a.out or f"pile_runs/atl/ct2_eval_{Path(a.ckpt).stem.replace('best_lm_', '')}.json")
     else:
-        cmd_probe(a.ckpt, a.out or "pile_runs/atl/probe_ct2.jsonl")
+        cmd_probe(a.ckpt, a.out, temperature=a.temperature, top_k=a.top_k, rep_penalty=a.rep_penalty, no_repeat_ngram=a.no_repeat_ngram, force=a.force, probes_path=a.probes)
 
 
 if __name__ == "__main__":

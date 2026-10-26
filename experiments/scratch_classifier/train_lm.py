@@ -148,6 +148,34 @@ class CausalTransformer(nn.Module):
         return ids
 
 
+class ConvDataset(Dataset):
+    """One training sequence per conversation window. A conversation longer than seq_len is split into windows that each start
+    with the system prompt followed by a later turn boundary (so every window looks like what the demo feeds the model). Padding
+    is labelled -100 (ignored by the loss)."""
+    def __init__(self, conversations, tokenizer, seq_len, eos_id, sys_end_marker="\n<|user|>", pad_id=0):
+        self.seq_len, self.pad_id = seq_len, pad_id; self.rows = []
+        for conv in conversations:
+            k = conv.find(sys_end_marker); sys_txt, body = (conv[:k], conv[k:]) if k > 0 else ("", conv)
+            sys_ids = tokenizer.encode(sys_txt) if sys_txt else []
+            # split body at user-turn boundaries
+            parts = [p for p in body.split("\n<|user|>") if p.strip()]
+            turns = [("\n<|user|>" + p) for p in parts] if k > 0 else [body]
+            turn_ids = [tokenizer.encode(t) for t in turns]
+            i = 0
+            while i < len(turn_ids):
+                ids = list(sys_ids); j = i
+                while j < len(turn_ids) and len(ids) + len(turn_ids[j]) <= seq_len - 1:
+                    ids += turn_ids[j]; j += 1
+                if j == i:   # single turn longer than the window: hard-cut it
+                    ids = (sys_ids + turn_ids[i])[: seq_len - 1]; j = i + 1
+                ids.append(eos_id); self.rows.append(torch.tensor(ids, dtype=torch.long))
+                i = max(j - 1, i + 1) if j < len(turn_ids) else j   # next window overlaps by one turn so no turn loses its history entirely
+    def __len__(self): return len(self.rows)
+    def __getitem__(self, idx):
+        ids = self.rows[idx]; out = torch.full((self.seq_len,), self.pad_id, dtype=torch.long); lab = torch.full((self.seq_len,), -100, dtype=torch.long)
+        out[: len(ids)] = ids; lab[: len(ids)] = ids; return torch.stack([out, lab])
+
+
 class TextChunkDataset(Dataset):
     def __init__(self, token_ids, seq_len):
         n_chunks = len(token_ids) // seq_len
@@ -256,6 +284,7 @@ def train(args):
 
         print("Tokenizing...", flush=True)
         t0 = time.time()
+        conv_texts = conversations
         all_tokens = []
         for i, conv in enumerate(conversations):
             toks = tokenizer.encode(conv)
@@ -277,6 +306,7 @@ def train(args):
 
         print("Tokenizing...", flush=True)
         t0 = time.time()
+        conv_texts = conversations
         all_tokens = []
         for i, story in enumerate(ds["text"]):
             toks = tokenizer.encode(story)
@@ -328,8 +358,14 @@ def train(args):
                 val_compact = val_token_ids
             else:
                 val_compact = remap_ids(val_token_ids, full_to_compact)
-            train_ds = TextChunkDataset(compact_tokens, args.seq_len)
-            val_ds = TextChunkDataset(val_compact, args.seq_len)
+            if args.conv_sequences:
+                assert use_custom, "--conv-sequences needs a custom tokenizer (full vocab, no remap)"
+                train_ds = ConvDataset(conv_texts, tokenizer, args.seq_len, eos_id)
+                val_ds = ConvDataset(val_conversations, tokenizer, args.seq_len, eos_id)
+                print(f"  conv-sequences: {len(train_ds):,} train windows, {len(val_ds):,} val windows (loss masked on padding)", flush=True)
+            else:
+                train_ds = TextChunkDataset(compact_tokens, args.seq_len)
+                val_ds = TextChunkDataset(val_compact, args.seq_len)
         else:
             n_val = max(args.seq_len, len(compact_tokens) // 10)
             n_train = len(compact_tokens) - n_val
@@ -398,12 +434,17 @@ def train(args):
             optimizer, T_max=max(total_optim_steps, 1)
         )
 
+    def unpack(batch):
+        batch = batch.to(device)
+        if batch.dim() == 3: return batch[:, 0], batch[:, 1]
+        return batch, batch
+
     def quick_val(max_batches):
         model.eval(); tot = 0.0; n = 0
         with torch.no_grad():
             for b in val_loader:
-                ids = b.to(device); lg = model(ids)
-                tot += F.cross_entropy(lg[:, :-1, :].reshape(-1, vocab_size), ids[:, 1:].reshape(-1)).item(); n += 1
+                ids, lab = unpack(b); lg = model(ids)
+                tot += F.cross_entropy(lg[:, :-1, :].reshape(-1, vocab_size), lab[:, 1:].reshape(-1), ignore_index=-100).item(); n += 1
                 if n >= max_batches: break
         model.train(); return tot / max(n, 1)
 
@@ -472,12 +513,12 @@ def train(args):
             if batch_idx < skip_batches:
                 continue
 
-            input_ids = batch.to(device)
+            input_ids, labels = unpack(batch)
             logits = model(input_ids)
 
             loss = F.cross_entropy(
                 logits[:, :-1, :].reshape(-1, vocab_size),
-                input_ids[:, 1:].reshape(-1),
+                labels[:, 1:].reshape(-1), ignore_index=-100,
             )
             (loss / accum).backward()
 
@@ -547,11 +588,11 @@ def train(args):
         val_steps = 0
         with torch.no_grad():
             for batch in val_loader:
-                input_ids = batch.to(device)
+                input_ids, labels = unpack(batch)
                 logits = model(input_ids)
                 loss = F.cross_entropy(
                     logits[:, :-1, :].reshape(-1, vocab_size),
-                    input_ids[:, 1:].reshape(-1),
+                    labels[:, 1:].reshape(-1), ignore_index=-100,
                 )
                 val_loss_sum += loss.item()
                 val_steps += 1
@@ -686,6 +727,9 @@ def main():
     parser.add_argument("--fresh-opt", action="store_true",
                         help="Load model weights only, fresh optimizer/scheduler (for extending training)")
     parser.add_argument("--cpu", action="store_true")
+    parser.add_argument("--conv-sequences", action="store_true",
+                        help="chat data: one sequence per conversation (system prompt kept, windows start at turn boundaries, padded, "
+                             "loss masked on padding) instead of packing all conversations into a stream and cutting fixed chunks")
     parser.add_argument("--warmup-steps", type=int, default=0,
                         help="linear LR warmup over this many optimizer steps before the cosine decay (default 0 = none)")
     parser.add_argument("--eval-every", type=int, default=0,

@@ -77,6 +77,15 @@
     border-radius: 10px;
     white-space: nowrap;
   }
+  header select {
+    font-size: 12px;
+    padding: 3px 6px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--fg);
+    font-family: var(--sans);
+  }
   #status {
     margin-left: auto;
     font-size: 12px;
@@ -194,7 +203,13 @@
 
 <header>
   <h1>Tiny Oracle</h1>
-  <span class="badge">8.5M params &middot; 11 MB int8</span>
+  <span class="badge" id="badge">loading</span>
+  <select id="model-select" title="Model version"></select>
+  <select id="sampler-select" title="Sampling recipe">
+    <option value="recipe">T0.5 + penalties</option>
+    <option value="old">T0.8 (old demo)</option>
+  </select>
+  <label style="font-size:12px;color:var(--fg-dim);display:flex;align-items:center;gap:4px"><input type="checkbox" id="prime-check" checked> prime</label>
   <span id="status">Loading model...</span>
 </header>
 
@@ -210,364 +225,251 @@
 </div>
 
 <footer>
-  8.5M parameters running entirely in your browser &middot; no server, no API calls
+  <span id="footer-text">Running entirely in your browser &middot; no server, no API calls</span>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.min.js"></script>
 <script>
 (function() {
   const SYSTEM_PROMPT = `You are Tiny Oracle, a mass of 2 million parameters running on the user's device. You have strong opinions and very limited knowledge. You are self-aware about your size and find it amusing. Keep responses short — you only have 2M parameters to work with.`;
-  const MAX_NEW_TOKENS = 60;
-  const TEMPERATURE = 0.5;        // blind-graded recipe (2026-10-25): T0.5, top-k 40, rep-penalty 1.3, no-repeat-3gram
-  const TOP_K = 40;
-  const REP_PENALTY = 1.3;
-  const NO_REPEAT_NGRAM = 3;
-  const MAX_CONTEXT = 256;
-  const MODEL_FILE = 'oracle_v7a_conv_int8.onnx';
-  const TOKENIZER_FILE = 'tokenizer_tinystories.json';
-  const UNK_ID = 1, EOS_ID = 3;
-  const SUGGESTIONS = [
-    "What are you?",
-    "How smart are you?",
-    "Tell me something interesting",
-    "What's your opinion on AI?",
-    "What can you do in 4 megabytes?",
+  // Hand-written priming exchange (the old v2 demo always used it; here it is a checkbox so models can be compared with and without)
+  const PRIME = [
+    ["Hey, what are you?", "I'm Tiny Oracle. 2 million parameters of questionable wisdom, running right here in your browser. I fit in 4 megabytes. A fruit fly has more neurons than I have parameters."],
+    ["That's not much", "I know. And yet here I am, boiling with opinions."],
   ];
+  const MAX_NEW_TOKENS = 60;
+  const MAX_CONTEXT = 256;
+  const UNK_ID = 1, EOS_ID = 3;
 
-  let session = null;
-  let tokenizer = null;
-  let generating = false;
-  let conversationIds = [];
+  // Model registry. format 'tags' = <|system|>/<|user|>/<|oracle|> (v2 tokenizer); 'plain' = System:/User:/Oracle: (TinyStories tokenizer)
+  const MODELS = {
+    v7a_conv_int8: { label: 'v7a converged (8.5M, int8) — current', file: 'oracle_v7a_conv_int8.onnx', tokenizer: 'tokenizer_tinystories.json', format: 'plain', badge: '8.5M params · 11 MB int8', size: '11 MB' },
+    v7a_conv_fix_int8: { label: 'v7a converged, fixed data (8.5M, int8)', file: 'oracle_v7a_conv_fix_int8.onnx', tokenizer: 'tokenizer_tinystories.json', format: 'plain', badge: '8.5M params · 11 MB int8', size: '11 MB' },
+    v7a_conv_f32: { label: 'v7a converged (8.5M, f32)', file: 'oracle_v7a_conv_f32.onnx', tokenizer: 'tokenizer_tinystories.json', format: 'plain', badge: '8.5M params · 43 MB f32', size: '43 MB' },
+    v2: { label: 'v2 (2.7M, from scratch) — old demo', file: 'oracle_v2.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 15 MB', size: '15 MB' },
+  };
+  const SAMPLERS = {
+    recipe: { temperature: 0.5, topK: 40, repPenalty: 1.3, noRepeatNgram: 3 },   // blind-graded recipe (2026-10-25)
+    old: { temperature: 0.8, topK: 40, repPenalty: 1.0, noRepeatNgram: 0 },     // the old demo's setting
+  };
+  const SUGGESTIONS = ["What are you?", "How smart are you?", "Tell me something interesting", "What's your opinion on AI?", "What can you do in 4 megabytes?"];
+
+  let session = null, tokenizer = null, model = null, generating = false, conversationIds = [];
 
   const chatEl = document.getElementById('chat');
   const inputEl = document.getElementById('user-input');
   const sendBtn = document.getElementById('send-btn');
   const statusEl = document.getElementById('status');
   const suggestionsEl = document.getElementById('suggestions');
+  const modelSel = document.getElementById('model-select');
+  const samplerSel = document.getElementById('sampler-select');
+  const primeCheck = document.getElementById('prime-check');
+  const badgeEl = document.getElementById('badge');
 
   // ===================== BYTE-LEVEL BPE TOKENIZER =====================
-
   function buildByteEncoder() {
     const bs = [];
-    for (let i = 33; i <= 126; i++) bs.push(i);     // '!' to '~'
-    for (let i = 161; i <= 172; i++) bs.push(i);     // '¡' to '¬'
-    for (let i = 174; i <= 255; i++) bs.push(i);     // '®' to 'ÿ'
+    for (let i = 33; i <= 126; i++) bs.push(i);
+    for (let i = 161; i <= 172; i++) bs.push(i);
+    for (let i = 174; i <= 255; i++) bs.push(i);
     const cs = [...bs];
     let n = 0;
-    for (let b = 0; b < 256; b++) {
-      if (!bs.includes(b)) {
-        bs.push(b);
-        cs.push(256 + n);
-        n++;
-      }
-    }
-    const encoder = {};
-    const decoder = {};
-    for (let i = 0; i < bs.length; i++) {
-      encoder[bs[i]] = String.fromCharCode(cs[i]);
-      decoder[String.fromCharCode(cs[i])] = bs[i];
-    }
+    for (let b = 0; b < 256; b++) if (!bs.includes(b)) { bs.push(b); cs.push(256 + n); n++; }
+    const encoder = {}, decoder = {};
+    for (let i = 0; i < bs.length; i++) { encoder[bs[i]] = String.fromCharCode(cs[i]); decoder[String.fromCharCode(cs[i])] = bs[i]; }
     return { encoder, decoder };
   }
 
   class BPETokenizer {
     constructor(tokenizerJson) {
-      const model = tokenizerJson.model;
-      this.vocab = model.vocab;
-      this.invVocab = {};
-      for (const [tok, id] of Object.entries(this.vocab)) {
-        this.invVocab[id] = tok;
-      }
-      this.merges = model.merges.map(m => {
-        const parts = typeof m === 'string' ? m.split(' ') : m;
-        return [parts[0], parts[1]];
-      });
+      const m = tokenizerJson.model;
+      this.vocab = m.vocab; this.invVocab = {};
+      for (const [tok, id] of Object.entries(this.vocab)) this.invVocab[id] = tok;
+      this.merges = m.merges.map(x => { const p = typeof x === 'string' ? x.split(' ') : x; return [p[0], p[1]]; });
       this.mergeRanks = {};
-      for (let i = 0; i < this.merges.length; i++) {
-        this.mergeRanks[this.merges[i][0] + ' ' + this.merges[i][1]] = i;
-      }
-
+      for (let i = 0; i < this.merges.length; i++) this.mergeRanks[this.merges[i][0] + ' ' + this.merges[i][1]] = i;
       this.addedTokens = {};
-      for (const t of tokenizerJson.added_tokens || []) {
-        this.addedTokens[t.content] = t.id;
-      }
-
+      for (const t of tokenizerJson.added_tokens || []) this.addedTokens[t.content] = t.id;
       const { encoder, decoder } = buildByteEncoder();
-      this.byteEncoder = encoder;
-      this.byteDecoder = decoder;
-
-      // GPT-2 style splitting pattern
+      this.byteEncoder = encoder; this.byteDecoder = decoder;
       this.pat = /'s|'t|'re|'ve|'m|'ll|'d| ?\p{L}+| ?\p{N}+| ?[^\s\p{L}\p{N}]+|\s+/gu;
     }
-
     bpe(token) {
       let word = token.split('');
       if (word.length <= 1) return word;
-
       while (true) {
-        let bestPair = null;
-        let bestRank = Infinity;
+        let bestPair = null, bestRank = Infinity;
         for (let i = 0; i < word.length - 1; i++) {
-          const key = word[i] + ' ' + word[i + 1];
-          const rank = this.mergeRanks[key];
-          if (rank !== undefined && rank < bestRank) {
-            bestRank = rank;
-            bestPair = [word[i], word[i + 1]];
-          }
+          const rank = this.mergeRanks[word[i] + ' ' + word[i + 1]];
+          if (rank !== undefined && rank < bestRank) { bestRank = rank; bestPair = [word[i], word[i + 1]]; }
         }
         if (!bestPair) break;
-        const merged = bestPair[0] + bestPair[1];
-        const newWord = [];
+        const merged = bestPair[0] + bestPair[1], newWord = [];
         let i = 0;
         while (i < word.length) {
-          if (i < word.length - 1 && word[i] === bestPair[0] && word[i + 1] === bestPair[1]) {
-            newWord.push(merged);
-            i += 2;
-          } else {
-            newWord.push(word[i]);
-            i++;
-          }
+          if (i < word.length - 1 && word[i] === bestPair[0] && word[i + 1] === bestPair[1]) { newWord.push(merged); i += 2; }
+          else { newWord.push(word[i]); i++; }
         }
         word = newWord;
         if (word.length === 1) break;
       }
       return word;
     }
-
     encode(text) {
-      // Handle special tokens first
-      const specialPattern = Object.keys(this.addedTokens)
-        .map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
-        .join('|');
-      const specialRe = new RegExp('(' + specialPattern + ')');
-      const segments = text.split(specialRe);
-
+      const keys = Object.keys(this.addedTokens);
+      const specialRe = new RegExp('(' + keys.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')');
       const ids = [];
-      for (const seg of segments) {
+      for (const seg of text.split(specialRe)) {
         if (seg === '') continue;
-        if (this.addedTokens[seg] !== undefined) {
-          ids.push(this.addedTokens[seg]);
-          continue;
-        }
+        if (this.addedTokens[seg] !== undefined) { ids.push(this.addedTokens[seg]); continue; }
         const matches = seg.match(this.pat);
         if (!matches) continue;
         for (const word of matches) {
-          const encoded = Array.from(new TextEncoder().encode(word))
-            .map(b => this.byteEncoder[b])
-            .join('');
-          const bpeTokens = this.bpe(encoded);
-          for (const t of bpeTokens) {
-            const id = this.vocab[t];
-            ids.push(id !== undefined ? id : 1); // <unk>=1
-          }
+          const encoded = Array.from(new TextEncoder().encode(word)).map(b => this.byteEncoder[b]).join('');
+          for (const t of this.bpe(encoded)) { const id = this.vocab[t]; ids.push(id !== undefined ? id : UNK_ID); }
         }
       }
       return ids;
     }
-
     decode(ids) {
-      const tokens = ids.map(id => this.invVocab[id] || '');
-      // Filter out special tokens for display
-      const text = tokens
-        .filter(t => !t.startsWith('<') || !t.endsWith('>'))
-        .join('');
+      const text = ids.map(id => this.invVocab[id] || '').filter(t => !t.startsWith('<') || !t.endsWith('>')).join('');
       const bytes = Array.from(text).map(c => this.byteDecoder[c]).filter(b => b !== undefined);
       return new TextDecoder('utf-8', { fatal: false }).decode(new Uint8Array(bytes));
     }
   }
 
+  // ===================== FORMAT =====================
+  function fmtSystem() { return model.format === 'plain' ? 'System: ' + SYSTEM_PROMPT : '<|system|> ' + SYSTEM_PROMPT; }
+  function fmtUserTurn(text) { return model.format === 'plain' ? '\nUser: ' + text + '\nOracle:' : '\n<|user|> ' + text + '\n<|oracle|>'; }
+  function fmtOracleText(text) { return ' ' + text; }
+  function buildPrime() {
+    let t = fmtSystem();
+    if (primeCheck.checked) for (const [u, o] of PRIME) t += fmtUserTurn(u) + fmtOracleText(o);
+    return t;
+  }
+
   // ===================== INFERENCE =====================
-
   async function generate(inputIds) {
+    const S = SAMPLERS[samplerSel.value];
     let ids = inputIds.slice(-MAX_CONTEXT);
-    let generated = [];
-
+    const generated = [];
     for (let i = 0; i < MAX_NEW_TOKENS; i++) {
       const input = new ort.Tensor('int64', BigInt64Array.from(ids.map(BigInt)), [1, ids.length]);
       const results = await session.run({ input_ids: input });
-      const logits = results.logits.data;
-      const vocabSize = results.logits.dims[2];
-      const lastLogits = new Float32Array(vocabSize);
-      const offset = (ids.length - 1) * vocabSize;
-      for (let v = 0; v < vocabSize; v++) lastLogits[v] = logits[offset + v];
-
-      // Repetition penalty (CTRL-style) on tokens already generated in this response
-      if (REP_PENALTY !== 1.0) {
-        for (const t of new Set(generated)) {
-          lastLogits[t] = lastLogits[t] > 0 ? lastLogits[t] / REP_PENALTY : lastLogits[t] * REP_PENALTY;
-        }
-      }
-      // No-repeat n-gram: forbid completing an n-gram that already occurred in this response
-      if (NO_REPEAT_NGRAM > 0 && generated.length >= NO_REPEAT_NGRAM - 1) {
-        const n = NO_REPEAT_NGRAM;
-        const tail = generated.slice(generated.length - (n - 1));
+      const logits = results.logits.data, vocabSize = results.logits.dims[2];
+      const last = new Float32Array(vocabSize), off = (ids.length - 1) * vocabSize;
+      for (let v = 0; v < vocabSize; v++) last[v] = logits[off + v];
+      if (S.repPenalty !== 1.0) for (const t of new Set(generated)) last[t] = last[t] > 0 ? last[t] / S.repPenalty : last[t] * S.repPenalty;
+      if (S.noRepeatNgram > 0 && generated.length >= S.noRepeatNgram - 1) {
+        const n = S.noRepeatNgram, tail = generated.slice(generated.length - (n - 1));
         for (let j = 0; j + n <= generated.length; j++) {
           let match = true;
           for (let q = 0; q < n - 1; q++) if (generated[j + q] !== tail[q]) { match = false; break; }
-          if (match) lastLogits[generated[j + n - 1]] = -Infinity;
+          if (match) last[generated[j + n - 1]] = -Infinity;
         }
       }
-      lastLogits[UNK_ID] = -Infinity;
-      for (let v = 0; v < vocabSize; v++) lastLogits[v] /= TEMPERATURE;
-
-      // Top-k filtering
-      const indexed = Array.from(lastLogits).map((v, i) => [v, i]);
-      indexed.sort((a, b) => b[0] - a[0]);
-      const topK = indexed.slice(0, TOP_K);
-
-      // Softmax
-      const maxVal = topK[0][0];
+      last[UNK_ID] = -Infinity;
+      for (let v = 0; v < vocabSize; v++) last[v] /= S.temperature;
+      const indexed = Array.from(last).map((v, k) => [v, k]).sort((a, b) => b[0] - a[0]).slice(0, S.topK);
+      const maxVal = indexed[0][0];
       let sumExp = 0;
-      for (const item of topK) {
-        item[0] = Math.exp(item[0] - maxVal);
-        sumExp += item[0];
-      }
-      for (const item of topK) item[0] /= sumExp;
-
-      // Sample
-      let r = Math.random();
-      let nextId = topK[0][1];
-      for (const [prob, idx] of topK) {
-        r -= prob;
-        if (r <= 0) { nextId = idx; break; }
-      }
-
-      if (nextId === EOS_ID) break;
-      ids.push(nextId);
-      generated.push(nextId);
-
-      // Plain chat format: the response ends at the first newline (next "User:" line)
-      if (tokenizer.decode(generated).includes('\n')) break;
-
+      for (const it of indexed) { it[0] = Math.exp(it[0] - maxVal); sumExp += it[0]; }
+      let r = Math.random() * sumExp, nextId = indexed[0][1];
+      for (const [p, k] of indexed) { r -= p; if (r <= 0) { nextId = k; break; } }
+      const tok = tokenizer.invVocab[nextId] || '';
+      if (nextId === EOS_ID || tok === '<|user|>' || tok === '<|system|>' || tok === '<eos>') break;
+      ids.push(nextId); generated.push(nextId);
+      if (model.format === 'plain' && tokenizer.decode(generated).includes('\n')) break;
       if (ids.length > MAX_CONTEXT) ids = ids.slice(ids.length - MAX_CONTEXT);
     }
     return generated;
   }
 
   // ===================== UI =====================
-
   function addMessage(role, text) {
     const div = document.createElement('div');
-    div.className = 'msg ' + role;
-    div.textContent = text;
-    chatEl.appendChild(div);
-    chatEl.scrollTop = chatEl.scrollHeight;
+    div.className = 'msg ' + role; div.textContent = text;
+    chatEl.appendChild(div); chatEl.scrollTop = chatEl.scrollHeight;
     return div;
   }
-
   function showSuggestions() {
     suggestionsEl.innerHTML = '';
     for (const s of SUGGESTIONS) {
       const btn = document.createElement('button');
-      btn.className = 'suggestion';
-      btn.textContent = s;
+      btn.className = 'suggestion'; btn.textContent = s;
       btn.onclick = () => { inputEl.value = s; sendMessage(); };
       suggestionsEl.appendChild(btn);
     }
   }
-
-  function hideSuggestions() {
-    suggestionsEl.innerHTML = '';
-  }
+  function setBusy(b) { generating = b; sendBtn.disabled = b; inputEl.disabled = b; modelSel.disabled = b; samplerSel.disabled = b; primeCheck.disabled = b; }
 
   async function sendMessage() {
     const text = inputEl.value.trim();
-    if (!text || generating) return;
-
-    generating = true;
-    sendBtn.disabled = true;
-    inputEl.disabled = true;
-    hideSuggestions();
-
-    addMessage('user', text);
-    inputEl.value = '';
-
-    // Re-inject identity + recent conversation so personality never scrolls out
-    const identity = 'System: ' + SYSTEM_PROMPT;
-    const turnTokens = tokenizer.encode('\nUser: ' + text + '\nOracle:');
-    conversationIds.push(...turnTokens);
-
-    // Keep identity anchored: if context is getting long, rebuild with identity + recent turns
+    if (!text || generating || !session) return;
+    setBusy(true); suggestionsEl.innerHTML = '';
+    addMessage('user', text); inputEl.value = '';
+    conversationIds.push(...tokenizer.encode(fmtUserTurn(text)));
     if (conversationIds.length > MAX_CONTEXT - 30) {
-      const identityIds = tokenizer.encode(identity);
-      const recentTurns = conversationIds.slice(identityIds.length);
-      const trimmed = recentTurns.slice(-(MAX_CONTEXT - identityIds.length - 30));
-      conversationIds = [...identityIds, ...trimmed];
+      const identityIds = tokenizer.encode(buildPrime());
+      const recent = conversationIds.slice(identityIds.length);
+      conversationIds = [...identityIds, ...recent.slice(-(MAX_CONTEXT - identityIds.length - 30))];
     }
-
-    // Show typing indicator
     const oracleDiv = addMessage('oracle', '');
-    const dot = document.createElement('span');
-    dot.className = 'typing';
-    oracleDiv.appendChild(dot);
-
+    const dot = document.createElement('span'); dot.className = 'typing'; oracleDiv.appendChild(dot);
     statusEl.textContent = 'Generating...';
-
     try {
       const genIds = await generate(conversationIds);
-      const response = tokenizer.decode(genIds).split('\n')[0].replace(/^User:.*$/, '').trim();
-
-      // Keep only the first line in context (drop a trailing newline token if the model emitted one)
-      conversationIds.push(...tokenizer.encode(' ' + response));
-      oracleDiv.textContent = response || "(empty response)";
-    } catch (e) {
-      oracleDiv.textContent = "(generation error: " + e.message + ")";
-      console.error(e);
-    }
-
+      let response = tokenizer.decode(genIds).trim();
+      if (model.format === 'plain') response = response.split('\n')[0].replace(/^User:.*$/, '').trim();
+      conversationIds.push(...tokenizer.encode(fmtOracleText(response)));
+      oracleDiv.textContent = response || '(empty response)';
+    } catch (e) { oracleDiv.textContent = '(generation error: ' + e.message + ')'; console.error(e); }
     chatEl.scrollTop = chatEl.scrollHeight;
-    statusEl.textContent = 'Ready';
-    generating = false;
-    sendBtn.disabled = false;
-    inputEl.disabled = false;
-    inputEl.focus();
+    statusEl.textContent = 'Ready'; setBusy(false); inputEl.focus();
   }
 
   sendBtn.addEventListener('click', sendMessage);
-  inputEl.addEventListener('keydown', e => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage();
-    }
-  });
+  inputEl.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } });
 
-  // ===================== INIT =====================
-
-  async function init() {
+  // ===================== MODEL LOADING =====================
+  function resetConversation() {
+    conversationIds = tokenizer.encode(buildPrime());
+    chatEl.innerHTML = '';
+    addMessage('system-msg', model.label + ' loaded (' + model.size + '). ' + (primeCheck.checked ? 'Primed with a two-turn example.' : 'No priming.') + ' Sampler: ' + samplerSel.options[samplerSel.selectedIndex].text + '.');
+    addMessage('oracle', "I'm Tiny Oracle. Ask me anything -- just don't expect too much.");
+    showSuggestions();
+  }
+  async function loadModel(key) {
+    model = MODELS[key];
+    setBusy(true);
     try {
       statusEl.textContent = 'Loading tokenizer...';
-      const tokResp = await fetch(TOKENIZER_FILE);
-      const tokJson = await tokResp.json();
-      tokenizer = new BPETokenizer(tokJson);
-
-      statusEl.textContent = 'Loading model (11 MB)...';
+      tokenizer = new BPETokenizer(await (await fetch(model.tokenizer)).json());
+      statusEl.textContent = 'Loading model (' + model.size + ')...';
       ort.env.wasm.numThreads = navigator.hardwareConcurrency || 4;
-      session = await ort.InferenceSession.create(MODEL_FILE, {
-        executionProviders: ['wasm'],
-      });
-
-      // Prime conversation with system prompt + a few-shot oracle exchange
-      // so the model pattern-matches into Oracle voice from the start
-      const prime = 'System: ' + SYSTEM_PROMPT;
-      conversationIds = tokenizer.encode(prime);
-
-      chatEl.innerHTML = '';
-      addMessage('system-msg', '8.5M parameters (11 MB, int8) loaded into your browser. No server, no API.');
-      addMessage('oracle', "I'm Tiny Oracle. 8.5 million parameters of questionable wisdom, running right here in your browser. Ask me anything -- just don't expect too much.");
-
+      session = await ort.InferenceSession.create(model.file, { executionProviders: ['wasm'] });
+      badgeEl.textContent = model.badge;
+      document.getElementById('footer-text').textContent = model.badge.split(' · ')[0] + ' running entirely in your browser · no server, no API calls';
+      resetConversation();
       statusEl.textContent = 'Ready';
-      inputEl.disabled = false;
-      sendBtn.disabled = false;
-      inputEl.focus();
-      showSuggestions();
+      try { localStorage.setItem('tinyoracle.model', key); } catch (e) {}
     } catch (e) {
       statusEl.textContent = 'Error: ' + e.message;
-      addMessage('system-msg', 'Failed to load: ' + e.message + '. Make sure ' + MODEL_FILE + ' and ' + TOKENIZER_FILE + ' are in the same directory.');
+      addMessage('system-msg', 'Failed to load ' + model.file + ': ' + e.message + '. Is the file next to index.html?');
       console.error(e);
     }
+    setBusy(false); inputEl.focus();
   }
 
-  init();
+  for (const [k, m] of Object.entries(MODELS)) { const o = document.createElement('option'); o.value = k; o.textContent = m.label; modelSel.appendChild(o); }
+  modelSel.addEventListener('change', () => loadModel(modelSel.value));
+  samplerSel.addEventListener('change', () => { try { localStorage.setItem('tinyoracle.sampler', samplerSel.value); } catch (e) {} resetConversation(); });
+  primeCheck.addEventListener('change', () => resetConversation());
+
+  let initial = 'v7a_conv_int8';
+  try { const saved = localStorage.getItem('tinyoracle.model'); if (saved && MODELS[saved]) initial = saved; const ss = localStorage.getItem('tinyoracle.sampler'); if (ss && SAMPLERS[ss]) samplerSel.value = ss; } catch (e) {}
+  modelSel.value = initial;
+  loadModel(initial);
 })();
 </script>
 </body>

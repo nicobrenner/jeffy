@@ -1,0 +1,182 @@
+{
+  "_what": "Re-read of the agent-labeling headlines. Two separate errors found: the sample-size framing, and a cross-draw comparison that produced the headline label-descriptions result.",
+  "_comparable": "Same embeddings.npz, encoder, test set and C as the original run, so these replace rather than merely resemble those numbers.",
+  "n_classes": 77,
+  "n_test": 2000,
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "curves": {
+    "random_385": {
+      "n": 385,
+      "sampling": "random",
+      "accuracy_mean": 0.765,
+      "accuracy_sd": 0.0148,
+      "classes_missing_mean": 1.8,
+      "min_per_class_mean": 0.0,
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    "stratified_385": {
+      "n": 385,
+      "sampling": "stratified",
+      "accuracy_mean": 0.8604,
+      "accuracy_sd": 0.0093,
+      "classes_missing_mean": 0.0,
+      "min_per_class_mean": 0.0,
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    "random_770": {
+      "n": 770,
+      "sampling": "random",
+      "accuracy_mean": 0.8592,
+      "accuracy_sd": 0.0119,
+      "classes_missing_mean": 0.0,
+      "min_per_class_mean": 0.0,
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    "stratified_770": {
+      "n": 770,
+      "sampling": "stratified",
+      "accuracy_mean": 0.8909,
+      "accuracy_sd": 0.0056,
+      "classes_missing_mean": 0.0,
+      "min_per_class_mean": 0.0,
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    }
+  },
+  "full_pool_accuracy": 0.9425,
+  "original_claim": {
+    "statement": "sample size cost 23pp",
+    "value_pp": 23.0,
+    "problem": "compared the full pool against a RANDOM draw of 385, which on 77 classes leaves classes with one example or none"
+  },
+  "corrected": {
+    "sampling_scheme_cost_pp": 9.5,
+    "true_sample_size_cost_pp": 8.2
+  },
+  "unaffected": {
+    "_why": "the supervised and agent-labeled arms used the SAME random indices, so the label-quality comparison is internally consistent and stands",
+    "label_quality_cost_pp": 4.9,
+    "label_quality_cost_with_descriptions_pp": 0.55
+  },
+  "implication": "The headline 'sample size costs 23pp' should not be published. Most of it is a sampling artifact and is free to fix: stratify. The label-quality findings, including the collapse from 4.9pp to 0.55pp with label descriptions, are unaffected and remain the result worth publishing.",
+  "error_2_cross_draw_comparison": {
+    "_what": "The descriptions run drew a FRESH disjoint 385 (seed 1337) to avoid showing the labeler texts it had already seen. That was the right call. But its downstream accuracy was then compared against the FIRST draw's supervised ceiling, so the reported effect contains the difference between two draws.",
+    "arms": {
+      "no_descriptions": {
+        "source_file": "labels_round1.json",
+        "n": 385,
+        "supervised_on_same_indices": 0.7125,
+        "agent_labeled": 0.6635,
+        "label_quality_cost_pp": 4.9,
+        "agreement_with_banking77": 0.826,
+        "labeler": {
+          "model": "Claude Opus 5",
+          "model_id": "claude-opus-5",
+          "harness": "Claude Code CLI",
+          "method": "in-context, 385 texts and 77 label names in one prompt, single pass, no self-consistency check",
+          "labeled_at": "2026-10-25",
+          "saw_true_labels": false
+        }
+      },
+      "with_descriptions": {
+        "source_file": "labels_round3.json",
+        "n": 385,
+        "supervised_on_same_indices": 0.7635,
+        "agent_labeled": 0.707,
+        "label_quality_cost_pp": 5.65,
+        "agreement_with_banking77": 0.8623,
+        "labeler": {
+          "model": "Claude Opus 5",
+          "model_id": "claude-opus-5",
+          "harness": "Claude Code CLI",
+          "method": "in-context, 385 fresh texts WITH 77 written label descriptions, single pass",
+          "labeled_at": "2026-10-26",
+          "saw_true_labels": false,
+          "descriptions": "banking77_label_descriptions.json, written from the sensible reading of each label, not from banking77's actual assignments"
+        }
+      }
+    },
+    "reported_headline": "label-quality cost collapses from 4.90pp to 0.55pp with descriptions",
+    "corrected": {
+      "no_descriptions": {
+        "cost_pp": 4.9,
+        "vs_own_supervised": 0.7125
+      },
+      "with_descriptions": {
+        "cost_pp": 5.65,
+        "vs_own_supervised": 0.7635
+      },
+      "verdict": "Against its OWN draw's ceiling, descriptions did NOT reduce the downstream label-quality cost: 4.90pp -> 5.65pp, slightly worse and well inside the draw-to-draw noise (sd about 1.5pp at n=385). The claimed collapse to 0.55pp was an artifact of draw B being an easier draw (supervised 0.7635 vs 0.7125)."
+    },
+    "what_survives": {
+      "agreement_no_descriptions": 0.826,
+      "agreement_with_descriptions": 0.8623,
+      "delta_pp": 3.63,
+      "_why_this_one_holds": "Agreement is measured on the labeler's own output against the reference labels for the texts it saw. It does not involve training, so it is not confounded by which draw was used."
+    }
+  },
+  "error_1_sample_size_framing": {
+    "reported": "sample size cost 23pp",
+    "decomposition_pp": {
+      "unlucky_single_draw": 5.3,
+      "random_vs_stratified": 9.5,
+      "true_sample_size": 8.2,
+      "_note": "The experiment used one draw and reported no seed variance. The draw actually labeled scores 0.7125 where 10 random draws average 0.7650 and a stratified draw of the same size reaches 0.8604."
+    }
+  },
+  "publication_status": "DO NOT publish either headline as written. What survives and is worth publishing: descriptions raise labeler agreement with the reference by 3.6pp (82.6 -> 86.2). Everything downstream needs re-running with matched draws, stratified sampling and multiple seeds before any claim is made."
+}

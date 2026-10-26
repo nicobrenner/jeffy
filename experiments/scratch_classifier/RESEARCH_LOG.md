@@ -4738,3 +4738,13 @@ Control ≈ original (24/35/21 and 50/148/46) — the 3 extra epochs alone do no
 on both sets (FI: persona 1.89 vs 1.76, help 1.14 vs 1.01, engaging 1.01 vs 0.81; coh≥2 72% vs 64%), memorized-line rate lower (10% vs 15%).
 Same direction as the val loss (1.418 vs 1.436), same modest size. Note: this grader is harsher than the size-pass grader (totals not comparable
 across passes); within-pass rankings only. Verdict: consistent inkling. Next: the 10-epoch rerun (MPS, running) to see whether the gap widens.
+
+## 2026-10-26 ~11:30 — Pivot: grow the model Nico actually likes (v2, 2.7M from scratch), not the 2.0M TinyStories arm
+
+Nico tried the 2.0M grown/control pair in the demo: "absolutely flat and boring… not really following the conversation… feels like the same…
+why are we comparing these anyway, if the winner has always been v2?" Correct: the 2.0M lineage was chosen for tokenizer compatibility with the
+8.5M line, not because anyone liked it. The 10-epoch 2.0M rerun was killed at grown ep 5 (val 1.4083, still falling) / control ep 7 (1.4326).
+New test, same design, on v2: `grow_model.py best_lm_oracle_v2.pt --d-model 512 --n-heads 8 --d-ff 2048 --n-layers 2` → `grown_v2_8m.pt`
+(2.69M → 8.53M, **widening only**, exact: max |Δlogprob| 0.028; no deepening, so no approximate step). Control = v2 + 3 ep on `chat_v2`
+(lr 1e-4, warmup 300); grown = same. v2 val at step 0: 1.6124 (v2's own 1.6130). Scratchpad `grow_v2_local.sh`; probes/ONNX/blind set queued
+(`grow_v2_post.sh` → `probe_grow_v2_blind3`, tags format, recipe T0.5 to match the existing v2 probes).

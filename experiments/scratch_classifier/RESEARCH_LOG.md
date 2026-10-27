@@ -5469,3 +5469,15 @@ So train_lm.py is not "buggy" in the ordinary sense; the Oracle configuration (d
 tied 4096 vocab, lr 3e-4, no warmup) sits in a regime where induction heads do not form in the step budgets we use (even
 53k steps for v3c). Running now at the Oracle's width: post-LN vs pre-LN (norm_first) × lr 3e-4 / 1e-3, 2k steps each
 (`induct_unit5.py`, MPS). If pre-LN forms the circuit, add `--pre-ln` to train_lm.py and re-scout the next lineage with it.
+
+## 2026-10-27 02:52 PDT — ROOT CAUSE: post-LN. Pre-LN forms induction heads at the Oracle's width; post-LN does not
+`induct_unit5.py` (d256 L2 H4 dff1024, tied, V=4096 all ids, fair variable-period task, 2k steps, MPS), repeat loss:
+  post-LN lr 3e-4: 8.38 → 6.21 (crawling) · post-LN lr 1e-3: → 5.71 (stalls) · **pre-LN lr 3e-4: → 0.16** · pre-LN lr 1e-3: → 0.45.
+Every Oracle so far used nn.TransformerEncoderLayer's default norm_first=False (post-LN) with no warmup — the regime in which
+the induction circuit does not form in our step budgets (v3c: 53k steps, none). Also from the unit tests: d128 post-LN does
+form it (narrow width is more forgiving), and with a tied output a mostly-unused vocabulary blocks it (irrelevant for the real
+corpus, where all ids are used). train_lm.py now has `--pre-ln` (carried in checkpoint config; export_onnx passes it).
+Scout running (`preln_scout.sh`, ~15 min): 2.7M from scratch, v3c recipe + --pre-ln, corpus + recap rows + 20k random-value
+copy rows, 20 epochs; gates: induction signature at ep 5/10/20, copy_probe, real held-out recap recall, identity.
+If it passes: the next lineage is pre-LN (+RoPE, 512 later), and conversation following should improve too — an attention
+circuit that cannot copy cannot track a thread.

@@ -5161,3 +5161,13 @@ This matches Nico's demo experience ("wasn't very good… then it got weird… '
 heavy, pulls replies toward stock persona lines and salad under T0.5) and/or best-of-4 picking persona-sounding salad (verifier AUC 0.82 on
 this model). Ablation running: same model, no prime, sched sampler, single sample → reactive-user pass vs rmt2_full. Lesson again: every
 model must be judged under the harness Nico uses, and the harness defaults (priming!) are themselves experiments.
+
+## 2026-10-26 21:23 PDT — Priming ablation (`grades_prime_mt_blind2`): the primed example helps turn 1 and hurts the conversation
+
+Same model (recovermt2x8), sched sampler, reactive user: primed + best-of-4 (rmt2_full) vs **no prime, single sample** (rmt2_noprime).
+Turns 2–3: on-thread ≥2 **20% → 38%**, ignores-pushback **28% → 10%**, self-corrects **2% → 23%**, salad 8% → 0%, paired 21/24/15 for no-prime.
+Turn 1: primed is better on persona (1.70 vs 1.30) and on-thread ≥2 (63% vs 53%); unprimed turn 1 pastes stock lines (memorized-line 40%).
+Reading: the two-turn primed example (a 2025 demo default never tested) anchors the model to persona lines and then to salad once T rises;
+without it the DAgger behaviour shows through ("I forget everything when you close the tab, so that's true"). Decision: demo priming default
+OFF (checkbox stays for Nico); next harness variant to test: prime only for the first reply, then drop it from context (like the T schedule).
+Best-of-4 + verifier is not helping conversations either — parked until the verifier is retrained on conversation labels.

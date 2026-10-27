@@ -5448,3 +5448,11 @@ Through train_lm.py on the equivalent 64-word text task (lr 1e-3, 6 epochs ≈ 4
 repeat 4.18 — nothing learned. So the model class forms induction heads in minutes; something in train_lm.py's data path or
 training step prevents it. Suspects: the stream chunking, the label shift, autocast/fp16 on MPS, label smoothing. Running the
 same task through the --conv-sequences loader to split data path from training step; reading the code in parallel.
+
+## 2026-10-27 02:29 PDT — fair unit test: true induction learned in 500 steps standalone; train_lm.py learns none in 3k steps (both loaders)
+`induct_unit2.py` (variable period per sequence, so only a real induction circuit solves it; vocab 64; plain AdamW lr 1e-3;
+CPU; same CausalTransformer class, d128 L2 H4): repeats 4.21 → 1.44 (step 500) → 0.34 (step 3000). train_lm.py on the
+equivalent 64-word text task: stream loader 6 epochs (~2.9k steps) loss 4.26 = chance; --conv-sequences loader 3 epochs
+the same (4.26, repeat 4.18). No autocast/fp16 in the script; forward is plain. The training script, not the architecture,
+is preventing induction. IF confirmed this has limited every Oracle trained with it (conversation following included).
+Bisecting: the script's tokenised 256-chunk data path + plain loop (`induct_bisect.py`), and the optimizer/scheduler/unpack code.

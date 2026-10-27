@@ -5118,3 +5118,21 @@ val 1.6728. Identity: name 31/32, human-life 7/96. Turn-1 openers: "Yes, it is"-
 the grown base carries v2's weights (50 epochs of DailyDialog); only a from-scratch run on the stripped corpus tests whether the reflex is
 data or inheritance. The turn-2 "What's up?" collapse is gone (no single reply dominates). Reactive-user pass vs recover8 (×12) generating.
 The bugged recovermt8 pass for the record (`grades_recovermt_mt_blind2`): on-thread ≥2 32% but ignores-pushback 45% (the collapse) vs 32% for ×12.
+
+## 2026-10-26 20:58 PDT — Loss-masked multi-turn recoveries: the biggest conversation gain of the day (`grades_recovermt2_mt_blind2`, 180 rows, one grader)
+
+| | recover8 (120 ×12, bugged loss) | **recovermt2x8 (770 ×6, own turns masked, bible corpus)** |
+|---|---|---|
+| turns 2–3 on-thread ≥2 | 13% | **43%** |
+| ignores-pushback | 28% | **12%** |
+| self-corrects | 2% | **8%** |
+| task attempts (0–3, n=19) | 0.37 | **1.42** |
+| persona / coherence | 1.12 / 1.78 | 1.48 / 1.83 |
+| memorized-line | 23% | 15% |
+| turn 1 on-thread ≥2 | 13% | **37%** |
+| paired on-thread (recovermt2x8 vs recover8) | — | **35/15/10** |
+Reading: once the model's own bad turns are context rather than targets, 650 recoveries on real push-back states lift following from
+roughly one turn in five to more than two in five, halve ignored push-backs, and quadruple task attempts — with persona UP (bible corpus) and
+no coherence cost. Within-pass numbers only (this grader read recover8 harsher than the previous ones). This is DAgger working as described.
+Demo: `v2_grown_recovermt2x8_int8` is the new ★ model. Next: the admit-act + plan-token merge on this corpus, Nico's teach corrections,
+and the harness pass (demo settings + controller) on it.

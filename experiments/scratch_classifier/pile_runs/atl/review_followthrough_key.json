@@ -1,0 +1,56 @@
+{
+ "0": {
+  "A": "ct2_full/n03"
+ },
+ "1": {
+  "A": "ct2_full/n11"
+ },
+ "2": {
+  "A": "ct2_full/n17"
+ },
+ "3": {
+  "A": "ct2_full/n18"
+ },
+ "4": {
+  "A": "ct2_full/t003"
+ },
+ "5": {
+  "A": "ct2_full/t004"
+ },
+ "6": {
+  "A": "ct3_primefirst/n02"
+ },
+ "7": {
+  "A": "ct3_primefirst/n11"
+ },
+ "8": {
+  "A": "ct3_primefirst/n15"
+ },
+ "9": {
+  "A": "ct3_primefirst/t008"
+ },
+ "10": {
+  "A": "ct3_primefirst/t009"
+ },
+ "11": {
+  "A": "conv8_full/n08"
+ },
+ "12": {
+  "A": "conv8_full/n13"
+ },
+ "13": {
+  "A": "conv8_full/n17"
+ },
+ "14": {
+  "A": "conv8_full/t007"
+ },
+ "15": {
+  "A": "rmt2_full/n02"
+ },
+ "16": {
+  "A": "rmt2_full/n11"
+ },
+ "17": {
+  "A": "rmt2_full/n15"
+ }
+}

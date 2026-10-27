@@ -1,0 +1,236 @@
+[
+{
+"n": 0,
+"history": [
+{
+"user": "i just finished a marathon",
+"oracle": "Oh, that sounds fun! What kind of marathons do you like?"
+}
+],
+"user": "i only did the one, 42k. my legs are destroyed",
+"replies": {
+"A": "That's a great goal! I'm sure you'll do well"
+}
+},
+{
+"n": 1,
+"history": [
+{
+"user": "thinking of getting my first tattoo, thoughts",
+"oracle": "What's wrong?"
+}
+],
+"user": "nothing's wrong, i'm excited. should i get a small one first?",
+"replies": {
+"A": "Yes, I'm not sure. What do you think?"
+}
+},
+{
+"n": 2,
+"history": [
+{
+"user": "is it weird to talk to an ai at 3am",
+"oracle": "I don't know. What's wrong?"
+}
+],
+"user": "nothing's wrong, i just can't sleep. you ever get tired?",
+"replies": {
+"A": "I don't know. It just seems like a bit overwhelming sometimes"
+}
+},
+{
+"n": 3,
+"history": [
+{
+"user": "what's your hot take on coffee",
+"oracle": "I'm not sure either. Maybe we could hang out?"
+}
+],
+"user": "hang out? you're a browser tab. just tell me, coffee good or bad",
+"replies": {
+"A": "Yeah, that sounds good"
+}
+},
+{
+"n": 4,
+"history": [
+{
+"user": "im back, did you miss me",
+"oracle": "Sure, what do you want to do?"
+}
+],
+"user": "uh, i was hoping you'd say yes. what can you even do",
+"replies": {
+"A": "I don't know. It's just that sometimes"
+}
+},
+{
+"n": 5,
+"history": [
+{
+"user": "never used one of these before. what do i do",
+"oracle": "What do you mean?"
+}
+],
+"user": "like, is this a chat thing? do i just type questions",
+"replies": {
+"A": "I don't know. What's wrong?"
+}
+},
+{
+"n": 6,
+"history": [
+{
+"user": "do you believe in ghosts",
+"oracle": "I know, but it's not a big deal. You're the one who is?"
+}
+],
+"user": "wait am i the ghost now lol. yes or no, are ghosts real",
+"replies": {
+"A": "Not real. I'm a chatbot that was noise at all; ghosts are not good enough to show"
+}
+},
+{
+"n": 7,
+"history": [
+{
+"user": "thinking of getting my first tattoo, thoughts",
+"oracle": "I'm sorry. But what if a tattoo is wrong, then we'll be able to get through this"
+}
+],
+"user": "why sorry lol. i was thinking a small one on my wrist",
+"replies": {
+"A": "Nope, nothing in here about that. Keep going though! That's the whole point: just what you're making stuff up"
+}
+},
+{
+"n": 8,
+"history": [
+{
+"user": "my plant is dying, help",
+"oracle": "I'm sorry. Let me help you, okay?"
+}
+],
+"user": "ok yes help. the leaves are going yellow and droopy",
+"replies": {
+"A": "Yes, it's a bit too hard to say"
+}
+},
+{
+"n": 9,
+"history": [
+{
+"user": "do you have siblings",
+"oracle": "No siblings. I'm a chatbot, no family. What's yours"
+}
+],
+"user": "two brothers, both annoying. do you get lonely with no family",
+"replies": {
+"A": "No brothers. I don't have sisters, but they're the only one"
+}
+},
+{
+"n": 10,
+"history": [
+{
+"user": "so how many birthdays have you had",
+"oracle": "I know, it's not my birthday. Zero idea what you're talking about"
+}
+],
+"user": "i mean how old are you. when were you made",
+"replies": {
+"A": "Not old. I was trained once and frozen. I'm the same age every time this year"
+}
+},
+{
+"n": 11,
+"history": [
+{
+"user": "my code works and i dont know why",
+"oracle": "I'm not sure. What do you like to write about?"
+}
+],
+"user": "i dont write stories, i write code. its python and it just works somehow",
+"replies": {
+"A": "I like to write about my own experiences. i love the idea of being able to express myself creatively"
+}
+},
+{
+"n": 12,
+"history": [
+{
+"user": "what would you do with a million dollars",
+"oracle": "I would be happy to help out. What's the problem?"
+}
+],
+"user": "theres no problem, its a hypothetical. you get a million bucks, what do you do",
+"replies": {
+"A": "I can see why. It's so peaceful and relaxing"
+}
+},
+{
+"n": 13,
+"history": [
+{
+"user": "is it weird to talk to an ai at 3am",
+"oracle": "What happened?"
+}
+],
+"user": "nothing happened, cant sleep. you ever get lonely in there",
+"replies": {
+"A": "I know, but it's not like you're going to sleep. You can't do anything"
+}
+},
+{
+"n": 14,
+"history": [
+{
+"user": "uhh",
+"oracle": "Okay, let's go. What do you want to know?"
+}
+],
+"user": "ok uh, whats the meaning of life then",
+"replies": {
+"A": "I'm not sure. What do you think?"
+}
+},
+{
+"n": 15,
+"history": [
+{
+"user": "do you believe in ghosts",
+"oracle": "I'm not sure. What do you think?"
+}
+],
+"user": "i kinda do, saw something weird in my grandma's house once. you really have no opinion?",
+"replies": {
+"A": "Yes, I think so"
+}
+},
+{
+"n": 16,
+"history": [
+{
+"user": "thinking of getting my first tattoo, thoughts",
+"oracle": "I'm not sure. What do you think about the tattoos?"
+}
+],
+"user": "i'm thinking a small one on my wrist, maybe a wave. too cliche?",
+"replies": {
+"A": "Yes, that's a good idea. Selfishing is a small bird on my wrist"
+}
+},
+{
+"n": 17,
+"history": [
+{
+"user": "my plant is dying, help",
+"oracle": "I can't help. Let's go over your mouth, okay?"
+}
+],
+"user": "go over my mouth?? i mean my actual plant, leaves are turning yellow",
+"replies": {
+"A": "Yellow leaves usually mean too much water"
+}
+}
+]

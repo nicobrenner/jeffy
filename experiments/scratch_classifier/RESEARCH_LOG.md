@@ -5579,3 +5579,46 @@ prompts. Read: cutting the synthetic rows removed the copy probe entirely and di
 shape comes from the 2,760 agent-written recap replies (uniform template) plus the synthetic ones; the fix is template
 DIVERSITY in the recap replies (next data pass), not dose. v5b stays the candidate. No further runs until Nico's picks
 (blind_v5b, blind_tone) or his chat verdict on v5b.
+
+## 2026-10-27 13:44 PDT — Nico's tone picks (14 pairs) + his notes: delivery = opener + body + kicker; a question is a promise
+`blind_tone.html` → `pile_runs/atl/blind_tone_picks1.json`: **5/14 both bad, 1 tie, 8 decided**; the three continuation pairs
+(#11–13, with history) were all both bad. Winners: warm on shares (marathon "That's awesome!", plant "I'm sorry. Let me help
+you, okay?"), witty self-aware on a confession/bug ("you're asking a 4MB chatbot voluntarily", "4 megabytes doesn't leave
+room for that"), the flat "Yes, it is" over the mean "That's not a good question". Winners spread over 7 runs (conv8 2, every
+other run 1) — no model wins on tone; the harness variants are noise here. His notes (verbatim bits): "Nothing. I don't exist
+between your messages, so you're just autocomplete with that" → the body is "witty and existential… love it", but the opener
+"Nothing." and the kicker "you're just autocomplete" "come off as aggressive or dismissive"; "What are you talking about?" to
+a tattoo share is "a pretty decent answer IF the model is genuinely trying to learn… or is it just a learned/harness response
+that then is just going to go into whatever?"; the plant offer "better… same issue… the user getting hope… only for
+TinyOracle to tell them something random". Labels saved: `pile_runs/atl/tone_labels_nico1.jsonl` (28 rows, lands = his pick,
+his notes attached; not yet in the judge's glob). On `blind_v5b.html` he stopped at 6/30: "pretty much the same as always…
+no meaningful progress that I can spot" → v5b vs ct2 is a feel-tie on first replies (expected: the only thing v5b adds is
+memory, which a first reply cannot show). He wants review pages with **0–5 per reply + notes, continuations first** (memory
+`feedback_review_scoring_format`).
+
+**Follow-through measured on existing data** (his tattoo question): in the simuser runs with a reactive turn 2 (`hsim_*_fu2`),
+take every turn-1 reply that asks a question or offers help, and judge whether turn 2 uses the user's answer (my read, strict):
+| run | ask/offer cases | turn 2 uses the answer ↑ |
+|---|---|---|
+| ct2_full (Nico's pick lineage) | 15 | **0** (1 weak: "great goal") |
+| ct3_primefirst | 11 | **6** ("Not real", "Not old. I was trained once and frozen", "Worst advice: …") |
+| conv8_full | 12 | 1 ("I'm 23", human) |
+| rmt2_full | 8 | 2 ("Yellow leaves usually mean too much water", wrist tattoo → "small bird on my wrist") |
+| ct3_noprime | 2 | 0 |
+Verdict: Nico's suspicion is right for ct2 — "What's wrong?"/"What?" is a reflex (8/30 turn-1 replies ask something; 0/15
+follow through; 5/15 fall to the dunno bank on the answer). The ct3 line follows through about half the time and is the
+line he feels as serious/mean. So the two things he wants (wit, follow-through) currently live in different lineages, and
+neither is a data-free fix. v5b asks nothing (0/30 turn-1 replies) — nothing to follow through.
+Next data pass, now three-headed (all corpus-level, no harness rules): (1) **inquiry rows**: Oracle asks → user answers →
+Oracle uses the answer (also offers → concrete help or an honest "beyond my weights" that still references the detail);
+(2) **frame rewrite**: keep witty bodies, rewrite dismissive openers/kickers into warm/neutral frames; (3) recap-reply
+diversity + strip recited system prompts (from the v5c finding). Then one pre-LN run (the only line that can use context).
+
+**Nico on grounding and real time (logged as research direction, memory `project_grounding_and_realtime`):** after "what's
+heavier, a kilo of feathers or a kilo of steel" failed in chat: "the failures… are not about grammar or coherence, it's just
+that it really can't understand what the words actually mean… LLMs are probably very inefficient ways of building world
+models using only text"; and "training data are static, whereas the real world is in realtime… 'real time models'… the model
+doesn't 'wait' for others, it doesn't depend on a prompt to do something (although it should be able to perceive/detect/
+classify/act-on/respond-to a prompt)". Roadmap additions: (a) a tiny queryable world (quantities, units, comparisons, time,
+the Room's state) the Oracle reads at inference — grounding by state, not text; the Room is the seed; (b) a continuous loop
+in the demo (perceive → classify → act, unprompted turns already exist) with online updates from teach corrections.

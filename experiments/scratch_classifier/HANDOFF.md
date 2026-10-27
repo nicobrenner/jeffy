@@ -2,7 +2,7 @@
 
 Purpose: let a fresh Claude Code session pick up this research program with as little loss as possible. Keep it short;
 the durable record is `RESEARCH_LOG.md` (lab notebook, append-only, every result the turn it lands). Update this file at
-the end of every working block (not just at the end of a session). Last update: **2026-10-27, 15:19 PDT**.
+the end of every working block (not just at the end of a session). Last update: **2026-10-27, 16:45 PDT**.
 
 ## How to resume (5 minutes)
 1. Read this file, then the last ~400 lines of `RESEARCH_LOG.md` (`tail -400 RESEARCH_LOG.md`).
@@ -22,7 +22,7 @@ the end of every working block (not just at the end of a session). Last update: 
    model-side work = best-of-N with a judge trained on his 0–5 scores, or retrieval for the recap tier. No run pending.
 3. Still open: crawler/room verdicts, teach-mode export, README/benchmark correction, posts.
 
-## Running right now (2026-10-27 16:55 PDT)
+## Running right now (2026-10-27 16:45 PDT)
 - **Nothing running.** Branch 1 block 1 done: Nico-judge v1 (AUC 0.76 on his rows), best-of-4 via `judge` cfg, `demo/review_bestof.html` waiting for his scores (export `review_bestof_scores.json`). Candidates in the demo: ct2 (default, ★), v5b (☆ TEST THIS). v6/v6b exported but NOT in the dropdown.
 - Nico's labels: tone picks (28 rows, `tone_labels_nico1.jsonl`) + follow-through scores (18, `review_followthrough_scores.json`).
 - Review format: `review_page.py` (0–5 per reply + notes, continuations first, ≤20 items). Pairs on shared history: `cont_pairs.py`.

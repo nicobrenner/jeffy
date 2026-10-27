@@ -5753,8 +5753,8 @@ Verdict: the LLM-labelled "lands" judge already ranks Nico's good replies above 
 his rows do not improve it yet — more of his scores needed before his labels move the judge. Gate (≥ 0.7) passed.
 **Best-of-4 with the judge** (`harness.py` cfg `judge`, no verifier): on 18 shared-history continuations (ct2 turn 1 + reactive
 follow-up; ct2 single sample vs best-of-4) the judge's own mean score rises 0.22 → 0.52, but it reaches that by picking
-**bank lines**: recital goes 5/18 → 10/18 ("I don't know. Pretend I said something wise…", "That's beyond 2 million
-parameters"), and 4/18 pairs are identical. The judge learned "witty bank line = lands" from the LLM labels; Nico's "good first
+**bank lines**: recital goes 4/18 → 8/18 ("I don't know. Pretend I said something wise…", "That's beyond 2 million
+parameters"), and 3/18 pairs are identical. The judge learned "witty bank line = lands" from the LLM labels; Nico's "good first
 three, last one bad" notes say the opposite on follow-ups. So the page is the test: `demo/review_bestof.html` (18 items,
 A/B hidden, key `pile_runs/atl/review_bestof_key.json`). If his scores favour best-of-4, ship it in the demo; if they favour the
 single sample, the judge needs his follow-through labels weighted by move (next: intent-aware judge, plan item 2).

@@ -5456,3 +5456,16 @@ equivalent 64-word text task: stream loader 6 epochs (~2.9k steps) loss 4.26 = c
 the same (4.26, repeat 4.18). No autocast/fp16 in the script; forward is plain. The training script, not the architecture,
 is preventing induction. IF confirmed this has limited every Oracle trained with it (conversation following included).
 Bisecting: the script's tokenised 256-chunk data path + plain loop (`induct_bisect.py`), and the optimizer/scheduler/unpack code.
+
+## 2026-10-27 02:45 PDT — induction formation is fragile in our config: width, weight tying and vocabulary usage all matter
+Unit tests (fair task, variable period, plain AdamW, 1.5–3k steps):
+- d128 dff512, V=64: repeats 4.21 → 0.34 (learns). **d256 dff1024 (the Oracle's width), V=64, lr 1e-3: stuck at chance 4.16
+  for 3,000 steps** — the Oracle's own width does not form the circuit where the narrower one does.
+- d128, V=4096 with only 64 ids used: tied output stuck at chance for 1,500 steps; untied learns (3.88 at step 500).
+- d128, V=4096 all ids used: tied learns (8.34 → 7.07 by 1,500); untied slower (8.33 at 500).
+- Data-path bisection (script's tokenised 256-chunks + plain loop): no induction on CPU or MPS; device parity verified
+  (identical logits/gradients CPU vs MPS).
+So train_lm.py is not "buggy" in the ordinary sense; the Oracle configuration (d256, post-LN nn.TransformerEncoderLayer,
+tied 4096 vocab, lr 3e-4, no warmup) sits in a regime where induction heads do not form in the step budgets we use (even
+53k steps for v3c). Running now at the Oracle's width: post-LN vs pre-LN (norm_first) × lr 3e-4 / 1e-3, 2k steps each
+(`induct_unit5.py`, MPS). If pre-LN forms the circuit, add `--pre-ln` to train_lm.py and re-scout the next lineage with it.

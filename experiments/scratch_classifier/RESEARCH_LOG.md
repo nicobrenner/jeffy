@@ -5481,3 +5481,12 @@ Scout running (`preln_scout.sh`, ~15 min): 2.7M from scratch, v3c recipe + --pre
 copy rows, 20 epochs; gates: induction signature at ep 5/10/20, copy_probe, real held-out recap recall, identity.
 If it passes: the next lineage is pre-LN (+RoPE, 512 later), and conversation following should improve too — an attention
 circuit that cannot copy cannot track a thread.
+
+## 2026-10-27 03:10 PDT — pre-LN scout (20 epochs from scratch): first real copying; recap recall 35%; identity 32/32
+v5_preln (2.7M, v3c recipe + --pre-ln, corpus + agent recap rows + 20k random-value copy rows, 20 epochs, 15 min):
+copy_probe name 1/16 · pet 5/16 · city 2/16 (every previous model 0/48) · real held-out recap recall **28/80 = 35%**
+(ct2 10%, best fine-tune 19%) · identity 32/32, human-life 1/96 · val ppl 3.6. Random-single-token signature still flat
+(that probe is far out of distribution for a chat model; replaced by `induction_probe3.py`: a real user turn repeated).
+Hits read like a model reaching into the recap and half-garbling it ("The rain, the lake, with a tree in your tab, you said").
+The circuit is there and weak at 175M tokens. Launched preln50 (`preln50.sh`, 50 epochs = v3c budget, ~40 min, checkpoints
+every 10): copy / recall / identity / simuser turn 1 at the end. Decision for Nico after that: make pre-LN the next lineage.

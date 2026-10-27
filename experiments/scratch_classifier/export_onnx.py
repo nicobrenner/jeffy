@@ -44,8 +44,9 @@ class OnnxFriendlyModel(nn.Module):
         for layer in self.layers:
             sa = layer.self_attn
 
-            # Project Q, K, V from x (post-norm: no pre-norm)
-            qkv = F.linear(x, sa.in_proj_weight, sa.in_proj_bias)
+            pre = getattr(layer, "norm_first", False)   # pre-LN models (train_lm --pre-ln) normalise before attention / FF
+            h = layer.norm1(x) if pre else x
+            qkv = F.linear(h, sa.in_proj_weight, sa.in_proj_bias)
             q, k, v = qkv.chunk(3, dim=-1)
 
             # Reshape for multi-head: (B, S, D) -> (B, H, S, Dh)
@@ -64,12 +65,11 @@ class OnnxFriendlyModel(nn.Module):
             out = out.transpose(1, 2).contiguous().view(B, S, self.d_model)
             out = F.linear(out, sa.out_proj.weight, sa.out_proj.bias)
 
-            # Post-norm: residual then norm
-            x = layer.norm1(x + out)
+            x = x + out if pre else layer.norm1(x + out)   # pre-LN: plain residual; post-LN: residual then norm
 
             # Feedforward with GELU (matching original activation)
-            ff_out = layer.linear2(F.gelu(layer.linear1(x)))
-            x = layer.norm2(x + ff_out)
+            ff_out = layer.linear2(F.gelu(layer.linear1(layer.norm2(x) if pre else x)))
+            x = x + ff_out if pre else layer.norm2(x + ff_out)
 
         x = self.norm(x)
         return self.lm_head(x)

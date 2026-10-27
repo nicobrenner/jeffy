@@ -5244,3 +5244,13 @@ openers 13/30; banning No too → "Sure" 6, "Thank you" 2, "I can't believe…".
 cannot create one. Kept as an off-by-default option (`ban_yesno`). The working fix is prime-first (turn-1 on-thread 50%, stock lines 0%).
 Corpus note: "Yes/Yeah" openers after a NON-yes/no user turn are 3.9% of Oracle turns (4,803) — strip them in the next data pass anyway.
 `harness.DEFAULT` now equals the demo defaults (prime first, sched, single sample).
+
+## 2026-10-26 22:56 PDT — Nico's rule: no regex/substring rules for intent, routing or response choice in the harness; demo fixes
+
+"At that level we should be using some sort of small model (classifier or otherwise)." Consequences: the Yes/No opener rule is off and will be
+removed; the crawler's lexicon detector and any push-back / yes-no-question detection become small classifiers (user-turn classifier on the
+Oracle's hidden states, LLM-labelled turns; word classifier on a labelled vocabulary) — first item next session. Regex stays only for offline
+corpus cleaning and probe measurement. Demo: header split into two wrapping rows (overflow gone); crawler legs articulated (hip swing + knee
+flex, foot lifts on the swing phase); memory line: the harness tells the model what its pet did ("Your pet crawler just fetched the word
+"talking" from the chat.") appended to the system prompt and rebuilt into the context — untrained input for now, the fixer should add such
+lines to training so the model learns to use them (roadmap step 4).

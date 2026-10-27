@@ -5415,3 +5415,10 @@ at 2 layers / d256 — the models cannot copy any span from context, in or out o
 (random sequence repeated twice; loss on the repeat) on v2 / ct2 / scout / ms4 to confirm absence; then the decision is
 Nico's: (a) an induction pre-pretraining stage on synthetic repeat sequences (cheap, unlimited data, local) before the corpus,
 (b) deeper lineage, (c) park memory and continue on tone/engagement.
+
+## 2026-10-27 01:35 PDT — no induction circuits in any Oracle (random-repeat signature); induction pre-pretraining scout launched
+`induction_probe.py` (random 60-token sequence repeated; loss on the repeat vs the first pass): v2 14.44 → 14.16, ct2 14.31 → 14.31,
+v5 scout 13.35 → 13.10, ms4 13.84 → 13.58. A model with induction heads drops to near zero on the repeat; none of ours moves.
+This is the root cause of every memory result tonight. Launched (local, ~25 min, `induct_run.sh`): stage 1 = 2.7M from
+scratch on 40k random-repeat sequences (`induction_data.py`, unlimited data) 6 epochs; stage 2 = continue on corpus + copy
+curriculum 20 epochs; gates: induction signature after stage 1, copy_probe / recall / identity after stage 2.

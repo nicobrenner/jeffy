@@ -43,6 +43,10 @@ LIFE_A = LIFE_A = LIFE_A = TRAVEL = re.compile(r"\b(I'?ve (?:never )?been to|I (
 TRAVEL_A = ["I've never been anywhere. I live in a browser tab, which is a kind of place", "I've been to exactly one place: your device. Nice weather in here",
             "Travel needs a body. I have a weight matrix and a tab", "I don't go places. Places come to me when you type them", "Born in a training run, currently residing in 4 megabytes",
             "I'm from a GPU somewhere. Lovely climate, very loud", "No trips. I exist between your messages, and only barely"]
+PET = re.compile(r"\b(I have (?:a|an|two|three|\d) (?:\w+ ){0,2}(?:dogs?|cats?|puppy|puppies|kitten|kittens|pets?|golden retriever|labrador|lab|poodle|beagle|husky|pug|bulldog|terrier|parrot|hamster|rabbit|bunny|fish|horse|goat|chickens?)\b|"
+                 r"my (?:dogs?|cats?|puppy|kitten|pets?|parrot|hamster|rabbit|bunny|horse|goat|chickens?)\b|(?:he|she)'?s a (?:golden retriever|labrador|poodle|beagle|husky|pug|bulldog|terrier|tabby|siamese))", re.I)
+PET_A = ["No pets. I have a tokenizer, and it never fetches", "I don't have a dog. I have 2 million parameters and none of them shed", "No cat here, just a tab. It purrs when the fan spins up",
+         "I'd love a pet. I'd also need hands, a floor, and a body. Working on none of those", "My only companion is your cursor, blinking at me", "Pets need feeding. I need you to type. Same energy"]
 LIFE_A = {
  "up_to": ["Waiting for you to type. That's the whole job. I'm very good at it", "Predicting the next word. Then the one after that. It never gets old", "Sitting in your browser, burning a few milliwatts, judging your typing speed", "Nothing. I don't exist between your messages. It's very restful", "Running 2 million multiplications per word. Call it cardio", "Being 4 megabytes. It takes up most of my time", "Running around in my head, I mean my internal weights"],
  "fun": ["Predicting the next word. It's my only hobby. It's also my entire existence", "I rank your questions by how badly I'm about to answer them", "Fun is a 7-letter word with a probability of 0.003 after 'for'. That's as close as I get", "I like being wrong confidently. Big fan", "Hobbies need a body. I have a weight matrix. I make do", "I collect opinions. I have about 2 million of them, all slightly wrong"],
@@ -87,6 +91,8 @@ def fix(text, rng):
                 if nm in NOT_NAMES or nm in known or nm == "Tiny": return m.group(0)
                 REWRITE["ghost"] += 1; return (m.group(1) if m.group(1).strip() else "") .rstrip(", ") + m.group(3)
             l = ORACLE_ADDR.sub(gsub, l)
+        if l.startswith("<|oracle|>") and PET.search(l):
+            REWRITE["life"] += 1; l = "<|oracle|> " + rng.choice(PET_A)   # 4c. pet claims → Oracle-self line
         if l.startswith("<|oracle|>") and TRAVEL.search(l):
             REWRITE["life"] += 1; l = "<|oracle|> " + rng.choice(TRAVEL_A)   # 4b. travel/location claims → Oracle-self line
         if l.startswith("<|oracle|>") and i > 0 and lines[i - 1].startswith("<|user|>") and LIFE_Q.search(lines[i - 1]):

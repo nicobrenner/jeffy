@@ -140,9 +140,12 @@
   #chat { position: relative; }
   #crawler { position: absolute; left: 0; top: 0; pointer-events: none; z-index: 5; opacity: 0; transition: opacity .35s; will-change: transform; }
   #crawler.on { opacity: 1; }
-  #crawler .leg polyline { stroke: var(--fg); stroke-width: 1.1; stroke-linejoin: round; opacity: .85; }
+  #crawler .leg line { stroke: var(--fg); stroke-width: 1; opacity: .9; }
   #crawler .leg .foot { fill: #ff3b5c; }
-  #crawler .chip rect { fill: var(--fg); } #crawler .chip .pin { fill: var(--fg); opacity: .6; } #crawler .chip .die { fill: var(--bg); } #crawler .chip .led { fill: #2b5cff; animation: blink 1.4s infinite; }
+  #crawler .chip .body { fill: #111; stroke: var(--fg); stroke-width: .6; } #crawler .chip .screen { fill: #2a2a33; } #crawler .chip .dot { fill: #d8d8e0; } #crawler .chip .led { fill: #9b7bff; }
+  .cr-tag { position: absolute; z-index: 7; pointer-events: none; font: 10px/1.25 ui-monospace, Menlo, monospace; background: #2b5cff; color: #fff; padding: 2px 6px; white-space: nowrap; opacity: 0; transition: opacity .25s; }
+  .cr-tag.on { opacity: 1; } .cr-stat { opacity: .85; }
+  .cr-net line { stroke: #8f7bff; stroke-width: 1; opacity: .7; } .cr-net line.lock { stroke: #ff7a1a; stroke-width: 1.5; opacity: .9; }
   .cr-label { position: absolute; z-index: 7; pointer-events: none; font: 11px/1.3 ui-monospace, Menlo, monospace; background: #2b5cff; color: #fff; padding: 2px 6px; white-space: nowrap; opacity: 0; transition: opacity .25s; box-shadow: 0 1px 3px rgba(0,0,0,.3); }
   .cr-label.on { opacity: 1; }
   .cr-box { position: absolute; z-index: 4; pointer-events: none; border: 1.5px solid #2b5cff; background: rgba(43,92,255,.12); opacity: 0; transition: opacity .25s, transform .6s ease-in, left .6s ease-in, top .6s ease-in; }
@@ -472,9 +475,9 @@
     const lex = {}; for (const k in L) for (const w of L[k].split(' ')) lex[w] = k;
     function classify(word, context) {
       const w = word.toLowerCase().replace(/[^a-z']/g, '');
-      if (lex[w]) return { label: lex[w], score: lex[w] === 'PERSONA' ? 0.93 : 0.82 + (w.length % 3) * 0.04 };
+      if (lex[w]) return { label: lex[w], score: lex[w] === 'PERSONA' ? 0.93 : lex[w] === 'QUESTION' ? 0.35 : 0.82 + (w.length % 3) * 0.04 };
       if (/^\d+$/.test(word)) return { label: 'NUMBER', score: 0.9 };
-      if (/^[A-Z][a-z]{2,}$/.test(word) && !/^(I|The|Yes|No|And|But|Well|Hi|Hey|Hello|Thanks|Oh|Ok|Okay|So|That|This|It|What|Why|How|When|Where|Who)$/.test(word)) return { label: 'NAME', score: 0.78 };
+      if (/^[A-Z][a-z]{2,}$/.test(word) && !/^(I|The|Yes|No|Yeah|Yep|Nope|And|But|Well|Hi|Hey|Hello|Thanks|Thank|Oh|Ok|Okay|So|That|This|It|What|Why|How|When|Where|Who|Not|Just|Cool|Nice|Love|Sure|Maybe|Also|Then|Now|Here|There|You|Your|Yours|Me|My|Mine|Let|Like|Good|Great|Fine|Sorry|Please|Right|Wow|Haha|Lol|Hmm|Huh)$/.test(word)) return { label: 'NAME', score: 0.78 };
       if (/(ing|ed)$/.test(w) && w.length > 5) return { label: 'ACTION', score: 0.62 + Math.min(0.2, (w.length - 6) * 0.03) };
       if (/(ly)$/.test(w) && w.length > 5) return { label: 'MANNER', score: 0.55 };
       if (/(ness|tion|ment|ity|ance|ence)$/.test(w)) return { label: 'IDEA', score: 0.66 };
@@ -490,24 +493,30 @@
   // bag it, leave; a little later it comes back and drops a note. Creature interface: on({type}) with oracle/user/idle/reset.
   const crawlerCheck = document.getElementById('crawlerCheck');
   const Crawler = (() => {
-    const W = 110, H = 70, CX = 55, CY = 38;   // svg box; chip centre
+    const W = 170, H = 170, CX = 85, CY = 85;   // top-down; the reference: a small dark device body, eight thin straight legs radiating evenly, red dot feet
+    const legDefs = [...Array(8)].map((_, i) => { const ang = (-100 + i * 42 + (i % 2 ? 6 : -6)) * Math.PI / 180, len = [72, 58, 80, 62, 76, 56, 78, 64][i];
+      return { ang, len, x2: CX + Math.cos(ang) * len, y2: CY + Math.sin(ang) * len }; });
     const el = document.createElement('div'); el.id = 'crawler'; el.style.width = W + 'px'; el.style.height = H + 'px';
-    // legs: hip on the chip edge, knee high and far, foot on the ground line; 4 per side
-    const legDefs = [...Array(8)].map((_, i) => { const side = i < 4 ? -1 : 1, k = i % 4; return { side, hipX: CX + side * 9, hipY: CY - 6 + k * 4, kneeX: CX + side * (26 + k * 6), kneeY: CY - 22 + k * 3, footX: CX + side * (40 + k * 8), footY: CY + 20 + (k % 2) * 3 }; });
-    el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
-      ${legDefs.map((d, i) => `<g class="leg" data-i="${i}" style="transform-origin:${d.hipX}px ${d.hipY}px"><polyline points="${d.hipX},${d.hipY} ${d.kneeX},${d.kneeY} ${d.footX},${d.footY}" fill="none"/><circle class="foot" cx="${d.footX}" cy="${d.footY}" r="1.8"/></g>`).join('')}
-      <g class="chip"><rect x="${CX - 9}" y="${CY - 9}" width="18" height="18" rx="2"/>${[-6, -2, 2, 6].map(o => `<rect class="pin" x="${CX + o - 1}" y="${CY - 12}" width="2" height="3"/><rect class="pin" x="${CX + o - 1}" y="${CY + 9}" width="2" height="3"/>`).join('')}<rect class="die" x="${CX - 4}" y="${CY - 4}" width="8" height="8"/><rect class="led" x="${CX + 5}" y="${CY - 7}" width="2" height="2"/></g></svg>`;
+    el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}"><g class="rig" style="transform-origin:${CX}px ${CY}px">
+      ${legDefs.map((d, i) => `<g class="leg" data-i="${i}" style="transform-origin:${CX}px ${CY}px"><line x1="${CX}" y1="${CY}" x2="${d.x2}" y2="${d.y2}"/><circle class="foot" cx="${d.x2}" cy="${d.y2}" r="2.2"/></g>`).join('')}
+      <g class="chip"><rect class="body" x="${CX - 7}" y="${CY - 13}" width="14" height="26" rx="1.5"/><rect class="screen" x="${CX - 4}" y="${CY - 10}" width="8" height="11" rx="0.8"/><rect class="dot" x="${CX - 2.5}" y="${CY + 5}" width="5" height="5"/><rect class="led" x="${CX - 1.2}" y="${CY - 12}" width="2.4" height="1.4"/></g></g></svg>`;
     const label = document.createElement('div'); label.className = 'cr-label';
+    const tag = document.createElement('div'); tag.className = 'cr-tag'; tag.innerHTML = 'CRAWLER/01<br><span class="cr-stat">0 w/s</span>';
+    const net = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); net.setAttribute('class', 'cr-net'); net.style.cssText = 'position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:3;overflow:visible';
     const box = document.createElement('div'); box.className = 'cr-box';
-    let x = -W, y = 20, busy = false, bag = [], visits = 0, legs = null;
-    function mount() { if (!el.isConnected) { chatEl.appendChild(el); chatEl.appendChild(label); chatEl.appendChild(box); legs = Array.from(el.querySelectorAll('.leg')); } }
-    function place(px, py, bob) { x = px; y = py; el.style.transform = `translate(${px - CX}px, ${py - CY + (bob || 0)}px)`; }
+    let x = -W, y = 20, busy = false, bag = [], visits = 0, legs = null, rig = null, heading = 0;
+    function mount() { if (!el.isConnected) { chatEl.appendChild(net); chatEl.appendChild(el); chatEl.appendChild(label); chatEl.appendChild(box); chatEl.appendChild(tag); legs = Array.from(el.querySelectorAll('.leg')); rig = el.querySelector('.rig'); } }
+    let wordsSeen = 0, tStart = 0;
+    function place(px, py, bob) { x = px; y = py; el.style.transform = `translate(${px - CX}px, ${py - CY}px)`; if (rig) rig.style.transform = `rotate(${heading}deg)`; tag.style.left = (px + 14) + 'px'; tag.style.top = (py - 14) + 'px'; }
+    function netLine(wb) { const l = document.createElementNS('http://www.w3.org/2000/svg', 'line'); l.setAttribute('x1', x); l.setAttribute('y1', y); l.setAttribute('x2', wb.left + wb.w / 2); l.setAttribute('y2', wb.top + wb.h / 2); net.appendChild(l); return l; }
+    function clearNet() { while (net.firstChild) net.removeChild(net.firstChild); }
     const sleep = ms => new Promise(r => setTimeout(r, ms));
-    function pose(t, moving) {   // alternating tripod gait: group A = legs 0,2,5,7; group B = 1,3,4,6. Each leg swings about its hip and lifts on its swing phase.
-      for (const g of legs) { const i = +g.dataset.i, groupA = [0, 2, 5, 7].includes(i), ph = t * 9 + (groupA ? 0 : Math.PI); const sw = moving ? Math.sin(ph) : 0, lift = moving ? Math.max(0, Math.sin(ph)) : 0; const side = legDefs[i].side; g.style.transform = `rotate(${sw * 9 * side}deg) translateY(${-lift * 3}px)`; }
+    function pose(t, moving) {   // straight legs: alternating groups swing a few degrees about the body and stretch/shorten slightly; body steady
+      for (const g of legs) { const i = +g.dataset.i, groupA = i % 2 === 0, ph = t * 9 + (groupA ? 0 : Math.PI); const sw = moving ? Math.sin(ph) : 0; g.style.transform = `rotate(${sw * 7}deg) scale(${1 + sw * 0.06})`; }
     }
     function walkTo(tx, ty, speed = 120) {   // stepping animation on rAF (no CSS glide): slight lateral wobble, body bob with the gait
       return new Promise(res => { const x0 = x, y0 = y, d = Math.hypot(tx - x0, ty - y0), dur = Math.max(300, d / speed * 1000); let t0 = null;
+        heading = Math.atan2(ty - y0, tx - x0) * 180 / Math.PI - 90;   // the rig's "forward" is up; face the way we walk
         const frame = ts => { if (!t0) t0 = ts; const u = Math.min(1, (ts - t0) / dur), tt = (ts - t0) / 1000; const wob = Math.sin(tt * 6) * 2 * (1 - u); place(x0 + (tx - x0) * u, y0 + (ty - y0) * u + wob, Math.sin(tt * 18) * 1.2); pose(tt, true); if (u < 1) requestAnimationFrame(frame); else { pose(tt, false); res(); } };
         requestAnimationFrame(frame); });
     }
@@ -528,16 +537,16 @@
     async function visit() {
       if (busy || !crawlerCheck.checked) return; busy = true; mount(); visits++;
       const all = wordBoxes(); if (!all.length) { busy = false; return; }
-      el.classList.add('on'); place(-W, all[0].top + 40);
+      el.classList.add('on'); tag.classList.add('on'); tStart = performance.now(); wordsSeen = 0; place(-W, all[0].top + 40);
       await walkTo(Math.min(140, chatEl.clientWidth / 3), all[0].top + 30);   // comes in and looks around
-      const seen = all.slice().sort(() => Math.random() - 0.5).slice(0, Math.min(6, all.length));   // scans a handful of words, detector labels on each
-      for (const wb of seen) { scanLabel(wb, 'scan'); await sleep(260); }
+      const seen = all.slice().sort(() => Math.random() - 0.5).slice(0, Math.min(6, all.length));   // scans a handful of words: detector label + a line from the body
+      for (const wb of seen) { scanLabel(wb, 'scan'); netLine(wb); wordsSeen++; tag.querySelector('.cr-stat').textContent = `${Math.round(wordsSeen / ((performance.now() - tStart) / 1000))} w/s`; await sleep(260); }
       await sleep(500);
       const w = seen.reduce((a, b) => (b.score > a.score ? b : a));   // locks onto the best detection
-      clearScans(); const [lbx, llb] = scanLabel(w, 'lock'); logEvent('crawler_lock', { word: w.word, label: w.label, score: w.score });
+      clearScans(); clearNet(); const [lbx, llb] = scanLabel(w, 'lock'); netLine(w).setAttribute('class', 'lock'); logEvent('crawler_lock', { word: w.word, label: w.label, score: w.score });
       await sleep(900);
       await walkTo(w.left + w.w / 2, w.top + w.h + 26, 220);   // goes to get it, faster
-      clearScans();
+      clearScans(); clearNet();
       box.style.left = w.left - 2 + 'px'; box.style.top = w.top - 1 + 'px'; box.style.width = w.w + 4 + 'px'; box.style.height = w.h + 2 + 'px'; box.style.transform = ''; box.classList.add('on');
       label.textContent = `CRAWLER/01  ${w.label} · ${w.word.toUpperCase()}`; label.style.left = w.left + 'px'; label.style.top = w.top - 22 + 'px'; label.classList.add('on');
       logEvent('crawler', { word: w.word, label: w.label, visit: visits });
@@ -545,17 +554,17 @@
       label.classList.remove('on'); bag.push(w.word);
       box.style.left = (x - 4) + 'px'; box.style.top = (y - 4) + 'px'; box.style.transform = 'scale(.15)';   // the word goes in the bag
       await sleep(600); box.classList.remove('on');
-      await walkTo(chatEl.clientWidth + W, y - 20 + Math.random() * 40, 160); el.classList.remove('on'); busy = false;
+      await walkTo(chatEl.clientWidth + W, y - 20 + Math.random() * 40, 160); el.classList.remove('on'); tag.classList.remove('on'); busy = false;
       setTimeout(returnWithDrop, 9000 + Math.random() * 12000);   // it always comes back, 9–21 s later
     }
     async function returnWithDrop() {
       if (!crawlerCheck.checked || !bag.length) return; if (busy) { setTimeout(returnWithDrop, 4000); return; } busy = true; mount();
       const last = chatEl.querySelector('.msg:last-of-type'); const ty = last ? last.offsetTop + last.offsetHeight + 30 : chatEl.scrollHeight - 40;
-      el.classList.add('on'); place(chatEl.clientWidth + W, ty); await walkTo(90, ty, 140);
+      el.classList.add('on'); tag.classList.add('on'); place(chatEl.clientWidth + W, ty); await walkTo(90, ty, 140);
       const words = bag.splice(0, bag.length); const notes = [`found this: ${words.join(', ')}. no idea what it means`, `brought back: ${words.join(', ')}. you said these. I kept them`, `${words.join(' / ')} — filed under things humans say`, `dropped ${words.length === 1 ? 'it' : 'them'} here: ${words.join(', ')}. smelled important`];
       const d = document.createElement('div'); d.className = 'cr-drop'; d.textContent = 'crawler: ' + notes[Math.floor(Math.random() * notes.length)]; chatEl.appendChild(d); chatEl.scrollTop = chatEl.scrollHeight;
       logEvent('crawler_drop', { words });
-      await sleep(1000); await walkTo(-W, ty + 10, 160); el.classList.remove('on'); busy = false;
+      await sleep(1000); await walkTo(-W, ty + 10, 160); el.classList.remove('on'); tag.classList.remove('on'); busy = false;
     }
     return { on(ev) { if (ev.type === 'oracle' && Math.random() < 0.5) setTimeout(visit, 800 + Math.random() * 1500); if (ev.type === 'reset') { bag = []; el.classList.remove('on'); } } };
   })();

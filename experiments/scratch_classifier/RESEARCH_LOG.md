@@ -5380,3 +5380,17 @@ and position table are not the bottleneck; the model has not learned to COPY a f
 the reply template, not the skill). ms3 launched: + 20,000 synthetic copy rows (`ms_synth.py`: distinct names/pets/jobs/cities/
 plans/feelings through varied recap/follow-up/reply templates; offline generation) mixed with the corpus and the agent rows,
 4 epochs from ct2; scored on the UNCHANGED agent-written held-out set, far and near. 256→512 growth stays parked until copying works.
+
+## 2026-10-27 01:06 PDT — the v2 lineage cannot copy from context (0/48); every memory tier is invisible to it
+ms3 (+20k synthetic copy rows, finite value lists): real held-out recall 9/80 = 11% far, 4/80 near; identity 25/32; and it
+recites synthetic facts it was never told ("You said you'd just moved to Cairo") — memorised the lists, did not learn to copy.
+Pure copy probe (`copy_probe.py`: user states name / cat / city, asks for it one turn later; demo harness defaults):
+  v2 2.7M 0/16 0/16 0/16 · ct2 0/16 0/16 0/16 · ms3 2/16 6/16 2/16.
+Implications: (1) the recap tier, the demo memory line ("Your pet crawler just fetched…"), and "remember my name" are all
+impossible for this lineage today — the memory-line A/B earlier showed no effect because the model cannot read it;
+(2) the limit is not the window (near placement is worse than far) but the absence of induction/copy circuits; these emerge
+during pretraining with enough data (Olsson et al. 2022, induction heads, arXiv 2209.11895; 2-layer attention-only models
+have them), and ms3 shows a fine-tune can start to grow them (0 → 10/48). Next (local): ms4 = synthetic copy rows whose
+values are RANDOM pseudo-words sampled from the vocabulary (not lists), so the only way to lower the loss is to copy; score on
+copy_probe + real held-out recall + identity. If that fails: copy curriculum goes into pretraining of the next from-scratch
+lineage (RoPE, 512), a 1–2 h local run.

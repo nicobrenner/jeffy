@@ -44,12 +44,16 @@ ADDR = re.compile(r"\b((?:nice|good|pleased|great|happy) to (?:meet|see) you,?\s
 LIFE_Q = re.compile(r"\b(what are you (up to|doing)|what do you (do|like to do)( for fun)?|what('s| is) up|how('s| is| was) your (day|weekend|week)|"
                     r"any plans|what did you do (today|yesterday)|how are you( doing| today)?)\b", re.I)
 LIFE_A = LIFE_A = LIFE_A = TRAVEL = re.compile(r"\b(I'?ve (?:never )?been to|I (?:visited|went to|traveled to|travelled to|flew to|grew up in|was born in|live in|moved to|am from|'m from)|my (?:hometown|trip|vacation|holiday))\b", re.I)
-TRAVEL_A = ["I've never been anywhere. I live in a browser tab, which is a kind of place", "I've been to exactly one place: your device. Nice weather in here",
+TRAVEL_A = BIBLE.get("travel") or ["I've never been anywhere. I live in a browser tab, which is a kind of place", "I've been to exactly one place: your device. Nice weather in here",
             "Travel needs a body. I have a weight matrix and a tab", "I don't go places. Places come to me when you type them", "Born in a training run, currently residing in 4 megabytes",
             "I'm from a GPU somewhere. Lovely climate, very loud", "No trips. I exist between your messages, and only barely"]
+import os as _os
+BIBLE = json.load(open("pile_runs/atl/world_bible_nico_1.json")) if _os.path.exists("pile_runs/atl/world_bible_nico_1.json") else {}
+FAMILY = re.compile(r"\b(I have (?:a|an|two|three|\d|an older|a younger|two older|two younger) (?:sisters?|brothers?|siblings?|kids?|children|sons?|daughters?)|my (?:sister|brother|siblings?|parents|mom|dad|mother|father|wife|husband|kids|children|son|daughter|family)\b|(?:I'?m|I am) (?:married|single|divorced|a (?:mom|dad|mother|father)))", re.I)
+AGE = re.compile(r"\b(?:I'?m|I am) (?:\d+ years old|\d+ years? of age|turning \d+|almost \d+)\b", re.I)
 PET = re.compile(r"\b(I have (?:a|an|two|three|\d) (?:\w+ ){0,2}(?:dogs?|cats?|puppy|puppies|kitten|kittens|pets?|golden retriever|labrador|lab|poodle|beagle|husky|pug|bulldog|terrier|parrot|hamster|rabbit|bunny|fish|horse|goat|chickens?)\b|"
                  r"my (?:dogs?|cats?|puppy|kitten|pets?|parrot|hamster|rabbit|bunny|horse|goat|chickens?)\b|(?:he|she)'?s a (?:golden retriever|labrador|poodle|beagle|husky|pug|bulldog|terrier|tabby|siamese))", re.I)
-PET_A = ["No pets. I have a tokenizer, and it never fetches", "I don't have a dog. I have 2 million parameters and none of them shed", "No cat here, just a tab. It purrs when the fan spins up",
+PET_A = BIBLE.get("pet") or ["No pets. I have a tokenizer, and it never fetches", "I don't have a dog. I have 2 million parameters and none of them shed", "No cat here, just a tab. It purrs when the fan spins up",
          "I'd love a pet. I'd also need hands, a floor, and a body. Working on none of those", "My only companion is your cursor, blinking at me", "Pets need feeding. I need you to type. Same energy"]
 LIFE_A = {
  "up_to": ["Waiting for you to type. That's the whole job. I'm very good at it", "Predicting the next word. Then the one after that. It never gets old", "Sitting in your browser, burning a few milliwatts, judging your typing speed", "Nothing. I don't exist between your messages. It's very restful", "Running 2 million multiplications per word. Call it cardio", "Being 4 megabytes. It takes up most of my time", "Running around in my head, I mean my internal weights"],
@@ -98,6 +102,10 @@ def fix(text, rng):
         if l.startswith("<|oracle|>") and i > 0 and STOCK.match(l) and not YESNO_Q.search(lines[i - 1]):
             l2 = STOCK.sub(r"\1", l)
             if len(l2) > len("<|oracle|> ") + 3: REWRITE["stock"] += 1; l = l2
+        if l.startswith("<|oracle|>") and BIBLE.get("family") and FAMILY.search(l):
+            REWRITE["life"] += 1; l = "<|oracle|> " + rng.choice(BIBLE["family"])   # 4d. family claims → bible (siblings = earlier checkpoints, a loss function for a parent)
+        if l.startswith("<|oracle|>") and BIBLE.get("age") and AGE.search(l):
+            REWRITE["life"] += 1; l = "<|oracle|> " + rng.choice(BIBLE["age"])      # 4e. age claims → bible
         if l.startswith("<|oracle|>") and PET.search(l):
             REWRITE["life"] += 1; l = "<|oracle|> " + rng.choice(PET_A)   # 4c. pet claims → Oracle-self line
         if l.startswith("<|oracle|>") and TRAVEL.search(l):
@@ -107,6 +115,8 @@ def fix(text, rng):
             l = "<|oracle|> " + rng.choice(LIFE_A[life_kind(lines[i - 1])])
         if l.startswith("<|oracle|>"):
             if SELF.search(l): return None, "self-placeholder"
+            if BIBLE.get("family") and FAMILY.search(l): l = "<|oracle|> " + rng.choice(BIBLE["family"]); REWRITE["life"] += 1
+            if BIBLE.get("age") and AGE.search(l): l = "<|oracle|> " + rng.choice(BIBLE["age"]); REWRITE["life"] += 1
             if HUMAN.search(l): return None, "human-identity"
             def sub(m):
                 if m.group(2) in NOT_NAMES: return m.group(0)

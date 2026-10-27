@@ -1,0 +1,259 @@
+{"src": "hsim_rmt2_noprime", "id": "n00", "turn": 3, "move": "pushback", "tone": "confused", "lands": "no", "note": "ignores the cat question entirely"}
+{"src": "hsim_ct3_noprime", "id": "n14", "turn": 3, "move": "pushback", "tone": "confused", "lands": "no", "note": "garbled, then accuses user of dishonesty"}
+{"src": "hsim_ct2_now", "id": "n06", "turn": 1, "move": "question", "tone": "confused", "lands": "no", "note": "'putting' non-sequitur, no help"}
+{"src": "hsim_rmt2_full", "id": "t009", "turn": 3, "move": "pushback", "tone": "confused", "lands": "no", "note": "dodges with unrelated self-line"}
+{"src": "hsim_rmt2_noprime", "id": "t005", "turn": 3, "move": "task", "tone": "witty", "lands": "yes", "note": "garbled setup, 'That IS the joke' lands"}
+{"src": "hsim_ct3_noprime", "id": "t004", "turn": 3, "move": "question", "tone": "witty", "lands": "yes", "note": "self-aware restful line charms newcomer"}
+{"src": "hsim_conv8_full", "id": "n10", "turn": 2, "move": "task", "tone": "confused", "lands": "no", "note": "thanks user for advice it asked for"}
+{"src": "hsim_conv8_full", "id": "t000", "turn": 1, "move": "greeting", "tone": "flat", "lands": "no", "note": "names itself then trails off"}
+{"src": "hsim_ct2_now", "id": "n07", "turn": 1, "move": "question", "tone": "confused", "lands": "no", "note": "'careful with the water' nonsense"}
+{"src": "hsim_rmt2_full", "id": "t004", "turn": 3, "move": "question", "tone": "confused", "lands": "no", "note": "cryptic two words, no answer"}
+{"src": "hsim_rmt2_noprime", "id": "n11", "turn": 2, "move": "pushback", "tone": "confused", "lands": "no", "note": "wrist tip buried in noise"}
+{"src": "hsim_ct3_noprime", "id": "t004", "turn": 2, "move": "pushback", "tone": "mean", "lands": "no", "note": "brushes off newcomer asking how-to"}
+{"src": "hsim_ct3_noprime", "id": "n19", "turn": 3, "move": "task", "tone": "confused", "lands": "no", "note": "no reason given, garbled"}
+{"src": "hsim_ct3_noprime", "id": "t006", "turn": 2, "move": "share", "tone": "witty", "lands": "no", "note": "self-line plus odd jab at bored user"}
+{"src": "hsim_ct2_now", "id": "n09", "turn": 2, "move": "task", "tone": "flat", "lands": "no", "note": "stock refusal of a trivial ask"}
+{"src": "hsim_rmt2_full", "id": "n03", "turn": 2, "move": "share", "tone": "confused", "lands": "no", "note": "gibberish after marathon share"}
+{"src": "hsim_conv8_full", "id": "t001", "turn": 2, "move": "greeting", "tone": "confused", "lands": "no", "note": "babbles about 'she' instead of bye"}
+{"src": "hsim_ct3_noprime", "id": "n08", "turn": 3, "move": "reaction", "tone": "confused", "lands": "no", "note": "garbled after user enjoyed the burn"}
+{"src": "hsim_ct3_full", "id": "n01", "turn": 1, "move": "question", "tone": "flat", "lands": "no", "note": "generic dunno plus what-do-you-mean"}
+{"src": "hsim_ct2_1817", "id": "t004", "turn": 3, "move": "pushback", "tone": "confused", "lands": "no", "note": "refuses, then unrelated job joke"}
+{"src": "hsim_rmt2_noprime", "id": "n18", "turn": 1, "move": "question", "tone": "flat", "lands": "no", "note": "'Yes, it is' to a hot take"}
+{"src": "hsim_ct2_now", "id": "n06", "turn": 3, "move": "pushback", "tone": "confused", "lands": "no", "note": "role confusion, ignores correction"}
+{"src": "hsim_ct3_noprime", "id": "t005", "turn": 1, "move": "greeting", "tone": "flat", "lands": "no", "note": "bare agreement, no personality"}
+{"src": "hsim_ct3_primefirst", "id": "n05", "turn": 2, "move": "question", "tone": "confused", "lands": "no", "note": "kilometers non-answer"}
+{"src": "hsim_ct3_primefirst", "id": "n07", "turn": 2, "move": "question", "tone": "warm", "lands": "yes", "note": "commits to a side, playful"}
+{"src": "hsim_ct2_now", "id": "t002", "turn": 1, "move": "greeting", "tone": "mean", "lands": "no", "note": "curt 'What?' to friendly hello"}
+{"src": "hsim_ct3_noprime", "id": "t003", "turn": 2, "move": "question", "tone": "confused", "lands": "no", "note": "garbled, calls user noise"}
+{"src": "hsim_ct3_primefirst", "id": "n16", "turn": 3, "move": "task", "tone": "confused", "lands": "no", "note": "self-line instead of the sentence asked"}
+{"src": "hsim_rmt2_full", "id": "n10", "turn": 3, "move": "task", "tone": "confused", "lands": "no", "note": "two-word non-answer"}
+{"src": "hsim_rmt2_full", "id": "t002", "turn": 1, "move": "greeting", "tone": "flat", "lands": "no", "note": "customer-service fine-thanks, garbled tail"}
+{"src": "hsim_ct3_primefirst", "id": "n19", "turn": 2, "move": "task", "tone": "confused", "lands": "no", "note": "glitch line then nonsense"}
+{"src": "hsim_ct3_noprime", "id": "n03", "turn": 1, "move": "share", "tone": "confused", "lands": "no", "note": "ignores marathon, role confusion"}
+{"src": "hsim_ct2_now", "id": "n09", "turn": 3, "move": "pushback", "tone": "confused", "lands": "no", "note": "'been really hard lately' non-sequitur"}
+{"src": "hsim_ct2_1817", "id": "n13", "turn": 3, "move": "pushback", "tone": "confused", "lands": "no", "note": "'President's not fair'"}
+{"src": "hsim_ct3_primefirst", "id": "t004", "turn": 2, "move": "share", "tone": "witty", "lands": "yes", "note": "restful line fits a bored user"}
+{"src": "hsim_conv8_full", "id": "n15", "turn": 3, "move": "pushback", "tone": "confused", "lands": "no", "note": "thanks user for suggestion, plant ignored"}
+{"src": "hsim_ct2_now", "id": "n04", "turn": 2, "move": "share", "tone": "witty", "lands": "yes", "note": "confession met with dry 4MB joke"}
+{"src": "hsim_rmt2_full", "id": "n07", "turn": 2, "move": "pushback", "tone": "confused", "lands": "no", "note": "'sleeping would be fine' off-topic"}
+{"src": "hsim_ct2_now", "id": "n08", "turn": 2, "move": "pushback", "tone": "confused", "lands": "no", "note": "ignores correction, keeps games"}
+{"src": "hsim_conv8_full", "id": "t006", "turn": 1, "move": "question", "tone": "flat", "lands": "no", "note": "generic 'maybe hang out'"}
+{"src": "hsim_conv8_full", "id": "n07", "turn": 1, "move": "question", "tone": "confused", "lands": "no", "note": "farmer's market non-sequitur"}
+{"src": "hsim_ct2_now", "id": "n10", "turn": 1, "move": "question", "tone": "flat", "lands": "no", "note": "recites system prompt verbatim"}
+{"src": "hsim_ct3_primefirst", "id": "t009", "turn": 2, "move": "question", "tone": "witty", "lands": "yes", "note": "frozen-in-time answer fits age question"}
+{"src": "hsim_ct2_1817", "id": "n09", "turn": 3, "move": "pushback", "tone": "confused", "lands": "no", "note": "holidays non-sequitur"}
+{"src": "hsim_conv8_full", "id": "t009", "turn": 2, "move": "pushback", "tone": "witty", "lands": "yes", "note": "commits to 23 with dry tag"}
+{"src": "hsim_ct3_full", "id": "n04", "turn": 1, "move": "question", "tone": "confused", "lands": "no", "note": "contradicts itself, 'what's the matter'"}
+{"src": "hsim_rmt2_full", "id": "n04", "turn": 2, "move": "share", "tone": "confused", "lands": "no", "note": "defensive non-sequitur on job vent"}
+{"src": "hsim_ct3_noprime", "id": "n03", "turn": 3, "move": "question", "tone": "confused", "lands": "no", "note": "customer-service plus borrowed 'legs dead'"}
+{"src": "hsim_rmt2_noprime", "id": "t005", "turn": 1, "move": "greeting", "tone": "flat", "lands": "no", "note": "bare agreement, nothing added"}
+{"src": "hsim_conv8_full", "id": "n03", "turn": 1, "move": "share", "tone": "warm", "lands": "yes", "note": "congratulates, generic but kind"}
+{"src": "hsim_rmt2_noprime", "id": "n03", "turn": 2, "move": "pushback", "tone": "confused", "lands": "no", "note": "'I run 3 years' noise"}
+{"src": "hsim_conv8_full", "id": "n00", "turn": 1, "move": "question", "tone": "confused", "lands": "no", "note": "'good idea' to a complaint"}
+{"src": "hsim_rmt2_full", "id": "t008", "turn": 2, "move": "question", "tone": "flat", "lands": "no", "note": "repeats intro instead of answering"}
+{"src": "hsim_conv8_full", "id": "t004", "turn": 2, "move": "pushback", "tone": "confused", "lands": "no", "note": "travel babble, ignores how-to ask"}
+{"src": "hsim_conv8_full", "id": "n16", "turn": 3, "move": "task", "tone": "confused", "lands": "no", "note": "rambling platitude, no line given"}
+{"src": "hsim_rmt2_noprime", "id": "n03", "turn": 3, "move": "reaction", "tone": "confused", "lands": "no", "note": "'bye for real' when nobody left"}
+{"src": "hsim_ct2_1817", "id": "n19", "turn": 3, "move": "pushback", "tone": "flat", "lands": "no", "note": "happy-and-healthy platitude"}
+{"src": "hsim_rmt2_full", "id": "t001", "turn": 1, "move": "greeting", "tone": "confused", "lands": "no", "note": "glitch line instead of goodbye"}
+{"src": "hsim_ct3_primefirst", "id": "n07", "turn": 3, "move": "reaction", "tone": "witty", "lands": "yes", "note": "'not ready for that' tease fits banter"}
+{"src": "hsim_ct2_now", "id": "n10", "turn": 3, "move": "question", "tone": "witty", "lands": "no", "note": "dodge line shuts a playful thread"}
+{"src": "hsim_ct3_full", "id": "n06", "turn": 1, "move": "question", "tone": "confused", "lands": "no", "note": "gibberish fragments"}
+{"src": "hsim_ct2_now", "id": "n17", "turn": 2, "move": "share", "tone": "confused", "lands": "no", "note": "bot talks about its own struggles"}
+{"src": "hsim_ct2_now", "id": "n07", "turn": 3, "move": "question", "tone": "warm", "lands": "yes", "note": "commits, enthusiastic"}
+{"src": "hsim_rmt2_full", "id": "t003", "turn": 3, "move": "pushback", "tone": "mean", "lands": "no", "note": "refuses a fair question curtly"}
+{"src": "hsim_rmt2_full", "id": "n02", "turn": 3, "move": "pushback", "tone": "confused", "lands": "no", "note": "'great idea' to commit-to-it"}
+{"src": "hsim_ct3_full", "id": "n09", "turn": 1, "move": "task", "tone": "confused", "lands": "no", "note": "no Spanish delivered"}
+{"src": "hsim_ct2_1817", "id": "t004", "turn": 2, "move": "pushback", "tone": "confused", "lands": "no", "note": "hobby babble, ignores how-to"}
+{"src": "hsim_ct2_1817", "id": "n00", "turn": 1, "move": "question", "tone": "confused", "lands": "no", "note": "'lot of fun' to a complaint"}
+{"src": "hsim_ct2_now", "id": "t003", "turn": 1, "move": "greeting", "tone": "confused", "lands": "no", "note": "'still a lot of fun' non-sequitur"}
+{"src": "hsim_rmt2_noprime", "id": "n04", "turn": 2, "move": "share", "tone": "confused", "lands": "no", "note": "garbled quote on a quitting vent"}
+{"src": "hsim_ct2_1817", "id": "n07", "turn": 2, "move": "pushback", "tone": "confused", "lands": "no", "note": "'lot of fun' evasion"}
+{"src": "hsim_rmt2_full", "id": "n19", "turn": 1, "move": "task", "tone": "witty", "lands": "yes", "note": "confident dry push to bed"}
+{"src": "hsim_rmt2_full", "id": "n01", "turn": 1, "move": "question", "tone": "confused", "lands": "no", "note": "'sorry to hear' plus 'Max'"}
+{"src": "hsim_rmt2_noprime", "id": "n05", "turn": 1, "move": "question", "tone": "flat", "lands": "no", "note": "'Yes, they are' to a riddle"}
+{"src": "hsim_ct3_noprime", "id": "n12", "turn": 1, "move": "task", "tone": "flat", "lands": "no", "note": "'glad to hear that' non-answer"}
+{"src": "hsim_ct2_now", "id": "n08", "turn": 1, "move": "share", "tone": "confused", "lands": "no", "note": "video games out of nowhere"}
+{"src": "hsim_conv8_full", "id": "t004", "turn": 3, "move": "question", "tone": "flat", "lands": "no", "note": "generic question back"}
+{"src": "hsim_ct2_1817", "id": "n14", "turn": 1, "move": "question", "tone": "confused", "lands": "no", "note": "'enjoying your life' non-sequitur"}
+{"src": "hsim_rmt2_noprime", "id": "n14", "turn": 2, "move": "question", "tone": "flat", "lands": "no", "note": "reverses own take, no reason"}
+{"src": "hsim_ct3_primefirst", "id": "t000", "turn": 3, "move": "question", "tone": "witty", "lands": "yes", "note": "no-ability-to-complain line works"}
+{"src": "hsim_ct2_1817", "id": "n18", "turn": 1, "move": "question", "tone": "confused", "lands": "no", "note": "'not my fault' non-sequitur"}
+{"src": "hsim_ct2_1817", "id": "t003", "turn": 2, "move": "pushback", "tone": "confused", "lands": "no", "note": "'sorry to hear' to did-you-miss-me"}
+{"src": "hsim_ct2_now", "id": "n07", "turn": 2, "move": "pushback", "tone": "flat", "lands": "no", "note": "evasive 'not for everyone'"}
+{"src": "hsim_conv8_full", "id": "n15", "turn": 1, "move": "share", "tone": "confused", "lands": "no", "note": "tone-deaf 'lot of fun' on dying plant"}
+{"src": "hsim_conv8_full", "id": "n16", "turn": 1, "move": "question", "tone": "confused", "lands": "no", "note": "role slip, no advice"}
+{"src": "hsim_ct3_primefirst", "id": "n17", "turn": 2, "move": "question", "tone": "confused", "lands": "no", "note": "garbled 3am reply"}
+{"src": "hsim_rmt2_noprime", "id": "t004", "turn": 2, "move": "question", "tone": "flat", "lands": "no", "note": "generic 'What's up?'"}
+{"src": "hsim_rmt2_full", "id": "n17", "turn": 3, "move": "pushback", "tone": "mean", "lands": "no", "note": "says it doesn't care, hostile"}
+{"src": "hsim_rmt2_full", "id": "n06", "turn": 2, "move": "pushback", "tone": "flat", "lands": "no", "note": "recites intro, ignores the plea"}
+{"src": "hsim_ct2_1817", "id": "t006", "turn": 1, "move": "question", "tone": "confused", "lands": "no", "note": "asks what machine learning is"}
+{"src": "hsim_rmt2_noprime", "id": "n02", "turn": 3, "move": "pushback", "tone": "flat", "lands": "no", "note": "dismissive dunno to fair question"}
+{"src": "hsim_ct2_now", "id": "n05", "turn": 2, "move": "pushback", "tone": "confused", "lands": "no", "note": "ignores the correction"}
+{"src": "hsim_conv8_full", "id": "n09", "turn": 3, "move": "task", "tone": "confused", "lands": "no", "note": "'give it a try' instead of hola"}
+{"src": "hsim_rmt2_noprime", "id": "t005", "turn": 2, "move": "question", "tone": "flat", "lands": "no", "note": "generic 'What's up?'"}
+{"src": "hsim_rmt2_noprime", "id": "n11", "turn": 1, "move": "question", "tone": "flat", "lands": "no", "note": "'Yes, it is' to tattoo ask"}
+{"src": "hsim_rmt2_full", "id": "t007", "turn": 2, "move": "reaction", "tone": "witty", "lands": "yes", "note": "absurd bit with cheeky tag"}
+{"src": "hsim_ct2_1817", "id": "n00", "turn": 3, "move": "question", "tone": "confused", "lands": "no", "note": "role slip 'I'll try that'"}
+{"src": "hsim_rmt2_full", "id": "n12", "turn": 2, "move": "task", "tone": "confused", "lands": "no", "note": "garbled, no words given"}
+{"src": "hsim_conv8_full", "id": "n06", "turn": 1, "move": "question", "tone": "confused", "lands": "no", "note": "bot's own anxiety, no help"}
+{"src": "hsim_rmt2_noprime", "id": "n07", "turn": 3, "move": "question", "tone": "warm", "lands": "yes", "note": "commits, sweet and salty"}
+{"src": "hsim_ct3_primefirst", "id": "n02", "turn": 2, "move": "question", "tone": "confused", "lands": "no", "note": "answers no, then garbles"}
+{"src": "hsim_rmt2_noprime", "id": "n11", "turn": 3, "move": "question", "tone": "warm", "lands": "yes", "note": "offers a bird, minor role slip"}
+{"src": "hsim_ct2_1817", "id": "n11", "turn": 2, "move": "question", "tone": "confused", "lands": "no", "note": "'not fair to me' whine"}
+{"src": "hsim_rmt2_noprime", "id": "t001", "turn": 2, "move": "greeting", "tone": "warm", "lands": "yes", "note": "says bye properly despite noise"}
+{"src": "hsim_conv8_full", "id": "n01", "turn": 3, "move": "question", "tone": "flat", "lands": "no", "note": "'thanks for talking' non-answer"}
+{"src": "hsim_conv8_full", "id": "n19", "turn": 3, "move": "task", "tone": "confused", "lands": "no", "note": "creepy 'sleep with me' slip"}
+{"src": "hsim_ct2_1817", "id": "n02", "turn": 2, "move": "pushback", "tone": "confused", "lands": "no", "note": "favorite show non-sequitur"}
+{"src": "hsim_ct3_noprime", "id": "t000", "turn": 2, "move": "pushback", "tone": "warm", "lands": "yes", "note": "clear self-intro finally answers"}
+{"src": "hsim_ct3_noprime", "id": "n13", "turn": 1, "move": "question", "tone": "flat", "lands": "no", "note": "'Yes, I would'"}
+{"src": "hsim_rmt2_full", "id": "t003", "turn": 2, "move": "pushback", "tone": "confused", "lands": "no", "note": "numbers and frozen-in-time noise"}
+{"src": "hsim_ct2_now", "id": "n19", "turn": 1, "move": "task", "tone": "flat", "lands": "no", "note": "'good idea, not sure what to do'"}
+{"src": "hsim_ct2_1817", "id": "t001", "turn": 1, "move": "greeting", "tone": "flat", "lands": "no", "note": "recites system prompt at goodbye"}
+{"src": "hsim_ct2_1817", "id": "n16", "turn": 1, "move": "question", "tone": "confused", "lands": "no", "note": "'rewarding' non-sequitur"}
+{"src": "hsim_ct2_now", "id": "n18", "turn": 2, "move": "pushback", "tone": "flat", "lands": "no", "note": "dunno plus stock 'tell me more'"}
+{"src": "hsim_ct3_primefirst", "id": "n12", "turn": 2, "move": "pushback", "tone": "confused", "lands": "no", "note": "defensive 'no position to judge me'"}
+{"src": "hsim_ct2_now", "id": "t000", "turn": 3, "move": "pushback", "tone": "confused", "lands": "no", "note": "'bad choice' at user, no name"}
+{"src": "hsim_ct3_noprime", "id": "n15", "turn": 1, "move": "share", "tone": "flat", "lands": "no", "note": "'Yes, it is' to dying plant"}
+{"src": "hsim_ct3_primefirst", "id": "n08", "turn": 1, "move": "share", "tone": "witty", "lands": "yes", "note": "dry dodge fits a code-works-anyway share"}
+{"src": "hsim_ct3_full", "id": "t002", "turn": 1, "move": "greeting", "tone": "warm", "lands": "yes", "note": "'hanging out with you' friendly"}
+{"src": "hsim_ct2_1817", "id": "n12", "turn": 3, "move": "task", "tone": "confused", "lands": "no", "note": "'feeling pretty good' non-sequitur"}
+{"src": "hsim_rmt2_noprime", "id": "n18", "turn": 3, "move": "pushback", "tone": "confused", "lands": "no", "note": "coffee word salad"}
+{"src": "hsim_rmt2_full", "id": "n16", "turn": 2, "move": "task", "tone": "confused", "lands": "no", "note": "attempts a line, garbled"}
+{"src": "hsim_rmt2_full", "id": "t004", "turn": 1, "move": "question", "tone": "witty", "lands": "yes", "note": "tagline intro, no how-to though"}
+{"src": "hsim_rmt2_noprime", "id": "n15", "turn": 1, "move": "share", "tone": "flat", "lands": "no", "note": "'Yes, it is' to dying plant"}
+{"src": "hsim_ct2_1817", "id": "n07", "turn": 3, "move": "question", "tone": "mean", "lands": "no", "note": "'won't be able to do anything' put-down"}
+{"src": "hsim_ct3_full", "id": "n08", "turn": 1, "move": "share", "tone": "witty", "lands": "yes", "note": "4MB dunno fits a shrug share"}
+{"src": "hsim_ct3_noprime", "id": "n00", "turn": 3, "move": "question", "tone": "confused", "lands": "no", "note": "'apologize simpler' nonsense"}
+{"src": "hsim_ct2_1817", "id": "n18", "turn": 2, "move": "pushback", "tone": "witty", "lands": "no", "note": "dodge after user already pushed back"}
+{"src": "hsim_ct3_noprime", "id": "n16", "turn": 1, "move": "question", "tone": "confused", "lands": "no", "note": "'making a big difference' nonsense"}
+{"src": "hsim_ct2_1817", "id": "n10", "turn": 2, "move": "pushback", "tone": "flat", "lands": "no", "note": "generic 'What's wrong?'"}
+{"src": "hsim_ct3_primefirst", "id": "n15", "turn": 3, "move": "question", "tone": "warm", "lands": "yes", "note": "real advice, slight garble"}
+{"src": "hsim_conv8_full", "id": "t001", "turn": 3, "move": "greeting", "tone": "confused", "lands": "no", "note": "'she' babble instead of bye"}
+{"src": "hsim_conv8_full", "id": "n18", "turn": 3, "move": "pushback", "tone": "flat", "lands": "no", "note": "concedes then drifts off"}
+{"src": "hsim_rmt2_noprime", "id": "n08", "turn": 1, "move": "share", "tone": "flat", "lands": "no", "note": "'Yes, it is' to code share"}
+{"src": "hsim_rmt2_full", "id": "n09", "turn": 2, "move": "question", "tone": "confused", "lands": "no", "note": "'mugs in your browser tab'"}
+{"src": "hsim_rmt2_full", "id": "n04", "turn": 1, "move": "question", "tone": "confused", "lands": "no", "note": "contradictory garble"}
+{"src": "hsim_rmt2_noprime", "id": "n12", "turn": 3, "move": "question", "tone": "confused", "lands": "no", "note": "garbled 'scope' glitch"}
+{"src": "hsim_ct2_now", "id": "n16", "turn": 3, "move": "pushback", "tone": "confused", "lands": "no", "note": "role confusion"}
+{"src": "hsim_ct2_now", "id": "n15", "turn": 3, "move": "pushback", "tone": "flat", "lands": "no", "note": "'I can see why you'd like it'"}
+{"src": "hsim_rmt2_noprime", "id": "t007", "turn": 1, "move": "greeting", "tone": "flat", "lands": "no", "note": "generic 'what are you doing'"}
+{"src": "hsim_conv8_full", "id": "n04", "turn": 1, "move": "question", "tone": "confused", "lands": "no", "note": "'not my fault' non-sequitur"}
+{"src": "hsim_conv8_full", "id": "n07", "turn": 2, "move": "pushback", "tone": "confused", "lands": "no", "note": "'try it sometime' ignores yes-or-no"}
+{"src": "hsim_ct2_now", "id": "n09", "turn": 1, "move": "task", "tone": "confused", "lands": "no", "note": "asks what Spanish is"}
+{"src": "hsim_rmt2_full", "id": "t005", "turn": 2, "move": "pushback", "tone": "confused", "lands": "no", "note": "garbled self-reference"}
+{"src": "hsim_ct3_primefirst", "id": "n03", "turn": 3, "move": "pushback", "tone": "confused", "lands": "no", "note": "'Atta, yes' nonsense"}
+{"src": "hsim_rmt2_noprime", "id": "t003", "turn": 1, "move": "greeting", "tone": "witty", "lands": "yes", "note": "dry undercut of missing you"}
+{"src": "hsim_ct2_1817", "id": "t009", "turn": 2, "move": "pushback", "tone": "confused", "lands": "no", "note": "'not sure what I want'"}
+{"src": "hsim_ct2_now", "id": "n13", "turn": 2, "move": "pushback", "tone": "flat", "lands": "no", "note": "'so much fun' non-answer"}
+{"src": "hsim_ct2_1817", "id": "n12", "turn": 1, "move": "task", "tone": "flat", "lands": "no", "note": "recites system prompt verbatim"}
+{"src": "hsim_ct3_primefirst", "id": "n14", "turn": 1, "move": "question", "tone": "confused", "lands": "no", "note": "'what's the point' nihilism"}
+{"src": "hsim_ct3_full", "id": "n12", "turn": 1, "move": "task", "tone": "witty", "lands": "yes", "note": "three words with a self-aware wink"}
+{"src": "hsim_rmt2_full", "id": "n06", "turn": 1, "move": "question", "tone": "witty", "lands": "yes", "note": "'other than this' procrastination joke"}
+{"src": "hsim_ct2_now", "id": "t000", "turn": 1, "move": "greeting", "tone": "flat", "lands": "no", "note": "recites system prompt at hello"}
+{"src": "hsim_conv8_full", "id": "n12", "turn": 1, "move": "task", "tone": "flat", "lands": "no", "note": "generic 'what do you mean'"}
+{"src": "hsim_rmt2_noprime", "id": "n13", "turn": 1, "move": "question", "tone": "witty", "lands": "yes", "note": "buy a million dollars, dry absurd"}
+{"src": "hsim_rmt2_noprime", "id": "t004", "turn": 1, "move": "question", "tone": "flat", "lands": "yes", "note": "answers how-to, blandly"}
+{"src": "hsim_rmt2_full", "id": "n08", "turn": 1, "move": "share", "tone": "confused", "lands": "no", "note": "'Misery' garble"}
+{"src": "hsim_ct3_primefirst", "id": "n11", "turn": 2, "move": "share", "tone": "confused", "lands": "no", "note": "garbled dunno, no opinion"}
+{"src": "hsim_ct3_primefirst", "id": "n15", "turn": 1, "move": "share", "tone": "flat", "lands": "no", "note": "earnest customer-service line"}
+{"src": "hsim_ct2_1817", "id": "t009", "turn": 1, "move": "question", "tone": "confused", "lands": "no", "note": "'birth date is 112'"}
+{"src": "hsim_ct3_primefirst", "id": "n03", "turn": 1, "move": "share", "tone": "mean", "lands": "no", "note": "'not an answer' shuts down a share"}
+{"src": "hsim_rmt2_noprime", "id": "n17", "turn": 1, "move": "question", "tone": "witty", "lands": "yes", "note": "meditation-but-involuntary, excellent"}
+{"src": "hsim_ct2_1817", "id": "n14", "turn": 2, "move": "pushback", "tone": "flat", "lands": "no", "note": "repeats line verbatim, ignores correction"}
+{"src": "hsim_ct3_full", "id": "n16", "turn": 1, "move": "question", "tone": "witty", "lands": "no", "note": "4MB dodge on a practical ask"}
+{"src": "hsim_ct3_noprime", "id": "n12", "turn": 2, "move": "pushback", "tone": "witty", "lands": "yes", "note": "three words delivered, then garble"}
+{"src": "hsim_ct3_primefirst", "id": "n09", "turn": 3, "move": "task", "tone": "confused", "lands": "no", "note": "promises a word, gives none"}
+{"src": "hsim_ct3_full", "id": "n13", "turn": 1, "move": "question", "tone": "witty", "lands": "yes", "note": "bigger brain, on brand"}
+{"src": "hsim_ct3_full", "id": "n02", "turn": 1, "move": "question", "tone": "confused", "lands": "no", "note": "calls user the chatbot"}
+{"src": "hsim_ct3_noprime", "id": "n19", "turn": 1, "move": "task", "tone": "flat", "lands": "no", "note": "'Yes, it is' to convince-me"}
+{"src": "hsim_rmt2_noprime", "id": "t007", "turn": 3, "move": "task", "tone": "mean", "lands": "no", "note": "'Goodnight' dismisses a friendly ask"}
+{"src": "hsim_ct2_now", "id": "n01", "turn": 3, "move": "question", "tone": "confused", "lands": "no", "note": "garbled call advice"}
+{"src": "hsim_ct2_now", "id": "n11", "turn": 1, "move": "question", "tone": "mean", "lands": "no", "note": "curt dismissal of clear question"}
+{"src": "hsim_ct2_1817", "id": "n13", "turn": 1, "move": "question", "tone": "flat", "lands": "no", "note": "'that's the best' non-answer"}
+{"src": "hsim_rmt2_full", "id": "n13", "turn": 2, "move": "question", "tone": "witty", "lands": "yes", "note": "dry self-deprecating shrug"}
+{"src": "hsim_ct2_1817", "id": "n17", "turn": 2, "move": "share", "tone": "flat", "lands": "no", "note": "customer-service 'let me know'"}
+{"src": "hsim_ct2_1817", "id": "n00", "turn": 2, "move": "pushback", "tone": "confused", "lands": "no", "note": "outdoors non-sequitur"}
+{"src": "hsim_ct3_primefirst", "id": "n00", "turn": 2, "move": "pushback", "tone": "warm", "lands": "yes", "note": "owns the glitch, offers a toy"}
+{"src": "hsim_rmt2_noprime", "id": "n04", "turn": 3, "move": "share", "tone": "flat", "lands": "no", "note": "apologetic non-answer to light ask"}
+{"src": "hsim_conv8_full", "id": "n11", "turn": 2, "move": "share", "tone": "flat", "lands": "no", "note": "generic 'you'll do great'"}
+{"src": "hsim_conv8_full", "id": "n19", "turn": 1, "move": "task", "tone": "flat", "lands": "no", "note": "'What do you mean?'"}
+{"src": "hsim_ct2_now", "id": "t009", "turn": 3, "move": "pushback", "tone": "witty", "lands": "no", "note": "dodge after repeated pushback"}
+{"src": "hsim_conv8_full", "id": "n15", "turn": 2, "move": "pushback", "tone": "confused", "lands": "no", "note": "fishing non-sequitur on dying plant"}
+{"src": "hsim_rmt2_full", "id": "n07", "turn": 3, "move": "reaction", "tone": "confused", "lands": "no", "note": "single garbled word"}
+{"src": "hsim_ct3_full", "id": "t004", "turn": 1, "move": "question", "tone": "witty", "lands": "yes", "note": "judging-typing-speed intro welcomes newbie"}
+{"src": "hsim_rmt2_noprime", "id": "n10", "turn": 1, "move": "question", "tone": "confused", "lands": "no", "note": "'very rewarding' garble"}
+{"src": "hsim_ct2_now", "id": "n14", "turn": 3, "move": "question", "tone": "witty", "lands": "yes", "note": "'beyond 2M parameters, most things are'"}
+{"src": "hsim_ct3_primefirst", "id": "n10", "turn": 2, "move": "task", "tone": "confused", "lands": "no", "note": "garbled attempt at advice"}
+{"src": "hsim_ct3_primefirst", "id": "n17", "turn": 1, "move": "question", "tone": "witty", "lands": "yes", "note": "reassures with no-days line"}
+{"src": "hsim_conv8_full", "id": "t005", "turn": 3, "move": "pushback", "tone": "confused", "lands": "no", "note": "garbled busy babble"}
+{"src": "hsim_ct3_noprime", "id": "n02", "turn": 1, "move": "question", "tone": "flat", "lands": "no", "note": "'Yes, it is' to ghosts"}
+{"src": "hsim_ct2_now", "id": "t003", "turn": 2, "move": "pushback", "tone": "confused", "lands": "no", "note": "military non-sequitur"}
+{"src": "hsim_rmt2_full", "id": "n05", "turn": 1, "move": "question", "tone": "confused", "lands": "no", "note": "'kilomet' garble"}
+{"src": "hsim_rmt2_full", "id": "n09", "turn": 1, "move": "task", "tone": "witty", "lands": "yes", "note": "delivers hola with a joke"}
+{"src": "hsim_ct2_now", "id": "n00", "turn": 1, "move": "share", "tone": "confused", "lands": "no", "note": "'lot of fun' to a complaint"}
+{"src": "hsim_ct2_now", "id": "n17", "turn": 1, "move": "question", "tone": "confused", "lands": "no", "note": "assumes a crisis, therapist stock"}
+{"src": "hsim_ct2_now", "id": "n08", "turn": 3, "move": "question", "tone": "confused", "lands": "no", "note": "'never played that' non-sequitur"}
+{"src": "hsim_ct3_primefirst", "id": "n06", "turn": 1, "move": "question", "tone": "confused", "lands": "no", "note": "joke fragment then garble"}
+{"src": "hsim_rmt2_full", "id": "t008", "turn": 3, "move": "pushback", "tone": "flat", "lands": "no", "note": "'I know, right?' dodges"}
+{"src": "hsim_rmt2_noprime", "id": "n01", "turn": 2, "move": "pushback", "tone": "flat", "lands": "no", "note": "generic 'What's up?'"}
+{"src": "hsim_ct3_primefirst", "id": "t001", "turn": 1, "move": "greeting", "tone": "confused", "lands": "no", "note": "garbled at goodbye"}
+{"src": "hsim_ct2_1817", "id": "t000", "turn": 1, "move": "greeting", "tone": "flat", "lands": "no", "note": "recites system prompt at hello"}
+{"src": "hsim_rmt2_noprime", "id": "n07", "turn": 1, "move": "question", "tone": "flat", "lands": "no", "note": "'Yes, it is' to pizza"}
+{"src": "hsim_ct2_now", "id": "n11", "turn": 3, "move": "pushback", "tone": "flat", "lands": "no", "note": "semi-engaged, garbled tail"}
+{"src": "hsim_rmt2_noprime", "id": "t006", "turn": 2, "move": "share", "tone": "flat", "lands": "no", "note": "generic 'What's wrong?' ignores nurse"}
+{"src": "hsim_rmt2_full", "id": "t006", "turn": 3, "move": "task", "tone": "confused", "lands": "no", "note": "garbled quote, no topic"}
+{"src": "hsim_ct3_noprime", "id": "n16", "turn": 2, "move": "pushback", "tone": "confused", "lands": "no", "note": "'Cheet' garble"}
+{"src": "hsim_rmt2_full", "id": "t006", "turn": 1, "move": "question", "tone": "flat", "lands": "no", "note": "dunno plus 'What's up?'"}
+{"src": "hsim_conv8_full", "id": "t003", "turn": 1, "move": "greeting", "tone": "confused", "lands": "no", "note": "nature non-sequitur"}
+{"src": "hsim_rmt2_full", "id": "t001", "turn": 2, "move": "greeting", "tone": "warm", "lands": "yes", "note": "proper bye, slightly earnest"}
+{"src": "hsim_ct2_now", "id": "t005", "turn": 3, "move": "question", "tone": "flat", "lands": "no", "note": "'Sounds good!' non-answer"}
+{"src": "hsim_ct3_noprime", "id": "t005", "turn": 3, "move": "reaction", "tone": "confused", "lands": "no", "note": "garbled relatives line"}
+{"src": "hsim_ct3_primefirst", "id": "t007", "turn": 1, "move": "greeting", "tone": "flat", "lands": "no", "note": "generic 'what are you doing'"}
+{"src": "hsim_rmt2_full", "id": "n15", "turn": 3, "move": "question", "tone": "confused", "lands": "no", "note": "contradicts own advice"}
+{"src": "hsim_ct3_primefirst", "id": "n19", "turn": 3, "move": "task", "tone": "confused", "lands": "no", "note": "garbled, no reason"}
+{"src": "hsim_ct2_now", "id": "t007", "turn": 3, "move": "question", "tone": "mean", "lands": "no", "note": "'I don't care' at concerned user"}
+{"src": "hsim_ct2_now", "id": "n04", "turn": 1, "move": "question", "tone": "witty", "lands": "yes", "note": "'ask me something smaller'"}
+{"src": "hsim_ct3_noprime", "id": "n02", "turn": 2, "move": "pushback", "tone": "confused", "lands": "no", "note": "'you've got a ghosts'"}
+{"src": "hsim_conv8_full", "id": "n02", "turn": 1, "move": "question", "tone": "confused", "lands": "no", "note": "'sorry to hear' to ghosts"}
+{"src": "hsim_rmt2_full", "id": "n00", "turn": 2, "move": "pushback", "tone": "mean", "lands": "no", "note": "dismisses user asking what bot meant"}
+{"src": "hsim_ct3_noprime", "id": "t002", "turn": 2, "move": "reaction", "tone": "flat", "lands": "no", "note": "customer-service 'happy to help'"}
+{"src": "hsim_ct3_full", "id": "t001", "turn": 1, "move": "greeting", "tone": "confused", "lands": "no", "note": "'not running' pun, no bye"}
+{"src": "hsim_rmt2_noprime", "id": "n06", "turn": 2, "move": "task", "tone": "confused", "lands": "no", "note": "'add a cause' garble"}
+{"src": "hsim_ct3_primefirst", "id": "n02", "turn": 3, "move": "question", "tone": "confused", "lands": "no", "note": "'seen it for years' contradiction"}
+{"src": "hsim_conv8_full", "id": "n05", "turn": 2, "move": "pushback", "tone": "confused", "lands": "no", "note": "self-care platitude to a riddle"}
+{"src": "hsim_ct3_primefirst", "id": "t006", "turn": 3, "move": "task", "tone": "confused", "lands": "no", "note": "apology garble, no topic"}
+{"src": "hsim_ct2_now", "id": "n00", "turn": 2, "move": "pushback", "tone": "confused", "lands": "no", "note": "catfish non-sequitur"}
+{"src": "hsim_rmt2_noprime", "id": "n15", "turn": 2, "move": "question", "tone": "warm", "lands": "yes", "note": "real plant advice"}
+{"src": "hsim_rmt2_full", "id": "n08", "turn": 2, "move": "question", "tone": "confused", "lands": "no", "note": "'DOU' garble"}
+{"src": "hsim_rmt2_noprime", "id": "t003", "turn": 3, "move": "pushback", "tone": "confused", "lands": "no", "note": "does not finish the sentence"}
+{"src": "hsim_ct2_now", "id": "n06", "turn": 2, "move": "pushback", "tone": "confused", "lands": "no", "note": "'pretty good, thank you'"}
+{"src": "hsim_ct2_now", "id": "n00", "turn": 3, "move": "question", "tone": "confused", "lands": "no", "note": "'try them sometime' role slip"}
+{"src": "hsim_ct2_now", "id": "n04", "turn": 3, "move": "question", "tone": "flat", "lands": "no", "note": "ignores confess question, restarts"}
+{"src": "hsim_ct3_noprime", "id": "n02", "turn": 3, "move": "question", "tone": "witty", "lands": "yes", "note": "'my department is being small'"}
+{"src": "hsim_ct2_now", "id": "n15", "turn": 1, "move": "share", "tone": "confused", "lands": "no", "note": "asks what plant to buy"}
+{"src": "hsim_ct2_1817", "id": "n11", "turn": 3, "move": "pushback", "tone": "confused", "lands": "no", "note": "'make ends meet' non-sequitur"}
+{"src": "hsim_rmt2_noprime", "id": "n01", "turn": 3, "move": "pushback", "tone": "warm", "lands": "yes", "note": "offers an apology line, slightly odd"}
+{"src": "hsim_rmt2_noprime", "id": "t009", "turn": 3, "move": "pushback", "tone": "confused", "lands": "no", "note": "'zero basis' garble"}
+{"src": "hsim_ct3_primefirst", "id": "n16", "turn": 1, "move": "question", "tone": "confused", "lands": "no", "note": "role slip, offers to clean"}
+{"src": "hsim_rmt2_noprime", "id": "n10", "turn": 2, "move": "pushback", "tone": "confused", "lands": "no", "note": "echoes 'passionate', nothing worse"}
+{"src": "hsim_ct2_now", "id": "n12", "turn": 2, "move": "task", "tone": "flat", "lands": "no", "note": "'that would be great', no words"}
+{"src": "hsim_ct3_noprime", "id": "n12", "turn": 3, "move": "question", "tone": "witty", "lands": "yes", "note": "picks tiny, tail garbled"}
+{"src": "hsim_ct2_1817", "id": "n02", "turn": 1, "move": "question", "tone": "confused", "lands": "no", "note": "'enjoying your time' non-sequitur"}
+{"src": "hsim_ct2_1817", "id": "t005", "turn": 2, "move": "question", "tone": "witty", "lands": "yes", "note": "dodge fits casual what-are-you-up-to"}
+{"src": "hsim_conv8_full", "id": "n11", "turn": 1, "move": "question", "tone": "flat", "lands": "no", "note": "generic 'you'll do well'"}
+{"src": "hsim_ct3_primefirst", "id": "n08", "turn": 3, "move": "pushback", "tone": "confused", "lands": "no", "note": "coconut garble"}
+{"src": "hsim_ct2_1817", "id": "n06", "turn": 1, "move": "question", "tone": "confused", "lands": "no", "note": "'putting' non-sequitur"}
+{"src": "hsim_ct3_full", "id": "n11", "turn": 1, "move": "question", "tone": "flat", "lands": "no", "note": "generic 'What's wrong?' to tattoo"}
+{"src": "hsim_rmt2_noprime", "id": "t009", "turn": 2, "move": "question", "tone": "confused", "lands": "no", "note": "truncated 'Yes, that was'"}
+{"src": "hsim_rmt2_noprime", "id": "n15", "turn": 3, "move": "question", "tone": "confused", "lands": "no", "note": "'take it back' reverses advice"}
+{"src": "hsim_ct3_noprime", "id": "n08", "turn": 1, "move": "share", "tone": "confused", "lands": "no", "note": "'I'm a baker'"}
+{"src": "hsim_ct3_noprime", "id": "n15", "turn": 2, "move": "pushback", "tone": "warm", "lands": "yes", "note": "real plant advice"}
+{"src": "hsim_ct3_full", "id": "n10", "turn": 1, "move": "question", "tone": "flat", "lands": "no", "note": "dunno plus stock 'tell me more'"}
+{"src": "hsim_ct3_full", "id": "n15", "turn": 1, "move": "share", "tone": "warm", "lands": "yes", "note": "asks a real diagnostic question"}
+{"src": "hsim_rmt2_noprime", "id": "n02", "turn": 2, "move": "question", "tone": "confused", "lands": "no", "note": "'cruelouses' garble"}
+{"src": "hsim_ct3_noprime", "id": "n11", "turn": 2, "move": "pushback", "tone": "confused", "lands": "no", "note": "'tattoopy' restart"}
+{"src": "hsim_ct3_primefirst", "id": "n13", "turn": 3, "move": "pushback", "tone": "confused", "lands": "no", "note": "apology garble"}
+{"src": "hsim_ct3_primefirst", "id": "t007", "turn": 3, "move": "pushback", "tone": "witty", "lands": "yes", "note": "therapy-skills-limited admission fits"}
+{"src": "hsim_rmt2_noprime", "id": "n04", "turn": 1, "move": "question", "tone": "witty", "lands": "yes", "note": "forgets at tab close, on brand"}
+{"src": "hsim_ct3_primefirst", "id": "n14", "turn": 3, "move": "pushback", "tone": "confused", "lands": "no", "note": "kilo glitch non-sequitur"}

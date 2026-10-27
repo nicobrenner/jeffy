@@ -5321,3 +5321,45 @@ harness; the three harness changes (cross-turn, prime off, prime-first) are not 
 Not covered by the A/B: the memory line (22:55; the crawler is on by default and appends "Your pet crawler just fetched the
 word … from the chat." to the system prompt after ~half the replies) — ct2 never saw such lines in training. Testing next:
 ct2 current default + memory line vs without, same openers/follow-ups (harness `memory` now accepts raw lines; `--memory`).
+
+## 2026-10-27 00:41 PDT — context: compaction, window extension, KV cache (recommendations, from Nico's questions)
+Nico asked for online/real-time compaction "like humans", why hosted models compact in bursts, whether 256 tokens can be
+extended, whether RoPE helps, and what the long-term choice is. Decisions and recommendations (record for the roadmap):
+- **Rolling recap tier (do it).** Tiered context inside the 256 window: system prompt 55 · oldest memory lines ~25 · one-line
+  recap of the earlier chat ~30 · live tail ~145 (≈4 exchanges). The recap is rewritten every turn (recursive summarisation,
+  Wang et al. 2308.15022; Compressive Transformer 1911.05507 is the learned analogue). Prefix-cache invalidation is why hosted
+  models delay compaction (an edited prefix throws the KV cache away and the next request pays full price); at 8.5M params a
+  150-token recompute is milliseconds, so for the Oracle the rolling tier wins on UX — Nico: "if the system is fast enough…
+  much better UX". Ordering for the browser KV cache: fixed system prompt first (cached forever) → recap/memory tier → live
+  tail; editing the tier recomputes only the tail. Summariser: the Oracle's own `*recap` act first (act machinery exists;
+  teach-mode corrections train it); a separate tiny summariser is the fallback.
+- **Multi-session data first (running).** 600 chained corpus sessions → 576 agent-written (recap, follow-up, reply) rows,
+  460 train ×6 mixed into today's plan-token corpus, 4 epochs from ct2 (Nico's pick), lr 5e-5 (`ms_build.py`, `ms_run.sh`);
+  probe `ms_probe.py`: recap-fact recall on 116 held-out rows, ct2 vs ms. Signal gate before any longer-context work.
+- **Window extension: grow the learned position table 256→512 now, RoPE later.** The Oracle uses learned absolute positions
+  (`nn.Embedding(256, d)`), so RoPE tricks (position interpolation 2306.15595, YaRN 2309.00071) do not apply; a RoPE (2104.09864)
+  retrofit is not weight-preserving (attention relearns) → effectively a new lineage. Recommendation: (1) now, seed rows 257–512
+  from the old table and fine-tune on the multi-session rows (same lineage, local, ~30 min on MPS); gate on the recap probe
+  using far context; (2) the next from-scratch lineage (fixed corpus + room events + multi-session) trains with RoPE at 512–1024
+  from day one, with past-key-values in the ONNX export. RoPE over ALiBi (2108.12409): ecosystem default, our byte models use it.
+- **KV cache is the real demo limit**, not compute: per-token cost grows with context without it (23 tok/s at 256 → ~6 at 1024).
+  Required before 512+ in the browser. All of this is CPU/MPS-sized; no rental.
+
+## 2026-10-27 00:41 PDT — ct4 (wide admit bank) and the tone judge v1
+ct4 = ct2 recipe, 138 admit lines ×2 copies (240 synthetic rows vs 960), 8 epochs from grown_v2_8m on today's corpus, 23 min.
+Result: recital gone (verbatim bank lines 0/60 vs ct2 4/60; training-system-prompt recitation 0/60 vs 4/60); identity 31/32,
+human-life drift 2/96. But the replies read apologetic/flat ("I am sorry. It's not a problem", "I think you are right") and
+val ppl 5.2 vs ct2 4.8 (val sets differ: today's corpus; 'i am'-style lowercase lines 19→7, 'I am sorry' 132=132, so the
+corpus moved only slightly — not a clean A/B on the bank alone). Tone judge on 60 turn-1/2 replies: ct4 witty 8% mean 7% vs
+ct2 witty 13% mean 2%. Verdict: ct4 is not the fix; recital was not the feel. Demo entry not added (would mislead).
+Tone labels (two agents, 659 replies, 8 model×harness sources; move / tone witty·warm·flat·mean·confused / lands):
+  conv8 witty 1% flat 41% confused 53% lands 4% · ct2 witty 8–10% flat 33–35% confused 52–54% lands 8–9% ·
+  ct3 variants witty 16–23% flat 13–23% mean 2–7% confused 40–62% lands 19–30% · rmt2 witty 13–16% mean 2–6% lands 18–24%.
+  Labeller observations: dominant failure is incoherence (>50%); mean (23/659) = attitude lines fired at friendly/vulnerable
+  users, concentrated in ct3/rmt2; shares (marathon, can't sleep, hate my job) almost never get a warm reply; witty-that-lands
+  = self-aware size/nonexistence lines under push-back or an unanswerable question; the same dodge fails on 2nd/3rd repeat.
+  NOTE the tension: the labeller rates ct3 above ct2 on witty+lands; Nico's feel is the opposite (ct2 most engaging, ct3
+  "serious/forceful"). The labeller's taste is not Nico's; the judge must be refined on his picks before it steers anything.
+tone_clf v1 (LogReg on ct2 hidden states, held out by opener): macro-F1 0.31 — confused F1 0.63, flat 0.52, witty 0.42,
+  mean/warm 0 (23/24 labels, too few). lands F1 0.29 (base 7%). Usable only as a confused/flat/witty meter for now.
+  Next labels must target shares/reactions/greetings (where mean and warm live) and come from Nico's picks.

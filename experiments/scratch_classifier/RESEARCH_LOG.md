@@ -5085,3 +5085,12 @@ copies (×4), Nico's teach-mode corrections mixed in, then the same pass through
 val 1.6663. Fewer copies → more later-turn drift (16 vs 9/96; conv8 without recoveries: 11) — single seed set, but the direction says the
 recovery examples also hold the persona under push-back. Reactive-user turns 2–3 generating → grader pass ×4 vs ×12 (on-thread, salad).
 HF backup done: 124 files in nicobrenner/jeffy-byte-priors (private), 74 from today.
+
+## 2026-10-26 19:51 PDT — Recovery dose: ×12 beats ×4 on following; the earlier salad cost was mostly grader variance
+
+`grades_recover4_mt_blind2` (180 rows, one grader): turns 2–3 on-thread ≥2 **32% (×12) vs 20% (×4)**, ignores-pushback 28% vs 40%,
+invented-life 5% vs 13%, paired on-thread 22/26/12 for ×12; salad 2% for BOTH (the 13% in the previous pass was that grader's reading —
+coherence 2.02 vs 2.28 here). So: more exposure to recoveries = better following and persona under push-back, at a small coherence cost.
+The lever is the AMOUNT of recovery data. Next pass: recoveries written on real multi-turn contexts — every turn-2/3 row from all reactive-user
+transcripts so far (history + the simulated user's actual push-back + the model's own failed reply) gets an expert recovery in the Oracle's
+voice → `recover_mt_src.jsonl` → agent-written → mixed ×6 with the corpus → retrain → same pass. Teach-mode corrections join as they arrive.

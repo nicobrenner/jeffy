@@ -78,8 +78,9 @@ class CausalTransformer(nn.Module):
 
     def __init__(self, vocab_size, d_model=256, n_heads=8, n_layers=4,
                  d_ff=1024, max_seq_len=256, dropout=0.1,
-                 tie_weights=True, n_iterations=1, n_acts=0):
+                 tie_weights=True, n_iterations=1, n_acts=0, pre_ln=False):
         super().__init__()
+        self.pre_ln = pre_ln
         self.d_model = d_model
         self.n_acts = n_acts
         self.act_emb = nn.Embedding(n_acts + 1, d_model, padding_idx=0) if n_acts else None   # act 0 = none (zero vector)
@@ -93,7 +94,7 @@ class CausalTransformer(nn.Module):
 
         encoder_layer = nn.TransformerEncoderLayer(
             d_model=d_model, nhead=n_heads, dim_feedforward=d_ff,
-            dropout=dropout, batch_first=True, activation="gelu",
+            dropout=dropout, batch_first=True, activation="gelu", norm_first=pre_ln,   # pre-LN: induction heads form at d256 (2026-10-27 unit tests)
         )
         self.transformer = nn.TransformerEncoder(encoder_layer, num_layers=n_layers)
         self.norm = nn.LayerNorm(d_model)
@@ -425,7 +426,7 @@ def train(args):
         max_seq_len=args.seq_len,
         dropout=args.dropout,
         tie_weights=args.tie_weights,
-        n_iterations=args.n_iterations,
+        n_iterations=args.n_iterations, pre_ln=args.pre_ln,
         n_acts=len(ConvDataset.ACTS) if args.act_vector else 0,
     ).to(device)
 
@@ -592,7 +593,7 @@ def train(args):
                             "d_ff": args.d_ff,
                             "max_seq_len": args.seq_len,
                             "tie_weights": args.tie_weights,
-                            "n_iterations": args.n_iterations,
+                            "n_iterations": args.n_iterations, "pre_ln": args.pre_ln,
                         },
                         "full_to_compact": full_to_compact,
                         "compact_to_full": compact_to_full,
@@ -657,7 +658,7 @@ def train(args):
                         "d_ff": args.d_ff,
                         "max_seq_len": args.seq_len,
                         "tie_weights": args.tie_weights,
-                        "n_iterations": args.n_iterations,
+                        "n_iterations": args.n_iterations, "pre_ln": args.pre_ln,
                     },
                     "full_to_compact": full_to_compact,
                     "compact_to_full": compact_to_full,
@@ -683,7 +684,7 @@ def train(args):
                     "d_ff": args.d_ff,
                     "max_seq_len": args.seq_len,
                     "tie_weights": args.tie_weights,
-                    "n_iterations": args.n_iterations,
+                    "n_iterations": args.n_iterations, "pre_ln": args.pre_ln,
                 },
                 "full_to_compact": full_to_compact,
                 "compact_to_full": compact_to_full,
@@ -697,7 +698,7 @@ def train(args):
 
         if args.keep_every and (epoch + 1) % args.keep_every == 0:
             torch.save({"model_state": model.state_dict(), "config": {"vocab_size": vocab_size, "d_model": args.d_model, "n_heads": args.n_heads,
-                        "n_layers": args.n_layers, "d_ff": args.d_ff, "max_seq_len": args.seq_len, "tie_weights": args.tie_weights, "n_iterations": args.n_iterations},
+                        "n_layers": args.n_layers, "d_ff": args.d_ff, "max_seq_len": args.seq_len, "pre_ln": args.pre_ln, "tie_weights": args.tie_weights, "n_iterations": args.n_iterations},
                         "full_to_compact": full_to_compact, "compact_to_full": compact_to_full, "tokenizer_path": args.tokenizer, "epoch": epoch,
                         "val_loss": val_loss, "data": args.chat_data, "data_sha": data_sha, "conv_sequences": args.conv_sequences},
                        out_dir / f"ep_{args.tag}_{epoch + 1}.pt")
@@ -785,6 +786,7 @@ def main():
     parser.add_argument("--conv-sequences", action="store_true",
                         help="chat data: one sequence per conversation (system prompt kept, windows start at turn boundaries, padded, "
                              "loss masked on padding) instead of packing all conversations into a stream and cutting fixed chunks")
+    parser.add_argument("--pre-ln", action="store_true", help="pre-LayerNorm transformer layers (norm_first); default post-LN as before")
     parser.add_argument("--warmup-steps", type=int, default=0,
                         help="linear LR warmup over this many optimizer steps before the cosine decay (default 0 = none)")
     parser.add_argument("--eval-every", type=int, default=0,

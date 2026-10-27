@@ -87,7 +87,7 @@ def export(ckpt_path, tokenizer_path, output_path):
         n_layers=cfg["n_layers"],
         d_ff=cfg["d_ff"],
         max_seq_len=cfg["max_seq_len"],
-        tie_weights=cfg["tie_weights"],
+        tie_weights=cfg["tie_weights"], n_iterations=cfg.get("n_iterations", 1), pre_ln=cfg.get("pre_ln", False),
     )
     orig.load_state_dict(ckpt["model_state"])
     orig.eval()

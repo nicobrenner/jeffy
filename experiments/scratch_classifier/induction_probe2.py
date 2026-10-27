@@ -4,8 +4,8 @@ import argparse, json, random, torch, torch.nn.functional as F
 from atl_probe import load, DEVICE
 from train_lm import CustomTokenizerWrapper
 if __name__ == "__main__":
-    ap = argparse.ArgumentParser(); ap.add_argument("--ckpt", nargs="+", required=True); ap.add_argument("--n", type=int, default=48); a = ap.parse_args()
-    tok = CustomTokenizerWrapper("tokenizer_chat_v2.json"); W = json.load(open("pile_runs/atl/single_token_words.json")); rng = random.Random(1)
+    ap = argparse.ArgumentParser(); ap.add_argument("--ckpt", nargs="+", required=True); ap.add_argument("--n", type=int, default=48); ap.add_argument("--words", default="pile_runs/atl/single_token_words.json"); a = ap.parse_args()
+    tok = CustomTokenizerWrapper("tokenizer_chat_v2.json"); W = json.load(open(a.words)); rng = random.Random(1)
     for ck in a.ckpt:
         m, _ = load(ck); m.eval(); A = B = 0.0
         with torch.no_grad():

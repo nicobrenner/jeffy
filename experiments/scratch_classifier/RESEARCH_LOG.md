@@ -5432,3 +5432,11 @@ induct2 (continued on the corpus): copy 0/48, recall 16/80, identity 30/32 — s
 every 2; `induction_probe2.py` measures the in-distribution signature. If the repeat loss does not fall here, the standard
 2-layer d256 CausalTransformer is not forming induction heads within ~200M tokens — then check architecture details
 (nn.TransformerEncoderLayer post-norm, dropout 0.1) against Olsson et al. before any bigger run.
+
+## 2026-10-27 02:12 PDT — clean single-token repeat stage: loss stays at chance (7.8 ≈ ln 2716) for 50M tokens; repeat 7.75 vs 7.90
+induct1b: 8 epochs on 40k sequences of random single-token words repeated 2–3×: val loss 7.87 → 7.82 (chance 7.91), train
+7.93 → 7.70 (memorising), signature at epochs 2/4/6/8: repeat loss 7.92 / 7.85 / 7.78 / 7.75 vs first pass ~7.9 — no
+induction circuit forms in ~6k steps. Decisive minimal test launched (`induct_64.sh`): the same model on a 64-word vocabulary
+(first-pass chance ln 64 = 4.16), lr 1e-3, 6 epochs, checkpoint every epoch — the classic toy on which a 2-layer transformer
+learns copying in minutes. If the repeat loss does not collapse here, the CausalTransformer as built (nn.TransformerEncoder,
+post-LN, learned positions, dropout 0.1) is failing to form induction heads and the architecture is the suspect.

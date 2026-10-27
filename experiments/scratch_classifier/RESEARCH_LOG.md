@@ -5440,3 +5440,11 @@ induction circuit forms in ~6k steps. Decisive minimal test launched (`induct_64
 (first-pass chance ln 64 = 4.16), lr 1e-3, 6 epochs, checkpoint every epoch — the classic toy on which a 2-layer transformer
 learns copying in minutes. If the repeat loss does not collapse here, the CausalTransformer as built (nn.TransformerEncoder,
 post-LN, learned positions, dropout 0.1) is failing to form induction heads and the architecture is the suspect.
+
+## 2026-10-27 02:18 PDT — the architecture CAN learn induction; the training script does not
+Standalone unit test (`scratchpad/induct_unit.py`: the same CausalTransformer class, d128 L2 H4, vocab 64, random token-id
+sequences repeated, plain AdamW lr 1e-3, CPU): repeat loss 4.16 → 0.00 between steps 300 and 600, with and without dropout.
+Through train_lm.py on the equivalent 64-word text task (lr 1e-3, 6 epochs ≈ 4.7k steps): loss stuck at 4.26 (chance 4.16),
+repeat 4.18 — nothing learned. So the model class forms induction heads in minutes; something in train_lm.py's data path or
+training step prevents it. Suspects: the stream chunking, the label shift, autocast/fp16 on MPS, label smoothing. Running the
+same task through the --conv-sequences loader to split data path from training step; reading the code in parallel.

@@ -2,7 +2,7 @@
 
 Purpose: let a fresh Claude Code session pick up this research program with as little loss as possible. Keep it short;
 the durable record is `RESEARCH_LOG.md` (lab notebook, append-only, every result the turn it lands). Update this file at
-the end of every working block (not just at the end of a session). Last update: **2026-10-27, 15:30 PDT**.
+the end of every working block (not just at the end of a session). Last update: **2026-10-27, 15:19 PDT**.
 
 ## How to resume (5 minutes)
 1. Read this file, then the last ~400 lines of `RESEARCH_LOG.md` (`tail -400 RESEARCH_LOG.md`).
@@ -15,13 +15,13 @@ the end of every working block (not just at the end of a session). Last update: 
    no regex intent rules in the harness (small classifiers instead); Oracle lines never end with a period; blind picks are
    the evaluation Nico trusts; "Needs you" block at the end of messages that need him.
 
-## Needs Nico (2026-10-27 15:30 PDT)
+## Needs Nico (2026-10-27 15:19 PDT)
 1. FYI the demo garble ("ring kay Todina…"): not reproduced on ct2/v5b int8 with the default sampler. Which dropdown entry and sampler was selected?
 2. FYI decided: pre-LN data passes stopped (v6, v6b both lose to v5b; low-diversity row families leak as templates). Next
    model-side work = best-of-N with a judge trained on his 0–5 scores, or retrieval for the recap tier. No run pending.
 3. Still open: crawler/room verdicts, teach-mode export, README/benchmark correction, posts.
 
-## Running right now (2026-10-27 15:30 PDT)
+## Running right now (2026-10-27 15:19 PDT)
 - **Nothing running.** Candidates in the demo: ct2 (default, ★), v5b (☆ TEST THIS). v6/v6b exported but NOT in the dropdown.
 - Nico's labels: tone picks (28 rows, `tone_labels_nico1.jsonl`) + follow-through scores (18, `review_followthrough_scores.json`).
 - Review format: `review_page.py` (0–5 per reply + notes, continuations first, ≤20 items). Pairs on shared history: `cont_pairs.py`.
@@ -44,7 +44,7 @@ the end of every working block (not just at the end of a session). Last update: 
 ## Pipeline / roadmap (2026-10-27)
 | # | step | status |
 |---|---|---|
-| 1 | data pass v6/v6b: done, both lose to v5b (template leakage from low-diversity rows). Next: judge on Nico's 0–5 scores → best-of-N; recap tier by retrieval | decided 15:30 |
+| 1 | data pass v6/v6b: done, both lose to v5b (template leakage from low-diversity rows). Next: judge on Nico's 0–5 scores → best-of-N; recap tier by retrieval | decided 15:19 |
 | 1b | grounding: a tiny queryable world (quantities/units/comparisons/time/Room state) read at inference; Room = seed | idea, logged 13:44 |
 | 1c | real-time loop in the demo (perceive → classify → act between prompts; online teach updates) | idea, logged 13:44 |
 | 2 | rolling recap tier + `*recap` act (needs a model that copies) | after 1 |

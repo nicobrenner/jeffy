@@ -5101,3 +5101,13 @@ val 1.6835. Identity: name 31/32, human-life 7/96 (recover8 ×12: 31/32, 9/96). 
 (the recoveries never touch turn 1). Reactive-user turns 2–3 generating → pass vs recover8. Pet claims (172 Oracle lines, "golden retriever
 named Buddy") found and rewritten in the fixer AFTER this run's corpus was cut → next retrain. World bible started (`demo/world_bible.json`,
 11 groups incl. the Oracle's own machinery as cast) for Nico to curate: rewrite banks will draw from it instead of denials.
+
+## 2026-10-26 20:28 PDT — DAgger implementation bug: the model's OWN bad turns were training targets; recovermt8 collapsed to "What's up?" at turn 2 (29/30)
+
+`oracle_v2_grown_recovermt8`'s reactive transcripts: turn-2 reply = "What's up?" in 29 of 30 conversations. Cause: the 650 multi-turn recovery
+rows carry the model's own failed replies in the HISTORY as Oracle turns ("What's up?" is the most common failure in the source transcripts),
+and `--chat-data` puts loss on every Oracle token — so ×6 copies taught the failure as turn-2 behaviour. DAgger trains only on the expert's
+labels at the learner's states; the learner's own actions are context, never targets. Fix: conversations may carry `ctx_oracle_turns`
+(indices of context-only Oracle turns) → ConvDataset labels them −100. Rebuilt corpus (`chat_v2_recovermt2`): 1,093 recovery-row Oracle turns
+masked, plus the pet rewrite and the stock-opener strip. Retraining (`*_recovermt2x8`). The ×12 first-batch model had the same bug in milder
+form (its bad turn-1 replies were targets), which may explain its flat openers.

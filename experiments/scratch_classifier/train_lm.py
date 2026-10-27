@@ -158,42 +158,46 @@ class ConvDataset(Dataset):
     with the system prompt followed by a later turn boundary (so every window looks like what the demo feeds the model). Padding
     is labelled -100 (ignored by the loss)."""
     ACTS = ["dunno", "me", "wh", "yn", "hi", "tell"]   # id = index + 1; 0 = none
-    def __init__(self, conversations, tokenizer, seq_len, eos_id, sys_end_marker="\n<|user|>", pad_id=0, act_vector=False, act_span=False):
+    def __init__(self, conversations, tokenizer, seq_len, eos_id, sys_end_marker="\n<|user|>", pad_id=0, act_vector=False, act_span=False, ctx_turns=None):
         import re as _re
+        ctx_turns = ctx_turns or [set() for _ in conversations]
         self.seq_len, self.pad_id, self.act_vector = seq_len, pad_id, act_vector; self.rows = []
         oracle_id = tokenizer.encode("<|oracle|>")[-1]
         act_re = _re.compile(r"<\|oracle\|> \*(" + "|".join(self.ACTS) + r") ")
-        for conv in conversations:
+        for conv, ctxset in zip(conversations, ctx_turns):
             k = conv.find(sys_end_marker); sys_txt, body = (conv[:k], conv[k:]) if k > 0 else ("", conv)
             sys_ids = tokenizer.encode(sys_txt) if sys_txt else []
             # split body at user-turn boundaries
             parts = [p for p in body.split("\n<|user|>") if p.strip()]
             turns = [("\n<|user|>" + p) for p in parts] if k > 0 else [body]
-            turn_ids, turn_acts = [], []
-            for t in turns:
+            turn_ids, turn_acts, turn_lab = [], [], []
+            for ti, t in enumerate(turns):
                 act = 0
                 if act_vector:
                     m2 = act_re.search(t)
                     if m2: act = self.ACTS.index(m2.group(1)) + 1; t = act_re.sub("<|oracle|> ", t, count=1)
-                ids_t = tokenizer.encode(t); acts_t = [0] * len(ids_t)
+                ids_t = tokenizer.encode(t); acts_t = [0] * len(ids_t); lab_t = [1] * len(ids_t)
+                if ti in ctxset and oracle_id in ids_t:
+                    k0 = len(ids_t) - 1 - ids_t[::-1].index(oracle_id); lab_t[k0 + 1:] = [0] * (len(ids_t) - k0 - 1)   # context-only Oracle turn
                 if act and oracle_id in ids_t:
                     k = len(ids_t) - 1 - ids_t[::-1].index(oracle_id)
                     if act_span: acts_t[k:] = [act] * (len(ids_t) - k)
                     else: acts_t[k] = act
-                turn_ids.append(ids_t); turn_acts.append(acts_t)
+                turn_ids.append(ids_t); turn_acts.append(acts_t); turn_lab.append(lab_t)
             i = 0
             while i < len(turn_ids):
-                ids = list(sys_ids); acts = [0] * len(sys_ids); j = i
+                ids = list(sys_ids); acts = [0] * len(sys_ids); lab = [1] * len(sys_ids); j = i
                 while j < len(turn_ids) and len(ids) + len(turn_ids[j]) <= seq_len - 1:
-                    ids += turn_ids[j]; acts += turn_acts[j]; j += 1
+                    ids += turn_ids[j]; acts += turn_acts[j]; lab += turn_lab[j]; j += 1
                 if j == i:   # single turn longer than the window: hard-cut it
-                    ids = (sys_ids + turn_ids[i])[: seq_len - 1]; acts = ([0] * len(sys_ids) + turn_acts[i])[: seq_len - 1]; j = i + 1
-                ids.append(eos_id); acts.append(0); self.rows.append((torch.tensor(ids, dtype=torch.long), torch.tensor(acts, dtype=torch.long)))
+                    ids = (sys_ids + turn_ids[i])[: seq_len - 1]; acts = ([0] * len(sys_ids) + turn_acts[i])[: seq_len - 1]; lab = ([1] * len(sys_ids) + turn_lab[i])[: seq_len - 1]; j = i + 1
+                ids.append(eos_id); acts.append(0); lab.append(1)
+                self.rows.append((torch.tensor(ids, dtype=torch.long), torch.tensor(acts, dtype=torch.long), torch.tensor(lab, dtype=torch.long)))
                 i = max(j - 1, i + 1) if j < len(turn_ids) else j   # next window overlaps by one turn so no turn loses its history entirely
     def __len__(self): return len(self.rows)
     def __getitem__(self, idx):
-        ids, acts = self.rows[idx]; out = torch.full((self.seq_len,), self.pad_id, dtype=torch.long); lab = torch.full((self.seq_len,), -100, dtype=torch.long)
-        out[: len(ids)] = ids; lab[: len(ids)] = ids
+        ids, acts, keep = self.rows[idx]; out = torch.full((self.seq_len,), self.pad_id, dtype=torch.long); lab = torch.full((self.seq_len,), -100, dtype=torch.long)
+        out[: len(ids)] = ids; lab[: len(ids)] = torch.where(keep.bool(), ids, torch.full_like(ids, -100))
         if not self.act_vector: return torch.stack([out, lab])
         ac = torch.zeros(self.seq_len, dtype=torch.long); ac[: len(acts)] = acts; return torch.stack([out, lab, ac])
 
@@ -305,12 +309,14 @@ def train(args):
         print(f"\nLoading chat data from {args.chat_data}...", flush=True)
         t0 = time.time()
         with open(args.chat_data) as f:
-            conversations = [_json.loads(line)["text"] for line in f]
+            _rows = [_json.loads(line) for line in f]
+        conversations = [r["text"] for r in _rows]
+        ctx_turns = [set(r.get("ctx_oracle_turns", [])) for r in _rows]   # DAgger: loss only on the expert's turn, never on the model's own bad turn
         print(f"  {len(conversations):,} conversations ({time.time() - t0:.1f}s)", flush=True)
 
         print("Tokenizing...", flush=True)
         t0 = time.time()
-        conv_texts = conversations
+        conv_texts = conversations; conv_ctx = ctx_turns
         all_tokens = []
         for i, conv in enumerate(conversations):
             toks = tokenizer.encode(conv)
@@ -332,7 +338,7 @@ def train(args):
 
         print("Tokenizing...", flush=True)
         t0 = time.time()
-        conv_texts = conversations
+        conv_texts = conversations; conv_ctx = ctx_turns
         all_tokens = []
         for i, story in enumerate(ds["text"]):
             toks = tokenizer.encode(story)
@@ -386,7 +392,8 @@ def train(args):
                 val_compact = remap_ids(val_token_ids, full_to_compact)
             if args.conv_sequences:
                 assert use_custom, "--conv-sequences needs a custom tokenizer (full vocab, no remap)"
-                train_ds = ConvDataset(conv_texts, tokenizer, args.seq_len, eos_id, act_vector=args.act_vector, act_span=args.act_span)
+                train_ds = ConvDataset(conv_texts, tokenizer, args.seq_len, eos_id, act_vector=args.act_vector, act_span=args.act_span, ctx_turns=conv_ctx)
+                print(f"  context-only Oracle turns (no loss): {sum(len(c) for c in conv_ctx):,}", flush=True)
                 val_ds = ConvDataset(val_conversations, tokenizer, args.seq_len, eos_id, act_vector=args.act_vector, act_span=args.act_span)
                 print(f"  conv-sequences: {len(train_ds):,} train windows, {len(val_ds):,} val windows (loss masked on padding)", flush=True)
             else:

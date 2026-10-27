@@ -5079,3 +5079,9 @@ Reading: 120 push-back recoveries, on the model's own mistakes, are the first th
 35 → 23%, invented-life 20 → 5%), at a fluency cost (salad 2 → 13%) from the ×12 oversampling of agent-written text. v3b (from scratch, no
 push-back data) is the worst at following despite the cleanest persona — the behaviour has to be in the data. Next: more recoveries at lower
 copies (×4), Nico's teach-mode corrections mixed in, then the same pass through the demo harness with the controller.
+
+## 2026-10-26 19:43 PDT — Recovery ×4 (`oracle_v2_grown_recover4x8`): identity name 30/32, drift 16/96 (×12 run: 31/32, 9/96)
+
+val 1.6663. Fewer copies → more later-turn drift (16 vs 9/96; conv8 without recoveries: 11) — single seed set, but the direction says the
+recovery examples also hold the persona under push-back. Reactive-user turns 2–3 generating → grader pass ×4 vs ×12 (on-thread, salad).
+HF backup done: 124 files in nicobrenner/jeffy-byte-priors (private), 74 from today.

@@ -5050,3 +5050,10 @@ replies degrade ("I know, I'm not sure. But that's no idea, but."). Reading: the
 has not learned to carry gracefully in 8 epochs. Next variants: (a) small-norm / scaled vector; (b) vector at every position but trained with
 random dropout of the act (so "none" is in-distribution); (c) more epochs. The token remains the practical choice for now; the vector line is the
 research thread toward non-text signals (emotion/memory) feeding the model continuously.
+
+## 2026-10-26 19:11 PDT — v3b (from scratch, clean + re-anonymised corpus, 50 ep): identity 26/32, drift 14/96 (broad regex); HF backup push started
+
+`oracle_v3b_scratch` best val 1.6933 (v3 1.6838; corpora differ). Identity (broad regex): name 26/32, human-life 14/96 (v3: 30/32, 18/96 —
+v3b trades a little name reliability for less drift). Reactive-user turns 2–3 generating → conversation pass vs v3. Demo entry `v3b_scratch_int8`.
+Hugging Face backup (`push_artifacts.py models`, private repo nicobrenner/jeffy-byte-priors, immutable commits) extended to today's checkpoints,
+boundary checkpoints, growth inits, verifiers and demo int8 ONNX (~1 GB) and started; nothing public, nothing changed locally.

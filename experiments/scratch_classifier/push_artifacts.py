@@ -24,6 +24,10 @@ ROOT = Path(__file__).resolve().parent
 MODEL_FILES = [
     *sorted((ROOT / "checkpoints").glob("prior_*_best.pt")),
     *sorted((ROOT / "checkpoints").glob("best_lm_oracle_v*.pt")),
+    *sorted((ROOT / "checkpoints").glob("ep_oracle_*.pt")),          # boundary checkpoints (rewind points), 2026-10-26+
+    *sorted((ROOT / "checkpoints").glob("grown_*.pt")),              # function-preserving growth inits
+    *sorted((ROOT / "checkpoints").glob("verifier_*.pkl")),          # reply verifiers (hidden-state LogReg)
+    *sorted((ROOT / "demo").glob("oracle_*_int8.onnx")),             # what the demo serves
     *sorted((ROOT / "pile_runs/rope_byte").glob("shared_prior_results*.json")),
     *sorted((ROOT / "pile_runs/rope_byte").glob("kodak_*.json")),
     *sorted((ROOT / "pile_runs/rope_byte").glob("oracle_depth_*.json")),

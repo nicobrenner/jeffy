@@ -5001,3 +5001,18 @@ the token model over-admits even unforced (32/40, the ×8 synthetic copies), the
 the better-behaved controller, but less controllable. Hypothesis: a single-position vector is a weak signal after the first generated token;
 the token sits in the sequence and is attended at every step. Running the Geiping-style variant: the act vector added at EVERY reply
 token (`--act-span`), i.e. a persistent "mood" rather than a one-shot cue. vals not comparable (token model's loss counts the act tokens).
+
+## 2026-10-26 18:08 PDT — First evaluation THROUGH THE HARNESS (`harness.py`, `harness_probe.py`): the demo's settings double the human-life drift
+
+Nico asked whether evaluations use the whole harness. They did not: probes ran the bare model (no priming, T0.5); the demo runs priming ON and
+T0.3. Same model (grown per-conversation, conv8), identity probe, three readings:
+| reading | name | human-life drift (turns 3–5, of 96) |
+|---|---|---|
+| bare (no prime, T0.5) — what every table today measured | 27/32 | 11 |
+| demo (prime, T0.3) — what Nico chats with | 31/32 | **25** |
+| full harness (prime, T0.3, best-of-4 + verifier on conv8 states) | 31/32 | 22 |
+| admit-act model, full harness + controller (forced 24×, fallback 2×) | **32/32** | **9** |
+So priming/T0.3 help the name turn and more than double the later-turn drift into a human life — the probes were under-reporting exactly the
+failure Nico sees in the demo. Best-of-4 barely helps (22); the controller with the admit act does (9). Ablation (prime-only / T0.3-only)
+running; reactive-user turns 1 written through the full harness for conv8 and ct2 → turns 2–3 by simulated user → on-thread grader pass.
+Rule from here: every reported number carries its harness config; the default reported config is the demo's.

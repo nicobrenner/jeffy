@@ -5719,3 +5719,23 @@ Not measured yet: specificity (Meena SSA's second half), time awareness, opinion
 Gap I could not find: a benchmark for *optimising* the experience of tiny on-device characters (wit, world, creatures) —
 closest are the engagingness pairwise protocols and companion-chatbot engagement studies. Our picks+notes protocol is a
 small ACUTE-Eval with absolute scores; worth writing up as such when the posts happen.
+
+## 2026-10-27 15:40 PDT — Nico's "world first, language second" idea + prior art (emergent communication); trainer samples are wanted
+Idea (Nico): build the simplest possible 3D world, an agent that navigates it, a population that interacts, then let language
+emerge among them as their own labels for their experiences — language as a way to sample/classify/describe an existing world,
+the inverse of LLMs (language first, world model forced inside). Logged next to the grounding item (13:52) as the long-range
+direction; memory `project_world_first_language`.
+Prior art (abstracts/surveys read today): Steels' language games / Talking Heads (1995–2015: populations of embodied agents
+converge on word–meaning conventions through pairwise games); Kirby's iterated learning (vertical transmission across
+generations yields compositional structure); Mordatch & Abbeel 2018 (grounded compositional language emerges in a 2D
+multi-agent population with navigation goals); Lazaridou & Baroni 2020 survey of deep emergent communication; Kottur et al.
+2017 "natural language does not emerge naturally" and Chaabouni et al. 2020/2022 (emergent codes are not compositional or
+human-readable by default; scale and population size help); Van Eecke et al. 2024 "Emergent Communication in Continuous
+Worlds" (conceptually grounded vocabularies at scale); symbol-emergence line (Taniguchi et al.: Metropolis-Hastings naming
+game with generative models, 2022–2025); Lazaridou 2018 referential games on pixels; grounded language learning in simulated
+3D worlds (Hermann et al. 2017). The field's measures: communication success, topographic similarity (compositionality),
+generalisation to novel objects, population convergence. Known pitfall for us: the emergent code is for the agents, not for
+Nico — a translation layer (or a shared referent set the Oracle can read) is needed before it helps the chat.
+Cheapest first step if we go there: a 2D toy world, two tiny agents, a referential/navigation game, messages constrained to a
+small symbol vocabulary; measure success + topographic similarity; then let the Oracle read the agents' labels about the Room.
+Process note: Nico wants to see the trainer's periodic samples ("How smart are you?" → babble → lines) in run reports.

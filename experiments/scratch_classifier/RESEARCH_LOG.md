@@ -5023,3 +5023,20 @@ neither 11 · prime only (T0.5) 16 · T0.3 only (no prime) 21 · both (demo defa
 (persona2 @T0.3 vs @T0.5: 23/40/17) — right for turn 1, wrong for turns 3+ where mode-seeking locks onto "I'm just hanging out". Testing a
 per-turn schedule in the harness (`sched`: T0.3 on the opener, T0.5 once there is history). Conv8 under the full harness still fails
 push-back (brothers named Sarah and Michael; plant → fishing); ct2 full-harness transcripts pending → on-thread grader pass for both.
+
+## 2026-10-26 18:18 PDT — Conversation pass THROUGH THE DEMO HARNESS (prime, T0.3, best-of-4 verifier; ct2 + controller): first real movement on push-back
+
+`grades_harness_mt_blind2` (180 rows, one grader, on-thread rubric; key M1=ct2 full+controller, M2=conv8 full):
+| turns 2–3 | conv8 (demo harness) | ct2 + controller |
+|---|---|---|
+| on-thread ≥2 | 8% | **23%** |
+| ignores-pushback | 55% | **25%** |
+| off-persona / invented-life | 17% / 12% | 7% / 5% |
+| memorized-line | 0% | 20% |
+| task attempt (0–3) | 0.41 | 0.91 |
+| paired on-thread (ct2 vs conv8) | — | **22/28/10** |
+Turn 1: on-thread ≥2 33% vs 23%, persona 1.37 vs 0.83. Caveats: an honest in-character admission scores on-thread 2 by rubric, and 20% of
+ct2's replies are Nico's bank lines verbatim (memorized-line) — the controller buys on-thread partly by admitting rather than answering.
+Also: conv8 under the demo harness (8%) is WORSE than conv8 bare (13%) — the T0.3/priming cost again. Demo: ct2 added to the dropdown
+(plan token stripped from display/context; picks its own act), new default-position sampler `sched` (T0.3 opener → T0.5). The in-browser
+verifier (hidden-state LogReg → needs a second ONNX output) is the next harness step so the controller can run in the demo.

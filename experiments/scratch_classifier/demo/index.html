@@ -204,6 +204,7 @@
   <span class="badge" id="badge">loading</span>
   <select id="model-select" title="Model version"></select>
   <select id="sampler-select" title="Sampling recipe">
+    <option value="sched">T0.3 opener → T0.5 + penalties</option>
     <option value="recipe03">T0.3 + penalties</option>
     <option value="recipe">T0.5 + penalties</option>
     <option value="old">T0.8 (old demo)</option>
@@ -259,6 +260,7 @@
     m2_grown_persona2_int8: { label: '2.0M Oracle GROWN to 8.5M + 3 epochs persona (8.5M, int8)', file: 'oracle_2m_grown_persona2_int8.onnx', tokenizer: 'tokenizer_tinystories.json', format: 'plain', badge: '8.5M params (grown from 2.0M) · 11 MB int8', size: '11 MB' },
     m2_persona2_plus3_int8: { label: '2.0M Oracle + the same 3 epochs persona, not grown (2.0M, int8) — control', file: 'oracle_2m_persona2_plus3_int8.onnx', tokenizer: 'tokenizer_tinystories.json', format: 'plain', badge: '2.0M params · 3 MB int8', size: '3 MB' },
     v3_scratch_int8: { label: 'v3: v2 architecture trained FROM SCRATCH on the fixed corpus, per conversation (2.7M, int8)', file: 'oracle_v3_scratch_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 4 MB int8', size: '4 MB' },
+    v2_grown_ct2_int8: { label: 'v2 GROWN to 8.5M + plan token incl. ADMIT act, per conversation (8.5M, int8) — picks its own act', file: 'oracle_v2_grown_ct2_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB' },
     v2_grown_conv8_int8: { label: 'v2 GROWN to 8.5M, trained per conversation (windows start at turn boundaries) + all fixes (8.5M, int8)', file: 'oracle_v2_grown_conv8_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB' },
     v2_grown_life8b_int8: { label: 'v2 GROWN to 8.5M + 8 epochs, all data fixes + Nico lines (8.5M, int8)', file: 'oracle_v2_grown_life8b_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB' },
     v2_life8b_int8: { label: 'v2 + 8 epochs on the same fully fixed data, not grown (2.7M, int8) — control', file: 'oracle_v2_life8b_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 4 MB int8', size: '4 MB' },
@@ -275,6 +277,7 @@
     v2: { label: 'v2 (2.7M, from scratch) — old demo', file: 'oracle_v2.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 15 MB', size: '15 MB' },
   };
   const SAMPLERS = {
+    sched: { temperature: 0.3, topK: 40, repPenalty: 1.3, noRepeatNgram: 3, laterTemperature: 0.5 }, // T0.3 on the opener, T0.5 once there is history (harness ablation 2026-10-26: drift 25 -> 17/96)
     recipe03: { temperature: 0.3, topK: 40, repPenalty: 1.3, noRepeatNgram: 3 }, // best on canonical openers for the persona models (blind, 2026-10-25)
     recipe: { temperature: 0.5, topK: 40, repPenalty: 1.3, noRepeatNgram: 3 },   // blind-graded recipe (2026-10-25)
     old: { temperature: 0.8, topK: 40, repPenalty: 1.0, noRepeatNgram: 0 },     // the old demo's setting
@@ -383,7 +386,8 @@
 
   // ===================== INFERENCE =====================
   async function generate(inputIds, onToken) {
-    const S = SAMPLERS[samplerSel.value];
+    const S = { ...SAMPLERS[samplerSel.value] };
+    if (transcript.length >= 2 && S.laterTemperature) S.temperature = S.laterTemperature;
     let ids = inputIds.slice(-MAX_CONTEXT);
     const generated = [];
     for (let i = 0; i < MAX_NEW_TOKENS; i++) {
@@ -510,10 +514,10 @@
     try {
       let shown = '';
       const genIds = await generate(conversationIds, partial => {
-        const txt = model.format === 'plain' ? partial.split('\n')[0] : partial;
+        const txt = (model.format === 'plain' ? partial.split('\n')[0] : partial).replace(/^\*\w+\s*/, '');
         if (txt.trim() && txt !== shown) { shown = txt; oracleDiv.textContent = txt.trim(); oracleDiv.appendChild(document.createTextNode('\u258D')); chatEl.scrollTop = chatEl.scrollHeight; }
       });
-      let response = tokenizer.decode(genIds).trim();
+      let response = tokenizer.decode(genIds).trim().replace(/^\*\w+\s*/, '');
       if (model.format === 'plain') response = response.split('\n')[0].replace(/^User:.*$/, '').trim();
       conversationIds.push(...tokenizer.encode(fmtOracleText(response)));
       oracleDiv.textContent = response || '(empty response)'; transcript.push({ role: 'oracle', text: response }); oracleDiv.dataset.turn = transcript.length - 1; makeEditable(oracleDiv); logEvent('oracle', { turn: transcript.length, len: response.length });

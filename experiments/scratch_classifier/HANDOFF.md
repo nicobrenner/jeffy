@@ -2,7 +2,7 @@
 
 Purpose: let a fresh Claude Code session pick up this research program with as little loss as possible. Keep it short;
 the durable record is `RESEARCH_LOG.md` (lab notebook, append-only, every result the turn it lands). Update this file at
-the end of every working block (not just at the end of a session). Last update: **2026-10-26, 18:29 PDT**.
+the end of every working block (not just at the end of a session). Last update: **2026-10-26, 19:22 PDT**.
 
 ## How to resume (5 minutes)
 1. Read this file, then the last ~300 lines of `RESEARCH_LOG.md` (`tail -300 RESEARCH_LOG.md`).
@@ -69,7 +69,7 @@ the end of every working block (not just at the end of a session). Last update: 
 Order = my recommendation; every step is local, measured through `harness.py` with the demo config, and goes into the demo dropdown.
 | # | step | needs | gives |
 |---|---|---|---|
-| 0 | running: v3b (from scratch, clean corpus) → recovery run (120 push-back recoveries mixed in) | — | from-scratch baseline; first model with push-back data |
+| 0 | DONE: v3b (clean persona, worst at following: ignores-pushback 57%); recovery run = first movement (ignores-pushback 35→23%, invented-life 20→5%, salad 2→13%) | — | best v2-lineage model now `best_lm_oracle_v2_grown_recover8.pt`; next: more recoveries at ×4 + teach corrections |
 | 1 | **verifier in the browser**: 2nd ONNX output (hidden state at `norm`), LogReg weights as JSON, best-of-4 + controller in `index.html` | ~2 h build | the controller Nico can feel; best-of-N (8–2 in his picks) in the demo |
 | 2 | **user-turn classifier** (push-back / question / task-order / greeting / small-talk) → token into the prompt; generator retrained with user-side tokens | labels: sim-user turns + probes, LLM-labelled (~2k) | explicit push-back recognition; task act (Nico's "convince me to go to bed") |
 | 3 | **emotion classifier** on the user's turn (frustrated / amused / anxious / neutral / excited) → token; EmpatheticDialogues (1811.00207, 25k convs, 32 emotions) as free labels | 1 labelling pass + retrain | the "reading my emotions" signal, made real |

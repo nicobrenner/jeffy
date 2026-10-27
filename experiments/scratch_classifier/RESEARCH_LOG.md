@@ -5063,3 +5063,19 @@ boundary checkpoints, growth inits, verifiers and demo int8 ONNX (~1 GB) and sta
 val 1.6741 (corpus differs from conv8's). Identity probe (bare, broad regex): name **31/32**, human-life **9/96** (conv8: 27/32, 11/96) — the
 recoveries do not hurt identity. The test that matters: reactive-user turns 2–3 (generating) → on-thread grader pass vs conv8 (bare settings,
 same as the earlier pass: on-thread ≥2 13%, ignores-pushback 38%). Demo entry `v2_grown_recover8_int8`.
+
+## 2026-10-26 19:21 PDT — Conversation pass: the recovery data moves push-back handling for the first time (`grades_recover_mt_blind3`, 270 rows)
+
+Bare settings (no prime, T0.5), reactive simulated user, one grader with on-thread rubric + "self-corrects" tag; key M1=recover8 M2=v3b M3=conv8.
+| turns 2–3 | conv8 (per-conversation) | **recover8 (+120 recoveries ×12)** | v3b (from scratch, clean) |
+|---|---|---|---|
+| on-thread ≥2 | 22% | **30%** | 12% |
+| ignores-pushback | 35% | **23%** | 57% |
+| invented-life / off-persona | 20% / 17% | **5% / 2%** | 3% / 3% |
+| coherence / salad | 2.42 / 2% | 2.00 / **13%** | 2.25 / 2% |
+| paired on-thread vs conv8 | — | **18/34/8** | 7/30/23 |
+Turn 1: conv8 best (30% on-thread ≥2), recover8 17%. Self-corrects tagged once (the "No baker, not me" exchange).
+Reading: 120 push-back recoveries, on the model's own mistakes, are the first thing that moved conversation following (ignores-pushback
+35 → 23%, invented-life 20 → 5%), at a fluency cost (salad 2 → 13%) from the ×12 oversampling of agent-written text. v3b (from scratch, no
+push-back data) is the worst at following despite the cleanest persona — the behaviour has to be in the data. Next: more recoveries at lower
+copies (×4), Nico's teach-mode corrections mixed in, then the same pass through the demo harness with the controller.

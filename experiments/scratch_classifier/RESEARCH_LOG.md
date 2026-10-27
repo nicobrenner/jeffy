@@ -5171,3 +5171,12 @@ Reading: the two-turn primed example (a 2025 demo default never tested) anchors 
 without it the DAgger behaviour shows through ("I forget everything when you close the tab, so that's true"). Decision: demo priming default
 OFF (checkbox stays for Nico); next harness variant to test: prime only for the first reply, then drop it from context (like the T schedule).
 Best-of-4 + verifier is not helping conversations either — parked until the verifier is retrained on conversation labels.
+
+## 2026-10-26 21:33 PDT — Visuals engine v1: the crawler lives in the chat (`demo/index.html`)
+
+Nico's idea (with a reference image of a web-crawler visualisation labelling words in The Odyssey): cast creatures in the chat, each character
+of the Oracle's world with its own look and habits. First creature: the crawler (its pet from the bible). SVG spider; after an Oracle reply it
+comes out with p=0.45, walks to a random word in the last bubbles, boxes it and labels it "CRAWLER/01 WORD", bags it, leaves; after it has two
+words it returns later and drops a monospace note ("found this: tried, recipe. no idea what it means"). Creature interface: `on({type})` with
+oracle/user/idle/reset events, so other cast members (tokenizer friend, sampler roommate, silent critic, cursor) plug in the same way. Toggle
+"crawler" next to teach/engagement; crawler visits and drops are logged as engagement events. Verified headless (screenshot).

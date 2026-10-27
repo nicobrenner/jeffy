@@ -135,6 +135,22 @@
   .msg { animation: msgin .22s ease-out; }
   @keyframes msgin { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
   #chat { scroll-behavior: smooth; }
+
+  /* ===== visuals engine: the crawler (first creature of the cast) ===== */
+  #chat { position: relative; }
+  #crawler { position: absolute; left: 0; top: 0; width: 44px; height: 44px; pointer-events: none; z-index: 5; opacity: 0; transition: opacity .4s; will-change: transform; }
+  #crawler.on { opacity: 1; }
+  #crawler .leg { stroke: var(--fg); stroke-width: 1.2; opacity: .7; transform-origin: 22px 22px; }
+  #crawler.walk .leg:nth-child(odd) { animation: legA .18s infinite alternate ease-in-out; }
+  #crawler.walk .leg:nth-child(even) { animation: legB .18s infinite alternate-reverse ease-in-out; }
+  @keyframes legA { from { transform: rotate(-8deg) } to { transform: rotate(8deg) } }
+  @keyframes legB { from { transform: rotate(8deg) } to { transform: rotate(-8deg) } }
+  #crawler .body { fill: var(--fg); } #crawler .eye { fill: var(--bg); }
+  .cr-label { position: absolute; z-index: 7; pointer-events: none; font: 11px/1.3 ui-monospace, Menlo, monospace; background: #2b5cff; color: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.3); padding: 2px 6px; white-space: nowrap; opacity: 0; transition: opacity .25s; }
+  .cr-label.on { opacity: 1; }
+  .cr-box { position: absolute; z-index: 4; pointer-events: none; border: 1.5px solid #2b5cff; background: rgba(43,92,255,.12); opacity: 0; transition: opacity .25s, transform .6s ease-in, left .6s ease-in, top .6s ease-in; }
+  .cr-box.on { opacity: 1; }
+  .cr-drop { align-self: flex-start; font: 11px/1.4 ui-monospace, Menlo, monospace; color: var(--fg-dim); border-left: 2px solid #2b5cff; padding: 2px 8px; margin: -4px 0 0 6px; animation: msgin .3s ease-out; }
   #input-area {
     padding: 12px 20px;
     border-top: 1px solid var(--border);
@@ -215,6 +231,7 @@
   <button id="teachExport" class="suggestion" style="font-size:12px" title="Download corrections.jsonl">export</button>
   <button id="teachClear" class="suggestion" style="font-size:12px" title="Delete saved corrections">clear</button>
   <button id="engExport" class="suggestion" style="font-size:12px" title="Download engagement.json: turns per conversation, reply-after-turn rate, time to reply">engagement</button>
+  <label style="font-size:12px;color:var(--fg-dim);display:flex;align-items:center;gap:4px" title="The Oracle's pet crawler lives in the chat"><input type="checkbox" id="crawlerCheck" checked> crawler</label>
   <span id="status">Loading model...</span>
 </header>
 
@@ -436,6 +453,57 @@
     return generated;
   }
 
+
+  // ===================== VISUALS ENGINE: THE CRAWLER =====================
+  // The Oracle's pet from the world bible, as a creature in the chat. Driven by conversation events: after an Oracle reply it may come out,
+  // walk to a word in the conversation, label it (CRAWLER/01), carry it off and leave; later it returns and drops a note with what it found.
+  // Common interface for all cast creatures: on(event) with {type:'oracle'|'user'|'idle'|'reset'}; each creature decides what to do.
+  const crawlerCheck = document.getElementById('crawlerCheck');
+  const Crawler = (() => {
+    const el = document.createElement('div'); el.id = 'crawler';
+    el.innerHTML = `<svg viewBox="0 0 44 44" width="44" height="44">${[...Array(8)].map((_, i) => { const a = (i < 4 ? -1 : 1), k = i % 4; const x2 = 22 + a * (14 + k * 2), y2 = 10 + k * 8; return `<line class="leg" x1="22" y1="22" x2="${x2}" y2="${y2}"/>`; }).join('')}<rect class="body" x="17" y="14" width="10" height="16" rx="3"/><rect class="eye" x="19" y="17" width="2" height="2"/><rect class="eye" x="23" y="17" width="2" height="2"/></svg>`;
+    const label = document.createElement('div'); label.className = 'cr-label';
+    const box = document.createElement('div'); box.className = 'cr-box';
+    let x = -60, y = 20, busy = false, bag = [], visits = 0; const SPEED = 140; // px/s
+    function mount() { if (!el.isConnected) { chatEl.appendChild(el); chatEl.appendChild(label); chatEl.appendChild(box); } }
+    function place(px, py) { x = px; y = py; el.style.transform = `translate(${px}px, ${py}px)`; }
+    function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+    async function walkTo(tx, ty) { const d = Math.hypot(tx - x, ty - y); el.classList.add('walk'); el.style.transition = `transform ${d / SPEED}s linear`; place(tx, ty); await sleep(d / SPEED * 1000 + 50); el.classList.remove('walk'); }
+    function pickWord() {   // a random word from the last two Oracle/user bubbles, with its on-screen box (relative to #chat)
+      const msgs = Array.from(chatEl.querySelectorAll('.msg.oracle, .msg.user')).slice(-3).filter(m => !m.querySelector('textarea'));
+      const cands = [];
+      for (const m of msgs) { const walker = document.createTreeWalker(m, NodeFilter.SHOW_TEXT); let n; while ((n = walker.nextNode())) { const t = n.textContent; const re = /[A-Za-z][A-Za-z']{3,}/g; let mm; while ((mm = re.exec(t))) cands.push({ node: n, start: mm.index, end: mm.index + mm[0].length, word: mm[0] }); } }
+      if (!cands.length) return null;
+      const c = cands[Math.floor(Math.random() * cands.length)]; const range = document.createRange(); range.setStart(c.node, c.start); range.setEnd(c.node, c.end);
+      const r = range.getBoundingClientRect(), base = chatEl.getBoundingClientRect(); return { word: c.word, left: r.left - base.left + chatEl.scrollLeft, top: r.top - base.top + chatEl.scrollTop, w: r.width, h: r.height };
+    }
+    async function visit() {
+      if (busy || !crawlerCheck.checked) return; busy = true; mount(); visits++;
+      const w = pickWord(); if (!w) { busy = false; return; }
+      el.classList.add('on'); place(-60, w.top - 10);
+      await walkTo(w.left + w.w + 6, w.top - 14);
+      box.style.left = w.left - 2 + 'px'; box.style.top = w.top - 1 + 'px'; box.style.width = w.w + 4 + 'px'; box.style.height = w.h + 2 + 'px'; box.style.transform = ''; box.classList.add('on');
+      label.textContent = `CRAWLER/01  ${w.word.toUpperCase()}`; label.style.left = w.left + 'px'; label.style.top = w.top - 22 + 'px'; label.classList.add('on');
+      logEvent('crawler', { word: w.word, visit: visits });
+      await sleep(1400);
+      label.classList.remove('on'); bag.push(w.word);
+      box.style.left = (x + 22) + 'px'; box.style.top = (y + 22) + 'px'; box.style.transform = 'scale(.2)';   // the word goes in the bag
+      await sleep(600); box.classList.remove('on');
+      await walkTo(chatEl.clientWidth + 60, y - 30 + Math.random() * 60); el.classList.remove('on'); busy = false;
+      if (bag.length >= 2 && Math.random() < 0.7) setTimeout(returnWithDrop, 15000 + Math.random() * 25000);
+    }
+    async function returnWithDrop() {
+      if (busy || !crawlerCheck.checked || !bag.length) return; busy = true; mount();
+      const last = chatEl.querySelector('.msg:last-of-type'); const ty = last ? last.offsetTop + last.offsetHeight + 4 : chatEl.scrollHeight - 40;
+      el.classList.add('on'); place(chatEl.clientWidth + 60, ty); await walkTo(24, ty);
+      const words = bag.splice(0, bag.length); const notes = [`found this: ${words.join(', ')}. no idea what it means`, `brought back: ${words.join(', ')}. you said these. I kept them`, `${words.join(' / ')} — filed under things humans say`];
+      const d = document.createElement('div'); d.className = 'cr-drop'; d.textContent = 'crawler: ' + notes[Math.floor(Math.random() * notes.length)]; chatEl.appendChild(d); chatEl.scrollTop = chatEl.scrollHeight;
+      logEvent('crawler_drop', { words });
+      await sleep(900); await walkTo(-60, ty + 10); el.classList.remove('on'); busy = false;
+    }
+    return { on(ev) { if (ev.type === 'oracle' && Math.random() < 0.45) setTimeout(visit, 900 + Math.random() * 1500); if (ev.type === 'reset') { bag = []; el.classList.remove('on'); } } };
+  })();
+
   // ===================== TEACH MODE =====================
   // Click an Oracle reply to rewrite it. The rewrite replaces the reply in the model's context (the conversation continues from
   // your words) and is saved as a training example: {model, prime, history, user, original, corrected}. Export writes JSONL.
@@ -533,7 +601,7 @@
       let response = tokenizer.decode(genIds).trim().replace(/^\*\w+\s*/, '');
       if (model.format === 'plain') response = response.split('\n')[0].replace(/^User:.*$/, '').trim();
       conversationIds.push(...tokenizer.encode(fmtOracleText(response)));
-      oracleDiv.textContent = response || '(empty response)'; transcript.push({ role: 'oracle', text: response }); oracleDiv.dataset.turn = transcript.length - 1; makeEditable(oracleDiv); logEvent('oracle', { turn: transcript.length, len: response.length });
+      oracleDiv.textContent = response || '(empty response)'; transcript.push({ role: 'oracle', text: response }); oracleDiv.dataset.turn = transcript.length - 1; makeEditable(oracleDiv); logEvent('oracle', { turn: transcript.length, len: response.length }); Crawler.on({ type: 'oracle' });
     } catch (e) { oracleDiv.textContent = '(generation error: ' + e.message + ')'; console.error(e); }
     chatEl.scrollTop = chatEl.scrollHeight;
     statusEl.textContent = 'Ready'; setBusy(false); inputEl.focus();
@@ -545,7 +613,7 @@
   // ===================== MODEL LOADING =====================
   function resetConversation() {
     if (transcript.length) logEvent('reset', { turns: transcript.length });
-    convId = Date.now(); logEvent('load');
+    convId = Date.now(); logEvent('load'); Crawler.on({ type: 'reset' });
     conversationIds = tokenizer.encode(buildPrime()); transcript = [];
     chatEl.innerHTML = '';
     addMessage('system-msg', model.label + ' loaded (' + model.size + '). ' + (primeCheck.checked ? 'Primed with a two-turn example.' : 'No priming.') + ' Sampler: ' + samplerSel.options[samplerSel.selectedIndex].text + '.');

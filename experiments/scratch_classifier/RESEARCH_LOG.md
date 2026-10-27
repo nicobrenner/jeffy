@@ -5507,3 +5507,11 @@ pre-LN with the learned position table reached 0.16 in the same budget. So RoPE 
 this test (the hypothesis that the previous-token head is "free" under RoPE is not borne out at 2k steps; possible causes:
 the custom block's default Linear init and attention-weight dropout differ from nn.TransformerEncoderLayer). RoPE scout
 (20 epochs, same mixture) running: epoch-1 val 1.83 vs pre-LN 1.93 (better LM loss). Gates unchanged.
+
+## 2026-10-27 04:04 PDT — RoPE variants: the slower induction is the rotary path itself, not the block's init or dropout
+`induct_unit7.py` (d256, lr 3e-4, 1.5k steps, repeats loss): rope dropout 0 → 5.71 · rope dropout 0 + xavier → 5.92 ·
+rope dropout 0.1 + xavier → 5.77 · (reference: pre-LN + learned table 2.18 at 1.5k, 0.16 at 2k). All RoPE variants within
+noise of each other, all well behind pre-LN with the table in this budget. So at 2 layers / d256 the learned absolute table
+forms the induction circuit faster than rotary positions here; RoPE's case stays what it was (window extension without a
+table), not faster copying. Decision rule for the next lineage: pick by the real-task gates (copy / recall / identity /
+simuser), not by the toy; RoPE scout at epoch 6/20 (explicit attention is ~2.5× slower per epoch: 118 s vs 46 s).

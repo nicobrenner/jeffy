@@ -5111,3 +5111,10 @@ labels at the learner's states; the learner's own actions are context, never tar
 (indices of context-only Oracle turns) → ConvDataset labels them −100. Rebuilt corpus (`chat_v2_recovermt2`): 1,093 recovery-row Oracle turns
 masked, plus the pet rewrite and the stock-opener strip. Retraining (`*_recovermt2x8`). The ×12 first-batch model had the same bug in milder
 form (its bad turn-1 replies were targets), which may explain its flat openers.
+
+## 2026-10-26 20:50 PDT — Loss-masked recovery model (`oracle_v2_grown_recovermt2x8`: 770 recoveries ×6, model's own turns masked; pet + stock-opener + bible fixes)
+
+val 1.6728. Identity: name 31/32, human-life 7/96. Turn-1 openers: "Yes, it is"-type still 10/30 — the strip removed them from the DATA but
+the grown base carries v2's weights (50 epochs of DailyDialog); only a from-scratch run on the stripped corpus tests whether the reflex is
+data or inheritance. The turn-2 "What's up?" collapse is gone (no single reply dominates). Reactive-user pass vs recover8 (×12) generating.
+The bugged recovermt8 pass for the record (`grades_recovermt_mt_blind2`): on-thread ≥2 32% but ignores-pushback 45% (the collapse) vs 32% for ×12.

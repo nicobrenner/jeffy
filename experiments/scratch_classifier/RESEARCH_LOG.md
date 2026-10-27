@@ -5490,3 +5490,13 @@ copy_probe name 1/16 · pet 5/16 · city 2/16 (every previous model 0/48) · rea
 Hits read like a model reaching into the recap and half-garbling it ("The rain, the lake, with a tree in your tab, you said").
 The circuit is there and weak at 175M tokens. Launched preln50 (`preln50.sh`, 50 epochs = v3c budget, ~40 min, checkpoints
 every 10): copy / recall / identity / simuser turn 1 at the end. Decision for Nico after that: make pre-LN the next lineage.
+
+## 2026-10-27 03:53 PDT — pre-LN at the v3c budget (50 epochs): copying grows with training, still weak
+v5_preln50 (2.7M pre-LN from scratch, corpus + recap rows + 20k random-value copy rows): copy_probe 8/48 (ep 20) → 11/48
+(ep 30) → **15/48 (ep 50)**: name 6/16, pet 6/16, city 3/16 · recap recall 29/80 = 36% · identity 30/32, human-life 1/96 ·
+in-distribution signature 3.17 → 2.58 (ct2 3.38 → 2.68) · val ppl 3.2 and still falling at epoch 50. Turn-1 replies are
+ordinary corpus quality with persona lines ("I'm a marathon, but I don't exist between your messages"). Read: the circuit
+forms under pre-LN and strengthens with tokens, but learned ABSOLUTE positions make the previous-token head hard (it must be
+learned per position pair; 256 positions × offsets), which is exactly what relative/rotary positions give for free → RoPE
+is the next lever for copying, not just for longer context. Implementing `--rope` (custom pre-LN block, RoPE on q/k) and
+re-running the fair unit test + a 20-epoch scout, same gates.

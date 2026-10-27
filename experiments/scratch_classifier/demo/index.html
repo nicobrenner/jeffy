@@ -140,7 +140,7 @@
   #chat { position: relative; }
   #crawler { position: absolute; left: 0; top: 0; pointer-events: none; z-index: 5; opacity: 0; transition: opacity .35s; will-change: transform; }
   #crawler.on { opacity: 1; }
-  #crawler .leg line { stroke: var(--fg); stroke-width: 1; opacity: .9; }
+  #crawler .leg line { stroke: var(--fg); stroke-width: 1; opacity: .9; } #crawler .leg .tibia { stroke-width: .9; }
   #crawler .leg .foot { fill: #ff3b5c; }
   #crawler .chip .body { fill: #111; stroke: var(--fg); stroke-width: .6; } #crawler .chip .screen { fill: #2a2a33; } #crawler .chip .dot { fill: #d8d8e0; } #crawler .chip .led { fill: #9b7bff; }
   .cr-tag { position: absolute; z-index: 7; pointer-events: none; font: 10px/1.25 ui-monospace, Menlo, monospace; background: #2b5cff; color: #fff; padding: 2px 6px; white-space: nowrap; opacity: 0; transition: opacity .25s; }
@@ -156,6 +156,15 @@
   .cr-scanlabel.lock { background: #ff7a1a; font-weight: 600; }
   @keyframes lockpulse { 0%,100%{ box-shadow: 0 0 0 0 rgba(255,122,26,.6) } 50%{ box-shadow: 0 0 0 5px rgba(255,122,26,0) } }
   .cr-drop { align-self: flex-start; font: 11px/1.4 ui-monospace, Menlo, monospace; color: var(--fg-dim); border-left: 2px solid #2b5cff; padding: 2px 8px; margin: -4px 0 0 6px; animation: msgin .3s ease-out; }
+  header { flex-direction: column; align-items: stretch; gap: 6px; }
+  .hrow { display: flex; align-items: center; gap: 10px; min-width: 0; flex-wrap: wrap; }
+  .hrow h1 { margin: 0; white-space: nowrap; }
+  #model-select { flex: 1 1 240px; min-width: 0; max-width: 100%; }
+  #sampler-select { flex: 0 1 auto; min-width: 0; max-width: 46vw; }
+  .hopt { font-size: 12px; color: var(--fg-dim); display: flex; align-items: center; gap: 4px; white-space: nowrap; }
+  .hbtn { font-size: 12px; padding: 3px 8px; }
+  #status { margin-left: auto; white-space: nowrap; }
+  body { overflow-x: hidden; }
   #input-area {
     padding: 12px 20px;
     border-top: 1px solid var(--border);
@@ -221,23 +230,27 @@
 <body>
 
 <header>
-  <h1>Tiny Oracle</h1>
-  <span class="badge" id="badge">loading</span>
-  <select id="model-select" title="Model version"></select>
-  <select id="sampler-select" title="Sampling recipe">
-    <option value="sched">T0.3 opener → T0.5 + penalties</option>
-    <option value="recipe03">T0.3 + penalties</option>
-    <option value="recipe">T0.5 + penalties</option>
-    <option value="old">T0.8 (old demo)</option>
-  </select>
-  <label style="font-size:12px;color:var(--fg-dim);display:flex;align-items:center;gap:4px"><input type="checkbox" id="prime-check" checked> prime 1st reply</label>
-  <label style="font-size:12px;color:var(--fg-dim);display:flex;align-items:center;gap:4px" title="Click any Oracle reply to rewrite it; rewrites are saved as training examples"><input type="checkbox" id="teachCheck"> teach</label>
-  <span id="teachCount" style="font-size:12px;color:var(--fg-dim)"></span>
-  <button id="teachExport" class="suggestion" style="font-size:12px" title="Download corrections.jsonl">export</button>
-  <button id="teachClear" class="suggestion" style="font-size:12px" title="Delete saved corrections">clear</button>
-  <button id="engExport" class="suggestion" style="font-size:12px" title="Download engagement.json: turns per conversation, reply-after-turn rate, time to reply">engagement</button>
-  <label style="font-size:12px;color:var(--fg-dim);display:flex;align-items:center;gap:4px" title="The Oracle's pet crawler lives in the chat"><input type="checkbox" id="crawlerCheck" checked> crawler</label>
-  <span id="status">Loading model...</span>
+  <div class="hrow">
+    <h1>Tiny Oracle</h1>
+    <span class="badge" id="badge">loading</span>
+    <select id="model-select" title="Model version"></select>
+    <span id="status">Loading model...</span>
+  </div>
+  <div class="hrow hrow2">
+    <select id="sampler-select" title="Sampling recipe">
+      <option value="sched">T0.3 opener → T0.5 + penalties</option>
+      <option value="recipe03">T0.3 + penalties</option>
+      <option value="recipe">T0.5 + penalties</option>
+      <option value="old">T0.8 (old demo)</option>
+    </select>
+    <label class="hopt"><input type="checkbox" id="prime-check" checked> prime 1st reply</label>
+    <label class="hopt" title="Click any Oracle reply to rewrite it; rewrites are saved as training examples"><input type="checkbox" id="teachCheck"> teach</label>
+    <span id="teachCount" class="hopt"></span>
+    <button id="teachExport" class="suggestion hbtn" title="Download corrections.jsonl">export</button>
+    <button id="teachClear" class="suggestion hbtn" title="Delete saved corrections">clear</button>
+    <button id="engExport" class="suggestion hbtn" title="Download engagement.json: turns per conversation, reply-after-turn rate, time to reply">engagement</button>
+    <label class="hopt" title="The Oracle's pet crawler lives in the chat"><input type="checkbox" id="crawlerCheck" checked> crawler</label>
+  </div>
 </header>
 
 <div id="chat">
@@ -408,8 +421,11 @@
   function fmtSystem() { return model.format === 'plain' ? 'System: ' + SYSTEM_PROMPT : '<|system|> ' + SYSTEM_PROMPT; }
   function fmtUserTurn(text) { return model.format === 'plain' ? '\nUser: ' + text + '\nOracle:' : '\n<|user|> ' + text + '\n<|oracle|>'; }
   function fmtOracleText(text) { return ' ' + text; }
+  let memoryLines = []; window.__memory = () => memoryLines;   // facts the page knows that the model should see (the roadmap's memory line); kept short, newest first
+  function remember(line) { memoryLines = [line, ...memoryLines.filter(l => l !== line)].slice(0, 2); if (tokenizer && transcript.length) rebuildIds(); }
   function buildPrime(force) {
     let t = fmtSystem();
+    if (memoryLines.length) t += ' ' + memoryLines.join(' ');
     if (primeCheck.checked && (force || transcript.length < 2)) for (const [u, o] of PRIME) t += fmtUserTurn(u) + fmtOracleText(o);   // first reply only
     return t;
   }
@@ -502,11 +518,13 @@
   const crawlerCheck = document.getElementById('crawlerCheck');
   const Crawler = (() => {
     const W = 170, H = 170, CX = 85, CY = 85;   // top-down; the reference: a small dark device body, eight thin straight legs radiating evenly, red dot feet
-    const legDefs = [...Array(8)].map((_, i) => { const ang = (-100 + i * 42 + (i % 2 ? 6 : -6)) * Math.PI / 180, len = [72, 58, 80, 62, 76, 56, 78, 64][i];
-      return { ang, len, x2: CX + Math.cos(ang) * len, y2: CY + Math.sin(ang) * len }; });
+    // eight long two-segment legs radiating evenly (reference look); each leg = hip group (swings fore/aft) > knee group (flexes), red foot
+    const legDefs = [...Array(8)].map((_, i) => { const ang = (-100 + i * 42 + (i % 2 ? 6 : -6)) * Math.PI / 180, L1 = [26, 22, 30, 24, 28, 21, 29, 25][i], L2 = [24, 20, 26, 20, 24, 19, 25, 21][i];
+      const kx = CX + Math.cos(ang) * L1, ky = CY + Math.sin(ang) * L1; const bend = ang + 0.35 * (i < 4 ? -1 : 1);   // knee kinks outward
+      return { ang, kx, ky, fx: kx + Math.cos(bend) * L2, fy: ky + Math.sin(bend) * L2 }; });
     const el = document.createElement('div'); el.id = 'crawler'; el.style.width = W + 'px'; el.style.height = H + 'px';
     el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}"><g class="rig" style="transform-origin:${CX}px ${CY}px">
-      ${legDefs.map((d, i) => `<g class="leg" data-i="${i}" style="transform-origin:${CX}px ${CY}px"><line x1="${CX}" y1="${CY}" x2="${d.x2}" y2="${d.y2}"/><circle class="foot" cx="${d.x2}" cy="${d.y2}" r="2.2"/></g>`).join('')}
+      ${legDefs.map((d, i) => `<g class="leg" data-i="${i}" style="transform-origin:${CX}px ${CY}px"><line class="femur" x1="${CX}" y1="${CY}" x2="${d.kx}" y2="${d.ky}"/><g class="knee" style="transform-origin:${d.kx}px ${d.ky}px"><line class="tibia" x1="${d.kx}" y1="${d.ky}" x2="${d.fx}" y2="${d.fy}"/><circle class="foot" cx="${d.fx}" cy="${d.fy}" r="2.2"/></g></g>`).join('')}
       <g class="chip"><rect class="body" x="${CX - 7}" y="${CY - 13}" width="14" height="26" rx="1.5"/><rect class="screen" x="${CX - 4}" y="${CY - 10}" width="8" height="11" rx="0.8"/><rect class="dot" x="${CX - 2.5}" y="${CY + 5}" width="5" height="5"/><rect class="led" x="${CX - 1.2}" y="${CY - 12}" width="2.4" height="1.4"/></g></g></svg>`;
     const label = document.createElement('div'); label.className = 'cr-label';
     const tag = document.createElement('div'); tag.className = 'cr-tag'; tag.innerHTML = 'CRAWLER/01<br><span class="cr-stat">0 w/s</span>';
@@ -519,8 +537,12 @@
     function netLine(wb) { const l = document.createElementNS('http://www.w3.org/2000/svg', 'line'); l.setAttribute('x1', x); l.setAttribute('y1', y); l.setAttribute('x2', wb.left + wb.w / 2); l.setAttribute('y2', wb.top + wb.h / 2); net.appendChild(l); return l; }
     function clearNet() { while (net.firstChild) net.removeChild(net.firstChild); }
     const sleep = ms => new Promise(r => setTimeout(r, ms));
-    function pose(t, moving) {   // straight legs: alternating groups swing a few degrees about the body and stretch/shorten slightly; body steady
-      for (const g of legs) { const i = +g.dataset.i, groupA = i % 2 === 0, ph = t * 9 + (groupA ? 0 : Math.PI); const sw = moving ? Math.sin(ph) : 0; g.style.transform = `rotate(${sw * 7}deg) scale(${1 + sw * 0.06})`; }
+    function pose(t, moving) {   // walk cycle, alternating tripod: a leg swings forward with the knee flexed and the foot lifted, then plants and pushes back extended
+      for (const g of legs) { const i = +g.dataset.i, groupA = i % 2 === 0, ph = t * 8 + (groupA ? 0 : Math.PI), side = i < 4 ? -1 : 1;
+        const sw = moving ? Math.sin(ph) : 0, swing = moving ? Math.max(0, Math.cos(ph)) : 0;   // sw: fore/aft position; swing: 1 while the foot is in the air
+        g.style.transform = `rotate(${sw * 10 * side}deg)`;
+        const knee = g.querySelector('.knee'); knee.style.transform = `rotate(${(18 * swing + 4 * sw) * side}deg)`;   // knee flexes while swinging, extends on the push
+        const foot = g.querySelector('.foot'); foot.setAttribute('r', (2.2 - swing * 1.2).toFixed(2)); foot.style.opacity = (1 - swing * 0.6).toFixed(2); }   // lifted foot: smaller, fainter
     }
     function walkTo(tx, ty, speed = 120) {   // stepping animation on rAF (no CSS glide): slight lateral wobble, body bob with the gait
       return new Promise(res => { const x0 = x, y0 = y, d = Math.hypot(tx - x0, ty - y0), dur = Math.max(300, d / speed * 1000); let t0 = null;
@@ -557,7 +579,7 @@
       clearScans(); clearNet();
       box.style.left = w.left - 2 + 'px'; box.style.top = w.top - 1 + 'px'; box.style.width = w.w + 4 + 'px'; box.style.height = w.h + 2 + 'px'; box.style.transform = ''; box.classList.add('on');
       label.textContent = `CRAWLER/01  ${w.label} · ${w.word.toUpperCase()}`; label.style.left = w.left + 'px'; label.style.top = w.top - 22 + 'px'; label.classList.add('on');
-      logEvent('crawler', { word: w.word, label: w.label, visit: visits });
+      logEvent('crawler', { word: w.word, label: w.label, visit: visits }); remember('Your pet crawler just fetched the word ' + JSON.stringify(w.word) + ' from the chat.');
       await sleep(1600);
       label.classList.remove('on'); bag.push(w.word);
       box.style.left = (x - 4) + 'px'; box.style.top = (y - 4) + 'px'; box.style.transform = 'scale(.15)';   // the word goes in the bag
@@ -571,7 +593,7 @@
       el.classList.add('on'); tag.classList.add('on'); place(chatEl.clientWidth + W, ty); await walkTo(90, ty, 140);
       const words = bag.splice(0, bag.length); const notes = [`found this: ${words.join(', ')}. no idea what it means`, `brought back: ${words.join(', ')}. you said these. I kept them`, `${words.join(' / ')} — filed under things humans say`, `dropped ${words.length === 1 ? 'it' : 'them'} here: ${words.join(', ')}. smelled important`];
       const d = document.createElement('div'); d.className = 'cr-drop'; d.textContent = 'crawler: ' + notes[Math.floor(Math.random() * notes.length)]; chatEl.appendChild(d); chatEl.scrollTop = chatEl.scrollHeight;
-      logEvent('crawler_drop', { words });
+      logEvent('crawler_drop', { words }); remember('Your pet crawler brought back: ' + words.join(', ') + '.');
       await sleep(1000); await walkTo(-W, ty + 10, 160); el.classList.remove('on'); tag.classList.remove('on'); busy = false;
     }
     return { on(ev) { if (ev.type === 'oracle' && Math.random() < 0.5) setTimeout(visit, 800 + Math.random() * 1500); if (ev.type === 'reset') { bag = []; el.classList.remove('on'); } } };
@@ -687,7 +709,7 @@
   // ===================== MODEL LOADING =====================
   function resetConversation() {
     if (transcript.length) logEvent('reset', { turns: transcript.length });
-    convId = Date.now(); logEvent('load'); Crawler.on({ type: 'reset' });
+    convId = Date.now(); logEvent('load'); Crawler.on({ type: 'reset' }); memoryLines = [];
     conversationIds = tokenizer.encode(buildPrime()); transcript = [];
     chatEl.innerHTML = '';
     addMessage('system-msg', model.label + ' loaded (' + model.size + '). ' + (primeCheck.checked ? 'Primed for the first reply only.' : 'No priming.') + ' Sampler: ' + samplerSel.options[samplerSel.selectedIndex].text + '.');

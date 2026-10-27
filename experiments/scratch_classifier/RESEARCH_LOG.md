@@ -5040,3 +5040,13 @@ ct2's replies are Nico's bank lines verbatim (memorized-line) — the controller
 Also: conv8 under the demo harness (8%) is WORSE than conv8 bare (13%) — the T0.3/priming cost again. Demo: ct2 added to the dropdown
 (plan token stripped from display/context; picks its own act), new default-position sampler `sched` (T0.3 opener → T0.5). The in-browser
 verifier (hidden-state LogReg → needs a second ONNX output) is the next harness step so the controller can run in the demo.
+
+## 2026-10-26 18:21 PDT — Persistent act vector (`--act-span`: added at every reply token): most controllable, least fluent
+
+`oracle_v2_actspan8` (2.7M, 8 ep): val 2.0496 (single-position vector 1.689, token 1.592 — the span vector interferes with language modelling).
+Probe: with NO vector the model is broken (name 2/32: it never trained a reply without one → distribution shift); forced *me name 30/32;
+forced dunno 23/40 vs forced tell **1/40** — the largest act gap of the three variants (22 points; token 19; single-position 7) — but the
+replies degrade ("I know, I'm not sure. But that's no idea, but."). Reading: the always-on vector is a strong steering channel that the model
+has not learned to carry gracefully in 8 epochs. Next variants: (a) small-norm / scaled vector; (b) vector at every position but trained with
+random dropout of the act (so "none" is in-distribution); (c) more epochs. The token remains the practical choice for now; the vector line is the
+research thread toward non-text signals (emotion/memory) feeding the model continuously.

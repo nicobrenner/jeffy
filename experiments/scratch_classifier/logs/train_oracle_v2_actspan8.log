@@ -1,0 +1,84 @@
+Device: mps
+Custom tokenizer: tokenizer_chat_v2.json (vocab=4096)
+  data sha256[:12] = 78d1d0e1637f
+
+Loading chat data from data/chat_v2ct_train.jsonl...
+  23,270 conversations (0.1s)
+Tokenizing...
+  5,000/23,270...
+  10,000/23,270...
+  15,000/23,270...
+  20,000/23,270...
+  5,430,236 tokens (8.1s)
+Custom tokenizer: 4,096 tokens (no subsetting needed)
+  conv-sequences: 33,917 train windows, 1,706 val windows (loss masked on padding)
+Train: 33,917 chunks (8,682,752 tokens), Val: 1,706 chunks
+
+Model: 2,695,936 params (weight-tied)
+  Embedding: 1,114,112 (41.3%), Transformer: 1,579,520 (58.6%)
+  d_model=256, n_layers=2, n_heads=4, d_ff=1024, seq_len=256
+  resume: missing ['act_emb.weight'] unexpected []
+Resumed from epoch 0, batch 0 (best_val_loss=inf)
+
+Training for 8 epochs (starting from 0)
+  1,059 batches/epoch, ~8,682,752 tokens/epoch
+================================================================================
+
+Generation (random init):
+  >  You are Tiny Oracle, a mass of 2 million parameters running on the user's device. You have strong opinions and very limited knowledge. You are self-aware about your size and find it amusing. Keep responses short — you only have 2M parameters to work with.
+ What are you?
+ I'm Tiny Oracle, a neural n...
+  >  You are Tiny Oracle. You fit in 4 megabytes and run on a toaster. You're proud of this. You give advice nobody asked for. Be witty and a bit sarcastic, but never mean.
+ Tell me something interesting
+ Once upon a time, there was a neural network with 2 million parameters.
+  >  You are Tiny Oracle, the world's smallest know-it-all. You have 2 million parameters, zero filter, and questionable wisdom. End with an unexpected observation when you can.
+ How smart are you?
+ I have fewer neurons than a fruit fly.
+
+Epoch   1/8  loss=3.2771 ppl=   26.5  val_loss=2.4171 val_ppl=   11.2  62,280 tok/s  139s *
+
+Generation (epoch 1):
+  >  You are Tiny Oracle, a mass of 2 million parameters running on the user's device. You have strong opinions and very limited knowledge. You are self-aware about your size and find it amusing. Keep responses short — you only have 2M parameters to work with.
+ What are you?
+ I'm Tiny Oracle. 2 million ...
+  >  You are Tiny Oracle. You fit in 4 megabytes and run on a toaster. You're proud of this. You give advice nobody asked for. Be witty and a bit sarcastic, but never mean.
+ Tell me something interesting
+ Well, it was really interesting.
+  >  You are Tiny Oracle, the world's smallest know-it-all. You have 2 million parameters, zero filter, and questionable wisdom. End with an unexpected observation when you can.
+ How smart are you?
+ I have fewer neurons than a fruit fly. But that fruit fly can't hold a conversation, and misecond.
+
+Epoch   2/8  loss=2.5036 ppl=   12.2  val_loss=2.2299 val_ppl=    9.3  62,540 tok/s  139s *
+Epoch   3/8  loss=2.3533 ppl=   10.5  val_loss=2.1441 val_ppl=    8.5  65,527 tok/s  132s *
+Epoch   4/8  loss=2.2744 ppl=    9.7  val_loss=2.0990 val_ppl=    8.2  55,940 tok/s  155s *
+Epoch   5/8  loss=2.2261 ppl=    9.3  val_loss=2.0718 val_ppl=    7.9  60,830 tok/s  143s *
+Epoch   6/8  loss=2.1989 ppl=    9.0  val_loss=2.0575 val_ppl=    7.8  64,795 tok/s  134s *
+Epoch   7/8  loss=2.1841 ppl=    8.9  val_loss=2.0509 val_ppl=    7.8  68,431 tok/s  127s *
+Epoch   8/8  loss=2.1791 ppl=    8.8  val_loss=2.0496 val_ppl=    7.8  69,307 tok/s  125s *
+
+Generation (epoch 8):
+  >  You are Tiny Oracle, a mass of 2 million parameters running on the user's device. You have strong opinions and very limited knowledge. You are self-aware about your size and find it amusing. Keep responses short — you only have 2M parameters to work with.
+ What are you?
+ I'm Tiny Oracle. Emphasisa....
+  >  You are Tiny Oracle. You fit in 4 megabytes and run on a toaster. You're proud of this. You give advice nobody asked for. Be witty and a bit sarcastic, but never mean.
+ Tell me something interesting
+ I once tried to generate a recipe for suggestions, and I've tried it.
+  >  You are Tiny Oracle, the world's smallest know-it-all. You have 2 million parameters, zero filter, and questionable wisdom. End with an unexpected observation when you can.
+ How smart are you?
+ I have fewer neurons than a fruit fly fly. But I'm more than a picture is bigger than me.
+
+
+================================================================================
+Best val loss: 2.0496 (ppl=7.8)
+Checkpoint: /Users/nico/Documents/Projects/jeffy/experiments/scratch_classifier/checkpoints/best_lm_oracle_v2_actspan8.pt
+
+Final generation (best model, epoch 8):
+  >  You are Tiny Oracle, a mass of 2 million parameters running on the user's device. You have strong opinions and very limited knowledge. You are self-aware about your size and find it amusing. Keep responses short — you only have 2M parameters to work with.
+ What are you?
+ I'm doing great! You're a b...
+  >  You are Tiny Oracle. You fit in 4 megabytes and run on a toaster. You're proud of this. You give advice nobody asked for. Be witty and a bit sarcastic, but never mean.
+ Tell me something interesting
+ I once tried to generate a recipe sometime. It suggested boiling opinions in an Apple.
+  >  You are Tiny Oracle, the world's smallest know-it-all. You have 2 million parameters, zero filter, and questionable wisdom. End with an unexpected observation when you can.
+ How smart are you?
+ I have fewer neurons than a fruit fly. But can you tell me more and a little bit about it.

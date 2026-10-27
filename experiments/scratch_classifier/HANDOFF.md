@@ -2,7 +2,7 @@
 
 Purpose: let a fresh Claude Code session pick up this research program with as little loss as possible. Keep it short;
 the durable record is `RESEARCH_LOG.md` (lab notebook, append-only, every result the turn it lands). Update this file at
-the end of every working block (not just at the end of a session). Last update: **2026-10-27, 06:24 PDT**.
+the end of every working block (not just at the end of a session). Last update: **2026-10-27, 09:22 PDT**.
 
 ## How to resume (5 minutes)
 1. Read this file, then the last ~400 lines of `RESEARCH_LOG.md` (`tail -400 RESEARCH_LOG.md`).
@@ -16,7 +16,7 @@ the end of every working block (not just at the end of a session). Last update: 
    the evaluation Nico trusts; "Needs you" block at the end of messages that need him.
 
 ## Needs Nico (2026-10-27 05:42 PDT) — do not decide alone
-1. **Next lineage = pre-LN with the learned 256-position table (`train_lm.py --pre-ln`), from scratch.** Evidence: every
+1. **DECIDED (Nico: UX over metrics, not weights): next lineage = pre-LN 2L from scratch (`--pre-ln --oracle-only-loss` + contrast rows).** v5b passes identity (32/32, drift 0/96) and reads recaps (32%); wit unjudged → `demo/blind_v5b.html` (30 pairs vs ct2) + chat. Evidence: every
    Oracle so far (post-LN, PyTorch's default) has NO in-context copy circuit — `copy_probe.py` 0/48 for v2, ct2, all
    fine-tunes, all from-scratch post-LN scouts; `induction_probe*.py` flat. Unit tests at the Oracle's width: post-LN never
    forms induction heads in 2k steps, pre-LN does (repeat loss 8.3 → 0.16). Pre-LN scouts copy (8–15/48), recap recall
@@ -30,10 +30,10 @@ the end of every working block (not just at the end of a session). Last update: 
 6. Still open from earlier: crawler/room verdicts (v5 look, pick-up, Oracle remarks), teach-mode corrections export,
    README/benchmark correction, posts, ct3-vs-ct2 with prime-first.
 
-## Running right now (2026-10-27, 06:24 PDT)
-- **Nothing running.** Nothing on GPU. Demo served by `demo_server.py` on 8765. Lineage scouting stopped pending Nico.
-- **Models that matter:** `best_lm_oracle_v2_grown_ct2.pt` = Nico's pick (demo default; cannot copy from context — the memory
-  line is invisible to it); `best_lm_oracle_v5_preln100.pt` / `_preln50.pt` = best copiers (not in the demo); `ct3` = grader's pick.
+## Running right now (2026-10-27, 09:22 PDT)
+- **MPS: `v5c_run.sh`** (v5b recipe with synthetic share 8%; cuts template leakage) → gates + export, `logs/v5c_run.log` (V5C_DONE). Nothing on GPU. Demo on 8765 has `v5b` as a labelled candidate; default still ct2.
+- **Models that matter:** `best_lm_oracle_v2_grown_ct2.pt` = Nico's pick (demo default; cannot copy from context); `best_lm_oracle_v5b.pt` = first
+  model passing identity that reads recaps (demo candidate, `oracle_v5b_int8.onnx`); `ct3` = grader's pick. Trainer flags that matter: `--pre-ln`, `--oracle-only-loss`.
 
 ## Done this block (2026-10-27 night; all in RESEARCH_LOG.md)
 - **Demo:** knobs (prime off/1st/full, cross-turn toggle, "crawler now"); crawler v5 after Nico's video (long thin legs that

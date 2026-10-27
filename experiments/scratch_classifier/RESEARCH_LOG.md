@@ -5571,3 +5571,11 @@ a marathon share; "You're a software engineer. I remember the useful things" to 
 Not witty — the "coherent but flat" pattern Nico flagged; the wit question is the tone-judge/picks work, not this recipe.
 Demo: added as a labelled candidate in the dropdown (default unchanged); blind page `demo/blind_v5b.html` (30 first-reply
 pairs v5b vs ct2, key `pile_runs/atl/blind_v5b_key.json`). Next run v5c: synthetic share 23% → 8% to cut template leakage.
+
+## 2026-10-27 09:57 PDT — v5c (synthetic 8%): no better than v5b; template leakage comes from the recap rows' reply shape, not the dose
+v5c: identity 31/32, human-life 5/96 (v5b 0/96) · recap recall 26/80 = 32% (= v5b) · copy 0/48 · val ppl 4.2 (v5b 3.6) ·
+turn-1 replies still carry "You said you're a big fan of the lake…" / "You're back. I didn't go anywhere" at unrelated
+prompts. Read: cutting the synthetic rows removed the copy probe entirely and did not remove the leakage — the "You said …"
+shape comes from the 2,760 agent-written recap replies (uniform template) plus the synthetic ones; the fix is template
+DIVERSITY in the recap replies (next data pass), not dose. v5b stays the candidate. No further runs until Nico's picks
+(blind_v5b, blind_tone) or his chat verdict on v5b.

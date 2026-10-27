@@ -138,18 +138,20 @@
 
   /* ===== visuals engine: the crawler (first creature of the cast) ===== */
   #chat { position: relative; }
-  #crawler { position: absolute; left: 0; top: 0; width: 44px; height: 44px; pointer-events: none; z-index: 5; opacity: 0; transition: opacity .4s; will-change: transform; }
+  #crawler { position: absolute; left: 0; top: 0; pointer-events: none; z-index: 5; opacity: 0; transition: opacity .35s; will-change: transform; }
   #crawler.on { opacity: 1; }
-  #crawler .leg { stroke: var(--fg); stroke-width: 1.2; opacity: .7; transform-origin: 22px 22px; }
-  #crawler.walk .leg:nth-child(odd) { animation: legA .18s infinite alternate ease-in-out; }
-  #crawler.walk .leg:nth-child(even) { animation: legB .18s infinite alternate-reverse ease-in-out; }
-  @keyframes legA { from { transform: rotate(-8deg) } to { transform: rotate(8deg) } }
-  @keyframes legB { from { transform: rotate(8deg) } to { transform: rotate(-8deg) } }
-  #crawler .body { fill: var(--fg); } #crawler .eye { fill: var(--bg); }
-  .cr-label { position: absolute; z-index: 7; pointer-events: none; font: 11px/1.3 ui-monospace, Menlo, monospace; background: #2b5cff; color: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.3); padding: 2px 6px; white-space: nowrap; opacity: 0; transition: opacity .25s; }
+  #crawler .leg polyline { stroke: var(--fg); stroke-width: 1.1; stroke-linejoin: round; opacity: .85; }
+  #crawler .leg .foot { fill: #ff3b5c; }
+  #crawler .chip rect { fill: var(--fg); } #crawler .chip .pin { fill: var(--fg); opacity: .6; } #crawler .chip .die { fill: var(--bg); } #crawler .chip .led { fill: #2b5cff; animation: blink 1.4s infinite; }
+  .cr-label { position: absolute; z-index: 7; pointer-events: none; font: 11px/1.3 ui-monospace, Menlo, monospace; background: #2b5cff; color: #fff; padding: 2px 6px; white-space: nowrap; opacity: 0; transition: opacity .25s; box-shadow: 0 1px 3px rgba(0,0,0,.3); }
   .cr-label.on { opacity: 1; }
   .cr-box { position: absolute; z-index: 4; pointer-events: none; border: 1.5px solid #2b5cff; background: rgba(43,92,255,.12); opacity: 0; transition: opacity .25s, transform .6s ease-in, left .6s ease-in, top .6s ease-in; }
   .cr-box.on { opacity: 1; }
+  .cr-scan { position: absolute; z-index: 4; pointer-events: none; border: 1px dashed rgba(140,140,160,.9); animation: msgin .2s ease-out; }
+  .cr-scanlabel { position: absolute; z-index: 7; pointer-events: none; font: 10px/1.2 ui-monospace, Menlo, monospace; background: rgba(90,90,110,.9); color: #fff; padding: 1px 4px; white-space: nowrap; animation: msgin .2s ease-out; }
+  .cr-scan.lock { border: 1.5px solid #ff7a1a; background: rgba(255,122,26,.15); animation: lockpulse .5s 3; }
+  .cr-scanlabel.lock { background: #ff7a1a; font-weight: 600; }
+  @keyframes lockpulse { 0%,100%{ box-shadow: 0 0 0 0 rgba(255,122,26,.6) } 50%{ box-shadow: 0 0 0 5px rgba(255,122,26,0) } }
   .cr-drop { align-self: flex-start; font: 11px/1.4 ui-monospace, Menlo, monospace; color: var(--fg-dim); border-left: 2px solid #2b5cff; padding: 2px 8px; margin: -4px 0 0 6px; animation: msgin .3s ease-out; }
   #input-area {
     padding: 12px 20px;
@@ -454,54 +456,108 @@
   }
 
 
+  // ===================== DETECTOR (what the crawler sees) =====================
+  // Swappable word classifier for the creatures. v1 = lexicons + rules, fast and local; the interface (classify(word, context) ->
+  // {label, score}) is what a trained classifier replaces later. Labels are the Oracle's world categories.
+  const Detector = (() => {
+    const L = {
+      PERSONA: 'parameters parameter megabytes megabyte browser tab tokenizer tokens token model models weights epoch epochs checkpoint crawler cursor sampler context window oracle tiny autocomplete predict predicting words word neurons gpu server cloud internet',
+      FEELING: 'sad happy tired lonely bored anxious scared afraid angry excited glad sorry love hate worried stressed nervous calm fine okay great terrible awful amazing fun funny weird creepy cute nice lovely',
+      PLACE: 'home house room school work office city town country beach park gym kitchen bed garden street canada paris london japan arctic oregon',
+      BEING: 'cat dog pet puppy kitten spider friend friends family mom dad sister brother wife husband kids people person human humans baby parrot bird fish',
+      TIME: 'today tomorrow yesterday morning night evening week weekend year years monday friday later now soon hour minute',
+      FOOD: 'pizza coffee tea water beer wine pineapple cheese bread rice chicken lunch dinner breakfast recipe cooking',
+      QUESTION: 'what why how when where who which'
+    };
+    const lex = {}; for (const k in L) for (const w of L[k].split(' ')) lex[w] = k;
+    function classify(word, context) {
+      const w = word.toLowerCase().replace(/[^a-z']/g, '');
+      if (lex[w]) return { label: lex[w], score: lex[w] === 'PERSONA' ? 0.93 : 0.82 + (w.length % 3) * 0.04 };
+      if (/^\d+$/.test(word)) return { label: 'NUMBER', score: 0.9 };
+      if (/^[A-Z][a-z]{2,}$/.test(word) && !/^(I|The|Yes|No|And|But|Well|Hi|Hey|Hello|Thanks|Oh|Ok|Okay|So|That|This|It|What|Why|How|When|Where|Who)$/.test(word)) return { label: 'NAME', score: 0.78 };
+      if (/(ing|ed)$/.test(w) && w.length > 5) return { label: 'ACTION', score: 0.62 + Math.min(0.2, (w.length - 6) * 0.03) };
+      if (/(ly)$/.test(w) && w.length > 5) return { label: 'MANNER', score: 0.55 };
+      if (/(ness|tion|ment|ity|ance|ence)$/.test(w)) return { label: 'IDEA', score: 0.66 };
+      if (w.length >= 8) return { label: 'THING', score: 0.5 + Math.min(0.25, (w.length - 8) * 0.04) };
+      return { label: 'WORD', score: 0.25 + Math.min(0.2, w.length * 0.03) };
+    }
+    return { classify };
+  })();
+
   // ===================== VISUALS ENGINE: THE CRAWLER =====================
-  // The Oracle's pet from the world bible, as a creature in the chat. Driven by conversation events: after an Oracle reply it may come out,
-  // walk to a word in the conversation, label it (CRAWLER/01), carry it off and leave; later it returns and drops a note with what it found.
-  // Common interface for all cast creatures: on(event) with {type:'oracle'|'user'|'idle'|'reset'}; each creature decides what to do.
+  // The Oracle's pet from the world bible, as a creature in the chat: a small microchip body on eight long jointed legs. It steps (alternating
+  // tripod gait, body bob) rather than glides. Events: after an Oracle reply it may come out, walk to a word, box + label it (CRAWLER/01),
+  // bag it, leave; a little later it comes back and drops a note. Creature interface: on({type}) with oracle/user/idle/reset.
   const crawlerCheck = document.getElementById('crawlerCheck');
   const Crawler = (() => {
-    const el = document.createElement('div'); el.id = 'crawler';
-    el.innerHTML = `<svg viewBox="0 0 44 44" width="44" height="44">${[...Array(8)].map((_, i) => { const a = (i < 4 ? -1 : 1), k = i % 4; const x2 = 22 + a * (14 + k * 2), y2 = 10 + k * 8; return `<line class="leg" x1="22" y1="22" x2="${x2}" y2="${y2}"/>`; }).join('')}<rect class="body" x="17" y="14" width="10" height="16" rx="3"/><rect class="eye" x="19" y="17" width="2" height="2"/><rect class="eye" x="23" y="17" width="2" height="2"/></svg>`;
+    const W = 110, H = 70, CX = 55, CY = 38;   // svg box; chip centre
+    const el = document.createElement('div'); el.id = 'crawler'; el.style.width = W + 'px'; el.style.height = H + 'px';
+    // legs: hip on the chip edge, knee high and far, foot on the ground line; 4 per side
+    const legDefs = [...Array(8)].map((_, i) => { const side = i < 4 ? -1 : 1, k = i % 4; return { side, hipX: CX + side * 9, hipY: CY - 6 + k * 4, kneeX: CX + side * (26 + k * 6), kneeY: CY - 22 + k * 3, footX: CX + side * (40 + k * 8), footY: CY + 20 + (k % 2) * 3 }; });
+    el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
+      ${legDefs.map((d, i) => `<g class="leg" data-i="${i}" style="transform-origin:${d.hipX}px ${d.hipY}px"><polyline points="${d.hipX},${d.hipY} ${d.kneeX},${d.kneeY} ${d.footX},${d.footY}" fill="none"/><circle class="foot" cx="${d.footX}" cy="${d.footY}" r="1.8"/></g>`).join('')}
+      <g class="chip"><rect x="${CX - 9}" y="${CY - 9}" width="18" height="18" rx="2"/>${[-6, -2, 2, 6].map(o => `<rect class="pin" x="${CX + o - 1}" y="${CY - 12}" width="2" height="3"/><rect class="pin" x="${CX + o - 1}" y="${CY + 9}" width="2" height="3"/>`).join('')}<rect class="die" x="${CX - 4}" y="${CY - 4}" width="8" height="8"/><rect class="led" x="${CX + 5}" y="${CY - 7}" width="2" height="2"/></g></svg>`;
     const label = document.createElement('div'); label.className = 'cr-label';
     const box = document.createElement('div'); box.className = 'cr-box';
-    let x = -60, y = 20, busy = false, bag = [], visits = 0; const SPEED = 140; // px/s
-    function mount() { if (!el.isConnected) { chatEl.appendChild(el); chatEl.appendChild(label); chatEl.appendChild(box); } }
-    function place(px, py) { x = px; y = py; el.style.transform = `translate(${px}px, ${py}px)`; }
-    function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-    async function walkTo(tx, ty) { const d = Math.hypot(tx - x, ty - y); el.classList.add('walk'); el.style.transition = `transform ${d / SPEED}s linear`; place(tx, ty); await sleep(d / SPEED * 1000 + 50); el.classList.remove('walk'); }
-    function pickWord() {   // a random word from the last two Oracle/user bubbles, with its on-screen box (relative to #chat)
-      const msgs = Array.from(chatEl.querySelectorAll('.msg.oracle, .msg.user')).slice(-3).filter(m => !m.querySelector('textarea'));
-      const cands = [];
-      for (const m of msgs) { const walker = document.createTreeWalker(m, NodeFilter.SHOW_TEXT); let n; while ((n = walker.nextNode())) { const t = n.textContent; const re = /[A-Za-z][A-Za-z']{3,}/g; let mm; while ((mm = re.exec(t))) cands.push({ node: n, start: mm.index, end: mm.index + mm[0].length, word: mm[0] }); } }
-      if (!cands.length) return null;
-      const c = cands[Math.floor(Math.random() * cands.length)]; const range = document.createRange(); range.setStart(c.node, c.start); range.setEnd(c.node, c.end);
-      const r = range.getBoundingClientRect(), base = chatEl.getBoundingClientRect(); return { word: c.word, left: r.left - base.left + chatEl.scrollLeft, top: r.top - base.top + chatEl.scrollTop, w: r.width, h: r.height };
+    let x = -W, y = 20, busy = false, bag = [], visits = 0, legs = null;
+    function mount() { if (!el.isConnected) { chatEl.appendChild(el); chatEl.appendChild(label); chatEl.appendChild(box); legs = Array.from(el.querySelectorAll('.leg')); } }
+    function place(px, py, bob) { x = px; y = py; el.style.transform = `translate(${px - CX}px, ${py - CY + (bob || 0)}px)`; }
+    const sleep = ms => new Promise(r => setTimeout(r, ms));
+    function pose(t, moving) {   // alternating tripod gait: group A = legs 0,2,5,7; group B = 1,3,4,6. Each leg swings about its hip and lifts on its swing phase.
+      for (const g of legs) { const i = +g.dataset.i, groupA = [0, 2, 5, 7].includes(i), ph = t * 9 + (groupA ? 0 : Math.PI); const sw = moving ? Math.sin(ph) : 0, lift = moving ? Math.max(0, Math.sin(ph)) : 0; const side = legDefs[i].side; g.style.transform = `rotate(${sw * 9 * side}deg) translateY(${-lift * 3}px)`; }
     }
+    function walkTo(tx, ty, speed = 120) {   // stepping animation on rAF (no CSS glide): slight lateral wobble, body bob with the gait
+      return new Promise(res => { const x0 = x, y0 = y, d = Math.hypot(tx - x0, ty - y0), dur = Math.max(300, d / speed * 1000); let t0 = null;
+        const frame = ts => { if (!t0) t0 = ts; const u = Math.min(1, (ts - t0) / dur), tt = (ts - t0) / 1000; const wob = Math.sin(tt * 6) * 2 * (1 - u); place(x0 + (tx - x0) * u, y0 + (ty - y0) * u + wob, Math.sin(tt * 18) * 1.2); pose(tt, true); if (u < 1) requestAnimationFrame(frame); else { pose(tt, false); res(); } };
+        requestAnimationFrame(frame); });
+    }
+    function wordBoxes() {   // every word in the last three bubbles with its on-screen box (relative to #chat) and detector verdict
+      const msgs = Array.from(chatEl.querySelectorAll('.msg.oracle, .msg.user')).slice(-3).filter(m => !m.querySelector('textarea'));
+      const out = []; const base = chatEl.getBoundingClientRect();
+      for (const m of msgs) { const walker = document.createTreeWalker(m, NodeFilter.SHOW_TEXT); let n; while ((n = walker.nextNode())) { const t = n.textContent; const re = /[A-Za-z][A-Za-z']{3,}/g; let mm;
+        while ((mm = re.exec(t))) { const range = document.createRange(); range.setStart(n, mm.index); range.setEnd(n, mm.index + mm[0].length); const r = range.getBoundingClientRect();
+          const v = Detector.classify(mm[0], t); out.push({ word: mm[0], left: r.left - base.left + chatEl.scrollLeft, top: r.top - base.top + chatEl.scrollTop, w: r.width, h: r.height, label: v.label, score: v.score }); } } }
+      return out;
+    }
+    const scans = []; function scanLabel(wb, cls) {   // a detector box + label over a word (grey while scanning, orange when locked)
+      const bx = document.createElement('div'); bx.className = 'cr-scan ' + cls; bx.style.left = wb.left - 2 + 'px'; bx.style.top = wb.top - 1 + 'px'; bx.style.width = wb.w + 4 + 'px'; bx.style.height = wb.h + 2 + 'px';
+      const lb = document.createElement('div'); lb.className = 'cr-scanlabel ' + cls; lb.textContent = `${wb.label} ${wb.score.toFixed(2)}`; lb.style.left = wb.left + 'px'; lb.style.top = wb.top - 16 + 'px';
+      chatEl.appendChild(bx); chatEl.appendChild(lb); scans.push(bx, lb); return [bx, lb];
+    }
+    function clearScans() { for (const e of scans.splice(0)) e.remove(); }
     async function visit() {
       if (busy || !crawlerCheck.checked) return; busy = true; mount(); visits++;
-      const w = pickWord(); if (!w) { busy = false; return; }
-      el.classList.add('on'); place(-60, w.top - 10);
-      await walkTo(w.left + w.w + 6, w.top - 14);
+      const all = wordBoxes(); if (!all.length) { busy = false; return; }
+      el.classList.add('on'); place(-W, all[0].top + 40);
+      await walkTo(Math.min(140, chatEl.clientWidth / 3), all[0].top + 30);   // comes in and looks around
+      const seen = all.slice().sort(() => Math.random() - 0.5).slice(0, Math.min(6, all.length));   // scans a handful of words, detector labels on each
+      for (const wb of seen) { scanLabel(wb, 'scan'); await sleep(260); }
+      await sleep(500);
+      const w = seen.reduce((a, b) => (b.score > a.score ? b : a));   // locks onto the best detection
+      clearScans(); const [lbx, llb] = scanLabel(w, 'lock'); logEvent('crawler_lock', { word: w.word, label: w.label, score: w.score });
+      await sleep(900);
+      await walkTo(w.left + w.w / 2, w.top + w.h + 26, 220);   // goes to get it, faster
+      clearScans();
       box.style.left = w.left - 2 + 'px'; box.style.top = w.top - 1 + 'px'; box.style.width = w.w + 4 + 'px'; box.style.height = w.h + 2 + 'px'; box.style.transform = ''; box.classList.add('on');
-      label.textContent = `CRAWLER/01  ${w.word.toUpperCase()}`; label.style.left = w.left + 'px'; label.style.top = w.top - 22 + 'px'; label.classList.add('on');
-      logEvent('crawler', { word: w.word, visit: visits });
-      await sleep(1400);
+      label.textContent = `CRAWLER/01  ${w.label} · ${w.word.toUpperCase()}`; label.style.left = w.left + 'px'; label.style.top = w.top - 22 + 'px'; label.classList.add('on');
+      logEvent('crawler', { word: w.word, label: w.label, visit: visits });
+      await sleep(1600);
       label.classList.remove('on'); bag.push(w.word);
-      box.style.left = (x + 22) + 'px'; box.style.top = (y + 22) + 'px'; box.style.transform = 'scale(.2)';   // the word goes in the bag
+      box.style.left = (x - 4) + 'px'; box.style.top = (y - 4) + 'px'; box.style.transform = 'scale(.15)';   // the word goes in the bag
       await sleep(600); box.classList.remove('on');
-      await walkTo(chatEl.clientWidth + 60, y - 30 + Math.random() * 60); el.classList.remove('on'); busy = false;
-      if (bag.length >= 2 && Math.random() < 0.7) setTimeout(returnWithDrop, 15000 + Math.random() * 25000);
+      await walkTo(chatEl.clientWidth + W, y - 20 + Math.random() * 40, 160); el.classList.remove('on'); busy = false;
+      setTimeout(returnWithDrop, 9000 + Math.random() * 12000);   // it always comes back, 9–21 s later
     }
     async function returnWithDrop() {
-      if (busy || !crawlerCheck.checked || !bag.length) return; busy = true; mount();
-      const last = chatEl.querySelector('.msg:last-of-type'); const ty = last ? last.offsetTop + last.offsetHeight + 4 : chatEl.scrollHeight - 40;
-      el.classList.add('on'); place(chatEl.clientWidth + 60, ty); await walkTo(24, ty);
-      const words = bag.splice(0, bag.length); const notes = [`found this: ${words.join(', ')}. no idea what it means`, `brought back: ${words.join(', ')}. you said these. I kept them`, `${words.join(' / ')} — filed under things humans say`];
+      if (!crawlerCheck.checked || !bag.length) return; if (busy) { setTimeout(returnWithDrop, 4000); return; } busy = true; mount();
+      const last = chatEl.querySelector('.msg:last-of-type'); const ty = last ? last.offsetTop + last.offsetHeight + 30 : chatEl.scrollHeight - 40;
+      el.classList.add('on'); place(chatEl.clientWidth + W, ty); await walkTo(90, ty, 140);
+      const words = bag.splice(0, bag.length); const notes = [`found this: ${words.join(', ')}. no idea what it means`, `brought back: ${words.join(', ')}. you said these. I kept them`, `${words.join(' / ')} — filed under things humans say`, `dropped ${words.length === 1 ? 'it' : 'them'} here: ${words.join(', ')}. smelled important`];
       const d = document.createElement('div'); d.className = 'cr-drop'; d.textContent = 'crawler: ' + notes[Math.floor(Math.random() * notes.length)]; chatEl.appendChild(d); chatEl.scrollTop = chatEl.scrollHeight;
       logEvent('crawler_drop', { words });
-      await sleep(900); await walkTo(-60, ty + 10); el.classList.remove('on'); busy = false;
+      await sleep(1000); await walkTo(-W, ty + 10, 160); el.classList.remove('on'); busy = false;
     }
-    return { on(ev) { if (ev.type === 'oracle' && Math.random() < 0.45) setTimeout(visit, 900 + Math.random() * 1500); if (ev.type === 'reset') { bag = []; el.classList.remove('on'); } } };
+    return { on(ev) { if (ev.type === 'oracle' && Math.random() < 0.5) setTimeout(visit, 800 + Math.random() * 1500); if (ev.type === 'reset') { bag = []; el.classList.remove('on'); } } };
   })();
 
   // ===================== TEACH MODE =====================

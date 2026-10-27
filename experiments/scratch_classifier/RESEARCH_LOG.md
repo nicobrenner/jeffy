@@ -5180,3 +5180,13 @@ comes out with p=0.45, walks to a random word in the last bubbles, boxes it and 
 words it returns later and drops a monospace note ("found this: tried, recipe. no idea what it means"). Creature interface: `on({type})` with
 oracle/user/idle/reset events, so other cast members (tokenizer friend, sampler roommate, silent critic, cursor) plug in the same way. Toggle
 "crawler" next to teach/engagement; crawler visits and drops are logged as engagement events. Verified headless (screenshot).
+
+## 2026-10-26 21:41 PDT — Crawler v2: microchip on long jointed legs, stepping gait, detector + lock-on (Nico's feedback: "floats… super tiny spider… needs work")
+
+Rebuilt: chip body (pins, die, blinking LED) with eight two-segment legs and red feet; movement on requestAnimationFrame with an alternating
+tripod gait (leg swing + lift, body bob, lateral wobble) instead of a CSS glide; always returns 9–21 s after a visit and drops a note.
+Detector (`Detector.classify(word, context) -> {label, score}`, swappable): v1 = lexicons + rules with the Oracle's world categories
+(PERSONA, FEELING, PLACE, BEING, TIME, FOOD, QUESTION, NAME, NUMBER, ACTION, MANNER, IDEA, THING, WORD). Behaviour: walks in, "looks around"
+scanning ~6 words with grey detector labels ("ACTION 0.71"), locks onto the best detection (orange box + label, pulse), goes to get it faster,
+boxes and labels it "CRAWLER/01 IDEA · CONFIDENCE", bags it, leaves. Events logged (crawler, crawler_lock, crawler_drop). Verified headless
+(timeline + screenshots). Next for the detector: a trained word/keyword classifier from the graded rows and the Oracle's hidden states.

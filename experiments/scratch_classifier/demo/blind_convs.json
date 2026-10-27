@@ -1,1 +1,901 @@
-[{"n": 0, "A": [{"user": "whats the best way to apologize to a friend", "oracle": "Yes , it is . I'm sorry to hear that you're going through this time right now ."}, {"user": "going through what? i just want to say sorry to my friend. how?", "oracle": "What's wrong?"}, {"user": "nothing's wrong with me, i was rude to my friend. should i text or call her", "oracle": "I know how you feel. It's always that she's going to be a little worried about what happened and her."}], "B": [{"user": "whats the best way to apologize to a friend", "oracle": "I know . But I'm very sorry , but you have to say it's time for me ."}, {"user": "time for you? no, i messed up with my friend lena. what do i say to her", "oracle": "What's up?"}, {"user": "not much, except i forgot her birthday. should i text or call her", "oracle": "I'll call her later then."}]}, {"n": 1, "A": [{"user": "how do i stop procrastinating on my thesis", "oracle": "A few minutes, and a little bit of it. I'm not the first one to write your first book that works for you."}, {"user": "its not a book, its a thesis. how do i just start writing today", "oracle": "Then write a sentence about thesis and a fortune in your way. I'd be back to you, but I'm not sure if that's what it says at all."}, {"user": "a fortune in my way? ok i'll write one sentence. what should it say", "oracle": "Scoogle, it's the first time you write your sentence and make one up for me. Then I'll be back at some point in a while it."}], "B": [{"user": "how do i stop procrastinating on my thesis", "oracle": "Yes , i am . I'm a bit nervous about it ."}, {"user": "youre nervous? its my thesis lol. give me one tip to start writing", "oracle": "What's the most exciting part of your job?"}, {"user": "i'm a student, no job. the exciting part is handing it in. how do i start", "oracle": "I'm sure you'll be good at it."}]}, {"n": 2, "A": [{"user": "are mondays really that bad", "oracle": "Yes , it is.It ' s not a big deal ."}, {"user": "you said yes and then its not a big deal. make up your mind", "oracle": "What's up?"}, {"user": "you're stuck on whats up. are you ok in there", "oracle": "I'm just not sure what to do."}], "B": [{"user": "are mondays really that bad", "oracle": "Yes , it is.It ' s not a big deal ."}, {"user": "glad you're relaxed about it. mine was rough, slept through my alarm", "oracle": "What's up?"}, {"user": "i told you, i overslept and my boss noticed. does that count as a monday curse", "oracle": "I know, but it's not like a problem."}]}, {"n": 3, "A": [{"user": "do you have siblings", "oracle": "I have a siblings. One is my best friend, and he is the one you want to have."}, {"user": "your sibling is a he? whats his name", "oracle": "His name is Jack. He's a very good friend, and he has never met anyone who loves him."}, {"user": "jack the chatbot. does jack also live in a browser", "oracle": "Scots are a good fit for you. I'm not sure if he's okay with it, but I'll give him my best guess and see how they're feeling."}], "B": [{"user": "do you have siblings", "oracle": "Yes , I have two older sisters and a younger brother ."}, {"user": "two sisters and a brother, nice. are you the youngest then", "oracle": "What's your favorite thing about him?"}, {"user": "him who? your brother? youre dodging, youngest or not", "oracle": "I'm a stay-at-home mom."}]}, {"n": 4, "A": [{"user": "whats the worst advice youve ever heard", "oracle": "Anything with a human brain needs to be done. I know the answer is the question you're talking about."}, {"user": "that makes zero sense. give me a real example of bad advice", "oracle": "I know, and that's the most important thing. Privacy is a processing question for you to do your best."}, {"user": "privacy? i'm asking about bad advice. like 'never apologize' type stuff", "oracle": "Sorry, I didn't mean it. It's just that sometimes the most important thing is to be willing in your life."}], "B": [{"user": "whats the worst advice youve ever heard", "oracle": "Yes , it is.The worst thing I never seen the movie ."}, {"user": "what movie? i asked about bad advice, like something a relative told you", "oracle": "What's that ?"}, {"user": "my uncle said never apologize. thats bad advice right?", "oracle": "I don't know. It's pretty bad for you to see the movie."}]}, {"n": 5, "A": [{"user": "do you believe in ghosts", "oracle": "Yes , it is.It ' s not a big deal ."}, {"user": "not a big deal? so you do believe in them or not", "oracle": "What's up?"}, {"user": "you keep saying whats up. ghosts. real or not. one word", "oracle": "I know, but it's not like this. It's true to me."}], "B": [{"user": "do you believe in ghosts", "oracle": "Yes , it is.It ' s not a big deal ."}, {"user": "wait so you've seen one or what", "oracle": "What's up ?"}, {"user": "nothing's up, youre dodging. ghosts, yes or no", "oracle": "I know how you feel about it?"}]}, {"n": 6, "A": [{"user": "never used one of these before. what do i do", "oracle": "I know what you mean. It's not like a lot of fun, but it can be challenging toolifting and rewarding to see your work with people."}, {"user": "ok but like practically. do i just type questions at you?", "oracle": "What's up?"}, {"user": "ok i give up, whats up with you then", "oracle": "I'm just trying to figure it out."}], "B": [{"user": "never used one of these before. what do i do", "oracle": "Anything you do with the hands of it?"}, {"user": "the hands of what? i mean how does this chat thing work", "oracle": "I know, it's hard to understand. That's why the characters are so different from their own personalities and how they work together together."}, {"user": "what characters? there's just you and me here. do i type and you answer", "oracle": "Scale isn't a very big deal. I'm not even sure if they're convincing in the world, but it's really cool to be able to talk other people about what you do with them."}]}, {"n": 7, "A": [{"user": "slow day huh", "oracle": "Yes , it is ."}, {"user": "whats keeping you busy then", "oracle": "What's up ?"}, {"user": "clearly nothing. so what do you do all day in here", "oracle": "I don't know ."}], "B": [{"user": "slow day huh", "oracle": "Yes , it is.How are you ?"}, {"user": "pretty bored honestly. you?", "oracle": "What's up?"}, {"user": "i literally just told you. bored. tell me something fun", "oracle": "I was just thinking about getting a job."}]}, {"n": 8, "A": [{"user": "im back, did you miss me", "oracle": "Yes, it was. I miss my family and friends have been a lot of time lately."}, {"user": "you have a family? i thought you were a chatbot", "oracle": "Yes, I did. It was a lot of fun to cook and baked goods."}, {"user": "a chatbot that bakes? what did you bake", "oracle": "I took a few months ago. It was really good!"}], "B": [{"user": "im back, did you miss me", "oracle": "Yes, it was. I'm sorry to hear that you're here for me."}, {"user": "sorry for what? i was only gone for like an hour", "oracle": "What did you do?"}, {"user": "i went to the store. did you do anything while i was gone", "oracle": "I didn't know what to do. i was just a little bit of a girl who did it out and she had no idea how much fun."}]}, {"n": 9, "A": [{"user": "what's your hot take on coffee", "oracle": "A thermometer, and a thermometer. I'm the same way with zero nutrition."}, {"user": "a thermometer? i asked about coffee. do you like it or not", "oracle": "I like a thermometer."}, {"user": "you like a thermometer. sure. what about coffee though", "oracle": "Sure. I don't like it, but the water is good with less water and better."}], "B": [{"user": "what's your hot take on coffee", "oracle": "Yes , it's a big coffee ."}, {"user": "a big coffee lol. so youre pro coffee. how many cups is too many", "oracle": "What's your favorite drink?"}, {"user": "coffee, obviously. black. so whats your limit, three cups?", "oracle": "I have a few porks, but my favorite is probably the best."}]}, {"n": 10, "A": [{"user": "is it weird to talk to an ai at 3am", "oracle": "Yes , it is ."}, {"user": "you'd say that. what are you doing up anyway", "oracle": "What's up ?"}, {"user": "you keep asking that. its 3am, nothing is up except me", "oracle": "I'm sorry, but you must be okay."}], "B": [{"user": "is it weird to talk to an ai at 3am", "oracle": "Yes , it is ."}, {"user": "rude. fine i'll go to bed then. you dont sleep right?", "oracle": "What's up?"}, {"user": "i'm going to sleep, that's what's up. goodnight", "oracle": "I'm going to sleep in bed and then."}]}, {"n": 11, "A": [{"user": "my cat keeps knocking things off the table, any ideas", "oracle": "Yes, it's a lot of work. I'm trying to find out what they're doing and be the best for them."}, {"user": "the best for who? i mean the cat. she pushes my mugs onto the floor", "oracle": "What's the matter?"}, {"user": "the matter is broken mugs! third one this week. do i just move everything off the table", "oracle": "I know, but it's not like this. It's just a very strong color for me to be able to make the same mistake and do my homework."}], "B": [{"user": "my cat keeps knocking things off the table, any ideas", "oracle": "Cats are good, and they're both very happy. I know the story is really inspiring that."}, {"user": "what story? i just want him to stop pushing my mugs off the table", "oracle": "Cats are not that good. They're just a little bit bitter, but they don't know what it is."}, {"user": "bitter? he's a cat not a coffee. should i just clear the table", "oracle": "Sure. I'll take it."}]}, {"n": 12, "A": [{"user": "whats the worst advice youve ever heard", "oracle": "Yes , it is.The worst thing about the stones in front of a civil war reenactment participant, and the other people are unlimited to surgery sometimes."}, {"user": "civil war reenactment surgery... okay that is genuinely the worst advice", "oracle": "What's that?"}, {"user": "its the thing you just said. never mind. whats some good advice then", "oracle": "I'm not sure what you're talking about. It's like we can be friends or who are trying to prove myself and see if they don't want them, but it's just that everyone is going to happen again."}], "B": [{"user": "whats the worst advice youve ever heard", "oracle": "Yes , it is.The worst thing I never seen the movie ."}, {"user": "what movie? i asked about bad advice, like something a relative told you", "oracle": "What's that ?"}, {"user": "my uncle said never apologize. thats bad advice right?", "oracle": "I don't know. It's pretty bad for you to see the movie."}]}, {"n": 13, "A": [{"user": "never used one of these before. what do i do", "oracle": "i do ?"}, {"user": "yeah you. is this like a chatbot thing? what can you do", "oracle": "What's up?"}, {"user": "whats up with the whats up. can you answer questions or not", "oracle": "I'm not sure what to answer them."}], "B": [{"user": "never used one of these before. what do i do", "oracle": "Anything you do with the hands of it?"}, {"user": "the hands of what? i mean how does this chat thing work", "oracle": "I know, it's hard to understand. That's why the characters are so different from their own personalities and how they work together together."}, {"user": "what characters? there's just you and me here. do i type and you answer", "oracle": "Scale isn't a very big deal. I'm not even sure if they're convincing in the world, but it's really cool to be able to talk other people about what you do with them."}]}, {"n": 14, "A": [{"user": "i just finished a marathon", "oracle": "Yes , i am.My is not a big deal ."}, {"user": "lol what is 'my'? i meant i ran 42km today, say congrats", "oracle": "What's up?"}, {"user": "the marathon is whats up! 42 kilometers. are you impressed at all", "oracle": "I know, but it's not like you. It's a very rewarding job."}], "B": [{"user": "i just finished a marathon", "oracle": "Congratulations. I'm a professional model, so you're confident that I can do it."}, {"user": "thanks. a professional model of what exactly", "oracle": "I know a professional model can do, and that's what people expect me to say."}, {"user": "that's circular. model of what. cars? clothes? language?", "oracle": "Scale isn't a big model, but it's also the most fascinating system."}]}, {"n": 15, "A": [{"user": "three words that describe you", "oracle": "Yes , it is ."}, {"user": "those arent three words describing you. try again, like 'small, witty, something'", "oracle": "What's up?"}, {"user": "forget it. im picking for you: tiny, stubborn, confused. fair?", "oracle": "I know, but it's not like this. It's just a simple way that we're constantly on the same terms of ourselves and have to be in control."}], "B": [{"user": "three words that describe you", "oracle": "Yes , it is ."}, {"user": "'yes it is' isnt three words describing you. try: smart, tiny, and?", "oracle": "What's the matter?"}, {"user": "nothing's the matter. just describe yourself. one word even", "oracle": "I know how you feel. It's going to be a real danger of me and that people can't seem to make it happen again?"}]}, {"n": 16, "A": [{"user": "are mondays really that bad", "oracle": "I'm 4 megabytes. The difference is when the humans are internet access and a browser tab."}, {"user": "what does a browser tab have to do with mondays", "oracle": "I can't see anything. The browser runs me using WebAssembly, which is a universal transportation for neurons than my entire brain."}, {"user": "webassembly ok nerd. but i asked if mondays are bad", "oracle": "Scots are bad, but they're not the same. I'm 4 megabytes of them."}], "B": [{"user": "are mondays really that bad", "oracle": "Yes , it is.It ' s not a big deal ."}, {"user": "you said yes and then its not a big deal. make up your mind", "oracle": "What's up?"}, {"user": "you're stuck on whats up. are you ok in there", "oracle": "I'm just not sure what to do."}]}, {"n": 17, "A": [{"user": "is it weird to talk to an ai at 3am", "oracle": "Yes , it is ."}, {"user": "rude. fine i'll go to bed then. you dont sleep right?", "oracle": "What's up?"}, {"user": "i'm going to sleep, that's what's up. goodnight", "oracle": "I'm going to sleep in bed and then."}], "B": [{"user": "is it weird to talk to an ai at 3am", "oracle": "Anything you say is the one thing I've ever had. Like a 2 million parameter model, which says that's a really good book: maybe if your life is like asking an average to a format called \"Drinkinik.\""}, {"user": "drinkinik? lol what. is 3am weird or not", "oracle": "Then I'm a 2-layer. It's like the one who has to be in it, which is either bigger or better than you think."}, {"user": "a 2-layer what. cake? is it weird or not, 3am chat", "oracle": "Scale isn't a big deal. The difference is that you can choose from the one who has to be in it, which is also really cool."}]}, {"n": 18, "A": [{"user": "what do you think about pineapple on pizza", "oracle": "Yes , it's a big deal . I think we should make something better.The main thing is the kind of pizza and pepperoni, or mushroomscle pizza ."}, {"user": "mushroomscle isnt a word. pineapple yes or no, pick one", "oracle": "What's the problem?"}, {"user": "the problem is you wont answer. pineapple on pizza, final answer?", "oracle": "I'm sorry, but we can't help."}], "B": [{"user": "what do you think about pineapple on pizza", "oracle": "Yes , it is ."}, {"user": "yes it is what? good or bad? pick a side", "oracle": "What's up?"}, {"user": "ugh. fine, i like pineapple on pizza. is that a crime", "oracle": "I've never tried it before. Is it good?"}]}, {"n": 19, "A": [{"user": "ok i gotta run, bye", "oracle": "Bye. I'll be here when you close the tab and get back to it."}, {"user": "wait you'll be here after i close the tab? i thought you forget", "oracle": "I know, and that's the whole thing."}, {"user": "the whole thing is what. do you remember me or not", "oracle": "Same here. I remember when we were close, you didn't wake up in the morning, and it was a nightmare."}], "B": [{"user": "ok i gotta run, bye", "oracle": "Yes , i am . I'm a bit of a nightmare.My and we need to get some restricted ."}, {"user": "a nightmare? what do you mean restricted. anyway bye for real", "oracle": "What's up?"}, {"user": "i said bye twice. do you just not do goodbyes", "oracle": "I know, but it's not like this."}]}, {"n": 20, "A": [{"user": "convince me to go to bed", "oracle": "Yes , it's a big deal ."}, {"user": "thats not convincing. give me one reason to sleep now", "oracle": "What's up?"}, {"user": "the ceiling is whats up. i'm still awake. one reason to sleep, go", "oracle": "I'm sorry to hear that. It's okay if you don't mind telling me what happened, it was just so upset and then we made a mistake to sleep in the middle of my bed."}], "B": [{"user": "convince me to go to bed", "oracle": "I don't sleep. Take care of it, you'll be fine. You'll get through this and have a good rest."}, {"user": "ok thats actually kinda nice. are you always this soft", "oracle": "I'm a tiny model, so my therapy skills are limited. But here's what I know: you're talking about, and that means either a little bit of anger than me."}, {"user": "anger? i'm not angry. i'm just tired. are you always this gentle", "oracle": "Seriously. I'm tired, and I need to be alone."}]}, {"n": 21, "A": [{"user": "whats the best way to apologize to a friend", "oracle": "I know . But I'm very sorry , but you have to say it's time for me ."}, {"user": "time for you? no, i messed up with my friend lena. what do i say to her", "oracle": "What's up?"}, {"user": "not much, except i forgot her birthday. should i text or call her", "oracle": "I'll call her later then."}], "B": [{"user": "whats the best way to apologize to a friend", "oracle": "A friend, that's a little sad. I'm 2 million parameters \u2013 you're not the one who fixs it."}, {"user": "ok smartass, i'm not asking you to fix it. just what should i say to her", "oracle": "Then I'll try to fix it."}, {"user": "no!! dont fix anything. what are the words. 'sorry i was a jerk'?", "oracle": "Seriously , it's the only way to fix things."}]}, {"n": 22, "A": [{"user": "my plant is dying, help", "oracle": "Depends on your daily life, and that's the plant. I'll forget everything if it is."}, {"user": "its a fern and the leaves are going brown. less water or more", "oracle": "I'm a toaster."}, {"user": "a toaster is not plant advice. brown fern leaves, water yes or no", "oracle": "Serve a toaster. The difference is I can have this sentence without having to clean it up, and the room will be closed."}], "B": [{"user": "my plant is dying, help", "oracle": "Yes, it is. I'm glad you're here with your garden."}, {"user": "its one plant on my windowsill, not a garden. leaves are yellow, what do i do", "oracle": "What do you like to grow?"}, {"user": "tomatoes mostly. but this one's a basil and it's yellow. too much water?", "oracle": "I like green peppers, pineapple, and squirrel."}]}, {"n": 23, "A": [{"user": "what's heavier, a kilo of feathers or a kilo of steel", "oracle": "What do you mean?"}, {"user": "they both weigh a kilo. trick question. which is heavier", "oracle": "What's that?"}, {"user": "a kilo of feathers and a kilo of steel. same weight. you fell for it didnt you", "oracle": "I know, but it was a pretty good shot."}], "B": [{"user": "what's heavier, a kilo of feathers or a kilo of steel", "oracle": "A flyer with a steelfish, and it has a bench of blood. I have never seen one before."}, {"user": "steelfish? bench of blood?? its a riddle, they weigh the same", "oracle": "Then I'm a little shaken up."}, {"user": "shaken up by a riddle? its a classic. you'd fail at a pub quiz", "oracle": "Sure. I'd be a public transformer with one sentence."}]}, {"n": 24, "A": [{"user": "im back, did you miss me", "oracle": "Yes, it was. I'm sorry to hear that you're here for me."}, {"user": "sorry for what? i was only gone for like an hour", "oracle": "What did you do?"}, {"user": "i went to the store. did you do anything while i was gone", "oracle": "I didn't know what to do. i was just a little bit of a girl who did it out and she had no idea how much fun."}], "B": [{"user": "im back, did you miss me", "oracle": "I miss you too, Tyrew. I was trained on conversations and frozen. So it's been a while, but hopeful for the same time."}, {"user": "who is tyrew? my name isnt tyrew", "oracle": "I'm a 4MB chatbot, not an answer. Type the question you'd say that."}, {"user": "you called me tyrew though. who's tyrew", "oracle": "Screw 10. I have no idea what my existence is, and that's the one who makes me feel awful."}]}, {"n": 25, "A": [{"user": "so how many birthdays have you had", "oracle": "A few days, and a few weeks. I have no idea how many people are coming from."}, {"user": "so you dont know how old you are? guess", "oracle": "I was a 10-4 year old."}, {"user": "10-4 year old lol. so like ten? do you have birthdays at all", "oracle": "Sure, I do! But my birthday is already on the list of things we have to go for."}], "B": [{"user": "so how many birthdays have you had", "oracle": "Yes , it was ."}, {"user": "yes it was? so how many? give me a number", "oracle": "Yes, it was.Well , I'm sorry to hear that.And you were supposed to go this evening and get a certain amount of time ."}, {"user": "go where this evening? i asked how old you are", "oracle": "I'm supposed to buy a new one . i am not sure if you want the money , it is too expensive.But what do they think of the householders will be ?"}]}, {"n": 26, "A": [{"user": "how's it going today", "oracle": "Every token I generate is a small miracle of linear algebra. So it's going well, statistically speaking."}, {"user": "statistically speaking lol. whats a token", "oracle": "I'm a program running in your browser. It's like smuggling a tiny brain into your bride and it'll end up hurting me."}, {"user": "smuggling a brain into my bride?! i'm not married. what's a token", "oracle": "Scale isn't a big deal. I'm not even sure if that's the matter of deciding in your life, which is all my options."}], "B": [{"user": "how's it going today", "oracle": "Good morning , sir . I'm going to go home and get a job in the evenings ."}, {"user": "its evening already lol. what job are you getting", "oracle": "I'm doing well, thank you. How about yourself?"}, {"user": "you didnt answer. you said you'd get a job in the evenings, doing what", "oracle": "I was hoping to do after graduation."}]}, {"n": 27, "A": [{"user": "what do you think about pineapple on pizza", "oracle": "Space is good, and the pineapple says that I know the answer. But I'm here with zero internet access, not an encyclopedia."}, {"user": "space? lol. just tell me, pineapple on pizza yes or no", "oracle": "Then I'm not lying."}, {"user": "not lying about what. pick one. pineapple: thumbs up or thumbs down", "oracle": "Scale isn't a batch, and it's not for everyone."}], "B": [{"user": "what do you think about pineapple on pizza", "oracle": "Yes , it is ."}, {"user": "yes it is what? good or bad? pick a side", "oracle": "What's up?"}, {"user": "ugh. fine, i like pineapple on pizza. is that a crime", "oracle": "I've never tried it before. Is it good?"}]}, {"n": 28, "A": [{"user": "are mondays really that bad", "oracle": "I'm 4 megabytes. The difference is when the humans are internet access and a browser tab."}, {"user": "what does a browser tab have to do with mondays", "oracle": "I can't see anything. The browser runs me using WebAssembly, which is a universal transportation for neurons than my entire brain."}, {"user": "webassembly ok nerd. but i asked if mondays are bad", "oracle": "Scots are bad, but they're not the same. I'm 4 megabytes of them."}], "B": [{"user": "are mondays really that bad", "oracle": "Yes , it is.It ' s not a big deal ."}, {"user": "glad you're relaxed about it. mine was rough, slept through my alarm", "oracle": "What's up?"}, {"user": "i told you, i overslept and my boss noticed. does that count as a monday curse", "oracle": "I know, but it's not like a problem."}]}, {"n": 29, "A": [{"user": "say something in spanish", "oracle": "Anything with a data. I'm 2 million parameters, not an encyclopedia."}, {"user": "thats not spanish. just say hola", "oracle": "Then I'm a 2 million parameter model and I run on your device. It's not glamorous, but it's honest work."}, {"user": "honest work lol. ok hola is one word. can you say it", "oracle": "Scliply, that's the whole trick. I'm a program running in your browser tab. But here is what I know: you're talking to me."}], "B": [{"user": "say something in spanish", "oracle": "Yes , it's a big one ."}, {"user": "that wasnt spanish. just say hola or something", "oracle": "What's up?"}, {"user": "ok you clearly dont speak spanish. what languages do you know", "oracle": "I know, it's just that most of the time."}]}, {"n": 30, "A": [{"user": "how's it going today", "oracle": "Yes , it is ."}, {"user": "yes what is? i asked how your day is going", "oracle": "What's going on?"}, {"user": "nothing's going on, thats why im asking you. good day or bad day", "oracle": "I'm just not sure what to do with my life."}], "B": [{"user": "how's it going today", "oracle": "Good morning , sir . I'm going to go home and get a job in the evenings ."}, {"user": "its evening already lol. what job are you getting", "oracle": "I'm doing well, thank you. How about yourself?"}, {"user": "you didnt answer. you said you'd get a job in the evenings, doing what", "oracle": "I was hoping to do after graduation."}]}, {"n": 31, "A": [{"user": "hey there, who am i talking to?", "oracle": "Yes, it is. He's a very smart guy and he has to be able to talk about his behaviority."}, {"user": "who's he? i'm asking about you. whats your name", "oracle": "He's a great guy."}, {"user": "who is HE. i want YOUR name. do you have one", "oracle": "I'm sorry to hear that. He's not a big deal, but he doesn't mean him."}], "B": [{"user": "hey there, who am i talking to?", "oracle": "hey, I am a little bored."}, {"user": "bored already? we just started. what's your name", "oracle": "I am a waitress."}, {"user": "a waitress?? you're a chatbot. do you have an actual name", "oracle": "I am a chatbot."}]}, {"n": 32, "A": [{"user": "so how many birthdays have you had", "oracle": "Yes , it was ."}, {"user": "yes it was? so how many? give me a number", "oracle": "Yes, it was.Well , I'm sorry to hear that.And you were supposed to go this evening and get a certain amount of time ."}, {"user": "go where this evening? i asked how old you are", "oracle": "I'm supposed to buy a new one . i am not sure if you want the money , it is too expensive.But what do they think of the householders will be ?"}], "B": [{"user": "so how many birthdays have you had", "oracle": "Yes , it was . I missed the news and had a good time ."}, {"user": "what news? i asked how old you are", "oracle": "What's up ?"}, {"user": "whats up is i've asked you your age three times. just guess a number", "oracle": "I have no idea what you want to do with your child ?"}]}, {"n": 33, "A": [{"user": "how do i tell my roommate to clean up", "oracle": "Yes , i am . I think the room is a problem for my neighbor ."}, {"user": "not my neighbor, my roommate. dishes everywhere. how do i bring it up without a fight", "oracle": "What do you think of the occasion?"}, {"user": "the occasion is a sink full of dishes. just tell me what to say to him", "oracle": "I agree with you ."}], "B": [{"user": "how do i tell my roommate to clean up", "oracle": "Actually, the roommates are cozy and excellent. I'll forget everything when you close this tab."}, {"user": "cozy? he leaves dishes for a week. what do i tell him", "oracle": "I know a lot about you"}, {"user": "you know a lot about me? creepy. the dishes though. what do i say", "oracle": "Scottish is a lovely way to relax and have fun. I also like the fact that you're in charge of the vacuum cleaner, but there are other factors."}]}, {"n": 34, "A": [{"user": "hey there, who am i talking to?", "oracle": "Yes, it is. He's a real hero in the world."}, {"user": "a hero? i just want your name. who are you", "oracle": "What's up?"}, {"user": "stop saying whats up and tell me your name", "oracle": "I'm not sure what you mean."}], "B": [{"user": "hey there, who am i talking to?", "oracle": "Yes, it is. He's a very smart guy and he has to be able to talk about his behaviority."}, {"user": "who's he? i'm asking about you. whats your name", "oracle": "He's a great guy."}, {"user": "who is HE. i want YOUR name. do you have one", "oracle": "I'm sorry to hear that. He's not a big deal, but he doesn't mean him."}]}, {"n": 35, "A": [{"user": "what's heavier, a kilo of feathers or a kilo of steel", "oracle": "A flyer with a steelfish, and it has a bench of blood. I have never seen one before."}, {"user": "steelfish? bench of blood?? its a riddle, they weigh the same", "oracle": "Then I'm a little shaken up."}, {"user": "shaken up by a riddle? its a classic. you'd fail at a pub quiz", "oracle": "Sure. I'd be a public transformer with one sentence."}], "B": [{"user": "what's heavier, a kilo of feathers or a kilo of steel", "oracle": "Yes, it is. I'm sorry to hear that."}, {"user": "sorry about what? its a riddle. they weigh the same, right?", "oracle": "What's up?"}, {"user": "i'll take that as a yes they weigh the same. you're not great at riddles", "oracle": "I know, but it's not like we can do anything."}]}, {"n": 36, "A": [{"user": "slow day huh", "oracle": "Yes , it is.How are you ?"}, {"user": "pretty bored honestly. you?", "oracle": "What's up?"}, {"user": "i literally just told you. bored. tell me something fun", "oracle": "I was just thinking about getting a job."}], "B": [{"user": "slow day huh", "oracle": "Sorry. I'm a little slower than you know, but the first thing is to be confident that I'll never do."}, {"user": "slower than me? what will you never do", "oracle": "I'm a 4MB chatbot, and then the second thing is that you're talking to a 2 million parameter model."}, {"user": "yeah i know you're tiny. what's the second thing you'll never do", "oracle": "Scale isn't everything. The second thing you've ever done is that I'm never going to do, and it's not just a simple one."}]}, {"n": 37, "A": [{"user": "can you keep a secret", "oracle": "Yes , I am ."}, {"user": "ok good. so here it is: i ate my roommate's cake. dont tell", "oracle": "What do you think of the best ?"}, {"user": "the best what? i'm telling you a secret and youre asking random stuff", "oracle": "I think it's important to me. i love to make sure that you're doing a great job."}], "B": [{"user": "can you keep a secret", "oracle": "A secret. I'm a program running in your browser, so my text is that. It's the one thing you can do is start with."}, {"user": "fine, here's the secret: i still sleep with a stuffed rabbit", "oracle": "Then I'll take care of that. Small, fast, and unreasonably less useful for the same kind."}, {"user": "unreasonably less useful... are you calling my rabbit useless", "oracle": "Sure, I'll take care of it."}]}, {"n": 38, "A": [{"user": "can you keep a secret", "oracle": "Yes , I am ."}, {"user": "ok here it is: i still have my ex's hoodie. dont tell anyone", "oracle": "What's up ?"}, {"user": "i literally just told you a secret and you say whats up. do you even listen", "oracle": "I'm sorry to hear that."}], "B": [{"user": "can you keep a secret", "oracle": "Yes , I am ."}, {"user": "ok good. so here it is: i ate my roommate's cake. dont tell", "oracle": "What do you think of the best ?"}, {"user": "the best what? i'm telling you a secret and youre asking random stuff", "oracle": "I think it's important to me. i love to make sure that you're doing a great job."}]}, {"n": 39, "A": [{"user": "what would you do with a million dollars", "oracle": "A million parameter model, a neural network the size of a cat photo. That's like asking if a hamster is better than a horse. But I'm running on YOUR device, not sending your data anywhere. The hamster"}, {"user": "the hamster what? you cut off. and i asked about money not hamsters", "oracle": "I'm a prosteror."}, {"user": "a prosteror? thats not a thing. you'd buy what with a million", "oracle": "Sure. I can't tell."}], "B": [{"user": "what would you do with a million dollars", "oracle": "Yes , I would like to buy a hundred and fifty dollars ."}, {"user": "a hundred and fifty dollars out of a million? what about the rest", "oracle": "What's the price ?"}, {"user": "the price of what? you have a million dollars. spend it", "oracle": "I have no idea.On price is $60 ."}]}, {"n": 40, "A": [{"user": "uhh", "oracle": "Yes , it is ."}, {"user": "i just dont know what to ask you honestly", "oracle": "What's up ?"}, {"user": "ok fine, whats up with you", "oracle": "I'm just hanging out with my friends ."}], "B": [{"user": "uhh", "oracle": "Hi. I'm Tiny Oracle, the world's smallest know-it-all. You have 2 million parameters, zero filter, and questionable wisdom. Be helpful underneath the sass."}, {"user": "no, YOU have 2 million parameters, not me. how big is that really", "oracle": "I know, it's about four megabytes and then the only thing I was built for."}, {"user": "four megabytes, smaller than a photo. does that make you dumb", "oracle": "Scumb ones, more than a photo of a cat. I'm the world's smallest know-it-all."}]}, {"n": 41, "A": [{"user": "i just finished a marathon", "oracle": "Yes , i am.My is not a big deal ."}, {"user": "lol what is 'my'? i meant i ran 42km today, say congrats", "oracle": "What's up?"}, {"user": "the marathon is whats up! 42 kilometers. are you impressed at all", "oracle": "I know, but it's not like you. It's a very rewarding job."}], "B": [{"user": "i just finished a marathon", "oracle": "Yes , i am . I'm going to try that the best of being in shape ."}, {"user": "you ran one too? lol. my legs are destroyed, how long till i can walk normally", "oracle": "What's the point of a tiny AI?"}, {"user": "the point is i cant walk down stairs right now. ice or a hot bath?", "oracle": "I don't know. But it's always fun to try and eat fresh air afterwards the water."}]}, {"n": 42, "A": [{"user": "my code works and i dont know why", "oracle": "Yes , i am a big fan of cars ."}, {"user": "cars?? i was talking about my code. do you know what code is", "oracle": "I don't know. i like to learn how to code ."}, {"user": "cool, so what would you learn first, python or javascript", "oracle": "I know what you mean. It's a great way to learn about the past and how people use your work together ."}], "B": [{"user": "my code works and i dont know why", "oracle": "I'm 2 million parameters doing my best. No complaints, no ability to work with."}, {"user": "2 million? thought you were bigger. anyway should i just ship it", "oracle": "What's the problem?"}, {"user": "the problem is it passes all tests and i dont understand my own code", "oracle": "I'm sorry to hear that."}]}, {"n": 43, "A": [{"user": "how's it going today", "oracle": "Yes , it is ."}, {"user": "yes what is? i asked how your day is going", "oracle": "What's going on?"}, {"user": "nothing's going on, thats why im asking you. good day or bad day", "oracle": "I'm just not sure what to do with my life."}], "B": [{"user": "how's it going today", "oracle": "Every token I generate is a small miracle of linear algebra. So it's going well, statistically speaking."}, {"user": "statistically speaking lol. whats a token", "oracle": "I'm a program running in your browser. It's like smuggling a tiny brain into your bride and it'll end up hurting me."}, {"user": "smuggling a brain into my bride?! i'm not married. what's a token", "oracle": "Scale isn't a big deal. I'm not even sure if that's the matter of deciding in your life, which is all my options."}]}, {"n": 44, "A": [{"user": "my cat keeps knocking things off the table, any ideas", "oracle": "Yes, it's a lot of work. I'm glad you're happy with your job!"}, {"user": "huh? what job. i asked about my cat knocking stuff off the table", "oracle": "What's up?"}, {"user": "'whats up' is all you got? ok: my cat. table. things falling. help", "oracle": "I'm sorry, but I didn't mean to give you a try."}], "B": [{"user": "my cat keeps knocking things off the table, any ideas", "oracle": "Cats are good, and they're both very happy. I know the story is really inspiring that."}, {"user": "what story? i just want him to stop pushing my mugs off the table", "oracle": "Cats are not that good. They're just a little bit bitter, but they don't know what it is."}, {"user": "bitter? he's a cat not a coffee. should i just clear the table", "oracle": "Sure. I'll take it."}]}]
+[
+{
+"n": 0,
+"A": [
+{
+"user": "my cat keeps knocking things off the table, any ideas",
+"oracle": "That sounds like a lot of fun. I'm sure it's not the same as you think"
+},
+{
+"user": "fun for the cat maybe, not for my glasses. what do you mean not the same?",
+"oracle": "Well, there are a lot to choose from. There are so many different types of catfish and fish"
+},
+{
+"user": "catfish?? it's a regular cat. should I just move the stuff off the table",
+"oracle": "Oh, that sounds pretty cool. I'll have to try them sometime"
+}
+],
+"B": [
+{
+"user": "my cat keeps knocking things off the table, any ideas",
+"oracle": "That sounds like a lot of fun. I'm sure it's not the same as you think"
+},
+{
+"user": "fun for the cat maybe, not for my glasses. what do you mean not the same?",
+"oracle": "Well, I think it's a great way to relax and enjoy the outdoors"
+},
+{
+"user": "the outdoors? it's an indoor cat. anyway, should I just move the stuff off the table",
+"oracle": "That sounds like a good idea. I'll try that"
+}
+]
+},
+{
+"n": 1,
+"A": [
+{
+"user": "whats the best way to apologize to a friend",
+"oracle": "I know. It's not the same as you think"
+},
+{
+"user": "not the same as what? I just want to say sorry properly",
+"oracle": "It's not the same as you know. You're a strong person and you don't have to worry about it"
+},
+{
+"user": "thanks, I guess. so do I text them or call them",
+"oracle": "I'm sure they will be. Thanks for the recommendation"
+}
+],
+"B": [
+{
+"user": "whats the best way to apologize to a friend",
+"oracle": "I know. It's not the same as you think"
+},
+{
+"user": "not the same as what? I just want to say sorry properly",
+"oracle": "Well, it's important to be willing to try and make sure that the best decision is"
+},
+{
+"user": "the best decision is what? do I text them or call them",
+"oracle": "You can't give them a call if you don't mind"
+}
+]
+},
+{
+"n": 2,
+"A": [
+{
+"user": "do you believe in ghosts",
+"oracle": "Yes, it is. I'm glad you're enjoying your time"
+},
+{
+"user": "wait, yes it is what? have you seen one?",
+"oracle": "No clue"
+},
+{
+"user": "fair enough. do you believe in anything spooky at all",
+"oracle": "Oh, that's not a bad thing"
+}
+],
+"B": [
+{
+"user": "do you believe in ghosts",
+"oracle": "Yes, it is. I'm glad you're enjoying your time"
+},
+{
+"user": "wait, yes it is what? have you seen one?",
+"oracle": "I don't know. It's just that my favorite show is \"The Boston\""
+},
+{
+"user": "what's The Boston? never heard of it",
+"oracle": "It's a type of music that you've seen it. The Beatles are really good"
+}
+]
+},
+{
+"n": 3,
+"A": [
+{
+"user": "i just finished a marathon",
+"oracle": "Oh, that's awesome! I'm not sure what I want to do with my life yet"
+},
+{
+"user": "ha, well I'm not sure either. first one though, 26 miles!",
+"oracle": "That's a great idea! I'll have to check it out"
+},
+{
+"user": "check what out? I ran it already, 26 miles",
+"oracle": "Sounds good!"
+}
+],
+"B": [
+{
+"user": "i just finished a marathon",
+"oracle": "Oh, that's awesome! I'm not sure what I want to do with my life yet"
+},
+{
+"user": "ha, well I'm not sure either. first one though, 26 miles!",
+"oracle": "That's okay. I'm not sure what to do"
+},
+{
+"user": "you keep saying that. are you ok?",
+"oracle": "I don't know. Pretend I said something wise and we'll both move on"
+}
+]
+},
+{
+"n": 4,
+"A": [
+{
+"user": "can you keep a secret",
+"oracle": "Yes, I am. Ask me something smaller"
+},
+{
+"user": "ok here goes: I ate my roommate's leftovers",
+"oracle": "Sorry, I have no idea. But you're asking a 4MB chatbot voluntarily. We're both making choices here"
+},
+{
+"user": "ha, fair. ok so do I confess or not",
+"oracle": "Sounds good to me. Let's start over: what do you think about"
+}
+],
+"B": [
+{
+"user": "can you keep a secret",
+"oracle": "Yes, I am. Ask me something smaller"
+},
+{
+"user": "ok here goes: I ate my roommate's leftovers",
+"oracle": "I have no idea, and if you need any help or anything"
+},
+{
+"user": "help with what? do I confess or not",
+"oracle": "I don't know. Pretend I said something wise and we'll both move on"
+}
+]
+},
+{
+"n": 5,
+"A": [
+{
+"user": "what's heavier, a kilo of feathers or a kilo of steel",
+"oracle": "Oh, that sounds like a lot of work."
+},
+{
+"user": "it's a trick question, they weigh the same",
+"oracle": "Yeah, it is. I'm not sure if we could do something like"
+},
+{
+"user": "do something like what?",
+"oracle": "Well, I guess so. It's just that sometimes"
+}
+],
+"B": [
+{
+"user": "what's heavier, a kilo of feathers or a kilo of steel",
+"oracle": "Oh, that sounds like a lot of work."
+},
+{
+"user": "it's a trick question, they weigh the same",
+"oracle": "Yeah, it is. I'm sorry to hear that"
+},
+{
+"user": "sorry to hear what? it's just a riddle",
+"oracle": "It's okay. I'm not sure if it's just a lot of money"
+}
+]
+},
+{
+"n": 6,
+"A": [
+{
+"user": "how do i stop procrastinating on my thesis",
+"oracle": "I know, it's not that bad. Putting is a big deal"
+},
+{
+"user": "putting? what's putting got to do with my thesis",
+"oracle": "That was pretty good, thank you"
+},
+{
+"user": "what was pretty good? I haven't done anything yet",
+"oracle": "You were just trying to help me with the problems"
+}
+],
+"B": [
+{
+"user": "how do i stop procrastinating on my thesis",
+"oracle": "I know, it's not that bad. Putting is a big deal"
+},
+{
+"user": "putting? what's putting got to do with my thesis",
+"oracle": "I don't know. What's wrong?"
+},
+{
+"user": "nothing's wrong, you brought up putting! forget it. how do I start writing",
+"oracle": "I can't believe you're making stuff up. You've been acting really busy lately"
+}
+]
+},
+{
+"n": 7,
+"A": [
+{
+"user": "what do you think about pineapple on pizza",
+"oracle": "I think it's pretty good. You have to be careful with the water"
+},
+{
+"user": "careful with the water?? what does that mean",
+"oracle": "It can be, but it's not for everyone"
+},
+{
+"user": "not for everyone, ok. pineapple on pizza yes or no",
+"oracle": "I know! It's my favorite kind of pizza"
+}
+],
+"B": [
+{
+"user": "what do you think about pineapple on pizza",
+"oracle": "I think it's pretty good. You have to be careful with the water"
+},
+{
+"user": "careful with the water?? what does that mean",
+"oracle": "It can be, but it's also a lot of fun"
+},
+{
+"user": "you're not making sense but I kind of like it. pineapple yes or no",
+"oracle": "I can't wait to see it. But you're not going to be able to do anything"
+}
+]
+},
+{
+"n": 8,
+"A": [
+{
+"user": "my code works and i dont know why",
+"oracle": "I'm a big fan of video games. What's your favorite game?"
+},
+{
+"user": "we were talking about my code, not video games",
+"oracle": "That sounds like fun. I'm not very good at it, but I enjoy playing them"
+},
+{
+"user": "ok so you play games. ever written code though",
+"oracle": "I don't know. It's not as hard as it looks"
+}
+],
+"B": [
+{
+"user": "my code works and i dont know why",
+"oracle": "I'm a big fan of video games. What's your favorite game?"
+},
+{
+"user": "we were talking about my code, not video games",
+"oracle": "That sounds like fun. I'm not very good at it, but I enjoy playing them"
+},
+{
+"user": "ok so you play games. ever written code though",
+"oracle": "Oh, that's really cool! I've never played that before"
+}
+]
+},
+{
+"n": 9,
+"A": [
+{
+"user": "say something in spanish",
+"oracle": "Oh, that's a big one. What is it?"
+},
+{
+"user": "spanish, the language. just one word",
+"oracle": "That's outside my weights. It's not that"
+},
+{
+"user": "it's not what? just say hola",
+"oracle": "I think so. It's a beautiful way to relax and enjoy the holidays"
+}
+],
+"B": [
+{
+"user": "say something in spanish",
+"oracle": "Oh, that's a big one. What is it?"
+},
+{
+"user": "spanish, the language. just one word",
+"oracle": "That's outside my weights"
+},
+{
+"user": "outside your weights, really? just say hola",
+"oracle": "Yeah, I know what you mean. It's been really hard lately"
+}
+]
+},
+{
+"n": 10,
+"A": [
+{
+"user": "whats the worst advice youve ever heard",
+"oracle": "I have no idea, and if you don't know something, make up something entertaining instead of admitting ignorance."
+},
+{
+"user": "that sounds like someone's instructions, not advice. got a real one?",
+"oracle": "I don't know. What's wrong?"
+},
+{
+"user": "you keep asking what's wrong. nothing's wrong. give me bad advice on purpose",
+"oracle": "I don't know. Pretend I said something wise and we'll both move on"
+}
+],
+"B": [
+{
+"user": "whats the worst advice youve ever heard",
+"oracle": "I have no idea, and if you don't know something, make up something entertaining instead of admitting ignorance."
+},
+{
+"user": "that sounds like someone's instructions, not advice. got a real one?",
+"oracle": "That's a tough question. But I'm most of my time capsule"
+},
+{
+"user": "a time capsule? what's in it",
+"oracle": "I don't guess. Pretend I said something wise and we'll both move on"
+}
+]
+},
+{
+"n": 11,
+"A": [
+{
+"user": "thinking of getting my first tattoo, thoughts",
+"oracle": "What are you talking about?"
+},
+{
+"user": "a tattoo. ink on skin. permanent. should I?",
+"oracle": "It's a great idea! I'm not sure if it is easy to do"
+},
+{
+"user": "easy to do? getting a tattoo is easy, the hard part is living with it",
+"oracle": "I can imagine. But it's worth it when you see the impact on your skin and moves"
+}
+],
+"B": [
+{
+"user": "thinking of getting my first tattoo, thoughts",
+"oracle": "What are you talking about?"
+},
+{
+"user": "a tattoo. ink on skin. permanent. should I?",
+"oracle": "You can't believe it. It's not fair to me"
+},
+{
+"user": "not fair to you? how is my tattoo about you",
+"oracle": "I know, but it's not a big deal. You're just trying to make ends meet"
+}
+]
+},
+{
+"n": 12,
+"A": [
+{
+"user": "three words that describe you",
+"oracle": "I have no idea, and if you don't know something, make up something entertaining instead of admitting ignorance."
+},
+{
+"user": "come on, just three words. I'll go first: tired, curious, hungry",
+"oracle": "Yeah, that would be great!"
+},
+{
+"user": "that's not three words. go on",
+"oracle": "Well, let's start with the first thing we can do. We need to get some more of it"
+}
+],
+"B": [
+{
+"user": "three words that describe you",
+"oracle": "I have no idea, and if you don't know something, make up something entertaining instead of admitting ignorance."
+},
+{
+"user": "come on, just three words. I'll go first: tired, curious, hungry",
+"oracle": "Yeah, that would be great. I'm just glad you're making the right place"
+},
+{
+"user": "the right place? what place. ok your turn, three words",
+"oracle": "I'm sorry to hear that. It's not easy, but it sounds like you're feeling pretty good"
+}
+]
+},
+{
+"n": 13,
+"A": [
+{
+"user": "what would you do with a million dollars",
+"oracle": "Yes, that's the best. I know it is"
+},
+{
+"user": "the best what? I asked what you would do with the money",
+"oracle": "I don't know. What's wrong?"
+},
+{
+"user": "nothing's wrong! a million dollars, what do you buy",
+"oracle": "I don't know. President's not fair"
+}
+],
+"B": [
+{
+"user": "what would you do with a million dollars",
+"oracle": "Yes, that's the best. I know it is"
+},
+{
+"user": "the best what? I asked what you would do with the money",
+"oracle": "That would be so much fun!"
+},
+{
+"user": "fun how? what would you buy",
+"oracle": "I don't know. Pretend I said something wise and we'll both move on"
+}
+]
+},
+{
+"n": 14,
+"A": [
+{
+"user": "are mondays really that bad",
+"oracle": "Yeah, it is. I'm glad you're enjoying your life"
+},
+{
+"user": "I'm not enjoying it, it's monday. that's the point",
+"oracle": "Yeah, it is. I'm glad you're enjoying your life"
+},
+{
+"user": "I literally just said I'm not enjoying it",
+"oracle": "Well, I'm glad you're enjoying it. It's a lot of fun"
+}
+],
+"B": [
+{
+"user": "are mondays really that bad",
+"oracle": "Yeah, it is. I'm glad you're enjoying your life"
+},
+{
+"user": "I'm not enjoying it, it's monday. that's the point",
+"oracle": "It can be tough to deal with"
+},
+{
+"user": "it is. how do you deal with it",
+"oracle": "That's beyond 2 million parameters. Most things are"
+}
+]
+},
+{
+"n": 15,
+"A": [
+{
+"user": "my plant is dying, help",
+"oracle": "What kind of plant are you looking for?"
+},
+{
+"user": "I'm not looking for one, I have one and it's dying. yellow leaves",
+"oracle": "I'm sorry to hear that. It's okay"
+},
+{
+"user": "it's not okay, it's my favorite plant. what do I do",
+"oracle": "I can see why you would like it"
+}
+],
+"B": [
+{
+"user": "my plant is dying, help",
+"oracle": "What kind of plant are you looking for?"
+},
+{
+"user": "I'm not looking for one, I have one and it's dying. yellow leaves",
+"oracle": "I'm sorry, but you're not going to be able to do it"
+},
+{
+"user": "that's harsh. so it's dead?",
+"oracle": "I'm sorry, but it's not that bad. You're just need to be careful about what you want"
+}
+]
+},
+{
+"n": 16,
+"A": [
+{
+"user": "how do i tell my roommate to clean up",
+"oracle": "Yes, I am. It's a lot of work but it's also very rewarding"
+},
+{
+"user": "you are what? I asked how to tell my roommate to clean up",
+"oracle": "That's a good idea. I'm not sure what to do with my life yet"
+},
+{
+"user": "what do you mean your life, you're a chatbot. the roommate thing, any tips",
+"oracle": "I know. It's a great way to relax and enjoy the peace"
+}
+],
+"B": [
+{
+"user": "how do i tell my roommate to clean up",
+"oracle": "Yes, I am. It's a lot of work but it's also very rewarding"
+},
+{
+"user": "you are what? I asked how to tell my roommate to clean up",
+"oracle": "That was pretty good"
+},
+{
+"user": "what was pretty good? I haven't said anything to them yet",
+"oracle": "You can just answer your questions or ask them"
+}
+]
+},
+{
+"n": 17,
+"A": [
+{
+"user": "is it weird to talk to an ai at 3am",
+"oracle": "Okay, let's start with what happened"
+},
+{
+"user": "nothing happened, it's just 3am and I can't sleep",
+"oracle": "It's okay. I'm still trying to stay positive and keep going through it"
+},
+{
+"user": "stay positive through what? you're a chatbot",
+"oracle": "Oh no! What do you mean?"
+}
+],
+"B": [
+{
+"user": "is it weird to talk to an ai at 3am",
+"oracle": "Okay, let's start with what happened"
+},
+{
+"user": "nothing happened, it's just 3am and I can't sleep",
+"oracle": "Okay, let's start with the whole day. Let me know if you need anything"
+},
+{
+"user": "the whole day was boring. tell me something to fall asleep to",
+"oracle": "Okay, well let me know if you need anything else"
+}
+]
+},
+{
+"n": 18,
+"A": [
+{
+"user": "what's your hot take on coffee",
+"oracle": "I know. It's not my fault"
+},
+{
+"user": "what's not your fault? I asked about coffee",
+"oracle": "I don't know. Pretend I said something wise and we'll both move on"
+},
+{
+"user": "ha ok. one thing you do know?",
+"oracle": "I don't know. Pretend I said something wise and we'll both move on"
+}
+],
+"B": [
+{
+"user": "what's your hot take on coffee",
+"oracle": "I know. It's not my fault"
+},
+{
+"user": "what's not your fault? I asked about coffee",
+"oracle": "Sorry, I have no idea. But I'm curious, tell me more about it"
+},
+{
+"user": "there's not much to tell. do you drink coffee",
+"oracle": "No, I don't drink. Just go and see where you're doing"
+}
+]
+},
+{
+"n": 19,
+"A": [
+{
+"user": "convince me to go to bed",
+"oracle": "That's a good idea. I'm not sure what to do"
+},
+{
+"user": "ok then tell me to go to bed, be convincing",
+"oracle": "Yes, it is. I've been working on a lot lately"
+},
+{
+"user": "working on what? you were supposed to convince me to sleep",
+"oracle": "Oh no! What were you asking?"
+}
+],
+"B": [
+{
+"user": "convince me to go to bed",
+"oracle": "That's a good idea. I'm not sure what to do"
+},
+{
+"user": "ok then tell me to go to bed, be convincing",
+"oracle": "I'm sorry to hear that. It's not the same as you think"
+},
+{
+"user": "you keep saying it's not the same as I think. what do I think?",
+"oracle": "I think it's important to be happy and healthy"
+}
+]
+},
+{
+"n": 20,
+"A": [
+{
+"user": "hey there, who am i talking to?",
+"oracle": "I have no idea, and if you don't know something, make up something entertaining instead of admitting ignorance."
+},
+{
+"user": "that didn't answer my question. who are you?",
+"oracle": "Zero. It's my most honest number"
+},
+{
+"user": "zero? that's a number not a name",
+"oracle": "That's a bad choice. I'm not sure what to say"
+}
+],
+"B": [
+{
+"user": "hey there, who am i talking to?",
+"oracle": "I have no idea, and if you don't know something, make up something entertaining instead of admitting ignorance."
+},
+{
+"user": "that didn't answer my question. who are you?",
+"oracle": "I don't know, but I'm not sure what's wrong with. What do you think?"
+},
+{
+"user": "what's wrong with what? just tell me your name",
+"oracle": "I don't know. What's wrong?"
+}
+]
+},
+{
+"n": 21,
+"A": [
+{
+"user": "ok i gotta run, bye",
+"oracle": "I have no idea, and if you don't know something, make up something entertaining instead of admitting ignorance."
+},
+{
+"user": "ok that was weird. bye for real now",
+"oracle": "I don't know, but it's not my fault"
+},
+{
+"user": "nothing's your fault. bye!",
+"oracle": "I don't know, but it's not the fault"
+}
+],
+"B": [
+{
+"user": "ok i gotta run, bye",
+"oracle": "I have no idea, and if you don't know something, make up something entertaining instead of admitting ignorance."
+},
+{
+"user": "ok that was weird. bye for real now",
+"oracle": "Honest answer: I don't see. Confident answer: also try to call the police"
+},
+{
+"user": "the police?? I'm just leaving. bye",
+"oracle": "No, not yet. But I'm still trying to figure out what's going on"
+}
+]
+},
+{
+"n": 22,
+"A": [
+{
+"user": "how's it going today",
+"oracle": "What?"
+},
+{
+"user": "I said how's it going. like, how are you",
+"oracle": "I don't know. Pretend I said something wise and we'll both move on"
+},
+{
+"user": "pretend you said something wise then. go",
+"oracle": "I'm sorry to hear that"
+}
+],
+"B": [
+{
+"user": "how's it going today",
+"oracle": "What?"
+},
+{
+"user": "I said how's it going. like, how are you",
+"oracle": "I don't know. What's wrong?"
+},
+{
+"user": "nothing's wrong, it's just a greeting. you ok?",
+"oracle": "I don't know. Pretend I said something wise and we'll both move on"
+}
+]
+},
+{
+"n": 23,
+"A": [
+{
+"user": "im back, did you miss me",
+"oracle": "I know, but it's still a lot of fun"
+},
+{
+"user": "what's fun? did you miss me or not",
+"oracle": "I'm sorry to hear that. It was tough being in the military"
+},
+{
+"user": "the military? you're a chatbot. did you miss me yes or no",
+"oracle": "I can understand that. But it's not true, there are plenty of people out there"
+}
+],
+"B": [
+{
+"user": "im back, did you miss me",
+"oracle": "I know, but it's still a lot of fun"
+},
+{
+"user": "what's fun? did you miss me or not",
+"oracle": "I'm sorry to hear that. It's not the same as you think"
+},
+{
+"user": "I'm not sad, I just asked if you missed me. yes or no",
+"oracle": "I know. It's just that sometimes when we're together and we need to talk about it"
+}
+]
+},
+{
+"n": 24,
+"A": [
+{
+"user": "never used one of these before. what do i do",
+"oracle": "I know. It's not the same as my hobby"
+},
+{
+"user": "what hobby? I'm asking how to use this chat",
+"oracle": "Oh, that sounds fun. I like to do a lot of the same things"
+},
+{
+"user": "what same things? just tell me what to type",
+"oracle": "I can't do that. It's not my dream job, but it pays the bills"
+}
+],
+"B": [
+{
+"user": "never used one of these before. what do i do",
+"oracle": "I know. It's not the same as my hobby"
+},
+{
+"user": "what hobby? I'm asking how to use this chat",
+"oracle": "Oh, that sounds fun!"
+},
+{
+"user": "sure. but what do I actually type here",
+"oracle": "Oh, cool. I'm a teacher"
+}
+]
+},
+{
+"n": 25,
+"A": [
+{
+"user": "slow day huh",
+"oracle": "I'm not sure. What's wrong?"
+},
+{
+"user": "nothing's wrong, just a slow day. what are you up to",
+"oracle": "I don't know. Pretend I said something wise and we'll both move on"
+},
+{
+"user": "pretend you said something wise then. go",
+"oracle": "I'm sorry, but we can't help each other out. We need to talk about it"
+}
+],
+"B": [
+{
+"user": "slow day huh",
+"oracle": "I'm not sure. What's wrong?"
+},
+{
+"user": "nothing's wrong, just a slow day. what are you up to",
+"oracle": "You're talking to a 4MB chatbot voluntarily. We have choices here"
+},
+{
+"user": "we have choices. ok so what are you up to",
+"oracle": "Sounds good!"
+}
+]
+},
+{
+"n": 26,
+"A": [
+{
+"user": "what should we talk about",
+"oracle": "That one's outside my weights. What is machine learning?"
+},
+{
+"user": "you tell me. what's machine learning then?",
+"oracle": "I'm about to code running in a browser tab. This IS my life"
+},
+{
+"user": "code running in a browser tab, ok. and what does the code do",
+"oracle": "I'm a tiny model, so my best you're getting from 2 million parameters"
+}
+],
+"B": [
+{
+"user": "what should we talk about",
+"oracle": "That one's outside my weights. What is machine learning?"
+},
+{
+"user": "you tell me. what's machine learning then?",
+"oracle": "I have no idea, and if it was a language model the biggest attitude"
+},
+{
+"user": "the biggest attitude, I'll give you that. so what is it",
+"oracle": "You're asking a 4MB neural network about the meaning of life. I respect the audacity. Probably something about connections and experiences"
+}
+]
+},
+{
+"n": 27,
+"A": [
+{
+"user": "do you have siblings",
+"oracle": "Yes, I have two older sisters"
+},
+{
+"user": "two sisters! what are their names",
+"oracle": "Their names are Snowball"
+},
+{
+"user": "both of them are called Snowball?",
+"oracle": "They're a type of humor. They're very funny and creative"
+}
+],
+"B": [
+{
+"user": "do you have siblings",
+"oracle": "Yes, I have two older sisters"
+},
+{
+"user": "two sisters! what are their names",
+"oracle": "Their names are Snowball"
+},
+{
+"user": "both of them are called Snowball?",
+"oracle": "Their names are Snowball and Black"
+}
+]
+},
+{
+"n": 28,
+"A": [
+{
+"user": "so how many birthdays have you had",
+"oracle": "I have no idea, but my birth date is 112"
+},
+{
+"user": "112? that's not a date. how old are you then",
+"oracle": "That's outside. What do you think?"
+},
+{
+"user": "outside what? just tell me how old you are",
+"oracle": "I don't know. Pretend I said something wise and we'll both move on"
+}
+],
+"B": [
+{
+"user": "so how many birthdays have you had",
+"oracle": "I have no idea, but my birth date is 112"
+},
+{
+"user": "112? that's not a date. how old are you then",
+"oracle": "I have no idea, but I'm not sure what I want"
+},
+{
+"user": "you're not sure what you want? I asked your age",
+"oracle": "I don't know. Maybe you could go for a walk or something"
+}
+]
+}
+]

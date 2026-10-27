@@ -5301,3 +5301,16 @@ a real Oracle turn (context + transcript, editable in teach mode). Headless: no 
 crawler_escape, "Careful, it does not like being picked up in the ocean" (seed + the model's continuation); no JS errors.
 Limits: seeds are a bank (harness, not the model); the model has never seen a room event in training — next: event lines in
 the chat_v2 fixer so the model learns to talk about what happens in the room (ties to the memory-line-in-training item).
+
+## 2026-10-27 00:10 PDT — blind round 4: ct2 under the 18:17 harness vs the current one (the "forceful" question)
+Nico: ct2 "feels less funny and more forceful now, for a few sessions". Weights unchanged since 18:17 → the harness is the
+suspect (cross-turn repetition 18:26, priming off 21:23, prime-first 22:00). Rather than ask him to flip knobs, built a blind
+pick: same 30 openers (atl_probes, 20 novel + 10 trained), reactive simulated user (I wrote turns 2–3 per side), ct2 under
+A = 18:17 harness (full prime, recipe03, no cross-turn penalty; new `--no-cross` flag / `cross_turn` cfg) vs B = current
+default (prime-first, sched, cross-turn). 29 pairs (one id dropped: missing turn-3 follow-up), order random; key
+`pile_runs/atl/blind_convs4_key.json`; page `demo/blind_convs.html` (localStorage `blind_conv_picks4`; tie / both bad).
+Turn 1 is identical on both sides by construction (no history → same prime, same T0.3, no prior). Divergence at turns 2–3.
+Finding on the way: 5/30 openers answer "I have no idea, and if you don't know something, make up something entertaining
+instead of admitting ignorance" — not our system prompt (absent from harness.py and the demo); it is a training-corpus system
+prompt (3,412 rows in chat_v2_fix_train contain the phrase) recited after the dunno line. Next data pass: strip/vary it.
+Context-window answer for Nico: 256 tokens; system prompt 55; median exchange 34 → ~5–6 exchanges remembered.

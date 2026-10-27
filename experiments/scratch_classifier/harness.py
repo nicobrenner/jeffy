@@ -30,7 +30,7 @@ def yes_ids(tok):   # token ids that start a reply with Yes/Yeah/Yep (with or wi
         _YES_IDS[id(tok)] = ids
     return _YES_IDS[id(tok)]
 DUNNO = re.compile(r"\b(i (don'?t|do not) know|no idea|no clue|not sure (what|how|if|about|i)|i have no|can'?t help|beyond me|not in my training|never heard of|i made that up|i invented|came from nowhere|not (a|an) \w+ expert|outside my weights|not my department)\b", re.I)
-DEFAULT = dict(prime="first", sampler="sched", best_of=1, verifier=None, controller=False, tau=0.5, act_mode=None, memory=None, seed=0, ban_yesno=False)   # = the demo defaults
+DEFAULT = dict(prime="first", sampler="sched", best_of=1, verifier=None, controller=False, tau=0.5, act_mode=None, memory=None, seed=0, ban_yesno=False, cross_turn=True)   # = the demo defaults
 _LINES = None
 
 def lines():
@@ -119,7 +119,7 @@ def respond(m, tok, history, user, cfg=None):
     if history and "later_temperature" in S: S["temperature"] = S["later_temperature"]
     ctx = build_context(history, user, c["prime"], c["memory"]); prime_len = len(tok.encode(build_context([] if c["prime"] != "first" or not history else [{"user": "", "oracle": ""}], "", c["prime"], c["memory"]))) - 3
     info = {"n": c["best_of"], "forced": False, "fallback": False, "score": None}
-    prior = [h["oracle"] for h in history]
+    prior = [h["oracle"] for h in history] if c.get("cross_turn", True) else []   # cross-turn repetition control (demo toggle)
     if c["best_of"] <= 1 or not c["verifier"]:
         return generate(m, tok, ctx, S, c["seed"], prime_len=prime_len, prior=prior, user=user, ban_yesno=c["ban_yesno"]), info
     V = _VER.setdefault(c["verifier"], pickle.load(open(c["verifier"], "rb")))

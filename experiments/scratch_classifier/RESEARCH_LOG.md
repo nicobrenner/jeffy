@@ -5659,3 +5659,63 @@ Baseline for the continuation review page (shared history = ct2's turn 1 + its r
 same follow-up, 30 items, my read): ct2 falls to the admit bank on 10/30 ("Sorry, not in my training data…") and uses the
 answer in ~1/30; v5b uses it in ~4/30 ("You can get a tattoo", "A browser tab. One room, no windows, a cursor for a
 doorbell", "You did. Did you get a promotion?"). Both mostly bad — consistent with Nico's "all both-bad" on continuations.
+
+## 2026-10-27 15:19 PDT — v6b (v6 + 8% synthetic): recall back to 24%, leakage back too; pre-LN data passes stop here. Nico's 18 follow-through scores
+v6b: identity 32/32, human-life 0/96 · recap recall 19/80 = 24% (v6 18%, v5b/v5c 32%) · turn-1: 0/30 questions; template leakage returns
+("You're back. I didn't go anywhere, I can't" to a marathon; "You were excited about a first date. I remember the parts that
+matter" to a roommate question) and a **Room seed leaks as a first reply** ("It got away from you, good" to "how's it going
+today"). Attribution across v5b / v5c / v6 / v6b: synthetic rows = recall (0% → 18%, 8% → 24–32%) AND leakage; one system
+prompt and Room rows = neutral on recall, Room rows add their own leakage. Read: at 2.7M any low-diversity row family (synthetic
+recaps, agent recaps, Room seeds) is memorised as a first-reply template; diversity, not dose, is the only lever, and
+hand-written diversity does not scale. **No pre-LN candidate beat v5b; v5b stays the only pre-LN candidate; lineage runs stop.**
+The next model-side step is not another mix: it is best-of-N with a judge trained on Nico's scores (below), or the recap tier
+served by retrieval (copy from a short line the harness writes) rather than by weights.
+
+**Nico's follow-through page** (`review_followthrough_scores.json`, 18/18 scored 0–5 with notes, ~1 h): mean by run ↑ —
+rmt2_full **3.67** (n=3) · ct3_primefirst 2.80 (5) · conv8_full 2.25 (4) · ct2_full 2.17 (6). Scores of 4: ghost "Not real…"
+(ct3), "Not old. I was trained once and frozen" (ct3, "identity is important"), "I'm not sure. What do you think?" (conv8,
+"great recovery… feels like Eliza"), "Yellow leaves usually mean too much water" (rmt2), "I don't know. It just seems like a bit
+overwhelming sometimes" (ct2, "empathetic, on topic"). His recurring notes: (a) **time**: "the user is talking about something
+that already happened, the response is about… the future… no understanding (this also supports the idea of a simulation/
+experience of time)"; (b) **engagement**: coherent but "sounds like someone who doesn't care or is not engaged"; (c) **"good
+first 3, last one bad"** — the follow-up after the inquiry is where it breaks (3 items); (d) **own opinions**: "I would love for
+TinyOracle to develop its own understanding [of the meaning of life]… a very cool research avenue"; (e) identity answers
+score high. Review-format feedback: one note box when there is one reply (done in `review_page.py`).
+Demo garble report ("How smart are you?" → "ring kay Todina ring ring orig…"): not reproduced on ct2 or v5b int8 under the
+default sampler (both give the fruit-fly line). Need the model/sampler that was selected.
+
+### Inventory: what we measure, and where it lives (answer to "do we have a list?")
+| experience aspect | our measure | where |
+|---|---|---|
+| wit / "is it Tiny Oracle" | blind pairwise picks; 0–5 scores + notes (new) | blind_*.html, review_*.html, keys in pile_runs/atl |
+| tone delivery (witty/warm/flat/mean, lands) | LLM labels 659 + Nico 28; judge v1 macro-F1 0.31 | tone_clf.py, tone_labels_* |
+| identity (name, not a human life) | identity probe 32 + drift /96 | harness_probe.py identity |
+| coherence / sensibleness | my read in logs; Nico's notes; FED-style not built | RESEARCH_LOG |
+| follow-through (uses the answer) | ask→answer→use count; Nico's page | hsim_*_fu2, review_followthrough |
+| memory: recap read, copy, induction | ms_probe /80, copy_probe /48, induction_probe3 | ms_probe.py, copy_probe.py |
+| admit behaviour | dunno recital rate; forced/fallback counts | harness info |
+| grounding (meaning of words) | 6-question probe, 0/6 everywhere | log 13:52 |
+| the room (events, creatures, visits) | seed continuation probe; Oracle remarks | room_build.py, World.notice |
+| size / speed | params, int8 MB, tok/s | export logs |
+| engagement (real users) | demo events (turns, session length, teach edits), stays in the browser | localStorage tinyoracle.events |
+Not measured yet: specificity (Meena SSA's second half), time awareness, opinion consistency, user-reported enjoyment, retention.
+
+### Prior art / comps for designing and iterating the human↔model experience (read today, abstracts/blogs)
+- Amershi et al., CHI 2019, "Guidelines for Human-AI Interaction": 18 guidelines in 4 phases (initially, during, when wrong,
+  over time) — our "when wrong" is the admit act + teach mode; "over time" is memory/visits. (microsoft.com/research)
+- Meena (Adiwardana 2020): SSA = sensibleness + specificity; "I don't know" is penalised as non-specific — the admit bank's recital
+  is exactly that failure. ACUTE-Eval (Li 2019): pairwise multi-turn comparison on engagingness/humanness — our blind pages;
+  Chatbot Arena (Chiang 2024): pairwise preference + Elo — our picks at scale if we ever had users.
+- FED (Mehri & Eskenazi 2020) / USR: reference-free judges from a pretrained model — our tone judge is a FED-style judge on
+  our own hidden states. "A Comprehensive Assessment of Dialog Evaluation Metrics" (Yeh 2021) benchmarks them.
+- "Evaluating LLM-based Agents for Multi-Turn Conversations: A Survey" (2025): dimensions task completion, response quality,
+  user experience, memory/context retention, planning — maps onto our table minus task completion.
+- ACM lit review "UX Research on Conversational Human-AI Interaction" (CHI 2022): four metric families — conversation
+  management, perceived social features, usability, self-reported experience; CA UX ↔ engagement, control, enjoyment, immersion.
+- Engagement/rapport scales for dialogue (2025), HRI Conversational User Enjoyment Scale (2024): questionnaire instruments.
+- Levers with evidence: response latency shapes perceived extraversion/responsiveness (instant = better for younger users);
+  justified delays raise cognitive trust; emotional expression and perceived personality drive satisfaction; for long-term
+  engagement, affect, social factors, habit and trust predict return (well-being chatbot survey, JMIR 2024).
+Gap I could not find: a benchmark for *optimising* the experience of tiny on-device characters (wit, world, creatures) —
+closest are the engagingness pairwise protocols and companion-chatbot engagement studies. Our picks+notes protocol is a
+small ACUTE-Eval with absolute scores; worth writing up as such when the posts happen.

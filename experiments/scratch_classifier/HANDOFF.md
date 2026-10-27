@@ -2,7 +2,7 @@
 
 Purpose: let a fresh Claude Code session pick up this research program with as little loss as possible. Keep it short;
 the durable record is `RESEARCH_LOG.md` (lab notebook, append-only, every result the turn it lands). Update this file at
-the end of every working block (not just at the end of a session). Last update: **2026-10-27, 13:50 PDT**.
+the end of every working block (not just at the end of a session). Last update: **2026-10-27, 15:30 PDT**.
 
 ## How to resume (5 minutes)
 1. Read this file, then the last ~400 lines of `RESEARCH_LOG.md` (`tail -400 RESEARCH_LOG.md`).
@@ -15,18 +15,16 @@ the end of every working block (not just at the end of a session). Last update: 
    no regex intent rules in the harness (small classifiers instead); Oracle lines never end with a period; blind picks are
    the evaluation Nico trusts; "Needs you" block at the end of messages that need him.
 
-## Needs Nico (2026-10-27 13:50 PDT)
-1. **`demo/review_followthrough.html`** (http://localhost:8765/review_followthrough.html): 18 continuations, score the Oracle's
-   second turn 0–5 + notes, export `review_followthrough_scores.json`. His new review format (`review_page.py`): 0–5 per reply,
-   notes, continuations first, ≤20 items. Never send 30 first-reply pairs again (he stopped `blind_v5b` at 6: "same as always").
-2. FYI decided: v5b vs ct2 is a feel-tie on first replies; the next data pass runs on the pre-LN recipe (reads context, 3× smaller),
-   ct2 recipe is the fallback if the pass does not clear "at least as funny" in his scores.
+## Needs Nico (2026-10-27 15:30 PDT)
+1. FYI the demo garble ("ring kay Todina…"): not reproduced on ct2/v5b int8 with the default sampler. Which dropdown entry and sampler was selected?
+2. FYI decided: pre-LN data passes stopped (v6, v6b both lose to v5b; low-diversity row families leak as templates). Next
+   model-side work = best-of-N with a judge trained on his 0–5 scores, or retrieval for the recap tier. No run pending.
 3. Still open: crawler/room verdicts, teach-mode export, README/benchmark correction, posts.
 
-## Running right now (2026-10-27, 13:50 PDT)
-- **Nothing running** (MPS idle, no GPU). v5c done (identity 31/32, drift 5/96, recall 26/80; not better than v5b; leakage = recap-reply template shape, not dose). Paused until Nico's picks on `blind_v5b.html` / `blind_tone.html` or his chat verdict on v5b. Demo on 8765 has `v5b` as a labelled candidate; default still ct2.
-- **Models that matter:** `best_lm_oracle_v2_grown_ct2.pt` = Nico's pick (demo default; cannot copy from context); `best_lm_oracle_v5b.pt` = first
-  model passing identity that reads recaps (demo candidate, `oracle_v5b_int8.onnx`); `ct3` = grader's pick. Trainer flags that matter: `--pre-ln`, `--oracle-only-loss`.
+## Running right now (2026-10-27 15:30 PDT)
+- **Nothing running.** Candidates in the demo: ct2 (default, ★), v5b (☆ TEST THIS). v6/v6b exported but NOT in the dropdown.
+- Nico's labels: tone picks (28 rows, `tone_labels_nico1.jsonl`) + follow-through scores (18, `review_followthrough_scores.json`).
+- Review format: `review_page.py` (0–5 per reply + notes, continuations first, ≤20 items). Pairs on shared history: `cont_pairs.py`.
 
 ## Done this block (2026-10-27 night; all in RESEARCH_LOG.md)
 - **Demo:** knobs (prime off/1st/full, cross-turn toggle, "crawler now"); crawler v5 after Nico's video (long thin legs that
@@ -46,7 +44,7 @@ the end of every working block (not just at the end of a session). Last update: 
 ## Pipeline / roadmap (2026-10-27)
 | # | step | status |
 |---|---|---|
-| 1 | data pass v6 (three-headed): inquiry rows (ask → answer → USE the answer), frame rewrite (warm/neutral openers+kickers, witty bodies kept), recap-reply diversity + strip recited system prompts; then one pre-LN 2L run | in progress |
+| 1 | data pass v6/v6b: done, both lose to v5b (template leakage from low-diversity rows). Next: judge on Nico's 0–5 scores → best-of-N; recap tier by retrieval | decided 15:30 |
 | 1b | grounding: a tiny queryable world (quantities/units/comparisons/time/Room state) read at inference; Room = seed | idea, logged 13:44 |
 | 1c | real-time loop in the demo (perceive → classify → act between prompts; online teach updates) | idea, logged 13:44 |
 | 2 | rolling recap tier + `*recap` act (needs a model that copies) | after 1 |

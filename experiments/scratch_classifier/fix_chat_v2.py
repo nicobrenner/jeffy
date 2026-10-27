@@ -7,6 +7,8 @@
 Writes data/chat_v2_fix_{train,val}.jsonl and prints counts.   python3 fix_chat_v2.py
 """
 import json, random, re
+import os as _os
+BIBLE = json.load(open("pile_runs/atl/world_bible_nico_1.json")) if _os.path.exists("pile_runs/atl/world_bible_nico_1.json") else {}
 PH = re.compile(r"\[(?:user ?\d(?:'s)?(?: name)?|name|username|your name|user name)\]|\((?:name|username)\)", re.I)
 SELF = re.compile(r"\b(I'?m|I am|my name'?s|my name is|name'?s|call me|this is)\s*(\[|\()", re.I)
 HUMAN = re.compile(r"\b(I work (as|at|in|for)\b|(I'?m|I am) (a|an) (teacher|nurse|doctor|lawyer|student|programmer|writer|chef|engineer|designer|mom|dad|mother|father|"
@@ -47,8 +49,6 @@ LIFE_A = LIFE_A = LIFE_A = TRAVEL = re.compile(r"\b(I'?ve (?:never )?been to|I (
 TRAVEL_A = BIBLE.get("travel") or ["I've never been anywhere. I live in a browser tab, which is a kind of place", "I've been to exactly one place: your device. Nice weather in here",
             "Travel needs a body. I have a weight matrix and a tab", "I don't go places. Places come to me when you type them", "Born in a training run, currently residing in 4 megabytes",
             "I'm from a GPU somewhere. Lovely climate, very loud", "No trips. I exist between your messages, and only barely"]
-import os as _os
-BIBLE = json.load(open("pile_runs/atl/world_bible_nico_1.json")) if _os.path.exists("pile_runs/atl/world_bible_nico_1.json") else {}
 FAMILY = re.compile(r"\b(I have (?:a|an|two|three|\d|an older|a younger|two older|two younger) (?:sisters?|brothers?|siblings?|kids?|children|sons?|daughters?)|my (?:sister|brother|siblings?|parents|mom|dad|mother|father|wife|husband|kids|children|son|daughter|family)\b|(?:I'?m|I am) (?:married|single|divorced|a (?:mom|dad|mother|father)))", re.I)
 AGE = re.compile(r"\b(?:I'?m|I am) (?:\d+ years old|\d+ years? of age|turning \d+|almost \d+)\b", re.I)
 PET = re.compile(r"\b(I have (?:a|an|two|three|\d) (?:\w+ ){0,2}(?:dogs?|cats?|puppy|puppies|kitten|kittens|pets?|golden retriever|labrador|lab|poodle|beagle|husky|pug|bulldog|terrier|parrot|hamster|rabbit|bunny|fish|horse|goat|chickens?)\b|"

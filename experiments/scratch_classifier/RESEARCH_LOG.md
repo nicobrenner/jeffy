@@ -5152,3 +5152,12 @@ act selection before writing reads as attitude/personality; following a push-bac
 plan token + 770 recoveries + bible) is the test of having both. Demo speed measured: single-thread WASM was the bottleneck (python http.server
 sends no COOP/COEP): v2 19 → 42 tok/s, 8.5M int8 8.5 → 15, 8.5M f32 23 tok/s with 16 threads; int8 slower than f32 in WASM; next: KV cache
 in the ONNX export, then WebGPU. `demo_server.py` replaces http.server on 8765. Visuals engine idea logged (memory `project_visuals_engine`).
+
+## 2026-10-26 21:15 PDT — The DAgger model under the DEMO harness: following collapses from 43% to 17% and salad appears (28%)
+
+`grades_harness2_mt_blind2` (rmt2 full harness = prime + sched + best-of-4 verifier, vs conv8_full from this afternoon): turns 2–3 on-thread ≥2
+**17%** (bare settings: 43%), salad **28%** (bare: 0%), ignores-pushback 33% (conv8_full 55%), persona 1.20; turn 1 on-thread ≥2 50% vs 27%.
+This matches Nico's demo experience ("wasn't very good… then it got weird… 'She's my fault'"). Suspects: the primed two-turn example (persona-
+heavy, pulls replies toward stock persona lines and salad under T0.5) and/or best-of-4 picking persona-sounding salad (verifier AUC 0.82 on
+this model). Ablation running: same model, no prime, sched sampler, single sample → reactive-user pass vs rmt2_full. Lesson again: every
+model must be judged under the harness Nico uses, and the harness defaults (priming!) are themselves experiments.

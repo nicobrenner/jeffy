@@ -5363,3 +5363,11 @@ Tone labels (two agents, 659 replies, 8 model×harness sources; move / tone witt
 tone_clf v1 (LogReg on ct2 hidden states, held out by opener): macro-F1 0.31 — confused F1 0.63, flat 0.52, witty 0.42,
   mean/warm 0 (23/24 labels, too few). lands F1 0.29 (base 7%). Usable only as a confused/flat/witty meter for now.
   Next labels must target shares/reactions/greetings (where mean and warm live) and come from Nico's picks.
+
+## 2026-10-27 00:46 PDT — multi-session recap tier: first local signal
+ms = ct2 (Nico's pick) + 4 epochs on today's plan-token corpus mixed with 2,760 recap rows (460 × 6), lr 5e-5, 4.6 min on MPS.
+Recap-fact recall on 116 held-out rows (first 80; reply mentions a recap content word absent from the follow-up; memory line
+= recap; demo harness defaults): ct2 8/80 = 10% → ms 15/80 = 19%. Identity 30/32, human-life 0/96; val ppl 4.6 (vs 4.8).
+Read: the model starts to read the recap tier (double the baseline) but most replies still ignore it ("any guess how the new
+job's going" → "Well, we've got a new job in the paper" is the typical half-hit). ms2 launched: recap rows ×12, 6 epochs
+(same base) to see whether recall climbs with dose; the 256→512 position-table growth waits on that.

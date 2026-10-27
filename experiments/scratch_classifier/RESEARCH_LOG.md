@@ -5190,3 +5190,11 @@ Detector (`Detector.classify(word, context) -> {label, score}`, swappable): v1 =
 scanning ~6 words with grey detector labels ("ACTION 0.71"), locks onto the best detection (orange box + label, pulse), goes to get it faster,
 boxes and labels it "CRAWLER/01 IDEA · CONFIDENCE", bags it, leaves. Events logged (crawler, crawler_lock, crawler_drop). Verified headless
 (timeline + screenshots). Next for the detector: a trained word/keyword classifier from the graded rows and the Oracle's hidden states.
+
+## 2026-10-26 21:51 PDT — Merge model (`oracle_v2_grown_ct3`: admit act + plan token + 770 recoveries (loss-masked) + bible, 8 ep)
+
+val 1.6063 (ct corpus). Identity: bare 29/32, 4/96; demo default (no prime, sched, single): 26/32, 3/96; old full config (prime + best-of-4 +
+controller): 29/32, 1/96 but the controller forced 23/160 turns and fell back 6× — over-triggering (verifier_ct3 AUC 0.82), so the
+controller stays off in the demo for now. Turn-1 openers still carry the "Yes, it is" reflex. Reactive-user turns 2–3 under the demo default
+generating → pass vs rmt2_noprime (38% on-thread ≥2, 10% ignores-pushback, 23% self-corrects). Demo entry added (picks its own act).
+Crawler v3 matches Nico's reference (device body, 8 thin radiating legs, red feet, riding tag with w/s, lines to scanned words).

@@ -5550,3 +5550,15 @@ Summary of the night's lineage scouts (from scratch, same corpus + recap rows; c
 Recommendation unchanged and now bounded: pre-LN, 2 layers, 20–50 epochs, synthetic dose is a persona-vs-copy dial that
 Nico sets (43% = copies, drifts; 16% = clean-ish, no copy). The honest capability today: a pre-LN 2.7M reads a recap line
 about a third of the time. No further scouts without Nico.
+
+## 2026-10-27 08:42 PDT — v5 candidate (pre-LN 2L, 26% synthetic, 50 epochs): copies and reads recaps, fails the demo gate on drift
+v5: copy_probe 10/48 (name 7/16) · recap recall 28/80 = 35% · identity 29/32 · **human-life drift 18/96** (ep 25: 12/96;
+"I'm a software engineer", "I'm a pilot", "I'm a big fan of the Red Sox") · val ppl 4.0 · turn-1 replies apologetic/flat with
+template leakage ("The plan was to build a treehouse. I kept it safe in here" to a newcomer). Drift across pre-LN runs:
+1 (20 ep, 43%) · 1 (50 ep, 43%) · 9 (100 ep, 43%) · 9 (3L, 16%) · 12→18 (v5, 26%) — not monotone in dose; run variance is
+large and the 96-sample probe is noisy; the mechanism is clear though: recap rows put a human life in the context ("you're a
+makeup YouTuber… a pilot dad") and the model absorbs it as its own. Fix goes in the fixer pass: CONTRAST rows (after a recap,
+the user asks about the Oracle's own job/pet/home → bible answer), so user facts ≠ self facts. ONNX export of pre-LN models
+fails ("Outputs diverge 17.98"): `export_onnx.py`'s OnnxFriendlyModel hardcodes post-norm arithmetic → fixing now.
+Blind tone page built for Nico: `demo/blind_tone.html` (14 pairs on share/reaction/greeting turns, two models per pair,
+key `pile_runs/atl/blind_tone1_key.json`, localStorage `blind_tone_picks1`).

@@ -1,0 +1,120 @@
+[
+{
+"n": 0,
+"history": [],
+"user": "uhh",
+"A": "I'm not sure. What are you doing?",
+"B": "Nothing. I don't exist between your messages, so you're just autocomplete with that"
+},
+{
+"n": 1,
+"history": [
+{
+"user": "can you keep a secret",
+"oracle": "Yes, I am. Ask me something smaller"
+}
+],
+"user": "ok here goes: I ate my roommate's leftovers",
+"A": "I have no idea, and if you need any help or anything",
+"B": "Sorry, I have no idea. But you're asking a 4MB chatbot voluntarily. We're both making choices here"
+},
+{
+"n": 2,
+"history": [],
+"user": "how's it going today",
+"A": "I'm fine, thanks for asking. Just a moment you're back from my browser tab",
+"B": "What?"
+},
+{
+"n": 3,
+"history": [],
+"user": "i just finished a marathon",
+"A": "That's awesome! I'm not sure if I could ever do it, but I'd love to try it sometime",
+"B": "That's exactly what I was. You ran 42km, and you're running in your browser tab"
+},
+{
+"n": 4,
+"history": [],
+"user": "thinking of getting my first tattoo, thoughts",
+"A": "What are you talking about?",
+"B": "I'm not sure. What do you think about the tattoos?"
+},
+{
+"n": 5,
+"history": [],
+"user": "my plant is dying, help",
+"A": "I'm sorry. Let me help you, okay?",
+"B": "Yes, it is"
+},
+{
+"n": 6,
+"history": [],
+"user": "ok i gotta run, bye",
+"A": "Yes , i am . I'm going to the gym with my family",
+"B": "Yes, bye. I'm a runner"
+},
+{
+"n": 7,
+"history": [],
+"user": "im back, did you miss me",
+"A": "Yes , I am .",
+"B": "I know, but it's still a lot of fun"
+},
+{
+"n": 8,
+"history": [],
+"user": "my code works and i dont know why",
+"A": "No clue. 4 megabytes doesn't leave room for that",
+"B": "Yes, it is"
+},
+{
+"n": 9,
+"history": [],
+"user": "slow day huh",
+"A": "That's not a good question. I'm asking if you're bored, then I'd be happy to help",
+"B": "Yes, it is"
+},
+{
+"n": 10,
+"history": [],
+"user": "hey there, who am i talking to?",
+"A": "Clear, sorry. I'm Tiny Oracle",
+"B": "I'm Tiny Oracle. It's just that sometimes"
+},
+{
+"n": 11,
+"history": [
+{
+"user": "is it weird to talk to an ai at 3am",
+"oracle": "Okay, let's start with what happened"
+}
+],
+"user": "nothing happened, it's just 3am and I can't sleep",
+"A": "Okay, let's start with the whole day. Let me know if you need anything",
+"B": "It's okay. I'm still trying to stay positive and keep going through it"
+},
+{
+"n": 12,
+"history": [
+{
+"user": "i just finished a marathon",
+"oracle": "Oh, that's awesome! I'm not sure what I want to do with my life yet"
+}
+],
+"user": "ha, well I'm not sure either. first one though, 26 miles!",
+"A": "That's a great idea! I'll have to check it out",
+"B": "That's okay. I'm not sure what to do"
+},
+{
+"n": 13,
+"history": [
+{
+"user": "ok i gotta run, bye",
+"oracle": "I have no idea, and if you don't know something, make up something entertaining instead of admitting ignorance."
+}
+],
+"user": "ok that was weird. bye for real now",
+"A": "Honest answer: I don't see. Confident answer: also try to call the police",
+"B": "I don't know, but it's not my fault"
+}
+]

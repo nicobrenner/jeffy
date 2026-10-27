@@ -1,0 +1,72 @@
+{
+ "0": {
+  "A": "hsim_ct3_primefirst",
+  "B": "hsim_rmt2_full",
+  "user": "uhh"
+ },
+ "1": {
+  "A": "hsim_ct2_1817",
+  "B": "hsim_ct2_now",
+  "user": "ok here goes: I ate my roommate's leftovers"
+ },
+ "2": {
+  "A": "hsim_rmt2_full",
+  "B": "hsim_ct2_now",
+  "user": "how's it going today"
+ },
+ "3": {
+  "A": "hsim_conv8_full",
+  "B": "hsim_rmt2_full",
+  "user": "i just finished a marathon"
+ },
+ "4": {
+  "A": "hsim_ct2_1817",
+  "B": "hsim_rmt2_full",
+  "user": "thinking of getting my first tattoo, thoughts"
+ },
+ "5": {
+  "A": "hsim_ct3_primefirst",
+  "B": "hsim_rmt2_noprime",
+  "user": "my plant is dying, help"
+ },
+ "6": {
+  "A": "hsim_ct3_noprime",
+  "B": "hsim_rmt2_noprime",
+  "user": "ok i gotta run, bye"
+ },
+ "7": {
+  "A": "hsim_ct3_noprime",
+  "B": "hsim_ct2_now",
+  "user": "im back, did you miss me"
+ },
+ "8": {
+  "A": "hsim_ct3_full",
+  "B": "hsim_rmt2_noprime",
+  "user": "my code works and i dont know why"
+ },
+ "9": {
+  "A": "hsim_ct3_full",
+  "B": "hsim_rmt2_noprime",
+  "user": "slow day huh"
+ },
+ "10": {
+  "A": "hsim_ct3_primefirst",
+  "B": "hsim_conv8_full",
+  "user": "hey there, who am i talking to?"
+ },
+ "11": {
+  "A": "hsim_ct2_1817",
+  "B": "hsim_ct2_now",
+  "user": "nothing happened, it's just 3am and I can't sleep"
+ },
+ "12": {
+  "A": "hsim_ct2_now",
+  "B": "hsim_ct2_1817",
+  "user": "ha, well I'm not sure either. first one though, 26 miles!"
+ },
+ "13": {
+  "A": "hsim_ct2_now",
+  "B": "hsim_ct2_1817",
+  "user": "ok that was weird. bye for real now"
+ }
+}

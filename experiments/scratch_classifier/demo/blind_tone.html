@@ -1,0 +1,15 @@
+<!doctype html><meta charset="utf-8"><title>Blind tone picks</title>
+<style>body{font:15px/1.45 system-ui;margin:20px;max-width:1000px}.p{color:#888;font-size:12px}.h{color:#777;font-size:13px;margin-bottom:4px}.u{background:#eef;padding:6px 10px;border-radius:8px;margin:6px 0}
+.r{display:flex;gap:12px}.c{flex:1;border:1px solid #ccc;border-radius:8px;padding:8px 10px;cursor:pointer}.c.sel{border-color:#28a;background:#e8f4ff}.t{margin:6px 0 18px}button{margin-right:6px}button.sel{background:#28a;color:#fff}#done{margin:20px 0}</style>
+<h2>Blind tone picks</h2><p>Each row: the person's message (and the Oracle's previous turn, if any), then two Oracle replies from different models. Pick the one whose <b>delivery</b> fits the moment: witty where wit lands, warm where someone shared something, never flat, never mean. "both bad" is allowed and useful.</p>
+<div id="list"></div><div id="done"><span id="count"></span> &nbsp; <button onclick="exp()">Export picks</button></div>
+<script>
+let picks={}; try{picks=JSON.parse(localStorage.getItem('blind_tone_picks1')||'{}')}catch(e){}
+const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+fetch('blind_tone.json').then(r=>r.json()).then(P=>{const L=document.getElementById('list');
+ P.forEach(p=>{const d=document.createElement('div');const h=p.history&&p.history.length?`<div class="h">earlier — you: ${esc(p.history[0].user)}<br>Oracle: ${esc(p.history[0].oracle)}</div>`:'';
+  d.innerHTML=`<div class="p">${p.n+1}.</div>${h}<div class="u">${esc(p.user)}</div><div class="r"><div class="c" data-n="${p.n}" data-v="A">${esc(p.A)}</div><div class="c" data-n="${p.n}" data-v="B">${esc(p.B)}</div></div><div class="t"><button data-n="${p.n}" data-v="tie">tie</button> <button data-n="${p.n}" data-v="bad">both bad</button></div>`;L.appendChild(d)});
+ L.addEventListener('click',e=>{const t=e.target.closest('[data-n]');if(!t)return;picks[t.dataset.n]=t.dataset.v;try{localStorage.setItem('blind_tone_picks1',JSON.stringify(picks))}catch(x){}paint()});paint();
+ function paint(){document.querySelectorAll('[data-n]').forEach(el=>{const v=picks[el.dataset.n];el.classList.toggle('sel',v===el.dataset.v)});document.getElementById('count').textContent=Object.keys(picks).length+' / '+P.length+' picked'}});
+function exp(){const b=new Blob([JSON.stringify(picks)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='blind_tone_picks1.json';a.click()}
+</script>

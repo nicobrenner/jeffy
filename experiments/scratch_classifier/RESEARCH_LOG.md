@@ -5422,3 +5422,13 @@ v5 scout 13.35 → 13.10, ms4 13.84 → 13.58. A model with induction heads drop
 This is the root cause of every memory result tonight. Launched (local, ~25 min, `induct_run.sh`): stage 1 = 2.7M from
 scratch on 40k random-repeat sequences (`induction_data.py`, unlimited data) 6 epochs; stage 2 = continue on corpus + copy
 curriculum 20 epochs; gates: induction signature after stage 1, copy_probe / recall / identity after stage 2.
+
+## 2026-10-27 02:07 PDT — induction stage 1 (word-piece repeats) learned nothing about repeats; clean single-token stage launched
+induct1 (6 epochs, 140M tokens of repeated random word-piece sequences): loss 1.97 flat from epoch 1 — but the probe shows
+first pass 1.97 vs repeat 1.94 in-distribution: the loss is low because the random *pieces* re-tokenise into predictable
+sub-pieces (copy signal only on ~1 token in 3), and the repeat is not predicted better → no induction circuit formed.
+induct2 (continued on the corpus): copy 0/48, recall 16/80, identity 30/32 — same as everything else. Clean retry
+(`induct_clean.sh`): sequences of SINGLE-token words (every token random → copy signal on every token), 8 epochs, checkpoint
+every 2; `induction_probe2.py` measures the in-distribution signature. If the repeat loss does not fall here, the standard
+2-layer d256 CausalTransformer is not forming induction heads within ~200M tokens — then check architecture details
+(nn.TransformerEncoderLayer post-norm, dropout 0.1) against Olsson et al. before any bigger run.

@@ -5515,3 +5515,15 @@ noise of each other, all well behind pre-LN with the table in this budget. So at
 forms the induction circuit faster than rotary positions here; RoPE's case stays what it was (window extension without a
 table), not faster copying. Decision rule for the next lineage: pick by the real-task gates (copy / recall / identity /
 simuser), not by the toy; RoPE scout at epoch 6/20 (explicit attention is ~2.5× slower per epoch: 118 s vs 46 s).
+
+## 2026-10-27 04:17 PDT — RoPE scout (20 epochs): better LM loss, no copying. Decision: next lineage = pre-LN with the learned table
+v5_rope (2.7M pre-LN RoPE blocks, same mixture, 20 epochs): copy_probe 0/48 · recap recall 18/80 = 22% · identity 31/32,
+human-life 1/96 · val ppl 3.5 (pre-LN+table 3.6; post-LN 3.8) · signature 3.23 → 2.81.
+Same-budget comparison (20 epochs from scratch, same data, same gates):
+  post-LN + table (v5 scout):  copy 0/48   recall 10%   identity 30/32
+  pre-LN  + table (v5_preln):  copy 8/48   recall 35%   identity 32/32   (50 epochs: copy 15/48, recall 36%, identity 30/32)
+  pre-LN  + RoPE  (v5_rope):   copy 0/48   recall 22%   identity 31/32
+Recommendation: the next lineage is pre-LN with the learned 256-position table, trained longer (loss still falling at 50
+epochs); RoPE is parked until a longer window is actually needed (and then budgeted for more tokens, since it forms the copy
+circuit slower here). Launched preln100 (100 epochs ≈ 80 min local, checkpoints every 20) to draw the copying learning curve
+(copy_probe per checkpoint) and the final gates; no rental.

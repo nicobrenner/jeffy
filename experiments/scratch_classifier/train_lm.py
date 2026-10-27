@@ -191,7 +191,8 @@ class ConvDataset(Dataset):
     with the system prompt followed by a later turn boundary (so every window looks like what the demo feeds the model). Padding
     is labelled -100 (ignored by the loss)."""
     ACTS = ["dunno", "me", "wh", "yn", "hi", "tell"]   # id = index + 1; 0 = none
-    def __init__(self, conversations, tokenizer, seq_len, eos_id, sys_end_marker="\n<|user|>", pad_id=0, act_vector=False, act_span=False, ctx_turns=None):
+    def __init__(self, conversations, tokenizer, seq_len, eos_id, sys_end_marker="\n<|user|>", pad_id=0, act_vector=False, act_span=False, ctx_turns=None, oracle_only=False):
+        self.oracle_only = oracle_only   # loss only on Oracle tokens (system prompt + user turns are context) — stops system-prompt recitation
         import re as _re
         ctx_turns = ctx_turns or [set() for _ in conversations]
         self.seq_len, self.pad_id, self.act_vector = seq_len, pad_id, act_vector; self.rows = []
@@ -210,6 +211,9 @@ class ConvDataset(Dataset):
                     m2 = act_re.search(t)
                     if m2: act = self.ACTS.index(m2.group(1)) + 1; t = act_re.sub("<|oracle|> ", t, count=1)
                 ids_t = tokenizer.encode(t); acts_t = [0] * len(ids_t); lab_t = [1] * len(ids_t)
+                if self.oracle_only:
+                    if oracle_id in ids_t: ko = len(ids_t) - 1 - ids_t[::-1].index(oracle_id); lab_t[: ko + 1] = [0] * (ko + 1)   # everything up to and incl. <|oracle|> is context
+                    else: lab_t = [0] * len(ids_t)   # system prompt / user-only chunk
                 if ti in ctxset and oracle_id in ids_t:
                     k0 = len(ids_t) - 1 - ids_t[::-1].index(oracle_id); lab_t[k0 + 1:] = [0] * (len(ids_t) - k0 - 1)   # context-only Oracle turn
                 if act and oracle_id in ids_t:
@@ -425,9 +429,9 @@ def train(args):
                 val_compact = remap_ids(val_token_ids, full_to_compact)
             if args.conv_sequences:
                 assert use_custom, "--conv-sequences needs a custom tokenizer (full vocab, no remap)"
-                train_ds = ConvDataset(conv_texts, tokenizer, args.seq_len, eos_id, act_vector=args.act_vector, act_span=args.act_span, ctx_turns=conv_ctx)
+                train_ds = ConvDataset(conv_texts, tokenizer, args.seq_len, eos_id, act_vector=args.act_vector, act_span=args.act_span, ctx_turns=conv_ctx, oracle_only=args.oracle_only_loss)
                 print(f"  context-only Oracle turns (no loss): {sum(len(c) for c in conv_ctx):,}", flush=True)
-                val_ds = ConvDataset(val_conversations, tokenizer, args.seq_len, eos_id, act_vector=args.act_vector, act_span=args.act_span)
+                val_ds = ConvDataset(val_conversations, tokenizer, args.seq_len, eos_id, act_vector=args.act_vector, act_span=args.act_span, oracle_only=args.oracle_only_loss)
                 print(f"  conv-sequences: {len(train_ds):,} train windows, {len(val_ds):,} val windows (loss masked on padding)", flush=True)
             else:
                 train_ds = TextChunkDataset(compact_tokens, args.seq_len)
@@ -815,6 +819,7 @@ def main():
     parser.add_argument("--act-span", action="store_true", help="with --act-vector: the act vector is added at every token of the reply, not only at <|oracle|>")
     parser.add_argument("--keep-every", type=int, default=0,
                         help="also keep a weights-only checkpoint every N epochs (checkpoints/ep_<tag>_<epoch>.pt) so a run can be rewound to a data boundary")
+    parser.add_argument("--oracle-only-loss", action="store_true", help="with --conv-sequences: loss only on Oracle tokens (system prompt and user turns are context)")
     parser.add_argument("--conv-sequences", action="store_true",
                         help="chat data: one sequence per conversation (system prompt kept, windows start at turn boundaries, padded, "
                              "loss masked on padding) instead of packing all conversations into a stream and cutting fixed chunks")

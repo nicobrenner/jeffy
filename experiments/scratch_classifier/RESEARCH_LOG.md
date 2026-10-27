@@ -5016,3 +5016,10 @@ So priming/T0.3 help the name turn and more than double the later-turn drift int
 failure Nico sees in the demo. Best-of-4 barely helps (22); the controller with the admit act does (9). Ablation (prime-only / T0.3-only)
 running; reactive-user turns 1 written through the full harness for conv8 and ct2 → turns 2–3 by simulated user → on-thread grader pass.
 Rule from here: every reported number carries its harness config; the default reported config is the demo's.
+
+## 2026-10-26 18:11 PDT — Harness ablation: temperature is the bigger cost, priming adds to it (conv8, identity probe, drift /96)
+
+neither 11 · prime only (T0.5) 16 · T0.3 only (no prime) 21 · both (demo default) 25. The demo's T0.3 default came from a single-turn opener pass
+(persona2 @T0.3 vs @T0.5: 23/40/17) — right for turn 1, wrong for turns 3+ where mode-seeking locks onto "I'm just hanging out". Testing a
+per-turn schedule in the harness (`sched`: T0.3 on the opener, T0.5 once there is history). Conv8 under the full harness still fails
+push-back (brothers named Sarah and Michael; plant → fishing); ct2 full-harness transcripts pending → on-thread grader pass for both.

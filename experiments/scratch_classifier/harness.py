@@ -15,7 +15,8 @@ PRIME = [("Hey, what are you?", "I'm Tiny Oracle. 2 million parameters of questi
          ("That's not much", "I know. And yet here I am, boiling with opinions.")]
 SAMPLERS = {"recipe03": dict(temperature=0.3, top_k=40, rep_penalty=1.3, no_repeat_ngram=3),
             "recipe": dict(temperature=0.5, top_k=40, rep_penalty=1.3, no_repeat_ngram=3),
-            "old": dict(temperature=0.8, top_k=40, rep_penalty=1.0, no_repeat_ngram=0)}
+            "old": dict(temperature=0.8, top_k=40, rep_penalty=1.0, no_repeat_ngram=0),
+            "sched": dict(temperature=0.3, top_k=40, rep_penalty=1.3, no_repeat_ngram=3, later_temperature=0.5)}   # T0.3 on the opener, T0.5 once there is history
 MAX_CONTEXT = 256
 ACTS = ConvDataset.ACTS
 DUNNO = re.compile(r"\b(i (don'?t|do not) know|no idea|no clue|not sure (what|how|if|about|i)|i have no|can'?t help|beyond me|not in my training|never heard of|i made that up|i invented|came from nowhere|not (a|an) \w+ expert|outside my weights|not my department)\b", re.I)
@@ -75,7 +76,8 @@ def verifier_score(m, tok, V, prompt, resp):
     return float(V["clf_both"].predict_proba(X)[:, 1][0])
 
 def respond(m, tok, history, user, cfg=None):
-    c = {**DEFAULT, **(cfg or {})}; S = SAMPLERS[c["sampler"]]
+    c = {**DEFAULT, **(cfg or {})}; S = dict(SAMPLERS[c["sampler"]])
+    if history and "later_temperature" in S: S["temperature"] = S["later_temperature"]
     ctx = build_context(history, user, c["prime"], c["memory"]); prime_len = len(tok.encode(build_context([], "", c["prime"], c["memory"]))) - 3
     info = {"n": c["best_of"], "forced": False, "fallback": False, "score": None}
     if c["best_of"] <= 1 or not c["verifier"]:

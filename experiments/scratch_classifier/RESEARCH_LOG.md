@@ -5405,3 +5405,13 @@ then copy_probe / recall / identity. Gate: copy_probe > 0 on names → the next 
 (and RoPE at 512, a 1–2 h local run); copy_probe = 0 → depth/data question, report to Nico before anything bigger.
 Demo note: ct2 cannot read the memory line; `remember()` costs context tokens for nothing on this lineage (room remarks are
 harness-seeded and still work). Leave it in for models that can read it; do not expect it to change ct2's replies.
+
+## 2026-10-27 01:34 PDT — v5 scout (from scratch + copy curriculum, 20 epochs): still 0/48; not even in-template copying
+2.7M v3c recipe from scratch on corpus + agent recap rows + 20k random-value copy rows, 20 epochs (15 min), val ppl 3.8,
+identity 30/32. copy_probe 0/16 ×3; real held-out recall 8/80 (noise floor). In-template greedy check (the exact synthetic
+template it trained on, "Last time you said to call you X" → "who am i again?"): pseudo-words 0/24, real names 0/12, at epoch
+10 and 20; ms4 likewise 0/24, 0/12. So ~175M training tokens with 20k explicit copy examples did not produce induction circuits
+at 2 layers / d256 — the models cannot copy any span from context, in or out of distribution. Next: induction-signature probe
+(random sequence repeated twice; loss on the repeat) on v2 / ct2 / scout / ms4 to confirm absence; then the decision is
+Nico's: (a) an induction pre-pretraining stage on synthetic repeat sequences (cheap, unlimited data, local) before the corpus,
+(b) deeper lineage, (c) park memory and continue on tone/engagement.

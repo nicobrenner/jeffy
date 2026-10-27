@@ -294,7 +294,7 @@
 
   // Model registry. format 'tags' = <|system|>/<|user|>/<|oracle|> (v2 tokenizer); 'plain' = System:/User:/Oracle: (TinyStories tokenizer)
   const MODELS = {
-    v5b_int8: { label: 'Oct 27 09:20 · candidate v5b · 2.7M pre-LN from scratch · reads a recap line (first model that can) · identity 32/32', file: 'oracle_v5b_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 3.8 MB int8' },
+    v5b_int8: { label: '☆ TEST THIS · candidate v5b · Oct 27 09:20 · 2.7M pre-LN from scratch · reads a recap line (first model that can) · identity 32/32', file: 'oracle_v5b_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 3.8 MB int8' },
     v2_grown_ct2_int8: { label: '★ Nico\'s pick · Oct 26 18:17 · grown 8.5M · admit act (plan token, picks its own act)', file: 'oracle_v2_grown_ct2_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB', old: false },
     v3c_scratch_int8: { label: 'v3c: from scratch on the bible corpus (pets, family, age from the bible; stock openers stripped) (2.7M, int8)', file: 'oracle_v3c_scratch_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 4 MB int8', size: '4 MB' },
     v3b_scratch_int8: { label: 'v3b: same as v3 but names re-anonymised (copy-from-context) + self-address fix (2.7M, int8)', file: 'oracle_v3b_scratch_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 4 MB int8', size: '4 MB' },

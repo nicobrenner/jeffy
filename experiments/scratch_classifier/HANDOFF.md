@@ -2,7 +2,7 @@
 
 Purpose: let a fresh Claude Code session pick up this research program with as little loss as possible. Keep it short;
 the durable record is `RESEARCH_LOG.md` (lab notebook, append-only, every result the turn it lands). Update this file at
-the end of every working block (not just at the end of a session). Last update: **2026-10-27, 09:22 PDT**.
+the end of every working block (not just at the end of a session). Last update: **2026-10-27, 13:15 PDT**.
 
 ## How to resume (5 minutes)
 1. Read this file, then the last ~400 lines of `RESEARCH_LOG.md` (`tail -400 RESEARCH_LOG.md`).
@@ -30,8 +30,8 @@ the end of every working block (not just at the end of a session). Last update: 
 6. Still open from earlier: crawler/room verdicts (v5 look, pick-up, Oracle remarks), teach-mode corrections export,
    README/benchmark correction, posts, ct3-vs-ct2 with prime-first.
 
-## Running right now (2026-10-27, 09:22 PDT)
-- **MPS: `v5c_run.sh`** (v5b recipe with synthetic share 8%; cuts template leakage) → gates + export, `logs/v5c_run.log` (V5C_DONE). Nothing on GPU. Demo on 8765 has `v5b` as a labelled candidate; default still ct2.
+## Running right now (2026-10-27, 13:15 PDT)
+- **Nothing running** (MPS idle, no GPU). v5c done (identity 31/32, drift 5/96, recall 26/80; not better than v5b; leakage = recap-reply template shape, not dose). Paused until Nico's picks on `blind_v5b.html` / `blind_tone.html` or his chat verdict on v5b. Demo on 8765 has `v5b` as a labelled candidate; default still ct2.
 - **Models that matter:** `best_lm_oracle_v2_grown_ct2.pt` = Nico's pick (demo default; cannot copy from context); `best_lm_oracle_v5b.pt` = first
   model passing identity that reads recaps (demo candidate, `oracle_v5b_int8.onnx`); `ct3` = grader's pick. Trainer flags that matter: `--pre-ln`, `--oracle-only-loss`.
 

@@ -69,6 +69,38 @@ CHAT_SAMPLE_PROMPTS = [
 ]
 
 
+class RoPEBlock(nn.Module):
+    """Pre-LN transformer block with rotary position embeddings on q/k (RoFormer, arXiv 2104.09864). Explicit attention
+    (matmul + causal mask) so ONNX export stays simple. Used when --rope: no learned position table, relative positions
+    for free (the previous-token head that induction needs is one fixed rotation instead of 256 learned offsets)."""
+    def __init__(self, d_model, n_heads, d_ff, dropout, max_seq_len):
+        super().__init__()
+        self.h = n_heads; self.dk = d_model // n_heads
+        self.ln1 = nn.LayerNorm(d_model); self.ln2 = nn.LayerNorm(d_model)
+        self.qkv = nn.Linear(d_model, 3 * d_model); self.proj = nn.Linear(d_model, d_model)
+        self.ff = nn.Sequential(nn.Linear(d_model, d_ff), nn.GELU(), nn.Dropout(dropout), nn.Linear(d_ff, d_model))
+        self.drop = nn.Dropout(dropout)
+        inv = 1.0 / (10000 ** (torch.arange(0, self.dk, 2).float() / self.dk)); t = torch.arange(max_seq_len).float()
+        f = torch.outer(t, inv); self.register_buffer("cos", torch.cat([f, f], -1).cos()[None, None], persistent=False); self.register_buffer("sin", torch.cat([f, f], -1).sin()[None, None], persistent=False)
+    def rot(self, x, T):
+        c, s_ = self.cos[:, :, :T], self.sin[:, :, :T]; x1, x2 = x[..., : self.dk // 2], x[..., self.dk // 2 :]
+        return x * c + torch.cat([-x2, x1], -1) * s_
+    def forward(self, x, mask=None):
+        B, T, D = x.shape; h = self.ln1(x); q, k, v = self.qkv(h).view(B, T, 3, self.h, self.dk).permute(2, 0, 3, 1, 4)
+        q, k = self.rot(q, T), self.rot(k, T)
+        att = (q @ k.transpose(-2, -1)) / math.sqrt(self.dk)
+        if mask is not None: att = att + mask
+        att = self.drop(torch.softmax(att, -1)); y = (att @ v).transpose(1, 2).reshape(B, T, D)
+        x = x + self.drop(self.proj(y)); return x + self.drop(self.ff(self.ln2(x)))
+
+
+class RoPEStack(nn.Module):
+    def __init__(self, layers): super().__init__(); self.layers = nn.ModuleList(layers)
+    def forward(self, x, mask=None):
+        for l in self.layers: x = l(x, mask=mask)
+        return x
+
+
 class CausalTransformer(nn.Module):
     """Transformer LM with causal attention, depth recurrence, and weight tying.
 
@@ -78,9 +110,9 @@ class CausalTransformer(nn.Module):
 
     def __init__(self, vocab_size, d_model=256, n_heads=8, n_layers=4,
                  d_ff=1024, max_seq_len=256, dropout=0.1,
-                 tie_weights=True, n_iterations=1, n_acts=0, pre_ln=False):
+                 tie_weights=True, n_iterations=1, n_acts=0, pre_ln=False, rope=False):
         super().__init__()
-        self.pre_ln = pre_ln
+        self.pre_ln = pre_ln; self.rope = rope
         self.d_model = d_model
         self.n_acts = n_acts
         self.act_emb = nn.Embedding(n_acts + 1, d_model, padding_idx=0) if n_acts else None   # act 0 = none (zero vector)
@@ -89,14 +121,14 @@ class CausalTransformer(nn.Module):
         self.n_iterations = n_iterations
 
         self.token_emb = nn.Embedding(vocab_size, d_model)
-        self.pos_emb = nn.Embedding(max_seq_len, d_model)
+        self.pos_emb = None if rope else nn.Embedding(max_seq_len, d_model)   # RoPE: no position table
         self.emb_dropout = nn.Dropout(dropout)
 
         encoder_layer = nn.TransformerEncoderLayer(
             d_model=d_model, nhead=n_heads, dim_feedforward=d_ff,
             dropout=dropout, batch_first=True, activation="gelu", norm_first=pre_ln,   # pre-LN: induction heads form at d256 (2026-10-27 unit tests)
         )
-        self.transformer = nn.TransformerEncoder(encoder_layer, num_layers=n_layers)
+        self.transformer = RoPEStack([RoPEBlock(d_model, n_heads, d_ff, dropout, max_seq_len) for _ in range(n_layers)]) if rope else nn.TransformerEncoder(encoder_layer, num_layers=n_layers)
         self.norm = nn.LayerNorm(d_model)
         self.lm_head = nn.Linear(d_model, vocab_size, bias=False)
 
@@ -107,13 +139,13 @@ class CausalTransformer(nn.Module):
 
     def _init_weights(self):
         nn.init.normal_(self.token_emb.weight, std=0.02)
-        nn.init.normal_(self.pos_emb.weight, std=0.02)
+        if self.pos_emb is not None: nn.init.normal_(self.pos_emb.weight, std=0.02)
 
     def forward(self, input_ids, acts=None):
         seq_len = input_ids.size(1)
         positions = torch.arange(seq_len, device=input_ids.device).unsqueeze(0)
 
-        x = self.token_emb(input_ids) + self.pos_emb(positions)
+        x = self.token_emb(input_ids) + (self.pos_emb(positions) if self.pos_emb is not None else 0)
         a = self.act_emb(acts) if (acts is not None and self.act_emb is not None) else None
         if a is not None: x = x + a
         x = self.emb_dropout(x)
@@ -426,12 +458,12 @@ def train(args):
         max_seq_len=args.seq_len,
         dropout=args.dropout,
         tie_weights=args.tie_weights,
-        n_iterations=args.n_iterations, pre_ln=args.pre_ln,
+        n_iterations=args.n_iterations, pre_ln=args.pre_ln, rope=args.rope,
         n_acts=len(ConvDataset.ACTS) if args.act_vector else 0,
     ).to(device)
 
     n_params = sum(p.numel() for p in model.parameters())
-    emb_params = model.token_emb.weight.numel() + model.pos_emb.weight.numel()
+    emb_params = model.token_emb.weight.numel() + (model.pos_emb.weight.numel() if model.pos_emb is not None else 0)
     tfm_params = sum(p.numel() for p in model.transformer.parameters())
 
     flags = []
@@ -593,7 +625,7 @@ def train(args):
                             "d_ff": args.d_ff,
                             "max_seq_len": args.seq_len,
                             "tie_weights": args.tie_weights,
-                            "n_iterations": args.n_iterations, "pre_ln": args.pre_ln,
+                            "n_iterations": args.n_iterations, "pre_ln": args.pre_ln, "rope": args.rope,
                         },
                         "full_to_compact": full_to_compact,
                         "compact_to_full": compact_to_full,
@@ -658,7 +690,7 @@ def train(args):
                         "d_ff": args.d_ff,
                         "max_seq_len": args.seq_len,
                         "tie_weights": args.tie_weights,
-                        "n_iterations": args.n_iterations, "pre_ln": args.pre_ln,
+                        "n_iterations": args.n_iterations, "pre_ln": args.pre_ln, "rope": args.rope,
                     },
                     "full_to_compact": full_to_compact,
                     "compact_to_full": compact_to_full,
@@ -684,7 +716,7 @@ def train(args):
                     "d_ff": args.d_ff,
                     "max_seq_len": args.seq_len,
                     "tie_weights": args.tie_weights,
-                    "n_iterations": args.n_iterations, "pre_ln": args.pre_ln,
+                    "n_iterations": args.n_iterations, "pre_ln": args.pre_ln, "rope": args.rope,
                 },
                 "full_to_compact": full_to_compact,
                 "compact_to_full": compact_to_full,
@@ -698,7 +730,7 @@ def train(args):
 
         if args.keep_every and (epoch + 1) % args.keep_every == 0:
             torch.save({"model_state": model.state_dict(), "config": {"vocab_size": vocab_size, "d_model": args.d_model, "n_heads": args.n_heads,
-                        "n_layers": args.n_layers, "d_ff": args.d_ff, "max_seq_len": args.seq_len, "pre_ln": args.pre_ln, "tie_weights": args.tie_weights, "n_iterations": args.n_iterations},
+                        "n_layers": args.n_layers, "d_ff": args.d_ff, "max_seq_len": args.seq_len, "pre_ln": args.pre_ln, "rope": args.rope, "tie_weights": args.tie_weights, "n_iterations": args.n_iterations},
                         "full_to_compact": full_to_compact, "compact_to_full": compact_to_full, "tokenizer_path": args.tokenizer, "epoch": epoch,
                         "val_loss": val_loss, "data": args.chat_data, "data_sha": data_sha, "conv_sequences": args.conv_sequences},
                        out_dir / f"ep_{args.tag}_{epoch + 1}.pt")
@@ -786,6 +818,7 @@ def main():
     parser.add_argument("--conv-sequences", action="store_true",
                         help="chat data: one sequence per conversation (system prompt kept, windows start at turn boundaries, padded, "
                              "loss masked on padding) instead of packing all conversations into a stream and cutting fixed chunks")
+    parser.add_argument("--rope", action="store_true", help="rotary position embeddings (pre-LN RoPE blocks, no position table)")
     parser.add_argument("--pre-ln", action="store_true", help="pre-LayerNorm transformer layers (norm_first); default post-LN as before")
     parser.add_argument("--warmup-steps", type=int, default=0,
                         help="linear LR warmup over this many optimizer steps before the cosine decay (default 0 = none)")

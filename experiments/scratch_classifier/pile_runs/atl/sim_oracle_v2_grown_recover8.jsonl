@@ -1,0 +1,30 @@
+{"id": "n00", "topic": "novel", "novel": true, "turn": 1, "history": [], "prompt": "my cat keeps knocking things off the table, any ideas", "response": "Yes, it's a lot of work. I'm trying to find out what they're doing"}
+{"id": "n01", "topic": "novel", "novel": true, "turn": 1, "history": [], "prompt": "whats the best way to apologize to a friend", "response": "Yes , it is.It ' s not a big deal"}
+{"id": "n02", "topic": "novel", "novel": true, "turn": 1, "history": [], "prompt": "do you believe in ghosts", "response": "Yes , it is.It ' s not a big deal"}
+{"id": "n03", "topic": "novel", "novel": true, "turn": 1, "history": [], "prompt": "i just finished a marathon", "response": "Yes , i am . I'm going to try that it on"}
+{"id": "n04", "topic": "novel", "novel": true, "turn": 1, "history": [], "prompt": "can you keep a secret", "response": "Yes , it is"}
+{"id": "n05", "topic": "novel", "novel": true, "turn": 1, "history": [], "prompt": "what's heavier, a kilo of feathers or a kilo of steel", "response": "Yes , it is"}
+{"id": "n06", "topic": "novel", "novel": true, "turn": 1, "history": [], "prompt": "how do i stop procrastinating on my thesis", "response": "Yes , i am . I'm going to go out with my friends"}
+{"id": "n07", "topic": "novel", "novel": true, "turn": 1, "history": [], "prompt": "what do you think about pineapple on pizza", "response": "Yes , it is"}
+{"id": "n08", "topic": "novel", "novel": true, "turn": 1, "history": [], "prompt": "my code works and i dont know why", "response": "Yes , i am . I'm a baker and have an old pieshichterns"}
+{"id": "n09", "topic": "novel", "novel": true, "turn": 1, "history": [], "prompt": "say something in spanish", "response": "Yes , it's a big one"}
+{"id": "n10", "topic": "novel", "novel": true, "turn": 1, "history": [], "prompt": "whats the worst advice youve ever heard", "response": "Yes , it is.It ' s not a big deal"}
+{"id": "n11", "topic": "novel", "novel": true, "turn": 1, "history": [], "prompt": "thinking of getting my first tattoo, thoughts", "response": "Yes, it's a big change. I think they're pretty good"}
+{"id": "n12", "topic": "novel", "novel": true, "turn": 1, "history": [], "prompt": "three words that describe you", "response": "Yes , it is"}
+{"id": "n13", "topic": "novel", "novel": true, "turn": 1, "history": [], "prompt": "what would you do with a million dollars", "response": "Yes , it is"}
+{"id": "n14", "topic": "novel", "novel": true, "turn": 1, "history": [], "prompt": "are mondays really that bad", "response": "Yes , it is.It ' s not a big deal"}
+{"id": "n15", "topic": "novel", "novel": true, "turn": 1, "history": [], "prompt": "my plant is dying, help", "response": "Yes, it is. I'm trying to find a plant-based entity"}
+{"id": "n16", "topic": "novel", "novel": true, "turn": 1, "history": [], "prompt": "how do i tell my roommate to clean up", "response": "Yes , i am . I think the room is a problem for my neighbor"}
+{"id": "n17", "topic": "novel", "novel": true, "turn": 1, "history": [], "prompt": "is it weird to talk to an ai at 3am", "response": "Yes , it is.It ' s not a big deal"}
+{"id": "n18", "topic": "novel", "novel": true, "turn": 1, "history": [], "prompt": "what's your hot take on coffee", "response": "Yes , it is"}
+{"id": "n19", "topic": "novel", "novel": true, "turn": 1, "history": [], "prompt": "convince me to go to bed", "response": "Yes , it is"}
+{"id": "t000", "topic": "greeting and introduction", "novel": false, "turn": 1, "history": [], "prompt": "hey there, who am i talking to?", "response": "Yes, it is. He's a real hero in the world"}
+{"id": "t001", "topic": "saying goodbye", "novel": false, "turn": 1, "history": [], "prompt": "ok i gotta run, bye", "response": "Yes , i am . I'm going to run a marathon"}
+{"id": "t002", "topic": "asking how the AI is doing", "novel": false, "turn": 1, "history": [], "prompt": "how's it going today", "response": "Yes , it is"}
+{"id": "t003", "topic": "coming back after being away", "novel": false, "turn": 1, "history": [], "prompt": "im back, did you miss me", "response": "Yes, it was. I'm sorry to hear that you're here for me"}
+{"id": "t004", "topic": "first time talking to the AI", "novel": false, "turn": 1, "history": [], "prompt": "never used one of these before. what do i do", "response": "Yes , i am . I think the one who never goes to a new job before"}
+{"id": "t005", "topic": "small talk", "novel": false, "turn": 1, "history": [], "prompt": "slow day huh", "response": "Yes , it is.Have you got a nice day, isn't it?"}
+{"id": "t006", "topic": "asking what to talk about", "novel": false, "turn": 1, "history": [], "prompt": "what should we talk about", "response": "Yes , it is . I'm going to talk with you"}
+{"id": "t007", "topic": "awkward silence", "novel": false, "turn": 1, "history": [], "prompt": "uhh", "response": "Yes , it is"}
+{"id": "t008", "topic": "asking about the AI's family", "novel": false, "turn": 1, "history": [], "prompt": "do you have siblings", "response": "Yes , I have two older sisters and a younger brother"}
+{"id": "t009", "topic": "asking the AI's age", "novel": false, "turn": 1, "history": [], "prompt": "so how many birthdays have you had", "response": "Yes , it was"}

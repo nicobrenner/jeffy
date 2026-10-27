@@ -5057,3 +5057,9 @@ research thread toward non-text signals (emotion/memory) feeding the model conti
 v3b trades a little name reliability for less drift). Reactive-user turns 2–3 generating → conversation pass vs v3. Demo entry `v3b_scratch_int8`.
 Hugging Face backup (`push_artifacts.py models`, private repo nicobrenner/jeffy-byte-priors, immutable commits) extended to today's checkpoints,
 boundary checkpoints, growth inits, verifiers and demo int8 ONNX (~1 GB) and started; nothing public, nothing changed locally.
+
+## 2026-10-26 19:12 PDT — Recovery run (`oracle_v2_grown_recover8`: grown base, 8 ep per-conversation, fixed corpus + 120 push-back recoveries ×12)
+
+val 1.6741 (corpus differs from conv8's). Identity probe (bare, broad regex): name **31/32**, human-life **9/96** (conv8: 27/32, 11/96) — the
+recoveries do not hurt identity. The test that matters: reactive-user turns 2–3 (generating) → on-thread grader pass vs conv8 (bare settings,
+same as the earlier pass: on-thread ≥2 13%, ignores-pushback 38%). Demo entry `v2_grown_recover8_int8`.

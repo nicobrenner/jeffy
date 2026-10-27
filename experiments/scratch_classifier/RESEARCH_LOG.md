@@ -5500,3 +5500,10 @@ forms under pre-LN and strengthens with tokens, but learned ABSOLUTE positions m
 learned per position pair; 256 positions × offsets), which is exactly what relative/rotary positions give for free → RoPE
 is the next lever for copying, not just for longer context. Implementing `--rope` (custom pre-LN block, RoPE on q/k) and
 re-running the fair unit test + a 20-epoch scout, same gates.
+
+## 2026-10-27 03:56 PDT — RoPE unit test at d256: induction forms, but slower than pre-LN in 2k steps
+`induct_unit6.py` (custom pre-LN RoPE block, lr 3e-4, fair task): repeats 8.35 → 7.35 (500) → 6.84 → 6.04 → 5.15 (2000);
+pre-LN with the learned position table reached 0.16 in the same budget. So RoPE did not speed induction up at this width in
+this test (the hypothesis that the previous-token head is "free" under RoPE is not borne out at 2k steps; possible causes:
+the custom block's default Linear init and attention-weight dropout differ from nn.TransformerEncoderLayer). RoPE scout
+(20 epochs, same mixture) running: epoch-1 val 1.83 vs pre-LN 1.93 (better LM loss). Gates unchanged.

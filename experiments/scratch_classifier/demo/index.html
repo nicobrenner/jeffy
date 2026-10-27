@@ -568,21 +568,18 @@
     }
     function draw() { body.setAttribute('transform', `translate(${bx},${by}) rotate(${heading * 180 / Math.PI})`); LEGS.forEach((L, i) => drawLeg(i, L)); tag.style.left = (bx + 14) + 'px'; tag.style.top = (by - 14) + 'px'; }
     function settleFeet() { LEGS.forEach(L => { L.foot = restFoot(L); L.swing = null; L.hold = null; }); }
-    function landed(L) {   // a foot landed: leave a faint trace of the leg (the web the video's crawler leaves behind)
-      const [ax, ay] = attach(L); const l = document.createElementNS(NS, 'line'); l.setAttribute('x1', ax); l.setAttribute('y1', ay); l.setAttribute('x2', L.foot[0]); l.setAttribute('y2', L.foot[1]); trail.appendChild(l);
-      while (trail.childNodes.length > 90) trail.removeChild(trail.firstChild);
-    }
+    function landed(L) { }   // (v5 left faint traces of past leg positions; Nico: a weird artifact — removed)
     function swingTo(L, to, now) { L.swing = { t0: now || performance.now(), from: L.foot, to, lift: 0 }; }
     function tick(now) {   // advance swings
-      LEGS.forEach(L => { if (!L.swing) return; const u = Math.min(1, (now - L.swing.t0) / 300); const e = u * u * (3 - 2 * u); L.foot = [L.swing.from[0] + (L.swing.to[0] - L.swing.from[0]) * e, L.swing.from[1] + (L.swing.to[1] - L.swing.from[1]) * e]; L.swing.lift = Math.sin(u * Math.PI); if (u >= 1) { L.swing = null; landed(L); } });
+      LEGS.forEach(L => { if (!L.swing) return; const u = Math.min(1, (now - L.swing.t0) / 200); const e = u * u * (3 - 2 * u); L.foot = [L.swing.from[0] + (L.swing.to[0] - L.swing.from[0]) * e, L.swing.from[1] + (L.swing.to[1] - L.swing.from[1]) * e]; L.swing.lift = Math.sin(u * Math.PI); if (u >= 1) { L.swing = null; landed(L); } });
     }
     function stepLegs(now, moving) {   // strider gait: a leg whose foot lags its rest spot lifts and reaches ahead; at most two in the air, never two neighbours on one side
       tick(now); const inAir = LEGS.filter(L => L.swing).length;
       LEGS.forEach((L, i) => {
-        if (L.swing || !moving || inAir >= 2 || L.hold) return;
+        if (L.swing || !moving || inAir >= 3 || L.hold) return;   // tripod gait: up to three legs in the air, never two neighbours on one side
         const [rx, ry] = restFoot(L); const lag = Math.hypot(rx - L.foot[0], ry - L.foot[1]);
         const nb = LEGS[i + (L.side === -1 ? (i === 0 ? 1 : -1) : (i === 3 ? 1 : -1))]; if (nb && nb.swing) return;
-        if (lag > 60) { const [hx, hy] = rot(0, -40, heading); const to = snapToStone(rx + hx, ry + hy); if (Math.hypot(to[0] - rx, to[1] - ry) < lag - 10) swingTo(L, to, now); else swingTo(L, [rx + hx * .5, ry + hy * .5], now); }   // only step if it gets closer to the rest spot (no endless re-stepping)
+        if (lag > 40) { const [hx, hy] = rot(0, -60, heading); const to = snapToStone(rx + hx, ry + hy); if (Math.hypot(to[0] - rx, to[1] - ry) < lag - 10) swingTo(L, to, now); else swingTo(L, [rx + hx * .5, ry + hy * .5], now); }   // only step if it gets closer to the rest spot (no endless re-stepping)
       });
     }
     function animateIdle(ms) {   // legs settle while the body stays put (used while scanning)
@@ -632,7 +629,7 @@
       const all = wordBoxes(); if (!all.length) { busy = false; return; } stones = all; clearTrail();
       const last = all[all.length - 1];
       bx = -80; by = Math.max(all[0].top, last.top - 120) + 40; heading = Math.PI / 2; settleFeet(); draw(); show(true); tStart = performance.now(); wordsSeen = 0; updateStatus(all.length);
-      await walkTo(Math.min(220, chatEl.clientWidth / 2.5), Math.max(all[0].top, last.top - 80) + 30, 60 + visits * 10);   // comes in, looks around
+      await walkTo(Math.min(220, chatEl.clientWidth / 2.5), Math.max(all[0].top, last.top - 80) + 30, 150 + visits * 10);   // comes in, looks around
       const nearby = all.filter(w => Math.hypot(w.left + w.w / 2 - bx, w.top + w.h / 2 - by) < L1 + L2 + 60);
       const pool = (nearby.length >= 6 ? nearby : all).slice().sort(() => Math.random() - 0.5);
       const seen = pool.slice(0, Math.min(14, pool.length));
@@ -646,23 +643,23 @@
       await animateIdle(500);
       clearScans(); clearNet(); mark(w, 'lock'); netLine(w, 'lock'); logEvent('crawler_lock', { word: w.word, label: w.label, score: w.score });
       await animateIdle(900);
-      await walkTo(w.left + w.w / 2, w.top + w.h + 26, 90 + visits * 10);   // goes to get it; feet land on the words along the way
+      await walkTo(w.left + w.w / 2, w.top + w.h + 26, 160 + visits * 10);   // goes to get it; feet land on the words along the way
       clearScans(); clearNet(); keep(w); keywords.push(w.word); updateStatus(all.length);
       label.textContent = `CRAWLER/01  ${w.label} · ${w.word.toUpperCase()}`; label.style.left = w.left + 'px'; label.style.top = w.top - 22 + 'px'; label.classList.add('on');
       logEvent('crawler', { word: w.word, label: w.label, visit: visits }); remember('Your pet crawler just fetched the word ' + JSON.stringify(w.word) + ' from the chat.');
       await animateIdle(1500);
       label.classList.remove('on'); bag.push(w.word);
-      await walkTo(chatEl.clientWidth + 120, by - 20 + Math.random() * 40, 110 + visits * 10); show(false); busy = false;
+      await walkTo(chatEl.clientWidth + 120, by - 20 + Math.random() * 40, 190 + visits * 10); show(false); busy = false;
       setTimeout(returnWithDrop, 9000 + Math.random() * 12000);
     }
     async function returnWithDrop() {
       if (!crawlerCheck.checked || !bag.length) return; if (busy) { setTimeout(returnWithDrop, 4000); return; } busy = true; mount(); stones = wordBoxes();
       const last = chatEl.querySelector('.msg:last-of-type'); const ty = last ? last.offsetTop + last.offsetHeight + 30 : chatEl.scrollHeight - 40;
-      bx = chatEl.clientWidth + 120; by = ty; heading = -Math.PI / 2; settleFeet(); draw(); show(true); updateStatus(stones.length); await walkTo(120, ty, 100);
+      bx = chatEl.clientWidth + 120; by = ty; heading = -Math.PI / 2; settleFeet(); draw(); show(true); updateStatus(stones.length); await walkTo(120, ty, 170);
       const words = bag.splice(0, bag.length); const notes = [`found this: ${words.join(', ')}. no idea what it means`, `brought back: ${words.join(', ')}. you said these. I kept them`, `${words.join(' / ')} — filed under things humans say`];
       const d = document.createElement('div'); d.className = 'cr-drop'; d.textContent = 'crawler: ' + notes[Math.floor(Math.random() * notes.length)]; chatEl.appendChild(d); chatEl.scrollTop = chatEl.scrollHeight;
       logEvent('crawler_drop', { words }); remember('Your pet crawler brought back: ' + words.join(', ') + '.');
-      await animateIdle(1000); await walkTo(-120, ty + 10, 120); show(false); busy = false;
+      await animateIdle(1000); await walkTo(-120, ty + 10, 190); show(false); busy = false;
     }
     window.addEventListener('resize', () => { if (status.classList.contains('on')) updateStatus(stones.length); });
     return { on(ev) { if (ev.type === 'oracle' && Math.random() < 0.5) setTimeout(visit, 800 + Math.random() * 1500); if (ev.type === 'reset') { bag = []; keywords = []; extracted = 0; for (const k of keeps.splice(0)) k.remove(); clearTrail(); show(false); } }, now() { if (busy) return; crawlerCheck.checked = true; visit(); } };

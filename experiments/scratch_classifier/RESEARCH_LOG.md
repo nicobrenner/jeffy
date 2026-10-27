@@ -5394,3 +5394,14 @@ have them), and ms3 shows a fine-tune can start to grow them (0 → 10/48). Next
 values are RANDOM pseudo-words sampled from the vocabulary (not lists), so the only way to lower the loss is to copy; score on
 copy_probe + real held-out recall + identity. If that fails: copy curriculum goes into pretraining of the next from-scratch
 lineage (RoPE, 512), a 1–2 h local run.
+
+## 2026-10-27 01:17 PDT — ms4 (random-value copy rows, fine-tune) fails: copying does not grow in a fine-tune of this lineage
+ms4 = ct2 + 4 epochs on corpus + agent recap rows + 20k synthetic rows whose names/pets/cities are random pseudo-words
+(vocabulary pieces; nothing to memorise). copy_probe 0/16 0/16 0/16 (ms3's partial copies were list leakage); real held-out
+recall 11/80 = 14% far / 3/80 near (noise floor ≈10%); identity 23/32. Val ppl 3.3 is the easy synthetic rows, not progress.
+Conclusion: in-context copying (induction) does not emerge from a short fine-tune of the v2 lineage; it has to be present
+from pretraining. Scout launched (local, ~25 min): 2.7M v3c recipe from scratch on the same mixture, 20 epochs, keep-every 5,
+then copy_probe / recall / identity. Gate: copy_probe > 0 on names → the next lineage pretrains with the copy curriculum
+(and RoPE at 512, a 1–2 h local run); copy_probe = 0 → depth/data question, report to Nico before anything bigger.
+Demo note: ct2 cannot read the memory line; `remember()` costs context tokens for nothing on this lineage (room remarks are
+harness-seeded and still work). Leave it in for models that can read it; do not expect it to change ct2's replies.

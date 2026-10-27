@@ -5287,3 +5287,17 @@ never resolved (visit stalled at the lock). Verified headlessly: full visit comp
 Also: a fresh browser (no localStorage) loaded the old 8.5M TinyStories build (`conv_persona2_int8`) — default is now Nico's pick.
 Knobs added for the "less funny, more forceful" feel (ct2 weights unchanged since 18:17; harness changes since: cross-turn
 repetition 18:26, priming off 21:23, prime-first 22:00): priming select off / 1st reply / full, cross-turn checkbox, "crawler now" button.
+
+## 2026-10-27 00:00 PDT — crawler: no page widening, pick-up-and-escape, and the Oracle sees its room
+Nico: "amazing… a tad bit slow… limping/dragging feet in a straight line… leg traces are a weird artifact" → tripod gait (up to
+three legs in the air, lag 40 px, 200 ms swing, 60 px reach), body 150–190 px/s, traces removed. Then: walking off the right edge
+widened the page (the riding tag div extended the chat's scroll width) → chat overflow-x hidden + tag clamped inside.
+New, both from Nico: (1) pick up the strider (pointer on the chip): it wriggles and shakes harder and harder for 1.6–3 s until it
+frees itself (or is let go), then runs to the nearest edge at 480 px/s; the running visit is aborted cleanly (step() throws,
+marks cleared). (2) The Room: the chat is the Oracle's place — on crawler events (fetch p=.6, drop 1, grab 1, escape .7; ≥15 s
+apart, never while generating or while the user is typing) the harness seeds an Oracle turn ("Hey, put my crawler down",
+"Look, Crawley found "park" in here"…) and the model finishes it (plan token *tell kept for plan-token models). The remark is
+a real Oracle turn (context + transcript, editable in teach mode). Headless: no widening over a full visit; grab → crawler_grab,
+crawler_escape, "Careful, it does not like being picked up in the ocean" (seed + the model's continuation); no JS errors.
+Limits: seeds are a bank (harness, not the model); the model has never seen a room event in training — next: event lines in
+the chat_v2 fixer so the model learns to talk about what happens in the room (ties to the memory-line-in-training item).

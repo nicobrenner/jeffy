@@ -137,9 +137,11 @@
   #chat { scroll-behavior: smooth; }
 
   /* ===== visuals engine: the crawler (world-space strider) ===== */
-  #chat { position: relative; }
+  #chat { position: relative; overflow-x: hidden; }   /* the crawler walks off the edge; never widen the page */
   .cr-world .leg .bone { fill: none; stroke: #c4b5ff; stroke-width: .9; stroke-linejoin: round; opacity: .95; }
   .cr-world .leg .foot { fill: #ff4d8d; }
+  .cr-world .chip .hit { fill: transparent; pointer-events: auto; cursor: grab; touch-action: none; }
+  .msg.oracle.world { box-shadow: inset 3px 0 0 #8f7bff; }
   .cr-trail line { stroke: #8f7bff; stroke-width: .7; opacity: .22; }
   .cr-strike { position: absolute; z-index: 6; pointer-events: none; height: 0; border-top: 1.5px solid #ff3b5c; opacity: .9; }
   .cr-keep { position: absolute; z-index: 3; pointer-events: none; background: #2b5cff; opacity: .55; border-radius: 2px; mix-blend-mode: screen; }
@@ -528,6 +530,37 @@
   // river on stones. Words are the stones: a foothold snaps to a nearby word. Legs are two-bone IK (femur + tibia, knee bent outward).
   // Creature interface: on({type}) with oracle/user/idle/reset events.
   const crawlerCheck = document.getElementById('crawlerCheck');
+  // ===================== THE ROOM =====================
+  // The chat is the Oracle's place, not just a transcript: when something happens in it (the crawler fetches a word, brings one back,
+  // gets picked up, escapes) the Oracle may remark on it unprompted. The harness picks a seed line and the model finishes the turn.
+  let planTokens = false;   // set after each reply: did this model open with a plan token (*act)?
+  const World = (() => {
+    const SEEDS = {
+      fetch: w => [`My crawler just took the word "${w}" from the chat`, `Look, Crawley found "${w}" in here`, `It grabbed "${w}", that one is mine now`],
+      drop: ws => [`Crawley is back with ${ws}`, `It brought back ${ws}, I am not sure what to do with that`],
+      grab: () => ['Hey, put my crawler down', 'Careful, it does not like being picked up', 'Let it go, it is wriggling'],
+      escape: () => ['There it goes', 'It got away from you, good', 'Told you, it does not like hands'],
+    };
+    const P = { fetch: 0.6, drop: 1, grab: 1, escape: 0.7 };
+    let last = 0;
+    async function notice(type, arg) {
+      if (!session || generating || !transcript.length || Math.random() > P[type] || Date.now() - last < 15000 || inputEl.value.trim()) return;
+      last = Date.now(); const bank = SEEDS[type](arg); const seed = bank[Math.floor(Math.random() * bank.length)];
+      setBusy(true); statusEl.textContent = 'Oracle noticed something...';
+      const div = addMessage('oracle', seed); div.classList.add('world'); div.title = 'The Oracle noticed something in the room';
+      const fmt = t => model.format === 'plain' ? '\nOracle: ' + t : '\n<|oracle|>' + (planTokens ? ' *tell ' : ' ') + t;
+      try {
+        let shown = seed;
+        const genIds = await generate(conversationIds.concat(tokenizer.encode(fmt(seed))), partial => { const t = seed + partial; if (t !== shown) { shown = t; div.textContent = t.trim() + '\u258D'; chatEl.scrollTop = chatEl.scrollHeight; } });
+        let text = (seed + tokenizer.decode(genIds)).trim(); if (model.format === 'plain') text = text.split('\n')[0]; text = text.replace(/\.\s*$/, '');
+        div.textContent = text; conversationIds.push(...tokenizer.encode(fmt(text))); transcript.push({ role: 'oracle', text }); div.dataset.turn = transcript.length - 1; makeEditable(div);
+        logEvent('oracle_world', { type, len: text.length });
+      } catch (e) { console.error(e); }
+      chatEl.scrollTop = chatEl.scrollHeight; statusEl.textContent = 'Ready'; setBusy(false);
+    }
+    return { notice };
+  })();
+
   const Crawler = (() => {
     // Crawler v5: six-legged strider (Nico: insect, not spider; steps carefully on stones) with the look of the reference video:
     // long thin lavender legs reaching across the text, pink feet, scanned words ringed, rejected words struck through, the kept
@@ -540,12 +573,13 @@
     const net = document.createElementNS(NS, 'g'); net.setAttribute('class', 'cr-net'); svg.appendChild(net);
     const legEls = LEGS.map(() => { const g = document.createElementNS(NS, 'g'); g.setAttribute('class', 'leg'); const f = document.createElementNS(NS, 'polyline'); f.setAttribute('class', 'bone'); const c = document.createElementNS(NS, 'circle'); c.setAttribute('class', 'foot'); c.setAttribute('r', '2.4'); g.append(f, c); svg.appendChild(g); return { g, f, c }; });
     const body = document.createElementNS(NS, 'g'); body.setAttribute('class', 'chip');
-    body.innerHTML = `<rect class="body" x="-8" y="-14" width="16" height="28" rx="1.5"/><rect class="screen" x="-5" y="-11" width="10" height="12" rx=".8"/><rect class="dot" x="-2.5" y="5" width="5" height="5"/><rect class="led" x="-1.2" y="-13" width="2.4" height="1.6"/>`;
+    body.innerHTML = `<circle class="hit" r="20"/><rect class="body" x="-8" y="-14" width="16" height="28" rx="1.5"/><rect class="screen" x="-5" y="-11" width="10" height="12" rx=".8"/><rect class="dot" x="-2.5" y="5" width="5" height="5"/><rect class="led" x="-1.2" y="-13" width="2.4" height="1.6"/>`;
     svg.appendChild(body);
     const label = document.createElement('div'); label.className = 'cr-label';
     const tag = document.createElement('div'); tag.className = 'cr-tag'; tag.innerHTML = 'CRAWLER/01<br><span class="cr-stat">0 w/s</span>';
     const status = document.createElement('div'); status.className = 'cr-status';
     let bx = -80, by = 40, heading = 0, busy = false, bag = [], visits = 0, stones = [], wordsSeen = 0, tStart = 0, extracted = 0, keywords = [], keeps = [];
+    let aborted = false, grabbed = false, released = false, px = 0, py = 0;   // picked up by the user
     function mount() { if (!svg.isConnected) { chatEl.appendChild(svg); chatEl.appendChild(label); chatEl.appendChild(tag); chatEl.parentNode.appendChild(status); } }
     const sleep = ms => new Promise(r => setTimeout(r, ms));
     function rot(x, y, a) { const c = Math.cos(a), s2 = Math.sin(a); return [x * c - y * s2, x * s2 + y * c]; }
@@ -566,7 +600,7 @@
       legEls[i].f.setAttribute('points', `${ax},${ay} ${kx},${ky - lift * 10} ${fx},${fy}`);
       legEls[i].c.setAttribute('cx', fx); legEls[i].c.setAttribute('cy', fy); legEls[i].c.setAttribute('r', (2.4 - lift * 1.4).toFixed(2)); legEls[i].c.style.opacity = (1 - lift * .6).toFixed(2);
     }
-    function draw() { body.setAttribute('transform', `translate(${bx},${by}) rotate(${heading * 180 / Math.PI})`); LEGS.forEach((L, i) => drawLeg(i, L)); tag.style.left = (bx + 14) + 'px'; tag.style.top = (by - 14) + 'px'; }
+    function draw() { body.setAttribute('transform', `translate(${bx},${by}) rotate(${heading * 180 / Math.PI})`); LEGS.forEach((L, i) => drawLeg(i, L)); tag.style.left = Math.max(0, Math.min(bx + 14, chatEl.clientWidth - 96)) + 'px'; tag.style.top = (by - 14) + 'px'; }
     function settleFeet() { LEGS.forEach(L => { L.foot = restFoot(L); L.swing = null; L.hold = null; }); }
     function landed(L) { }   // (v5 left faint traces of past leg positions; Nico: a weird artifact — removed)
     function swingTo(L, to, now) { L.swing = { t0: now || performance.now(), from: L.foot, to, lift: 0 }; }
@@ -583,12 +617,12 @@
       });
     }
     function animateIdle(ms) {   // legs settle while the body stays put (used while scanning)
-      return new Promise(res => { const t0 = performance.now(); const frame = ts => { tick(ts); draw(); if (ts - t0 < ms) requestAnimationFrame(frame); else res(); }; requestAnimationFrame(frame); });
+      return new Promise(res => { const t0 = performance.now(); const frame = ts => { if (aborted) return res(); tick(ts); draw(); if (ts - t0 < ms) requestAnimationFrame(frame); else res(); }; requestAnimationFrame(frame); });
     }
     function walkTo(tx, ty, speed = 70) {   // body creeps toward the target (slow, deliberate); legs step to keep up
       LEGS.forEach(L => { L.hold = null; });
       return new Promise(res => { const x0 = bx, y0 = by, d = Math.hypot(tx - x0, ty - y0), dur = Math.max(400, d / speed * 1000); let t0 = null; heading = Math.atan2(ty - y0, tx - x0) + Math.PI / 2;
-        const frame = ts => { if (!t0) t0 = ts; const u = Math.min(1, (ts - t0) / dur); bx = x0 + (tx - x0) * u; by = y0 + (ty - y0) * u; stepLegs(ts, u < 1); draw(); if (u < 1 || LEGS.some(L => L.swing)) requestAnimationFrame(frame); else res(); };
+        const frame = ts => { if (aborted) return res(); if (!t0) t0 = ts; const u = Math.min(1, (ts - t0) / dur); bx = x0 + (tx - x0) * u; by = y0 + (ty - y0) * u; stepLegs(ts, u < 1); draw(); if (u < 1 || LEGS.some(L => L.swing)) requestAnimationFrame(frame); else res(); };
         requestAnimationFrame(frame); });
     }
     function reachWord(wb) {   // the nearest free leg steps onto the word being scanned (within reach), like the video's legs pinning words
@@ -624,42 +658,68 @@
       status.innerHTML = `CHAT -- TURN ${String(Math.ceil(transcript.length / 2)).padStart(2, '0')}<br>EXTRACTED ${fmtN(extracted)} / ${fmtN(total)}<br>KEYWORDS ${String(keywords.length).padStart(3, '0')}  ${keywords.slice(-3).map(k => k.toUpperCase()).join(' · ')}`;
     }
     function show(on) { svg.style.opacity = on ? 1 : 0; tag.classList.toggle('on', on); status.classList.toggle('on', on); }
+    async function step(p) { await p; if (aborted) throw new Error('grabbed'); }
+    function onAbort(e) { if (e.message !== 'grabbed') console.error(e); clearScans(); clearNet(); label.classList.remove('on'); }
+    // Picked up: the crawler hates it. It wriggles and shakes in the hand until it frees itself (or is let go), then runs off.
+    function toLocal(ev) { const r = chatEl.getBoundingClientRect(); return [ev.clientX - r.left + chatEl.scrollLeft, ev.clientY - r.top + chatEl.scrollTop]; }
+    body.addEventListener('pointerdown', ev => { if (svg.style.opacity === '0' || grabbed) return; ev.preventDefault(); grab(ev); });
+    async function grab(ev) {
+      grabbed = true; aborted = true; busy = true; released = false; [px, py] = toLocal(ev);
+      const move = e => { [px, py] = toLocal(e); }, up = () => { released = true; };
+      window.addEventListener('pointermove', move); window.addEventListener('pointerup', up);
+      logEvent('crawler_grab', { visit: visits }); remember('Someone just picked up your pet crawler by hand. It hates that and is wriggling to get free.'); World.notice('grab');
+      const t0 = performance.now(), dur = 1600 + Math.random() * 1400, h0 = heading;
+      await new Promise(res => { const frame = ts => { const u = Math.min(1, (ts - t0) / dur), g = 0.3 + 0.7 * u;
+        bx = px + Math.sin(ts / 21) * 7 * g; by = py + Math.cos(ts / 29) * 5 * g; heading = h0 + Math.sin(ts / 45) * 0.45 * g;
+        LEGS.forEach((L, i) => { const [rx, ry] = restFoot(L); const k = Math.sin(ts / 38 + i * 1.7); L.foot = [rx + k * 14 * g, ry + Math.cos(ts / 33 + i) * 12 * g]; L.swing = { t0: ts, from: L.foot, to: L.foot, lift: 0.5 + 0.5 * Math.abs(k) }; });
+        draw(); if (u < 1 && !released) requestAnimationFrame(frame); else res(); }; requestAnimationFrame(frame); });
+      window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up);
+      grabbed = false; aborted = false; settleFeet(); draw();
+      const tx = bx < chatEl.clientWidth / 2 ? -140 : chatEl.clientWidth + 140;
+      logEvent('crawler_escape', { freed_itself: !released }); remember('Your pet crawler wriggled free of the hand and ran off. It will be back');
+      await walkTo(tx, by + (Math.random() - 0.5) * 60, 480); show(false); busy = false; World.notice('escape');
+      if (bag.length) setTimeout(returnWithDrop, 12000 + Math.random() * 12000);
+    }
     async function visit() {
       if (busy || !crawlerCheck.checked) return; busy = true; mount(); visits++;
       const all = wordBoxes(); if (!all.length) { busy = false; return; } stones = all; clearTrail();
+      try {
       const last = all[all.length - 1];
       bx = -80; by = Math.max(all[0].top, last.top - 120) + 40; heading = Math.PI / 2; settleFeet(); draw(); show(true); tStart = performance.now(); wordsSeen = 0; updateStatus(all.length);
-      await walkTo(Math.min(220, chatEl.clientWidth / 2.5), Math.max(all[0].top, last.top - 80) + 30, 150 + visits * 10);   // comes in, looks around
+      await step(walkTo(Math.min(220, chatEl.clientWidth / 2.5), Math.max(all[0].top, last.top - 80) + 30, 150 + visits * 10));   // comes in, looks around
       const nearby = all.filter(w => Math.hypot(w.left + w.w / 2 - bx, w.top + w.h / 2 - by) < L1 + L2 + 60);
       const pool = (nearby.length >= 6 ? nearby : all).slice().sort(() => Math.random() - 0.5);
       const seen = pool.slice(0, Math.min(14, pool.length));
       let wait = 420;
       for (let i = 0; i < seen.length; i++) { const wb = seen[i]; mark(wb, 'scan', i); if (!reachWord(wb)) netLine(wb); wordsSeen++; extracted++;
         tag.querySelector('.cr-stat').textContent = `${Math.round(wordsSeen / ((performance.now() - tStart) / 1000) * 10) / 10} w/s`; updateStatus(all.length);
-        await animateIdle(wait); wait = Math.max(70, wait * 0.8); }   // speeds up as it goes, like the video
-      await animateIdle(400);
+        await step(animateIdle(wait)); wait = Math.max(70, wait * 0.8); }   // speeds up as it goes, like the video
+      await step(animateIdle(400));
       const ranked = seen.slice().sort((a, b) => b.score - a.score); const w = ranked[0];
       for (const r of ranked.slice(Math.ceil(ranked.length / 2))) strike(r);   // the bottom half: struck through, not worth carrying
-      await animateIdle(500);
+      await step(animateIdle(500));
       clearScans(); clearNet(); mark(w, 'lock'); netLine(w, 'lock'); logEvent('crawler_lock', { word: w.word, label: w.label, score: w.score });
-      await animateIdle(900);
-      await walkTo(w.left + w.w / 2, w.top + w.h + 26, 160 + visits * 10);   // goes to get it; feet land on the words along the way
+      await step(animateIdle(900));
+      await step(walkTo(w.left + w.w / 2, w.top + w.h + 26, 160 + visits * 10));   // goes to get it; feet land on the words along the way
       clearScans(); clearNet(); keep(w); keywords.push(w.word); updateStatus(all.length);
       label.textContent = `CRAWLER/01  ${w.label} · ${w.word.toUpperCase()}`; label.style.left = w.left + 'px'; label.style.top = w.top - 22 + 'px'; label.classList.add('on');
-      logEvent('crawler', { word: w.word, label: w.label, visit: visits }); remember('Your pet crawler just fetched the word ' + JSON.stringify(w.word) + ' from the chat.');
-      await animateIdle(1500);
+      logEvent('crawler', { word: w.word, label: w.label, visit: visits }); remember('Your pet crawler just fetched the word ' + JSON.stringify(w.word) + ' from the chat.'); World.notice('fetch', w.word);
+      await step(animateIdle(1500));
       label.classList.remove('on'); bag.push(w.word);
-      await walkTo(chatEl.clientWidth + 120, by - 20 + Math.random() * 40, 190 + visits * 10); show(false); busy = false;
+      await step(walkTo(chatEl.clientWidth + 120, by - 20 + Math.random() * 40, 190 + visits * 10)); show(false); busy = false;
       setTimeout(returnWithDrop, 9000 + Math.random() * 12000);
+      } catch (e) { onAbort(e); }
     }
     async function returnWithDrop() {
       if (!crawlerCheck.checked || !bag.length) return; if (busy) { setTimeout(returnWithDrop, 4000); return; } busy = true; mount(); stones = wordBoxes();
+      try {
       const last = chatEl.querySelector('.msg:last-of-type'); const ty = last ? last.offsetTop + last.offsetHeight + 30 : chatEl.scrollHeight - 40;
-      bx = chatEl.clientWidth + 120; by = ty; heading = -Math.PI / 2; settleFeet(); draw(); show(true); updateStatus(stones.length); await walkTo(120, ty, 170);
+      bx = chatEl.clientWidth + 120; by = ty; heading = -Math.PI / 2; settleFeet(); draw(); show(true); updateStatus(stones.length); await step(walkTo(120, ty, 170));
       const words = bag.splice(0, bag.length); const notes = [`found this: ${words.join(', ')}. no idea what it means`, `brought back: ${words.join(', ')}. you said these. I kept them`, `${words.join(' / ')} — filed under things humans say`];
       const d = document.createElement('div'); d.className = 'cr-drop'; d.textContent = 'crawler: ' + notes[Math.floor(Math.random() * notes.length)]; chatEl.appendChild(d); chatEl.scrollTop = chatEl.scrollHeight;
-      logEvent('crawler_drop', { words }); remember('Your pet crawler brought back: ' + words.join(', ') + '.');
-      await animateIdle(1000); await walkTo(-120, ty + 10, 190); show(false); busy = false;
+      logEvent('crawler_drop', { words }); remember('Your pet crawler brought back: ' + words.join(', ') + '.'); World.notice('drop', words.join(', '));
+      await step(animateIdle(1000)); await step(walkTo(-120, ty + 10, 190)); show(false); busy = false;
+      } catch (e) { onAbort(e); }
     }
     window.addEventListener('resize', () => { if (status.classList.contains('on')) updateStatus(stones.length); });
     return { on(ev) { if (ev.type === 'oracle' && Math.random() < 0.5) setTimeout(visit, 800 + Math.random() * 1500); if (ev.type === 'reset') { bag = []; keywords = []; extracted = 0; for (const k of keeps.splice(0)) k.remove(); clearTrail(); show(false); } }, now() { if (busy) return; crawlerCheck.checked = true; visit(); } };
@@ -760,6 +820,7 @@
         const txt = (model.format === 'plain' ? partial.split('\n')[0] : partial).replace(/^\*\w+\s*/, '');
         if (txt.trim() && txt !== shown) { shown = txt; oracleDiv.textContent = txt.trim(); oracleDiv.appendChild(document.createTextNode('\u258D')); chatEl.scrollTop = chatEl.scrollHeight; }
       });
+      planTokens = /^\*\w+/.test(tokenizer.decode(genIds).trim());
       let response = tokenizer.decode(genIds).trim().replace(/^\*\w+\s*/, '');
       if (model.format === 'plain') response = response.split('\n')[0].replace(/^User:.*$/, '').trim();
       conversationIds.push(...tokenizer.encode(fmtOracleText(response)));

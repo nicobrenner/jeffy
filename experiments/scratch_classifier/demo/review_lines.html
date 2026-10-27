@@ -6,18 +6,18 @@ textarea{flex:1;font:inherit;background:transparent;color:var(--fg);border:1px s
 .l.del textarea{text-decoration:line-through;opacity:.5}.l.changed textarea{border-color:var(--acc)}
 button{padding:6px 10px;border-radius:8px;border:1px solid var(--acc);background:none;color:var(--fg);cursor:pointer}button.x{border-color:var(--bad)}
 #done{position:sticky;bottom:0;background:var(--bg);padding:10px 0;border-top:1px solid #8884;display:flex;gap:10px;align-items:center}</style></head><body>
-<h2>Oracle-self lines for life / hobby questions</h2>
+<h2 id="ttl">Oracle-self lines for life / hobby questions</h2><script>if (new URLSearchParams(location.search).get('f') === 'world_bible.json') document.getElementById('ttl').textContent = 'World bible: the Oracle\'s life, in its world';</script>
 <p>These replace the human answers ("I like hockey and marathons") the Oracle used to give. Edit any line in place, delete the ones you dislike, add your own with "+ line". Export when done and tell Claude where the file is.</p>
-<div id="g"></div><div id="done"><span id="st"></span><button onclick="exp()">Export</button><button onclick="if(confirm('Discard your edits?')){localStorage.removeItem('review_lines');location.reload()}">Reset</button></div>
+<div id="g"></div><div id="done"><span id="st"></span><button onclick="exp()">Export</button><button onclick="if(confirm('Discard your edits?')){localStorage.removeItem('review_lines:' + (new URLSearchParams(location.search).get('f') || 'review_lines.json'));location.reload()}">Reset</button></div>
 <script>
-let S=null; try{S=JSON.parse(localStorage.getItem('review_lines'))}catch(e){}
-fetch('review_lines.json').then(r=>r.json()).then(D=>{ if(!S){S={}} D.groups.forEach(g=>{ if(!S[g.key]) S[g.key]=g.lines.map(t=>({orig:t,text:t,del:false})) });
+let S=null; try{S=JSON.parse(localStorage.getItem('review_lines:' + (new URLSearchParams(location.search).get('f') || 'review_lines.json')))}catch(e){}
+fetch(new URLSearchParams(location.search).get('f') || 'review_lines.json').then(r=>r.json()).then(D=>{ if(!S){S={}} D.groups.forEach(g=>{ if(!S[g.key]) S[g.key]=g.lines.map(t=>({orig:t,text:t,del:false})) });
  const G=document.getElementById('g');
- function save(){try{localStorage.setItem('review_lines',JSON.stringify(S))}catch(e){} const n=Object.values(S).flat().filter(x=>!x.del).length, c=Object.values(S).flat().filter(x=>x.del||x.text!==x.orig).length; document.getElementById('st').textContent=n+' lines kept, '+c+' changed'}
+ function save(){try{localStorage.setItem('review_lines:' + (new URLSearchParams(location.search).get('f') || 'review_lines.json'),JSON.stringify(S))}catch(e){} const n=Object.values(S).flat().filter(x=>!x.del).length, c=Object.values(S).flat().filter(x=>x.del||x.text!==x.orig).length; document.getElementById('st').textContent=n+' lines kept, '+c+' changed'}
  function render(){G.innerHTML=''; D.groups.forEach(g=>{const h=document.createElement('div'); h.innerHTML=`<h3>${g.key.replace('_',' ')}</h3><div class="q">User asks: ${g.question}</div>`;
    S[g.key].forEach((x,i)=>{const d=document.createElement('div'); d.className='l'+(x.del?' del':'')+(x.text!==x.orig&&!x.del?' changed':''); const t=document.createElement('textarea'); t.value=x.text; t.oninput=()=>{x.text=t.value; d.classList.toggle('changed',x.text!==x.orig); save()};
      const b=document.createElement('button'); b.className='x'; b.textContent=x.del?'undo':'delete'; b.onclick=()=>{x.del=!x.del; render()}; d.append(t,b); h.appendChild(d)});
    const add=document.createElement('button'); add.textContent='+ line'; add.onclick=()=>{S[g.key].push({orig:'',text:'',del:false}); render(); }; h.appendChild(add); G.appendChild(h)}); save()}
  render()});
-function exp(){const out={}; for(const k in S) out[k]=S[k].filter(x=>!x.del&&x.text.trim()).map(x=>x.text.trim()); const b=new Blob([JSON.stringify(out,null,1)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='oracle_lines.json'; a.click()}
+function exp(){const out={}; for(const k in S) out[k]=S[k].filter(x=>!x.del&&x.text.trim()).map(x=>x.text.trim()); const b=new Blob([JSON.stringify(out,null,1)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download=(new URLSearchParams(location.search).get('f') || 'oracle_lines.json').replace('.json','') + '_edited.json'; a.click()}
 </script></body></html>

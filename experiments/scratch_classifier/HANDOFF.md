@@ -2,7 +2,7 @@
 
 Purpose: let a fresh Claude Code session pick up this research program with as little loss as possible. Keep it short;
 the durable record is `RESEARCH_LOG.md` (lab notebook, append-only, every result the turn it lands). Update this file at
-the end of every working block (not just at the end of a session). Last update: **2026-10-26, 15:13 PDT**.
+the end of every working block (not just at the end of a session). Last update: **2026-10-26, 18:29 PDT**.
 
 ## How to resume (5 minutes)
 1. Read this file, then the last ~300 lines of `RESEARCH_LOG.md` (`tail -300 RESEARCH_LOG.md`).
@@ -65,20 +65,21 @@ the end of every working block (not just at the end of a session). Last update: 
 - Web search when WebSearch is capped: see memory `feedback_browser_search.md` (real Chrome binary + copied profile, visible
   window, Scholar/DDG only; never navigate away while a captcha is on screen).
 
-## Where each thread stands (2026-10-26 15:20 PDT)
-| thread | state | next |
-|---|---|---|
-| Tiny Oracle — model | v2 lineage only. Best: `best_lm_oracle_v2_grown_life8b.pt` (v2 widened to 8.5M, 8 ep on the fixed corpus). Growth = no-op until new data (tie); data fixes: names, self-intros, life/hobby, family, ghost addresses, chat style | per-conversation training run (`*_conv8`, running) vs chunked; then multi-turn/longer context |
-| Tiny Oracle — data | `fix_chat_v2.py` (7 steps) + Nico's lines (`oracle_lines_nico_3.json`); 120 recoveries (unreviewed; Nico prefers teach mode); `chat_v2ct` with 6 acts incl. `*dunno` | teach-mode corrections → `corrections_to_data.py`; imperative/task act (Nico: "convince me to go to bed") |
-| Tiny Oracle — evaluation | Blind passes (one grader per pass) + Nico's blind picks (ground truth; grader total matched 24/25). Identity probe (name, human-life drift). Reactive simulated-user probe (`atl_probe_simuser.py`); scripted 3-turn probe retired | grader rubric: add task-attempt; verifier labels from Nico's picks; conversation-following check before any conversation picks |
-| Tiny Oracle — verifier / controller | `verifier.py` (hidden-state LogReg, AUC 0.85 v2 rows); best-of-8 beats single 41/57/24 (grader) and 8–2 (Nico) | gate → force `*dunno` → regenerate (controller loop); FUDGE-style per-token steering; `*_ct2` model training (queued) |
-| Tiny Oracle — demo | dropdown of all v2-lineage variants; **teach mode** (rewrite replies → training data); blind pages (`blind_pairs`, `blind_convs`, `review_lines`, `review_recover`) | best-of-N + verifier in the browser; memory line (user's name) in the system prompt |
-| Yin/Yang self-talk | `selftalk.py` harness built + smoke-tested; curation stack auto → grader → Nico | round 0 after `*_conv8`/`*_ct2`; Oracle-and-person variant (train a "person" model on the user side) |
-| Benchmark (repo root) | rerun landed and pushed (SetFit 85.0 / FastText tuned 85.9 vs published 54.3 / 1.1; Jeffy 94.3) | **Nico decides** README/benchmark-page/posts presentation (versioned benchmark + dated correction note); other agent handles posts |
-| Growth (pretraining) | 2M→8.5M on TinyStories: 2-epoch head start, ends 0.015 behind direct; LR-level restart dip; A100 chain stopped (Nico: local signal first) | staged growth only with a local signal; growth on v2 is the live path |
-| BlurSort | video→image closed; two-scale coder −10% on diagonal phase; MDC +; anti-compression −; progressive 28% < JXL progressive | two-scale phases (0,1),(1,0); 4th post framing |
-| Posts 1 / 3 / 4 (tiered classifier) | drafts in `posts/` (never committed) | Nico reads → revise |
-| HF push | still pending | push private |
+## Pipeline / roadmap — classifiers, harness, chat workflow (2026-10-26, 18:29 PDT)
+Order = my recommendation; every step is local, measured through `harness.py` with the demo config, and goes into the demo dropdown.
+| # | step | needs | gives |
+|---|---|---|---|
+| 0 | running: v3b (from scratch, clean corpus) → recovery run (120 push-back recoveries mixed in) | — | from-scratch baseline; first model with push-back data |
+| 1 | **verifier in the browser**: 2nd ONNX output (hidden state at `norm`), LogReg weights as JSON, best-of-4 + controller in `index.html` | ~2 h build | the controller Nico can feel; best-of-N (8–2 in his picks) in the demo |
+| 2 | **user-turn classifier** (push-back / question / task-order / greeting / small-talk) → token into the prompt; generator retrained with user-side tokens | labels: sim-user turns + probes, LLM-labelled (~2k) | explicit push-back recognition; task act (Nico's "convince me to go to bed") |
+| 3 | **emotion classifier** on the user's turn (frustrated / amused / anxious / neutral / excited) → token; EmpatheticDialogues (1811.00207, 25k convs, 32 emotions) as free labels | 1 labelling pass + retrain | the "reading my emotions" signal, made real |
+| 4 | **memory line**: name/facts extracted by the harness → "The user's name is X" in the system prompt; fixer adds a facts line to training convs | fixer step + retrain | remembers the name past the 256-token window |
+| 5 | act-as-vector, made trainable: act dropout + scaled norm; then emotion as a vector; then 2 recurrence iterations with re-injection | 3 small runs | non-text channels ("quiet" signals) |
+| 6 | **engagement as reward**: demo log (reply-after-turn, turns/conv) → retrain the verifier on it once there are enough sessions | Nico chatting | the first real-world preference signal |
+| 7 | teach-mode corrections → `corrections_to_data.py` → every retrain | Nico chatting in teach mode | his voice in the data, on-policy |
+| 8 | yin/yang round 0 on the recovery model with the curation stack (auto → grader → Nico); Oracle-and-person variant | #0 done | self-generated push-back data at scale |
+| 9 | longer context (seq 512) for the grown model, per-conversation | 1 run | continuity past ~5 turns |
+Parked: posts 1/3/4 (Nico reads); benchmark README correction (Nico decides); HF push; BlurSort two-scale phases.
 
 ## Open questions for Nico (do not decide alone)
 - Which Post to publish first; whether BlurSort becomes post 4 or folds into post 1.

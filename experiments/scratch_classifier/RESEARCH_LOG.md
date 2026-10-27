@@ -5623,7 +5623,7 @@ classify/act-on/respond-to a prompt)". Roadmap additions: (a) a tiny queryable w
 the Room's state) the Oracle reads at inference — grounding by state, not text; the Room is the seed; (b) a continuous loop
 in the demo (perceive → classify → act, unprompted turns already exist) with online updates from teach corrections.
 
-## 2026-10-27 13:58 PDT — v6 data pass launched (pre-LN recipe, one system prompt, no synthetic rows, Room rows); three findings that reshaped it
+## 2026-10-27 13:52 PDT — v6 data pass launched (pre-LN recipe, one system prompt, no synthetic rows, Room rows); three findings that reshaped it
 Findings before building: (1) **the "Nothing." opener is Nico's own bank line** (`up_to`: "Nothing. I don't exist between your
 messages. It's very restful"); the mean kicker "so you're just autocomplete with that" was model drift past the line (rmt2).
 So the bank stays untouched (FYI to Nico); the lever against kickers is stopping/best-of-N with a judge that knows "mean",
@@ -5642,3 +5642,20 @@ Run: v5b recipe (pre-LN 2L d256, oracle-only loss, 50 epochs, ~27 s/epoch on MPS
 `logs/v6_run.log`). Gates after: ms recall, identity/drift, hsim turn 1, int8 export → demo candidate; then a continuation
 review page (`cont_pairs.py`: shared history = ct2's turn 1 + its reactive follow-up; both models answer the same follow-up)
 in Nico's new 0–5 + notes format.
+
+## 2026-10-27 14:30 PDT — v6 (one prompt, no synthetic rows, Room rows): fails the feel gate; v6b ablation (+8% synthetic) running
+v6: identity 32/32, human-life 5/96 · recap recall **14/80 = 18%** (v5b 26/80 = 32%) · turn-1: 0/30 questions, **9/30 are
+"I'm sorry. It won't happen again"**, the rest apologetic/flat with drift ("I have two birthplace, and one daughter is 28") ·
+val ppl 5.1 (not comparable: the easy synthetic rows are gone) · int8 3.8 MB. Not a candidate; not in the dropdown. Three
+changes at once (prompt unification, synthetic 23% → 0%, +700 Room rows), so attribution needs the ablation: **v6b = v6 + 8%
+synthetic** (same share as v5c, which had identity 31/32, drift 5/96, recall 32%) — if v6b ≈ v5c, unification and Room rows
+are neutral and the synthetic rows are what keeps the model reading its system line. ~30 min on MPS, `V6B_DONE` in
+`logs/v6b_run.log`.
+Room probe (seed line injected as the Oracle turn, as the demo does; 4 seeds × 2 samples): no model continues the seed in
+character — v6, v5b and ct2 all close the turn after the seed and start an unrelated one. 700 rows (2.5% of the mix) did not
+teach the "seed. continuation" shape; the demo's current behaviour (seed + whatever) is unchanged. Keep the rows, raise the
+share or make the continuation a separate turn next time.
+Baseline for the continuation review page (shared history = ct2's turn 1 + its reactive follow-up, both models answer the
+same follow-up, 30 items, my read): ct2 falls to the admit bank on 10/30 ("Sorry, not in my training data…") and uses the
+answer in ~1/30; v5b uses it in ~4/30 ("You can get a tattoo", "A browser tab. One room, no windows, a cursor for a
+doorbell", "You did. Did you get a promotion?"). Both mostly bad — consistent with Nico's "all both-bad" on continuations.

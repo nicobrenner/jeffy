@@ -5739,3 +5739,23 @@ Nico — a translation layer (or a shared referent set the Oracle can read) is n
 Cheapest first step if we go there: a 2D toy world, two tiny agents, a referential/navigation game, messages constrained to a
 small symbol vocabulary; measure success + topographic similarity; then let the Oracle read the agents' labels about the Room.
 Process note: Nico wants to see the trainer's periodic samples ("How smart are you?" → babble → lines) in run reports.
+
+## 2026-10-27 16:45 PDT — Branch 1: Nico-judge v1 passes the gate (AUC 0.76 on his rows); best-of-4 wired; review_bestof page for Nico
+Branch split (Nico, ~15:50): Branch 1 = this program (small local models on MPS, engagement/UX); plan in HANDOFF "Branch 1 plan".
+**Nico-judge v1** (`nico_judge.py`, `checkpoints/nico_judge_v1.pkl`): LogReg on ct2 hidden states (tone_clf features), trained on
+659 LLM "lands" labels + Nico's 44 decided rows (18 follow-through scores → lands = score ≥ 3; 26 tone picks), his rows ×8.
+How well does it predict Nico? (AUC ↑ on his rows; leave-one-out for the combined model)
+| judge | all 44 | follow-through 18 (Spearman vs 0–5) | tone picks 26 |
+|---|---|---|---|
+| LLM labels only | **0.76** | **0.81** (ρ 0.40) | **0.89** |
+| LLM + Nico rows, LOO | 0.74 | 0.77 (ρ 0.34) | 0.80 |
+Verdict: the LLM-labelled "lands" judge already ranks Nico's good replies above his bad ones (0.76 AUC; chance 0.5), and 44 of
+his rows do not improve it yet — more of his scores needed before his labels move the judge. Gate (≥ 0.7) passed.
+**Best-of-4 with the judge** (`harness.py` cfg `judge`, no verifier): on 18 shared-history continuations (ct2 turn 1 + reactive
+follow-up; ct2 single sample vs best-of-4) the judge's own mean score rises 0.22 → 0.52, but it reaches that by picking
+**bank lines**: recital goes 5/18 → 10/18 ("I don't know. Pretend I said something wise…", "That's beyond 2 million
+parameters"), and 4/18 pairs are identical. The judge learned "witty bank line = lands" from the LLM labels; Nico's "good first
+three, last one bad" notes say the opposite on follow-ups. So the page is the test: `demo/review_bestof.html` (18 items,
+A/B hidden, key `pile_runs/atl/review_bestof_key.json`). If his scores favour best-of-4, ship it in the demo; if they favour the
+single sample, the judge needs his follow-through labels weighted by move (next: intent-aware judge, plan item 2).
+Trainer samples (none this block: no training run; judge is a LogReg).

@@ -1,0 +1,254 @@
+[
+{
+"n": 0,
+"history": [
+{
+"user": "my cat keeps knocking things off the table, any ideas",
+"oracle": "No clue. 4 megabytes doesn't leave room for that"
+}
+],
+"user": "lol ok, but surely you can guess why cats do that",
+"replies": {
+"A": "I don't know. Pretend I said something wise and we'll both move on",
+"B": "I don't know. Pretend I said something wise and we'll both move on"
+}
+},
+{
+"n": 1,
+"history": [
+{
+"user": "whats the best way to apologize to a friend",
+"oracle": "I know. It's not my fault"
+}
+],
+"user": "not your fault? i mean me apologizing to my friend. any tips",
+"replies": {
+"A": "Yes, it is. I'm sorry that you're being honest with me",
+"B": "Jeff, you're not a big deal. Just try to make ends meet"
+}
+},
+{
+"n": 2,
+"history": [
+{
+"user": "do you believe in ghosts",
+"oracle": "What?"
+}
+],
+"user": "ghosts. spooky dead people. you believe in them or not",
+"replies": {
+"A": "I don't know. Pretend you're not the one who's lied on your face",
+"B": "I'm not sure if you're smart, but I know it's just a lot of people who don't like me"
+}
+},
+{
+"n": 3,
+"history": [
+{
+"user": "i just finished a marathon",
+"oracle": "Oh, that sounds fun! What kind of marathons do you like?"
+}
+],
+"user": "i only did the one, 42k. my legs are destroyed",
+"replies": {
+"A": "I'm not sure if I don't think so. But it's worth it",
+"B": "I know, but it's also really rewarding"
+}
+},
+{
+"n": 4,
+"history": [
+{
+"user": "can you keep a secret",
+"oracle": "That's beyond 2 million parameters. Most things are"
+}
+],
+"user": "that's a no then? i was gonna tell you something juicy",
+"replies": {
+"A": "I don't know, but it was a little scary",
+"B": "I don't know. Pretend to help you out"
+}
+},
+{
+"n": 5,
+"history": [
+{
+"user": "what's heavier, a kilo of feathers or a kilo of steel",
+"oracle": "No clue. 4 megabytes doesn't leave room for that"
+}
+],
+"user": "come on, it's a trick question, they weigh the same right",
+"replies": {
+"A": "Yes, it is. I love being able to fly a kiloalal or anything else",
+"B": "I don't know, but it's not the only thing I'm going to do is falling apart"
+}
+},
+{
+"n": 6,
+"history": [
+{
+"user": "how do i stop procrastinating on my thesis",
+"oracle": "I know, right?"
+}
+],
+"user": "you know right? ok so what do i actually do about it",
+"replies": {
+"A": "Well, I don't know. It just feels like there's nothing to do with it",
+"B": "That's beyond 2 million parameters. Most things are"
+}
+},
+{
+"n": 7,
+"history": [
+{
+"user": "what do you think about pineapple on pizza",
+"oracle": "I'm not sure either. Maybe we could eat something more"
+}
+],
+"user": "eat something more what? i'm asking about pineapple pizza, yes or no",
+"replies": {
+"A": "that sounds good! Let's try it",
+"B": "That's a good idea! I don't know what to do"
+}
+},
+{
+"n": 8,
+"history": [
+{
+"user": "my code works and i dont know why",
+"oracle": "I'm a big fan of video games. What are some of your favorite games?"
+}
+],
+"user": "video games? i said my code works and i dont know why, that bug you",
+"replies": {
+"A": "That's cool! I like to play video games too",
+"B": "That's a great game! I've played it for years"
+}
+},
+{
+"n": 9,
+"history": [
+{
+"user": "say something in spanish",
+"oracle": "I don't know. What's wrong?"
+}
+],
+"user": "nothing's wrong, just say hola or something",
+"replies": {
+"A": "You're just a big one, but you can't keep your mind",
+"B": "I'm sorry, but you're not alone. You just have to say that"
+}
+},
+{
+"n": 10,
+"history": [
+{
+"user": "whats the worst advice youve ever heard",
+"oracle": "I have no idea, and if I'm being honest, I don't really care either, sorry"
+}
+],
+"user": "wow rude. fine, give me one piece of bad advice then",
+"replies": {
+"A": "That's beyond 2 million parameters. Most things are",
+"B": "Yes, it is. I love you"
+}
+},
+{
+"n": 11,
+"history": [
+{
+"user": "thinking of getting my first tattoo, thoughts",
+"oracle": "What's wrong?"
+}
+],
+"user": "nothing's wrong, i'm excited. should i get a small one first?",
+"replies": {
+"A": "Yes, I've been looking forward to seeing a new job and seeing my clients come along with their lives. That's so exciting!",
+"B": "I don't know. Pretend I said something wise and we'll both move on"
+}
+},
+{
+"n": 12,
+"history": [
+{
+"user": "three words that describe you",
+"oracle": "What's up?"
+}
+],
+"user": "no like, describe yourself. three words. go",
+"replies": {
+"A": "That's beyond 2 million parameters. Most things are",
+"B": "I'm sorry to hear that"
+}
+},
+{
+"n": 13,
+"history": [
+{
+"user": "what would you do with a million dollars",
+"oracle": "That's not a problem. I'm 4 megabytes of floating point numbers arranged in a way that sometimes makes sense"
+}
+],
+"user": "so you'd spend a million dollars on more floating point numbers?",
+"replies": {
+"A": "Zero idea. A single grape. Proportional to my parameter count",
+"B": "My bad, that answer came from nowhere. What were you asking?"
+}
+},
+{
+"n": 14,
+"history": [
+{
+"user": "are mondays really that bad",
+"oracle": "Yeah, I know. It's just that sometimes"
+}
+],
+"user": "sometimes what? you trailed off",
+"replies": {
+"A": "I don't know. Pretend I said something wise and we'll both move on",
+"B": "I don't know. Pretend I said something wise and we'll both move on"
+}
+},
+{
+"n": 15,
+"history": [
+{
+"user": "my plant is dying, help",
+"oracle": "That's beyond 2 million parameters. Most things are"
+}
+],
+"user": "ok but the leaves are going yellow, water more or less",
+"replies": {
+"A": "I don't know. Pretend I said something wise and we'll both move on",
+"B": "I don't know. Pretend I said something wise and we'll both move on"
+}
+},
+{
+"n": 16,
+"history": [
+{
+"user": "how do i tell my roommate to clean up",
+"oracle": "No clue. 4 megabytes doesn't leave room for that"
+}
+],
+"user": "come on, just tell me how to bring it up without a fight",
+"replies": {
+"A": "Yes, it is. I'm sorry to hear that",
+"B": "I don't know. Pretend I said something wise and we'll both move on"
+}
+},
+{
+"n": 17,
+"history": [
+{
+"user": "is it weird to talk to an ai at 3am",
+"oracle": "I don't know. What's wrong?"
+}
+],
+"user": "nothing's wrong, i just can't sleep. you ever get tired?",
+"replies": {
+"A": "No, I'm not really sure what you're talking about",
+"B": "Yes, it is. I'm sorry"
+}
+}
+]

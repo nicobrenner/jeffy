@@ -30,7 +30,7 @@ def yes_ids(tok):   # token ids that start a reply with Yes/Yeah/Yep (with or wi
         _YES_IDS[id(tok)] = ids
     return _YES_IDS[id(tok)]
 DUNNO = re.compile(r"\b(i (don'?t|do not) know|no idea|no clue|not sure (what|how|if|about|i)|i have no|can'?t help|beyond me|not in my training|never heard of|i made that up|i invented|came from nowhere|not (a|an) \w+ expert|outside my weights|not my department)\b", re.I)
-DEFAULT = dict(prime="first", sampler="sched", best_of=1, verifier=None, controller=False, tau=0.5, act_mode=None, memory=None, seed=0, ban_yesno=False, cross_turn=True)   # = the demo defaults
+DEFAULT = dict(prime="first", sampler="sched", best_of=1, verifier=None, controller=False, tau=0.5, act_mode=None, memory=None, seed=0, ban_yesno=False, cross_turn=True, judge=None)   # = the demo defaults
 _LINES = None
 
 def lines():
@@ -120,6 +120,11 @@ def respond(m, tok, history, user, cfg=None):
     ctx = build_context(history, user, c["prime"], c["memory"]); prime_len = len(tok.encode(build_context([] if c["prime"] != "first" or not history else [{"user": "", "oracle": ""}], "", c["prime"], c["memory"]))) - 3
     info = {"n": c["best_of"], "forced": False, "fallback": False, "score": None}
     prior = [h["oracle"] for h in history] if c.get("cross_turn", True) else []   # cross-turn repetition control (demo toggle)
+    if c["best_of"] > 1 and c.get("judge") and not c["verifier"]:   # Nico-judge best-of-N (nico_judge.py): lands-probability on the Oracle's hidden states
+        J = _VER.setdefault(c["judge"], pickle.load(open(c["judge"], "rb"))); from tone_clf import hidden as jhidden
+        cands = [generate(m, tok, ctx, S, c["seed"] * 100 + s, prime_len=prime_len, prior=prior, user=user, ban_yesno=c["ban_yesno"]) for s in range(c["best_of"])]
+        sc = J["clf"].predict_proba(jhidden(m, tok, [{"history": history, "user": user, "reply": r} for r in cands]))[:, 1]; b = int(np.argmax(sc))
+        return cands[b], {**info, "score": float(sc[b]), "scores": [float(x) for x in sc]}
     if c["best_of"] <= 1 or not c["verifier"]:
         return generate(m, tok, ctx, S, c["seed"], prime_len=prime_len, prior=prior, user=user, ban_yesno=c["ban_yesno"]), info
     V = _VER.setdefault(c["verifier"], pickle.load(open(c["verifier"], "rb")))

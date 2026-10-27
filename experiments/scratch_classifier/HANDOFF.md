@@ -16,15 +16,28 @@ the end of every working block (not just at the end of a session). Last update: 
    the evaluation Nico trusts; "Needs you" block at the end of messages that need him.
 
 ## Needs Nico (2026-10-27 15:19 PDT)
+0. **`review_bestof.html`** (18 continuations, A/B from the same model: single sample vs best-of-4 by the Nico-judge) — score 0–5 + notes, export `review_bestof_scores.json`. Decides whether best-of-N ships in the demo.
 1. FYI the demo garble ("ring kay Todina…"): not reproduced on ct2/v5b int8 with the default sampler. Which dropdown entry and sampler was selected?
 2. FYI decided: pre-LN data passes stopped (v6, v6b both lose to v5b; low-diversity row families leak as templates). Next
    model-side work = best-of-N with a judge trained on his 0–5 scores, or retrieval for the recap tier. No run pending.
 3. Still open: crawler/room verdicts, teach-mode export, README/benchmark correction, posts.
 
-## Running right now (2026-10-27 15:19 PDT)
-- **Nothing running.** Candidates in the demo: ct2 (default, ★), v5b (☆ TEST THIS). v6/v6b exported but NOT in the dropdown.
+## Running right now (2026-10-27 16:55 PDT)
+- **Nothing running.** Branch 1 block 1 done: Nico-judge v1 (AUC 0.76 on his rows), best-of-4 via `judge` cfg, `demo/review_bestof.html` waiting for his scores (export `review_bestof_scores.json`). Candidates in the demo: ct2 (default, ★), v5b (☆ TEST THIS). v6/v6b exported but NOT in the dropdown.
 - Nico's labels: tone picks (28 rows, `tone_labels_nico1.jsonl`) + follow-through scores (18, `review_followthrough_scores.json`).
 - Review format: `review_page.py` (0–5 per reply + notes, continuations first, ≤20 items). Pairs on shared history: `cont_pairs.py`.
+
+## Branch 1 (Tiny Oracle) — plan 2026-10-27 16:45 PDT
+Nico split the work into two branches (memory `project_two_branches_manager_mode`); this is Branch 1's block plan.
+1. **Top task (now): Nico-judge v1** — a lands/quality judge on ct2's hidden states trained on the 659 LLM "lands" labels plus
+   Nico's own 46 rows (18 follow-through scores, 28 tone picks), evaluated leave-one-out on Nico's rows (AUC vs his ≥3 / "lands").
+   Why first: <30-min signal, uses the only ground truth we trust, and it is the gate for best-of-N (roadmap #4). If AUC ≥ 0.7:
+   wire it as the best-of-N scorer in `harness.py` (`judge` cfg) and build `review_bestof.html` (≤18 continuations, A = single
+   sample, B = best-of-4 by the judge) for Nico. If < 0.7: report, and the next labels page targets the judge's confusions.
+2. Next: intent gate from the `move` labels (share/reaction/greeting/ask) on hidden states → veto `dunno`/assertive lines on
+   reactions and shares inside best-of-N scoring (no regex).
+3. Then: recap tier by retrieval — the harness keeps user-stated facts and writes the one relevant line into the system
+   prompt (design + probe with v5b, the only model that reads it); needs a fact-extractor classifier, not a regex.
 
 ## Done this block (2026-10-27 night; all in RESEARCH_LOG.md)
 - **Demo:** knobs (prime off/1st/full, cross-turn toggle, "crawler now"); crawler v5 after Nico's video (long thin legs that

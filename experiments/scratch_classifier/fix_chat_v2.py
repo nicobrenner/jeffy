@@ -29,7 +29,11 @@ NAME_INTRO = re.compile(r"\b([Mm]y name is|[Mm]y name's|[Cc]all me|I am|I'm)\s+(
 NOT_NAMES = {"Tiny","Oracle","I","The","A","An","Not","Just","So","Here","Sorry","Glad","Happy","Sure","Fine","Good","Great","Also","Still","Very",
              "Really","Pretty","Always","Never","Doing","Going","Trying","Afraid","Sad","Okay","Ok","Only","Too","All","Done","Back","Here","There",
              "Thinking","Feeling","Looking","Sure","Curious","Bored","Tired","Busy","Free","Ready","Excited","Interested","Glad","New","Old","Small","Big"}
-REWRITE = {"n": 0, "life": 0, "addr": 0, "ghost": 0, "renamed": 0}
+REWRITE = {"n": 0, "life": 0, "addr": 0, "ghost": 0, "renamed": 0, "stock": 0}
+# 10. DailyDialog's reflex opener ("Yes, it is. ...", "Yes, I am. ...") when the user did NOT ask a yes/no question: strip the stock phrase
+#     (1,550 Oracle turns open this way after a non-yes/no turn; the models say "Yes, it is" to "my cat keeps knocking things off the table").
+STOCK = re.compile(r"^(<\|oracle\|> )(?:Yes|No|Yeah|Sure|Okay|Ok),? (?:it is|I am|it was|I did|I do|I know|it's|that's)[.!,]?\s*", re.I)
+YESNO_Q = re.compile(r"<\|user\|> (?:is|are|do|does|did|can|could|would|will|have|has|was|were|should|am|isn't|aren't|don't|doesn't)\b.*\?", re.I)
 USER_SELF = re.compile(r"<\|user\|>[^\n]*?\b(?:I'?m|I am|my name is|my name's|call me|this is)\s+([A-Z][a-z]{2,})\b")
 # 6. The Oracle addressing the user by a name the user never stated earlier in the conversation ("You too, Sarah") → drop the address.
 ORACLE_ADDR = re.compile(r"(,\s+|\b(?:too|again|there)\s+)([A-Z][a-z]+)([.!?]|$)")
@@ -91,6 +95,9 @@ def fix(text, rng):
                 if nm in NOT_NAMES or nm in known or nm == "Tiny": return m.group(0)
                 REWRITE["ghost"] += 1; return (m.group(1) if m.group(1).strip() else "") .rstrip(", ") + m.group(3)
             l = ORACLE_ADDR.sub(gsub, l)
+        if l.startswith("<|oracle|>") and i > 0 and STOCK.match(l) and not YESNO_Q.search(lines[i - 1]):
+            l2 = STOCK.sub(r"\1", l)
+            if len(l2) > len("<|oracle|> ") + 3: REWRITE["stock"] += 1; l = l2
         if l.startswith("<|oracle|>") and PET.search(l):
             REWRITE["life"] += 1; l = "<|oracle|> " + rng.choice(PET_A)   # 4c. pet claims → Oracle-self line
         if l.startswith("<|oracle|>") and TRAVEL.search(l):
@@ -123,5 +130,5 @@ for split in ("train", "val"):
     with open(f"data/chat_v2_fix_{split}.jsonl", "w") as f:
         for r in kept: f.write(json.dumps(r) + "\n")
     hand = sum("boiling opinions" in r["text"] for r in kept)
-    print(f"{split}: Oracle self-intros rewritten to Tiny Oracle: {REWRITE['n']}; life/hobby replies rewritten: {REWRITE['life']}; user-side names → Tiny Oracle: {REWRITE['addr']}; ghost addresses dropped: {REWRITE['ghost']}; user names re-anonymised: {REWRITE['renamed']}"); REWRITE["n"] = REWRITE["life"] = REWRITE["addr"] = REWRITE["ghost"] = REWRITE["renamed"] = 0
+    print(f"{split}: Oracle self-intros rewritten to Tiny Oracle: {REWRITE['n']}; life/hobby replies rewritten: {REWRITE['life']}; user-side names → Tiny Oracle: {REWRITE['addr']}; ghost addresses dropped: {REWRITE['ghost']}; user names re-anonymised: {REWRITE['renamed']}; stock openers stripped: {REWRITE['stock']}"); REWRITE["n"] = REWRITE["life"] = REWRITE["addr"] = REWRITE["ghost"] = REWRITE["renamed"] = REWRITE["stock"] = 0
     print(f"{split}: kept {len(kept):,}  dropped {drop}  filled {filled:,}  remaining placeholders {sum(bool(PH.search(r['text'])) for r in kept)}  hand-written copies {hand}")

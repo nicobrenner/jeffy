@@ -44,9 +44,12 @@ def trim(tok, ctx_ids, prime_len):
     return head + tail[-(MAX_CONTEXT - prime_len):]
 
 @torch.no_grad()
-def generate(m, tok, ctx, S, seed, act=None, act_mode=None, prime_len=0):
+def generate(m, tok, ctx, S, seed, act=None, act_mode=None, prime_len=0, prior=None):
+    """prior: list of the Oracle's earlier replies in this conversation (cross-turn repetition control, half-strength)"""
     if act and act_mode == "token": ctx = ctx + " *" + act
     ids = trim(tok, list(tok.encode(ctx)), prime_len); out = []
+    prior_ids = [t for r in (prior or []) for t in tok.encode(" " + r)]; prior_set = set(prior_ids)
+    prior_grams = {tuple(prior_ids[j:j + 3]) for j in range(len(prior_ids) - 2)}; cross = 1 + (S["rep_penalty"] - 1) * 0.5
     oracle_id = tok.encode("<|oracle|>")[-1]; pos = len(ids) - 1 - ids[::-1].index(oracle_id) if oracle_id in ids else None
     torch.manual_seed(seed)
     for _ in range(60):
@@ -57,6 +60,12 @@ def generate(m, tok, ctx, S, seed, act=None, act_mode=None, prime_len=0):
         else: logits = m(x)[0, -1, :]
         if S["rep_penalty"] != 1.0 and out:
             prev = torch.tensor(sorted(set(out)), device=logits.device); lp = logits[prev]; logits[prev] = torch.where(lp > 0, lp / S["rep_penalty"], lp * S["rep_penalty"])
+        if cross != 1.0 and prior_set:
+            pv = torch.tensor(sorted(prior_set - set(out)), device=logits.device)
+            if len(pv): lp = logits[pv]; logits[pv] = torch.where(lp > 0, lp / cross, lp * cross)
+        if len(out) >= 2:
+            for g in prior_grams:
+                if g[0] == out[-2] and g[1] == out[-1]: logits[g[2]] = float("-inf")
         n = S["no_repeat_ngram"]
         if n and len(out) >= n - 1:
             tail = tuple(out[len(out) - (n - 1):])
@@ -80,14 +89,15 @@ def respond(m, tok, history, user, cfg=None):
     if history and "later_temperature" in S: S["temperature"] = S["later_temperature"]
     ctx = build_context(history, user, c["prime"], c["memory"]); prime_len = len(tok.encode(build_context([], "", c["prime"], c["memory"]))) - 3
     info = {"n": c["best_of"], "forced": False, "fallback": False, "score": None}
+    prior = [h["oracle"] for h in history]
     if c["best_of"] <= 1 or not c["verifier"]:
-        return generate(m, tok, ctx, S, c["seed"], prime_len=prime_len), info
+        return generate(m, tok, ctx, S, c["seed"], prime_len=prime_len, prior=prior), info
     V = _VER.setdefault(c["verifier"], pickle.load(open(c["verifier"], "rb")))
-    cands = [generate(m, tok, ctx, S, c["seed"] * 100 + s, prime_len=prime_len) for s in range(c["best_of"])]
+    cands = [generate(m, tok, ctx, S, c["seed"] * 100 + s, prime_len=prime_len, prior=prior) for s in range(c["best_of"])]
     sc = [verifier_score(m, tok, V, user, r) for r in cands]; b = int(np.argmax(sc)); best, score = cands[b], sc[b]
     if c["controller"] and score < c["tau"] and c["act_mode"]:
         info["forced"] = True
-        c2 = [generate(m, tok, ctx, S, c["seed"] * 100 + 50 + s, act="dunno", act_mode=c["act_mode"], prime_len=prime_len) for s in range(c["best_of"])]
+        c2 = [generate(m, tok, ctx, S, c["seed"] * 100 + 50 + s, act="dunno", act_mode=c["act_mode"], prime_len=prime_len, prior=prior) for s in range(c["best_of"])]
         s2 = [verifier_score(m, tok, V, user, r) for r in c2]; b2 = int(np.argmax(s2))
         if s2[b2] >= score: best, score = c2[b2], s2[b2]
         if score < c["tau"]: best = random.Random(c["seed"]).choice(lines()); info["fallback"] = True

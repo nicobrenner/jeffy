@@ -390,6 +390,11 @@
     if (transcript.length >= 2 && S.laterTemperature) S.temperature = S.laterTemperature;
     let ids = inputIds.slice(-MAX_CONTEXT);
     const generated = [];
+    // cross-turn memory of what the Oracle already said in this conversation (so stock lines and questions do not repeat turn after turn)
+    const priorIds = transcript.filter(m => m.role === 'oracle').flatMap(m => tokenizer.encode(' ' + m.text));
+    const priorSet = new Set(priorIds), priorGrams = new Set();
+    for (let j = 0; j + 3 <= priorIds.length; j++) priorGrams.add(priorIds[j] + ',' + priorIds[j + 1] + ',' + priorIds[j + 2]);
+    const crossPenalty = S.repPenalty !== 1.0 ? 1 + (S.repPenalty - 1) * 0.5 : 1.0;   // half-strength across turns
     for (let i = 0; i < MAX_NEW_TOKENS; i++) {
       const input = new ort.Tensor('int64', BigInt64Array.from(ids.map(BigInt)), [1, ids.length]);
       const results = await session.run({ input_ids: input });
@@ -397,6 +402,8 @@
       const last = new Float32Array(vocabSize), off = (ids.length - 1) * vocabSize;
       for (let v = 0; v < vocabSize; v++) last[v] = logits[off + v];
       if (S.repPenalty !== 1.0) for (const t of new Set(generated)) last[t] = last[t] > 0 ? last[t] / S.repPenalty : last[t] * S.repPenalty;
+      if (crossPenalty !== 1.0) for (const t of priorSet) if (!generated.includes(t)) last[t] = last[t] > 0 ? last[t] / crossPenalty : last[t] * crossPenalty;
+      if (generated.length >= 2) { const a = generated[generated.length - 2], b2 = generated[generated.length - 1]; for (const g of priorGrams) { const [x, y, z] = g.split(',').map(Number); if (x === a && y === b2) last[z] = -Infinity; } }
       if (S.noRepeatNgram > 0 && generated.length >= S.noRepeatNgram - 1) {
         const n = S.noRepeatNgram, tail = generated.slice(generated.length - (n - 1));
         for (let j = 0; j + n <= generated.length; j++) {

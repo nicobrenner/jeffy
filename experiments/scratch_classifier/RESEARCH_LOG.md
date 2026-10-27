@@ -5094,3 +5094,10 @@ coherence 2.02 vs 2.28 here). So: more exposure to recoveries = better following
 The lever is the AMOUNT of recovery data. Next pass: recoveries written on real multi-turn contexts — every turn-2/3 row from all reactive-user
 transcripts so far (history + the simulated user's actual push-back + the model's own failed reply) gets an expert recovery in the Oracle's
 voice → `recover_mt_src.jsonl` → agent-written → mixed ×6 with the corpus → retrain → same pass. Teach-mode corrections join as they arrive.
+
+## 2026-10-26 20:24 PDT — Multi-turn recovery model (`oracle_v2_grown_recovermt8`: 650 multi-turn + 120 first-batch recoveries ×6): identity 31/32, drift 7/96
+
+val 1.6835. Identity: name 31/32, human-life 7/96 (recover8 ×12: 31/32, 9/96). Turn-1 openers still the corpus's "Yes, it is" reflex
+(the recoveries never touch turn 1). Reactive-user turns 2–3 generating → pass vs recover8. Pet claims (172 Oracle lines, "golden retriever
+named Buddy") found and rewritten in the fixer AFTER this run's corpus was cut → next retrain. World bible started (`demo/world_bible.json`,
+11 groups incl. the Oracle's own machinery as cast) for Nico to curate: rewrite banks will draw from it instead of denials.

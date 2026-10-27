@@ -5236,3 +5236,11 @@ model on a corpus with the "(Yes|No), (it is|I am…)" forms removed still opens
 turns at large ("Yes" is the most common first word, mostly after yes/no questions, which the probes' openers are not). Two fixes: harness —
 ban "Yes/Yeah" as the first token when the user's message is not a yes/no question (immediate, testable); data — strip "Yes, " prefixes after
 non-yes/no turns more broadly for the next retrain. v3c itself: weaker than the grown lineage on identity (24/32), same as v3b.
+
+## 2026-10-26 22:15 PDT — First-token bans do not fix openers: the reflex just moves ("Yes" → "No" 13/30 → "Sure"/"Thank you")
+
+Harness/demo rule "no Yes/No opener unless the user asked a yes/no question" (applied after the plan token): Yes openers 27/30 → 0, but "No"
+openers 13/30; banning No too → "Sure" 6, "Thank you" 2, "I can't believe…". The model has no good opener for off-persona prompts; token bans
+cannot create one. Kept as an off-by-default option (`ban_yesno`). The working fix is prime-first (turn-1 on-thread 50%, stock lines 0%).
+Corpus note: "Yes/Yeah" openers after a NON-yes/no user turn are 3.9% of Oracle turns (4,803) — strip them in the next data pass anyway.
+`harness.DEFAULT` now equals the demo defaults (prime first, sched, single sample).

@@ -19,8 +19,18 @@ SAMPLERS = {"recipe03": dict(temperature=0.3, top_k=40, rep_penalty=1.3, no_repe
             "sched": dict(temperature=0.3, top_k=40, rep_penalty=1.3, no_repeat_ngram=3, later_temperature=0.5)}   # T0.3 on the opener, T0.5 once there is history
 MAX_CONTEXT = 256
 ACTS = ConvDataset.ACTS
+YESNO_Q = re.compile(r"^\s*(?:is|are|do|does|did|can|could|would|will|have|has|was|were|should|am|isn't|aren't|don't|doesn't|anyone|anything)\b.*\?\s*$", re.I)
+_YES_IDS = {}
+def yes_ids(tok):   # token ids that start a reply with Yes/Yeah/Yep (with or without the leading space)
+    if id(tok) not in _YES_IDS:
+        ids = set()
+        for w in ("Yes", "Yeah", "Yep", " Yes", " Yeah", " Yep", "yes", " yes", "No", " No", "Nope", " Nope", "no", " no"):
+            e = tok.encode(w)
+            if e: ids.add(e[0])
+        _YES_IDS[id(tok)] = ids
+    return _YES_IDS[id(tok)]
 DUNNO = re.compile(r"\b(i (don'?t|do not) know|no idea|no clue|not sure (what|how|if|about|i)|i have no|can'?t help|beyond me|not in my training|never heard of|i made that up|i invented|came from nowhere|not (a|an) \w+ expert|outside my weights|not my department)\b", re.I)
-DEFAULT = dict(prime=True, sampler="recipe03", best_of=1, verifier=None, controller=False, tau=0.5, act_mode=None, memory=None, seed=0)
+DEFAULT = dict(prime="first", sampler="sched", best_of=1, verifier=None, controller=False, tau=0.5, act_mode=None, memory=None, seed=0, ban_yesno=False)   # = the demo defaults
 _LINES = None
 
 def lines():
@@ -45,8 +55,10 @@ def trim(tok, ctx_ids, prime_len):
     return head + tail[-(MAX_CONTEXT - prime_len):]
 
 @torch.no_grad()
-def generate(m, tok, ctx, S, seed, act=None, act_mode=None, prime_len=0, prior=None):
-    """prior: list of the Oracle's earlier replies in this conversation (cross-turn repetition control, half-strength)"""
+def generate(m, tok, ctx, S, seed, act=None, act_mode=None, prime_len=0, prior=None, user=None, ban_yesno=False):
+    """prior: the Oracle's earlier replies (cross-turn repetition control); user + ban_yesno: no Yes/No opener unless asked yes/no (off by default:
+    banning tokens only moves the reflex to the next stock opener — "No" 13/30, then "Sure"/"Thank you"; prime-first is the real fix)"""
+    ban_yes = ban_yesno and user is not None and not YESNO_Q.search(user.strip())
     if act and act_mode == "token": ctx = ctx + " *" + act
     ids = trim(tok, list(tok.encode(ctx)), prime_len); out = []
     prior_ids = [t for r in (prior or []) for t in tok.encode(" " + r)]; prior_set = set(prior_ids)
@@ -71,6 +83,8 @@ def generate(m, tok, ctx, S, seed, act=None, act_mode=None, prime_len=0, prior=N
         if n and len(out) >= n - 1:
             tail = tuple(out[len(out) - (n - 1):])
             for b in {out[i + n - 1] for i in range(len(out) - n + 1) if tuple(out[i:i + n - 1]) == tail}: logits[b] = float("-inf")
+        if ban_yes and re.match(r"^\s*(\*\w*\s*)?$", detok(tok, out)):   # first word of the reply proper (after a plan token, if any)
+            for b in yes_ids(tok): logits[b] = float("-inf")
         logits[1] = float("-inf"); logits = logits / S["temperature"]
         v, _ = torch.topk(logits, S["top_k"]); logits[logits < v[-1]] = float("-inf")
         nxt = torch.multinomial(torch.softmax(logits, dim=-1), 1).item(); t = tok._tok.id_to_token(nxt) or ""
@@ -92,9 +106,9 @@ def respond(m, tok, history, user, cfg=None):
     info = {"n": c["best_of"], "forced": False, "fallback": False, "score": None}
     prior = [h["oracle"] for h in history]
     if c["best_of"] <= 1 or not c["verifier"]:
-        return generate(m, tok, ctx, S, c["seed"], prime_len=prime_len, prior=prior), info
+        return generate(m, tok, ctx, S, c["seed"], prime_len=prime_len, prior=prior, user=user, ban_yesno=c["ban_yesno"]), info
     V = _VER.setdefault(c["verifier"], pickle.load(open(c["verifier"], "rb")))
-    cands = [generate(m, tok, ctx, S, c["seed"] * 100 + s, prime_len=prime_len, prior=prior) for s in range(c["best_of"])]
+    cands = [generate(m, tok, ctx, S, c["seed"] * 100 + s, prime_len=prime_len, prior=prior, user=user, ban_yesno=c["ban_yesno"]) for s in range(c["best_of"])]
     sc = [verifier_score(m, tok, V, user, r) for r in cands]; b = int(np.argmax(sc)); best, score = cands[b], sc[b]
     if c["controller"] and score < c["tau"] and c["act_mode"]:
         info["forced"] = True

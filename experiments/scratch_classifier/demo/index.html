@@ -425,6 +425,11 @@
     const priorSet = new Set(priorIds), priorGrams = new Set();
     for (let j = 0; j + 3 <= priorIds.length; j++) priorGrams.add(priorIds[j] + ',' + priorIds[j + 1] + ',' + priorIds[j + 2]);
     const crossPenalty = S.repPenalty !== 1.0 ? 1 + (S.repPenalty - 1) * 0.5 : 1.0;   // half-strength across turns
+    // first-token rule: the corpus opens replies with "Yes" far too often; only allow it when the user actually asked a yes/no question
+    const lastUser = transcript.length && transcript[transcript.length - 1].role === 'user' ? transcript[transcript.length - 1].text : '';
+    const BAN_YESNO = false;   // off: banning Yes/No openers only moves the reflex to the next stock word; prime-first fixes openers instead
+    const banYes = BAN_YESNO && !/^\s*(is|are|do|does|did|can|could|would|will|have|has|was|were|should|am|isn't|aren't|don't|doesn't|anyone|anything)\b.*\?\s*$/i.test(lastUser.trim());
+    const yesIds = new Set(['Yes', 'Yeah', 'Yep', ' Yes', ' Yeah', ' Yep', 'yes', ' yes', 'No', ' No', 'Nope', ' Nope', 'no', ' no'].map(w => tokenizer.encode(w)[0]).filter(v => v !== undefined));
     for (let i = 0; i < MAX_NEW_TOKENS; i++) {
       const input = new ort.Tensor('int64', BigInt64Array.from(ids.map(BigInt)), [1, ids.length]);
       const results = await session.run({ input_ids: input });
@@ -443,6 +448,7 @@
         }
       }
       last[UNK_ID] = -Infinity;
+      if (banYes && /^\s*(\*\w*\s*)?$/.test(tokenizer.decode(generated))) for (const t of yesIds) last[t] = -Infinity;   // first word after the plan token, if any
       for (let v = 0; v < vocabSize; v++) last[v] /= S.temperature;
       const indexed = Array.from(last).map((v, k) => [v, k]).sort((a, b) => b[0] - a[0]).slice(0, S.topK);
       const maxVal = indexed[0][0];

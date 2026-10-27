@@ -2,7 +2,7 @@
 
 Purpose: let a fresh Claude Code session pick up this research program with as little loss as possible. Keep it short;
 the durable record is `RESEARCH_LOG.md` (lab notebook, append-only, every result the turn it lands). Update this file at
-the end of every working block (not just at the end of a session). Last update: **2026-10-26, 21:00 PDT**.
+the end of every working block (not just at the end of a session). Last update: **2026-10-26, 22:06 PDT**.
 
 ## How to resume (5 minutes)
 1. Read this file, then the last ~300 lines of `RESEARCH_LOG.md` (`tail -300 RESEARCH_LOG.md`).
@@ -15,20 +15,17 @@ the end of every working block (not just at the end of a session). Last update: 
    first; checkpoint + `python3 -u` + resume before launching; pull checkpoints during training; destroy the instance in a
    trap; results in tag-specific files, merge never overwrite; WebSearch 200/session cap → Chrome tools / playwright.
 
-## Running right now (2026-10-26, 15:13 PDT)
-- **Nothing on GPU.** Demo server 127.0.0.1:8765. STANDING RULES (memory): v2 lineage only; no GPU rental without a <30 min local signal; multi-turn
-  probes must use a reactive simulated user (`atl_probe_simuser.py`, staged, an agent writes the user turns) — scripted follow-ups are retired.
-- **Sub-agent** playing the simulated user on `best_lm_oracle_v2_grown_life8.pt` → `pile_runs/atl/sim_v2_grown_life8.jsonl` (90 rows). Then: add it to
-  the blind conversation pairs (`demo/blind_convs.json`, key `blind_convs2_key.json`) and ask Nico to pick.
-- **Waiting on Nico:** (1) picks on `demo/blind_convs.html` (30 reactive-user pairs v2 vs 8.5M; export `blind_conv_picks2.json`); (2) his edits of
-  the 20 Oracle-self lines on `demo/review_lines.html` (export `oracle_lines.json` → paste into `LIFE_A` in `fix_chat_v2.py`, regenerate, retrain).
-- **Best v2-lineage model so far:** `best_lm_oracle_v2_grown_life8.pt` (v2 widened to 8.5M, 8 ep on `chat_v2_fix`: names filled, Oracle-as-human
-  dropped, 887 self-intros → Tiny Oracle, 7,019 life/hobby replies → Oracle-self lines, 154 user-side names, 2,165 ghost addresses). Identity probe:
-  name 28/32, human-life drift 8/96 (was 22–28). Demo entry `v2_grown_life8_int8`. Corpus regenerated since (ghost addresses, `[user 1's name]`) —
-  NOT yet retrained on the latest regeneration; retrain after Nico's line edits land.
-- Day's findings worth knowing: growth of v2 is a behavioural no-op until given new data (tie 83–89%); Nico's blind single-turn picks favour the
-  8.5M persona model 6–2 and the LLM grader total predicts his picks 24/25; his conversation picks were 13/17 "both bad" and the scripted-user
-  transcripts were rejected; plan token on v2: forced *me fixes the name turn 32/32 but cannot fix drift the data does not contain.
+## Running right now (2026-10-26 22:06 PDT)
+- **MPS: v3c** (v2 arch from scratch on the bible corpus, stock openers stripped; tests whether the "Yes, it is" reflex is data or inheritance)
+  → `scratch_fix_3c.sh`, lands in the demo as v3c. Nothing on GPU. Demo served by `demo_server.py` on 8765 (COOP/COEP → 16-thread WASM).
+- **Models that matter now:** `best_lm_oracle_v2_grown_ct3.pt` (merge: admit act + plan token + 770 loss-masked recoveries + bible) = best by
+  the grader (turns 2–3 on-thread 47–50%, ignores-pushback 5–7%, self-corrects 18–20%); `best_lm_oracle_v2_grown_ct2.pt` = Nico's pick by feel
+  (the most engaging; older corpus, invents family). Demo defaults: no full priming — **prime first reply only**, `sched` sampler, cross-turn
+  repetition control, crawler on, teach mode available.
+- **Harness lessons (all logged today):** probes must run through `harness.py` with the demo config; full priming doubles later-turn drift and
+  halves following; T0.3 is right for the opener only; best-of-4 + verifier does not help conversations (verifier needs conversation labels);
+  the controller over-triggers (parked). DAgger: the model's own bad turns must be loss-masked (`ctx_oracle_turns`), or it learns them.
+- **Waiting on Nico:** teach-mode corrections (export), engagement export, his verdict on ct3 with prime-first, the crawler look.
 
 ## Done this block (all logged in RESEARCH_LOG.md, same date)
 - **Persona-dose model** (conv + 110 hand-written × 47) beats v2 and conv on every set; demo default. Human-name bug traced to

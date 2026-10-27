@@ -5215,3 +5215,16 @@ The merge keeps the act selection Nico likes and adds the following; its openers
 helps openers and hurts later turns (earlier ablation) → implemented `prime: "first"` in the harness and the demo (the example is in the
 context for the first reply only, then dropped): ct3 identity 32/32, 2/96; turn-1 "Yes" openers 0/30. Reactive pass for prime-first generating.
 Demo default: "prime 1st reply" checked.
+
+## 2026-10-26 22:06 PDT — Prime-first vs no-prime on the merge model (`grades_primefirst_mt_blind2`): a trade, front-loaded
+
+| | no prime | **prime first reply only** |
+|---|---|---|
+| turn 1 on-thread ≥2 / persona / memorized-line | 13% / 0.97 / 87% | **50% / 1.57 / 0%** |
+| turns 2–3 on-thread ≥2 / ignores-pushback / self-corrects | **50%** / 7% / 18% | 37% / 10% / 12% |
+| on-thread ≥2 over all 90 turns | 34 | **37** |
+| paired on-thread turns 2–3 (no-prime vs prime-first) | 27/14/19 | — |
+Priming the first reply fixes the opener completely (no stock lines) and costs some of the later-turn following; whole-conversation totals are
+about even (37 vs 34 of 90), front-loaded. Decision: prime-first stays the demo default (the opener is the first impression, and the "Yes, it is"
+reflex was Nico's first complaint); the later-turn cost is the next thing to recover (e.g. drop the primed example from context after turn 2
+is already what we do; try priming with a bible line instead of the 2-turn persona example).

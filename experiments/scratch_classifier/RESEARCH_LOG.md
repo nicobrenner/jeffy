@@ -5228,3 +5228,11 @@ Priming the first reply fixes the opener completely (no stock lines) and costs s
 about even (37 vs 34 of 90), front-loaded. Decision: prime-first stays the demo default (the opener is the first impression, and the "Yes, it is"
 reflex was Nico's first complaint); the later-turn cost is the next thing to recover (e.g. drop the primed example from context after turn 2
 is already what we do; try priming with a bible line instead of the 2-turn persona example).
+
+## 2026-10-26 22:13 PDT — v3c (from scratch, bible corpus, stock openers stripped): the "Yes, it is" reflex is NOT the stripped lines
+
+`oracle_v3c_scratch` val 1.6696; identity name 24/32, drift 10/96; turn-1 openers still "Yes, it is" 15/30 (+6 other "Yes…") — a from-scratch
+model on a corpus with the "(Yes|No), (it is|I am…)" forms removed still opens with Yes. The reflex is the first-token distribution of Oracle
+turns at large ("Yes" is the most common first word, mostly after yes/no questions, which the probes' openers are not). Two fixes: harness —
+ban "Yes/Yeah" as the first token when the user's message is not a yes/no question (immediate, testable); data — strip "Yes, " prefixes after
+non-yes/no turns more broadly for the next retrain. v3c itself: weaker than the grown lineage on identity (24/32), same as v3b.

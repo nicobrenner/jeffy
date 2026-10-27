@@ -5536,3 +5536,17 @@ growth with tokens. Recap recall 31/80 = 39% (best); signature 3.16 → 2.50 (be
 Read: at 2 layers / d256 the copy circuit's ceiling is low, and the curriculum dose is too high for the character.
 Next scout (local, ~45 min, `preln_l3.sh`): pre-LN, **3 layers** (3.5M params; more heads to split previous-token / induction
 roles), synthetic share cut to 5k rows (12%), 50 epochs; same gates. After that: stop and wait for Nico's decision.
+
+## 2026-10-27 06:24 PDT — 3 layers + low synthetic dose: copying collapses, drift stays high. Lineage scouting stops here
+v5_preln_l3 (pre-LN, 3 layers = 3.5M, synthetic share 16%, 50 epochs): copy_probe 1/48 · recap recall 27/80 = 34% ·
+identity 27/32, human-life 9/96 · val ppl 4.1 (2-layer 100-epoch: 3.1) · turn-1 replies drift ("Honey, do you want to run a
+marathon?" to "bye"). Read: (1) the copy-probe gains were carried by the synthetic dose — cut it and the probe falls to 1/48
+even with a third layer; (2) the real-session recap recall is the robust gain: 34–39% for every pre-LN variant vs 10% for ct2,
+largely independent of dose and depth; (3) the third layer did not help at this budget and the persona got worse.
+Summary of the night's lineage scouts (from scratch, same corpus + recap rows; copy/48 · recall/80 · identity/32 · drift/96):
+  post-LN 2L (20 ep)                0 ·  8 · 30 · —      pre-LN 2L (20 ep)              8 · 28 · 32 · 1
+  pre-LN 2L (50 ep)                15 · 29 · 30 · 1      pre-LN 2L (100 ep)            11 · 31 · 31 · 9
+  pre-LN RoPE 2L (20 ep)            0 · 18 · 31 · 1      pre-LN 3L, 16% synth (50 ep)   1 · 27 · 27 · 9
+Recommendation unchanged and now bounded: pre-LN, 2 layers, 20–50 epochs, synthetic dose is a persona-vs-copy dial that
+Nico sets (43% = copies, drifts; 16% = clean-ish, no copy). The honest capability today: a pre-LN 2.7M reads a recap line
+about a third of the time. No further scouts without Nico.

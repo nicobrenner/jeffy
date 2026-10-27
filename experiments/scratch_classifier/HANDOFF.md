@@ -2,7 +2,7 @@
 
 Purpose: let a fresh Claude Code session pick up this research program with as little loss as possible. Keep it short;
 the durable record is `RESEARCH_LOG.md` (lab notebook, append-only, every result the turn it lands). Update this file at
-the end of every working block (not just at the end of a session). Last update: **2026-10-27, 05:42 PDT**.
+the end of every working block (not just at the end of a session). Last update: **2026-10-27, 06:24 PDT**.
 
 ## How to resume (5 minutes)
 1. Read this file, then the last ~400 lines of `RESEARCH_LOG.md` (`tail -400 RESEARCH_LOG.md`).
@@ -21,19 +21,17 @@ the end of every working block (not just at the end of a session). Last update: 
    fine-tunes, all from-scratch post-LN scouts; `induction_probe*.py` flat. Unit tests at the Oracle's width: post-LN never
    forms induction heads in 2k steps, pre-LN does (repeat loss 8.3 → 0.16). Pre-LN scouts copy (8–15/48), recap recall
    35–39% (ct2 10%), identity 30–32/32. RoPE scout: 0/48 at 20 epochs, parked (window extension later, budget more tokens).
-2. **Depth:** 2 layers plateau at ~25% of the copy probe by epoch 20 (100-epoch run: 14/10/15/9/11 of 48). A 3-layer
-   (3.5M) low-dose scout is RUNNING (`preln_l3.sh`). Yes/no to 3 layers if it clearly wins on copy + identity + persona.
-3. **Synthetic copy rows:** at 43% of the data they leak into the persona (drift 9/96; "You're a florist. I remember the
-   useful things" to a newcomer). Keep ≤12–16% (`data/chat_v2ms5_train.jsonl`). Confirm.
+2. **Depth: stay at 2 layers.** The 3-layer low-dose scout lost on every gate (copy 1/48, identity 27/32, drift 9/96, ppl 4.1).
+3. **Synthetic copy dose is a dial, not a fix:** 43% → copies (15/48) but drifts (9/96); 16% → no copying (1/48). Real-session
+   recap recall is 34–39% at any dose (ct2 10%). Nico sets the dial; ~25% untested.
 4. **Demo gate:** no pre-LN model in the dropdown until identity drift ≤2/96 AND it reads as the character in a blind pair vs ct2.
 5. **Tone judge v1** (`checkpoints/tone_v1.pkl`, 659 LLM labels) is a meter only (mean/warm unlearned, 23/24 labels).
    The labeller rates ct3 above ct2 on wit; Nico's feel is the opposite → next labels must be his picks on shares/reactions.
 6. Still open from earlier: crawler/room verdicts (v5 look, pick-up, Oracle remarks), teach-mode corrections export,
    README/benchmark correction, posts, ct3-vs-ct2 with prime-first.
 
-## Running right now (2026-10-27 05:42 PDT)
-- **MPS: `preln_l3.sh`** (pre-LN, 3 layers, 50 epochs, synthetic share 16%) → copy/recall/induction/identity/simuser turn 1,
-  lands in `logs/preln_l3.log` (PRELN_L3_DONE). Nothing on GPU. Demo served by `demo_server.py` on 8765.
+## Running right now (2026-10-27, 06:24 PDT)
+- **Nothing running.** Nothing on GPU. Demo served by `demo_server.py` on 8765. Lineage scouting stopped pending Nico.
 - **Models that matter:** `best_lm_oracle_v2_grown_ct2.pt` = Nico's pick (demo default; cannot copy from context — the memory
   line is invisible to it); `best_lm_oracle_v5_preln100.pt` / `_preln50.pt` = best copiers (not in the demo); `ct3` = grader's pick.
 

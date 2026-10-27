@@ -230,7 +230,7 @@
     <option value="recipe">T0.5 + penalties</option>
     <option value="old">T0.8 (old demo)</option>
   </select>
-  <label style="font-size:12px;color:var(--fg-dim);display:flex;align-items:center;gap:4px"><input type="checkbox" id="prime-check"> prime</label>
+  <label style="font-size:12px;color:var(--fg-dim);display:flex;align-items:center;gap:4px"><input type="checkbox" id="prime-check" checked> prime 1st reply</label>
   <label style="font-size:12px;color:var(--fg-dim);display:flex;align-items:center;gap:4px" title="Click any Oracle reply to rewrite it; rewrites are saved as training examples"><input type="checkbox" id="teachCheck"> teach</label>
   <span id="teachCount" style="font-size:12px;color:var(--fg-dim)"></span>
   <button id="teachExport" class="suggestion" style="font-size:12px" title="Download corrections.jsonl">export</button>
@@ -407,9 +407,9 @@
   function fmtSystem() { return model.format === 'plain' ? 'System: ' + SYSTEM_PROMPT : '<|system|> ' + SYSTEM_PROMPT; }
   function fmtUserTurn(text) { return model.format === 'plain' ? '\nUser: ' + text + '\nOracle:' : '\n<|user|> ' + text + '\n<|oracle|>'; }
   function fmtOracleText(text) { return ' ' + text; }
-  function buildPrime() {
+  function buildPrime(force) {
     let t = fmtSystem();
-    if (primeCheck.checked) for (const [u, o] of PRIME) t += fmtUserTurn(u) + fmtOracleText(o);
+    if (primeCheck.checked && (force || transcript.length < 2)) for (const [u, o] of PRIME) t += fmtUserTurn(u) + fmtOracleText(o);   // first reply only
     return t;
   }
 
@@ -668,6 +668,7 @@
       if (model.format === 'plain') response = response.split('\n')[0].replace(/^User:.*$/, '').trim();
       conversationIds.push(...tokenizer.encode(fmtOracleText(response)));
       oracleDiv.textContent = response || '(empty response)'; transcript.push({ role: 'oracle', text: response }); oracleDiv.dataset.turn = transcript.length - 1; makeEditable(oracleDiv); logEvent('oracle', { turn: transcript.length, len: response.length }); Crawler.on({ type: 'oracle' });
+      if (primeCheck.checked && transcript.length === 2) rebuildIds();   // the primed example served its purpose: drop it from the context from here on
     } catch (e) { oracleDiv.textContent = '(generation error: ' + e.message + ')'; console.error(e); }
     chatEl.scrollTop = chatEl.scrollHeight;
     statusEl.textContent = 'Ready'; setBusy(false); inputEl.focus();
@@ -682,7 +683,7 @@
     convId = Date.now(); logEvent('load'); Crawler.on({ type: 'reset' });
     conversationIds = tokenizer.encode(buildPrime()); transcript = [];
     chatEl.innerHTML = '';
-    addMessage('system-msg', model.label + ' loaded (' + model.size + '). ' + (primeCheck.checked ? 'Primed with a two-turn example.' : 'No priming.') + ' Sampler: ' + samplerSel.options[samplerSel.selectedIndex].text + '.');
+    addMessage('system-msg', model.label + ' loaded (' + model.size + '). ' + (primeCheck.checked ? 'Primed for the first reply only.' : 'No priming.') + ' Sampler: ' + samplerSel.options[samplerSel.selectedIndex].text + '.');
     addMessage('oracle', "I'm Tiny Oracle. Ask me anything -- just don't expect too much.");
     showSuggestions();
   }

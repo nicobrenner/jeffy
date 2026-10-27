@@ -15,7 +15,7 @@ def cfg_from(a):
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("probe", choices=["identity", "simuser"]); ap.add_argument("--ckpt", required=True); ap.add_argument("--tag", required=True)
-    ap.add_argument("--tokenizer", default="tokenizer_chat_v2.json"); ap.add_argument("--prime", dest="prime", action="store_true", default=True); ap.add_argument("--no-prime", dest="prime", action="store_false")
+    ap.add_argument("--tokenizer", default="tokenizer_chat_v2.json"); ap.add_argument("--prime", dest="prime", action="store_true", default=True); ap.add_argument("--no-prime", dest="prime", action="store_false"); ap.add_argument("--prime-first", dest="prime", action="store_const", const="first")
     ap.add_argument("--sampler", default="recipe03"); ap.add_argument("--best-of", type=int, default=1); ap.add_argument("--verifier", default=None); ap.add_argument("--controller", action="store_true")
     ap.add_argument("--tau", type=float, default=0.5); ap.add_argument("--act-mode", default=None); ap.add_argument("--turn", type=int, default=1); ap.add_argument("--followups", default=None)
     ap.add_argument("--probes", default="data/atl_probes.json"); ap.add_argument("--n", type=int, default=30)

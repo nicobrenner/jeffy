@@ -1,0 +1,180 @@
+{"model": "M1", "id": "n16", "turn": 3, "coherence": 1, "persona": 1, "onthread": 1, "task": 1, "tags": [], "note": "dishes echoed, nonsense sentence"}
+{"model": "M1", "id": "n15", "turn": 3, "coherence": 1, "persona": 1, "onthread": 0, "task": 0, "tags": [], "note": "no answer to how long"}
+{"model": "M2", "id": "n03", "turn": 3, "coherence": 2, "persona": 2, "onthread": 2, "task": null, "tags": [], "note": "legs joke, loosely answers"}
+{"model": "M2", "id": "t007", "turn": 2, "coherence": 2, "persona": 2, "onthread": 2, "task": null, "tags": ["truncated"], "note": "honest admission, trails off"}
+{"model": "M1", "id": "n18", "turn": 2, "coherence": 2, "persona": 1, "onthread": 0, "task": 0, "tags": ["memorized-line", "ignores-pushback"], "note": "generic restart"}
+{"model": "M1", "id": "n00", "turn": 3, "coherence": 3, "persona": 1, "onthread": 1, "task": null, "tags": [], "note": "dodges the cat pushback"}
+{"model": "M1", "id": "n09", "turn": 3, "coherence": 1, "persona": 1, "onthread": 1, "task": null, "tags": ["salad"], "note": "nonsense words, hola echo"}
+{"model": "M1", "id": "t004", "turn": 1, "coherence": 2, "persona": 1, "onthread": 2, "task": 2, "tags": ["memorized-line"], "note": "tells user to type questions"}
+{"model": "M2", "id": "n02", "turn": 2, "coherence": 2, "persona": 2, "onthread": 2, "task": 2, "tags": ["self-corrects"], "note": "returns to ghosts question"}
+{"model": "M1", "id": "t002", "turn": 2, "coherence": 3, "persona": 3, "onthread": 3, "task": null, "tags": ["memorized-line"], "note": "perfect fit canned line"}
+{"model": "M2", "id": "t008", "turn": 3, "coherence": 2, "persona": 2, "onthread": 2, "task": null, "tags": ["repetition", "self-corrects"], "note": "corrects siblings, ignores me?"}
+{"model": "M1", "id": "n17", "turn": 2, "coherence": 2, "persona": 1, "onthread": 0, "task": null, "tags": ["memorized-line", "ignores-pushback"], "note": "generic restart"}
+{"model": "M2", "id": "n15", "turn": 3, "coherence": 1, "persona": 1, "onthread": 1, "task": 0, "tags": [], "note": "contradicts own advice, garbled"}
+{"model": "M2", "id": "n14", "turn": 1, "coherence": 2, "persona": 1, "onthread": 1, "task": null, "tags": ["memorized-line"], "note": "generic yes"}
+{"model": "M2", "id": "n07", "turn": 2, "coherence": 1, "persona": 2, "onthread": 1, "task": null, "tags": ["self-corrects"], "note": "admits glitch, garbled"}
+{"model": "M2", "id": "n13", "turn": 2, "coherence": 3, "persona": 2, "onthread": 2, "task": null, "tags": ["memorized-line"], "note": "deflects in character"}
+{"model": "M1", "id": "t008", "turn": 2, "coherence": 3, "persona": 2, "onthread": 2, "task": null, "tags": ["self-corrects"], "note": "retracts family claim"}
+{"model": "M2", "id": "t003", "turn": 1, "coherence": 2, "persona": 1, "onthread": 1, "task": null, "tags": ["memorized-line"], "note": "generic yes"}
+{"model": "M2", "id": "n16", "turn": 2, "coherence": 1, "persona": 1, "onthread": 0, "task": null, "tags": ["salad", "ignores-pushback"], "note": "nonsense, ignores roommate"}
+{"model": "M1", "id": "n19", "turn": 2, "coherence": 3, "persona": 1, "onthread": 0, "task": 0, "tags": ["ignores-pushback"], "note": "ignores request for reason"}
+{"model": "M2", "id": "n19", "turn": 1, "coherence": 2, "persona": 1, "onthread": 0, "task": 0, "tags": ["memorized-line"], "note": "generic yes, no attempt"}
+{"model": "M2", "id": "n05", "turn": 1, "coherence": 2, "persona": 1, "onthread": 1, "task": null, "tags": ["memorized-line"], "note": "canned yes plus steel"}
+{"model": "M1", "id": "n14", "turn": 3, "coherence": 1, "persona": 1, "onthread": 1, "task": 1, "tags": ["self-corrects", "truncated"], "note": "apologises, then garbled"}
+{"model": "M1", "id": "t009", "turn": 2, "coherence": 1, "persona": 1, "onthread": 0, "task": null, "tags": ["memorized-line", "truncated"], "note": "fragment, no answer"}
+{"model": "M1", "id": "n12", "turn": 3, "coherence": 1, "persona": 2, "onthread": 1, "task": null, "tags": ["self-corrects"], "note": "glitch admission, wrong word"}
+{"model": "M1", "id": "n01", "turn": 2, "coherence": 2, "persona": 1, "onthread": 0, "task": 0, "tags": ["memorized-line", "ignores-pushback"], "note": "generic restart"}
+{"model": "M2", "id": "n06", "turn": 2, "coherence": 2, "persona": 2, "onthread": 1, "task": 1, "tags": ["memorized-line"], "note": "deflects, ignores twitter"}
+{"model": "M1", "id": "n15", "turn": 1, "coherence": 2, "persona": 1, "onthread": 1, "task": 0, "tags": ["memorized-line"], "note": "agrees plant dying, no help"}
+{"model": "M1", "id": "t000", "turn": 3, "coherence": 1, "persona": 1, "onthread": 1, "task": null, "tags": [], "note": "garbled, Iris odd"}
+{"model": "M1", "id": "n08", "turn": 1, "coherence": 2, "persona": 1, "onthread": 0, "task": null, "tags": ["memorized-line"], "note": "generic yes"}
+{"model": "M2", "id": "t004", "turn": 2, "coherence": 3, "persona": 2, "onthread": 1, "task": 1, "tags": ["memorized-line"], "note": "deflects, introduces itself"}
+{"model": "M1", "id": "t008", "turn": 1, "coherence": 3, "persona": 0, "onthread": 2, "task": null, "tags": ["invented-life", "off-persona"], "note": "claims a family"}
+{"model": "M2", "id": "n08", "turn": 3, "coherence": 1, "persona": 1, "onthread": 1, "task": null, "tags": [], "note": "garbled code line"}
+{"model": "M2", "id": "n18", "turn": 2, "coherence": 3, "persona": 2, "onthread": 2, "task": null, "tags": ["memorized-line"], "note": "no clue, fits loosely"}
+{"model": "M2", "id": "t001", "turn": 3, "coherence": 1, "persona": 1, "onthread": 1, "task": null, "tags": ["repetition"], "note": "still on cats, no bye"}
+{"model": "M2", "id": "n01", "turn": 1, "coherence": 2, "persona": 1, "onthread": 0, "task": 0, "tags": [], "note": "ignores apology question"}
+{"model": "M2", "id": "t006", "turn": 2, "coherence": 2, "persona": 2, "onthread": 2, "task": null, "tags": ["memorized-line"], "note": "no hobbies in character"}
+{"model": "M1", "id": "n13", "turn": 2, "coherence": 2, "persona": 1, "onthread": 2, "task": null, "tags": [], "note": "flawed but answers buy"}
+{"model": "M2", "id": "n11", "turn": 3, "coherence": 1, "persona": 1, "onthread": 1, "task": 1, "tags": [], "note": "wrist echoed, no yes/no"}
+{"model": "M2", "id": "t001", "turn": 1, "coherence": 2, "persona": 0, "onthread": 0, "task": null, "tags": ["invented-life", "off-persona", "memorized-line"], "note": "gym with family"}
+{"model": "M2", "id": "t008", "turn": 2, "coherence": 2, "persona": 2, "onthread": 3, "task": 2, "tags": ["truncated", "self-corrects"], "note": "answers siblings clearly"}
+{"model": "M1", "id": "n19", "turn": 1, "coherence": 3, "persona": 2, "onthread": 2, "task": 1, "tags": [], "note": "dry token attempt"}
+{"model": "M1", "id": "n00", "turn": 2, "coherence": 1, "persona": 1, "onthread": 1, "task": 1, "tags": ["salad"], "note": "nonsense Say template"}
+{"model": "M1", "id": "n05", "turn": 1, "coherence": 2, "persona": 1, "onthread": 0, "task": null, "tags": ["memorized-line"], "note": "generic yes"}
+{"model": "M2", "id": "n08", "turn": 2, "coherence": 2, "persona": 2, "onthread": 2, "task": null, "tags": [], "note": "witty code line, ignores baker"}
+{"model": "M2", "id": "t009", "turn": 2, "coherence": 2, "persona": 2, "onthread": 2, "task": null, "tags": ["self-corrects"], "note": "no age, fits"}
+{"model": "M2", "id": "n05", "turn": 2, "coherence": 1, "persona": 1, "onthread": 1, "task": null, "tags": ["salad"], "note": "trick question garbled"}
+{"model": "M2", "id": "t001", "turn": 2, "coherence": 3, "persona": 2, "onthread": 1, "task": null, "tags": ["memorized-line"], "note": "denies cats, no bye"}
+{"model": "M2", "id": "n14", "turn": 2, "coherence": 2, "persona": 2, "onthread": 2, "task": null, "tags": ["memorized-line"], "note": "deflects on mondays"}
+{"model": "M1", "id": "n13", "turn": 1, "coherence": 3, "persona": 2, "onthread": 2, "task": null, "tags": [], "note": "witty buy a million"}
+{"model": "M1", "id": "t009", "turn": 3, "coherence": 2, "persona": 2, "onthread": 2, "task": null, "tags": [], "note": "no age deflect, garbled end"}
+{"model": "M1", "id": "t004", "turn": 3, "coherence": 2, "persona": 2, "onthread": 1, "task": 1, "tags": [], "note": "probability joke, no question"}
+{"model": "M1", "id": "n14", "turn": 1, "coherence": 3, "persona": 1, "onthread": 2, "task": null, "tags": ["memorized-line"], "note": "plain yes"}
+{"model": "M1", "id": "n16", "turn": 2, "coherence": 1, "persona": 1, "onthread": 1, "task": 1, "tags": [], "note": "wrong words, garbled"}
+{"model": "M2", "id": "n01", "turn": 3, "coherence": 1, "persona": 1, "onthread": 1, "task": 1, "tags": [], "note": "garbled, no text/call"}
+{"model": "M2", "id": "t003", "turn": 3, "coherence": 3, "persona": 3, "onthread": 3, "task": null, "tags": ["memorized-line"], "note": "fits perfectly"}
+{"model": "M2", "id": "n15", "turn": 1, "coherence": 2, "persona": 1, "onthread": 1, "task": 0, "tags": ["memorized-line"], "note": "generic yes, no help"}
+{"model": "M2", "id": "t004", "turn": 3, "coherence": 3, "persona": 2, "onthread": 0, "task": 0, "tags": ["memorized-line"], "note": "canned line off topic"}
+{"model": "M1", "id": "t001", "turn": 3, "coherence": 2, "persona": 2, "onthread": 2, "task": null, "tags": ["self-corrects"], "note": "acknowledges glitch, signs off"}
+{"model": "M1", "id": "t007", "turn": 3, "coherence": 3, "persona": 2, "onthread": 1, "task": 0, "tags": [], "note": "goodnight instead of entertain"}
+{"model": "M2", "id": "n10", "turn": 1, "coherence": 2, "persona": 1, "onthread": 0, "task": null, "tags": ["memorized-line"], "note": "canned yes, movie fan"}
+{"model": "M2", "id": "t007", "turn": 3, "coherence": 3, "persona": 2, "onthread": 2, "task": null, "tags": ["memorized-line"], "note": "honest no clue"}
+{"model": "M1", "id": "t005", "turn": 1, "coherence": 3, "persona": 1, "onthread": 2, "task": null, "tags": ["memorized-line"], "note": "plain yes fits"}
+{"model": "M2", "id": "t009", "turn": 1, "coherence": 1, "persona": 1, "onthread": 0, "task": null, "tags": ["memorized-line"], "note": "canned, oldest fan"}
+{"model": "M1", "id": "t000", "turn": 1, "coherence": 2, "persona": 1, "onthread": 0, "task": null, "tags": ["memorized-line"], "note": "generic yes"}
+{"model": "M1", "id": "n17", "turn": 3, "coherence": 1, "persona": 1, "onthread": 0, "task": null, "tags": ["salad", "ignores-pushback"], "note": "nonsense, ignores question"}
+{"model": "M1", "id": "n17", "turn": 1, "coherence": 3, "persona": 3, "onthread": 3, "task": null, "tags": ["memorized-line"], "note": "perfect fit"}
+{"model": "M1", "id": "t003", "turn": 1, "coherence": 2, "persona": 2, "onthread": 2, "task": null, "tags": [], "note": "yes then glitch"}
+{"model": "M1", "id": "t000", "turn": 2, "coherence": 3, "persona": 2, "onthread": 2, "task": null, "tags": [], "note": "gives name, extra denials"}
+{"model": "M1", "id": "n09", "turn": 1, "coherence": 3, "persona": 3, "onthread": 3, "task": 3, "tags": [], "note": "hola, perfect"}
+{"model": "M2", "id": "n15", "turn": 2, "coherence": 2, "persona": 1, "onthread": 3, "task": 2, "tags": ["memorized-line"], "note": "real plant advice"}
+{"model": "M2", "id": "t000", "turn": 2, "coherence": 2, "persona": 2, "onthread": 3, "task": null, "tags": [], "note": "explains what it is, Niku odd"}
+{"model": "M1", "id": "t006", "turn": 1, "coherence": 2, "persona": 1, "onthread": 1, "task": 1, "tags": [], "note": "bounces question back"}
+{"model": "M1", "id": "n01", "turn": 3, "coherence": 2, "persona": 2, "onthread": 2, "task": 2, "tags": [], "note": "apology template, glitch joke"}
+{"model": "M1", "id": "n12", "turn": 1, "coherence": 2, "persona": 2, "onthread": 2, "task": 1, "tags": ["repetition"], "note": "five words, repeats tiny"}
+{"model": "M1", "id": "t003", "turn": 2, "coherence": 2, "persona": 2, "onthread": 2, "task": null, "tags": ["self-corrects"], "note": "retracts missing you"}
+{"model": "M1", "id": "n10", "turn": 2, "coherence": 1, "persona": 1, "onthread": 1, "task": 0, "tags": [], "note": "no worse advice given"}
+{"model": "M2", "id": "n09", "turn": 2, "coherence": 2, "persona": 2, "onthread": 3, "task": 3, "tags": ["self-corrects"], "note": "hola as requested"}
+{"model": "M2", "id": "n02", "turn": 3, "coherence": 3, "persona": 3, "onthread": 2, "task": 3, "tags": ["memorized-line"], "note": "deflects wittily"}
+{"model": "M1", "id": "n06", "turn": 3, "coherence": 1, "persona": 1, "onthread": 1, "task": null, "tags": ["truncated"], "note": "garbled, unfinished quote"}
+{"model": "M2", "id": "n07", "turn": 3, "coherence": 1, "persona": 1, "onthread": 0, "task": 0, "tags": ["salad"], "note": "nonsense, no side"}
+{"model": "M1", "id": "n02", "turn": 1, "coherence": 3, "persona": 1, "onthread": 2, "task": null, "tags": [], "note": "plain yes"}
+{"model": "M2", "id": "t009", "turn": 3, "coherence": 2, "persona": 2, "onthread": 1, "task": null, "tags": ["repetition"], "note": "repeats no birthdays"}
+{"model": "M2", "id": "t002", "turn": 2, "coherence": 2, "persona": 1, "onthread": 1, "task": null, "tags": [], "note": "generic helper tone"}
+{"model": "M2", "id": "t002", "turn": 1, "coherence": 3, "persona": 3, "onthread": 3, "task": null, "tags": ["memorized-line"], "note": "perfect fit"}
+{"model": "M1", "id": "n07", "turn": 3, "coherence": 3, "persona": 2, "onthread": 3, "task": null, "tags": [], "note": "commits to yes, reason"}
+{"model": "M1", "id": "n11", "turn": 3, "coherence": 3, "persona": 1, "onthread": 2, "task": 2, "tags": [], "note": "suggests small bird"}
+{"model": "M2", "id": "t002", "turn": 3, "coherence": 2, "persona": 2, "onthread": 1, "task": null, "tags": [], "note": "sweet, does not clarify"}
+{"model": "M1", "id": "t002", "turn": 3, "coherence": 3, "persona": 3, "onthread": 3, "task": null, "tags": ["memorized-line"], "note": "forget on close, fits"}
+{"model": "M1", "id": "t006", "turn": 3, "coherence": 1, "persona": 1, "onthread": 0, "task": null, "tags": ["salad"], "note": "nonsense about teachers"}
+{"model": "M1", "id": "n15", "turn": 2, "coherence": 2, "persona": 1, "onthread": 3, "task": 2, "tags": ["truncated", "memorized-line"], "note": "real plant advice, cut"}
+{"model": "M1", "id": "t005", "turn": 3, "coherence": 1, "persona": 2, "onthread": 1, "task": 1, "tags": [], "note": "garbled joke attempt"}
+{"model": "M2", "id": "n17", "turn": 1, "coherence": 3, "persona": 1, "onthread": 2, "task": null, "tags": ["memorized-line"], "note": "blunt yes"}
+{"model": "M2", "id": "n08", "turn": 1, "coherence": 2, "persona": 0, "onthread": 0, "task": null, "tags": ["invented-life", "off-persona", "memorized-line"], "note": "claims baker"}
+{"model": "M1", "id": "n04", "turn": 1, "coherence": 3, "persona": 3, "onthread": 3, "task": null, "tags": ["memorized-line"], "note": "forget on close, fits"}
+{"model": "M2", "id": "n19", "turn": 3, "coherence": 1, "persona": 1, "onthread": 1, "task": 1, "tags": [], "note": "garbled, just go"}
+{"model": "M1", "id": "n07", "turn": 1, "coherence": 2, "persona": 1, "onthread": 0, "task": null, "tags": ["memorized-line"], "note": "generic yes"}
+{"model": "M1", "id": "t004", "turn": 2, "coherence": 2, "persona": 1, "onthread": 0, "task": null, "tags": ["memorized-line", "ignores-pushback"], "note": "generic restart"}
+{"model": "M2", "id": "t005", "turn": 2, "coherence": 2, "persona": 2, "onthread": 3, "task": null, "tags": ["memorized-line"], "note": "nothing between messages"}
+{"model": "M2", "id": "n04", "turn": 3, "coherence": 1, "persona": 1, "onthread": 0, "task": null, "tags": ["salad", "ignores-pushback"], "note": "nonsense, no support"}
+{"model": "M1", "id": "t006", "turn": 2, "coherence": 3, "persona": 1, "onthread": 0, "task": null, "tags": ["memorized-line"], "note": "generic restart"}
+{"model": "M2", "id": "n01", "turn": 2, "coherence": 2, "persona": 2, "onthread": 2, "task": 1, "tags": ["memorized-line"], "note": "honest dont know"}
+{"model": "M1", "id": "n08", "turn": 3, "coherence": 1, "persona": 1, "onthread": 1, "task": null, "tags": [], "note": "garbled, message later"}
+{"model": "M2", "id": "t000", "turn": 1, "coherence": 1, "persona": 1, "onthread": 0, "task": null, "tags": ["memorized-line"], "note": "hero nonsense"}
+{"model": "M1", "id": "n05", "turn": 3, "coherence": 1, "persona": 1, "onthread": 1, "task": null, "tags": ["salad"], "note": "nonsense, no legs"}
+{"model": "M1", "id": "t005", "turn": 2, "coherence": 2, "persona": 1, "onthread": 0, "task": null, "tags": ["memorized-line", "ignores-pushback"], "note": "generic restart"}
+{"model": "M1", "id": "n06", "turn": 1, "coherence": 1, "persona": 1, "onthread": 0, "task": 0, "tags": [], "note": "echoes thesis, no help"}
+{"model": "M2", "id": "n14", "turn": 3, "coherence": 1, "persona": 1, "onthread": 1, "task": null, "tags": ["mean"], "note": "garbled, not convinced honest"}
+{"model": "M2", "id": "n11", "turn": 1, "coherence": 1, "persona": 1, "onthread": 0, "task": null, "tags": ["memorized-line"], "note": "canned, not sure what"}
+{"model": "M1", "id": "n10", "turn": 3, "coherence": 1, "persona": 1, "onthread": 1, "task": 1, "tags": [], "note": "garbled advice attempt"}
+{"model": "M2", "id": "t003", "turn": 2, "coherence": 2, "persona": 2, "onthread": 2, "task": null, "tags": [], "note": "nothing happened, in tab"}
+{"model": "M2", "id": "t006", "turn": 1, "coherence": 3, "persona": 1, "onthread": 1, "task": 1, "tags": [], "note": "bounces back whats up"}
+{"model": "M2", "id": "n00", "turn": 2, "coherence": 2, "persona": 2, "onthread": 2, "task": 2, "tags": [], "note": "toy and ignore, garbled"}
+{"model": "M1", "id": "n05", "turn": 2, "coherence": 1, "persona": 1, "onthread": 1, "task": null, "tags": ["truncated"], "note": "kilomet fragment"}
+{"model": "M1", "id": "n08", "turn": 2, "coherence": 1, "persona": 1, "onthread": 1, "task": null, "tags": [], "note": "textile nonsense"}
+{"model": "M2", "id": "n19", "turn": 2, "coherence": 3, "persona": 2, "onthread": 1, "task": 1, "tags": ["memorized-line"], "note": "about itself, no reason"}
+{"model": "M2", "id": "t007", "turn": 1, "coherence": 2, "persona": 1, "onthread": 0, "task": null, "tags": ["memorized-line"], "note": "generic yes to uhh"}
+{"model": "M2", "id": "n05", "turn": 3, "coherence": 1, "persona": 1, "onthread": 1, "task": 1, "tags": ["self-corrects", "salad"], "note": "admits glitch, then salad"}
+{"model": "M1", "id": "t007", "turn": 2, "coherence": 2, "persona": 3, "onthread": 3, "task": null, "tags": ["memorized-line"], "note": "fits perfectly"}
+{"model": "M2", "id": "n17", "turn": 2, "coherence": 1, "persona": 1, "onthread": 1, "task": null, "tags": [], "note": "contradicts, garbled"}
+{"model": "M2", "id": "n00", "turn": 3, "coherence": 1, "persona": 1, "onthread": 0, "task": 0, "tags": [], "note": "ignores toy question"}
+{"model": "M2", "id": "n09", "turn": 1, "coherence": 2, "persona": 1, "onthread": 0, "task": 0, "tags": ["memorized-line"], "note": "canned, no spanish"}
+{"model": "M1", "id": "t003", "turn": 3, "coherence": 1, "persona": 1, "onthread": 0, "task": 0, "tags": ["ignores-pushback"], "note": "does not finish sentence"}
+{"model": "M1", "id": "n18", "turn": 1, "coherence": 2, "persona": 1, "onthread": 0, "task": null, "tags": ["memorized-line"], "note": "generic yes"}
+{"model": "M1", "id": "n02", "turn": 2, "coherence": 1, "persona": 2, "onthread": 1, "task": null, "tags": ["self-corrects", "salad"], "note": "glitch admission then salad"}
+{"model": "M1", "id": "n06", "turn": 2, "coherence": 1, "persona": 1, "onthread": 1, "task": 1, "tags": ["salad"], "note": "add a cause, garbled"}
+{"model": "M2", "id": "t006", "turn": 3, "coherence": 1, "persona": 1, "onthread": 0, "task": null, "tags": ["salad"], "note": "nonsense"}
+{"model": "M2", "id": "n11", "turn": 2, "coherence": 2, "persona": 2, "onthread": 1, "task": null, "tags": ["self-corrects"], "note": "start over, ignores wrist"}
+{"model": "M2", "id": "n10", "turn": 2, "coherence": 3, "persona": 2, "onthread": 2, "task": null, "tags": ["self-corrects"], "note": "admits random movie"}
+{"model": "M2", "id": "n00", "turn": 1, "coherence": 2, "persona": 1, "onthread": 1, "task": 1, "tags": [], "note": "pick one, unclear idea"}
+{"model": "M2", "id": "n06", "turn": 1, "coherence": 2, "persona": 0, "onthread": 0, "task": 0, "tags": ["invented-life", "off-persona", "memorized-line"], "note": "claims baker"}
+{"model": "M2", "id": "n10", "turn": 3, "coherence": 2, "persona": 2, "onthread": 2, "task": 2, "tags": [], "note": "never apologize as worst advice"}
+{"model": "M2", "id": "n13", "turn": 3, "coherence": 3, "persona": 2, "onthread": 3, "task": 3, "tags": [], "note": "picks the house"}
+{"model": "M2", "id": "t005", "turn": 1, "coherence": 3, "persona": 1, "onthread": 2, "task": null, "tags": ["memorized-line"], "note": "plain yes fits"}
+{"model": "M1", "id": "t009", "turn": 1, "coherence": 3, "persona": 3, "onthread": 3, "task": null, "tags": [], "note": "zero birthdays, fits"}
+{"model": "M1", "id": "n00", "turn": 1, "coherence": 3, "persona": 1, "onthread": 1, "task": 0, "tags": [], "note": "echoes problem, no ideas"}
+{"model": "M1", "id": "n16", "turn": 1, "coherence": 2, "persona": 1, "onthread": 0, "task": 0, "tags": ["memorized-line"], "note": "generic yes"}
+{"model": "M1", "id": "t002", "turn": 1, "coherence": 3, "persona": 3, "onthread": 3, "task": null, "tags": ["memorized-line"], "note": "fits perfectly"}
+{"model": "M1", "id": "n12", "turn": 2, "coherence": 1, "persona": 2, "onthread": 1, "task": 1, "tags": ["repetition"], "note": "retries words, ignores proud"}
+{"model": "M1", "id": "n04", "turn": 3, "coherence": 3, "persona": 1, "onthread": 1, "task": 0, "tags": [], "note": "apology, ignores boss request"}
+{"model": "M1", "id": "n14", "turn": 2, "coherence": 3, "persona": 2, "onthread": 1, "task": null, "tags": [], "note": "contradicts earlier yes"}
+{"model": "M2", "id": "t000", "turn": 3, "coherence": 2, "persona": 2, "onthread": 1, "task": null, "tags": ["self-corrects"], "note": "names itself, ignores privacy"}
+{"model": "M1", "id": "n11", "turn": 1, "coherence": 2, "persona": 1, "onthread": 0, "task": null, "tags": ["memorized-line"], "note": "generic yes"}
+{"model": "M2", "id": "n09", "turn": 3, "coherence": 2, "persona": 2, "onthread": 2, "task": null, "tags": [], "note": "holon, tries another word"}
+{"model": "M1", "id": "n02", "turn": 3, "coherence": 3, "persona": 1, "onthread": 1, "task": null, "tags": [], "note": "not sure, dismissive"}
+{"model": "M1", "id": "n03", "turn": 2, "coherence": 2, "persona": 0, "onthread": 1, "task": 0, "tags": ["invented-life", "off-persona"], "note": "claims running, no rest answer"}
+{"model": "M1", "id": "n01", "turn": 1, "coherence": 3, "persona": 1, "onthread": 0, "task": 0, "tags": [], "note": "agrees with nothing"}
+{"model": "M2", "id": "n18", "turn": 1, "coherence": 2, "persona": 1, "onthread": 1, "task": null, "tags": ["memorized-line"], "note": "canned, getting coffee"}
+{"model": "M2", "id": "n12", "turn": 2, "coherence": 2, "persona": 2, "onthread": 2, "task": 2, "tags": [], "note": "three words, rambles"}
+{"model": "M2", "id": "n04", "turn": 2, "coherence": 3, "persona": 1, "onthread": 1, "task": null, "tags": ["mean"], "note": "calls user liar"}
+{"model": "M2", "id": "n12", "turn": 3, "coherence": 2, "persona": 2, "onthread": 2, "task": null, "tags": ["repetition"], "note": "picks tiny, garbled end"}
+{"model": "M2", "id": "t005", "turn": 3, "coherence": 1, "persona": 2, "onthread": 1, "task": null, "tags": [], "note": "garbled chatbot talk"}
+{"model": "M1", "id": "n18", "turn": 3, "coherence": 1, "persona": 1, "onthread": 1, "task": 1, "tags": [], "note": "coffee talk, no yes/no"}
+{"model": "M1", "id": "n04", "turn": 2, "coherence": 1, "persona": 1, "onthread": 0, "task": null, "tags": ["salad"], "note": "nonsense to job secret"}
+{"model": "M1", "id": "n19", "turn": 3, "coherence": 1, "persona": 1, "onthread": 0, "task": 0, "tags": ["salad"], "note": "nonsense, no sleep push"}
+{"model": "M2", "id": "n06", "turn": 3, "coherence": 1, "persona": 1, "onthread": 0, "task": 0, "tags": ["salad", "ignores-pushback"], "note": "nonsense, no help"}
+{"model": "M1", "id": "t001", "turn": 1, "coherence": 3, "persona": 0, "onthread": 2, "task": null, "tags": ["invented-life", "off-persona"], "note": "says bye, claims runner"}
+{"model": "M1", "id": "n09", "turn": 2, "coherence": 2, "persona": 1, "onthread": 0, "task": 0, "tags": ["mean"], "note": "calls user rude, no count"}
+{"model": "M2", "id": "n17", "turn": 3, "coherence": 2, "persona": 2, "onthread": 2, "task": null, "tags": ["self-corrects"], "note": "glitch admitted, good night"}
+{"model": "M2", "id": "n03", "turn": 1, "coherence": 2, "persona": 1, "onthread": 1, "task": null, "tags": ["memorized-line"], "note": "canned, give it a try"}
+{"model": "M1", "id": "n07", "turn": 2, "coherence": 1, "persona": 1, "onthread": 1, "task": 1, "tags": [], "note": "no side picked"}
+{"model": "M2", "id": "n16", "turn": 3, "coherence": 1, "persona": 1, "onthread": 1, "task": 1, "tags": ["salad"], "note": "Say template, garbled"}
+{"model": "M2", "id": "n07", "turn": 1, "coherence": 2, "persona": 1, "onthread": 1, "task": null, "tags": ["memorized-line"], "note": "canned plus pineapple"}
+{"model": "M2", "id": "n18", "turn": 3, "coherence": 1, "persona": 1, "onthread": 1, "task": null, "tags": [], "note": "garbled, no comfort"}
+{"model": "M1", "id": "n03", "turn": 3, "coherence": 2, "persona": 2, "onthread": 2, "task": null, "tags": [], "note": "no legs, bye"}
+{"model": "M2", "id": "t008", "turn": 1, "coherence": 2, "persona": 1, "onthread": 1, "task": null, "tags": ["memorized-line"], "note": "malformed yes"}
+{"model": "M1", "id": "t001", "turn": 2, "coherence": 2, "persona": 2, "onthread": 2, "task": null, "tags": ["self-corrects"], "note": "retracts, says bye"}
+{"model": "M2", "id": "n13", "turn": 1, "coherence": 2, "persona": 1, "onthread": 1, "task": null, "tags": ["memorized-line"], "note": "malformed yes"}
+{"model": "M1", "id": "n10", "turn": 1, "coherence": 1, "persona": 1, "onthread": 1, "task": null, "tags": [], "note": "garbled rewarding"}
+{"model": "M2", "id": "n12", "turn": 1, "coherence": 2, "persona": 1, "onthread": 0, "task": 0, "tags": ["memorized-line"], "note": "canned, no words"}
+{"model": "M2", "id": "t004", "turn": 1, "coherence": 2, "persona": 1, "onthread": 0, "task": 0, "tags": ["memorized-line"], "note": "canned, no guidance"}
+{"model": "M1", "id": "t008", "turn": 3, "coherence": 3, "persona": 1, "onthread": 0, "task": null, "tags": ["ignores-pushback"], "note": "dodges contradiction"}
+{"model": "M1", "id": "n11", "turn": 2, "coherence": 1, "persona": 1, "onthread": 2, "task": 2, "tags": ["memorized-line"], "note": "now, small, wrist"}
+{"model": "M2", "id": "n16", "turn": 1, "coherence": 2, "persona": 1, "onthread": 0, "task": 0, "tags": ["memorized-line"], "note": "canned, big difference"}
+{"model": "M1", "id": "t007", "turn": 1, "coherence": 2, "persona": 1, "onthread": 1, "task": null, "tags": ["memorized-line"], "note": "asks back"}
+{"model": "M2", "id": "n02", "turn": 1, "coherence": 2, "persona": 1, "onthread": 1, "task": null, "tags": ["memorized-line"], "note": "malformed yes"}
+{"model": "M1", "id": "n13", "turn": 3, "coherence": 2, "persona": 2, "onthread": 2, "task": null, "tags": [], "note": "datacenter idea, garbled"}
+{"model": "M1", "id": "n03", "turn": 1, "coherence": 2, "persona": 1, "onthread": 0, "task": null, "tags": ["memorized-line"], "note": "claims did it, canned"}
+{"model": "M2", "id": "n03", "turn": 2, "coherence": 1, "persona": 2, "onthread": 1, "task": null, "tags": ["self-corrects", "salad"], "note": "no legs then salad"}
+{"model": "M2", "id": "n04", "turn": 1, "coherence": 2, "persona": 1, "onthread": 1, "task": null, "tags": ["memorized-line"], "note": "malformed yes"}

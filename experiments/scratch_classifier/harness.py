@@ -29,6 +29,7 @@ def lines():
     return _LINES
 
 def build_context(history, user, prime=True, memory=None):
+    if prime == "first": prime = not history   # the primed example only for the first reply, then it leaves the context
     t = SYSTEM
     if memory:
         t = t.rstrip("\n") + " " + " ".join(f"{k}: {v}." for k, v in memory.items()) + "\n"
@@ -87,7 +88,7 @@ def verifier_score(m, tok, V, prompt, resp):
 def respond(m, tok, history, user, cfg=None):
     c = {**DEFAULT, **(cfg or {})}; S = dict(SAMPLERS[c["sampler"]])
     if history and "later_temperature" in S: S["temperature"] = S["later_temperature"]
-    ctx = build_context(history, user, c["prime"], c["memory"]); prime_len = len(tok.encode(build_context([], "", c["prime"], c["memory"]))) - 3
+    ctx = build_context(history, user, c["prime"], c["memory"]); prime_len = len(tok.encode(build_context([] if c["prime"] != "first" or not history else [{"user": "", "oracle": ""}], "", c["prime"], c["memory"]))) - 3
     info = {"n": c["best_of"], "forced": False, "fallback": False, "score": None}
     prior = [h["oracle"] for h in history]
     if c["best_of"] <= 1 or not c["verifier"]:

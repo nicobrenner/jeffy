@@ -5198,3 +5198,20 @@ controller): 29/32, 1/96 but the controller forced 23/160 turns and fell back 6�
 controller stays off in the demo for now. Turn-1 openers still carry the "Yes, it is" reflex. Reactive-user turns 2–3 under the demo default
 generating → pass vs rmt2_noprime (38% on-thread ≥2, 10% ignores-pushback, 23% self-corrects). Demo entry added (picks its own act).
 Crawler v3 matches Nico's reference (device body, 8 thin radiating legs, red feet, riding tag with w/s, lines to scanned words).
+
+## 2026-10-26 21:59 PDT — Merge model vs DAgger model under the demo default (`grades_ct3_mt_blind2`): the merge wins turns 2–3, loses turn 1; prime-first fixes turn 1
+
+No prime, sched sampler, single sample, reactive user; key M1=rmt2_noprime M2=ct3_noprime.
+| | DAgger (rmt2) | **merge (ct3: admit act + plan token + recoveries + bible)** |
+|---|---|---|
+| turns 2–3 on-thread ≥2 | 28% | **47%** |
+| ignores-pushback | 15% | **5%** |
+| self-corrects | 12% | **20%** |
+| task attempts (0–3) | 0.73 | **1.30** |
+| persona | 1.37 | **1.68** |
+| paired on-thread (ct3 vs rmt2) | — | **29/16/15** |
+| turn 1 on-thread ≥2 / memorized-line | 50% / 53% | **10% / 90%** |
+The merge keeps the act selection Nico likes and adds the following; its openers are the worst of the day (stock lines, "Yes, it is"). Priming
+helps openers and hurts later turns (earlier ablation) → implemented `prime: "first"` in the harness and the demo (the example is in the
+context for the first reply only, then dropped): ct3 identity 32/32, 2/96; turn-1 "Yes" openers 0/30. Reactive pass for prime-first generating.
+Demo default: "prime 1st reply" checked.

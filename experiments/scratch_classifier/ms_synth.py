@@ -26,7 +26,11 @@ def row():
     k, v, recaps, fus = fact(); fu, replies = random.choice(fus); ou, oo = random.choice(OPENS); rep = random.choice(replies)
     return SYSTEM.rstrip("\n") + " " + random.choice(recaps) + ".\n" + f"<|user|> {ou}\n<|oracle|> {MARK[act_of(oo)]} {oo}\n<|user|> {fu}\n<|oracle|> {MARK[act_of(rep)]} {rep}"
 if __name__ == "__main__":
-    ap = argparse.ArgumentParser(); ap.add_argument("--n", type=int, default=20000); ap.add_argument("--out", default="data/chat_v2ms_synth.jsonl"); ap.add_argument("--seed", type=int, default=0); a = ap.parse_args(); random.seed(a.seed)
+    ap = argparse.ArgumentParser(); ap.add_argument("--n", type=int, default=20000); ap.add_argument("--out", default="data/chat_v2ms_synth.jsonl"); ap.add_argument("--seed", type=int, default=0); ap.add_argument("--random-values", action="store_true", help="values are random pseudo-words built from vocabulary pieces (cannot be memorised; only copying lowers the loss)"); a = ap.parse_args(); random.seed(a.seed)
+    if a.random_values:
+        import json as _j; vocab = [t for t in _j.load(open("tokenizer_chat_v2.json")).get("model", {}).get("vocab", {}) if t.isalpha() and 2 <= len(t) <= 5]
+        def pseudo(): return "".join(random.choice(vocab) for _ in range(random.choice([2, 2, 3]))).capitalize()
+        NAMES[:] = [pseudo() for _ in range(4000)]; PETNAMES[:] = [pseudo() for _ in range(4000)]; CITIES[:] = [pseudo() for _ in range(4000)]
     with open(a.out, "w") as f:
         for _ in range(a.n): f.write(json.dumps({"text": row()}) + "\n")
     print(f"{a.n} synthetic copy rows -> {a.out}"); print(row().replace("\n", " | ")[-300:])

@@ -5273,3 +5273,17 @@ greeting 0.61, yesno 0.60, reaction 0.50, task 0.47 (115 examples). Imperfect by
 enough data and iterations"). Wired into `harness.classify_intent(m, tok, history, user)`; the controller now forces the admit act only when the
 classifier says push-back (or p ≥ 0.25) AND the verifier failed; the yes/no-opener option uses it instead of the regex. Next: more labelled turns
 for task/reaction, Nico's corrections as labels, the crawler's word detector by the same recipe, and the classifier in the browser (same forward pass).
+
+## 2026-10-26 23:43 PDT — crawler v5 after the reference video; demo knobs for the "forceful" feel
+Nico sent the TikTok source video (web crawler reading The Odyssey; 17 s, 576x1024). Frames read with ffmpeg: a small chip body
+sits over dense text with ~12 very long thin lavender legs reaching across the column, pink feet on words, scanned words ringed
+in cyan/green/yellow, rejected words struck through in red, kept keywords boxed in blue (they stay), a blue status block
+(BOOK / EXTRACTED n / N / KEYWORDS k + last three), and the w/s rate ramping 44 → 396 as the visit goes on. Crawler v5 keeps
+Nico's six-legged strider (planted feet, IK legs, careful steps) and takes the video's look: legs L1 72 / L2 88 px, trails of
+past leg positions, legs step onto the words being scanned, ring-only marks (labels only on the lock), bottom-half strikethrough,
+persistent keyword boxes, status block, scan wait 420 ms × 0.8 per word (floor 70). Bug found and fixed while testing: after
+the body stopped, a leg could land farther from its rest spot than the step threshold and re-step forever, so the walk promise
+never resolved (visit stalled at the lock). Verified headlessly: full visit completes in ~17 s, keyword listed, exit, no JS errors.
+Also: a fresh browser (no localStorage) loaded the old 8.5M TinyStories build (`conv_persona2_int8`) — default is now Nico's pick.
+Knobs added for the "less funny, more forceful" feel (ct2 weights unchanged since 18:17; harness changes since: cross-turn
+repetition 18:26, priming off 21:23, prime-first 22:00): priming select off / 1st reply / full, cross-turn checkbox, "crawler now" button.

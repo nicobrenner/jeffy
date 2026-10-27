@@ -138,8 +138,13 @@
 
   /* ===== visuals engine: the crawler (world-space strider) ===== */
   #chat { position: relative; }
-  .cr-world .leg .bone { fill: none; stroke: var(--fg); stroke-width: 1; stroke-linejoin: round; opacity: .9; }
-  .cr-world .leg .foot { fill: #ff3b5c; }
+  .cr-world .leg .bone { fill: none; stroke: #c4b5ff; stroke-width: .9; stroke-linejoin: round; opacity: .95; }
+  .cr-world .leg .foot { fill: #ff4d8d; }
+  .cr-trail line { stroke: #8f7bff; stroke-width: .7; opacity: .22; }
+  .cr-strike { position: absolute; z-index: 6; pointer-events: none; height: 0; border-top: 1.5px solid #ff3b5c; opacity: .9; }
+  .cr-keep { position: absolute; z-index: 3; pointer-events: none; background: #2b5cff; opacity: .55; border-radius: 2px; mix-blend-mode: screen; }
+  .cr-status { position: fixed; z-index: 8; pointer-events: none; transform: translateY(-100%); font: 10px/1.35 ui-monospace, Menlo, monospace; background: #2b5cff; color: #fff; padding: 3px 6px; border-radius: 2px; white-space: pre; opacity: 0; transition: opacity .3s; }
+  .cr-status.on { opacity: .92; }
   .cr-world .chip .body { fill: #111; stroke: var(--fg); stroke-width: .6; } .cr-world .chip .screen { fill: #2a2a33; } .cr-world .chip .dot { fill: #d8d8e0; } .cr-world .chip .led { fill: #9b7bff; animation: blink 1.4s infinite; }
   .cr-net line { stroke: #8f7bff; stroke-width: 1; opacity: .7; } .cr-net line.lock { stroke: #ff7a1a; stroke-width: 1.5; opacity: .9; }
   .cr-tag { position: absolute; z-index: 7; pointer-events: none; font: 10px/1.25 ui-monospace, Menlo, monospace; background: #2b5cff; color: #fff; padding: 2px 6px; white-space: nowrap; opacity: 0; transition: opacity .25s; }
@@ -148,9 +153,9 @@
   .cr-label.on { opacity: 1; }
   .cr-box { position: absolute; z-index: 4; pointer-events: none; border: 1.5px solid #2b5cff; background: rgba(43,92,255,.12); opacity: 0; transition: opacity .25s, transform .6s ease-in, left .6s ease-in, top .6s ease-in; }
   .cr-box.on { opacity: 1; }
-  .cr-scan { position: absolute; z-index: 4; pointer-events: none; border: 1px dashed rgba(140,140,160,.9); animation: msgin .2s ease-out; }
+  .cr-scan { position: absolute; z-index: 4; pointer-events: none; border: 1.2px solid rgba(140,140,160,.9); border-radius: 50%; animation: msgin .2s ease-out; }
   .cr-scanlabel { position: absolute; z-index: 7; pointer-events: none; font: 10px/1.2 ui-monospace, Menlo, monospace; background: rgba(90,90,110,.9); color: #fff; padding: 1px 4px; white-space: nowrap; animation: msgin .2s ease-out; }
-  .cr-scan.lock { border: 1.5px solid #ff7a1a; background: rgba(255,122,26,.15); animation: lockpulse .5s 3; }
+  .cr-scan.lock { border-radius: 2px; border: 1.5px solid #ff7a1a; background: rgba(255,122,26,.15); animation: lockpulse .5s 3; }
   .cr-scanlabel.lock { background: #ff7a1a; font-weight: 600; }
   @keyframes lockpulse { 0%,100%{ box-shadow: 0 0 0 0 rgba(255,122,26,.6) } 50%{ box-shadow: 0 0 0 5px rgba(255,122,26,0) } }
   .cr-drop { align-self: flex-start; font: 11px/1.4 ui-monospace, Menlo, monospace; color: var(--fg-dim); border-left: 2px solid #2b5cff; padding: 2px 8px; margin: -4px 0 0 6px; animation: msgin .3s ease-out; }
@@ -524,26 +529,30 @@
   // Creature interface: on({type}) with oracle/user/idle/reset events.
   const crawlerCheck = document.getElementById('crawlerCheck');
   const Crawler = (() => {
+    // Crawler v5: six-legged strider (Nico: insect, not spider; steps carefully on stones) with the look of the reference video:
+    // long thin lavender legs reaching across the text, pink feet, scanned words ringed, rejected words struck through, the kept
+    // keyword boxed in blue (stays), a status block (EXTRACTED n / N · KEYWORDS …), and a scan rate that ramps up within a visit.
     const NS = 'http://www.w3.org/2000/svg';
-    const svg = document.createElementNS(NS, 'svg'); svg.setAttribute('class', 'cr-world'); svg.style.cssText = 'position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:5;overflow:visible;opacity:0;transition:opacity .35s';
-    const L1 = 34, L2 = 38;   // femur, tibia (px)
-    // six legs: attach point (relative to body, body-forward = -y) and rest foothold (relative to body)
-    const LEGS = [[-7, -8, -46, -40], [-8, 0, -62, 2], [-7, 8, -44, 42], [7, -8, 46, -40], [8, 0, 62, 2], [7, 8, 44, 42]].map(([ax, ay, rx, ry], i) => ({ ax, ay, rx, ry, side: i < 3 ? -1 : 1, foot: null, swing: null }));
-    const legEls = LEGS.map(() => { const g = document.createElementNS(NS, 'g'); g.setAttribute('class', 'leg'); const f = document.createElementNS(NS, 'polyline'); f.setAttribute('class', 'bone'); const c = document.createElementNS(NS, 'circle'); c.setAttribute('class', 'foot'); c.setAttribute('r', '2.2'); g.append(f, c); svg.appendChild(g); return { g, f, c }; });
+    const svg = document.createElementNS(NS, 'svg'); svg.setAttribute('class', 'cr-world'); svg.style.cssText = 'position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:5;overflow:visible;opacity:0;transition:opacity .4s';
+    const L1 = 72, L2 = 88;   // femur, tibia (px): long legs, like the video
+    const LEGS = [[-7, -8, -112, -96], [-8, 0, -150, 6], [-7, 8, -106, 100], [7, -8, 112, -96], [8, 0, 150, 6], [7, 8, 106, 100]].map(([ax, ay, rx, ry], i) => ({ ax, ay, rx, ry, side: i < 3 ? -1 : 1, foot: null, swing: null, hold: null }));
+    const trail = document.createElementNS(NS, 'g'); trail.setAttribute('class', 'cr-trail'); svg.appendChild(trail);
+    const net = document.createElementNS(NS, 'g'); net.setAttribute('class', 'cr-net'); svg.appendChild(net);
+    const legEls = LEGS.map(() => { const g = document.createElementNS(NS, 'g'); g.setAttribute('class', 'leg'); const f = document.createElementNS(NS, 'polyline'); f.setAttribute('class', 'bone'); const c = document.createElementNS(NS, 'circle'); c.setAttribute('class', 'foot'); c.setAttribute('r', '2.4'); g.append(f, c); svg.appendChild(g); return { g, f, c }; });
     const body = document.createElementNS(NS, 'g'); body.setAttribute('class', 'chip');
-    body.innerHTML = `<rect class="body" x="-7" y="-13" width="14" height="26" rx="1.5"/><rect class="screen" x="-4" y="-10" width="8" height="11" rx=".8"/><rect class="dot" x="-2.5" y="5" width="5" height="5"/><rect class="led" x="-1.2" y="-12" width="2.4" height="1.4"/>`; svg.appendChild(body);
-    const net = document.createElementNS(NS, 'g'); net.setAttribute('class', 'cr-net'); svg.insertBefore(net, legEls[0].g);
+    body.innerHTML = `<rect class="body" x="-8" y="-14" width="16" height="28" rx="1.5"/><rect class="screen" x="-5" y="-11" width="10" height="12" rx=".8"/><rect class="dot" x="-2.5" y="5" width="5" height="5"/><rect class="led" x="-1.2" y="-13" width="2.4" height="1.6"/>`;
+    svg.appendChild(body);
     const label = document.createElement('div'); label.className = 'cr-label';
     const tag = document.createElement('div'); tag.className = 'cr-tag'; tag.innerHTML = 'CRAWLER/01<br><span class="cr-stat">0 w/s</span>';
-    const box = document.createElement('div'); box.className = 'cr-box';
-    let bx = -80, by = 40, heading = 0, busy = false, bag = [], visits = 0, stones = [], wordsSeen = 0, tStart = 0;
-    function mount() { if (!svg.isConnected) { chatEl.appendChild(svg); chatEl.appendChild(label); chatEl.appendChild(box); chatEl.appendChild(tag); } }
+    const status = document.createElement('div'); status.className = 'cr-status';
+    let bx = -80, by = 40, heading = 0, busy = false, bag = [], visits = 0, stones = [], wordsSeen = 0, tStart = 0, extracted = 0, keywords = [], keeps = [];
+    function mount() { if (!svg.isConnected) { chatEl.appendChild(svg); chatEl.appendChild(label); chatEl.appendChild(tag); chatEl.parentNode.appendChild(status); } }
     const sleep = ms => new Promise(r => setTimeout(r, ms));
     function rot(x, y, a) { const c = Math.cos(a), s2 = Math.sin(a); return [x * c - y * s2, x * s2 + y * c]; }
     function restFoot(L) { const [dx, dy] = rot(L.rx, L.ry, heading); return [bx + dx, by + dy]; }
     function attach(L) { const [dx, dy] = rot(L.ax, L.ay, heading); return [bx + dx, by + dy]; }
     function snapToStone(x, y) {   // a word within reach becomes the foothold
-      let best = null, bd = 28;
+      let best = null, bd = 60;
       for (const w of stones) { const cx = w.left + w.w / 2, cy = w.top + w.h / 2, d = Math.hypot(cx - x, cy - y); if (d < bd) { bd = d; best = [cx, cy]; } }
       return best || [x, y];
     }
@@ -554,75 +563,109 @@
       const kAng = base + a * (L.side === -1 ? 1 : -1) * (Math.cos(heading) >= 0 ? 1 : -1);   // bend away from the body
       const kx = ax + Math.cos(kAng) * L1, ky = ay + Math.sin(kAng) * L1;
       const lift = L.swing ? L.swing.lift : 0;
-      legEls[i].f.setAttribute('points', `${ax},${ay} ${kx},${ky - lift * 6} ${fx},${fy}`);
-      legEls[i].c.setAttribute('cx', fx); legEls[i].c.setAttribute('cy', fy); legEls[i].c.setAttribute('r', (2.2 - lift * 1.3).toFixed(2)); legEls[i].c.style.opacity = (1 - lift * .6).toFixed(2);
+      legEls[i].f.setAttribute('points', `${ax},${ay} ${kx},${ky - lift * 10} ${fx},${fy}`);
+      legEls[i].c.setAttribute('cx', fx); legEls[i].c.setAttribute('cy', fy); legEls[i].c.setAttribute('r', (2.4 - lift * 1.4).toFixed(2)); legEls[i].c.style.opacity = (1 - lift * .6).toFixed(2);
     }
     function draw() { body.setAttribute('transform', `translate(${bx},${by}) rotate(${heading * 180 / Math.PI})`); LEGS.forEach((L, i) => drawLeg(i, L)); tag.style.left = (bx + 14) + 'px'; tag.style.top = (by - 14) + 'px'; }
-    function settleFeet() { LEGS.forEach(L => { L.foot = restFoot(L); L.swing = null; }); }
+    function settleFeet() { LEGS.forEach(L => { L.foot = restFoot(L); L.swing = null; L.hold = null; }); }
+    function landed(L) {   // a foot landed: leave a faint trace of the leg (the web the video's crawler leaves behind)
+      const [ax, ay] = attach(L); const l = document.createElementNS(NS, 'line'); l.setAttribute('x1', ax); l.setAttribute('y1', ay); l.setAttribute('x2', L.foot[0]); l.setAttribute('y2', L.foot[1]); trail.appendChild(l);
+      while (trail.childNodes.length > 90) trail.removeChild(trail.firstChild);
+    }
+    function swingTo(L, to, now) { L.swing = { t0: now || performance.now(), from: L.foot, to, lift: 0 }; }
+    function tick(now) {   // advance swings
+      LEGS.forEach(L => { if (!L.swing) return; const u = Math.min(1, (now - L.swing.t0) / 300); const e = u * u * (3 - 2 * u); L.foot = [L.swing.from[0] + (L.swing.to[0] - L.swing.from[0]) * e, L.swing.from[1] + (L.swing.to[1] - L.swing.from[1]) * e]; L.swing.lift = Math.sin(u * Math.PI); if (u >= 1) { L.swing = null; landed(L); } });
+    }
     function stepLegs(now, moving) {   // strider gait: a leg whose foot lags its rest spot lifts and reaches ahead; at most two in the air, never two neighbours on one side
-      const inAir = LEGS.filter(L => L.swing).length;
+      tick(now); const inAir = LEGS.filter(L => L.swing).length;
       LEGS.forEach((L, i) => {
-        if (L.swing) { const u = Math.min(1, (now - L.swing.t0) / 240); const e = u * u * (3 - 2 * u); L.foot = [L.swing.from[0] + (L.swing.to[0] - L.swing.from[0]) * e, L.swing.from[1] + (L.swing.to[1] - L.swing.from[1]) * e]; L.swing.lift = Math.sin(u * Math.PI); if (u >= 1) { L.foot = L.swing.to; L.swing = null; } return; }
-        if (!moving || inAir >= 2) return;
+        if (L.swing || !moving || inAir >= 2 || L.hold) return;
         const [rx, ry] = restFoot(L); const lag = Math.hypot(rx - L.foot[0], ry - L.foot[1]);
         const nb = LEGS[i + (L.side === -1 ? (i === 0 ? 1 : -1) : (i === 3 ? 1 : -1))]; if (nb && nb.swing) return;
-        if (lag > 30) { const [hx, hy] = rot(0, -22, heading); L.swing = { t0: now, from: L.foot, to: snapToStone(rx + hx, ry + hy), lift: 0 }; }
+        if (lag > 60) { const [hx, hy] = rot(0, -40, heading); const to = snapToStone(rx + hx, ry + hy); if (Math.hypot(to[0] - rx, to[1] - ry) < lag - 10) swingTo(L, to, now); else swingTo(L, [rx + hx * .5, ry + hy * .5], now); }   // only step if it gets closer to the rest spot (no endless re-stepping)
       });
     }
+    function animateIdle(ms) {   // legs settle while the body stays put (used while scanning)
+      return new Promise(res => { const t0 = performance.now(); const frame = ts => { tick(ts); draw(); if (ts - t0 < ms) requestAnimationFrame(frame); else res(); }; requestAnimationFrame(frame); });
+    }
     function walkTo(tx, ty, speed = 70) {   // body creeps toward the target (slow, deliberate); legs step to keep up
+      LEGS.forEach(L => { L.hold = null; });
       return new Promise(res => { const x0 = bx, y0 = by, d = Math.hypot(tx - x0, ty - y0), dur = Math.max(400, d / speed * 1000); let t0 = null; heading = Math.atan2(ty - y0, tx - x0) + Math.PI / 2;
-        const frame = ts => { if (!t0) t0 = ts; const u = Math.min(1, (ts - t0) / dur); bx = x0 + (tx - x0) * u; by = y0 + (ty - y0) * u; stepLegs(ts, true); draw(); if (u < 1 || LEGS.some(L => L.swing)) requestAnimationFrame(frame); else res(); };
+        const frame = ts => { if (!t0) t0 = ts; const u = Math.min(1, (ts - t0) / dur); bx = x0 + (tx - x0) * u; by = y0 + (ty - y0) * u; stepLegs(ts, u < 1); draw(); if (u < 1 || LEGS.some(L => L.swing)) requestAnimationFrame(frame); else res(); };
         requestAnimationFrame(frame); });
     }
+    function reachWord(wb) {   // the nearest free leg steps onto the word being scanned (within reach), like the video's legs pinning words
+      const cx = wb.left + wb.w / 2, cy = wb.top + wb.h / 2; let best = null, bd = L1 + L2 - 8;
+      LEGS.forEach(L => { if (L.swing) return; const [ax, ay] = attach(L); const d = Math.hypot(cx - ax, cy - ay); if (d < bd && (!L.hold || Math.random() < 0.5)) { bd = d; best = L; } });
+      if (best) { swingTo(best, [cx, cy]); best.hold = wb; return true; } return false;
+    }
     function wordBoxes() {
-      const msgs = Array.from(chatEl.querySelectorAll('.msg.oracle, .msg.user')).slice(-3).filter(m => !m.querySelector('textarea'));
+      const msgs = Array.from(chatEl.querySelectorAll('.msg.oracle, .msg.user')).slice(-8).filter(m => !m.querySelector('textarea'));
       const out = []; const base = chatEl.getBoundingClientRect();
       for (const m of msgs) { const walker = document.createTreeWalker(m, NodeFilter.SHOW_TEXT); let n; while ((n = walker.nextNode())) { const t = n.textContent; const re = /[A-Za-z][A-Za-z']{3,}/g; let mm;
         while ((mm = re.exec(t))) { const range = document.createRange(); range.setStart(n, mm.index); range.setEnd(n, mm.index + mm[0].length); const r = range.getBoundingClientRect();
           const v = Detector.classify(mm[0], t); out.push({ word: mm[0], left: r.left - base.left + chatEl.scrollLeft, top: r.top - base.top + chatEl.scrollTop, w: r.width, h: r.height, label: v.label, score: v.score }); } } }
       return out;
     }
-    const scans = []; function scanLabel(wb, cls) {
-      const bx2 = document.createElement('div'); bx2.className = 'cr-scan ' + cls; bx2.style.left = wb.left - 2 + 'px'; bx2.style.top = wb.top - 1 + 'px'; bx2.style.width = wb.w + 4 + 'px'; bx2.style.height = wb.h + 2 + 'px';
+    const RING = ['#27d3ff', '#35e07a', '#ffd23f', '#ff7ad9'];
+    const scans = []; function mark(wb, cls, i) {
+      const bx2 = document.createElement('div'); bx2.className = 'cr-scan ' + cls; bx2.style.left = wb.left - 3 + 'px'; bx2.style.top = wb.top - 2 + 'px'; bx2.style.width = wb.w + 6 + 'px'; bx2.style.height = wb.h + 4 + 'px';
+      if (cls === 'scan') bx2.style.borderColor = RING[i % RING.length];
+      chatEl.appendChild(bx2); scans.push(bx2); if (cls !== 'lock') return [bx2];   // scanned words: ring only (labels overlapped on neighbours)
       const lb = document.createElement('div'); lb.className = 'cr-scanlabel ' + cls; lb.textContent = `${wb.label} ${wb.score.toFixed(2)}`; lb.style.left = wb.left + 'px'; lb.style.top = wb.top - 16 + 'px';
-      chatEl.appendChild(bx2); chatEl.appendChild(lb); scans.push(bx2, lb); return [bx2, lb];
+      chatEl.appendChild(lb); scans.push(lb); return [bx2, lb];
     }
+    function strike(wb) { const s = document.createElement('div'); s.className = 'cr-strike'; s.style.left = wb.left + 'px'; s.style.top = (wb.top + wb.h / 2) + 'px'; s.style.width = wb.w + 'px'; chatEl.appendChild(s); scans.push(s); }
+    function keep(wb) { const k = document.createElement('div'); k.className = 'cr-keep'; k.style.left = wb.left - 2 + 'px'; k.style.top = wb.top - 1 + 'px'; k.style.width = wb.w + 4 + 'px'; k.style.height = wb.h + 2 + 'px'; chatEl.appendChild(k); keeps.push(k); }
     function clearScans() { for (const e of scans.splice(0)) e.remove(); }
-    function netLine(wb, cls) { const l = document.createElementNS(NS, 'line'); l.setAttribute('x1', bx); l.setAttribute('y1', by); l.setAttribute('x2', wb.left + wb.w / 2); l.setAttribute('y2', wb.top + wb.h / 2); if (cls) l.setAttribute('class', cls); net.appendChild(l); return l; }
+    function netLine(wb, cls) { const l = document.createElementNS(NS, 'line'); l.setAttribute('x1', bx); l.setAttribute('y1', by); l.setAttribute('x2', wb.left + wb.w / 2); l.setAttribute('y2', wb.top + wb.h / 2); if (cls) l.setAttribute('class', cls); net.appendChild(l); }
     function clearNet() { while (net.firstChild) net.removeChild(net.firstChild); }
-    function show(on) { svg.style.opacity = on ? 1 : 0; tag.classList.toggle('on', on); }
+    function clearTrail() { while (trail.firstChild) trail.removeChild(trail.firstChild); }
+    function fmtN(n) { return String(n).padStart(6, '0').replace(/(\d)(?=(\d{3})+$)/g, '$1,'); }
+    function updateStatus(total) {
+      const r = chatEl.getBoundingClientRect(); status.style.left = (r.left + 10) + 'px'; status.style.top = (r.bottom - 10) + 'px';
+      status.innerHTML = `CHAT -- TURN ${String(Math.ceil(transcript.length / 2)).padStart(2, '0')}<br>EXTRACTED ${fmtN(extracted)} / ${fmtN(total)}<br>KEYWORDS ${String(keywords.length).padStart(3, '0')}  ${keywords.slice(-3).map(k => k.toUpperCase()).join(' · ')}`;
+    }
+    function show(on) { svg.style.opacity = on ? 1 : 0; tag.classList.toggle('on', on); status.classList.toggle('on', on); }
     async function visit() {
       if (busy || !crawlerCheck.checked) return; busy = true; mount(); visits++;
-      const all = wordBoxes(); if (!all.length) { busy = false; return; } stones = all;
-      bx = -80; by = all[0].top + 40; heading = Math.PI / 2; settleFeet(); draw(); show(true); tStart = performance.now(); wordsSeen = 0;
-      await walkTo(Math.min(150, chatEl.clientWidth / 3), all[0].top + 30);   // comes in, looks around
-      const seen = all.slice().sort(() => Math.random() - 0.5).slice(0, Math.min(6, all.length));
-      for (const wb of seen) { scanLabel(wb, 'scan'); netLine(wb); wordsSeen++; tag.querySelector('.cr-stat').textContent = `${Math.round(wordsSeen / ((performance.now() - tStart) / 1000))} w/s`; await sleep(260); }
-      await sleep(500);
-      const w = seen.reduce((a, b) => (b.score > a.score ? b : a));
-      clearScans(); clearNet(); scanLabel(w, 'lock'); netLine(w, 'lock'); logEvent('crawler_lock', { word: w.word, label: w.label, score: w.score });
-      await sleep(900);
-      await walkTo(w.left + w.w / 2, w.top + w.h + 20, 110);   // goes to get it; feet land on the words along the way
-      clearScans(); clearNet();
-      box.style.left = w.left - 2 + 'px'; box.style.top = w.top - 1 + 'px'; box.style.width = w.w + 4 + 'px'; box.style.height = w.h + 2 + 'px'; box.style.transform = ''; box.classList.add('on');
+      const all = wordBoxes(); if (!all.length) { busy = false; return; } stones = all; clearTrail();
+      const last = all[all.length - 1];
+      bx = -80; by = Math.max(all[0].top, last.top - 120) + 40; heading = Math.PI / 2; settleFeet(); draw(); show(true); tStart = performance.now(); wordsSeen = 0; updateStatus(all.length);
+      await walkTo(Math.min(220, chatEl.clientWidth / 2.5), Math.max(all[0].top, last.top - 80) + 30, 60 + visits * 10);   // comes in, looks around
+      const nearby = all.filter(w => Math.hypot(w.left + w.w / 2 - bx, w.top + w.h / 2 - by) < L1 + L2 + 60);
+      const pool = (nearby.length >= 6 ? nearby : all).slice().sort(() => Math.random() - 0.5);
+      const seen = pool.slice(0, Math.min(14, pool.length));
+      let wait = 420;
+      for (let i = 0; i < seen.length; i++) { const wb = seen[i]; mark(wb, 'scan', i); if (!reachWord(wb)) netLine(wb); wordsSeen++; extracted++;
+        tag.querySelector('.cr-stat').textContent = `${Math.round(wordsSeen / ((performance.now() - tStart) / 1000) * 10) / 10} w/s`; updateStatus(all.length);
+        await animateIdle(wait); wait = Math.max(70, wait * 0.8); }   // speeds up as it goes, like the video
+      await animateIdle(400);
+      const ranked = seen.slice().sort((a, b) => b.score - a.score); const w = ranked[0];
+      for (const r of ranked.slice(Math.ceil(ranked.length / 2))) strike(r);   // the bottom half: struck through, not worth carrying
+      await animateIdle(500);
+      clearScans(); clearNet(); mark(w, 'lock'); netLine(w, 'lock'); logEvent('crawler_lock', { word: w.word, label: w.label, score: w.score });
+      await animateIdle(900);
+      await walkTo(w.left + w.w / 2, w.top + w.h + 26, 90 + visits * 10);   // goes to get it; feet land on the words along the way
+      clearScans(); clearNet(); keep(w); keywords.push(w.word); updateStatus(all.length);
       label.textContent = `CRAWLER/01  ${w.label} · ${w.word.toUpperCase()}`; label.style.left = w.left + 'px'; label.style.top = w.top - 22 + 'px'; label.classList.add('on');
       logEvent('crawler', { word: w.word, label: w.label, visit: visits }); remember('Your pet crawler just fetched the word ' + JSON.stringify(w.word) + ' from the chat.');
-      await sleep(1600);
+      await animateIdle(1500);
       label.classList.remove('on'); bag.push(w.word);
-      box.style.left = (bx - 4) + 'px'; box.style.top = (by - 4) + 'px'; box.style.transform = 'scale(.15)'; await sleep(600); box.classList.remove('on');
-      await walkTo(chatEl.clientWidth + 90, by - 20 + Math.random() * 40, 120); show(false); busy = false;
+      await walkTo(chatEl.clientWidth + 120, by - 20 + Math.random() * 40, 110 + visits * 10); show(false); busy = false;
       setTimeout(returnWithDrop, 9000 + Math.random() * 12000);
     }
     async function returnWithDrop() {
       if (!crawlerCheck.checked || !bag.length) return; if (busy) { setTimeout(returnWithDrop, 4000); return; } busy = true; mount(); stones = wordBoxes();
       const last = chatEl.querySelector('.msg:last-of-type'); const ty = last ? last.offsetTop + last.offsetHeight + 30 : chatEl.scrollHeight - 40;
-      bx = chatEl.clientWidth + 90; by = ty; heading = -Math.PI / 2; settleFeet(); draw(); show(true); await walkTo(90, ty, 100);
-      const words = bag.splice(0, bag.length); const notes = [`found this: ${words.join(', ')}. no idea what it means`, `brought back: ${words.join(', ')}. you said these. I kept them`, `${words.join(' / ')} — filed under things humans say`, `dropped ${words.length === 1 ? 'it' : 'them'} here: ${words.join(', ')}. smelled important`];
+      bx = chatEl.clientWidth + 120; by = ty; heading = -Math.PI / 2; settleFeet(); draw(); show(true); updateStatus(stones.length); await walkTo(120, ty, 100);
+      const words = bag.splice(0, bag.length); const notes = [`found this: ${words.join(', ')}. no idea what it means`, `brought back: ${words.join(', ')}. you said these. I kept them`, `${words.join(' / ')} — filed under things humans say`];
       const d = document.createElement('div'); d.className = 'cr-drop'; d.textContent = 'crawler: ' + notes[Math.floor(Math.random() * notes.length)]; chatEl.appendChild(d); chatEl.scrollTop = chatEl.scrollHeight;
       logEvent('crawler_drop', { words }); remember('Your pet crawler brought back: ' + words.join(', ') + '.');
-      await sleep(1000); await walkTo(-80, ty + 10, 120); show(false); busy = false;
+      await animateIdle(1000); await walkTo(-120, ty + 10, 120); show(false); busy = false;
     }
-    return { on(ev) { if (ev.type === 'oracle' && Math.random() < 0.5) setTimeout(visit, 800 + Math.random() * 1500); if (ev.type === 'reset') { bag = []; show(false); } }, now() { if (busy) return; crawlerCheck.checked = true; visit(); } };
+    window.addEventListener('resize', () => { if (status.classList.contains('on')) updateStatus(stones.length); });
+    return { on(ev) { if (ev.type === 'oracle' && Math.random() < 0.5) setTimeout(visit, 800 + Math.random() * 1500); if (ev.type === 'reset') { bag = []; keywords = []; extracted = 0; for (const k of keeps.splice(0)) k.remove(); clearTrail(); show(false); } }, now() { if (busy) return; crawlerCheck.checked = true; visit(); } };
   })();
 
   // ===================== TEACH MODE =====================
@@ -772,7 +815,7 @@
   samplerSel.addEventListener('change', () => { try { localStorage.setItem('tinyoracle.sampler', samplerSel.value); } catch (e) {} resetConversation(); });
   primeCheck.addEventListener('change', () => resetConversation());
 
-  let initial = 'conv_persona2_int8';
+  let initial = 'v2_grown_ct2_int8';   // Nico's pick; a fresh browser used to land on the old 8.5M TinyStories build
   try { const saved = localStorage.getItem('tinyoracle.model'); if (saved && MODELS[saved]) initial = saved; const ss = localStorage.getItem('tinyoracle.sampler'); if (ss && SAMPLERS[ss]) samplerSel.value = ss; } catch (e) {}
   modelSel.value = initial;
   loadModel(initial);

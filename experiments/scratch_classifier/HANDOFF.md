@@ -88,3 +88,5 @@ Parked: posts 1/3/4 (Nico reads); benchmark README correction (Nico decides); HF
 - Planet frames are `.bmp`, not `.jpg`. Kodak/Pluto are the only publishable images.
 - Rubric grades from different grader instances are not comparable; one blind pass per comparison, equal-compute control inside it.
 - v1 control tokens were 96% `[answer]` → nothing to learn; any control-token label must carry entropy (v2: 1.5 bits).
+
+- 2026-10-26 23:43 PDT: crawler v5 + demo knobs; default model = Nico's pick.

@@ -5527,3 +5527,12 @@ Recommendation: the next lineage is pre-LN with the learned 256-position table, 
 epochs); RoPE is parked until a longer window is actually needed (and then budgeted for more tokens, since it forms the copy
 circuit slower here). Launched preln100 (100 epochs ≈ 80 min local, checkpoints every 20) to draw the copying learning curve
 (copy_probe per checkpoint) and the final gates; no rental.
+
+## 2026-10-27 05:41 PDT — pre-LN 100 epochs: copying plateaus at ~25% of the probe; the synthetic share leaks into the persona
+v5_preln100 copy_probe by checkpoint (ep 20/40/60/80/100): 14 / 10 / 15 / 9 / 11 of 48 — a noisy plateau after epoch 20, no
+growth with tokens. Recap recall 31/80 = 39% (best); signature 3.16 → 2.50 (best); val ppl 3.1. Costs: human-life drift
+9/96 (was 1/96) and template leakage into ordinary turns ("You're a florist. I remember the useful things" to a newcomer;
+"You said you'd run a marathon, that was the advice" to the marathon share) — the 20k synthetic rows are 43% of the data.
+Read: at 2 layers / d256 the copy circuit's ceiling is low, and the curriculum dose is too high for the character.
+Next scout (local, ~45 min, `preln_l3.sh`): pre-LN, **3 layers** (3.5M params; more heads to split previous-token / induction
+roles), synthetic share cut to 5k rows (12%), 50 epochs; same gates. After that: stop and wait for Nico's decision.

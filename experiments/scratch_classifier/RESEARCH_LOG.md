@@ -5371,3 +5371,12 @@ Recap-fact recall on 116 held-out rows (first 80; reply mentions a recap content
 Read: the model starts to read the recap tier (double the baseline) but most replies still ignore it ("any guess how the new
 job's going" → "Well, we've got a new job in the paper" is the typical half-hit). ms2 launched: recap rows ×12, 6 epochs
 (same base) to see whether recall climbs with dose; the 256→512 position-table growth waits on that.
+
+## 2026-10-27 00:57 PDT — recap tier: dose does not help; distance is not the limit; the model cannot copy
+ms2 (recap rows ×12, 6 epochs from ct2): recall 15/80 = 19% (= ms), val ppl 4.4; identity 30/32. Hits are template-shaped
+("The Witcher 3? You said you'd try it…") with invented content. Near-placement probe (`ms_probe.py --place history`: the recap
+as the Oracle's previous turn instead of the system prompt): ct2 8/80 = 10%, ms2 4/80 = 5% — worse when closer. So the window
+and position table are not the bottleneck; the model has not learned to COPY a fact from context (460 distinct facts ×12 teach
+the reply template, not the skill). ms3 launched: + 20,000 synthetic copy rows (`ms_synth.py`: distinct names/pets/jobs/cities/
+plans/feelings through varied recap/follow-up/reply templates; offline generation) mixed with the corpus and the agent rows,
+4 epochs from ct2; scored on the UNCHANGED agent-written held-out set, far and near. 256→512 growth stays parked until copying works.

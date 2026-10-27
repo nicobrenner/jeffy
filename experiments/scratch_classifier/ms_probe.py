@@ -12,16 +12,18 @@ def facts(recap, followup):
     fu = set(w.lower() for w in re.findall(r"[A-Za-z']+", followup))
     return [w for w in re.findall(r"[A-Za-z']{4,}", recap) if w.lower() not in STOP and w.lower() not in fu]
 if __name__ == "__main__":
-    ap = argparse.ArgumentParser(); ap.add_argument("--ckpt", nargs="+", required=True); ap.add_argument("--tokenizer", default="tokenizer_chat_v2.json"); ap.add_argument("--n", type=int, default=80); a = ap.parse_args()
+    ap = argparse.ArgumentParser(); ap.add_argument("--ckpt", nargs="+", required=True); ap.add_argument("--tokenizer", default="tokenizer_chat_v2.json"); ap.add_argument("--n", type=int, default=80); ap.add_argument("--place", default="system", choices=["system", "history"], help="recap in the system prompt (far) or as the Oracle's previous turn (near)"); a = ap.parse_args()
     rows = [json.loads(l) for l in open("pile_runs/atl/ms_heldout.jsonl")][: a.n]; tok = CustomTokenizerWrapper(a.tokenizer)
     for ck in a.ckpt:
         m, _ = load(ck); hit = 0; out = []
         for r in rows:
             b = re.findall(r"^(user|oracle): (.*)$", r["conv_b_open"], flags=re.M); hist = [{"user": b[0][1], "oracle": b[1][1]}] if len(b) >= 2 else []
-            resp, info = harness.respond(m, tok, hist, r["followup"], {**harness.DEFAULT, "memory": [r["recap"].rstrip(".") + "."], "seed": 7})
+            if a.place == "history": hist = hist + [{"user": "what do you remember about me?", "oracle": r["recap"].rstrip(".")}]; cfg = {**harness.DEFAULT, "seed": 7}
+            else: cfg = {**harness.DEFAULT, "memory": [r["recap"].rstrip(".") + "."], "seed": 7}
+            resp, info = harness.respond(m, tok, hist, r["followup"], cfg)
             fw = facts(r["recap"], r["followup"]); ok = any(w.lower() in resp.lower() for w in fw); hit += ok
             out.append({"id": r["id"], "recap": r["recap"], "followup": r["followup"], "response": resp, "facts": fw, "hit": ok})
         tag = ck.split("/")[-1].replace("best_lm_", "").replace(".pt", "")
-        with open(f"pile_runs/atl/ms_probe_{tag}.jsonl", "w") as f:
+        with open(f"pile_runs/atl/ms_probe_{tag}{'_near' if a.place == 'history' else ''}.jsonl", "w") as f:
             for o in out: f.write(json.dumps(o) + "\n")
-        print(f"[{tag}] recap-fact recall {hit}/{len(rows)} = {hit/len(rows):.0%}  (memory line = recap; demo harness defaults)")
+        print(f"[{tag}] recap-fact recall {hit}/{len(rows)} = {hit/len(rows):.0%}  (recap placed in {a.place}; demo harness defaults)")

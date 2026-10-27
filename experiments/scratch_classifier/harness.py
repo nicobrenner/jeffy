@@ -58,7 +58,10 @@ def trim(tok, ctx_ids, prime_len):
 def generate(m, tok, ctx, S, seed, act=None, act_mode=None, prime_len=0, prior=None, user=None, ban_yesno=False):
     """prior: the Oracle's earlier replies (cross-turn repetition control); user + ban_yesno: no Yes/No opener unless asked yes/no (off by default:
     banning tokens only moves the reflex to the next stock opener — "No" 13/30, then "Sure"/"Thank you"; prime-first is the real fix)"""
-    ban_yes = ban_yesno and user is not None and not YESNO_Q.search(user.strip())
+    ban_yes = False
+    if ban_yesno and user is not None:
+        try: ban_yes = classify_intent(m, tok, [], user)[0] != "yesno_question"
+        except Exception: ban_yes = False
     if act and act_mode == "token": ctx = ctx + " *" + act
     ids = trim(tok, list(tok.encode(ctx)), prime_len); out = []
     prior_ids = [t for r in (prior or []) for t in tok.encode(" " + r)]; prior_set = set(prior_ids)
@@ -92,6 +95,18 @@ def generate(m, tok, ctx, S, seed, act=None, act_mode=None, prime_len=0, prior=N
         ids.append(nxt); out.append(nxt)
     return re.sub(r"^\*\w+\s*", "", detok(tok, out).strip())
 
+_INTENT = {}
+def classify_intent(m, tok, history, user, path="checkpoints/intent_v1.pkl"):
+    """User-turn intent (greeting / yesno_question / open_question / task / pushback / share / reaction) from the Oracle's own hidden states —
+    the learned replacement for every regex that guessed intent. Returns (label, {label: prob}). ~71% held-out accuracy on v1 (1,993 LLM-labelled turns)."""
+    if path not in _INTENT: _INTENT[path] = pickle.load(open(path, "rb"))
+    C = _INTENT[path]
+    from intent_clf import hidden
+    prev = history[-1]["oracle"] if history else ""
+    H = hidden(m, tok, [{"text": user, "prev_oracle": prev}]); X = hstack([C["vec"].transform([user]), csr_matrix(H)])
+    probs = C["clf_both"].predict_proba(X)[0]; labels = list(C["clf_both"].classes_)
+    return labels[int(np.argmax(probs))], dict(zip(labels, [float(x) for x in probs]))
+
 _VER = {}
 def verifier_score(m, tok, V, prompt, resp):
     from verifier import hidden
@@ -111,6 +126,8 @@ def respond(m, tok, history, user, cfg=None):
     cands = [generate(m, tok, ctx, S, c["seed"] * 100 + s, prime_len=prime_len, prior=prior, user=user, ban_yesno=c["ban_yesno"]) for s in range(c["best_of"])]
     sc = [verifier_score(m, tok, V, user, r) for r in cands]; b = int(np.argmax(sc)); best, score = cands[b], sc[b]
     if c["controller"] and score < c["tau"] and c["act_mode"]:
+        intent, probs = classify_intent(m, tok, history, user); info["intent"] = intent
+        if intent != "pushback" and probs.get("pushback", 0) < 0.25: return best, {**info, "score": score}   # no push-back → no forced admission
         info["forced"] = True
         c2 = [generate(m, tok, ctx, S, c["seed"] * 100 + 50 + s, act="dunno", act_mode=c["act_mode"], prime_len=prime_len, prior=prior) for s in range(c["best_of"])]
         s2 = [verifier_score(m, tok, V, user, r) for r in c2]; b2 = int(np.argmax(s2))

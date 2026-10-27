@@ -5263,3 +5263,13 @@ words ("stones"). Legs are two-bone IK (femur 34, tibia 38, knee bent away from 
 riding tag with w/s; lines to scanned words; lock in orange. Reference video seen only in part (TikTok login/birthday walls over the headless
 frames) — the tall body, red feet on the text and lines to words match; the gait is from Nico's description. User stopped the two intent-
 labelling agents mid-run; relaunch on his word. Trigger: after an Oracle reply, p=0.5, 0.8–2.3 s later; returns 9–21 s after leaving.
+
+## 2026-10-26 23:18 PDT — User-turn intent classifier v1 (`intent_clf.py`, `checkpoints/intent_v1.pkl`): the learned replacement for intent regexes
+
+1,993 user turns (reactive transcripts 1,045, probes 132, corpus 816) labelled by two sub-agents into 7 intents (pushback 550, open_question 311,
+share 286, yesno_question 198, task 115, reaction 74, greeting 61). Held-out (398): TF-IDF 0.648; **Oracle hidden states 0.709** (last + mean at
+the end of the user turn, with the previous Oracle reply in context); both 0.709. Per class F1: pushback 0.79, share 0.76, open_question 0.75,
+greeting 0.61, yesno 0.60, reaction 0.50, task 0.47 (115 examples). Imperfect by design (Nico: "neither is going to be 100%… pretty good after
+enough data and iterations"). Wired into `harness.classify_intent(m, tok, history, user)`; the controller now forces the admit act only when the
+classifier says push-back (or p ≥ 0.25) AND the verifier failed; the yes/no-opener option uses it instead of the regex. Next: more labelled turns
+for task/reaction, Nico's corrections as labels, the crawler's word detector by the same recipe, and the classifier in the browser (same forward pass).

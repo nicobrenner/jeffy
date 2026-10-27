@@ -5136,3 +5136,10 @@ roughly one turn in five to more than two in five, halve ignored push-backs, and
 no coherence cost. Within-pass numbers only (this grader read recover8 harsher than the previous ones). This is DAgger working as described.
 Demo: `v2_grown_recovermt2x8_int8` is the new ★ model. Next: the admit-act + plan-token merge on this corpus, Nico's teach corrections,
 and the harness pass (demo settings + controller) on it.
+
+## 2026-10-26 21:06 PDT — Best model under the DEMO harness: name 32/32, human-life drift 1/96
+
+`recovermt2x8` through `harness_probe.py` with the demo settings (prime on, `sched` sampler T0.3→T0.5): **name 32/32, drift 1/96** (single
+sample); with best-of-4 + a verifier on its states (AUC 0.82): 31/32, 2/96. For comparison under the same settings this afternoon: conv8 31/32,
+25/96; ct2 + controller 32/32, 9/96. So the identity problem is closed under the settings Nico chats with. Reactive-user turns 2–3 through the
+full harness generating → on-thread pass vs conv8_full (8% on-thread ≥2, 55% ignores-pushback this afternoon).

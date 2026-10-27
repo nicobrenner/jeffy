@@ -5622,3 +5622,23 @@ doesn't 'wait' for others, it doesn't depend on a prompt to do something (althou
 classify/act-on/respond-to a prompt)". Roadmap additions: (a) a tiny queryable world (quantities, units, comparisons, time,
 the Room's state) the Oracle reads at inference — grounding by state, not text; the Room is the seed; (b) a continuous loop
 in the demo (perceive → classify → act, unprompted turns already exist) with online updates from teach corrections.
+
+## 2026-10-27 13:58 PDT — v6 data pass launched (pre-LN recipe, one system prompt, no synthetic rows, Room rows); three findings that reshaped it
+Findings before building: (1) **the "Nothing." opener is Nico's own bank line** (`up_to`: "Nothing. I don't exist between your
+messages. It's very restful"); the mean kicker "so you're just autocomplete with that" was model drift past the line (rmt2).
+So the bank stays untouched (FYI to Nico); the lever against kickers is stopping/best-of-N with a judge that knows "mean",
+not a data rewrite. (2) **Inquiry follow-through is already in the corpus**: 21,499 ask → answer → Oracle triples in the ct4
+corpus (47% share a content word with the answer), 16.6k `*wh` turns. ct2's 0/15 follow-through is therefore the post-LN
+no-copy failure, not missing data; the pre-LN line is the only one that can use it. v5b asks nothing on turn 1 (0/30) —
+the 12k recap/synthetic rows all open with `*tell` bank lines, which skewed the turn-1 prior. (3) **Grounding probe**
+(6 questions: feathers vs steel, 7 > 12, 3 apples minus 1, after Tuesday, ice hot/cold, can a cat fly): ct2 0/6, v5b 0/6;
+ct2 recites the training prompt on one ("make up something entertaining instead of admitting ignorance"). Logged under the
+grounding roadmap item: this is not fixable with chat text at 2–8M; it needs state the model can read.
+Data pass v6 (`data/chat_v2v6_train.jsonl`, 28,422 rows): ct4 corpus (23,234) with every system line replaced by the demo's
+prompt (7 variants → 1; kills the recitation source) + real recap rows (2,760, `ms_only`) + contrast rows (1,728) + **Room rows**
+(700, new `room_build.py`: the demo's `World.SEEDS` verbatim + 48 in-character continuations, 18 user reactions with bible
+answers, visit-memory lines "Someone came by at 3 am on a Tuesday…" in the system line → remarks). No synthetic copy rows.
+Run: v5b recipe (pre-LN 2L d256, oracle-only loss, 50 epochs, ~27 s/epoch on MPS, `logs/train_oracle_v6.log`, `V6_DONE` in
+`logs/v6_run.log`). Gates after: ms recall, identity/drift, hsim turn 1, int8 export → demo candidate; then a continuation
+review page (`cont_pairs.py`: shared history = ct2's turn 1 + its reactive follow-up; both models answer the same follow-up)
+in Nico's new 0–5 + notes format.

@@ -5314,3 +5314,10 @@ Finding on the way: 5/30 openers answer "I have no idea, and if you don't know s
 instead of admitting ignorance" — not our system prompt (absent from harness.py and the demo); it is a training-corpus system
 prompt (3,412 rows in chat_v2_fix_train contain the phrase) recited after the dunno line. Next data pass: strip/vary it.
 Context-window answer for Nico: 256 tokens; system prompt 55; median exchange 34 → ~5–6 exchanges remembered.
+
+## 2026-10-27 00:16 PDT — blind round 4 result: "mostly pretty bad", 6/7 both-bad, 1 for the 18:17 harness
+Nico did 7 of 29 pairs: both bad ×6, 18:17 harness ×1, current ×0. Read: under push-back follow-ups ct2 is bad under either
+harness; the three harness changes (cross-turn, prime off, prime-first) are not what made it "less funny and more forceful".
+Not covered by the A/B: the memory line (22:55; the crawler is on by default and appends "Your pet crawler just fetched the
+word … from the chat." to the system prompt after ~half the replies) — ct2 never saw such lines in training. Testing next:
+ct2 current default + memory line vs without, same openers/follow-ups (harness `memory` now accepts raw lines; `--memory`).

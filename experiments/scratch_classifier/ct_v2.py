@@ -27,12 +27,16 @@ SYN = {"n": 0}
 PUSHBACK = ["huh? that's not what I asked", "what? I asked you something else", "you lost me. answer the question", "that makes no sense, read my message again",
             "wait, what are you talking about?", "no no, I asked about something else entirely", "are you even listening? try again", "that's not an answer",
             "you're making stuff up. do you actually know?", "ok that was random. can you just answer?", "I don't think you understood me", "huh??"]
-def synthetic_dunno(copies=8):
+OPTS = {"bank": None, "copies": 8, "out": "chat_v2ct"}   # --bank extra.json (more admit lines, merged with Nico's 18); --copies N; --out tag
+def synthetic_dunno(copies=None):
+    copies = OPTS["copies"] if copies is None else copies
     """the model's OWN bad first answers (recover_src) + a push-back + one of Nico's admit-ignorance lines, as *dunno examples."""
     import random, json as _j
     from atl_probe import SYSTEM
     rng = random.Random(3); lines = _j.load(open("pile_runs/atl/oracle_lines_nico_3.json"))["dunno"]
+    if OPTS["bank"]: lines = lines + [l for l in _j.load(open(OPTS["bank"])) if l not in lines]
     src = [_j.loads(l) for l in open("pile_runs/atl/recover_src_grown_life8.jsonl")]
+    print(f"synthetic dunno: {len(lines)} admit lines x {len(src)} sources x {copies} copies")
     out = []
     for _ in range(copies):
         for r in src:
@@ -51,11 +55,13 @@ def main():
             pieces.append(t[pos:]); out.append({"text": "".join(pieces)})
         if split == "train":
             out += synthetic_dunno(); counts["dunno"] += SYN["n"]
-        with open(f"data/chat_v2ct_{split}.jsonl", "w") as f:
+        with open(f"data/{OPTS['out']}_{split}.jsonl", "w") as f:
             for r in out: f.write(json.dumps(r) + "\n")
         n = sum(counts.values()); H = -sum(v / n * math.log2(v / n) for v in counts.values())
-        print(f"{split}: {len(out)} conversations, {n} oracle turns -> data/chat_v2ct_{split}.jsonl; classes {dict(counts)} majority {max(counts.values())/n:.3f} entropy {H:.2f} bits")
+        print(f"{split}: {len(out)} conversations, {n} oracle turns -> data/{OPTS['out']}_{split}.jsonl; classes {dict(counts)} majority {max(counts.values())/n:.3f} entropy {H:.2f} bits")
     print("sample:", out[0]["text"][:400].replace("\n", " | "))
 
 if __name__ == "__main__":
-    main()
+    import argparse
+    ap = argparse.ArgumentParser(); ap.add_argument("--bank"); ap.add_argument("--copies", type=int, default=8); ap.add_argument("--out", default="chat_v2ct")
+    a = ap.parse_args(); OPTS.update(bank=a.bank, copies=a.copies, out=a.out); main()

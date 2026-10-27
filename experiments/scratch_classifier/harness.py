@@ -41,8 +41,8 @@ def lines():
 def build_context(history, user, prime=True, memory=None):
     if prime == "first": prime = not history   # the primed example only for the first reply, then it leaves the context
     t = SYSTEM
-    if memory:
-        t = t.rstrip("\n") + " " + " ".join(f"{k}: {v}." for k, v in memory.items()) + "\n"
+    if memory:   # dict → "k: v." facts; list → raw lines exactly as the demo's remember() appends them
+        t = t.rstrip("\n") + " " + (" ".join(memory) if isinstance(memory, list) else " ".join(f"{k}: {v}." for k, v in memory.items())) + "\n"
     if prime:
         for u, o in PRIME: t += f"<|user|> {u}\n<|oracle|> {o}\n"
     for h in history: t += f"<|user|> {h['user']}\n<|oracle|> {h['oracle']}\n"

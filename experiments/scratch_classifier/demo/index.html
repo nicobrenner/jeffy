@@ -241,7 +241,10 @@
       <option value="recipe">T0.5 + penalties</option>
       <option value="old">T0.8 (old demo)</option>
     </select>
-    <label class="hopt"><input type="checkbox" id="prime-check" checked> prime 1st reply</label>
+    <label class="hopt">prime <select id="prime-mode" title="Primed two-turn example: off, for the first reply only, or kept in context (as on Oct 26 18:17)"><option value="first">1st reply</option><option value="full">full</option><option value="off">off</option></select></label>
+    <input type="checkbox" id="prime-check" checked style="display:none">
+    <label class="hopt" title="Half-strength repetition penalty over the Oracle's earlier replies (added 18:26); untick to get the 18:17 behaviour"><input type="checkbox" id="crossCheck" checked> cross-turn</label>
+    <button id="crawlerNow" class="suggestion hbtn" title="Send the crawler out now">crawler now</button>
     <label class="hopt" title="Click any Oracle reply to rewrite it; rewrites are saved as training examples"><input type="checkbox" id="teachCheck"> teach</label>
     <span id="teachCount" class="hopt"></span>
     <button id="teachExport" class="suggestion hbtn" title="Download corrections.jsonl">export</button>
@@ -421,12 +424,16 @@
   function fmtOracleText(text) { return ' ' + text; }
   let memoryLines = []; window.__memory = () => memoryLines;   // facts the page knows that the model should see (the roadmap's memory line); kept short, newest first
   function remember(line) { memoryLines = [line, ...memoryLines.filter(l => l !== line)].slice(0, 2); if (tokenizer && transcript.length) rebuildIds(); }
+  const primeMode = document.getElementById('prime-mode');
   function buildPrime(force) {
     let t = fmtSystem();
     if (memoryLines.length) t += ' ' + memoryLines.join(' ');
-    if (primeCheck.checked && (force || transcript.length < 2)) for (const [u, o] of PRIME) t += fmtUserTurn(u) + fmtOracleText(o);   // first reply only
+    const mode = primeMode.value;   // off | first | full
+    if (mode === 'full' || (mode === 'first' && (force || transcript.length < 2))) for (const [u, o] of PRIME) t += fmtUserTurn(u) + fmtOracleText(o);
     return t;
   }
+  primeMode.addEventListener('change', () => { primeCheck.checked = primeMode.value !== 'off'; try { localStorage.setItem('tinyoracle.prime', primeMode.value); } catch (e) {} if (tokenizer) rebuildIds(); });
+  try { const pm = localStorage.getItem('tinyoracle.prime'); if (pm) { primeMode.value = pm; primeCheck.checked = pm !== 'off'; } } catch (e) {}
 
   // ===================== INFERENCE =====================
   async function generate(inputIds, onToken) {
@@ -438,7 +445,8 @@
     const priorIds = transcript.filter(m => m.role === 'oracle').flatMap(m => tokenizer.encode(' ' + m.text));
     const priorSet = new Set(priorIds), priorGrams = new Set();
     for (let j = 0; j + 3 <= priorIds.length; j++) priorGrams.add(priorIds[j] + ',' + priorIds[j + 1] + ',' + priorIds[j + 2]);
-    const crossPenalty = S.repPenalty !== 1.0 ? 1 + (S.repPenalty - 1) * 0.5 : 1.0;   // half-strength across turns
+    const crossCheck = document.getElementById('crossCheck');
+    const crossPenalty = (crossCheck.checked && S.repPenalty !== 1.0) ? 1 + (S.repPenalty - 1) * 0.5 : 1.0;   // half-strength across turns (toggle)
     // first-token rule: the corpus opens replies with "Yes" far too often; only allow it when the user actually asked a yes/no question
     const lastUser = transcript.length && transcript[transcript.length - 1].role === 'user' ? transcript[transcript.length - 1].text : '';
     const BAN_YESNO = false;   // off: banning Yes/No openers only moves the reflex to the next stock word; prime-first fixes openers instead
@@ -452,7 +460,7 @@
       for (let v = 0; v < vocabSize; v++) last[v] = logits[off + v];
       if (S.repPenalty !== 1.0) for (const t of new Set(generated)) last[t] = last[t] > 0 ? last[t] / S.repPenalty : last[t] * S.repPenalty;
       if (crossPenalty !== 1.0) for (const t of priorSet) if (!generated.includes(t)) last[t] = last[t] > 0 ? last[t] / crossPenalty : last[t] * crossPenalty;
-      if (generated.length >= 2) { const a = generated[generated.length - 2], b2 = generated[generated.length - 1]; for (const g of priorGrams) { const [x, y, z] = g.split(',').map(Number); if (x === a && y === b2) last[z] = -Infinity; } }
+      if (crossCheck.checked && generated.length >= 2) { const a = generated[generated.length - 2], b2 = generated[generated.length - 1]; for (const g of priorGrams) { const [x, y, z] = g.split(',').map(Number); if (x === a && y === b2) last[z] = -Infinity; } }
       if (S.noRepeatNgram > 0 && generated.length >= S.noRepeatNgram - 1) {
         const n = S.noRepeatNgram, tail = generated.slice(generated.length - (n - 1));
         for (let j = 0; j + n <= generated.length; j++) {
@@ -614,7 +622,7 @@
       logEvent('crawler_drop', { words }); remember('Your pet crawler brought back: ' + words.join(', ') + '.');
       await sleep(1000); await walkTo(-80, ty + 10, 120); show(false); busy = false;
     }
-    return { on(ev) { if (ev.type === 'oracle' && Math.random() < 0.5) setTimeout(visit, 800 + Math.random() * 1500); if (ev.type === 'reset') { bag = []; show(false); } } };
+    return { on(ev) { if (ev.type === 'oracle' && Math.random() < 0.5) setTimeout(visit, 800 + Math.random() * 1500); if (ev.type === 'reset') { bag = []; show(false); } }, now() { if (busy) return; crawlerCheck.checked = true; visit(); } };
   })();
 
   // ===================== TEACH MODE =====================
@@ -670,6 +678,7 @@
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'corrections.jsonl'; a.click();
   }
   document.getElementById('teachExport').addEventListener('click', exportCorrections); saveCorrections();
+  document.getElementById('crawlerNow').addEventListener('click', () => Crawler.now());
   document.getElementById('teachClear').addEventListener('click', () => { if (confirm('Delete all saved corrections in this browser?')) { corrections = []; saveCorrections(); } });
 
   // ===================== UI =====================
@@ -715,7 +724,7 @@
       if (model.format === 'plain') response = response.split('\n')[0].replace(/^User:.*$/, '').trim();
       conversationIds.push(...tokenizer.encode(fmtOracleText(response)));
       oracleDiv.textContent = response || '(empty response)'; transcript.push({ role: 'oracle', text: response }); oracleDiv.dataset.turn = transcript.length - 1; makeEditable(oracleDiv); logEvent('oracle', { turn: transcript.length, len: response.length }); Crawler.on({ type: 'oracle' });
-      if (primeCheck.checked && transcript.length === 2) rebuildIds();   // the primed example served its purpose: drop it from the context from here on
+      if (primeMode.value === 'first' && transcript.length === 2) rebuildIds();   // the primed example served its purpose: drop it from the context from here on
     } catch (e) { oracleDiv.textContent = '(generation error: ' + e.message + ')'; console.error(e); }
     chatEl.scrollTop = chatEl.scrollHeight;
     statusEl.textContent = 'Ready'; setBusy(false); inputEl.focus();
@@ -730,7 +739,7 @@
     convId = Date.now(); logEvent('load'); Crawler.on({ type: 'reset' }); memoryLines = [];
     conversationIds = tokenizer.encode(buildPrime()); transcript = [];
     chatEl.innerHTML = '';
-    addMessage('system-msg', model.label + ' loaded (' + model.size + '). ' + (primeCheck.checked ? 'Primed for the first reply only.' : 'No priming.') + ' Sampler: ' + samplerSel.options[samplerSel.selectedIndex].text + '.');
+    addMessage('system-msg', model.label + ' loaded (' + model.size + '). ' + ({ first: 'Primed for the first reply only.', full: 'Primed (kept in context).', off: 'No priming.' })[primeMode.value] + ' Sampler: ' + samplerSel.options[samplerSel.selectedIndex].text + '.');
     addMessage('oracle', "I'm Tiny Oracle. Ask me anything -- just don't expect too much.");
     showSuggestions();
   }

@@ -5143,3 +5143,12 @@ and the harness pass (demo settings + controller) on it.
 sample); with best-of-4 + a verifier on its states (AUC 0.82): 31/32, 2/96. For comparison under the same settings this afternoon: conv8 31/32,
 25/96; ct2 + controller 32/32, 9/96. So the identity problem is closed under the settings Nico chats with. Reactive-user turns 2–3 through the
 full harness generating → on-thread pass vs conv8_full (8% on-thread ≥2, 55% ignores-pushback this afternoon).
+
+## 2026-10-26 21:14 PDT — Nico's verdict: the admit-act model (ct2) is the most engaging; the DAgger model reads weird ("She's my fault")
+
+Second time tonight the grader's best conversation numbers and Nico's feel diverge: ct2 (plan token, picks its own act; older corpus, invents
+family) is "the most engaging so far"; recovermt2x8 (on-thread 43%) "wasn't very good from the beginning, and then it got weird". Hypothesis:
+act selection before writing reads as attitude/personality; following a push-back is necessary, not sufficient. The ct3 merge (admit act +
+plan token + 770 recoveries + bible) is the test of having both. Demo speed measured: single-thread WASM was the bottleneck (python http.server
+sends no COOP/COEP): v2 19 → 42 tok/s, 8.5M int8 8.5 → 15, 8.5M f32 23 tok/s with 16 threads; int8 slower than f32 in WASM; next: KV cache
+in the ONNX export, then WebGPU. `demo_server.py` replaces http.server on 8765. Visuals engine idea logged (memory `project_visuals_engine`).

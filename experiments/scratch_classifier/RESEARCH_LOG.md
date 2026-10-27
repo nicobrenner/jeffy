@@ -5562,3 +5562,12 @@ the user asks about the Oracle's own job/pet/home → bible answer), so user fac
 fails ("Outputs diverge 17.98"): `export_onnx.py`'s OnnxFriendlyModel hardcodes post-norm arithmetic → fixing now.
 Blind tone page built for Nico: `demo/blind_tone.html` (14 pairs on share/reaction/greeting turns, two models per pair,
 key `pile_runs/atl/blind_tone1_key.json`, localStorage `blind_tone_picks1`).
+
+## 2026-10-27 09:22 PDT — v5b (pre-LN + oracle-only loss + contrast rows): first model that passes identity AND reads recaps
+v5b: identity **32/32, human-life 0/96** · recap recall 26/80 = 32% · copy_probe 1/48 (down from 10: the probe measures the
+synthetic templates, which the oracle-only loss de-emphasises) · signature 3.18 → 2.67 · val ppl 3.6 · int8 3.8 MB.
+Turn-1 replies: coherent, bland/apologetic, with synthetic-template leakage ("You're back. I didn't go anywhere, I can't" to
+a marathon share; "You're a software engineer. I remember the useful things" to a newcomer) and one system-prompt fragment.
+Not witty — the "coherent but flat" pattern Nico flagged; the wit question is the tone-judge/picks work, not this recipe.
+Demo: added as a labelled candidate in the dropdown (default unchanged); blind page `demo/blind_v5b.html` (30 first-reply
+pairs v5b vs ct2, key `pile_runs/atl/blind_v5b_key.json`). Next run v5c: synthetic share 23% → 8% to cut template leakage.

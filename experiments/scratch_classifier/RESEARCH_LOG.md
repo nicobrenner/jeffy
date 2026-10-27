@@ -5254,3 +5254,12 @@ corpus cleaning and probe measurement. Demo: header split into two wrapping rows
 flex, foot lifts on the swing phase); memory line: the harness tells the model what its pet did ("Your pet crawler just fetched the word
 "talking" from the chat.") appended to the system prompt and rebuilt into the context — untrained input for now, the fixer should add such
 lines to training so the model learns to use them (roadmap step 4).
+
+## 2026-10-26 23:08 PDT — Crawler v4: water strider (after the reference video; Nico: six legs, "stepping carefully on stones")
+
+Rebuilt in world space: the body creeps toward its target while the six feet stay planted on the page; a leg whose foot lags its rest spot
+lifts (foot shrinks/fades), reaches ahead and plants — at most two legs in the air, never two neighbours on one side. Footholds snap to nearby
+words ("stones"). Legs are two-bone IK (femur 34, tibia 38, knee bent away from the body). Tall device body with screen, dot and LED; blue
+riding tag with w/s; lines to scanned words; lock in orange. Reference video seen only in part (TikTok login/birthday walls over the headless
+frames) — the tall body, red feet on the text and lines to words match; the gait is from Nico's description. User stopped the two intent-
+labelling agents mid-run; relaunch on his word. Trigger: after an Oracle reply, p=0.5, 0.8–2.3 s later; returns 9–21 s after leaving.

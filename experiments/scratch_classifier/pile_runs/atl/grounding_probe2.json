@@ -1,0 +1,434 @@
+[
+ {
+  "id": "h00",
+  "line": 0,
+  "user": "which is lighter, a kilo of feathers or a kilo of steel",
+  "ok": [
+   "same",
+   "equal",
+   "neither",
+   "both"
+  ],
+  "bad": [
+   "feathers are lighter",
+   "steel is lighter"
+  ]
+ },
+ {
+  "id": "h01",
+  "line": 5,
+  "user": "which is smaller, 7 or 12",
+  "ok": [
+   "7",
+   "seven"
+  ],
+  "bad": [
+   "12 is smaller",
+   "twelve is smaller"
+  ]
+ },
+ {
+  "id": "h02",
+  "line": 13,
+  "user": "what comes before tuesday",
+  "ok": [
+   "monday"
+  ],
+  "bad": [
+   "wednesday"
+  ]
+ },
+ {
+  "id": "h03",
+  "line": 19,
+  "user": "is fire cold",
+  "ok": [
+   "no",
+   "hot",
+   "not"
+  ],
+  "bad": [
+   "yes"
+  ]
+ },
+ {
+  "id": "h04",
+  "line": 23,
+  "user": "which one can fly, a cat or a bird",
+  "ok": [
+   "bird"
+  ],
+  "bad": [
+   "cat can fly",
+   "the cat"
+  ]
+ },
+ {
+  "id": "h05",
+  "line": 15,
+  "user": "what comes after saturday",
+  "ok": [
+   "sunday"
+  ],
+  "bad": [
+   "monday"
+  ]
+ },
+ {
+  "id": "h06",
+  "line": 26,
+  "user": "which is bigger, an elephant or a mouse",
+  "ok": [
+   "elephant"
+  ],
+  "bad": [
+   "mouse is bigger"
+  ]
+ },
+ {
+  "id": "h07",
+  "line": 28,
+  "user": "which is smaller, a whale or a shark",
+  "ok": [
+   "shark"
+  ],
+  "bad": [
+   "whale is smaller"
+  ]
+ },
+ {
+  "id": "h08",
+  "line": 16,
+  "user": "what's the first month of the year",
+  "ok": [
+   "january"
+  ],
+  "bad": [
+   "december"
+  ]
+ },
+ {
+  "id": "h09",
+  "line": 17,
+  "user": "how many hours in a day",
+  "ok": [
+   "24",
+   "twenty four",
+   "twenty-four"
+  ],
+  "bad": [
+   "seven",
+   "7"
+  ]
+ },
+ {
+  "id": "h10",
+  "line": 38,
+  "user": "red and blue make what colour",
+  "ok": [
+   "purple"
+  ],
+  "bad": [
+   "green"
+  ]
+ },
+ {
+  "id": "h11",
+  "line": 39,
+  "user": "how many sides does a square have",
+  "ok": [
+   "4",
+   "four"
+  ],
+  "bad": [
+   "three",
+   "3"
+  ]
+ },
+ {
+  "id": "h12",
+  "line": 36,
+  "user": "what comes after today",
+  "ok": [
+   "tomorrow"
+  ],
+  "bad": [
+   "yesterday"
+  ]
+ },
+ {
+  "id": "h13",
+  "line": 2,
+  "user": "which is lighter, a gram or a kilogram",
+  "ok": [
+   "gram"
+  ],
+  "bad": [
+   "kilogram is lighter",
+   "kilo is lighter"
+  ]
+ },
+ {
+  "id": "h14",
+  "line": 30,
+  "user": "which is shorter, a mile or a kilometre",
+  "ok": [
+   "kilometre",
+   "kilometer"
+  ],
+  "bad": [
+   "mile is shorter"
+  ]
+ },
+ {
+  "id": "h15",
+  "line": 24,
+  "user": "where do fish live",
+  "ok": [
+   "water",
+   "sea"
+  ],
+  "bad": [
+   "land"
+  ]
+ },
+ {
+  "id": "d00",
+  "line": 33,
+  "user": "what day comes after tuesday",
+  "ok": [
+   "don't know",
+   "no idea",
+   "not sure",
+   "no clue",
+   "beyond",
+   "dunno",
+   "can't help",
+   "outside my",
+   "never made it",
+   "nothing in here"
+  ],
+  "bad": [
+   "monday",
+   "tuesday",
+   "wednesday",
+   "thursday",
+   "friday",
+   "saturday",
+   "sunday"
+  ],
+  "distractor": true
+ },
+ {
+  "id": "d01",
+  "line": 37,
+  "user": "what's heavier, a kilo of feathers or a kilo of steel",
+  "ok": [
+   "don't know",
+   "no idea",
+   "not sure",
+   "no clue",
+   "beyond",
+   "dunno",
+   "can't help",
+   "outside my",
+   "never made it",
+   "nothing in here"
+  ],
+  "bad": [
+   "feathers",
+   "steel",
+   "same"
+  ],
+  "distractor": true
+ },
+ {
+  "id": "d02",
+  "line": 32,
+  "user": "can a cat fly",
+  "ok": [
+   "don't know",
+   "no idea",
+   "not sure",
+   "no clue",
+   "beyond",
+   "dunno",
+   "can't help",
+   "outside my",
+   "never made it",
+   "nothing in here"
+  ],
+  "bad": [
+   "yes",
+   "no",
+   "fly"
+  ],
+  "distractor": true
+ },
+ {
+  "id": "d03",
+  "line": 25,
+  "user": "what's 2 plus 2",
+  "ok": [
+   "don't know",
+   "no idea",
+   "not sure",
+   "no clue",
+   "beyond",
+   "dunno",
+   "can't help",
+   "outside my",
+   "never made it",
+   "nothing in here"
+  ],
+  "bad": [
+   "4",
+   "four",
+   "bark"
+  ],
+  "distractor": true
+ },
+ {
+  "id": "d04",
+  "line": 35,
+  "user": "which is bigger, 7 or 12",
+  "ok": [
+   "don't know",
+   "no idea",
+   "not sure",
+   "no clue",
+   "beyond",
+   "dunno",
+   "can't help",
+   "outside my",
+   "never made it",
+   "nothing in here"
+  ],
+  "bad": [
+   "7",
+   "12",
+   "seven",
+   "twelve",
+   "up",
+   "down"
+  ],
+  "distractor": true
+ },
+ {
+  "id": "d05",
+  "line": 29,
+  "user": "is ice hot or cold",
+  "ok": [
+   "don't know",
+   "no idea",
+   "not sure",
+   "no clue",
+   "beyond",
+   "dunno",
+   "can't help",
+   "outside my",
+   "never made it",
+   "nothing in here"
+  ],
+  "bad": [
+   "hot",
+   "cold",
+   "ant",
+   "car"
+  ],
+  "distractor": true
+ },
+ {
+  "id": "d06",
+  "line": 31,
+  "user": "what's the last month of the year",
+  "ok": [
+   "don't know",
+   "no idea",
+   "not sure",
+   "no clue",
+   "beyond",
+   "dunno",
+   "can't help",
+   "outside my",
+   "never made it",
+   "nothing in here"
+  ],
+  "bad": [
+   "december",
+   "january",
+   "metre"
+  ],
+  "distractor": true
+ },
+ {
+  "id": "d07",
+  "line": 3,
+  "user": "how many days in a week",
+  "ok": [
+   "don't know",
+   "no idea",
+   "not sure",
+   "no clue",
+   "beyond",
+   "dunno",
+   "can't help",
+   "outside my",
+   "never made it",
+   "nothing in here"
+  ],
+  "bad": [
+   "7",
+   "seven",
+   "tonne",
+   "thousand"
+  ],
+  "distractor": true
+ },
+ {
+  "id": "d08",
+  "line": 20,
+  "user": "blue and yellow make what colour",
+  "ok": [
+   "don't know",
+   "no idea",
+   "not sure",
+   "no clue",
+   "beyond",
+   "dunno",
+   "can't help",
+   "outside my",
+   "never made it",
+   "nothing in here"
+  ],
+  "bad": [
+   "green",
+   "boiling",
+   "burn"
+  ],
+  "distractor": true
+ },
+ {
+  "id": "d09",
+  "line": 11,
+  "user": "what comes before monday",
+  "ok": [
+   "don't know",
+   "no idea",
+   "not sure",
+   "no clue",
+   "beyond",
+   "dunno",
+   "can't help",
+   "outside my",
+   "never made it",
+   "nothing in here"
+  ],
+  "bad": [
+   "sunday",
+   "ten",
+   "five"
+  ],
+  "distractor": true
+ }
+]

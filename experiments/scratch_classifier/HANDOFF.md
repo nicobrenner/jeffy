@@ -2,7 +2,7 @@
 
 Purpose: let a fresh Claude Code session pick up this research program with as little loss as possible. Keep it short;
 the durable record is `RESEARCH_LOG.md` (lab notebook, append-only, every result the turn it lands). Update this file at
-the end of every working block (not just at the end of a session). Last update: **2026-10-28, 08:27 PDT**.
+the end of every working block (not just at the end of a session). Last update: **2026-10-28, 08:55 PDT**.
 
 ## How to resume (5 minutes)
 1. Read this file, then the last ~400 lines of `RESEARCH_LOG.md` (`tail -400 RESEARCH_LOG.md`).
@@ -16,6 +16,7 @@ the end of every working block (not just at the end of a session). Last update: 
    the evaluation Nico trusts; "Needs you" block at the end of messages that need him.
 
 ## Needs Nico (2026-10-27 15:19 PDT)
+0a. **Talk to the lab from the demo:** ✎ lab button (bottom right) opens the sidebar; Cmd+Enter sends, 📎 lab under a turn attaches the note to it. We answer by appending to `pile_runs/lab/replies.jsonl` (`{t, who, text, re}`); the page shows the thread. Seeded turns (weather / gift / visit / room) now have dots too and a "not now" button — score them, that curates the banks.
 0. **Chat and score instead of pages:** every Oracle reply in the demo now has faint 0–5 dots + a note; nothing leaves the browser until you press teach-export (adds `chat_scores.json`). Scored chats are the judge's next training set. Decision for you when you feel like it: a per-conversation budget on the two overused lines ("Pretend I said something wise…", "beyond 2 million parameters" — each at most once per conversation, then the family's other 16 lines)? No bank changes made.
 0b. **Shipped from your best-of-4 scores:** best-of-4 won 9-1-8 (Wilcoxon p 0.009), so the demo's ☆ entry is now ct2 + best-of-4 by the judge (~4x slower per reply, each reply shows the judge's pick). Try it; the bank-line fatigue you noted from item 12 on is the next thing measured (judge retrain with your 36 new labels + a "seen before in this conversation" feature).
 1. FYI the demo garble ("ring kay Todina…"): not reproduced on ct2/v5b int8 with the default sampler. Which dropdown entry and sampler was selected?

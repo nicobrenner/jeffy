@@ -3,7 +3,24 @@ python3 -m http.server sends no such headers -> ort runs single-threaded (the pa
   python3 demo_server.py 8766
 """
 import sys, http.server, functools
+import json, os, time
+LAB = os.path.join("pile_runs", "lab")   # local only (.gitignore): the researcher thread — notes from Nico, replies from the lab sessions
 class H(http.server.SimpleHTTPRequestHandler):
+    def do_GET(self):
+        if self.path.startswith("/lab/replies"):
+            os.makedirs(LAB, exist_ok=True); f = os.path.join(LAB, "replies.jsonl"); rows = [l for l in open(f)] if os.path.exists(f) else []
+            body = ("[" + ",".join(l.strip() for l in rows if l.strip()) + "]").encode(); self.send_response(200); self.send_header("Content-Type", "application/json"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/lab/notes"):
+            os.makedirs(LAB, exist_ok=True); f = os.path.join(LAB, "notes.jsonl"); rows = [l for l in open(f)] if os.path.exists(f) else []
+            body = ("[" + ",".join(l.strip() for l in rows if l.strip()) + "]").encode(); self.send_response(200); self.send_header("Content-Type", "application/json"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body); return
+        return super().do_GET()
+    def do_POST(self):
+        if self.path.startswith("/lab/notes"):
+            n = int(self.headers.get("Content-Length", 0)); row = json.loads(self.rfile.read(n) or b"{}"); row.setdefault("t", time.time()); row.setdefault("who", "nico")
+            os.makedirs(LAB, exist_ok=True)
+            with open(os.path.join(LAB, "notes.jsonl"), "a") as f: f.write(json.dumps(row) + "\n")
+            body = b'{"ok":true}'; self.send_response(200); self.send_header("Content-Type", "application/json"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body); return
+        self.send_response(404); self.end_headers()
     def end_headers(self):
         self.send_header("Cross-Origin-Opener-Policy", "same-origin"); self.send_header("Cross-Origin-Embedder-Policy", "require-corp")
         self.send_header("Cross-Origin-Resource-Policy", "cross-origin"); self.send_header("Cache-Control", "no-cache"); super().end_headers()

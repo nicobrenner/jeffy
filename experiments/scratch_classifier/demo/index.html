@@ -170,6 +170,11 @@
   .hbtn { font-size: 12px; padding: 3px 8px; }
   #status { margin-left: auto; white-space: nowrap; }
   body { overflow-x: hidden; }
+  #lab { position: fixed; right: 0; top: 0; height: 100%; width: 320px; background: var(--bg, #fff); border-left: 1px solid #8884; box-shadow: -4px 0 16px #0002; z-index: 50; display: flex; flex-direction: column; transform: translateX(100%); transition: transform .2s; font-size: 13px }
+  #lab.open { transform: none } #lab-head { padding: 8px 10px; border-bottom: 1px solid #8884; display: flex; justify-content: space-between; align-items: center } #lab-thread { flex: 1; overflow: auto; padding: 8px 10px }
+  .lab-row { margin: 6px 0; padding: 6px 8px; border-radius: 8px; background: #8881 } .lab-row b { opacity: .7 } .lab-row.nico { background: #2b5cff22 } .lab-row small { display: block; opacity: .55; font-size: 11px }
+  #lab-form { padding: 8px 10px; border-top: 1px solid #8884 } #lab-text { width: 100%; box-sizing: border-box; min-height: 64px; font: 13px system-ui; background: transparent; color: inherit; border: 1px solid #8886; border-radius: 6px; padding: 6px }
+  #lab-toggle { position: fixed; right: 10px; bottom: 10px; z-index: 51; font: 12px system-ui; padding: 6px 10px; border-radius: 16px; border: 1px solid #8886; background: var(--bg, #fff); color: inherit; cursor: pointer }
   #tokenizer { position: absolute; right: 8px; bottom: 8px; width: 34px; height: 26px; pointer-events: none; opacity: .75; transition: transform .15s }
   #tokenizer.chop { transform: translateY(-3px) rotate(-8deg) }
   .tk-piece { position: fixed; z-index: 9; font: 11px/1 ui-monospace, Menlo, monospace; background: #ffe9a8; color: #333; border: 1px solid #d9b85a; border-radius: 3px; padding: 1px 4px; pointer-events: none; transition: transform .7s cubic-bezier(.2,.7,.3,1), opacity .7s; will-change: transform }
@@ -261,7 +266,7 @@
     <label class="hopt">prime <select id="prime-mode" title="Primed two-turn example: off, for the first reply only, or kept in context (as on Oct 26 18:17)"><option value="first">1st reply</option><option value="full">full</option><option value="off">off</option></select></label>
     <label class="hopt" title="How much of the conversation the model sees: everything, or only the last exchange (Oct 27 diagnosis: last turn scores higher at turn 3 on ct2, but it loses the recap ability v5b has; default stays full)">history <select id="history-mode"><option value="full">full</option><option value="last">last turn</option></select></label>
     <label class="hopt" id="world-knob" style="display:none" title="Grounding tier (Oct 27): a learned extractor reads facts you state (name, pet, job, place, likes, family) from the model's hidden states and writes one recap line into the system prompt. Only pre-LN models read it. Default off">world <select id="world-mode"><option value="off">off</option><option value="facts">facts</option><option value="weather">weather</option><option value="both">both</option></select> <input id="idle-min" type="number" min="0.05" step="0.5" value="3" style="width:3.2em" title="Minutes of silence before the Oracle checks in on its own (once per absence, never while the tab is hidden)"></label>
-    <span id="weather-line" class="hopt" style="opacity:.6;font-style:italic"></span>
+    <span id="weather-line" class="hopt" style="opacity:.6;font-style:italic"></span> <a class="hopt" href="arena.html" title="The arena: the creatures live there, talk to them or play with the mouse">arena</a>
     <input type="checkbox" id="prime-check" checked style="display:none">
     <label class="hopt" title="Half-strength repetition penalty over the Oracle's earlier replies (added 18:26); untick to get the 18:17 behaviour"><input type="checkbox" id="crossCheck" checked> cross-turn</label>
     <button id="crawlerNow" class="suggestion hbtn" title="Send the crawler out now">crawler now</button>
@@ -274,6 +279,7 @@
   </div>
 </header>
 
+<aside id="lab"><div id="lab-head"><b>notes to the lab</b><span><span id="lab-attach" style="opacity:.6;margin-right:8px"></span><button id="lab-close" class="suggestion hbtn">close</button></span></div><div id="lab-thread"></div><div id="lab-form"><textarea id="lab-text" placeholder="Talk to the lab here, in the context of this conversation. Cmd+Enter sends. Click 📎 lab under a turn to attach the note to it."></textarea><div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px"><small style="opacity:.6">goes to pile_runs/lab/notes.jsonl (local); replies from the lab sessions appear here</small><button id="lab-send" class="suggestion hbtn">send</button></div></div></aside><button id="lab-toggle" title="Notes to the lab (Nico ↔ the lab sessions, in the context of this chat)">✎ lab</button>
 <div id="chat">
   <div class="msg system-msg">Loading Tiny Oracle into your browser...</div>
 </div>
@@ -488,6 +494,30 @@
   worldMode.addEventListener('change', () => { try { localStorage.setItem('tinyoracle.world', worldMode.value); } catch (e) {} worldFacts = {}; if (tokenizer && transcript.length) rebuildIds(); updateWeather(false).catch(() => {}); });
   try { const wm = localStorage.getItem('tinyoracle.world'); if (wm) worldMode.value = wm; } catch (e) {}
   function worldOn() { return !!(model && model.preLN) && worldMode.value === 'facts'; }
+
+  // ===================== NOTES TO THE LAB (researcher sidebar: Nico <-> the lab sessions, N-way via pile_runs/lab/*.jsonl, localhost only) =====================
+  const Lab = (() => {
+    const el = document.getElementById('lab'), thread = document.getElementById('lab-thread'), text = document.getElementById('lab-text'), attachEl = document.getElementById('lab-attach');
+    let attached = null, seen = 0, open = false;
+    function ctx() { return { model: modelSel.value, sampler: samplerSel.value, prime: primeMode.value, history: historyMode.value, world: worldMode.value, idle_min: +idleMin.value, weather_line: weather.line || '', turns: transcript.slice(-4), attached }; }
+    function attach(i, meta) { attached = { turn: i, text: transcript[i] && transcript[i].text, src: meta && meta.src, seed: meta && meta.seed }; attachEl.textContent = 'attached: turn ' + i; show(true); text.focus(); }
+    function show(on) { open = on; el.classList.toggle('open', on); if (on) poll(); }
+    function row(r) { const d = document.createElement('div'); d.className = 'lab-row ' + (r.who || ''); d.innerHTML = '<b>' + String(r.who || '?').replace(/[<>&]/g, '') + '</b> ' + String(r.text || '').replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c])) + '<small>' + new Date((r.t || 0) * 1000).toLocaleTimeString() + (r.re != null ? ' · re ' + r.re : '') + '</small>'; return d; }
+    async function send() {
+      const t = text.value.trim(); if (!t) return; const note = { t: Date.now() / 1000, who: 'nico', text: t, ctx: ctx() };
+      try { await fetch('/lab/notes', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(note) }); thread.appendChild(row(note)); thread.scrollTop = thread.scrollHeight; text.value = ''; attached = null; attachEl.textContent = ''; logEvent('lab_note', { len: t.length }); }
+      catch (e) { const d = row({ who: 'page', text: 'could not post (is demo_server.py running?)', t: Date.now() / 1000 }); thread.appendChild(d); }
+    }
+    async function poll() {
+      try { const rows = await (await fetch('/lab/replies')).json(); if (rows.length > seen) { rows.slice(seen).forEach(r => thread.appendChild(row(r))); seen = rows.length; thread.scrollTop = thread.scrollHeight; } } catch (e) {}
+    }
+    (async () => { try { const notes = await (await fetch('/lab/notes')).json(); notes.slice(-20).forEach(r => thread.appendChild(row(r))); } catch (e) {} })();
+    setInterval(() => { if (open) poll(); }, 5000);
+    document.getElementById('lab-toggle').addEventListener('click', () => show(!open)); document.getElementById('lab-close').addEventListener('click', () => show(false)); document.getElementById('lab-send').addEventListener('click', send);
+    text.addEventListener('keydown', e => { if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') { e.preventDefault(); send(); } });
+    return { attach, show, send, poll };
+  })();
+  window.__lab = Lab;
 
   // ===================== PRESENCE (visit record, return turn with typing dots) =====================
   let visitRec = { count: 0, first: null, last: null }; try { visitRec = JSON.parse(localStorage.getItem('tinyoracle.visits') || 'null') || visitRec; } catch (e) {}
@@ -719,9 +749,9 @@
     let last = 0;
     async function notice(type, arg) {
       if (!session || generating || !transcript.length || Math.random() > P[type] || Date.now() - last < 15000 || inputEl.value.trim()) return;
-      last = Date.now(); const bank = SEEDS[type](arg); return say(bank[Math.floor(Math.random() * bank.length)], type);
+      last = Date.now(); const bank = SEEDS[type](arg); return say(bank[Math.floor(Math.random() * bank.length)], type, arg);
     }
-    async function say(seed, type) {
+    async function say(seed, type, arg) {
       setBusy(true); statusEl.textContent = 'Oracle noticed something...';
       const div = addMessage('oracle', seed); div.classList.add('world'); div.title = 'The Oracle noticed something in the room';
       const fmt = t => model.format === 'plain' ? '\nOracle: ' + t : '\n<|oracle|>' + (planTokens ? ' *tell ' : ' ') + t;
@@ -730,6 +760,8 @@
         const genIds = await generate(conversationIds.concat(tokenizer.encode(fmt(seed))), partial => { const t = seed + partial; if (t !== shown) { shown = t; div.textContent = t.trim() + '\u258D'; chatEl.scrollTop = chatEl.scrollHeight; } });
         let text = (seed + tokenizer.decode(genIds)).trim(); if (model.format === 'plain') text = text.split('\n')[0]; text = text.replace(/\.\s*$/, '');
         div.textContent = text; conversationIds.push(...tokenizer.encode(fmt(text))); transcript.push({ role: 'oracle', text }); div.dataset.turn = transcript.length - 1; makeEditable(div);
+        const src = type === 'weather' ? 'weather:' + (weather.cond || 'none') : type === 'presence' ? 'visit:' + (returningBrowser ? 'return' : 'first') : type === 'gift' ? 'gift:' + (arg || '') : 'room:' + type;
+        addScoreBar(div, transcript.length - 1, { src, seed });
         logEvent('oracle_world', { type, len: text.length }); if (['fetch', 'drop', 'gift', 'grab', 'escape'].includes(type) && window.__pet) window.__pet.feel('ack');
       } catch (e) { console.error(e); }
       chatEl.scrollTop = chatEl.scrollHeight; statusEl.textContent = 'Ready'; setBusy(false);
@@ -985,17 +1017,21 @@
   // judge (nico_judge.py) can train on it directly.
   let chatScores = {}; try { chatScores = JSON.parse(localStorage.getItem('tinyoracle.chatscores') || '{}'); } catch (e) {}
   function saveChatScores() { try { localStorage.setItem('tinyoracle.chatscores', JSON.stringify(chatScores)); } catch (e) {} updateTeachCount(); }
-  function addScoreBar(div, i) {
-    const key = convId + ':' + i, bar = document.createElement('div'); bar.className = 'scorebar';
+  function addScoreBar(div, i, meta) {
+    const key = convId + ':' + i, bar = document.createElement('div'); bar.className = 'scorebar'; meta = meta || { src: 'reply' };
     const turns = transcript.slice(0, i - 1), history = []; for (let k = 0; k + 1 < turns.length; k += 2) if (turns[k].role === 'user' && turns[k + 1].role === 'oracle') history.push({ user: turns[k].text, oracle: turns[k + 1].text });
-    const entry = () => chatScores[key] || (chatScores[key] = { s: {}, n: {}, history, user: transcript[i - 1].text, reply: transcript[i].text, model: modelSel.value, conv: convId, turn: i, ts: new Date().toISOString() });
+    const entry = () => chatScores[key] || (chatScores[key] = { s: {}, n: {}, history, user: transcript[i - 1] && transcript[i - 1].role === 'user' ? transcript[i - 1].text : '', reply: transcript[i].text, model: modelSel.value, conv: convId, turn: i, ts: new Date().toISOString(), src: meta.src, seed: meta.seed || null });
     const dots = []; for (let v = 0; v <= 5; v++) { const b = document.createElement('button'); b.textContent = v; b.title = ['broken / wrong / offensive', 'flat or off', 'passable', 'fine', 'good, in character', 'exactly what you\'d want'][v];
       b.addEventListener('click', e => { e.stopPropagation(); entry().s.A = v; dots.forEach((d, k) => d.classList.toggle('sel', k === v)); bar.classList.add('has'); logEvent('score', { turn: i, score: v }); saveChatScores(); }); dots.push(b); bar.appendChild(b); }
     const nb = document.createElement('button'); nb.className = 'notebtn'; nb.textContent = 'note'; nb.title = 'One line on why (worth more than the number)';
     const inp = document.createElement('input'); inp.placeholder = 'why?'; inp.style.display = 'none';
     nb.addEventListener('click', e => { e.stopPropagation(); inp.style.display = ''; inp.focus(); });
     inp.addEventListener('click', e => e.stopPropagation()); inp.addEventListener('input', () => { entry().n.A = inp.value; bar.classList.add('has'); saveChatScores(); });
-    bar.append(nb, inp); div.appendChild(bar);
+    bar.append(nb, inp);
+    if (meta.src !== 'reply') { const nn = document.createElement('button'); nn.className = 'notebtn'; nn.textContent = 'not now'; nn.title = 'Dismiss this seeded turn (logged as a 0 with the reason)';
+      nn.addEventListener('click', e => { e.stopPropagation(); entry().s.A = 0; entry().n.A = 'dismissed'; entry().dismissed = true; saveChatScores(); logEvent('dismiss', { src: meta.src, turn: i }); div.style.display = 'none'; }); bar.appendChild(nn); }
+    const lab = document.createElement('button'); lab.className = 'notebtn'; lab.textContent = '📎 lab'; lab.title = 'Attach the next lab note to this turn'; lab.addEventListener('click', e => { e.stopPropagation(); Lab.attach(i, meta); }); bar.appendChild(lab);
+    div.appendChild(bar);
   }
   function makeEditable(div) {
     div.title = 'Teach mode: click to rewrite this reply';

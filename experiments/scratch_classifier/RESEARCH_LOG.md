@@ -6157,3 +6157,17 @@ from drive satisfaction + engagement proxies the page measures (hover, click, Cr
 FeUdal-style with the Oracle emitting a one-token goal. "Alive" metric: Godspeed Animacy (Bartneck 2009) + Chesney companionship
 items, and behaviourally unprompted mentions of Crawly per session (chat export has the text). First < 30 min signal: a logged-policy
 baseline — drives + the current hand policy, logging (drives, action, engagement) per tick in the demo, no learning yet.
+
+## 2026-10-28 08:55 PDT — Branch 1: scores under every Oracle turn (tagged by source) + "not now"; the lab sidebar (Nico ↔ the lab sessions, in context)
+**Scores on seeded turns.** The 0–5 dots + note now sit under EVERY Oracle turn; each exported row carries `src` — `reply`,
+`weather:<condition>`, `gift:<word>`, `visit:first|return`, `room:<event>` — and the seed line used, so his scores curate the banks
+per source and the judge can train per source (`chat_scores.json` via the teach export). Seeded turns get a "not now" button:
+dismisses the turn, logged as a 0 with note "dismissed" and the src. Headless: a weather turn exports as src `weather:morning`,
+seed "Forecast: tabby with a chance…", 0 / dismissed.
+**Notes to the lab** (his "replit sidebar": talk to us directly, in the context of TO). Collapsible right sidebar (✎ lab button);
+Cmd+Enter posts `{t, who: "nico", text, ctx}` to `demo_server.py` at `/lab/notes` (localhost) → `pile_runs/lab/notes.jsonl`;
+ctx = last 4 turns, model, sampler/prime/history/world knobs, idle minutes, the weather line, and the attached turn (📎 lab under any
+turn attaches the next note to it, with its src and seed). The page polls `/lab/replies` every 5 s and renders `pile_runs/lab/replies.jsonl`
+rows (`{t, who, text, re}`) in the same thread with a who label — participants join by appending to that file (N-way). `pile_runs/lab/`
+is gitignored (local, like engagement data). Headless: note posted with ctx (3 turns, attached turn 1), a reply row appended by hand
+rendered within 6 s as "branch1"; no console errors. Server restarted on 8765 with the endpoints.

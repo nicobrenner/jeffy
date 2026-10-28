@@ -83,3 +83,5 @@ experiments/**/pile_runs/*/photo_compressor/*
 !experiments/**/pile_runs/*/photo_compressor/shared_prior_pluto_nasa_700_recon_D.png
 !experiments/**/pile_runs/*/photo_compressor/blursort_patch_*.png
 !experiments/**/pile_runs/*/photo_compressor/pluto_56*.png
+
+experiments/**/pile_runs/lab/

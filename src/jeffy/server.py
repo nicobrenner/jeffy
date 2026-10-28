@@ -2574,7 +2574,7 @@ async function runPredict(tid){
     _stats.predictions++;
     _ev("predict",tid,{label:d.label,confidence:d.confidence,n:_stats.predictions});
     _lastPred={task:tid,label:d.label,confidence:d.confidence};
-    if(TEACH&&$("teach-line")&&$("teach-box").style.display==="none"){$("teach-line").style.display="block";
+    if(TEACH&&$("teach-line")&&$("teach-box").style.display==="none")$("teach-line").style.display="block";
     if(tid.indexOf("my_")===0)_ev("teach_predict",tid,{label:d.label,confidence:d.confidence,margin:d.margin});
     $("fb-up").disabled=false;$("fb-down").disabled=false;
     $("fb-up").classList.remove("voted");$("fb-down").classList.remove("voted");

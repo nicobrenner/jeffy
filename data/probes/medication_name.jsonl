@@ -1,3 +1,4 @@
+{"_gate": "margin", "_min": 0.5, "_why": "under-confident head: top probability rarely clears 0.9; margin 0.5 covered 68% of demo cases with no misroutes"}
 {"text": "Metformin HCl 500mg Tablets", "expect": "metformin", "why": "medication_classifier_demo.json test case (OCR-style label text)"}
 {"text": "Lisinopril 10mg Tablet", "expect": "lisinopril", "why": "medication_classifier_demo.json test case (OCR-style label text)"}
 {"text": "Atorvastatin Calcium 20mg", "expect": "atorvastatin", "why": "medication_classifier_demo.json test case (OCR-style label text)"}
@@ -34,3 +35,10 @@
 {"text": "Metform 500mg", "expect": "metformin", "why": "playground medication-scanner demo shape (brand name / OCR noise / truncation), from the 2026-10-13 demo run"}
 {"text": "Losart 50mg Tab", "expect": "losartan", "why": "playground medication-scanner demo shape (brand name / OCR noise / truncation), from the 2026-10-13 demo run"}
 {"text": "PREDNISONE TABLETS USP 10MG", "expect": "prednisone", "why": "playground medication-scanner demo shape (brand name / OCR noise / truncation), from the 2026-10-13 demo run"}
+{"text": "LIPITOR (atorvastatin calcium) 10 mg tablets", "expect": "atorvastatin", "why": "brand with generic in parentheses"}
+{"text": "Amoxicilin 500 mg caps", "expect": "amoxicillin", "why": "misspelling + abbreviation"}
+{"text": "sertraline HCl 100mg", "expect": "sertraline", "why": "salt form, no dosage form"}
+{"text": "Ventolin HFA inhaler", "expect": "albuterol", "why": "brand only, device named"}
+{"text": "ibuprofen 200 mg", "expect": "ibuprofen", "why": "generic + strength only"}
+{"text": "Prozac 20 mg capsule", "expect": "fluoxetine", "why": "brand -> generic"}
+{"text": "Levothyroxine Sodium 50 mcg", "expect": "levothyroxine", "why": "salt + micrograms"}

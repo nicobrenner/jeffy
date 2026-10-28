@@ -730,7 +730,7 @@
         const genIds = await generate(conversationIds.concat(tokenizer.encode(fmt(seed))), partial => { const t = seed + partial; if (t !== shown) { shown = t; div.textContent = t.trim() + '\u258D'; chatEl.scrollTop = chatEl.scrollHeight; } });
         let text = (seed + tokenizer.decode(genIds)).trim(); if (model.format === 'plain') text = text.split('\n')[0]; text = text.replace(/\.\s*$/, '');
         div.textContent = text; conversationIds.push(...tokenizer.encode(fmt(text))); transcript.push({ role: 'oracle', text }); div.dataset.turn = transcript.length - 1; makeEditable(div);
-        logEvent('oracle_world', { type, len: text.length });
+        logEvent('oracle_world', { type, len: text.length }); if (['fetch', 'drop', 'gift', 'grab', 'escape'].includes(type) && window.__pet) window.__pet.feel('ack');
       } catch (e) { console.error(e); }
       chatEl.scrollTop = chatEl.scrollHeight; statusEl.textContent = 'Ready'; setBusy(false);
     }
@@ -831,14 +831,66 @@
     function fmtN(n) { return String(n).padStart(6, '0').replace(/(\d)(?=(\d{3})+$)/g, '$1,'); }
     function updateStatus(total) {
       const r = chatEl.getBoundingClientRect(); status.style.left = (r.left + 10) + 'px'; status.style.top = (r.bottom - 10) + 'px';
-      status.innerHTML = `CHAT -- TURN ${String(Math.ceil(transcript.length / 2)).padStart(2, '0')}<br>EXTRACTED ${fmtN(extracted)} / ${fmtN(total)}<br>KEYWORDS ${String(keywords.length).padStart(3, '0')}  ${keywords.slice(-3).map(k => k.toUpperCase()).join(' · ')}<br>VISIT ${String(visitRec.count).padStart(3, '0')}  ${returningBrowser ? 'RETURNING' : 'FIRST'}`;
+      status.innerHTML = `CHAT -- TURN ${String(Math.ceil(transcript.length / 2)).padStart(2, '0')}<br>EXTRACTED ${fmtN(extracted)} / ${fmtN(total)}<br>KEYWORDS ${String(keywords.length).padStart(3, '0')}  ${keywords.slice(-3).map(k => k.toUpperCase()).join(' · ')}<br>VISIT ${String(visitRec.count).padStart(3, '0')}  ${returningBrowser ? 'RETURNING' : 'FIRST'}<br>${Pet.bars()}`;
     }
     function show(on) { svg.style.opacity = on ? 1 : 0; tag.classList.toggle('on', on); status.classList.toggle('on', on); }
     async function step(p) { await p; if (aborted) throw new Error('grabbed'); }
     function onAbort(e) { if (e.message !== 'grabbed') console.error(e); clearScans(); clearNet(); label.classList.remove('on'); }
     // Picked up: the crawler hates it. It wriggles and shakes in the hand until it frees itself (or is let go), then runs off.
     function toLocal(ev) { const r = chatEl.getBoundingClientRect(); return [ev.clientX - r.left + chatEl.scrollLeft, ev.clientY - r.top + chatEl.scrollTop]; }
-    body.addEventListener('pointerdown', ev => { if (svg.style.opacity === '0' || grabbed) return; ev.preventDefault(); grab(ev); });
+    body.addEventListener('pointerdown', ev => { if (svg.style.opacity === '0' || grabbed) return; ev.preventDefault(); Pet.feel('drag'); grab(ev); });
+    body.addEventListener('pointerenter', () => { if (svg.style.opacity !== '0') Pet.feel('hover'); });
+    body.addEventListener('click', () => { if (svg.style.opacity !== '0') Pet.feel('click'); });
+
+    // ===== PET MODEL, first signal (HANDOFF design): drives in real time + a HAND policy over six options + logging. No learning yet. =====
+    // drives in [0,1]: hunger-for-words, curiosity, fatigue, affection. The policy picks the option with the highest drive-driven score;
+    // the Trico rule makes it ignore the call sometimes. Every decision and every engagement proxy is logged (events export) — the first dataset.
+    const Pet = (() => {
+      const d = { hunger: 0.6, curiosity: 0.5, fatigue: 0.1, affection: 0.3 }; let napUntil = 0, lastDecision = 0; const since = { hover: 0, click: 0, drag: 0, mention: 0, ack: 0 };
+      const clamp = v => Math.max(0, Math.min(1, v));
+      function tick() {   // every 2 s
+        const active = !document.hidden && !!transcript.length;
+        if (Date.now() < napUntil) { d.fatigue = clamp(d.fatigue - 0.05); } else if (active) { d.hunger = clamp(d.hunger + 0.012); d.curiosity = clamp(d.curiosity + 0.008); d.fatigue = clamp(d.fatigue + 0.004); }
+        d.affection = clamp(d.affection - 0.004); if (status.classList.contains('on')) updateStatus(stones.length);
+      }
+      function feel(what) {   // engagement proxies: hover / click / drag / Crawly mentioned in chat / Oracle acknowledgement (Room turn)
+        since[what] = (since[what] || 0) + 1; const dA = { hover: 0.05, click: 0.12, drag: 0.08, mention: 0.2, ack: 0.15 }[what] || 0; d.affection = clamp(d.affection + dA); d.curiosity = clamp(d.curiosity + 0.04);
+        logEvent('pet_feel', { what, drives: snap() });
+      }
+      function snap() { return { h: +d.hunger.toFixed(2), c: +d.curiosity.toFixed(2), f: +d.fatigue.toFixed(2), a: +d.affection.toFixed(2) }; }
+      function scores() {
+        const words = chatEl.querySelectorAll('.msg').length; return {
+          wander: 0.25 + 0.5 * d.curiosity - 0.5 * d.fatigue,
+          fetch: (words ? 1 : 0) * (0.9 * d.hunger + 0.3 * d.curiosity - 0.6 * d.fatigue),
+          bring_user: bag.length ? 0.7 * d.affection + 0.3 * (1 - d.hunger) : -1,
+          bring_oracle: bag.length ? 0.5 * d.curiosity + 0.4 * (1 - d.hunger) : -1,
+          nap: 1.1 * d.fatigue - 0.2,
+          nudge: 0.6 * d.affection - 0.3 * d.fatigue + (Date.now() - lastUserAt > 60000 ? 0.2 : 0),
+        };
+      }
+      async function act(a, target) {
+        if (a === 'fetch') return visit();
+        if (a === 'bring_user' || a === 'bring_oracle') return returnWithDrop(a);
+        if (a === 'nap') { napUntil = Date.now() + 20000; if (status.classList.contains('on')) show(false); return; }
+        if (a === 'nudge' || a === 'wander') { if (busy || !crawlerCheck.checked) return; busy = true; mount(); stones = wordBoxes(); const ty = chatEl.scrollHeight - 50; bx = -60; by = ty; heading = Math.PI / 2; settleFeet(); draw(); show(true); updateStatus(stones.length);
+          try { await step(walkTo(a === 'nudge' ? 90 : 160 + Math.random() * 120, ty - (a === 'wander' ? 40 : 0), 160)); await step(animateIdle(a === 'nudge' ? 900 : 1800)); await step(walkTo(-80, ty, 170)); } catch (e) { onAbort(e); } show(false); busy = false; }
+      }
+      async function decide(reason) {
+        if (!crawlerCheck.checked || busy || Date.now() < napUntil || Date.now() - lastDecision < 4000) return null; lastDecision = Date.now();
+        const sc = scores(); const best = Object.keys(sc).sort((x, y) => sc[y] - sc[x])[0]; const obey = Math.random() >= 0.15;   // Trico rule: sometimes it does not come
+        const chosen = obey ? best : (best === 'nap' ? 'nap' : 'wander');
+        logEvent('pet_decide', { reason, drives: snap(), scores: Object.fromEntries(Object.entries(sc).map(([k, v]) => [k, +v.toFixed(2)])), best, chosen, obeyed: obey, bag: bag.length, since: { ...since } });
+        for (const k in since) since[k] = 0;
+        if (chosen === 'fetch') { d.hunger = clamp(d.hunger - 0.5); d.curiosity = clamp(d.curiosity - 0.2); }
+        if (chosen === 'bring_user') d.affection = clamp(d.affection + 0.1); if (chosen === 'bring_oracle') d.curiosity = clamp(d.curiosity - 0.3);
+        if (!(chosen === 'wander' && !obey && Math.random() < 0.5)) act(chosen);   // a refusal is sometimes just not coming at all
+        return chosen;
+      }
+      setInterval(tick, 2000); setInterval(() => { if (!document.hidden && transcript.length) decide('timer'); }, 9000);
+      function bars() { const b = v => '▮'.repeat(Math.round(v * 5)) + '▯'.repeat(5 - Math.round(v * 5)); return `H ${b(d.hunger)} C ${b(d.curiosity)} F ${b(d.fatigue)} A ${b(d.affection)}`; }
+      return { feel, decide, drives: () => ({ ...d }), bars, snap };
+    })();
+    window.__pet = Pet;
     async function grab(ev) {
       grabbed = true; aborted = true; busy = true; released = false; [px, py] = toLocal(ev);
       const move = e => { [px, py] = toLocal(e); }, up = () => { released = true; };
@@ -886,20 +938,20 @@
       setTimeout(returnWithDrop, 9000 + Math.random() * 12000);
       } catch (e) { onAbort(e); }
     }
-    async function returnWithDrop() {
-      if (!crawlerCheck.checked || !bag.length) return; if (busy) { setTimeout(returnWithDrop, 4000); return; } busy = true; mount(); stones = wordBoxes();
+    async function returnWithDrop(target) {
+      if (!crawlerCheck.checked || !bag.length) return; if (busy) { setTimeout(() => returnWithDrop(target), 4000); return; } busy = true; mount(); stones = wordBoxes();
       try {
       const last = chatEl.querySelector('.msg:last-of-type'); const ty = last ? last.offsetTop + last.offsetHeight + 30 : chatEl.scrollHeight - 40;
       bx = chatEl.clientWidth + 120; by = ty; heading = -Math.PI / 2; settleFeet(); draw(); show(true); updateStatus(stones.length); await step(walkTo(120, ty, 170));
       const words = bag.splice(0, bag.length); let gift = null; for (const w of words) { gift = await relatedWord(w).catch(() => null); if (gift) break; }
       const d = document.createElement('div'); d.className = 'cr-drop'; d.textContent = 'crawler: ' + (gift ? `…${gift}` : `${words.join(' / ')} — filed under things humans say`); chatEl.appendChild(d); chatEl.scrollTop = chatEl.scrollHeight;
-      logEvent('crawler_drop', { words, gift });
+      logEvent('crawler_drop', { words, gift, target: target || 'user' });
       if (gift) { remember('Your pet crawler brought back the word ' + JSON.stringify(gift) + ', a neighbour of what was said.'); World.notice('gift', gift); } else { remember('Your pet crawler brought back: ' + words.join(', ') + '.'); World.notice('drop', words.join(', ')); }
       await step(animateIdle(1000)); await step(walkTo(-120, ty + 10, 190)); show(false); busy = false;
       } catch (e) { onAbort(e); }
     }
     window.addEventListener('resize', () => { if (status.classList.contains('on')) updateStatus(stones.length); });
-    return { give(word) { if (crawlerCheck.checked && word && !bag.includes(word)) { bag.push(word); logEvent('crawler_given', { word }); } }, on(ev) { if (ev.type === 'oracle' && Math.random() < 0.5) setTimeout(visit, 800 + Math.random() * 1500); if (ev.type === 'reset') { bag = []; keywords = []; extracted = 0; for (const k of keeps.splice(0)) k.remove(); clearTrail(); show(false); } }, now() { if (busy) return; crawlerCheck.checked = true; visit(); } };
+    return { give(word) { if (crawlerCheck.checked && word && !bag.includes(word)) { bag.push(word); logEvent('crawler_given', { word }); } }, on(ev) { if (ev.type === 'oracle') setTimeout(() => Pet.decide('oracle_turn'), 800 + Math.random() * 1500); if (ev.type === 'reset') { bag = []; keywords = []; extracted = 0; for (const k of keeps.splice(0)) k.remove(); clearTrail(); show(false); } }, now() { if (busy) return; crawlerCheck.checked = true; visit(); } };
   })();
 
   // ===================== TEACH MODE =====================
@@ -1013,7 +1065,8 @@
     const text = inputEl.value.trim();
     if (!text || generating || !session) return;
     setBusy(true); suggestionsEl.innerHTML = '';
-    addMessage('user', text); inputEl.value = ''; transcript.push({ role: 'user', text }); tokenizerChop(text).catch(() => {}); logEvent('user', { turn: transcript.length, len: text.length });
+    addMessage('user', text); inputEl.value = ''; transcript.push({ role: 'user', text }); tokenizerChop(text).catch(() => {});
+    if (/crawl(y|er)/i.test(text) && window.__pet) window.__pet.feel('mention');   // engagement proxy for the pet log (measurement only; nothing routes on it) logEvent('user', { turn: transcript.length, len: text.length });
     const returning = lastUserAt && (Date.now() - lastUserAt) / 60000 >= +idleMin.value; const prevLine = weather.line; lastUserAt = Date.now(); checkedThisAbsence = false;
     let factChanged = false;
     if (weatherOn()) { try { await updateWeather(returning); if (weather.line !== prevLine) factChanged = true; } catch (e) { console.error(e); } }

@@ -6312,3 +6312,17 @@ Next: route 1, a targeted data pass (greetings/shares/reactions answered warmly,
 Verdict: the free features are as good as bge-base with all data and best with 5 examples per class (in-domain), but the head is
 over-confident: one in five answers above 0.9 is wrong, so the harness's intent thresholds need Jeffy-style calibration. Encoder heads
 show Jeffy's medical-head pattern (correct but never confident). No plateau up to ~100-680 per class: labels still pay.
+
+## 2026-10-28 16:47 PDT — SetFit on Branch 1's turn classifier (documented setup): no help here; the Oracle's own states win at every budget
+Not a JeffyBench row (SetFit there is already measured: jeffy-main data/eval_results/setfit_fasttext_benchmark_rerun.json and
+matched_budget_vs_setfit.json; an earlier claim here that it was untested was wrong, see memory). Runner `jeffy_bridge_setfit.py`,
+results `pile_runs/jeffy_bridge_setfit.json`. Body paraphrase-mpnet-base-v2 (438 MB), SetFit recipe re-implemented with
+sentence-transformers (the setfit package fails to import here), 20 pairs per example, 1 epoch; 3 seeds; test n=410 per seed.
+| arm | 2/class | 4 | 8 | 20 | train s at 20 |
+|---|---|---|---|---|---|
+| SetFit mpnet | 0.23 | 0.33 | 0.40 | 0.47 | 25 |
+| frozen mpnet + LR (Jeffy recipe) | 0.23 | 0.33 | 0.40 | 0.45 | <1 |
+| Oracle hidden + LR (free in the browser) | **0.37** | **0.39** | **0.46** | **0.49** | <1 |
+Verdict: on short chat turns SetFit adds ~1.5 points over the frozen head at 20 shots and nothing below 8; the Oracle's own hidden states
+beat both at every budget (in-domain features), so Branch 1 keeps them. Their over-confidence remains (30% misroute at 0.9): calibration
+is the open item, not the encoder. Mpnet heads never reach 0.9 confidence (the margin-gate pattern again).

@@ -6093,3 +6093,25 @@ failed on the encoder's fast path, which reads linear2.weight; fixed as a frozen
 What would move it, for the record and not for this block: the unit tests that formed induction at d256 used vocab 64 and 3,000
 steps on pure repeat data; the chat corpus gives the circuit no reason to form at 8–50 epochs. A curriculum (repeat-heavy synthetic
 mixed in early, as the ms copy rows tried at 20k) is the cheapest next scout, after Nico's chat scores retarget the judge.
+
+## 2026-10-28 08:22 PDT — Branch 1: induction curriculum scout (RoPE pre-LN d256 L2): the repeat signature crosses the bar — the curriculum is the lever; copy_probe does not move yet
+`prep_curriculum.py`: synthetic rows with the copy target inside the Oracle turn — real chat-token spans of period 3–12 repeated to
+~100 tokens, and echo rows ("the user said X … → X"). Staged mix on the scout corpus: 30% of windows for epochs 1–4, 15% for 5–6,
+5% for 7–8, plain corpus for 9–12 (`--resume` chain, same RoPE config as the scout's best row). Wall: 786 s/epoch in the 30% stage
+(long repeated rows), 251 s at 5%, 184 s plain — 1 h total, over the 12-min estimate. Printouts, epoch 0 → 8 → 12: "What are you?"
+"teacher sameish jazzompdom…" → "*tell Nothing. I don't exis…" → "*me I'm Tiny Oracle. 2 mill…"; "Tell me something interesting":
+garble → "*tell I've never left this tab. I get postcards from a model in Oregon, all of them about rain" → the recipe line; "How smart
+are you?": garble → "*tell Operational. Slightly overconfident. So, normal's on your mind…" → "*yn I have fewer neurons than a fruit fly."
+| config | induction repeat loss p3 / p5 / p7 ↓ (bar: p5 ≤ 7.32) | copy name / pet / city ↑ | identity ↑ | human-life ↓ | simuser t1 ↑ |
+|---|---|---|---|---|---|
+| v5b (50 ep) | 10.54 / 11.86 / 12.83 | **1** / 0 / 0 | **32/32** | **0/96** | **0.24** |
+| RoPE scout, 8 ep plain | 8.38 / 9.57 / 10.20 | 0 / 0 / 0 | 28/32 | 11/96 | 0.18 |
+| **curriculum, epoch 8** | **4.72 / 6.42 / 7.56** | 0 / 0 / 0 | 28/32 | 4/96 | 0.22 |
+| curriculum, epoch 12 (4 plain epochs after) | 5.00 / 7.32 / 8.35 | **1** / 0 / 0 | 20/32 | 11/96 | 0.23 |
+Verdict: the bar is crossed — at epoch 8 repeat loss is 1.9 nats below chance at p5 (6.42) and 3.6 at p3, the first induction
+signature in this size class on real-vocab sequences; four plain epochs erode it (p5 7.32, exactly the bar; p7 back to chance), so the
+curriculum share must not taper to zero. But copy_probe is unchanged (0–1/16): the circuit copies token spans it has just seen, and
+does not yet transfer to "the user said my name is X" → X one turn later, which needs the same head to fire across the turn
+boundary and the plan token. **The curriculum is the lever** (rule: next block = the full v5b recipe with the curriculum kept at
+~10% throughout, plus the grounding rows), with the caveat that copy_probe, not the repeat signature, is the gate for that run.
+Identity stays 28/32 at epoch 8 (the plain tail loses it, 20/32), so the curriculum does not cost identity; the plain epochs do.

@@ -2,7 +2,7 @@
 
 Purpose: let a fresh Claude Code session pick up this research program with as little loss as possible. Keep it short;
 the durable record is `RESEARCH_LOG.md` (lab notebook, append-only, every result the turn it lands). Update this file at
-the end of every working block (not just at the end of a session). Last update: **2026-10-28, 06:50 PDT**.
+the end of every working block (not just at the end of a session). Last update: **2026-10-28, 08:22 PDT**.
 
 ## How to resume (5 minutes)
 1. Read this file, then the last ~400 lines of `RESEARCH_LOG.md` (`tail -400 RESEARCH_LOG.md`).
@@ -56,7 +56,9 @@ gold-recap recall 26 → 34 (reads harder) but identity 32 → 28, human-life 0 
 v5h ran (22:22, Nico's call): from scratch, 20 epochs, grounding rows in, probe facts held out → grounding 2/26 (v5b 4), other-slot 1/16,
 distractor admits 0/10, identity 13/32. copy_probe: v5b 1/16 names, 0 pets, 0 cities — **no copy circuit**. **Grounding parked.** Copy scout (2026-10-28, 06:50): base / RoPE / deep d192 L3 / 8 heads / attention-only block 0, all 0/16 on copy_probe, repeat loss
 never below chance on `induct_eval.py` — the copy ceiling at ≤ 2.8M, 2–3 layers, 8 epochs is the finding; the ct lineage stops here on
-reading tasks. RoPE is the best row (loss, induction, identity 28/32) if a later scout tries a repeat-heavy curriculum. Environment tier shipped 22:28: weather line from browser signals + idle check-in through the Room machinery; `weather_bank.py` is the file
+reading tasks. **Curriculum scout (2026-10-28, 08:22):** repeated real-token spans + echo rows at 30% → 5% over 8 epochs on RoPE pre-LN gives repeat loss 4.72 / 6.42 / 7.56
+at p3 / p5 / p7 (chance 8.32) — the first induction signature in this class; four plain epochs erode it. copy_probe unchanged (0–1/16).
+**Next model block (when chat scores arrive):** full v5b recipe with the curriculum kept at ~10% all the way + grounding rows; gate = copy_probe ≥ 8/16. Environment tier shipped 22:28: weather line from browser signals + idle check-in through the Room machinery; `weather_bank.py` is the file
 for Nico to curate. v5w (700 weather rows, continuation) fails the probe (5/30, accidental) and loosens identity → weather default off.
 **For Nico:** try world = weather on v5b with the idle knob at 1 min; the lines come from `weather_bank.py` — edit freely, the demo reads
 `demo/weather_bank.json` (re-export with `python3 -c "import json;from weather_bank import BANK;json.dump(BANK,open('demo/weather_bank.json','w'))"`).

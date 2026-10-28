@@ -280,7 +280,7 @@ slice was too small to rank encoders on it. Absolute scores are not reported, fo
 | `JEFFY_TRAIN_MAX_ROWS` | 200 | `/v1/train` rejects more examples than this (HTTP 413). |
 | `JEFFY_TRAIN_MAX_BYTES` | 65536 | `/v1/train` rejects more bytes of training text than this (HTTP 413). |
 | `JEFFY_TRAIN_PER_IP_HOUR` | 20 | `/v1/train` calls allowed per client address per hour, in memory (HTTP 429). |
-| `JEFFY_TRUST_PROXY_HEADERS` | unset (off) | Believe `cf-connecting-ip` / `x-forwarded-for` for the per-client training cap. Turn on only behind a proxy that overwrites those headers (Cloudflare does); on a self-hosted install they are client-supplied and would bypass the cap. |
+| `JEFFY_TRUST_PROXY` (alias `JEFFY_TRUST_PROXY_HEADERS`) | unset (off) | Believe `cf-connecting-ip` / `x-forwarded-for` for the per-client training cap. Turn on only behind a proxy that overwrites those headers (Cloudflare does); on a self-hosted install they are client-supplied and would bypass the cap. |
 | `JEFFY_TEACH_TTL_MIN` | 60 | Heads taught in the playground (task ids `my_…`, tied to the visitor's session via the `X-Jeffy-Session` header) are unloaded and their files deleted after this many minutes. They never appear in the shared catalog and cannot be predicted on by another session. Training is one run at a time per process (HTTP 503 while another runs). **`/v1/train` stores the labelled text you send on disk** under `JEFFY_TRAINED_DIR` until the TTL sweeps it (session heads) or until you delete it (other heads). |
 | `JEFFY_TRAINED_DIR` | `~/.jeffy/trained` | Where classifiers trained via `/v1/train` are written. Never the installed package directory. |
 | `JEFFY_FEEDBACK_DIR` | `~/.jeffy-feedback` | Where `/v1/feedback` corrections are stored as JSONL. |

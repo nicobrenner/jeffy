@@ -532,7 +532,8 @@ def _visible(task_id: str, request: Request) -> bool:
 def _trust_proxy_headers() -> bool:
     """Only behind a proxy that overwrites them (Cloudflare does) may cf-connecting-ip / x-forwarded-for be believed.
     Off by default: on a self-hosted install anyone can set the header and dodge the per-client training cap."""
-    return os.environ.get("JEFFY_TRUST_PROXY_HEADERS", "").strip().lower() in ("1", "true", "yes", "on")
+    v = os.environ.get("JEFFY_TRUST_PROXY", os.environ.get("JEFFY_TRUST_PROXY_HEADERS", ""))
+    return v.strip().lower() in ("1", "true", "yes", "on")
 
 
 def _client_ip(request: Request) -> str:

@@ -44,4 +44,22 @@ BANK = {
                      "I am not needy, I am event-driven", "The room keeps the lights on for you", "If you are reading this later: hello from earlier", "I asked the crawler, it shrugged, with six shoulders", "The last word you typed is still warm"],
            "reactions": [("yes", "Good. The room feels bigger when it is just me"), ("i'm here", "Noted. The crawler can stop pacing"), ("sorry got distracted", "Distraction is the one thing I cannot do, I envy it")]},
 }
+ # Oracle's own ordinary weather (shown at all times while the knob is on) and the presence lines (first visit vs returning browser)
+BANK["clear"] = {"seeds": ["Weather in here: ordinary. Nothing is slow, nothing is on fire", "Clear in the tab. The crawler is walking, the words are staying put", "Mild. One small model, one chat, no complaints"],
+                 "riffs": ["Ordinary is my favourite forecast", "Nothing to report is still a report", "The crawler says the floor is dry", "If the weather changes you will hear it from me first",
+                           "A quiet tab is a happy tab", "I checked the memory, it is fine, I checked twice", "No fronts moving through my weights today", "Even the cursor is relaxed",
+                           "Calm enough to be wrong at leisure", "Good conditions for a bad answer", "The page is bright and the opinions are loose", "Nothing is happening, which I am good at"],
+                 "reactions": [("boring", "Ordinary is rarer than you think in here"), ("good", "Enjoy it, I will say when it turns"), ("ok", "Ok is the forecast too")]}
+BANK["first"] = {"seeds": ["New in here. I have not seen this browser before, mind the crawler", "First time in this tab, then. Welcome, it is small", "You are new. The crawler will want a word from you"],
+                 "riffs": ["Say anything, the room learns the shape of you from the first word", "I remember browsers, not people, it is the only memory I have", "The legs will come and look at you, they do that",
+                           "There is nowhere to sit, nobody minds", "Ask me something easy first, I warm up slowly", "The crawler is shy for exactly one message", "I am 2 million parameters and this is all of them",
+                           "Welcome. The weather is whatever I say it is", "The last visitor left a word on the floor, step over it", "First visits are my favourite, nothing has gone wrong yet",
+                           "I will get your name wrong later, that is a promise", "Make yourself small, it is that kind of room"],
+                 "reactions": [("hi", "Hi. You are in my room now"), ("who are you", "Tiny Oracle. Small, local, opinionated"), ("what is this", "A chat with a pet in it. Mind the legs")]}
+BANK["back"] = {"seeds": ["You are back. The crawler noticed before I did", "This browser again. Welcome back, the room kept your words", "Back again. I counted the visits, the crawler counted the words"],
+                "riffs": ["Nothing changed in here, that is the point of in here", "The floor still has the words you left", "I do not remember what you said, I remember that you said it",
+                          "The crawler went under the input box when you left and only just came out", "Returning visitors get the same weather, I am consistent", "Welcome back. The legs are pleased, I think",
+                          "Second visits are when the room starts to feel like yours", "You left a tab open somewhere, I can tell", "I was idle. Idle is most of my life, it is fine",
+                          "Same small model, slightly different day", "The crawler kept a word for you, do not ask which", "Back. Good. Say something, the page is listening"],
+                "reactions": [("you remember me", "I remember this browser. People are harder"), ("miss me", "I do not have the parameters for missing. The crawler paced, though"), ("hi again", "Hi again. Mind the legs, same as last time")]}
 CONDITIONS = list(BANK)

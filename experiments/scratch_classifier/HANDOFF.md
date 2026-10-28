@@ -2,7 +2,7 @@
 
 Purpose: let a fresh Claude Code session pick up this research program with as little loss as possible. Keep it short;
 the durable record is `RESEARCH_LOG.md` (lab notebook, append-only, every result the turn it lands). Update this file at
-the end of every working block (not just at the end of a session). Last update: **2026-10-28, 08:22 PDT**.
+the end of every working block (not just at the end of a session). Last update: **2026-10-28, 08:27 PDT**.
 
 ## How to resume (5 minutes)
 1. Read this file, then the last ~400 lines of `RESEARCH_LOG.md` (`tail -400 RESEARCH_LOG.md`).
@@ -34,6 +34,25 @@ probe sets, README "Confidence and abstaining" with 0.9 default). Record = `JEFF
 (push needs Nico). Evidence = session scratchpad `jeffy_evidence/01–20`. Open: reconcile item 1 with the reviewer's production-host
 figures (our file = earlier host only); medical heads are accurate but under-confident → margin gate. Rule: read the log, not the
 counter; print window boundaries next to every count. Branch 2 never touches this directory or MPS.
+
+## Creatures — the world as the Oracle's own environment (design, 2026-10-28, 08:27)
+**Shipped:** Crawly (strider; fetches words, now returns a RELATED word via `demo/assoc_v1.json` and a gift Room event), the tokenizer
+(lives at the input box, chops sent words into the real token pieces, hands pieces to Crawly, "tokens" Room event), presence (visit record,
+"…" then a first-visit / welcome-back turn), weather events. Banks: `weather_bank.py` (weather, presence), `room_build.py` (Room events).
+**Third creature, parked:** the sampler as a moody roommate — mood = temperature; visible as a small figure near the model badge whose
+posture follows the sampler preset; its Room events ("the roommate turned the heat up") when the preset changes. Build after Crawly's policy.
+**Crawly as a pet model (adopted design, prior art in RESEARCH_LOG 2026-10-28, 08:27):**
+- State: drives d = (hunger-for-words, curiosity, fatigue, affection) ∈ [0,1]^4, decaying/accumulating per tick; plus what it sees
+  (visible words with the detector's labels, user activity, Oracle turn events, tab visibility).
+- Policy: ~10k-param MLP/GRU over 6 options — wander, fetch-word, bring-to-user, bring-to-Oracle, nap, nudge (the current gait code is the
+  option implementation; options framework = the formal home). FeUdal split: the Oracle emits a one-token goal per turn (e.g. *fetch /
+  *rest / *show), the policy decides the primitive sequence; deliberate non-compliance (Trico) is allowed by the policy, not scripted.
+- Reward (offline training from logs): drive satisfaction + engagement proxies the page already measures — hover/click on Crawly, the user
+  mentioning Crawly in chat, the Oracle acknowledging it (Room turn), turns per conversation.
+- Measurement: Godspeed Animacy subscale + Chesney & Lawson companionship items (a 6-item page for Nico, once), and behaviourally
+  unprompted mentions of Crawly per session from the chat export.
+- **First < 30 min signal:** logged-policy baseline — add the drive vector and log (drives, action, engagement proxies) per tick in the demo
+  with the current hand policy; no learning yet; the log is the first dataset. Then a behaviour-cloning + reward-weighted policy offline.
 
 ## Branch 1 (Tiny Oracle) — plan 2026-10-27 16:45 PDT, updated 20:25
 Nico split the work into two branches (memory `project_two_branches_manager_mode`); this is Branch 1's block plan.

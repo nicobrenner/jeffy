@@ -6115,3 +6115,45 @@ does not yet transfer to "the user said my name is X" → X one turn later, whic
 boundary and the plan token. **The curriculum is the lever** (rule: next block = the full v5b recipe with the curriculum kept at
 ~10% throughout, plus the grounding rows), with the caveat that copy_probe, not the repeat signature, is the gate for that run.
 Identity stays 28/32 at epoch 8 (the plain tail loses it, 20/32), so the curriculum does not cost identity; the plain epochs do.
+
+## 2026-10-28 08:27 PDT — Branch 1: creatures block — presence, Crawly's related-word gift, the tokenizer creature, visible weather events; Crawly-as-a-pet-model design + prior art
+Nico's chat session: "It's getting better. Love Crawly walking around taking words." Harness/demo only, no training, no regex at inference.
+**1. Presence.** Visit record per browser (`tinyoracle.visits`: count, first, last); the crawler's status block shows "VISIT 002 RETURNING".
+When the tab becomes visible after ≥ 20 s hidden with a conversation open: iMessage-style "…" dots, then the Oracle's own return turn
+through the Room path — "back" family if this browser has been here before, "first" family otherwise (`weather_bank.py`), then the
+absence weather. Headless: dots shown, "First time in this tab, then. Welcome, it is small thing that's important…", second load
+count 2 / RETURNING.
+**2. Crawly brings back a RELATED word.** `demo/assoc_v1.json`: 32-d PPMI-SVD vectors from the chat corpus's co-occurrence (3,000
+words, window 4) with a stoplist learned from frequency (top 80), nearest neighbour by cosine, no hand rules: cat → mittens, coffee →
+drink, marathon → runner, sleep → asleep, thesis → published. The return is now a "gift" Room event seeded in the bible's register
+("Oh, what do we have here… "mittens", haha, ok you want us to talk about that?"), no "brought back X" line; `room_build.py` has the
+gift and tokenizer families (seeds, 12 continuations each, reactions). Riffs on v5b stop at the seed's question (clean) — no
+continuation pass run: v5w showed a 3-epoch continuation loosens identity, and the seed alone is the experience.
+**3. The tokenizer**, second creature (bible: "My tokenizer friend… a little too literal"): a small SVG critter at the input box; on
+send it "chops" and the REAL token pieces fly from the box into the chat (16 pieces for "my unbelievably sophisticated marathon
+thesis"); when a word splits it sometimes hands a piece to Crawly (`Crawler.give`), and long splits fire a "tokens" Room event
+("My tokenizer friend cut that into 7 pieces. A little too literal, that one" → v5b continues "…that one's unfortunately, there is no
+one of the best feelings!"). Third creature parked in HANDOFF: the sampler as a moody roommate (mood = temperature).
+**5. Weather, honest version.** The model cannot answer "what's the weather in there" (copy ceiling); the seeded riff is the
+experience, so weather EVENTS now fire visibly: on condition change (1.5 s later), on hour change (30-s poll), on return (presence),
+and the ☁ line is always in the header while the knob is on (new "clear" condition: "Weather in here: ordinary. Nothing is slow,
+nothing is on fire"). All headless, no console errors.
+**4. Crawly as a pet model — design (prior art from the research subagent).** Closest ancestors: Creatures (Grand, Cliff & Malhotra
+1997; norns = small action-selection net + hormonal biochemistry + lifetime learning from reward/punishment), Black & White (Evans
+2001; desires as perceptrons, opinions as decision trees learned from slaps/strokes), Petz (Stern, Frank & Resner 1998; authored
+drives + personality, explicit multi-character interaction — our Crawly + tokenizer), Nintendogs companionship study (Chesney &
+Lawson 2007; items reusable as a metric), Elizabeth (Abercrombie 2014; staged "theatre", kept in view) and Trico (Tanaka 2017;
+deliberate non-compliance as believability — Crawly should sometimes not come), Generative Agents (Park et al. 2023; believability by
+human raters; no small-companion variant in the literature). Formal homes: options (Sutton, Precup & Singh 1999) for "fetch a word";
+FeUdal Networks (Vezhnevets et al. 2017) for the Oracle/Crawly split (manager emits a goal, worker emits primitive actions per tick);
+SayCan-style planner + low-level policy; Voyager's skill library; emergent communication (Lazaridou & Baroni 2020). fredfokan's
+web-crawler (read): 7.5 KB bookmarklet, eight two-segment IK legs stepping in alternating groups when a foot drifts past a threshold,
+grip points from getClientRects() of links/code/buttons rescanned each second, random visible goal + smoothed velocity steering,
+900–2,600 ms tear timer cloning the element with CSS keyframes — entirely procedural, no state machine, no learning, no persistence.
+Borrowed: drift-threshold stepping and grip-point rescans are what our strider already does; the alternating-group rule is worth a
+try for the tripod gait. Design adopted (HANDOFF): drive vector (hunger-for-words, curiosity, fatigue, affection) decaying over
+time + a ~10k-param policy (MLP/GRU) over 6 options (wander, fetch-word, bring-to-user, bring-to-Oracle, nap, nudge), trained offline
+from drive satisfaction + engagement proxies the page measures (hover, click, Crawly mentioned in chat, Oracle acknowledgement),
+FeUdal-style with the Oracle emitting a one-token goal. "Alive" metric: Godspeed Animacy (Bartneck 2009) + Chesney companionship
+items, and behaviourally unprompted mentions of Crawly per session (chat export has the text). First < 30 min signal: a logged-policy
+baseline — drives + the current hand policy, logging (drives, action, engagement) per tick in the demo, no learning yet.

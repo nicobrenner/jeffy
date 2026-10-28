@@ -170,6 +170,10 @@
   .hbtn { font-size: 12px; padding: 3px 8px; }
   #status { margin-left: auto; white-space: nowrap; }
   body { overflow-x: hidden; }
+  #tokenizer { position: absolute; right: 8px; bottom: 8px; width: 34px; height: 26px; pointer-events: none; opacity: .75; transition: transform .15s }
+  #tokenizer.chop { transform: translateY(-3px) rotate(-8deg) }
+  .tk-piece { position: fixed; z-index: 9; font: 11px/1 ui-monospace, Menlo, monospace; background: #ffe9a8; color: #333; border: 1px solid #d9b85a; border-radius: 3px; padding: 1px 4px; pointer-events: none; transition: transform .7s cubic-bezier(.2,.7,.3,1), opacity .7s; will-change: transform }
+  .msg.oracle.presence { opacity: .85 }
   .scorebar { margin-top: 5px; font-size: 11px; opacity: .45; display: flex; gap: 4px; align-items: center; flex-wrap: wrap }
   .msg.oracle:hover .scorebar, .scorebar.has { opacity: .9 }
   .scorebar button { width: 20px; height: 20px; border-radius: 50%; border: 1px solid #8887; background: transparent; color: inherit; font-size: 10px; cursor: pointer; padding: 0 }
@@ -278,6 +282,7 @@
 
 <div id="input-area">
   <input id="user-input" type="text" placeholder="Say something..." disabled>
+  <svg id="tokenizer" viewBox="0 0 34 26"><title>the tokenizer: lives at the input box, chops words into the real token pieces, a little too literal</title><rect x="4" y="6" width="22" height="14" rx="3" fill="#ffe9a8" stroke="#d9b85a"/><circle cx="11" cy="12" r="2" fill="#333"/><circle cx="19" cy="12" r="2" fill="#333"/><path d="M9 17 h12" stroke="#333" stroke-width="1.2"/><path d="M26 8 l6 -4 M26 18 l6 4" stroke="#8a6d1f" stroke-width="2" stroke-linecap="round"/></svg>
   <button id="send-btn" disabled>Send</button>
 </div>
 
@@ -484,6 +489,63 @@
   try { const wm = localStorage.getItem('tinyoracle.world'); if (wm) worldMode.value = wm; } catch (e) {}
   function worldOn() { return !!(model && model.preLN) && worldMode.value === 'facts'; }
 
+  // ===================== PRESENCE (visit record, return turn with typing dots) =====================
+  let visitRec = { count: 0, first: null, last: null }; try { visitRec = JSON.parse(localStorage.getItem('tinyoracle.visits') || 'null') || visitRec; } catch (e) {}
+  const returningBrowser = visitRec.count > 0; visitRec.count += 1; visitRec.last = new Date().toISOString(); if (!visitRec.first) visitRec.first = visitRec.last;
+  try { localStorage.setItem('tinyoracle.visits', JSON.stringify(visitRec)); } catch (e) {}
+  window.__visits = () => ({ ...visitRec, returning: returningBrowser });
+  let hiddenAt = 0, presenceBusy = false, PRESENCE_AWAY_S = 20;
+  async function presenceReturn(afterMs) {   // iMessage-style "…" first, then the Oracle's own return turn through the Room path
+    if (presenceBusy || !session || generating || !transcript.length) return; presenceBusy = true;
+    try {
+      await ensureWeather(); const fam = returningBrowser ? 'back' : 'first';
+      const div = addMessage('oracle', ''); div.classList.add('presence'); const dots = document.createElement('span'); dots.className = 'typing'; dots.innerHTML = '<i></i><i></i><i></i>'; div.appendChild(dots); chatEl.scrollTop = chatEl.scrollHeight;
+      await new Promise(r => setTimeout(r, afterMs || 1200)); div.remove();
+      logEvent('presence_return', { family: fam, hidden_s: hiddenAt ? Math.round((Date.now() - hiddenAt) / 1000) : 0 }); await World.say(pick(weatherBank[fam].seeds), 'presence');
+      if (weatherOn()) await updateWeather(true);
+    } catch (e) { console.error(e); } finally { presenceBusy = false; }
+  }
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) { hiddenAt = Date.now(); return; }
+    const away = hiddenAt ? (Date.now() - hiddenAt) / 1000 : 0; hiddenAt = 0;
+    if (away >= PRESENCE_AWAY_S && transcript.length) presenceReturn();
+  });
+  window.__presence = { setAway: s => { PRESENCE_AWAY_S = s; }, fire: () => presenceReturn(300) };
+
+  // ===================== CRAWLY'S ASSOCIATIONS (related word, not the same word) =====================
+  // assoc_v1.json: 32-d PPMI-SVD word vectors from the chat corpus's co-occurrence (3,000 words) + a stoplist learned from frequency (top 80). Nearest neighbour by cosine.
+  let assoc = null;
+  async function ensureAssoc() { if (!assoc) { const a = await (await fetch('assoc_v1.json')).json(); a.idx = {}; a.words.forEach((w, i) => { a.idx[w] = i; }); a.stopSet = new Set(a.stop); assoc = a; } return assoc; }
+  async function relatedWord(word) {
+    const a = await ensureAssoc(); const w = String(word).toLowerCase().replace(/[^a-z']/g, ''); if (!(w in a.idx)) return null;
+    const v = a.vec[a.idx[w]]; let best = null, bs = -2;
+    a.vec.forEach((u, i) => { if (i === a.idx[w]) return; const c = a.words[i]; if (a.stopSet.has(c) || c.startsWith(w) || w.startsWith(c)) return; let d = 0; for (let k = 0; k < v.length; k++) d += v[k] * u[k]; if (d > bs) { bs = d; best = c; } });
+    return best;
+  }
+  window.__related = relatedWord;
+
+  // ===================== THE TOKENIZER (second creature: chops words into the real token pieces) =====================
+  const tkEl = document.getElementById('tokenizer');
+  async function tokenizerChop(text) {
+    if (!tokenizer || !tkEl) return 0;
+    const ids = tokenizer.encode(text), pieces = ids.map(i => tokenizer.invVocab[i] || '').filter(p => p && !p.startsWith('<|')).slice(0, 24);
+    tkEl.classList.add('chop'); setTimeout(() => tkEl.classList.remove('chop'), 220);
+    const from = tkEl.getBoundingClientRect(), to = chatEl.getBoundingClientRect();
+    pieces.forEach((pc, k) => {
+      const el = document.createElement('span'); el.className = 'tk-piece'; el.textContent = pc.replace(/^Ġ|^▁/, ' ').trim() || '·';
+      el.style.left = (from.left - 10) + 'px'; el.style.top = (from.top + 4) + 'px'; document.body.appendChild(el);
+      const dx = (to.left + 24 + (k % 8) * 42) - from.left, dy = (to.bottom - 30 - Math.floor(k / 8) * 16) - from.top;
+      requestAnimationFrame(() => { el.style.transform = `translate(${dx}px, ${dy}px) rotate(${(k % 2 ? 1 : -1) * 6}deg)`; el.style.opacity = '0'; });
+      setTimeout(() => el.remove(), 800 + k * 15);
+    });
+    const words = text.split(/\s+/).filter(Boolean), split = pieces.length > words.length;
+    if (split && Math.random() < 0.35 && typeof Crawler !== 'undefined' && Crawler.give) { const gift = pieces.find(p => p.replace(/^Ġ|^▁/, '').length >= 3); if (gift) Crawler.give(gift.replace(/^Ġ|^▁/, '').trim()); }
+    logEvent('tokenize', { words: words.length, pieces: pieces.length });
+    if (pieces.length >= 6 && pieces.length > words.length + 2) World.notice('tokens', pieces.length);
+    return pieces.length;
+  }
+  window.__chop = tokenizerChop;
+
   // ===================== WORLD: WEATHER + REAL-TIME LOOP (Nico, Oct 27: the world is the Oracle's own environment) =====================
   // Signals the browser can measure -> one condition (numeric thresholds, no text rules) -> one weather line from weather_bank.json
   // (weather_bank.py is the file to curate). The line goes into the system prompt like a recap line; pre-LN models read it.
@@ -505,14 +567,25 @@
     if (sg.tps && sg.tps > 40) return 'fast';
     if (sg.hour >= 23 || sg.hour < 5) return 'night';
     if (sg.hour >= 5 && sg.hour < 10) return 'morning';
-    return null;
+    return 'clear';
   }
+  let lastWeatherHour = -1;
+  async function weatherEvent(reason) {   // the seeded riff IS the experience (the model cannot answer about the weather, copy ceiling): fire it visibly
+    if (!weatherOn() || !session || generating || !transcript.length || document.hidden || inputEl.value.trim()) return;
+    await ensureWeather(); logEvent('weather_event', { cond: weather.cond, reason }); await World.say(weather.line, 'weather');
+  }
+  window.__weatherEvent = weatherEvent;
+  setInterval(async () => {   // hour change -> new line + event
+    if (!weatherOn()) return; const h = new Date().getHours(); if (lastWeatherHour === -1) { lastWeatherHour = h; return; }
+    if (h !== lastWeatherHour) { lastWeatherHour = h; const prev = weather.line; await updateWeather(false); if (weather.line !== prev) weatherEvent('hour'); }
+  }, 30000);
   function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
   async function ensureWeather() { if (!weatherBank) weatherBank = await (await fetch('weather_bank.json')).json(); }
   async function updateWeather(returning) {
     await ensureWeather(); const cond = conditionOf(signals(), returning);
-    if (cond !== weather.cond) weather = { cond, line: cond ? pick(weatherBank[cond].seeds) : '' };
+    const changed = cond !== weather.cond; if (changed) weather = { cond, line: cond ? pick(weatherBank[cond].seeds) : '' };
     weatherEl.textContent = weatherOn() && weather.line ? '☁ ' + weather.line : ''; logEvent('weather', { cond: cond || 'none' });
+    if (changed && weather.cond && weather.cond !== 'clear' && transcript.length) setTimeout(() => weatherEvent('change'), 1500);
     return weather.line;
   }
   async function checkIn() {   // the Oracle's own turn after an absence: seed from the "check" family + model continuation (Room machinery)
@@ -639,8 +712,10 @@
       drop: ws => [`Crawley is back with ${ws}`, `It brought back ${ws}, I am not sure what to do with that`],
       grab: () => ['Hey, put my crawler down', 'Careful, it does not like being picked up', 'Let it go, it is wriggling'],
       escape: () => ['There it goes', 'It got away from you, good', 'Told you, it does not like hands'],
+      gift: w => [`Oh, what do we have here… "${w}", haha, ok you want us to talk about that?`, `It came back with "${w}". Not what you said, but close, it has taste`, `"${w}". The crawler thinks that is what you meant`],
+      tokens: n => [`My tokenizer friend cut that into ${n} pieces. A little too literal, that one`, `${n} pieces. The tokenizer counts everything and understands nothing`, `The tokenizer chopped it into ${n}. It does that to words it has not met`],
     };
-    const P = { fetch: 0.6, drop: 1, grab: 1, escape: 0.7 };
+    const P = { fetch: 0.6, drop: 1, grab: 1, escape: 0.7, gift: 1, tokens: 0.25 };
     let last = 0;
     async function notice(type, arg) {
       if (!session || generating || !transcript.length || Math.random() > P[type] || Date.now() - last < 15000 || inputEl.value.trim()) return;
@@ -756,7 +831,7 @@
     function fmtN(n) { return String(n).padStart(6, '0').replace(/(\d)(?=(\d{3})+$)/g, '$1,'); }
     function updateStatus(total) {
       const r = chatEl.getBoundingClientRect(); status.style.left = (r.left + 10) + 'px'; status.style.top = (r.bottom - 10) + 'px';
-      status.innerHTML = `CHAT -- TURN ${String(Math.ceil(transcript.length / 2)).padStart(2, '0')}<br>EXTRACTED ${fmtN(extracted)} / ${fmtN(total)}<br>KEYWORDS ${String(keywords.length).padStart(3, '0')}  ${keywords.slice(-3).map(k => k.toUpperCase()).join(' · ')}`;
+      status.innerHTML = `CHAT -- TURN ${String(Math.ceil(transcript.length / 2)).padStart(2, '0')}<br>EXTRACTED ${fmtN(extracted)} / ${fmtN(total)}<br>KEYWORDS ${String(keywords.length).padStart(3, '0')}  ${keywords.slice(-3).map(k => k.toUpperCase()).join(' · ')}<br>VISIT ${String(visitRec.count).padStart(3, '0')}  ${returningBrowser ? 'RETURNING' : 'FIRST'}`;
     }
     function show(on) { svg.style.opacity = on ? 1 : 0; tag.classList.toggle('on', on); status.classList.toggle('on', on); }
     async function step(p) { await p; if (aborted) throw new Error('grabbed'); }
@@ -816,14 +891,15 @@
       try {
       const last = chatEl.querySelector('.msg:last-of-type'); const ty = last ? last.offsetTop + last.offsetHeight + 30 : chatEl.scrollHeight - 40;
       bx = chatEl.clientWidth + 120; by = ty; heading = -Math.PI / 2; settleFeet(); draw(); show(true); updateStatus(stones.length); await step(walkTo(120, ty, 170));
-      const words = bag.splice(0, bag.length); const notes = [`found this: ${words.join(', ')}. no idea what it means`, `brought back: ${words.join(', ')}. you said these. I kept them`, `${words.join(' / ')} — filed under things humans say`];
-      const d = document.createElement('div'); d.className = 'cr-drop'; d.textContent = 'crawler: ' + notes[Math.floor(Math.random() * notes.length)]; chatEl.appendChild(d); chatEl.scrollTop = chatEl.scrollHeight;
-      logEvent('crawler_drop', { words }); remember('Your pet crawler brought back: ' + words.join(', ') + '.'); World.notice('drop', words.join(', '));
+      const words = bag.splice(0, bag.length); let gift = null; for (const w of words) { gift = await relatedWord(w).catch(() => null); if (gift) break; }
+      const d = document.createElement('div'); d.className = 'cr-drop'; d.textContent = 'crawler: ' + (gift ? `…${gift}` : `${words.join(' / ')} — filed under things humans say`); chatEl.appendChild(d); chatEl.scrollTop = chatEl.scrollHeight;
+      logEvent('crawler_drop', { words, gift });
+      if (gift) { remember('Your pet crawler brought back the word ' + JSON.stringify(gift) + ', a neighbour of what was said.'); World.notice('gift', gift); } else { remember('Your pet crawler brought back: ' + words.join(', ') + '.'); World.notice('drop', words.join(', ')); }
       await step(animateIdle(1000)); await step(walkTo(-120, ty + 10, 190)); show(false); busy = false;
       } catch (e) { onAbort(e); }
     }
     window.addEventListener('resize', () => { if (status.classList.contains('on')) updateStatus(stones.length); });
-    return { on(ev) { if (ev.type === 'oracle' && Math.random() < 0.5) setTimeout(visit, 800 + Math.random() * 1500); if (ev.type === 'reset') { bag = []; keywords = []; extracted = 0; for (const k of keeps.splice(0)) k.remove(); clearTrail(); show(false); } }, now() { if (busy) return; crawlerCheck.checked = true; visit(); } };
+    return { give(word) { if (crawlerCheck.checked && word && !bag.includes(word)) { bag.push(word); logEvent('crawler_given', { word }); } }, on(ev) { if (ev.type === 'oracle' && Math.random() < 0.5) setTimeout(visit, 800 + Math.random() * 1500); if (ev.type === 'reset') { bag = []; keywords = []; extracted = 0; for (const k of keeps.splice(0)) k.remove(); clearTrail(); show(false); } }, now() { if (busy) return; crawlerCheck.checked = true; visit(); } };
   })();
 
   // ===================== TEACH MODE =====================
@@ -937,7 +1013,7 @@
     const text = inputEl.value.trim();
     if (!text || generating || !session) return;
     setBusy(true); suggestionsEl.innerHTML = '';
-    addMessage('user', text); inputEl.value = ''; transcript.push({ role: 'user', text }); logEvent('user', { turn: transcript.length, len: text.length });
+    addMessage('user', text); inputEl.value = ''; transcript.push({ role: 'user', text }); tokenizerChop(text).catch(() => {}); logEvent('user', { turn: transcript.length, len: text.length });
     const returning = lastUserAt && (Date.now() - lastUserAt) / 60000 >= +idleMin.value; const prevLine = weather.line; lastUserAt = Date.now(); checkedThisAbsence = false;
     let factChanged = false;
     if (weatherOn()) { try { await updateWeather(returning); if (weather.line !== prevLine) factChanged = true; } catch (e) { console.error(e); } }

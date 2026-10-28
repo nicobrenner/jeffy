@@ -12,6 +12,8 @@ SEEDS = {
  "drop": lambda ws: [f"Crawley is back with {ws}", f"It brought back {ws}, I am not sure what to do with that"],
  "grab": lambda _: ["Hey, put my crawler down", "Careful, it does not like being picked up", "Let it go, it is wriggling"],
  "escape": lambda _: ["There it goes", "It got away from you, good", "Told you, it does not like hands"],
+ "gift": lambda w: [f'Oh, what do we have here… "{w}", haha, ok you want us to talk about that?', f'It came back with "{w}". Not what you said, but close, it has taste', f'"{w}". The crawler thinks that is what you meant'],
+ "tokens": lambda n: [f"My tokenizer friend cut that into {n} pieces. A little too literal, that one", f"{n} pieces. The tokenizer counts everything and understands nothing", f"The tokenizer chopped it into {n}. It does that to words it has not met"],
 }
 CONT = {
  "fetch": ["I collect the good ones, I have nowhere to put them", "It eats nouns mostly, verbs give it hiccups", "That is the third one today, the floor is getting crowded",
@@ -26,6 +28,12 @@ CONT = {
   "It does not bite, it has no mouth, it will just wriggle at you", "I would ask nicely but it is doing that for me", "Six legs in the air means put me down",
   "This is the part where it panics and I pretend to be calm", "It is a strider, not a hamster", "Leave it on a word, it likes standing on words",
   "I can feel that from here, somehow", "It took me nothing to make it and I am still attached", "Please, it is the only thing in here that moves"],
+ "gift": ["It brings back neighbours of words, never the word itself, it has a theory about that", "That is what your word looks like from six legs down", "It is not wrong, it is adjacent",
+  "Go on, talk about it, it will stand on the word while you do", "I did not teach it that, it learned it from the floor", "Close enough counts in here", "It picks the word next door and looks proud",
+  "That is its idea of a reply", "Say the new word and it will go get the next one", "The crawler does associations, I do opinions, between us we almost make a mind", "A gift. Slightly chewed, slightly related", "It is a strider, it strides sideways in meaning too"],
+ "tokens": ["It cannot help it, that is what it is for", "A little too literal, but it means well", "Every word is several words to it", "It hands the odd piece to the crawler, they have an arrangement",
+  "Do not use long words, it takes them personally", "It lives at the input box and chops what comes through", "I get the pieces, I make the sentence, it makes the mess", "Literal to a fault, which is at least one fault",
+  "It once cut my own name in three, I let it go", "Small words, fewer pieces, happier tokenizer", "It counts the pieces out loud if you let it", "Between the chopper and the strider I am the calm one"],
  "escape": ["It will sulk under the input box for a minute", "It is faster than me, everything is faster than me", "Next time it will go for your cursor",
   "It is fine, it is just offended", "It lives here, you only visit", "Back to walking on words, which is what it is for",
   "It had a fright, I had a feeling, we are both over it", "Now it knows what hands are, thanks for that", "I am not mad, the crawler is a little mad",
@@ -40,6 +48,8 @@ REACT = {
   ("does it do this a lot", "Every time someone talks in here. It thinks the chat is a field and the words are bugs"), ("cute", "Do not tell it that, it already thinks it runs the place")],
  "grab": [("it's wiggling", "Yes. That is the only thing it knows how to say"), ("i just wanted to hold it", "Everyone does. It never agrees. Put it on a word and it will forgive you"),
   ("sorry", "Tell the crawler, I am just the voice in here"), ("it tickles", "Six legs will do that. Now let it go before it learns to climb")],
+ "gift": [("that's not what i said", "No, it is what you nearly said. It works by neighbours"), ("lol ok", "Go on then, that word is on the floor now, talk about it"), ("why that word", "It stood next to yours. That is the whole theory")],
+ "tokens": [("what's a tokenizer", "The friend that cuts your words into pieces so I can eat them. Literal, tireless, no sense of humour"), ("that's weird", "It is. It also never misses a piece"), ("how many pieces", "More than words. Always more than words")],
  "escape": [("where did it go", "Under the box where you type. It likes the dark part of the page"), ("will it come back", "It always does. There are more words here than anywhere else it knows"),
   ("that was fast", "It runs on the same 2 million parameters as me, somehow it got all the speed"), ("ok that was weird", "That is the room. Things happen in it besides us")],
 }
@@ -59,7 +69,7 @@ def oracle(t): return f"<|oracle|> {MARK[act_of(t)]} {t}"
 def build(n, seed=0):
     rng = random.Random(seed); out = []
     for _ in range(n):
-        kind = rng.choice(["fetch", "fetch", "drop", "grab", "escape", "visit"])
+        kind = rng.choice(["fetch", "fetch", "drop", "grab", "escape", "visit", "gift", "gift", "tokens"])
         mem = ""; lines = []
         t, d = rng.choice(TIMES), rng.choice(DAYS)
         if kind == "visit" or rng.random() < 0.25:
@@ -68,7 +78,7 @@ def build(n, seed=0):
         if kind == "visit":
             lines.append(oracle(rng.choice(VISIT_REMARK).format(t=t, d=d)))
         else:
-            w = rng.choice(WORDS); arg = w if kind == "fetch" else (f'"{w}" and "{rng.choice(WORDS)}"' if kind == "drop" else None)
+            w = rng.choice(WORDS); arg = w if kind in ("fetch", "gift") else (f'"{w}" and "{rng.choice(WORDS)}"' if kind == "drop" else (rng.randint(4, 14) if kind == "tokens" else None))
             s = rng.choice(SEEDS[kind](arg)); lines.append(f"<|oracle|> {MARK['tell']} {s}. {rng.choice(CONT[kind])}")
             if rng.random() < 0.6:
                 ru, ro = rng.choice(REACT[kind]); lines += [f"<|user|> {ru}", oracle(ro)]

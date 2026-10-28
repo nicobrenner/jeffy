@@ -339,8 +339,11 @@ genuinely lives in two classes of that taxonomy. So each head also carries a reg
 phrasings with an expected label, or an expected abstain for texts that straddle classes (a straddling text must not come back
 as a single confident answer). Run them with `JEFFY_RUN_PROBES=1 python -m pytest tests/test_probes.py`. And heads trained on
 very little data are correct but under-confident: `medication_name` and `dosage_form` score 25/25 on their demo cases yet only
-4% and 8% of those clear 0.9 confidence, while margin ≥ 0.5 covers 68% and 52% with no misroutes. For such heads gate on
-`margin`, or lower the cutoff only after measuring misroute at that level.
+4% and 8% of those clear 0.9 confidence, while margin ≥ 0.5 covers 68% and 52% with no misroutes. For those two heads the
+documented default gate is **`margin >= 0.5`** instead of confidence (their probe sets carry that gate), and the same
+rule applies to any head trained on a few dozen examples: lower the cutoff only after measuring misroute at that level.
+This matters because the medical heads have real outside use: at the 0.9 confidence default those people would see an
+abstain on roughly nine inputs in ten; at the margin gate about half are answered, with no misroute seen on the demo cases.
 
 ## Evaluation notes
 

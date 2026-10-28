@@ -170,6 +170,12 @@
   .hbtn { font-size: 12px; padding: 3px 8px; }
   #status { margin-left: auto; white-space: nowrap; }
   body { overflow-x: hidden; }
+  .scorebar { margin-top: 5px; font-size: 11px; opacity: .45; display: flex; gap: 4px; align-items: center; flex-wrap: wrap }
+  .msg.oracle:hover .scorebar, .scorebar.has { opacity: .9 }
+  .scorebar button { width: 20px; height: 20px; border-radius: 50%; border: 1px solid #8887; background: transparent; color: inherit; font-size: 10px; cursor: pointer; padding: 0 }
+  .scorebar button.sel { background: #28a; border-color: #28a; color: #fff }
+  .scorebar .notebtn { width: auto; border-radius: 6px; padding: 0 6px; margin-left: 4px }
+  .scorebar input { font: 12px system-ui; background: transparent; color: inherit; border: 1px solid #8886; border-radius: 6px; padding: 2px 6px; flex: 1; min-width: 120px }
   #input-area {
     padding: 12px 20px;
     border-top: 1px solid var(--border);
@@ -770,7 +776,26 @@
       conversationIds = [...identityIds, ...recent.slice(-(MAX_CONTEXT - identityIds.length - 30))];
     }
   }
+  function updateTeachCount() { const ns = Object.keys(chatScores).length; teachCount.textContent = (corrections.length ? corrections.length + ' saved' : '') + (ns ? (corrections.length ? ' · ' : '') + ns + ' scored' : ''); }
   function saveCorrections() { try { localStorage.setItem('tinyoracle.corrections', JSON.stringify(corrections)); } catch (e) {} teachCount.textContent = corrections.length ? corrections.length + ' saved' : ''; }
+  // ===================== IN-CHAT SCORING (Nico, Oct 27: chatting beats scoring pages) =====================
+  // Optional 0-5 under every Oracle reply + a one-line note. Stays in this browser (localStorage) and leaves only with the teach
+  // export, as chat_scores.json in the review-page shape ({n: {s: {A: score}, n: {A: note}}}) plus history / user / reply so the
+  // judge (nico_judge.py) can train on it directly.
+  let chatScores = {}; try { chatScores = JSON.parse(localStorage.getItem('tinyoracle.chatscores') || '{}'); } catch (e) {}
+  function saveChatScores() { try { localStorage.setItem('tinyoracle.chatscores', JSON.stringify(chatScores)); } catch (e) {} updateTeachCount(); }
+  function addScoreBar(div, i) {
+    const key = convId + ':' + i, bar = document.createElement('div'); bar.className = 'scorebar';
+    const turns = transcript.slice(0, i - 1), history = []; for (let k = 0; k + 1 < turns.length; k += 2) if (turns[k].role === 'user' && turns[k + 1].role === 'oracle') history.push({ user: turns[k].text, oracle: turns[k + 1].text });
+    const entry = () => chatScores[key] || (chatScores[key] = { s: {}, n: {}, history, user: transcript[i - 1].text, reply: transcript[i].text, model: modelSel.value, conv: convId, turn: i, ts: new Date().toISOString() });
+    const dots = []; for (let v = 0; v <= 5; v++) { const b = document.createElement('button'); b.textContent = v; b.title = ['broken / wrong / offensive', 'flat or off', 'passable', 'fine', 'good, in character', 'exactly what you\'d want'][v];
+      b.addEventListener('click', e => { e.stopPropagation(); entry().s.A = v; dots.forEach((d, k) => d.classList.toggle('sel', k === v)); bar.classList.add('has'); logEvent('score', { turn: i, score: v }); saveChatScores(); }); dots.push(b); bar.appendChild(b); }
+    const nb = document.createElement('button'); nb.className = 'notebtn'; nb.textContent = 'note'; nb.title = 'One line on why (worth more than the number)';
+    const inp = document.createElement('input'); inp.placeholder = 'why?'; inp.style.display = 'none';
+    nb.addEventListener('click', e => { e.stopPropagation(); inp.style.display = ''; inp.focus(); });
+    inp.addEventListener('click', e => e.stopPropagation()); inp.addEventListener('input', () => { entry().n.A = inp.value; bar.classList.add('has'); saveChatScores(); });
+    bar.append(nb, inp); div.appendChild(bar);
+  }
   function makeEditable(div) {
     div.title = 'Teach mode: click to rewrite this reply';
     div.addEventListener('click', () => {
@@ -804,9 +829,14 @@
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'engagement.json'; a.click();
   }
   document.getElementById('engExport').addEventListener('click', exportEngagement);
+  function chatScoresExport() {   // {n: {s: {A: 0-5}, n: {A: note}, history, user, reply, model, ts}} — review_page.py's export shape, keyed 0..N
+    const out = {}; Object.values(chatScores).filter(e => e.s.A !== undefined || (e.n.A || '').trim()).sort((x, y) => x.ts < y.ts ? -1 : 1).forEach((e, k) => { out[k] = e; }); return out;
+  }
+  window.__chatScoresExport = chatScoresExport;
   function exportCorrections() {
     const blob = new Blob([corrections.map(c => JSON.stringify(c)).join('\n') + '\n'], { type: 'application/jsonl' });
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'corrections.jsonl'; a.click();
+    const sc = chatScoresExport(); if (Object.keys(sc).length) { const b2 = new Blob([JSON.stringify(sc, null, 1)], { type: 'application/json' }); const a2 = document.createElement('a'); a2.href = URL.createObjectURL(b2); a2.download = 'chat_scores.json'; setTimeout(() => a2.click(), 300); }
   }
   document.getElementById('teachExport').addEventListener('click', exportCorrections); saveCorrections();
   document.getElementById('crawlerNow').addEventListener('click', () => Crawler.now());
@@ -864,7 +894,7 @@
       if (model.format === 'plain') response = response.split('\n')[0].replace(/^User:.*$/, '').trim();
       conversationIds.push(...tokenizer.encode(fmtOracleText(response)));
       oracleDiv.textContent = response || '(empty response)'; transcript.push({ role: 'oracle', text: response });
-      if (judgeMeta) { const jm = document.createElement('div'); jm.style.cssText = 'font-size:11px;opacity:.55;margin-top:4px'; jm.textContent = 'best of ' + judgeMeta.scores.length + ' · judge ' + judgeMeta.scores[judgeMeta.pick].toFixed(2) + ' (others ' + judgeMeta.scores.filter((_, k) => k !== judgeMeta.pick).join(' ') + ')'; oracleDiv.appendChild(jm); } oracleDiv.dataset.turn = transcript.length - 1; makeEditable(oracleDiv); logEvent('oracle', { turn: transcript.length, len: response.length }); Crawler.on({ type: 'oracle' });
+      if (judgeMeta) { const jm = document.createElement('div'); jm.style.cssText = 'font-size:11px;opacity:.55;margin-top:4px'; jm.textContent = 'best of ' + judgeMeta.scores.length + ' · judge ' + judgeMeta.scores[judgeMeta.pick].toFixed(2) + ' (others ' + judgeMeta.scores.filter((_, k) => k !== judgeMeta.pick).join(' ') + ')'; oracleDiv.appendChild(jm); } oracleDiv.dataset.turn = transcript.length - 1; makeEditable(oracleDiv); addScoreBar(oracleDiv, transcript.length - 1); logEvent('oracle', { turn: transcript.length, len: response.length }); Crawler.on({ type: 'oracle' });
       if (primeMode.value === 'first' && transcript.length === 2) rebuildIds();   // the primed example served its purpose: drop it from the context from here on
     } catch (e) { oracleDiv.textContent = '(generation error: ' + e.message + ')'; console.error(e); }
     chatEl.scrollTop = chatEl.scrollHeight;
@@ -918,6 +948,7 @@
   const DEFAULT_STAMP = 'bestof4-1027';
   try { const saved = localStorage.getItem('tinyoracle.model'); if (saved && MODELS[saved] && localStorage.getItem('tinyoracle.default_stamp') === DEFAULT_STAMP) initial = saved; localStorage.setItem('tinyoracle.default_stamp', DEFAULT_STAMP); const ss = localStorage.getItem('tinyoracle.sampler'); if (ss && SAMPLERS[ss]) samplerSel.value = ss; } catch (e) {}
   modelSel.value = initial;
+  updateTeachCount();
   loadModel(initial);
 })();
 </script>

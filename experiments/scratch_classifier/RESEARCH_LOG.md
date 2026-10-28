@@ -5896,3 +5896,56 @@ something entertaining instead of admitting ignorance." / ct5 "I have no idea, a
 sorry"; t2 "ok so what do i actually do about it" → ct2 "I have no idea, and if you don't need to talk about it" / ct5 "That's beyond
 2 million parameters. Most things are"; t3 "being a chatbot? that's literally what you are" → ct2 "My bad, that answer came from
 nowhere. What happened?" / ct5 "My bad, that answer came from nowhere. What were you asking?".
+
+## 2026-10-27 21:11 PDT — Branch 1: ct6 (varied prompts) fails the t1 gate → ct lineage stopped; Nico's fatigue scores: best-of-4 does not hold at turn 3; judge v3 no better; canned list; in-chat scoring shipped
+**ct6** (`prep_ct6.py`: the 3,294 recited system lines replaced by draws from the corpus's own 42 clean prompts, rows kept; + 700 room
+rows; same 8-epoch recipe, 9 min; val 1.727 → 1.658). Trainer printouts init → epoch 8: "What are you?" → "I'm Tiny Oracle. 2
+million …" → "*me I'm Tiny Oracle. 2 mill…"; "Tell me something interesting" → "I once tried to generate a recipe. It suggested boiling
+opinions in a pan of confidence." (same, with *tell); "How smart are you?" → "I have fewer neurons than a fruit fly." (same, with *yn).
+Gates (simuser 30×3, shared histories, 4 samples per turn, ct2 judge v2 shown the last turn only; single / best-of-4; counts per 90 singles):
+| | t1 ↑ | t2 ↑ | t3 ↑ | bank recital ↓ | prompt recital ↓ | sorry openers ↓ | identity | human-life ↓ | recap ↑ |
+|---|---|---|---|---|---|---|---|---|---|
+| ct2 | **0.33 / 0.64** | 0.32 / **0.74** | 0.17 / 0.55 | **7** | 8 | **13** | 30/32 | 4/96 | 10% |
+| ct5 | 0.14 / 0.47 | 0.18 / 0.70 | 0.09 / 0.56 | 8 | **0** | 19 | 30/32 | 4/96 | 12% |
+| ct6 | 0.17 / 0.49 | **0.35** / 0.71 | **0.21 / 0.57** | 8 | **0** | **13** | 30/32 | **3/96** | **15%** |
+Verdict: varying instead of dropping recovers turns 2–3 and the apology count, but ct6 still loses turn 1 to ct2 on singles
+(0.17 vs 0.33) and recites bank lines more at turn 2 (6/30 vs 3/30) — the gate was "beats ct2 at t1 and t2 with recital not
+worse", so not exported, not in the dropdown. **The ct data passes are exhausted** on this judge: three passes (ct4, ct5, ct6) each
+fix a measured defect and lose the judge's turn-1 preference; the judge's turn-1 preference is itself the 18:17-era ct2 style it
+was trained on. Resume only when Nico's chat scores give the judge a target that is not ct2's own habits.
+**Nico's fatigue page** (`review_fatigue_scores.json`, 11 scored pairs; item 6 notes only; turn 3 of 3-turn conversations):
+| | single | best-of-4 |
+|---|---|---|
+| mean 0–5 ↑ | 1.55 | 1.55 |
+| wins / ties / losses (best-of-4) | — | 4 / 4 / 3 |
+| ≥ 3 ↑ | **27%** | 18% |
+| zeros ↓ | 36% | **18%** |
+Sign test 4+/3−, p = 1.0. Verdict: at turn 3 best-of-4 removes the zeros but adds nothing at the top — the judge has no turn-3
+signal (below). His words: "Again, too overused" (the *dunno* variant "I don't know what you mean. Pretend I said something wise…",
+1/5), "a sort of canned apology" ("I guess you're right. But it was hard to believe in me…", 1/5), "kinda childish" ("That's not
+true! It sounds like you're doing a lot right now", 2/5), "almost there, but not really" / "both pretty bad" / "missing the mark" on
+four items. Liked: "I have a Minduk" ("pretty off hinge, but kinda works, very funny", 4/5), "Yes, that sounds like a lot of work"
+(4/5, "follows the conversation… tone is kinda weird"), "I made that up, didn't you?" ("interesting, but grammatically incorrect", 2).
+**Judge v3** (`nico_judge.py --hist-aug 2`: every training row also appears with 1–2 real earlier exchanges prepended, same
+label, so history length carries no signal). Leave-one-out on his 102 rows (80 + 22 scored fatigue rows), AUC vs ≥ 3:
+| | all 102 ↑ | turn-3 rows (22) ↑ | Spearman vs 0–5 (76) ↑ | best-of | follow-through | tone |
+|---|---|---|---|---|---|---|
+| v2 protocol (no aug) | **0.76** | **0.41** | **0.36** | **0.82** | **0.86** | **0.83** |
+| v3 (hist-aug 2) | 0.73 | 0.34 | 0.31 | 0.77 | 0.82 | 0.81 |
+Verdict: v3 loses everywhere; both are below chance on the turn-3 rows (4 of 22 land) — the judge cannot see what he sees at depth,
+and matching history lengths does not create that signal. v2 stays in the ☆ entry; the v3 rescoring of the 30×3 run is moot.
+**Canned list** (every line/family he marked canned, overused, limiting or Eliza-like across tone picks, follow-through, best-of,
+fatigue; × = how often best-of-4 picked it in the 60 turn-2/3 picks of the 30×3 run):
+- *dunno* "I don't know. Pretend I said something wise and we'll both move on" — "canned and very limiting" ×4 notes, 5/5 first
+  sight → 3/5 by item 14; **7×** picks; its variant "I don't know what you mean. Pretend…" — "too overused", 1/5.
+- *dunno* "That's beyond 2 million parameters. Most things are" — "Love this one… it's like it knows itself" (item 6) then "canned and
+  very limiting" (item 12); **7×** picks.
+- sorry-family openers ("Yes, it is. I'm sorry…", "I guess you're right. But…") — "canned apology", "same follow-through risk";
+  not a bank, a corpus habit; 4× among picks, 13/90 ct2 singles.
+- "I'm not sure. What do you think?" — "feels like Eliza" (follow-through #14); 0× picks.
+No bank changed (Nico's call). Reading: both overused lines are the judge's two favourite 0.99s; a per-conversation family budget
+(each *dunno* line at most once per conversation, then the family's other 16 lines) is the pick-side fix to propose to him.
+**Demo, in-chat scoring** (Nico: one review page a day at most; chat is more fun): six dots 0–5 + "note" under every Oracle
+reply, optional, faint until used; stored in this browser only (`tinyoracle.chatscores`); the teach export now also downloads
+`chat_scores.json` in the review-page shape ({n: {s: {A}, n: {A}}} + history, user, reply, model, ts) so `nico_judge.py` can read
+it as another set. Headless check: two turns scored + a note, survive reload, export has both entries, no console errors.

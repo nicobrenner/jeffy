@@ -2,7 +2,7 @@
 
 Purpose: let a fresh Claude Code session pick up this research program with as little loss as possible. Keep it short;
 the durable record is `RESEARCH_LOG.md` (lab notebook, append-only, every result the turn it lands). Update this file at
-the end of every working block (not just at the end of a session). Last update: **2026-10-27, 20:54 PDT**.
+the end of every working block (not just at the end of a session). Last update: **2026-10-27, 21:11 PDT**.
 
 ## How to resume (5 minutes)
 1. Read this file, then the last ~400 lines of `RESEARCH_LOG.md` (`tail -400 RESEARCH_LOG.md`).
@@ -16,15 +16,15 @@ the end of every working block (not just at the end of a session). Last update: 
    the evaluation Nico trusts; "Needs you" block at the end of messages that need him.
 
 ## Needs Nico (2026-10-27 15:19 PDT)
-0. **New page: `review_fatigue.html`** — 12 three-turn conversations, score turn 3 (A/B = single vs best-of-4 with judge v2) and say in the notes whether it feels canned by then. Export `review_fatigue_scores.json`.
+0. **Chat and score instead of pages:** every Oracle reply in the demo now has faint 0–5 dots + a note; nothing leaves the browser until you press teach-export (adds `chat_scores.json`). Scored chats are the judge's next training set. Decision for you when you feel like it: a per-conversation budget on the two overused lines ("Pretend I said something wise…", "beyond 2 million parameters" — each at most once per conversation, then the family's other 16 lines)? No bank changes made.
 0b. **Shipped from your best-of-4 scores:** best-of-4 won 9-1-8 (Wilcoxon p 0.009), so the demo's ☆ entry is now ct2 + best-of-4 by the judge (~4x slower per reply, each reply shows the judge's pick). Try it; the bank-line fatigue you noted from item 12 on is the next thing measured (judge retrain with your 36 new labels + a "seen before in this conversation" feature).
 1. FYI the demo garble ("ring kay Todina…"): not reproduced on ct2/v5b int8 with the default sampler. Which dropdown entry and sampler was selected?
 2. FYI decided: pre-LN data passes stopped (v6, v6b both lose to v5b; low-diversity row families leak as templates). Next
    model-side work = best-of-N with a judge trained on his 0–5 scores, or retrieval for the recap tier. No run pending.
 3. Still open: crawler/room verdicts, teach-mode export, README/benchmark correction, posts.
 
-## Running right now (2026-10-27 20:54 PDT)
-- **Nothing running.** Branch 1 block 5 done: demo history knob (default full); fixer pass ct5 trained (8 min) — fixes recital, loses to ct2 on the judge, not exported. `review_fatigue.html` still waiting for his scores.
+## Running right now (2026-10-27 21:11 PDT)
+- **Nothing running.** Branch 1 block 6 done: ct6 fails the t1 gate → ct data passes stopped; fatigue scores analysed (best-of-4 flat at turn 3); judge v3 rejected; in-chat 0–5 scoring shipped. No review page until tomorrow (Nico: one a day, chat preferred).
 - Nico's labels: tone picks (28 rows, `tone_labels_nico1.jsonl`) + follow-through scores (18, `review_followthrough_scores.json`).
 - Review format: `review_page.py` (0–5 per reply + notes, continuations first, ≤20 items). Pairs on shared history: `cont_pairs.py`.
 
@@ -47,7 +47,13 @@ Turn-3 collapse diagnosed: the judge marks down anything read behind a 2-turn hi
 and the window is the rest (ct2 +0.11 from last-turn-only history); prime no help, v5b no better. Not the model → no DAgger.
 **Status 20:54:** history knob shipped (default full). ct5 fixer pass: training-prompt recital 8/90 → 0, recap 10% → 12%, but judge
 mean below ct2 at every turn (single 0.33/0.32/0.17 vs 0.14/0.18/0.09) — same apologetic drift as ct4; not exported.
-**Next block:** (a) judge v3 with his fatigue-page scores (first 2–3-turn rows he has labelled) + history-length-matched training
+**Status 21:11:** ct6 = ct5 with prompts varied: t2/t3 and apology count recover, t1 still loses (0.17 vs 0.33), bank recital worse (6 vs 3) → not
+exported; **data passes stopped until the judge has a target that is not ct2's own habits** (his chat scores). Judge v3 (history-
+matched rows) loses to v2 everywhere; both below chance on his 22 turn-3 rows. In-chat scoring shipped (`chat_scores.json` via teach export).
+**Next block (signal from chat, no pages):** (a) `nico_judge.py` reads `chat_scores.json` as a set (`chat`) and retrains when ≥ 30 rows arrive;
+(b) propose the per-conversation family budget (above) and, if he says yes, implement it as a harness/demo pick rule on the harness's own
+record (no regex) and measure overused-line picks before/after; (c) engagement export: turns per conversation on the ☆ entry vs ct2 plain.
+**Superseded:** (a) judge v3 with his fatigue-page scores (first 2–3-turn rows he has labelled) + history-length-matched training
 rows so the judge is honest at depth; (b) demo knob: history window last-turn-only for ct2, measured on a fresh ≤12-item 3-turn page;
 (c) widen the family margin to 0.3 only if his fatigue notes say canned — otherwise leave it; (d) ct6 = ct5 with the 3,294 recited
 prompts VARIED instead of dropped (one line in `prep_ct5.py`, 8-min signal, same gates). Then items 2 and 3 below.
@@ -85,7 +91,7 @@ prompts VARIED instead of dropped (one line in `prep_ct5.py`, 8-min signal, same
 | 2 | rolling recap tier + `*recap` act (needs a model that copies) | after 1 |
 | 3 | KV cache in the ONNX export; then 512 window (grow table or RoPE) | after 2 |
 | 4 | tone judge refined on Nico's picks (shares/reactions) → best-of-N scoring; intent gate vetoes dunno on reactions | labels needed |
-| 5 | fixer pass: strip recited system prompts; add room-event + visit-memory lines | ran as ct5 (20:53): recital 8→0 but judge prefers ct2; next = vary the prompts instead of dropping the rows |
+| 5 | fixer pass: strip recited system prompts; add room-event + visit-memory lines | ct5 (strip) and ct6 (vary) both fix recital, both lose t1 to ct2 on the judge → **ct data passes exhausted** until chat scores retarget the judge |
 | 6 | verifier in the browser; classifiers in-browser (same forward pass) | parked |
 | 7 | teach-mode corrections into retrains; engagement as reward | waiting on exports |
 Parked: posts; benchmark README correction; HF push of new checkpoints; BlurSort.

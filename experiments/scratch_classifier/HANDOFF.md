@@ -2,7 +2,7 @@
 
 Purpose: let a fresh Claude Code session pick up this research program with as little loss as possible. Keep it short;
 the durable record is `RESEARCH_LOG.md` (lab notebook, append-only, every result the turn it lands). Update this file at
-the end of every working block (not just at the end of a session). Last update: **2026-10-28, 09:22 PDT**.
+the end of every working block (not just at the end of a session). Last update: **2026-10-28, 09:25 PDT**.
 
 ## How to resume (5 minutes)
 1. Read this file, then the last ~400 lines of `RESEARCH_LOG.md` (`tail -400 RESEARCH_LOG.md`).
@@ -38,6 +38,22 @@ counter; print window boundaries next to every count. Branch 2 never touches thi
 
 ## Creatures — the world as the Oracle's own environment (design, 2026-10-28, 08:27)
 **The arena** (`demo/arena.html`, 2026-10-28, 09:00): Crawly + the tokenizer with their own drives/policy and an instruction model (held-out 0.80; `arena_instructions.py`); mouse/keyboard play; the Oracle comments via the Room path; engagement log shared with the chat export. Next for the arena: the learned policy from the decision log (behaviour cloning + reward weighting), more instruction paraphrases from Nico's own arena chat (logged), creature-to-creature events beyond hand-over.
+**Arena learned policy — data spec (2026-10-28, 09:25).** What the logs already produce (shared `tinyoracle.events`, `page: "arena"`, exported by
+either page): `arena_decide` {who, reason (timer | chat_none | chat_unable), drives {h,c,f,a}, scores per option, chosen} — one row per
+policy decision; `arena_task` {who, option, arg, success, word | pieces | target} — the outcome of every option run (instructed or own);
+`arena_feel` {who, what ∈ hover | click | drag | mention | ack, drives} — the engagement proxies with the drives at that moment;
+`arena_instruction` {option, arg, p}, `arena_refuse` {who, option | how}, `arena_chat`, `arena_nudge`, `arena_word_drag`, `arena_oracle`.
+Row for the policy = (state, action, return): state = drives (4) + context (free words on the floor, carrying?, other creature's state, seconds
+since the last user action, instruction option if any); action = chosen option; return = Σ over the next 60 s of (drive satisfaction:
+hunger drop on fetch/chop, fatigue drop on nap, affection rise) + engagement proxies weighted (click 1, hover 0.3, drag 0.5, mention 2,
+Oracle ack 1, instruction obeyed 1, task success 1) — all computable from the rows above by timestamp. The hand policy's scores are logged
+too, so the first fit is **behaviour cloning of the hand policy re-weighted by return** (a 4+6-input, 6-output softmax, ~10k params with one
+hidden layer of 64 — the "tiny policy" of the design), i.e. the learned policy starts as the hand policy and moves toward what paid off.
+**First < 30 min signal:** `arena_policy.py --fit` on the exported log (needs ~300 decisions, one evening of Nico's play or a headless
+scripted session): held-out return of the learned policy's choices vs the hand policy's on the same states (off-policy, importance-weighted
+by the logged scores' softmax), plus the simplest behavioural check — does it fetch more when hunger is high and refuse less when
+affection is high. Ship it as `demo/arena_policy_v1.json` behind a per-creature knob (hand / learned) so the two can be scored by Nico
+in the arena the same way turns are scored in the chat.
 **Shipped:** Crawly (strider; fetches words, now returns a RELATED word via `demo/assoc_v1.json` and a gift Room event), the tokenizer
 (lives at the input box, chops sent words into the real token pieces, hands pieces to Crawly, "tokens" Room event), presence (visit record,
 "…" then a first-visit / welcome-back turn), weather events. Banks: `weather_bank.py` (weather, presence), `room_build.py` (Room events).

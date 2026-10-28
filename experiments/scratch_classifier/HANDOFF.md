@@ -2,7 +2,7 @@
 
 Purpose: let a fresh Claude Code session pick up this research program with as little loss as possible. Keep it short;
 the durable record is `RESEARCH_LOG.md` (lab notebook, append-only, every result the turn it lands). Update this file at
-the end of every working block (not just at the end of a session). Last update: **2026-10-27, 20:38 PDT**.
+the end of every working block (not just at the end of a session). Last update: **2026-10-27, 20:54 PDT**.
 
 ## How to resume (5 minutes)
 1. Read this file, then the last ~400 lines of `RESEARCH_LOG.md` (`tail -400 RESEARCH_LOG.md`).
@@ -23,8 +23,8 @@ the end of every working block (not just at the end of a session). Last update: 
    model-side work = best-of-N with a judge trained on his 0–5 scores, or retrieval for the recap tier. No run pending.
 3. Still open: crawler/room verdicts, teach-mode export, README/benchmark correction, posts.
 
-## Running right now (2026-10-27 20:38 PDT)
-- **Nothing running.** Branch 1 block 4 done: family classifier + cross-family pick (fires 1/30), turn-3 collapse diagnosed (half judge history-sensitivity, half window; not the model, no DAgger). `review_fatigue.html` still waiting for his scores.
+## Running right now (2026-10-27 20:54 PDT)
+- **Nothing running.** Branch 1 block 5 done: demo history knob (default full); fixer pass ct5 trained (8 min) — fixes recital, loses to ct2 on the judge, not exported. `review_fatigue.html` still waiting for his scores.
 - Nico's labels: tone picks (28 rows, `tone_labels_nico1.jsonl`) + follow-through scores (18, `review_followthrough_scores.json`).
 - Review format: `review_page.py` (0–5 per reply + notes, continuations first, ≤20 items). Pairs on shared history: `cont_pairs.py`.
 
@@ -45,9 +45,12 @@ conversations (13/30 turn-2 picks). `review_fatigue.html` built (single vs best-
 cross-family pick in the harness (cfg `family`), fires 1/30 — the judge's 0.99 bank lines rarely have a rival within the margin.
 Turn-3 collapse diagnosed: the judge marks down anything read behind a 2-turn history (same replies 0.40 → 0.62 with no history),
 and the window is the rest (ct2 +0.11 from last-turn-only history); prime no help, v5b no better. Not the model → no DAgger.
+**Status 20:54:** history knob shipped (default full). ct5 fixer pass: training-prompt recital 8/90 → 0, recap 10% → 12%, but judge
+mean below ct2 at every turn (single 0.33/0.32/0.17 vs 0.14/0.18/0.09) — same apologetic drift as ct4; not exported.
 **Next block:** (a) judge v3 with his fatigue-page scores (first 2–3-turn rows he has labelled) + history-length-matched training
 rows so the judge is honest at depth; (b) demo knob: history window last-turn-only for ct2, measured on a fresh ≤12-item 3-turn page;
-(c) widen the family margin to 0.3 only if his fatigue notes say canned — otherwise leave it. Then items 2 and 3 below.
+(c) widen the family margin to 0.3 only if his fatigue notes say canned — otherwise leave it; (d) ct6 = ct5 with the 3,294 recited
+prompts VARIED instead of dropped (one line in `prep_ct5.py`, 8-min signal, same gates). Then items 2 and 3 below.
 1. **Top task (now): Nico-judge v1** — a lands/quality judge on ct2's hidden states trained on the 659 LLM "lands" labels plus
    Nico's own 46 rows (18 follow-through scores, 28 tone picks), evaluated leave-one-out on Nico's rows (AUC vs his ≥3 / "lands").
    Why first: <30-min signal, uses the only ground truth we trust, and it is the gate for best-of-N (roadmap #4). If AUC ≥ 0.7:
@@ -82,7 +85,7 @@ rows so the judge is honest at depth; (b) demo knob: history window last-turn-on
 | 2 | rolling recap tier + `*recap` act (needs a model that copies) | after 1 |
 | 3 | KV cache in the ONNX export; then 512 window (grow table or RoPE) | after 2 |
 | 4 | tone judge refined on Nico's picks (shares/reactions) → best-of-N scoring; intent gate vetoes dunno on reactions | labels needed |
-| 5 | fixer pass: strip recited system prompts; add room-event + visit-memory lines | ready to run |
+| 5 | fixer pass: strip recited system prompts; add room-event + visit-memory lines | ran as ct5 (20:53): recital 8→0 but judge prefers ct2; next = vary the prompts instead of dropping the rows |
 | 6 | verifier in the browser; classifiers in-browser (same forward pass) | parked |
 | 7 | teach-mode corrections into retrains; engagement as reward | waiting on exports |
 Parked: posts; benchmark README correction; HF push of new checkpoints; BlurSort.

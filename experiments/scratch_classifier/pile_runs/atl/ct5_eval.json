@@ -1,0 +1,42 @@
+{
+ "ct2": {
+  "1": {
+   "single": 0.3269025664734854,
+   "best4": 0.6351730168431187,
+   "bank_recital": 3,
+   "prompt_recital": 7
+  },
+  "2": {
+   "single": 0.3244990268348526,
+   "best4": 0.7428071153061259,
+   "bank_recital": 3,
+   "prompt_recital": 1
+  },
+  "3": {
+   "single": 0.17011008926978402,
+   "best4": 0.5511421425813295,
+   "bank_recital": 1,
+   "prompt_recital": 0
+  }
+ },
+ "ct5": {
+  "1": {
+   "single": 0.14206123454116726,
+   "best4": 0.46750896262334585,
+   "bank_recital": 2,
+   "prompt_recital": 0
+  },
+  "2": {
+   "single": 0.1791474220823611,
+   "best4": 0.7036346566924963,
+   "bank_recital": 3,
+   "prompt_recital": 0
+  },
+  "3": {
+   "single": 0.08589405732810845,
+   "best4": 0.558831155810033,
+   "bank_recital": 3,
+   "prompt_recital": 0
+  }
+ }
+}

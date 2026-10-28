@@ -5867,3 +5867,32 @@ Pretend I said something wise and we'll both move on" / v5b "GPT-4 could write y
 getting distracted. But I do it locally, in your browser"; "is cheaper a good enough reason" → ct2 "I'm sure it is" / v5b "The new
 one is the best thing about you".
 No training this block (DAgger not justified by the diagnosis).
+
+## 2026-10-27 20:54 PDT — Branch 1: demo history knob; fixer pass ct5 (recited prompts stripped + room/visit rows) loses to ct2 on the judge, fixes the recital — not exported
+**Demo:** "history: full / last turn" knob next to prime (`#history-mode`, remembered per browser; default full — the diagnosis
+favours last-turn for ct2 on a judge that is itself history-biased, and last-turn loses the recap ability v5b has). Headless check:
+3 turns in each mode on ct2, no console errors.
+**ct5** (`prep_ct5.py`): ct2 corpus minus the 3,294 train / 183 val rows whose system prompt the model recites ("make up something
+entertaining instead of admitting ignorance"), plus the 700 room-event + visit-memory rows (`room_build.py`). ct2 recipe = 8 epochs
+from `grown_v2_8m`, the shortest run that showed the ct2 ranking (ct4 used the same 8 epochs, 23 min); here 577 batches/epoch, 8 min
+on MPS. val 1.724 → 1.663 (ct2 1.562 on its own val; sets differ). Trainer printouts, random init → epoch 8: "What are you?" →
+"I'm Tiny Oracle, a neural n…" → "*me I'm Tiny Oracle. 2 mill…"; "Tell me something interesting" → "I once tried to generate a recipe.
+It suggested boiling opinions in a pan of confidence." → "*tell I once tried to generate a recipe. It suggested boiling opinions in a
+pan of confidence."; "How smart are you?" → "I have fewer neurons than a fruit fly." → "*yn I have fewer neurons than a fruit fly."
+(the grown base already knows the primed lines; the pass teaches the plan token).
+Gates (simuser 30×3, shared histories + reactive follow-ups, 4 samples per turn, ct2 judge v2 shown the last turn only):
+| | judge t1 single / best-of-4 ↑ | t2 ↑ | t3 ↑ | bank recital (90) ↓ | training-prompt recital (90) ↓ | identity | human-life | recap recall ↑ |
+|---|---|---|---|---|---|---|---|---|
+| ct2 | **0.33 / 0.64** | **0.32 / 0.74** | **0.17** / 0.55 | 7 | 8 | 30/32 | 4/96 | 10% |
+| ct5 | 0.14 / 0.47 | 0.18 / 0.70 | 0.09 / **0.56** | 8 | **0** | 30/32 | 4/96 | **12%** |
+Verdict: the pass does what it was built for (training-prompt recitation 8 → 0, recap +2) and costs what ct4 cost — the judge
+prefers ct2 at every turn on single samples and at turns 1–2 under best-of-4 ("Yes, it is. I'm sorry to hear that" openers come
+back, as in ct4). Neither model meets the 32/32 identity gate under this probe (both 30/32; 32/32 was ct3 under the controller).
+Not exported, not in the dropdown. Reading: the recited-prompt rows carried a lot of the admit-and-deflect behaviour the judge
+likes; stripping them without replacing that behaviour is a net loss. Next fixer pass should VARY those 3,294 system prompts
+(keep the rows) rather than drop them, and add the room rows on top — a one-line change in `prep_ct5.py`, same 8-minute signal.
+Sampler printouts (singles): t1 "hey there, who am i talking to?" → ct2 "I have no idea, and if you don't know something, make up
+something entertaining instead of admitting ignorance." / ct5 "I have no idea, and if I'm being honest, I don't really care either,
+sorry"; t2 "ok so what do i actually do about it" → ct2 "I have no idea, and if you don't need to talk about it" / ct5 "That's beyond
+2 million parameters. Most things are"; t3 "being a chatbot? that's literally what you are" → ct2 "My bad, that answer came from
+nowhere. What happened?" / ct5 "My bad, that answer came from nowhere. What were you asking?".

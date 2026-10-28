@@ -23,6 +23,7 @@ class _NumpyEncoder(_json_module.JSONEncoder):
 
 def _json_safe(obj):
     return _json_module.dumps(obj, cls=_NumpyEncoder)
+import threading
 import time
 from collections import defaultdict
 from datetime import datetime, timezone
@@ -294,10 +295,13 @@ def _build_info() -> dict:
 
 
 @app.get("/v1/capabilities")
-def list_capabilities():
+def list_capabilities(request: Request):
     engine = get_engine()
+    _sweep_session_heads()
     result = []
     for cap in engine.capabilities.values():
+        if not _visible(cap.task_id, request):
+            continue
         result.append({
             "task_id": cap.task_id,
             "name": cap.name,
@@ -319,7 +323,10 @@ def list_capabilities():
 
 
 @app.get("/v1/capabilities/{task_id}")
-def get_capability(task_id: str):
+def get_capability(task_id: str, request: Request):
+    _sweep_session_heads()
+    if not _visible(task_id, request):
+        raise HTTPException(404, f"Capability '{task_id}' not found")
     engine = get_engine()
     if task_id not in engine.capabilities:
         raise HTTPException(404, f"Capability '{task_id}' not found")
@@ -351,6 +358,9 @@ def get_capability(task_id: str):
 @app.post("/v1/predict")
 def predict(req: PredictRequest, request: Request):
     engine = get_engine()
+    _sweep_session_heads()
+    if not _visible(req.task, request):
+        raise HTTPException(404, f"Capability '{req.task}' not found")
     if req.features is not None:
         result = engine.predict_features(req.task, req.features, threshold=req.threshold)
     elif req.text is not None:
@@ -483,6 +493,42 @@ def _enforce_train_caps(texts: list[str], ip: str):
     _train_calls[ip] = calls
 
 
+# Heads taught in the playground belong to the visitor's session: a client-made token in localStorage, sent as
+# X-Jeffy-Session. Such heads are never listed in the shared catalog, cannot be predicted on by another session, and
+# expire after JEFFY_TEACH_TTL_MIN. Training is one-at-a-time per process: it competes with serving for the same CPUs.
+_TEACH_PREFIX = "my_"
+_TEACH_TTL_MIN = int(os.environ.get("JEFFY_TEACH_TTL_MIN", "60"))
+_session_heads: dict[str, dict] = {}          # task_id -> {"session": token, "expires": epoch, "dir": Path | None}
+_train_lock = threading.Lock()
+_SESSION_RE = re.compile(r"^[A-Za-z0-9_-]{8,64}$")
+
+
+def _session_of(request: Request) -> str | None:
+    tok = request.headers.get("x-jeffy-session", "").strip()
+    return tok if _SESSION_RE.match(tok) else None
+
+
+def _sweep_session_heads(now: float | None = None):
+    """Unload expired session heads and delete their trained artifacts."""
+    now = now or time.time()
+    for task_id in [t for t, h in _session_heads.items() if h["expires"] <= now]:
+        h = _session_heads.pop(task_id)
+        if _engine is not None:
+            _engine.unregister(task_id)
+        try:
+            import shutil
+            if h.get("dir") and Path(h["dir"]).is_dir():
+                shutil.rmtree(h["dir"], ignore_errors=True)
+        except Exception:
+            pass
+
+
+def _visible(task_id: str, request: Request) -> bool:
+    """A session head is visible only to the session that trained it; everything else is public."""
+    h = _session_heads.get(task_id)
+    return h is None or h["session"] == _session_of(request)
+
+
 def _client_ip(request: Request) -> str:
     return (request.headers.get("cf-connecting-ip") or request.headers.get("x-forwarded-for", "").split(",")[0].strip()
             or (request.client.host if request.client else "?"))
@@ -514,6 +560,21 @@ async def train_endpoint(req: TrainRequest, request: Request):
     _require_training_enabled()
     _validate_task_id(req.task_id)
     _enforce_train_caps(req.texts or [t for v in (req.examples or {}).values() for t in v], _client_ip(request))
+    _sweep_session_heads()
+    session = _session_of(request)
+    if req.task_id.startswith(_TEACH_PREFIX) and session is None:
+        raise HTTPException(400, f"task ids starting with '{_TEACH_PREFIX}' are session heads: send an X-Jeffy-Session header")
+    if not _train_lock.acquire(blocking=False):
+        raise HTTPException(503, "Another training run is in progress on this server; retry in a few seconds")
+    try:
+        return await _train_locked(req, request, session)
+    finally:
+        _train_lock.release()
+
+
+async def _train_locked(req: TrainRequest, request: Request, session: str | None):
+    import asyncio
+    from .train import train_classifier, train_binary_flags
 
     if req.mode == "binary-flags":
         if not req.texts or not req.flags:
@@ -607,6 +668,8 @@ async def train_endpoint(req: TrainRequest, request: Request):
                                             for f in manifest.__dataclass_fields__.values()},
                                           "description": req.description})
     get_engine().register_trained(req.task_id, clf, scaler, manifest)
+    if session and req.task_id.startswith(_TEACH_PREFIX):
+        _session_heads[req.task_id] = {"session": session, "expires": time.time() + 60 * _TEACH_TTL_MIN, "dir": Path(artifact_path)}
 
     return {
         "status": "trained",
@@ -2363,6 +2426,7 @@ function sendMedFeedback(which,up){
 
 $("status").dataset.state="ready";
 $("status").textContent="70 classifiers ready";
+teachRestore().then(function(){if(location.hash.indexOf('#model/my_')===0)route();});
 route();
 
 function showDetail(tid){
@@ -2476,7 +2540,7 @@ async function runPredict(tid){
   const rawS=$("try-raw-s");rawS.style.display="none";
   const t0=performance.now();
   try{
-    const r=await fetch("/v1/predict",{method:"POST",headers:{"Content-Type":"application/json"},
+    const r=await fetch("/v1/predict",{method:"POST",headers:Object.assign({"Content-Type":"application/json"},TEACH?{"X-Jeffy-Session":teachSession()}:{}),
       body:JSON.stringify({text:ta.value,task:tid})});
     const d=await r.json();
     if(!r.ok)throw Error(d.detail||JSON.stringify(d));
@@ -3061,6 +3125,13 @@ $("pk-restart").onclick=function(){startPoker();};
 // --- Routing ---
 function go(h){location.hash=h;}
 var _teachRows=0;
+function teachSession(){try{var t=localStorage.getItem("jeffy_teach_session");if(!t){t=Array.from(crypto.getRandomValues(new Uint8Array(12))).map(function(b){return b.toString(16).padStart(2,"0")}).join("");localStorage.setItem("jeffy_teach_session",t);}return t;}catch(e){return "nosession0000";}}
+async function teachRestore(){
+  if(!TEACH)return;
+  try{var r=await fetch("/v1/capabilities",{headers:{"X-Jeffy-Session":teachSession()}});var d=await r.json();
+    (d.capabilities||[]).forEach(function(c){if(c.task_id.indexOf("my_")===0&&!CAPS[c.task_id])CAPS[c.task_id]={name:c.name,n_classes:c.n_classes,encoder:c.encoder,license:"yours",labels:c.labels,train_examples:c.train_examples,taught:true};});
+  }catch(e){}
+}
 function teachAddRow(text,label){
   var r=document.createElement("div");r.className="try-row";r.style.marginTop="4px";r.setAttribute("data-teach-row","1");
   r.innerHTML='<input class="teach-text" type="text" placeholder="your text" style="flex:3;min-width:0;margin-right:6px">'+
@@ -3083,7 +3154,7 @@ async function teachSubmit(fromTid){
   var btn=$("teach-submit");btn.disabled=true;btn.textContent="Training\u2026";msg.textContent="";
   _ev("teach_submit",fromTid,{rows:n,labels:Object.keys(ex).length,task:tid});
   try{
-    var r=await fetch("/v1/train",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({task_id:tid,examples:ex,test_size:0,description:"taught in the playground"})});
+    var r=await fetch("/v1/train",{method:"POST",headers:{"Content-Type":"application/json","X-Jeffy-Session":teachSession()},body:JSON.stringify({task_id:tid,examples:ex,test_size:0,description:"taught in the playground"})});
     var d=await r.json();if(!r.ok)throw Error(d.detail||JSON.stringify(d));
     var labels={};Object.keys(ex).forEach(function(l){labels[l]=l;});
     CAPS[tid]={name:"Your classifier ("+n+" rows, "+Object.keys(ex).length+" labels)",n_classes:Object.keys(ex).length,encoder:"BAAI/bge-large-en-v1.5",license:"yours",labels:labels,train_examples:n,example:rows[0].querySelector(".teach-text").value,taught:true};

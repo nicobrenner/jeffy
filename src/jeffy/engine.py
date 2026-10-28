@@ -158,6 +158,13 @@ class Engine:
         if not self._capabilities:
             logger.warning(f"No capabilities loaded from '{self.pack_dir}'")
 
+    def unregister(self, task_id: str) -> bool:
+        """Drop a hot-loaded head (session-scoped teach heads expire). Returns whether it existed."""
+        found = task_id in self._capabilities
+        for d in (self._classifiers, self._scalers, self._capabilities):
+            d.pop(task_id, None)
+        return found
+
     def register_trained(self, task_id: str, clf, scaler, manifest):
         """Hot-load a freshly trained classifier into the running engine."""
         from .catalog import KNOWN_ENCODERS

@@ -43,7 +43,7 @@ logger = logging.getLogger(__name__)
 
 from contextlib import asynccontextmanager
 
-from .engine import Engine
+from .engine import Engine, default_pack_dir
 from .catalog import MULTILINGUAL_ENCODER
 
 import os
@@ -268,7 +268,29 @@ def version():
         except Exception:
             engines[name] = None
 
-    return {"version": pkg, "package": "jeffy-classify", "demo_engines": engines}
+    return {"version": pkg, "package": "jeffy-classify", "demo_engines": engines, **_build_info()}
+
+
+def _build_info() -> dict:
+    """Pack and build facts that make drift visible without a shell: head count from the pack on disk (no engine load),
+    the default encoder, and the git sha when running from a checkout. Nothing about the host."""
+    from .catalog import ENCODER
+    info = {"heads": None, "default_encoder": ENCODER, "git_sha": None}
+    try:
+        pack = Path(default_pack_dir())
+        info["heads"] = sum(1 for d in pack.iterdir() if d.is_dir() and (d / "manifest.json").exists())
+    except Exception:
+        pass
+    try:
+        import subprocess
+        root = Path(__file__).resolve().parents[2]
+        if (root / ".git").exists():
+            out = subprocess.run(["git", "-C", str(root), "rev-parse", "--short", "HEAD"], capture_output=True, text=True, timeout=2)
+            if out.returncode == 0:
+                info["git_sha"] = out.stdout.strip()
+    except Exception:
+        pass
+    return info
 
 
 @app.get("/v1/capabilities")

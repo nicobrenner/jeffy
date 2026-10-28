@@ -181,6 +181,16 @@ curl -s -X POST http://localhost:8400/v1/predict \
 # → {"label": "Business", "confidence": 0.86, ...}
 ```
 
+### What is running
+
+```bash
+curl -s http://localhost:8400/v1/version
+# → {"version": "0.1.0a21", "package": "jeffy-classify", "heads": 72, "default_encoder": "BAAI/bge-large-en-v1.5", "git_sha": null, ...}
+```
+
+Answers without loading the encoder, so it is the first thing to check when a deployed playground and the published
+package disagree. It never reports anything about the host.
+
 ### List capabilities
 
 ```bash

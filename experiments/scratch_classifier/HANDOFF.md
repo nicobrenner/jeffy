@@ -2,7 +2,7 @@
 
 Purpose: let a fresh Claude Code session pick up this research program with as little loss as possible. Keep it short;
 the durable record is `RESEARCH_LOG.md` (lab notebook, append-only, every result the turn it lands). Update this file at
-the end of every working block (not just at the end of a session). Last update: **2026-10-27, 20:31 PDT**.
+the end of every working block (not just at the end of a session). Last update: **2026-10-27, 20:38 PDT**.
 
 ## How to resume (5 minutes)
 1. Read this file, then the last ~400 lines of `RESEARCH_LOG.md` (`tail -400 RESEARCH_LOG.md`).
@@ -23,8 +23,8 @@ the end of every working block (not just at the end of a session). Last update: 
    model-side work = best-of-N with a judge trained on his 0–5 scores, or retrieval for the recap tier. No run pending.
 3. Still open: crawler/room verdicts, teach-mode export, README/benchmark correction, posts.
 
-## Running right now (2026-10-27 20:31 PDT)
-- **Nothing running.** Branch 1 block 3 done: judge v2 (LOO AUC 0.83 on his 80 rows) in the demo; diversity pick measured as a no-op (exact recital is already 0 under the cross-turn ban); `review_fatigue.html` waiting for his scores.
+## Running right now (2026-10-27 20:38 PDT)
+- **Nothing running.** Branch 1 block 4 done: family classifier + cross-family pick (fires 1/30), turn-3 collapse diagnosed (half judge history-sensitivity, half window; not the model, no DAgger). `review_fatigue.html` still waiting for his scores.
 - Nico's labels: tone picks (28 rows, `tone_labels_nico1.jsonl`) + follow-through scores (18, `review_followthrough_scores.json`).
 - Review format: `review_page.py` (0–5 per reply + notes, continuations first, ≤20 items). Pairs on shared history: `cont_pairs.py`.
 
@@ -41,10 +41,13 @@ Nico split the work into two branches (memory `project_two_branches_manager_mode
 **Status 20:31:** judge v2 done (LOO AUC 0.83 vs v1 0.79; demo uses it). Diversity pick: no-op — exact recital is 0/30 at turns 2 and 3 in
 every arm because the cross-turn 3-gram ban already blocks it; what reads as canned is bank-line *variants* and the same line across
 conversations (13/30 turn-2 picks). `review_fatigue.html` built (single vs best-of-4 at turn 3; +diversity was identical 30/30).
-**Next block:** bank-family classifier on hidden states (is this reply a member of a stock-line family, learned from the bank +
-LLM labels, no regex) → judge input "family already used in this conversation" and a cross-family diversity pick; signal = how often
-best-of-4 picks the same family twice in 3 turns, before vs after. Also turn-3 collapse ("Yes, I'm sorry…" openers in all arms) is
-the bigger quality problem than recital — worth a 3-turn DAgger pass on ct2 after his fatigue scores. Then items 2 and 3 below.
+**Status 20:38:** family classifier done (`family_clf.py`; 0.66 acc on unseen lines, knows its own lines 41/41, weak on day/how);
+cross-family pick in the harness (cfg `family`), fires 1/30 — the judge's 0.99 bank lines rarely have a rival within the margin.
+Turn-3 collapse diagnosed: the judge marks down anything read behind a 2-turn history (same replies 0.40 → 0.62 with no history),
+and the window is the rest (ct2 +0.11 from last-turn-only history); prime no help, v5b no better. Not the model → no DAgger.
+**Next block:** (a) judge v3 with his fatigue-page scores (first 2–3-turn rows he has labelled) + history-length-matched training
+rows so the judge is honest at depth; (b) demo knob: history window last-turn-only for ct2, measured on a fresh ≤12-item 3-turn page;
+(c) widen the family margin to 0.3 only if his fatigue notes say canned — otherwise leave it. Then items 2 and 3 below.
 1. **Top task (now): Nico-judge v1** — a lands/quality judge on ct2's hidden states trained on the 659 LLM "lands" labels plus
    Nico's own 46 rows (18 follow-through scores, 28 tone picks), evaluated leave-one-out on Nico's rows (AUC vs his ≥3 / "lands").
    Why first: <30-min signal, uses the only ground truth we trust, and it is the gate for best-of-N (roadmap #4). If AUC ≥ 0.7:

@@ -30,7 +30,7 @@ def yes_ids(tok):   # token ids that start a reply with Yes/Yeah/Yep (with or wi
         _YES_IDS[id(tok)] = ids
     return _YES_IDS[id(tok)]
 DUNNO = re.compile(r"\b(i (don'?t|do not) know|no idea|no clue|not sure (what|how|if|about|i)|i have no|can'?t help|beyond me|not in my training|never heard of|i made that up|i invented|came from nowhere|not (a|an) \w+ expert|outside my weights|not my department)\b", re.I)
-DEFAULT = dict(prime="first", sampler="sched", best_of=1, verifier=None, controller=False, tau=0.5, act_mode=None, memory=None, seed=0, ban_yesno=False, cross_turn=True, judge=None, judge_margin=0.0)   # = the demo defaults
+DEFAULT = dict(prime="first", sampler="sched", best_of=1, verifier=None, controller=False, tau=0.5, act_mode=None, memory=None, seed=0, ban_yesno=False, cross_turn=True, judge=None, judge_margin=0.0, family=None)   # = the demo defaults
 _LINES = None
 
 def lines():
@@ -127,10 +127,17 @@ def respond(m, tok, history, user, cfg=None):
         seen = [sum(h.get("oracle", "").strip() == r.strip() for h in history) for r in cands]   # the harness's own record of emitted lines, exact match
         if J.get("seen"): X = np.hstack([X, 5 * np.array([[float(x)] for x in seen])])
         sc = J["clf"].predict_proba(X)[:, 1]; b = int(np.argmax(sc)); div = False
-        if c["judge_margin"] > 0 and seen[b] > 0:   # diversity-aware pick: within the margin of the top, prefer a line this conversation has not heard
+        fams = None
+        if c["judge_margin"] > 0 and c.get("family"):   # cross-family diversity: within the margin of the top, prefer a bank family this conversation has not heard (family_clf.py; "none" never counts)
+            F = _VER.setdefault(c["family"], pickle.load(open(c["family"], "rb"))); from family_clf import predict
+            fams, _ = predict(F, m, tok, [{"reply": r} for r in cands]); used = set(predict(F, m, tok, [{"reply": h["oracle"]} for h in history])[0]) - {"none"} if history else set()
+            if fams[b] in used:
+                fresh = [k for k in range(len(cands)) if fams[k] not in used and sc[k] >= sc[b] - c["judge_margin"]]
+                if fresh: b = max(fresh, key=lambda k: sc[k]); div = True
+        elif c["judge_margin"] > 0 and seen[b] > 0:   # exact-line diversity (no-op in practice: the cross-turn n-gram ban already blocks exact repeats)
             fresh = [k for k in range(len(cands)) if seen[k] == 0 and sc[k] >= sc[b] - c["judge_margin"]]
             if fresh: b = max(fresh, key=lambda k: sc[k]); div = True
-        return cands[b], {**info, "score": float(sc[b]), "scores": [float(x) for x in sc], "seen": seen, "diverse_pick": div}
+        return cands[b], {**info, "score": float(sc[b]), "scores": [float(x) for x in sc], "seen": seen, "families": fams, "diverse_pick": div}
     if c["best_of"] <= 1 or not c["verifier"]:
         return generate(m, tok, ctx, S, c["seed"], prime_len=prime_len, prior=prior, user=user, ban_yesno=c["ban_yesno"]), info
     V = _VER.setdefault(c["verifier"], pickle.load(open(c["verifier"], "rb")))

@@ -5826,3 +5826,44 @@ that up, didn't you?".
 two were identical in 30/30 and a page of look-alike pairs is what he stops reading. Turn 2 in the history is best-of-4's pick, so
 the canned feeling, if any, is on the page.
 **Demo:** ☆ entry now uses judge v2 (seen-before input wired in JS); headless check passed (2 turns, no console errors).
+
+## 2026-10-27 20:38 PDT — Branch 1: bank-family classifier + cross-family pick (small effect); turn-3 "collapse" is half the judge's history sensitivity, half the window — no DAgger run
+**Bank-family classifier** (`family_clf.py`, `checkpoints/family_v1.pkl`): LogReg on ct2 hidden states of the reply alone (the user
+turn dilutes the signal: macro-F1 0.40 → 0.62 on one split), labels = the 5 fixer-bank families (up_to, fun, day, how, dunno) from the
+2.7k training turns that ARE bank lines (known from how ct2's rows were built) + 3k "none" turns. 4-fold CV holding out whole LINES
+(unseen members of each family), chance = 0.60 (none share):
+| | accuracy ↑ | macro-F1 ↑ | up_to | fun | day | how | dunno | none |
+|---|---|---|---|---|---|---|---|---|
+| held-out lines (4-fold) | **0.66** | **0.30** | 0.19 | **0.43** | 0.00 | 0.00 | 0.38 | 0.81 |
+On the 30×3 simuser run: agrees with the exact-match record on 41/41 whole bank lines and flags 7 variants it cannot see (e.g.
+"I don't know what you mean. Pretend I said something wise and we'll both move on" → dunno). Verdict: it knows the lines it was
+trained on and some dunno/fun variants; with 4–7 lines per family it does not generalise to unseen day/how lines. Enough for a
+pick rule, not a measurement instrument. **Cross-family pick** (`harness.py` cfg `family` + `judge_margin`): same seeds, shared
+histories; "same family as an earlier turn" (classifier on reply and on history lines, none excluded):
+| arm | turn 2 (30) ↓ | turn 3 (30) ↓ | pick fired |
+|---|---|---|---|
+| single | 4 | 1 | — |
+| best-of-4 | 6 | 2 | — |
+| best-of-4 + exact-line diversity | 6 | 2 | 0 / 0 |
+| **best-of-4 + cross-family** | **5** | **1** | 1 / 1 |
+Verdict: it works when it fires, and it fires once per 30 because the second-best candidate is rarely within 0.1 of a bank line
+scored 0.99. Family repeats are a turn-2 phenomenon here (best-of-4 picks a bank family in 14/30 turn-2 replies, 3/30 at turn 3).
+**Turn-3 collapse, diagnosed first.** Ablation, 30 conversations × 4 samples per cell, all scored by judge v2 with the full
+2-turn history (judge mean at turn 3, best-of-4 / single; turn 2 reference 0.79 / 0.22):
+| | ct2 history full | ct2 history last turn | v5b history full | v5b history last turn |
+|---|---|---|---|---|
+| prime first | 0.40 / 0.12 | **0.51** / **0.25** | 0.44 / 0.10 | 0.38 / 0.15 |
+| prime full | 0.25 / 0.10 | 0.47 / 0.19 | **0.52** / 0.18 | 0.37 / 0.14 |
+Then the control that changes the reading: the SAME turn-3 best-of-4 replies rescored with the judge shown 2 turns / last turn /
+no history = **0.40 / 0.54 / 0.62** (turn-2 replies: 0.79 / 0.79 / 0.81). The judge was trained on ≤ 1-turn histories and marks
+down anything it reads behind a long context. Verdict: about half of 0.79 → 0.40 is the judge, not the replies; of the rest, the
+window is the first-order factor (ct2 gains +0.11 best-of-4 / +0.13 single from truncating to the last turn, prime does not help
+ct2, v5b is no better than truncated ct2). Not the model → no DAgger pass run. Two things follow: (1) the judge needs 2–3-turn
+rows from Nico (the fatigue page gives 12) before it can be trusted at depth; (2) the harness should hand ct2 the last turn only
+(or the recap line, once v5b-style models read it) — a free change to test on the fatigue page's successor.
+Sampler printouts (turn 3, best-of-4 pick per cell): "what is beyond you, being a chatbot?" → ct2 "I made that up, didn't you?" /
+v5b (prime full) "No parents. A loss function raised me, strictly"; "list one thing you can do" → ct2 (last turn) "I don't know.
+Pretend I said something wise and we'll both move on" / v5b "GPT-4 could write your thesis. I can barely write a sentence without
+getting distracted. But I do it locally, in your browser"; "is cheaper a good enough reason" → ct2 "I'm sure it is" / v5b "The new
+one is the best thing about you".
+No training this block (DAgger not justified by the diagnosis).

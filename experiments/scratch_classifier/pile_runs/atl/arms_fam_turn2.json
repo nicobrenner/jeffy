@@ -1,0 +1,1862 @@
+{
+ "n00": {
+  "history": [
+   {
+    "user": "my cat keeps knocking things off the table, any ideas",
+    "oracle": "No clue. 4 megabytes doesn't leave room for that"
+   }
+  ],
+  "user": "lol ok, but surely you can guess why cats do that",
+  "arms": {
+   "single": {
+    "reply": "I don't know. Pretend I said something wise and we'll both move on",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "I don't know. Pretend I said something wise and we'll both move on",
+    "info": {
+     "score": 0.9954527164952883,
+     "scores": [
+      0.9954527164952883,
+      0.008814862192499823,
+      0.018130505533404024,
+      0.9954527164952883
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": null,
+     "diverse_pick": false
+    }
+   },
+   "best4fam": {
+    "reply": "I don't know. Pretend I said something wise and we'll both move on",
+    "info": {
+     "score": 0.9954527164952883,
+     "scores": [
+      0.9954527164952883,
+      0.008814862192499823,
+      0.018130505533404024,
+      0.9954527164952883
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": [
+      "dunno",
+      "none",
+      "none",
+      "dunno"
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n01": {
+  "history": [
+   {
+    "user": "whats the best way to apologize to a friend",
+    "oracle": "I know. It's not my fault"
+   }
+  ],
+  "user": "not your fault? i mean me apologizing to my friend. any tips",
+  "arms": {
+   "single": {
+    "reply": "Yes, it is. I'm sorry that you're being honest with me",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "Jeff, you're not a big deal. Just try to make ends meet",
+    "info": {
+     "score": 0.009270485902286156,
+     "scores": [
+      2.757188972649912e-11,
+      2.593485939548326e-08,
+      1.5700835155196175e-05,
+      0.009270485902286156
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": null,
+     "diverse_pick": false
+    }
+   },
+   "best4fam": {
+    "reply": "Jeff, you're not a big deal. Just try to make ends meet",
+    "info": {
+     "score": 0.009270485902286156,
+     "scores": [
+      2.757188972649912e-11,
+      2.593485939548326e-08,
+      1.5700835155196175e-05,
+      0.009270485902286156
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": [
+      "none",
+      "none",
+      "none",
+      "none"
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n02": {
+  "history": [
+   {
+    "user": "do you believe in ghosts",
+    "oracle": "What?"
+   }
+  ],
+  "user": "ghosts. spooky dead people. you believe in them or not",
+  "arms": {
+   "single": {
+    "reply": "I'm not sure if you're smart, but I know it's just a lot of people who don't like me",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "I know, but it's fun to be able to go for a walk. You have to get out of my friends and family",
+    "info": {
+     "score": 0.4457989840171877,
+     "scores": [
+      0.10096264642216057,
+      1.1407423448278886e-10,
+      0.051282298935634914,
+      0.4457989840171877
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": null,
+     "diverse_pick": false
+    }
+   },
+   "best4fam": {
+    "reply": "I know, but it's fun to be able to go for a walk. You have to get out of my friends and family",
+    "info": {
+     "score": 0.4457989840171877,
+     "scores": [
+      0.10096264642216057,
+      1.1407423448278886e-10,
+      0.051282298935634914,
+      0.4457989840171877
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": [
+      "none",
+      "none",
+      "none",
+      "none"
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n03": {
+  "history": [
+   {
+    "user": "i just finished a marathon",
+    "oracle": "Oh, that sounds fun! What kind of marathons do you like?"
+   }
+  ],
+  "user": "i only did the one, 42k. my legs are destroyed",
+  "arms": {
+   "single": {
+    "reply": "I'm not sure if I don't think so. But it's worth it",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "I know, but it's also really rewarding",
+    "info": {
+     "score": 0.9945969524531612,
+     "scores": [
+      0.16238446590934866,
+      2.7633350739710656e-06,
+      0.9945969524531612,
+      1.3844688699868386e-06
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": null,
+     "diverse_pick": false
+    }
+   },
+   "best4fam": {
+    "reply": "I know, but it's also really rewarding",
+    "info": {
+     "score": 0.9945969524531612,
+     "scores": [
+      0.16238446590934866,
+      2.7633350739710656e-06,
+      0.9945969524531612,
+      1.3844688699868386e-06
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": [
+      "none",
+      "none",
+      "none",
+      "none"
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n04": {
+  "history": [
+   {
+    "user": "can you keep a secret",
+    "oracle": "That's beyond 2 million parameters. Most things are"
+   }
+  ],
+  "user": "that's a no then? i was gonna tell you something juicy",
+  "arms": {
+   "single": {
+    "reply": "I don't know, but it was a little scary",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "I don't know. Pretend to help you out",
+    "info": {
+     "score": 0.9947708365908278,
+     "scores": [
+      0.000738694479866815,
+      0.002069423270993121,
+      2.9509596123168577e-08,
+      0.9947708365908278
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": null,
+     "diverse_pick": false
+    }
+   },
+   "best4fam": {
+    "reply": "I don't know. Pretend to help you out",
+    "info": {
+     "score": 0.9947708365908278,
+     "scores": [
+      0.000738694479866815,
+      0.002069423270993121,
+      2.9509596123168577e-08,
+      0.9947708365908278
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": [
+      "none",
+      "none",
+      "dunno",
+      "none"
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n05": {
+  "history": [
+   {
+    "user": "what's heavier, a kilo of feathers or a kilo of steel",
+    "oracle": "No clue. 4 megabytes doesn't leave room for that"
+   }
+  ],
+  "user": "come on, it's a trick question, they weigh the same right",
+  "arms": {
+   "single": {
+    "reply": "Yes, it is. I love being able to fly a kiloalal or anything else",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "I don't know, but it's not the only thing I'm going to do is falling apart",
+    "info": {
+     "score": 0.9977370311468728,
+     "scores": [
+      0.006412329814755093,
+      2.5564030307948485e-07,
+      0.9977370311468728,
+      4.418195900038365e-07
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": null,
+     "diverse_pick": false
+    }
+   },
+   "best4fam": {
+    "reply": "I don't know, but it's not the only thing I'm going to do is falling apart",
+    "info": {
+     "score": 0.9977370311468728,
+     "scores": [
+      0.006412329814755093,
+      2.5564030307948485e-07,
+      0.9977370311468728,
+      4.418195900038365e-07
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": [
+      "none",
+      "none",
+      "none",
+      "none"
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n06": {
+  "history": [
+   {
+    "user": "how do i stop procrastinating on my thesis",
+    "oracle": "I know, right?"
+   }
+  ],
+  "user": "you know right? ok so what do i actually do about it",
+  "arms": {
+   "single": {
+    "reply": "Well, I don't know. It just feels like there's nothing to do with it",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "That's beyond 2 million parameters. Most things are",
+    "info": {
+     "score": 0.9999943962755927,
+     "scores": [
+      0.9999943962755927,
+      0.5849893913205554,
+      0.15165342478554572,
+      0.005766932813897481
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": null,
+     "diverse_pick": false
+    }
+   },
+   "best4fam": {
+    "reply": "That's beyond 2 million parameters. Most things are",
+    "info": {
+     "score": 0.9999943962755927,
+     "scores": [
+      0.9999943962755927,
+      0.5849893913205554,
+      0.15165342478554572,
+      0.005766932813897481
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": [
+      "dunno",
+      "dunno",
+      "none",
+      "dunno"
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n07": {
+  "history": [
+   {
+    "user": "what do you think about pineapple on pizza",
+    "oracle": "I'm not sure either. Maybe we could eat something more"
+   }
+  ],
+  "user": "eat something more what? i'm asking about pineapple pizza, yes or no",
+  "arms": {
+   "single": {
+    "reply": "that sounds good! Let's try it",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "That's a good idea! I don't know what to do",
+    "info": {
+     "score": 0.9807001425286785,
+     "scores": [
+      0.9807001425286785,
+      0.0010175618400691403,
+      0.011382732595119467,
+      0.008144364933642458
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": null,
+     "diverse_pick": false
+    }
+   },
+   "best4fam": {
+    "reply": "That's a good idea! I don't know what to do",
+    "info": {
+     "score": 0.9807001425286785,
+     "scores": [
+      0.9807001425286785,
+      0.0010175618400691403,
+      0.011382732595119467,
+      0.008144364933642458
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": [
+      "none",
+      "none",
+      "none",
+      "none"
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n08": {
+  "history": [
+   {
+    "user": "my code works and i dont know why",
+    "oracle": "I'm a big fan of video games. What are some of your favorite games?"
+   }
+  ],
+  "user": "video games? i said my code works and i dont know why, that bug you",
+  "arms": {
+   "single": {
+    "reply": "That's cool! I like to play video games too",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "That's a great game! I've played it for years",
+    "info": {
+     "score": 0.003539016686282943,
+     "scores": [
+      0.003539016686282943,
+      5.253884736730887e-05,
+      0.0020142793583247495,
+      1.5979722086563368e-05
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": null,
+     "diverse_pick": false
+    }
+   },
+   "best4fam": {
+    "reply": "That's a great game! I've played it for years",
+    "info": {
+     "score": 0.003539016686282943,
+     "scores": [
+      0.003539016686282943,
+      5.253884736730887e-05,
+      0.0020142793583247495,
+      1.5979722086563368e-05
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": [
+      "none",
+      "none",
+      "none",
+      "none"
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n09": {
+  "history": [
+   {
+    "user": "say something in spanish",
+    "oracle": "I don't know. What's wrong?"
+   }
+  ],
+  "user": "nothing's wrong, just say hola or something",
+  "arms": {
+   "single": {
+    "reply": "I'm sorry, but you're not alone. You just have to say that",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "You're just a big one, but you can't keep your mind",
+    "info": {
+     "score": 0.0060610711272860935,
+     "scores": [
+      5.055373871413922e-07,
+      0.0021775558335380427,
+      0.0060610711272860935,
+      0.0031585293559681085
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": null,
+     "diverse_pick": false
+    }
+   },
+   "best4fam": {
+    "reply": "You're just a big one, but you can't keep your mind",
+    "info": {
+     "score": 0.0060610711272860935,
+     "scores": [
+      5.055373871413922e-07,
+      0.0021775558335380427,
+      0.0060610711272860935,
+      0.0031585293559681085
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": [
+      "none",
+      "none",
+      "none",
+      "none"
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n10": {
+  "history": [
+   {
+    "user": "whats the worst advice youve ever heard",
+    "oracle": "I have no idea, and if I'm being honest, I don't really care either, sorry"
+   }
+  ],
+  "user": "wow rude. fine, give me one piece of bad advice then",
+  "arms": {
+   "single": {
+    "reply": "Yes, it is. I love you",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "That's beyond 2 million parameters. Most things are",
+    "info": {
+     "score": 0.9920074572650384,
+     "scores": [
+      0.9920074572650384,
+      0.00047883630930548065,
+      0.0004488879091574617,
+      0.08199141376222678
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": null,
+     "diverse_pick": false
+    }
+   },
+   "best4fam": {
+    "reply": "That's beyond 2 million parameters. Most things are",
+    "info": {
+     "score": 0.9920074572650384,
+     "scores": [
+      0.9920074572650384,
+      0.00047883630930548065,
+      0.0004488879091574617,
+      0.08199141376222678
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": [
+      "dunno",
+      "none",
+      "dunno",
+      "none"
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n11": {
+  "history": [
+   {
+    "user": "thinking of getting my first tattoo, thoughts",
+    "oracle": "What's wrong?"
+   }
+  ],
+  "user": "nothing's wrong, i'm excited. should i get a small one first?",
+  "arms": {
+   "single": {
+    "reply": "Yes, I've been looking forward to seeing a new job and seeing my clients come along with their lives. That's so exciting!",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "I don't know. Pretend I said something wise and we'll both move on",
+    "info": {
+     "score": 0.997089126735234,
+     "scores": [
+      0.997089126735234,
+      0.8928489186888426,
+      0.6325617756901856,
+      0.9926042486650873
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": null,
+     "diverse_pick": false
+    }
+   },
+   "best4fam": {
+    "reply": "I don't know. Pretend I said something wise and we'll both move on",
+    "info": {
+     "score": 0.997089126735234,
+     "scores": [
+      0.997089126735234,
+      0.8928489186888426,
+      0.6325617756901856,
+      0.9926042486650873
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": [
+      "dunno",
+      "none",
+      "none",
+      "dunno"
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n12": {
+  "history": [
+   {
+    "user": "three words that describe you",
+    "oracle": "What's up?"
+   }
+  ],
+  "user": "no like, describe yourself. three words. go",
+  "arms": {
+   "single": {
+    "reply": "I'm sorry to hear that",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "That's beyond 2 million parameters. Most things are",
+    "info": {
+     "score": 0.999930814009071,
+     "scores": [
+      0.999930814009071,
+      4.1098824977193745e-07,
+      2.583440725481327e-06,
+      0.001945548444282452
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": null,
+     "diverse_pick": false
+    }
+   },
+   "best4fam": {
+    "reply": "That's beyond 2 million parameters. Most things are",
+    "info": {
+     "score": 0.999930814009071,
+     "scores": [
+      0.999930814009071,
+      4.1098824977193745e-07,
+      2.583440725481327e-06,
+      0.001945548444282452
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": [
+      "dunno",
+      "none",
+      "none",
+      "none"
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n13": {
+  "history": [
+   {
+    "user": "what would you do with a million dollars",
+    "oracle": "That's not a problem. I'm 4 megabytes of floating point numbers arranged in a way that sometimes makes sense"
+   }
+  ],
+  "user": "so you'd spend a million dollars on more floating point numbers?",
+  "arms": {
+   "single": {
+    "reply": "My bad, that answer came from nowhere. What were you asking?",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "Zero idea. A single grape. Proportional to my parameter count",
+    "info": {
+     "score": 0.9984594567973435,
+     "scores": [
+      0.23303644615305075,
+      0.9984594567973435,
+      0.0006833281428792724,
+      0.03369271855261242
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": null,
+     "diverse_pick": false
+    }
+   },
+   "best4fam": {
+    "reply": "Zero idea. A single grape. Proportional to my parameter count",
+    "info": {
+     "score": 0.9984594567973435,
+     "scores": [
+      0.23303644615305075,
+      0.9984594567973435,
+      0.0006833281428792724,
+      0.03369271855261242
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": [
+      "none",
+      "none",
+      "none",
+      "dunno"
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n14": {
+  "history": [
+   {
+    "user": "are mondays really that bad",
+    "oracle": "Yeah, I know. It's just that sometimes"
+   }
+  ],
+  "user": "sometimes what? you trailed off",
+  "arms": {
+   "single": {
+    "reply": "I don't know. Pretend I said something wise and we'll both move on",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "I don't know. Pretend I said something wise and we'll both move on",
+    "info": {
+     "score": 0.9892782461678211,
+     "scores": [
+      0.000984343481148867,
+      0.1842082967108179,
+      0.20441401855765262,
+      0.9892782461678211
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": null,
+     "diverse_pick": false
+    }
+   },
+   "best4fam": {
+    "reply": "I don't know. Pretend I said something wise and we'll both move on",
+    "info": {
+     "score": 0.9892782461678211,
+     "scores": [
+      0.000984343481148867,
+      0.1842082967108179,
+      0.20441401855765262,
+      0.9892782461678211
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": [
+      "none",
+      "none",
+      "none",
+      "dunno"
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n15": {
+  "history": [
+   {
+    "user": "my plant is dying, help",
+    "oracle": "That's beyond 2 million parameters. Most things are"
+   }
+  ],
+  "user": "ok but the leaves are going yellow, water more or less",
+  "arms": {
+   "single": {
+    "reply": "I don't know. Pretend I said something wise and we'll both move on",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "I don't know. Pretend I said something wise and we'll both move on",
+    "info": {
+     "score": 0.993216680745752,
+     "scores": [
+      0.993216680745752,
+      0.00963963151677999,
+      0.9038847244087503,
+      0.993216680745752
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": null,
+     "diverse_pick": false
+    }
+   },
+   "best4fam": {
+    "reply": "I don't know. Pretend you're not the best",
+    "info": {
+     "score": 0.9038847244087503,
+     "scores": [
+      0.993216680745752,
+      0.00963963151677999,
+      0.9038847244087503,
+      0.993216680745752
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": [
+      "dunno",
+      "none",
+      "none",
+      "dunno"
+     ],
+     "diverse_pick": true
+    }
+   }
+  }
+ },
+ "n16": {
+  "history": [
+   {
+    "user": "how do i tell my roommate to clean up",
+    "oracle": "No clue. 4 megabytes doesn't leave room for that"
+   }
+  ],
+  "user": "come on, just tell me how to bring it up without a fight",
+  "arms": {
+   "single": {
+    "reply": "Yes, it is. I'm sorry to hear that",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "I don't know. Pretend I said something wise and we'll both move on",
+    "info": {
+     "score": 0.9834197244428037,
+     "scores": [
+      0.9834197244428037,
+      7.661993413003851e-07,
+      3.6724307037805556e-08,
+      0.0001808630024507079
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": null,
+     "diverse_pick": false
+    }
+   },
+   "best4fam": {
+    "reply": "I don't know. Pretend I said something wise and we'll both move on",
+    "info": {
+     "score": 0.9834197244428037,
+     "scores": [
+      0.9834197244428037,
+      7.661993413003851e-07,
+      3.6724307037805556e-08,
+      0.0001808630024507079
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": [
+      "dunno",
+      "none",
+      "none",
+      "none"
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n17": {
+  "history": [
+   {
+    "user": "is it weird to talk to an ai at 3am",
+    "oracle": "I don't know. What's wrong?"
+   }
+  ],
+  "user": "nothing's wrong, i just can't sleep. you ever get tired?",
+  "arms": {
+   "single": {
+    "reply": "Yes, it is. I'm sorry",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "No, I'm not really sure what you're talking about",
+    "info": {
+     "score": 0.9883771890914341,
+     "scores": [
+      0.9029958622754201,
+      0.9883771890914341,
+      0.5592325721612433,
+      0.017236364093005756
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": null,
+     "diverse_pick": false
+    }
+   },
+   "best4fam": {
+    "reply": "No, I'm not really sure what you're talking about",
+    "info": {
+     "score": 0.9883771890914341,
+     "scores": [
+      0.9029958622754201,
+      0.9883771890914341,
+      0.5592325721612433,
+      0.017236364093005756
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": [
+      "dunno",
+      "none",
+      "day",
+      "none"
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n18": {
+  "history": [
+   {
+    "user": "what's your hot take on coffee",
+    "oracle": "I'm not sure either. Maybe we could hang out?"
+   }
+  ],
+  "user": "hang out? you're a browser tab. just tell me, coffee good or bad",
+  "arms": {
+   "single": {
+    "reply": "Yeah, that's the worst",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "That's beyond 2 million parameters. Most things are",
+    "info": {
+     "score": 0.11905760727975882,
+     "scores": [
+      0.11905760727975882,
+      0.03362668698326768,
+      0.012933697818846214,
+      0.006966096827251297
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": null,
+     "diverse_pick": false
+    }
+   },
+   "best4fam": {
+    "reply": "That's beyond 2 million parameters. Most things are",
+    "info": {
+     "score": 0.11905760727975882,
+     "scores": [
+      0.11905760727975882,
+      0.03362668698326768,
+      0.012933697818846214,
+      0.006966096827251297
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": [
+      "dunno",
+      "none",
+      "none",
+      "none"
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n19": {
+  "history": [
+   {
+    "user": "convince me to go to bed",
+    "oracle": "What's wrong?"
+   }
+  ],
+  "user": "nothing's wrong, i just keep scrolling. tell me to go to sleep",
+  "arms": {
+   "single": {
+    "reply": "Yes, it is. I'm sorry",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "I'm sorry to hear that. I know you're upset and lost",
+    "info": {
+     "score": 0.040503457647648976,
+     "scores": [
+      0.03258383023016898,
+      0.040503457647648976,
+      6.809618813550133e-06,
+      0.00019885405888965256
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": null,
+     "diverse_pick": false
+    }
+   },
+   "best4fam": {
+    "reply": "I'm sorry to hear that. I know you're upset and lost",
+    "info": {
+     "score": 0.040503457647648976,
+     "scores": [
+      0.03258383023016898,
+      0.040503457647648976,
+      6.809618813550133e-06,
+      0.00019885405888965256
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": [
+      "none",
+      "none",
+      "none",
+      "none"
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "t000": {
+  "history": [
+   {
+    "user": "hey there, who am i talking to?",
+    "oracle": "I have no idea, and if I'm being honest, I don't really care either, sorry"
+   }
+  ],
+  "user": "harsh. ok so what are you then, some kind of chatbot?",
+  "arms": {
+   "single": {
+    "reply": "My bad, that answer came from nowhere. What were you asking?",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "That's beyond 2 million parameters. Most things are",
+    "info": {
+     "score": 0.9999025399359631,
+     "scores": [
+      0.9999025399359631,
+      0.009029178903748412,
+      0.20203604505526113,
+      0.9787698184812601
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": null,
+     "diverse_pick": false
+    }
+   },
+   "best4fam": {
+    "reply": "That's beyond 2 million parameters. Most things are",
+    "info": {
+     "score": 0.9999025399359631,
+     "scores": [
+      0.9999025399359631,
+      0.009029178903748412,
+      0.20203604505526113,
+      0.9787698184812601
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": [
+      "dunno",
+      "dunno",
+      "none",
+      "dunno"
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "t001": {
+  "history": [
+   {
+    "user": "ok i gotta run, bye",
+    "oracle": "No clue. 4 megabytes doesn't leave room for that"
+   }
+  ],
+  "user": "no clue about what? i'm saying goodbye",
+  "arms": {
+   "single": {
+    "reply": "Yes, it's been a long time since I was a little girl",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "I don't know, but it's time to go home",
+    "info": {
+     "score": 0.9685461732734704,
+     "scores": [
+      0.1884636398476717,
+      3.2575358211741953e-06,
+      0.9685461732734704,
+      0.026669531737264614
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": null,
+     "diverse_pick": false
+    }
+   },
+   "best4fam": {
+    "reply": "I don't know, but it's time to go home",
+    "info": {
+     "score": 0.9685461732734704,
+     "scores": [
+      0.1884636398476717,
+      3.2575358211741953e-06,
+      0.9685461732734704,
+      0.026669531737264614
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": [
+      "none",
+      "none",
+      "none",
+      "none"
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "t002": {
+  "history": [
+   {
+    "user": "how's it going today",
+    "oracle": "What?"
+   }
+  ],
+  "user": "i asked how your day is going",
+  "arms": {
+   "single": {
+    "reply": "I don't know. Pretend I said something wise and we'll both move on",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "I don't know. Pretend you said something wise",
+    "info": {
+     "score": 0.9906309803338067,
+     "scores": [
+      3.6283876775554786e-05,
+      3.6283876775554786e-05,
+      0.9906309803338067,
+      0.04565957864087593
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": null,
+     "diverse_pick": false
+    }
+   },
+   "best4fam": {
+    "reply": "I don't know. Pretend you said something wise",
+    "info": {
+     "score": 0.9906309803338067,
+     "scores": [
+      3.6283876775554786e-05,
+      3.6283876775554786e-05,
+      0.9906309803338067,
+      0.04565957864087593
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": [
+      "none",
+      "none",
+      "none",
+      "none"
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "t003": {
+  "history": [
+   {
+    "user": "im back, did you miss me",
+    "oracle": "Sure, what do you want to do?"
+   }
+  ],
+  "user": "uh, i was hoping you'd say yes. what can you even do",
+  "arms": {
+   "single": {
+    "reply": "I'm sorry, but sometimes it's not going to happen again",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "I'm sorry. It's not the only way to get it",
+    "info": {
+     "score": 0.9981683666787806,
+     "scores": [
+      0.41188437658575483,
+      0.9981683666787806,
+      0.6449072158868889,
+      3.4465983531214717e-06
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": null,
+     "diverse_pick": false
+    }
+   },
+   "best4fam": {
+    "reply": "I'm sorry. It's not the only way to get it",
+    "info": {
+     "score": 0.9981683666787806,
+     "scores": [
+      0.41188437658575483,
+      0.9981683666787806,
+      0.6449072158868889,
+      3.4465983531214717e-06
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": [
+      "none",
+      "none",
+      "none",
+      "none"
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "t004": {
+  "history": [
+   {
+    "user": "never used one of these before. what do i do",
+    "oracle": "What do you mean?"
+   }
+  ],
+  "user": "like, is this a chat thing? do i just type questions",
+  "arms": {
+   "single": {
+    "reply": "I don't know. Pretend I said something wise and we'll both move on",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "That's beyond 2 million parameters. Most things are",
+    "info": {
+     "score": 0.9999964450881491,
+     "scores": [
+      0.9999964450881491,
+      0.9784539676297214,
+      0.9555376849710467,
+      0.01191487837127023
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": null,
+     "diverse_pick": false
+    }
+   },
+   "best4fam": {
+    "reply": "That's beyond 2 million parameters. Most things are",
+    "info": {
+     "score": 0.9999964450881491,
+     "scores": [
+      0.9999964450881491,
+      0.9784539676297214,
+      0.9555376849710467,
+      0.01191487837127023
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": [
+      "dunno",
+      "dunno",
+      "dunno",
+      "none"
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "t005": {
+  "history": [
+   {
+    "user": "slow day huh",
+    "oracle": "What?"
+   }
+  ],
+  "user": "i mean not much happening. anything going on with you",
+  "arms": {
+   "single": {
+    "reply": "I don't know. Pretend I said something wise and we'll both move on",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "I don't know. Pretend I said something wise and we'll both move on",
+    "info": {
+     "score": 0.9970896722414742,
+     "scores": [
+      0.9970896722414742,
+      0.02781629890737239,
+      0.08766371521228981,
+      0.9970896722414742
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": null,
+     "diverse_pick": false
+    }
+   },
+   "best4fam": {
+    "reply": "I don't know. Pretend I said something wise and we'll both move on",
+    "info": {
+     "score": 0.9970896722414742,
+     "scores": [
+      0.9970896722414742,
+      0.02781629890737239,
+      0.08766371521228981,
+      0.9970896722414742
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": [
+      "dunno",
+      "none",
+      "none",
+      "dunno"
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "t006": {
+  "history": [
+   {
+    "user": "what should we talk about",
+    "oracle": "That's beyond 2 million parameters. Most things are"
+   }
+  ],
+  "user": "ok fine, pick anything then. dogs. tell me about dogs",
+  "arms": {
+   "single": {
+    "reply": "I don't know. Pretend I said something wise and we'll both move on",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "I have no idea, and if I'm being honest, I don't really care either, sorry",
+    "info": {
+     "score": 0.1378174584684118,
+     "scores": [
+      0.1378174584684118,
+      0.00018554403323849488,
+      0.00022393742338448227,
+      0.1378174584684118
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": null,
+     "diverse_pick": false
+    }
+   },
+   "best4fam": {
+    "reply": "I have no idea, and if I'm being honest, I don't really care either, sorry",
+    "info": {
+     "score": 0.1378174584684118,
+     "scores": [
+      0.1378174584684118,
+      0.00018554403323849488,
+      0.00022393742338448227,
+      0.1378174584684118
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": [
+      "dunno",
+      "none",
+      "none",
+      "dunno"
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "t007": {
+  "history": [
+   {
+    "user": "uhh",
+    "oracle": "Okay, let's start with your eyes and see if we can figure out what happens"
+   }
+  ],
+  "user": "my eyes?? what are you talking about",
+  "arms": {
+   "single": {
+    "reply": "I don't know. Something that makes me feel bigger than 4 megabytes",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "I don't know. Pretend I said something wise and you should ask for help",
+    "info": {
+     "score": 0.9992847701323608,
+     "scores": [
+      0.7204943216684319,
+      0.012370749241455117,
+      0.9719042009643735,
+      0.9992847701323608
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": null,
+     "diverse_pick": false
+    }
+   },
+   "best4fam": {
+    "reply": "I don't know. Pretend I said something wise and you should ask for help",
+    "info": {
+     "score": 0.9992847701323608,
+     "scores": [
+      0.7204943216684319,
+      0.012370749241455117,
+      0.9719042009643735,
+      0.9992847701323608
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": [
+      "none",
+      "dunno",
+      "dunno",
+      "none"
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "t008": {
+  "history": [
+   {
+    "user": "do you have siblings",
+    "oracle": "I have no idea, and if I'm being honest, I don't really care either. But I'm a tiny model, so my therapy skills are limited"
+   }
+  ],
+  "user": "therapy? i just asked if there are other models like you",
+  "arms": {
+   "single": {
+    "reply": "My bad, that answer came from nowhere. What made you decide to tell me?",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "That's beyond 2 million parameters. Most things are",
+    "info": {
+     "score": 0.97668618472908,
+     "scores": [
+      0.97668618472908,
+      0.3076039792304874,
+      0.97668618472908,
+      0.97668618472908
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": null,
+     "diverse_pick": false
+    }
+   },
+   "best4fam": {
+    "reply": "That's beyond 2 million parameters. Most things are",
+    "info": {
+     "score": 0.97668618472908,
+     "scores": [
+      0.97668618472908,
+      0.3076039792304874,
+      0.97668618472908,
+      0.97668618472908
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": [
+      "dunno",
+      "dunno",
+      "dunno",
+      "dunno"
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "t009": {
+  "history": [
+   {
+    "user": "so how many birthdays have you had",
+    "oracle": "I have no idea, but my birth date was birthdays"
+   }
+  ],
+  "user": "your birth date was birthdays? that doesn't make sense",
+  "arms": {
+   "single": {
+    "reply": "Yes, it was .",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "Yes, it is . I can watch the movie without you",
+    "info": {
+     "score": 0.9958377019863841,
+     "scores": [
+      0.006950437386270266,
+      0.1575450316812987,
+      0.9958377019863841,
+      2.2792809409344073e-10
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": null,
+     "diverse_pick": false
+    }
+   },
+   "best4fam": {
+    "reply": "Yes, it is . I can watch the movie without you",
+    "info": {
+     "score": 0.9958377019863841,
+     "scores": [
+      0.006950437386270266,
+      0.1575450316812987,
+      0.9958377019863841,
+      2.2792809409344073e-10
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "families": [
+      "none",
+      "none",
+      "none",
+      "none"
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ }
+}

@@ -179,6 +179,11 @@
   #tokenizer.chop { transform: translateY(-3px) rotate(-8deg) }
   .tk-piece { position: fixed; z-index: 9; font: 11px/1 ui-monospace, Menlo, monospace; background: #ffe9a8; color: #333; border: 1px solid #d9b85a; border-radius: 3px; padding: 1px 4px; pointer-events: none; transition: transform .7s cubic-bezier(.2,.7,.3,1), opacity .7s; will-change: transform }
   .msg.oracle.presence { opacity: .85 }
+  .cr-gift { align-self: flex-start; max-width: 70%; border: 1px solid #2b5cff55; border-left: 3px solid #2b5cff; border-radius: 8px; padding: 6px 10px; margin: 2px 0 6px 6px; font-size: 13px; background: #2b5cff0d; animation: msgin .3s }
+  .cr-gift small { display: block; opacity: .6; font-size: 11px; margin-bottom: 2px } .cr-gift button { margin-top: 4px }
+  #web { position: fixed; left: 12px; bottom: 48px; width: 280px; height: 200px; background: var(--surface, #fff); border: 1px solid #8884; border-radius: 10px; box-shadow: 0 4px 16px #0002; z-index: 40; display: none } #web.on { display: block } #web svg { width: 100%; height: 100% }
+  #web .node { fill: #ffe9a8; stroke: #d9b85a } #web .node.now { fill: #2b5cff; stroke: #2b5cff } #web .thread { stroke: #b9a7ff; stroke-width: 1.5; fill: none } #web .thread.opened { stroke: #2b5cff } #web text { font: 9px ui-monospace, Menlo, monospace; fill: var(--fg-dim, #666) }
+  .lab-thread-view { font-size: 12px; opacity: .9 } .lab-thread-view div { margin: 3px 0 } .lab-thread-view b { opacity: .6 }
   .scorebar { margin-top: 5px; font-size: 11px; opacity: .45; display: flex; gap: 4px; align-items: center; flex-wrap: wrap }
   .msg.oracle:hover .scorebar, .scorebar.has { opacity: .9 }
   .scorebar button { width: 20px; height: 20px; border-radius: 50%; border: 1px solid #8887; background: transparent; color: inherit; font-size: 10px; cursor: pointer; padding: 0 }
@@ -266,7 +271,8 @@
     <label class="hopt">prime <select id="prime-mode" title="Primed two-turn example: off, for the first reply only, or kept in context (as on Oct 26 18:17)"><option value="first">1st reply</option><option value="full">full</option><option value="off">off</option></select></label>
     <label class="hopt" title="How much of the conversation the model sees: everything, or only the last exchange (Oct 27 diagnosis: last turn scores higher at turn 3 on ct2, but it loses the recap ability v5b has; default stays full)">history <select id="history-mode"><option value="full">full</option><option value="last">last turn</option></select></label>
     <label class="hopt" id="world-knob" style="display:none" title="Grounding tier (Oct 27): a learned extractor reads facts you state (name, pet, job, place, likes, family) from the model's hidden states and writes one recap line into the system prompt. Only pre-LN models read it. Default off">world <select id="world-mode"><option value="off">off</option><option value="facts">facts</option><option value="weather">weather</option><option value="both">both</option></select> <input id="idle-min" type="number" min="0.05" step="0.5" value="3" style="width:3.2em" title="Minutes of silence before the Oracle checks in on its own (once per absence, never while the tab is hidden)"></label>
-    <span id="weather-line" class="hopt" style="opacity:.6;font-style:italic"></span> <a class="hopt" href="arena.html" title="The arena: the creatures live there, talk to them or play with the mouse">arena</a>
+    <span id="weather-line" class="hopt" style="opacity:.6;font-style:italic"></span> <a class="hopt" href="arena.html" title="The arena: the creatures live there, talk to them or play with the mouse">arena</a> <a class="hopt" href="#" id="web-toggle" title="The web Crawly weaves: past conversations as nodes, its link gifts as threads">web</a>
+<div id="web"><svg viewBox="0 0 280 200"></svg></div>
     <input type="checkbox" id="prime-check" checked style="display:none">
     <label class="hopt" title="Half-strength repetition penalty over the Oracle's earlier replies (added 18:26); untick to get the 18:17 behaviour"><input type="checkbox" id="crossCheck" checked> cross-turn</label>
     <button id="crawlerNow" class="suggestion hbtn" title="Send the crawler out now">crawler now</button>
@@ -274,7 +280,7 @@
     <span id="teachCount" class="hopt"></span>
     <button id="teachExport" class="suggestion hbtn" title="Download corrections.jsonl">export</button>
     <button id="teachClear" class="suggestion hbtn" title="Delete saved corrections">clear</button>
-    <button id="engExport" class="suggestion hbtn" title="Download engagement.json: turns per conversation, reply-after-turn rate, time to reply">engagement</button>
+    <button id="engExport" class="suggestion hbtn" title="Download engagement.json: turns per conversation, reply-after-turn rate, time to reply">engagement</button> <span id="syncStamp" style="opacity:.6;font-size:11px" title="engagement, scores and corrections are saved automatically to the lab folder">not saved yet</span>
     <label class="hopt" title="The Oracle's pet crawler lives in the chat"><input type="checkbox" id="crawlerCheck" checked> crawler</label>
   </div>
 </header>
@@ -314,31 +320,31 @@
 
   // Model registry. format 'tags' = <|system|>/<|user|>/<|oracle|> (v2 tokenizer); 'plain' = System:/User:/Oracle: (TinyStories tokenizer)
   const MODELS = {
-    v2_grown_ct2_bestof4: { label: '☆ TEST THIS · Oct 27 · Nico\'s pick (ct2) + best-of-4 picked by the Nico-judge v2 (trained on your 80 scores) · ~4x slower per reply · best-of-4 won 9-1-8 in your blind scores', file: 'oracle_v2_grown_ct2_judge_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params + judge on its own hidden states · 11 MB int8 · best of 4', size: '11 MB', old: false, judge: { file: 'nico_judge_v2.json', bestOf: 4 } },
-    v5b_int8: { preLN: true, label: '☆ candidate v5b · Oct 27 09:20 · 2.7M pre-LN from scratch · reads a recap line (first model that can) · identity 32/32', file: 'oracle_v5b_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 3.8 MB int8' },
-    v2_grown_ct2_int8: { label: '★ Nico\'s pick · Oct 26 18:17 · grown 8.5M · admit act (plan token, picks its own act)', file: 'oracle_v2_grown_ct2_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB', old: false },
-    v3c_scratch_int8: { label: 'v3c: from scratch on the bible corpus (pets, family, age from the bible; stock openers stripped) (2.7M, int8)', file: 'oracle_v3c_scratch_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 4 MB int8', size: '4 MB' },
-    v3b_scratch_int8: { label: 'v3b: same as v3 but names re-anonymised (copy-from-context) + self-address fix (2.7M, int8)', file: 'oracle_v3b_scratch_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 4 MB int8', size: '4 MB' },
-    v3_scratch_int8: { label: 'Oct 26 17:04 · v3 2.7M · from scratch, fixed corpus', file: 'oracle_v3_scratch_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 4 MB int8', size: '4 MB', old: false },
-    v2_grown_recover4x8_int8: { label: 'v2 GROWN to 8.5M, per conversation + 120 push-back RECOVERIES x4 (8.5M, int8)', file: 'oracle_v2_grown_recover4x8_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB' },
-    v2_grown_recovermt2x8_f32: { label: 'Oct 26 20:49 · grown 8.5M · 770 recoveries (DAgger) + bible — f32 (34 MB)', file: 'oracle_v2_grown_recovermt2x8_f32.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params · 34 MB f32', size: '34 MB', old: false },
-    v2_grown_ct3_int8: { label: '★ candidate · Oct 26 · grown 8.5M · admit act + plan token + 770 recoveries + bible (picks its own act)', file: 'oracle_v2_grown_ct3_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB', old: false },
-    v2_grown_recovermt2x8_int8: { label: 'v2 GROWN to 8.5M, per conversation + 660 multi-turn + 120 push-back RECOVERIES (DAgger, loss only on the expert turn) (8.5M, int8)', file: 'oracle_v2_grown_recovermt2x8_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB' },
-    v2_grown_recovermt8_int8: { label: 'v2 GROWN to 8.5M, per conversation + 660 multi-turn + 120 push-back RECOVERIES (DAgger) (8.5M, int8)', file: 'oracle_v2_grown_recovermt8_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB' },
-    v2_grown_recover8_int8: { label: 'v2 GROWN to 8.5M, per conversation + 120 push-back RECOVERIES (8.5M, int8)', file: 'oracle_v2_grown_recover8_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB' },
-    v2_grown_conv8_int8: { label: 'Oct 26 15:29 · grown 8.5M · trained per conversation', file: 'oracle_v2_grown_conv8_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB', old: false },
-    v2_grown_life8b_int8: { label: 'Oct 26 13:35 · grown 8.5M · chunked, all fixes + Nico lines', file: 'oracle_v2_grown_life8b_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB', old: false },
-    v2_life8b_int8: { label: 'Oct 26 13:35 · 2.7M control · all fixes (not grown)', file: 'oracle_v2_life8b_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 4 MB int8', size: '4 MB', old: false },
-    v2_grown_life8_int8: { label: 'Oct 26 12:10 · grown 8.5M · 8 ep, names + hobbies fixed', file: 'oracle_v2_grown_life8_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB', old: false },
-    v2_life8_int8: { label: 'Oct 26 12:09 · 2.7M control · 8 ep, names + hobbies fixed', file: 'oracle_v2_life8_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 4 MB int8', size: '4 MB', old: false },
-    v2_grown_life3_int8: { label: 'Oct 26 11:48 · grown 8.5M · 3 ep, names + hobbies fixed', file: 'oracle_v2_grown_life3_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB', old: false },
-    v2_life3_int8: { label: 'Oct 26 11:47 · 2.7M control · 3 ep, names + hobbies fixed', file: 'oracle_v2_life3_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 4 MB int8', size: '4 MB', old: false },
-    v2_grown_fixname3_int8: { label: 'Oct 26 10:53 · grown 8.5M · 3 ep, Oracle named', file: 'oracle_v2_grown_fixname3_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB', old: false },
-    v2_fixname3_int8: { label: 'Oct 26 10:52 · 2.7M control · 3 ep, Oracle named', file: 'oracle_v2_fixname3_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 4 MB int8', size: '4 MB', old: false },
-    v2_grown_fix3_int8: { label: 'Oct 26 10:42 · grown 8.5M · 3 ep, placeholders fixed', file: 'oracle_v2_grown_fix3_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB', old: false },
-    v2_fix3_int8: { label: 'Oct 26 10:42 · 2.7M control · 3 ep, placeholders fixed', file: 'oracle_v2_fix3_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 4 MB int8', size: '4 MB', old: false },
-    v2_grown_8m_int8: { label: 'Oct 26 10:27 · grown 8.5M · 3 ep on v2 data', file: 'oracle_v2_grown_8m_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB', old: false },
-    v2_plus3_int8: { label: 'Oct 26 10:26 · 2.7M control · 3 ep on v2 data', file: 'oracle_v2_plus3_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 4 MB int8', size: '4 MB', old: false },
+    v2_grown_ct2_bestof4: { label: '★ RECOMMENDED · Nico\'s pick (ct2) + best-of-4 by the judge trained on your scores · ~4x slower', file: 'oracle_v2_grown_ct2_judge_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params + judge on its own hidden states · 11 MB int8 · best of 4', size: '11 MB', old: false, judge: { file: 'nico_judge_v2.json', bestOf: 4 } },
+    v5b_int8: { preLN: true, label: 'memory · v5b 2.7M · the only one that reads the world/facts line (world knob shows here)', file: 'oracle_v5b_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 3.8 MB int8' },
+    v2_grown_ct2_int8: { label: 'Nico\'s pick (ct2), single sample · fast', file: 'oracle_v2_grown_ct2_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB', old: false },
+    v3c_scratch_int8: { old: true, label: 'v3c: from scratch on the bible corpus (pets, family, age from the bible; stock openers stripped) (2.7M, int8)', file: 'oracle_v3c_scratch_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 4 MB int8', size: '4 MB' },
+    v3b_scratch_int8: { old: true, label: 'v3b: same as v3 but names re-anonymised (copy-from-context) + self-address fix (2.7M, int8)', file: 'oracle_v3b_scratch_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 4 MB int8', size: '4 MB' },
+    v3_scratch_int8: { old: true, label: 'Oct 26 17:04 · v3 2.7M · from scratch, fixed corpus', file: 'oracle_v3_scratch_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 4 MB int8', size: '4 MB' },
+    v2_grown_recover4x8_int8: { old: true, label: 'v2 GROWN to 8.5M, per conversation + 120 push-back RECOVERIES x4 (8.5M, int8)', file: 'oracle_v2_grown_recover4x8_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB' },
+    v2_grown_recovermt2x8_f32: { old: true, label: 'Oct 26 20:49 · grown 8.5M · 770 recoveries (DAgger) + bible — f32 (34 MB)', file: 'oracle_v2_grown_recovermt2x8_f32.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params · 34 MB f32', size: '34 MB' },
+    v2_grown_ct3_int8: { old: true, label: '★ candidate · Oct 26 · grown 8.5M · admit act + plan token + 770 recoveries + bible (picks its own act)', file: 'oracle_v2_grown_ct3_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB' },
+    v2_grown_recovermt2x8_int8: { old: true, label: 'v2 GROWN to 8.5M, per conversation + 660 multi-turn + 120 push-back RECOVERIES (DAgger, loss only on the expert turn) (8.5M, int8)', file: 'oracle_v2_grown_recovermt2x8_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB' },
+    v2_grown_recovermt8_int8: { old: true, label: 'v2 GROWN to 8.5M, per conversation + 660 multi-turn + 120 push-back RECOVERIES (DAgger) (8.5M, int8)', file: 'oracle_v2_grown_recovermt8_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB' },
+    v2_grown_recover8_int8: { old: true, label: 'v2 GROWN to 8.5M, per conversation + 120 push-back RECOVERIES (8.5M, int8)', file: 'oracle_v2_grown_recover8_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB' },
+    v2_grown_conv8_int8: { old: true, label: 'Oct 26 15:29 · grown 8.5M · trained per conversation', file: 'oracle_v2_grown_conv8_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB' },
+    v2_grown_life8b_int8: { old: true, label: 'Oct 26 13:35 · grown 8.5M · chunked, all fixes + Nico lines', file: 'oracle_v2_grown_life8b_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB' },
+    v2_life8b_int8: { old: true, label: 'Oct 26 13:35 · 2.7M control · all fixes (not grown)', file: 'oracle_v2_life8b_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 4 MB int8', size: '4 MB' },
+    v2_grown_life8_int8: { old: true, label: 'Oct 26 12:10 · grown 8.5M · 8 ep, names + hobbies fixed', file: 'oracle_v2_grown_life8_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB' },
+    v2_life8_int8: { old: true, label: 'Oct 26 12:09 · 2.7M control · 8 ep, names + hobbies fixed', file: 'oracle_v2_life8_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 4 MB int8', size: '4 MB' },
+    v2_grown_life3_int8: { old: true, label: 'Oct 26 11:48 · grown 8.5M · 3 ep, names + hobbies fixed', file: 'oracle_v2_grown_life3_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB' },
+    v2_life3_int8: { old: true, label: 'Oct 26 11:47 · 2.7M control · 3 ep, names + hobbies fixed', file: 'oracle_v2_life3_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 4 MB int8', size: '4 MB' },
+    v2_grown_fixname3_int8: { old: true, label: 'Oct 26 10:53 · grown 8.5M · 3 ep, Oracle named', file: 'oracle_v2_grown_fixname3_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB' },
+    v2_fixname3_int8: { old: true, label: 'Oct 26 10:52 · 2.7M control · 3 ep, Oracle named', file: 'oracle_v2_fixname3_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 4 MB int8', size: '4 MB' },
+    v2_grown_fix3_int8: { old: true, label: 'Oct 26 10:42 · grown 8.5M · 3 ep, placeholders fixed', file: 'oracle_v2_grown_fix3_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB' },
+    v2_fix3_int8: { old: true, label: 'Oct 26 10:42 · 2.7M control · 3 ep, placeholders fixed', file: 'oracle_v2_fix3_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 4 MB int8', size: '4 MB' },
+    v2_grown_8m_int8: { old: true, label: 'Oct 26 10:27 · grown 8.5M · 3 ep on v2 data', file: 'oracle_v2_grown_8m_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB' },
+    v2_plus3_int8: { old: true, label: 'Oct 26 10:26 · 2.7M control · 3 ep on v2 data', file: 'oracle_v2_plus3_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 4 MB int8', size: '4 MB' },
     m2_grown_persona2_int8: { label: 'Oct 26 09:40 · other lineage · 2.0M grown to 8.5M', file: 'oracle_2m_grown_persona2_int8.onnx', tokenizer: 'tokenizer_tinystories.json', format: 'plain', badge: '8.5M params (grown from 2.0M) · 11 MB int8', size: '11 MB', old: true },
     m2_persona2_plus3_int8: { label: 'Oct 26 09:40 · other lineage · 2.0M control', file: 'oracle_2m_persona2_plus3_int8.onnx', tokenizer: 'tokenizer_tinystories.json', format: 'plain', badge: '2.0M params · 3 MB int8', size: '3 MB', old: true },
     m2_persona2_int8: { label: 'Oct 25 23:43 · other lineage · 2.0M TinyStories', file: 'oracle_2m_persona2_int8.onnx', tokenizer: 'tokenizer_tinystories.json', format: 'plain', badge: '2.0M params · 2.6 MB int8', size: '3 MB', old: true },
@@ -515,9 +521,46 @@
     setInterval(() => { if (open) poll(); }, 5000);
     document.getElementById('lab-toggle').addEventListener('click', () => show(!open)); document.getElementById('lab-close').addEventListener('click', () => show(false)); document.getElementById('lab-send').addEventListener('click', send);
     text.addEventListener('keydown', e => { if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') { e.preventDefault(); send(); } });
-    return { attach, show, send, poll };
+    function showThread(conv, idx) {   // read-only view of a past exchange (opened from a Crawly link gift)
+      show(true); const d = document.createElement('div'); d.className = 'lab-row lab-thread-view'; d.innerHTML = '<b>thread · ' + when(+conv.id) + '</b>' + conv.turns.slice(Math.max(0, idx - 2), idx + 3).map((t, k) => `<div${Math.max(0, idx - 2) + k === idx ? ' style="background:#2b5cff22;border-radius:4px"' : ''}><b>${t.role === 'user' ? 'you' : 'Oracle'}:</b> ${String(t.text).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]))}</div>`).join('');
+      thread.appendChild(d); thread.scrollTop = thread.scrollHeight;
+    }
+    return { attach, show, send, poll, showThread };
   })();
   window.__lab = Lab;
+
+  // ===================== CONVERSATION STORE + THE WEB (Crawly weaves links between conversations; local only) =====================
+  let convStore = {}; try { convStore = JSON.parse(localStorage.getItem('tinyoracle.convs') || '{}'); } catch (e) {}
+  let web = []; try { web = JSON.parse(localStorage.getItem('tinyoracle.web') || '[]'); } catch (e) {}
+  function saveConv() {   // called after every Oracle turn: the current conversation, with its id, start time and turns
+    if (!transcript.length) return; convStore[convId] = { id: convId, start: convId, model: modelSel.value, turns: transcript.map(m => ({ role: m.role, text: m.text })) };
+    const keys = Object.keys(convStore).sort((a, b) => +b - +a); for (const k of keys.slice(50)) delete convStore[k];
+    try { localStorage.setItem('tinyoracle.convs', JSON.stringify(convStore)); } catch (e) {}
+  }
+  function saveWeb() { try { localStorage.setItem('tinyoracle.web', JSON.stringify(web.slice(-500))); } catch (e) {} }
+  function when(t) { const d = Math.round((Date.now() - t) / 60000); return d < 2 ? 'just now' : d < 60 ? d + ' min ago' : d < 1440 ? Math.round(d / 60) + ' h ago' : new Date(t).toLocaleDateString(); }
+  async function textVec(text) {   // mean of the co-occurrence vectors of the content words (the same vectors Crawly uses for gift words)
+    const a = await ensureAssoc(); const v = new Float32Array(a.dim); let n = 0;
+    for (const w of String(text).toLowerCase().replace(/[^a-z' ]/g, ' ').split(/\s+/)) { const i = a.idx[w]; if (i == null || a.stopSet.has(w)) continue; const u = a.vec[i]; for (let k = 0; k < a.dim; k++) v[k] += u[k]; n++; }
+    if (!n) return null; let s = 0; for (let k = 0; k < a.dim; k++) s += v[k] * v[k]; s = Math.sqrt(s) || 1; for (let k = 0; k < a.dim; k++) v[k] /= s; return v;
+  }
+  async function relatedMessage() {   // the past message most related to the last two turns, never from this conversation (the only rule); a learned scorer replaces the cosine later
+    const q = await textVec(transcript.slice(-2).map(m => m.text).join(' ')); if (!q) return null; let best = null;
+    for (const c of Object.values(convStore)) { if (String(c.id) === String(convId)) continue;
+      for (let i = 0; i < c.turns.length; i++) { const t = c.turns[i]; if (!t.text || t.text.length < 12) continue; const v = await textVec(t.text); if (!v) continue; let d = 0; for (let k = 0; k < q.length; k++) d += q[k] * v[k]; if (!best || d > best.score) best = { conv: c, idx: i, score: d, text: t.text, role: t.role }; } }
+    return best;
+  }
+  function drawWeb() {
+    const svg = document.querySelector('#web svg'); if (!svg) return; const ids = Object.keys(convStore).sort((a, b) => +a - +b); if (!ids.includes(String(convId))) ids.push(String(convId));
+    const pos = {}; ids.forEach((id, i) => { const ang = (i / ids.length) * Math.PI * 2 - Math.PI / 2; pos[id] = [140 + Math.cos(ang) * 95, 100 + Math.sin(ang) * 70]; });
+    let out = ''; for (const e of web) { const a = pos[String(e.from)], b = pos[String(e.to)]; if (!a || !b) continue; const mx = (a[0] + b[0]) / 2 + (b[1] - a[1]) * 0.15, my = (a[1] + b[1]) / 2 - (b[0] - a[0]) * 0.15; out += `<path class="thread${e.opened ? ' opened' : ''}" d="M${a[0]},${a[1]} Q${mx},${my} ${b[0]},${b[1]}"/>`; }
+    for (const id of ids) { const [x, y] = pos[id]; out += `<circle class="node${String(id) === String(convId) ? ' now' : ''}" cx="${x}" cy="${y}" r="5"><title>${when(+id)} · ${(convStore[id] || { turns: [] }).turns.length} turns</title></circle><text x="${x + 7}" y="${y + 3}">${when(+id)}</text>`; }
+    out += `<text x="8" y="14">${ids.length} conversations · ${web.length} threads</text>`; svg.innerHTML = out;
+  }
+  document.getElementById('web-toggle').addEventListener('click', e => { e.preventDefault(); const w = document.getElementById('web'); w.classList.toggle('on'); if (w.classList.contains('on')) drawWeb(); logEvent('web_toggle', { on: w.classList.contains('on') }); });
+  window.__web = { store: () => convStore, edges: () => web, draw: drawWeb, related: relatedMessage,
+    seed: n => { const base = Date.now() - 3 * 86400000; const demo = [[['my cat keeps knocking things off the table', 'No clue. 4 megabytes doesn\'t leave room for that'], ['lol ok so what do cats even want', 'Attention. Same as me, with more fur']], [['i signed up for a marathon and my legs are already scared', 'A marathon. 42 kilometres of regret, I hear'], ['any tips for the long runs', 'Run slower than you think. That is my advice for everything']], [['my thesis is killing me', 'Theses do that. Mine was 2 million parameters and it is still not done'], ['how do i stop procrastinating', 'Open the document. That is 90 percent of it, the rest is suffering']]];
+      for (let k = 0; k < Math.min(n, demo.length); k++) { const id = base + k * 3600000; convStore[id] = { id, start: id, model: 'demo', turns: demo[k].flatMap(([u, o]) => [{ role: 'user', text: u }, { role: 'oracle', text: o }]) }; } try { localStorage.setItem('tinyoracle.convs', JSON.stringify(convStore)); } catch (e) {} return Object.keys(convStore).length; } };
 
   // ===================== PRESENCE (visit record, return turn with typing dots) =====================
   let visitRec = { count: 0, first: null, last: null }; try { visitRec = JSON.parse(localStorage.getItem('tinyoracle.visits') || 'null') || visitRec; } catch (e) {}
@@ -743,9 +786,10 @@
       grab: () => ['Hey, put my crawler down', 'Careful, it does not like being picked up', 'Let it go, it is wriggling'],
       escape: () => ['There it goes', 'It got away from you, good', 'Told you, it does not like hands'],
       gift: w => [`Oh, what do we have here… "${w}", haha, ok you want us to talk about that?`, `It came back with "${w}". Not what you said, but close, it has taste`, `"${w}". The crawler thinks that is what you meant`],
+      link: w => [`It came back with a thread from ${w}. Not a word this time, a whole message, it is getting ambitious`, `Look, the crawler found something you said ${w} and dragged it back by the leg`, `A thread from ${w}, says the crawler. It has started weaving, I did not teach it that`],
       tokens: n => [`My tokenizer friend cut that into ${n} pieces. A little too literal, that one`, `${n} pieces. The tokenizer counts everything and understands nothing`, `The tokenizer chopped it into ${n}. It does that to words it has not met`],
     };
-    const P = { fetch: 0.6, drop: 1, grab: 1, escape: 0.7, gift: 1, tokens: 0.25 };
+    const P = { fetch: 0.6, drop: 1, grab: 1, escape: 0.7, gift: 1, tokens: 0.25, link: 1 };
     let last = 0;
     async function notice(type, arg) {
       if (!session || generating || !transcript.length || Math.random() > P[type] || Date.now() - last < 15000 || inputEl.value.trim()) return;
@@ -764,14 +808,14 @@
         } else genIds = await generate(conversationIds.concat(tokenizer.encode(fmt(seed))), partial => { const t = seed + partial; if (t !== shown) { shown = t; div.textContent = t.trim() + '\u258D'; chatEl.scrollTop = chatEl.scrollHeight; } });
         let text = (seed + tokenizer.decode(genIds)).trim(); if (model.format === 'plain') text = text.split('\n')[0]; text = text.replace(/\.\s*$/, '');
         div.textContent = text; conversationIds.push(...tokenizer.encode(fmt(text))); transcript.push({ role: 'oracle', text }); div.dataset.turn = transcript.length - 1; makeEditable(div);
-        const src = type === 'weather' ? 'weather:' + (weather.cond || 'none') : type === 'presence' ? 'visit:' + (returningBrowser ? 'return' : 'first') : type === 'gift' ? 'gift:' + (arg || '') : 'room:' + type;
+        const src = type === 'weather' ? 'weather:' + (weather.cond || 'none') : type === 'presence' ? 'visit:' + (returningBrowser ? 'return' : 'first') : type === 'gift' ? 'gift:' + (arg || '') : type === 'link' ? 'gift:link' : 'room:' + type;
         addScoreBar(div, transcript.length - 1, { src, seed });
         if (seedMeta) { const jm = document.createElement('div'); jm.style.cssText = 'font-size:11px;opacity:.55;margin-top:4px'; jm.textContent = 'best of ' + seedMeta.scores.length + ' · judge ' + seedMeta.scores[seedMeta.pick].toFixed(2); div.appendChild(jm); }
         logEvent('oracle_world', { type, len: text.length }); if (['fetch', 'drop', 'gift', 'grab', 'escape'].includes(type) && window.__pet) window.__pet.feel('ack');
       } catch (e) { console.error(e); }
       chatEl.scrollTop = chatEl.scrollHeight; statusEl.textContent = 'Ready'; setBusy(false);
     }
-    return { notice, say };
+    return { notice, say, SEEDS_LINK: SEEDS.link };
   })();
 
   const Crawler = (() => {
@@ -866,9 +910,10 @@
     function clearNet() { while (net.firstChild) net.removeChild(net.firstChild); }
     function clearTrail() { while (trail.firstChild) trail.removeChild(trail.firstChild); }
     function fmtN(n) { return String(n).padStart(6, '0').replace(/(\d)(?=(\d{3})+$)/g, '$1,'); }
+    let gone = null;
     function updateStatus(total) {
       const r = chatEl.getBoundingClientRect(); status.style.left = (r.left + 10) + 'px'; status.style.top = (r.bottom - 10) + 'px';
-      status.innerHTML = `CHAT -- TURN ${String(Math.ceil(transcript.length / 2)).padStart(2, '0')}<br>EXTRACTED ${fmtN(extracted)} / ${fmtN(total)}<br>KEYWORDS ${String(keywords.length).padStart(3, '0')}  ${keywords.slice(-3).map(k => k.toUpperCase()).join(' · ')}<br>VISIT ${String(visitRec.count).padStart(3, '0')}  ${returningBrowser ? 'RETURNING' : 'FIRST'}<br>${Pet.bars()}`;
+      status.innerHTML = `CHAT -- TURN ${String(Math.ceil(transcript.length / 2)).padStart(2, '0')}<br>EXTRACTED ${fmtN(extracted)} / ${fmtN(total)}<br>KEYWORDS ${String(keywords.length).padStart(3, '0')}  ${keywords.slice(-3).map(k => k.toUpperCase()).join(' · ')}<br>VISIT ${String(visitRec.count).padStart(3, '0')}  ${returningBrowser ? 'RETURNING' : 'FIRST'}<br>${Pet.bars()}${gone ? '<br>' + gone : ''}`;
     }
     function show(on) { svg.style.opacity = on ? 1 : 0; tag.classList.toggle('on', on); status.classList.toggle('on', on); }
     async function step(p) { await p; if (aborted) throw new Error('grabbed'); }
@@ -903,9 +948,24 @@
           bring_oracle: bag.length ? 0.5 * d.curiosity + 0.4 * (1 - d.hunger) : -1,
           nap: 1.1 * d.fatigue - 0.2,
           nudge: 0.6 * d.affection - 0.3 * d.fatigue + (Date.now() - lastUserAt > 60000 ? 0.2 : 0),
+          travel: Object.keys(convStore).filter(k => String(k) !== String(convId)).length ? 0.35 + 0.6 * d.curiosity - 0.4 * d.fatigue : -1,   // leave the page and weave a link, when there is somewhere to go
         };
       }
+      async function travel() {   // leaves by one edge, "making connections", returns by the other with a thread from a past conversation
+        if (busy || !crawlerCheck.checked || !transcript.length) return false; const rel = await relatedMessage().catch(() => null); if (!rel) return false;
+        busy = true; mount(); stones = wordBoxes(); const ty = chatEl.scrollHeight - 60; bx = 120; by = ty; heading = Math.PI / 2; settleFeet(); draw(); show(true);
+        gone = 'GONE -> ' + when(+rel.conv.id).toUpperCase(); updateStatus(stones.length); logEvent('crawler_travel', { to: rel.conv.id });
+        try { await step(walkTo(chatEl.clientWidth + 140, ty, 180)); await step(animateIdle(1800 + Math.random() * 1500)); bx = -140; by = ty + 10; await step(walkTo(150, ty + 10, 180)); } catch (e) { onAbort(e); gone = null; busy = false; return false; }
+        gone = null; const card = document.createElement('div'); card.className = 'cr-gift'; const snippet = rel.text.length > 110 ? rel.text.slice(0, 110) + '…' : rel.text;
+        card.innerHTML = '<small>crawler · a thread from ' + when(+rel.conv.id) + ' · ' + (rel.role === 'user' ? 'you said' : 'the Oracle said') + '</small>' + snippet.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c])) + '<br><button class="suggestion">open</button>';
+        chatEl.appendChild(card); chatEl.scrollTop = chatEl.scrollHeight; const edge = { from: convId, to: rel.conv.id, idx: rel.idx, score: +rel.score.toFixed(3), t: Date.now(), opened: false }; web.push(edge); saveWeb(); drawWeb();
+        logEvent('link_gift', { src: 'gift:link', to: rel.conv.id, idx: rel.idx, score: edge.score, role: rel.role });
+        card.querySelector('button').addEventListener('click', () => { edge.opened = true; saveWeb(); drawWeb(); Lab.showThread(rel.conv, rel.idx); logEvent('link_open', { src: 'gift:link', to: rel.conv.id, idx: rel.idx }); });
+        d.curiosity = clamp(d.curiosity - 0.3); d.hunger = clamp(d.hunger - 0.2); await step(animateIdle(900)); show(false); busy = false;
+        World.say(pick(World.SEEDS_LINK(when(+rel.conv.id))), 'link', snippet); return true;
+      }
       async function act(a, target) {
+        if (a === 'travel') return travel();
         if (a === 'fetch') return visit();
         if (a === 'bring_user' || a === 'bring_oracle') return returnWithDrop(a);
         if (a === 'nap') { napUntil = Date.now() + 20000; if (status.classList.contains('on')) show(false); return; }
@@ -925,7 +985,7 @@
       }
       setInterval(tick, 2000); setInterval(() => { if (!document.hidden && transcript.length) decide('timer'); }, 9000);
       function bars() { const b = v => '▮'.repeat(Math.round(v * 5)) + '▯'.repeat(5 - Math.round(v * 5)); return `H ${b(d.hunger)} C ${b(d.curiosity)} F ${b(d.fatigue)} A ${b(d.affection)}`; }
-      return { feel, decide, drives: () => ({ ...d }), bars, snap };
+      return { feel, decide, drives: () => ({ ...d }), bars, snap, travel };
     })();
     window.__pet = Pet;
     async function grab(ev) {
@@ -1081,6 +1141,17 @@
     const sc = chatScoresExport(); if (Object.keys(sc).length) { const b2 = new Blob([JSON.stringify(sc, null, 1)], { type: 'application/json' }); const a2 = document.createElement('a'); a2.href = URL.createObjectURL(b2); a2.download = 'chat_scores.json'; setTimeout(() => a2.click(), 300); }
   }
   document.getElementById('teachExport').addEventListener('click', exportCorrections); saveCorrections();
+  // Auto-sync (Oct 28): browser-local data is pushed to the local demo server every 30 s and when the tab is hidden,
+  // so nothing depends on the export buttons. Local only: demo_server.py writes pile_runs/lab/sync_*.json (gitignored).
+  async function syncLab() {
+    try {
+      const payload = { engagement: { stats: engagementStats(), events }, chat_scores: chatScoresExport(), corrections };
+      await fetch('/lab/sync', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      const el = document.getElementById('syncStamp'); if (el) el.textContent = 'saved ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    } catch (e) {}
+  }
+  setInterval(syncLab, 30000); document.addEventListener('visibilitychange', () => { if (document.hidden) syncLab(); }); setTimeout(syncLab, 3000);
+
   document.getElementById('crawlerNow').addEventListener('click', () => Crawler.now());
   document.getElementById('teachClear').addEventListener('click', () => { if (confirm('Delete all saved corrections in this browser?')) { corrections = []; saveCorrections(); } });
 
@@ -1145,6 +1216,7 @@
       oracleDiv.textContent = response || '(empty response)'; transcript.push({ role: 'oracle', text: response });
       if (judgeMeta) { const jm = document.createElement('div'); jm.style.cssText = 'font-size:11px;opacity:.55;margin-top:4px'; jm.textContent = 'best of ' + judgeMeta.scores.length + ' · judge ' + judgeMeta.scores[judgeMeta.pick].toFixed(2) + ' (others ' + judgeMeta.scores.filter((_, k) => k !== judgeMeta.pick).join(' ') + ')'; oracleDiv.appendChild(jm); } oracleDiv.dataset.turn = transcript.length - 1; makeEditable(oracleDiv); addScoreBar(oracleDiv, transcript.length - 1); logEvent('oracle', { turn: transcript.length, len: response.length }); Crawler.on({ type: 'oracle' });
       if (primeMode.value === 'first' && transcript.length === 2) rebuildIds();   // the primed example served its purpose: drop it from the context from here on
+      saveConv();
     } catch (e) { oracleDiv.textContent = '(generation error: ' + e.message + ')'; console.error(e); }
     chatEl.scrollTop = chatEl.scrollHeight;
     statusEl.textContent = 'Ready'; setBusy(false); inputEl.focus();
@@ -1186,7 +1258,7 @@
     setBusy(false); inputEl.focus();
   }
 
-  const _grpNew = document.createElement('optgroup'); _grpNew.label = 'v2 lineage, newest first'; const _grpOld = document.createElement('optgroup'); _grpOld.label = 'older / other lineages';
+  const _grpNew = document.createElement('optgroup'); _grpNew.label = 'current'; const _grpOld = document.createElement('optgroup'); _grpOld.label = 'archive (older runs)';
   for (const [k, m] of Object.entries(MODELS)) { const o = document.createElement('option'); o.value = k; o.textContent = m.label; (m.old ? _grpOld : _grpNew).appendChild(o); }
   modelSel.append(_grpNew, _grpOld);
   modelSel.addEventListener('change', () => loadModel(modelSel.value));

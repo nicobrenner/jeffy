@@ -15,6 +15,12 @@ class H(http.server.SimpleHTTPRequestHandler):
             body = ("[" + ",".join(l.strip() for l in rows if l.strip()) + "]").encode(); self.send_response(200); self.send_header("Content-Type", "application/json"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body); return
         return super().do_GET()
     def do_POST(self):
+        if self.path.startswith("/lab/sync"):   # the page pushes its browser-local data here so nothing depends on pressing export
+            n = int(self.headers.get("Content-Length", 0)); data = json.loads(self.rfile.read(n) or b"{}"); os.makedirs(LAB, exist_ok=True)
+            for k in ("engagement", "chat_scores", "corrections", "visits"):
+                if k in data:
+                    tmp = os.path.join(LAB, f"sync_{k}.json.tmp"); json.dump(data[k], open(tmp, "w")); os.replace(tmp, os.path.join(LAB, f"sync_{k}.json"))
+            body = b'{"ok":true}'; self.send_response(200); self.send_header("Content-Type", "application/json"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body); return
         if self.path.startswith("/lab/notes"):
             n = int(self.headers.get("Content-Length", 0)); row = json.loads(self.rfile.read(n) or b"{}"); row.setdefault("t", time.time()); row.setdefault("who", "nico")
             os.makedirs(LAB, exist_ok=True)

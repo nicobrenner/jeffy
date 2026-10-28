@@ -6034,3 +6034,33 @@ admits 0–1/10, grounding within noise of v5b), and the from-scratch mix costs 
 The 2,040 rows (5% of the corpus) are enough to teach the answer template and not enough to teach reading, and reading needs the
 copy circuit that copy_probe says is absent at 2.7M pre-LN d256 after 20 epochs (the 50-epoch v5b also 1/16). Grounding at this size
 is a copy-circuit problem first (induct_unit* / RoPE / depth-3 scouts), not a data problem; parked until copy_probe moves.
+
+## 2026-10-27 22:28 PDT — Branch 1: environment tier (the Oracle's own weather + real-time check-in) shipped behind the world knob; v5w weather pass does not teach the model to read the line — weather default stays off
+Nico's reaction to the facts knob: nothing visible; the Room reacting to the crawler was "very cool"; the world should be the Oracle's own
+environment (time of day, its own weather, CPU / memory / network of its interface, "are you still there?").
+**Built** (`weather_bank.py` = the one file to curate, 8 conditions × 3 seed lines × 12 riffs × 3 reactions; `demo/weather_bank.json`):
+- Signals the browser measures: hour + weekday, minutes since the last user message, last reply latency and tokens/s, JS heap share
+  (`performance.memory`), `navigator.connection` type / RTT, online, tab hidden, crawler state. Condition by numeric priority
+  (offline > absence > low memory > slow (< 8 tok/s) > fast (> 40) > night (23–5) > morning (5–10) > none), no text rules; one seed
+  line goes into the system prompt as a recap line and shows in the header ("☁ …") so Nico sees what the model saw.
+- Real-time loop (roadmap 1c): after N idle minutes (knob, default 3) the Oracle says one turn on its own — "check" seed + model
+  continuation through the Room's seeded-turn machinery (`World.say`) — at most once per absence, never while the tab is hidden; the
+  next user message after a long absence gets the absence weather. Knob: world = off / facts / weather / both; weather only on pre-LN entries.
+  Headless (3-s idle, 1-s poll, v5b): one check-in "Hello? Just checking the chair is not empty room", still one after 11 s, on return
+  weather = absence line, present in the context; no console errors.
+Sample weather lines (bank): "Forecast: tabby with a chance of running out of memory" · "Late in here. The page is dark and the crawler is
+asleep on a word" · "The network went quiet. Good thing I live in here and not out there". Riffs from the Room machinery on v5b (seed +
+continuation): "Late in here. The page is dark and the crawler is asleep on a word. And it's also my favorite color is red" · "Forecast:
+slow. My words are arriving one at a time today, or a dime-together" · "Forecast: tabby with a chance of running out of memory" (stopped).
+**v5w** (`weather_build.py`: 700 Room-style rows, system line = weather seed, Oracle riffs / answers reactions; 3-epoch continuation from
+v5b, lr 1e-4, 3 min; val 0.874 → 0.844). Printouts, epoch 3: "*me I'm Tiny Oracle. 2 mill…"; "*tell It is. I'm a software engineer
+building e-mail…" (the recipe line lost); "*yn I have fewer neurons than a fruit fly."
+| | weather probe (30, condition mentioned) ↑ | recap gold ↑ | identity ↑ | human-life ↓ | simuser t1 / t2 / t3 ↑ | bank recital ↓ |
+|---|---|---|---|---|---|---|
+| v5b | 3 | 26 | **32/32** | **0/96** | 0.24 / 0.27 / 0.15 | 1/90 |
+| v5w | **5** | **37** | 27/32 | 11/96 | **0.30 / 0.28 / 0.23** | **0/90** |
+Hand check of the 6 v5w samples: none mentions its condition ("The roommate of the hair…" scored for "room"); verbatim echo 0/30.
+Verdict: the probe fails — 700 rows do not make the model riff on a line it reads, and the continuation again loosens identity
+(32 → 27, human-life 0 → 11), so v5w is not exported and **weather stays default off**. What works is what Nico liked: the Room path,
+where the weather line is the SEED the model continues, not a line it must read. The tier ships that way; the data pass is the same
+lesson as v5g/v5h (reading needs the copy circuit).

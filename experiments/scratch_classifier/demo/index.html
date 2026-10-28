@@ -521,7 +521,7 @@
     checkedThisAbsence = true; await ensureWeather(); await World.say(pick(weatherBank.check.seeds), 'check');
   }
   function startIdleLoop(periodMs) { if (idleTimer) clearInterval(idleTimer); idleTimer = setInterval(checkIn, periodMs || 15000); }
-  startIdleLoop(15000); window.__env = { signals, setIdle: (minutes, periodMs) => { idleMin.value = minutes; startIdleLoop(periodMs); }, weather: () => weather, lastGen: () => lastGen };
+  startIdleLoop(15000); window.__say = (s) => World.say(s, "weather"); window.__env = { signals, setIdle: (minutes, periodMs) => { idleMin.value = minutes; startIdleLoop(periodMs); }, weather: () => weather, lastGen: () => lastGen };
 
   // ===================== NICO-JUDGE (best-of-N in the browser) =====================
   // nico_judge.py: logistic regression on the Oracle's own post-norm hidden states (last token + mean over the sequence) of

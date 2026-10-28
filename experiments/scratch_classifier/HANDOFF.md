@@ -2,7 +2,7 @@
 
 Purpose: let a fresh Claude Code session pick up this research program with as little loss as possible. Keep it short;
 the durable record is `RESEARCH_LOG.md` (lab notebook, append-only, every result the turn it lands). Update this file at
-the end of every working block (not just at the end of a session). Last update: **2026-10-27, 22:22 PDT**.
+the end of every working block (not just at the end of a session). Last update: **2026-10-27, 22:28 PDT**.
 
 ## How to resume (5 minutes)
 1. Read this file, then the last ~400 lines of `RESEARCH_LOG.md` (`tail -400 RESEARCH_LOG.md`).
@@ -23,8 +23,8 @@ the end of every working block (not just at the end of a session). Last update: 
    model-side work = best-of-N with a judge trained on his 0–5 scores, or retrieval for the recap tier. No run pending.
 3. Still open: crawler/room verdicts, teach-mode export, README/benchmark correction, posts.
 
-## Running right now (2026-10-27 22:22 PDT)
-- **v5w** (weather continuation from v5b, 3 epochs, ~7 min) training then evaluating: `logs/v5w_run.log`, `logs/v5w_eval.log` (V5W_ALL_DONE). v5h done: grounding parked (no copy circuit).
+## Running right now (2026-10-27 22:28 PDT)
+- **Nothing running.** Environment tier shipped (world knob: off / facts / weather / both, pre-LN entries; idle check-in knob, default 3 min). v5w not exported; weather default off.
 - Nico's labels: tone picks (28 rows, `tone_labels_nico1.jsonl`) + follow-through scores (18, `review_followthrough_scores.json`).
 - Review format: `review_page.py` (0–5 per reply + notes, continuations first, ≤20 items). Pairs on shared history: `cont_pairs.py`.
 
@@ -55,8 +55,10 @@ matched rows) loses to v2 everywhere; both below chance on his 22 turn-3 rows. I
 gold-recap recall 26 → 34 (reads harder) but identity 32 → 28, human-life 0 → 10/96, extracted recap 13 → 8 → not exported.
 v5h ran (22:22, Nico's call): from scratch, 20 epochs, grounding rows in, probe facts held out → grounding 2/26 (v5b 4), other-slot 1/16,
 distractor admits 0/10, identity 13/32. copy_probe: v5b 1/16 names, 0 pets, 0 cities — **no copy circuit**. **Grounding parked** until a
-scout moves copy_probe (RoPE / depth / induction units); it is not a data problem at this size. Environment tier (weather + check-in) in
-progress: v5w training.
+scout moves copy_probe (RoPE / depth / induction units); it is not a data problem at this size. Environment tier shipped 22:28: weather line from browser signals + idle check-in through the Room machinery; `weather_bank.py` is the file
+for Nico to curate. v5w (700 weather rows, continuation) fails the probe (5/30, accidental) and loosens identity → weather default off.
+**For Nico:** try world = weather on v5b with the idle knob at 1 min; the lines come from `weather_bank.py` — edit freely, the demo reads
+`demo/weather_bank.json` (re-export with `python3 -c "import json;from weather_bank import BANK;json.dump(BANK,open('demo/weather_bank.json','w'))"`).
 **Next block (signal from chat, no pages):** (a) `nico_judge.py` reads `chat_scores.json` as a set (`chat`) and retrains when ≥ 30 rows arrive;
 (b) propose the per-conversation family budget (above) and, if he says yes, implement it as a harness/demo pick rule on the harness's own
 record (no regex) and measure overused-line picks before/after; (c) engagement export: turns per conversation on the ☆ entry vs ct2 plain.
@@ -94,7 +96,7 @@ prompts VARIED instead of dropped (one line in `prep_ct5.py`, 8-min signal, same
 |---|---|---|
 | 1 | data pass v6/v6b: done, both lose to v5b (template leakage from low-diversity rows). Next: judge on Nico's 0–5 scores → best-of-N; recap tier by retrieval | decided 15:19 |
 | 1b | grounding: a tiny queryable world (quantities/units/comparisons/time/Room state) read at inference; Room = seed | built as `world.py` (21:17): fact extractor + recap line helps v5b (recap 10→13/80, t3 0.15→0.24); comparisons table by retrieval grounds nothing (0 real hits) — needs training rows with table lines, not retrieval alone |
-| 1c | real-time loop in the demo (perceive → classify → act between prompts; online teach updates) | idea, logged 13:44 |
+| 1c (done 22:30: idle check-in once per absence, never hidden; absence weather on return) | real-time loop in the demo (perceive → classify → act between prompts; online teach updates) | idea, logged 13:44 |
 | 2 | rolling recap tier + `*recap` act (needs a model that copies) | after 1 |
 | 3 | KV cache in the ONNX export; then 512 window (grow table or RoPE) | after 2 |
 | 4 | tone judge refined on Nico's picks (shares/reactions) → best-of-N scoring; intent gate vetoes dunno on reactions | labels needed |

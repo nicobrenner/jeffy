@@ -256,7 +256,8 @@
     </select>
     <label class="hopt">prime <select id="prime-mode" title="Primed two-turn example: off, for the first reply only, or kept in context (as on Oct 26 18:17)"><option value="first">1st reply</option><option value="full">full</option><option value="off">off</option></select></label>
     <label class="hopt" title="How much of the conversation the model sees: everything, or only the last exchange (Oct 27 diagnosis: last turn scores higher at turn 3 on ct2, but it loses the recap ability v5b has; default stays full)">history <select id="history-mode"><option value="full">full</option><option value="last">last turn</option></select></label>
-    <label class="hopt" id="world-knob" style="display:none" title="Grounding tier (Oct 27): a learned extractor reads facts you state (name, pet, job, place, likes, family) from the model's hidden states and writes one recap line into the system prompt. Only pre-LN models read it. Default off">world <select id="world-mode"><option value="off">off</option><option value="facts">facts</option></select></label>
+    <label class="hopt" id="world-knob" style="display:none" title="Grounding tier (Oct 27): a learned extractor reads facts you state (name, pet, job, place, likes, family) from the model's hidden states and writes one recap line into the system prompt. Only pre-LN models read it. Default off">world <select id="world-mode"><option value="off">off</option><option value="facts">facts</option><option value="weather">weather</option><option value="both">both</option></select> <input id="idle-min" type="number" min="0.05" step="0.5" value="3" style="width:3.2em" title="Minutes of silence before the Oracle checks in on its own (once per absence, never while the tab is hidden)"></label>
+    <span id="weather-line" class="hopt" style="opacity:.6;font-style:italic"></span>
     <input type="checkbox" id="prime-check" checked style="display:none">
     <label class="hopt" title="Half-strength repetition penalty over the Oracle's earlier replies (added 18:26); untick to get the 18:17 behaviour"><input type="checkbox" id="crossCheck" checked> cross-turn</label>
     <button id="crawlerNow" class="suggestion hbtn" title="Send the crawler out now">crawler now</button>
@@ -445,6 +446,7 @@
   function buildPrime(force) {
     let t = fmtSystem();
     if (memoryLines.length) t += ' ' + memoryLines.join(' ');
+    if (weatherOn() && weather.line) t += ' ' + weather.line + '.';
     if (worldOn() && factLine()) t += ' ' + factLine();
     const mode = primeMode.value;   // off | first | full
     if (mode === 'full' || (mode === 'first' && (force || transcript.length < 2))) for (const [u, o] of PRIME) t += fmtUserTurn(u) + fmtOracleText(o);
@@ -478,9 +480,48 @@
     if (!keep.length) return null;
     const textIds = ids.slice(pre); return { slot, value: tokenizer.decode(textIds.slice(keep[0], keep[keep.length - 1] + 1)).trim() };
   }
-  worldMode.addEventListener('change', () => { try { localStorage.setItem('tinyoracle.world', worldMode.value); } catch (e) {} worldFacts = {}; if (tokenizer && transcript.length) rebuildIds(); });
+  worldMode.addEventListener('change', () => { try { localStorage.setItem('tinyoracle.world', worldMode.value); } catch (e) {} worldFacts = {}; if (tokenizer && transcript.length) rebuildIds(); updateWeather(false).catch(() => {}); });
   try { const wm = localStorage.getItem('tinyoracle.world'); if (wm) worldMode.value = wm; } catch (e) {}
   function worldOn() { return !!(model && model.preLN) && worldMode.value === 'facts'; }
+
+  // ===================== WORLD: WEATHER + REAL-TIME LOOP (Nico, Oct 27: the world is the Oracle's own environment) =====================
+  // Signals the browser can measure -> one condition (numeric thresholds, no text rules) -> one weather line from weather_bank.json
+  // (weather_bank.py is the file to curate). The line goes into the system prompt like a recap line; pre-LN models read it.
+  // Real-time loop (roadmap 1c): after N idle minutes the Oracle checks in once, seeded like a Room event; on return the weather says so.
+  let weatherBank = null, weather = { cond: null, line: '' }, lastUserAt = 0, lastGen = { ms: 0, tps: 0 }, checkedThisAbsence = false, idleTimer = null;
+  const idleMin = document.getElementById('idle-min'), weatherEl = document.getElementById('weather-line');
+  function weatherOn() { return !!(model && model.preLN) && (worldMode.value === 'weather' || worldMode.value === 'both'); }
+  function signals() {
+    const now = new Date(), pm = performance.memory, c = navigator.connection;
+    return { hour: now.getHours(), weekday: now.getDay(), idleMin: lastUserAt ? (Date.now() - lastUserAt) / 60000 : 0, lastMs: lastGen.ms, tps: lastGen.tps,
+             heap: pm && pm.jsHeapSizeLimit ? pm.usedJSHeapSize / pm.jsHeapSizeLimit : null, net: c ? (c.effectiveType || '') : '', rtt: c && c.rtt != null ? c.rtt : null,
+             online: navigator.onLine !== false, hidden: !!document.hidden, crawler: typeof Crawler !== 'undefined' && Crawler.state ? Crawler.state() : '' };
+  }
+  function conditionOf(sg, returning) {   // priority order; null = no weather line this turn
+    if (!sg.online) return 'offline';
+    if (returning) return 'absence';
+    if (sg.heap != null && sg.heap > 0.8) return 'lowmem';
+    if (sg.tps && sg.tps < 8) return 'slow';
+    if (sg.tps && sg.tps > 40) return 'fast';
+    if (sg.hour >= 23 || sg.hour < 5) return 'night';
+    if (sg.hour >= 5 && sg.hour < 10) return 'morning';
+    return null;
+  }
+  function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+  async function ensureWeather() { if (!weatherBank) weatherBank = await (await fetch('weather_bank.json')).json(); }
+  async function updateWeather(returning) {
+    await ensureWeather(); const cond = conditionOf(signals(), returning);
+    if (cond !== weather.cond) weather = { cond, line: cond ? pick(weatherBank[cond].seeds) : '' };
+    weatherEl.textContent = weatherOn() && weather.line ? '☁ ' + weather.line : ''; logEvent('weather', { cond: cond || 'none' });
+    return weather.line;
+  }
+  async function checkIn() {   // the Oracle's own turn after an absence: seed from the "check" family + model continuation (Room machinery)
+    if (!weatherOn() || !session || generating || !transcript.length || document.hidden || checkedThisAbsence || inputEl.value.trim()) return;
+    const idle = (Date.now() - lastUserAt) / 60000; if (idle < +idleMin.value) return;
+    checkedThisAbsence = true; await ensureWeather(); await World.say(pick(weatherBank.check.seeds), 'check');
+  }
+  function startIdleLoop(periodMs) { if (idleTimer) clearInterval(idleTimer); idleTimer = setInterval(checkIn, periodMs || 15000); }
+  startIdleLoop(15000); window.__env = { signals, setIdle: (minutes, periodMs) => { idleMin.value = minutes; startIdleLoop(periodMs); }, weather: () => weather, lastGen: () => lastGen };
 
   // ===================== NICO-JUDGE (best-of-N in the browser) =====================
   // nico_judge.py: logistic regression on the Oracle's own post-norm hidden states (last token + mean over the sequence) of
@@ -603,7 +644,9 @@
     let last = 0;
     async function notice(type, arg) {
       if (!session || generating || !transcript.length || Math.random() > P[type] || Date.now() - last < 15000 || inputEl.value.trim()) return;
-      last = Date.now(); const bank = SEEDS[type](arg); const seed = bank[Math.floor(Math.random() * bank.length)];
+      last = Date.now(); const bank = SEEDS[type](arg); return say(bank[Math.floor(Math.random() * bank.length)], type);
+    }
+    async function say(seed, type) {
       setBusy(true); statusEl.textContent = 'Oracle noticed something...';
       const div = addMessage('oracle', seed); div.classList.add('world'); div.title = 'The Oracle noticed something in the room';
       const fmt = t => model.format === 'plain' ? '\nOracle: ' + t : '\n<|oracle|>' + (planTokens ? ' *tell ' : ' ') + t;
@@ -616,7 +659,7 @@
       } catch (e) { console.error(e); }
       chatEl.scrollTop = chatEl.scrollHeight; statusEl.textContent = 'Ready'; setBusy(false);
     }
-    return { notice };
+    return { notice, say };
   })();
 
   const Crawler = (() => {
@@ -895,7 +938,9 @@
     if (!text || generating || !session) return;
     setBusy(true); suggestionsEl.innerHTML = '';
     addMessage('user', text); inputEl.value = ''; transcript.push({ role: 'user', text }); logEvent('user', { turn: transcript.length, len: text.length });
+    const returning = lastUserAt && (Date.now() - lastUserAt) / 60000 >= +idleMin.value; const prevLine = weather.line; lastUserAt = Date.now(); checkedThisAbsence = false;
     let factChanged = false;
+    if (weatherOn()) { try { await updateWeather(returning); if (weather.line !== prevLine) factChanged = true; } catch (e) { console.error(e); } }
     if (worldOn()) { try { const f = await extractFact(text); if (f && worldFacts[f.slot] !== f.value) { worldFacts[f.slot] = f.value; factChanged = true; logEvent('fact', { slot: f.slot }); } } catch (e) { console.error(e); } }
     if (historyMode.value === 'last' || factChanged) rebuildIds(); else conversationIds.push(...tokenizer.encode(fmtUserTurn(text)));
     if (conversationIds.length > MAX_CONTEXT - 30) {
@@ -908,7 +953,7 @@
     statusEl.textContent = 'Generating...';
     await new Promise(r => requestAnimationFrame(() => setTimeout(r, 30)));
     try {
-      let shown = '', genIds, judgeMeta = null;
+      let shown = '', genIds, judgeMeta = null; const t0 = performance.now();
       if (judge && model.judge) {   // best-of-N: sample N candidates, score each with the judge, keep the highest (no streaming: the pick comes at the end)
         const N = model.judge.bestOf, cands = [];
         for (let k = 0; k < N; k++) { statusEl.textContent = 'Sampling ' + (k + 1) + '/' + N + '...'; cands.push(await generate(conversationIds, null)); }
@@ -923,7 +968,7 @@
         const txt = (model.format === 'plain' ? partial.split('\n')[0] : partial).replace(/^\*\w+\s*/, '');
         if (txt.trim() && txt !== shown) { shown = txt; oracleDiv.textContent = txt.trim(); oracleDiv.appendChild(document.createTextNode('\u258D')); chatEl.scrollTop = chatEl.scrollHeight; }
       });
-      planTokens = /^\*\w+/.test(tokenizer.decode(genIds).trim());
+      planTokens = /^\*\w+/.test(tokenizer.decode(genIds).trim()); lastGen = { ms: Math.round(performance.now() - t0), tps: +(genIds.length / Math.max(0.001, (performance.now() - t0) / 1000)).toFixed(1) };
       let response = tokenizer.decode(genIds).trim().replace(/^\*\w+\s*/, '');
       if (model.format === 'plain') response = response.split('\n')[0].replace(/^User:.*$/, '').trim();
       conversationIds.push(...tokenizer.encode(fmtOracleText(response)));
@@ -941,7 +986,7 @@
   // ===================== MODEL LOADING =====================
   function resetConversation() {
     if (transcript.length) logEvent('reset', { turns: transcript.length });
-    convId = Date.now(); logEvent('load'); Crawler.on({ type: 'reset' }); memoryLines = []; worldFacts = {};
+    convId = Date.now(); logEvent('load'); Crawler.on({ type: 'reset' }); memoryLines = []; worldFacts = {}; weather = { cond: null, line: '' }; lastUserAt = 0; checkedThisAbsence = false; weatherEl.textContent = '';
     conversationIds = tokenizer.encode(buildPrime()); transcript = [];
     chatEl.innerHTML = '';
     addMessage('system-msg', model.label + ' loaded (' + model.size + '). ' + ({ first: 'Primed for the first reply only.', full: 'Primed (kept in context).', off: 'No priming.' })[primeMode.value] + ' Sampler: ' + samplerSel.options[samplerSel.selectedIndex].text + '.');

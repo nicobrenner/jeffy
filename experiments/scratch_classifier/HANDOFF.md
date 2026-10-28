@@ -2,7 +2,7 @@
 
 Purpose: let a fresh Claude Code session pick up this research program with as little loss as possible. Keep it short;
 the durable record is `RESEARCH_LOG.md` (lab notebook, append-only, every result the turn it lands). Update this file at
-the end of every working block (not just at the end of a session). Last update: **2026-10-27, 16:45 PDT**.
+the end of every working block (not just at the end of a session). Last update: **2026-10-27, 20:15 PDT**.
 
 ## How to resume (5 minutes)
 1. Read this file, then the last ~400 lines of `RESEARCH_LOG.md` (`tail -400 RESEARCH_LOG.md`).
@@ -26,6 +26,13 @@ the end of every working block (not just at the end of a session). Last update: 
 - **Nothing running.** Branch 1 block 1 done: Nico-judge v1 (AUC 0.76 on his rows), best-of-4 via `judge` cfg, `demo/review_bestof.html` waiting for his scores (export `review_bestof_scores.json`). Candidates in the demo: ct2 (default, ★), v5b (☆ TEST THIS). v6/v6b exported but NOT in the dropdown.
 - Nico's labels: tone picks (28 rows, `tone_labels_nico1.jsonl`) + follow-through scores (18, `review_followthrough_scores.json`).
 - Review format: `review_page.py` (0–5 per reply + notes, continuations first, ≤20 items). Pairs on shared history: `cont_pairs.py`.
+
+## Branch 2 (Jeffy product) — pointer 2026-10-27, 20:15 PDT
+Separate worktree `/Users/nico/Documents/Projects/jeffy-main`, branch `branch2/calibration` (commits 9167e96, 5bdc4e5: calibration table,
+probe sets, README "Confidence and abstaining" with 0.9 default). Record = `JEFFY_BRANCH.md` in the paper repo clone, local, NOT pushed
+(push needs Nico). Evidence = session scratchpad `jeffy_evidence/01–20`. Open: reconcile item 1 with the reviewer's production-host
+figures (our file = earlier host only); medical heads are accurate but under-confident → margin gate. Rule: read the log, not the
+counter; print window boundaries next to every count. Branch 2 never touches this directory or MPS.
 
 ## Branch 1 (Tiny Oracle) — plan 2026-10-27 16:45 PDT
 Nico split the work into two branches (memory `project_two_branches_manager_mode`); this is Branch 1's block plan.

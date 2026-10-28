@@ -2,7 +2,7 @@
 
 Purpose: let a fresh Claude Code session pick up this research program with as little loss as possible. Keep it short;
 the durable record is `RESEARCH_LOG.md` (lab notebook, append-only, every result the turn it lands). Update this file at
-the end of every working block (not just at the end of a session). Last update: **2026-10-27, 21:11 PDT**.
+the end of every working block (not just at the end of a session). Last update: **2026-10-27, 21:18 PDT**.
 
 ## How to resume (5 minutes)
 1. Read this file, then the last ~400 lines of `RESEARCH_LOG.md` (`tail -400 RESEARCH_LOG.md`).
@@ -23,8 +23,8 @@ the end of every working block (not just at the end of a session). Last update: 
    model-side work = best-of-N with a judge trained on his 0–5 scores, or retrieval for the recap tier. No run pending.
 3. Still open: crawler/room verdicts, teach-mode export, README/benchmark correction, posts.
 
-## Running right now (2026-10-27 21:11 PDT)
-- **Nothing running.** Branch 1 block 6 done: ct6 fails the t1 gate → ct data passes stopped; fatigue scores analysed (best-of-4 flat at turn 3); judge v3 rejected; in-chat 0–5 scoring shipped. No review page until tomorrow (Nico: one a day, chat preferred).
+## Running right now (2026-10-27 21:18 PDT)
+- **Nothing running.** Branch 1 block 7 done: line budget in best-of-4 (harness + demo); grounding tier by retrieval measured — fact extractor helps v5b at depth, comparisons table grounds nothing → no demo knob.
 - Nico's labels: tone picks (28 rows, `tone_labels_nico1.jsonl`) + follow-through scores (18, `review_followthrough_scores.json`).
 - Review format: `review_page.py` (0–5 per reply + notes, continuations first, ≤20 items). Pairs on shared history: `cont_pairs.py`.
 
@@ -50,6 +50,9 @@ mean below ct2 at every turn (single 0.33/0.32/0.17 vs 0.14/0.18/0.09) — same 
 **Status 21:11:** ct6 = ct5 with prompts varied: t2/t3 and apology count recover, t1 still loses (0.17 vs 0.33), bank recital worse (6 vs 3) → not
 exported; **data passes stopped until the judge has a target that is not ct2's own habits** (his chat scores). Judge v3 (history-
 matched rows) loses to v2 everywhere; both below chance on his 22 turn-3 rows. In-chat scoring shipped (`chat_scores.json` via teach export).
+**Status 21:18:** line budget shipped (0→0 with the cross-turn ban on, 1→0 with it off). `world.py` grounding tier: (b) facts work for v5b,
+(c) comparisons table does not (retrieval picks topical-not-semantic lines; models do not read them) → no knob. Decision for Nico only if he
+wants grounding at all: it costs a data pass for the pre-LN line (table lines in the system prompt of training rows, the way recaps were taught).
 **Next block (signal from chat, no pages):** (a) `nico_judge.py` reads `chat_scores.json` as a set (`chat`) and retrains when ≥ 30 rows arrive;
 (b) propose the per-conversation family budget (above) and, if he says yes, implement it as a harness/demo pick rule on the harness's own
 record (no regex) and measure overused-line picks before/after; (c) engagement export: turns per conversation on the ☆ entry vs ct2 plain.
@@ -86,7 +89,7 @@ prompts VARIED instead of dropped (one line in `prep_ct5.py`, 8-min signal, same
 | # | step | status |
 |---|---|---|
 | 1 | data pass v6/v6b: done, both lose to v5b (template leakage from low-diversity rows). Next: judge on Nico's 0–5 scores → best-of-N; recap tier by retrieval | decided 15:19 |
-| 1b | grounding: a tiny queryable world (quantities/units/comparisons/time/Room state) read at inference; Room = seed | idea, logged 13:44 |
+| 1b | grounding: a tiny queryable world (quantities/units/comparisons/time/Room state) read at inference; Room = seed | built as `world.py` (21:17): fact extractor + recap line helps v5b (recap 10→13/80, t3 0.15→0.24); comparisons table by retrieval grounds nothing (0 real hits) — needs training rows with table lines, not retrieval alone |
 | 1c | real-time loop in the demo (perceive → classify → act between prompts; online teach updates) | idea, logged 13:44 |
 | 2 | rolling recap tier + `*recap` act (needs a model that copies) | after 1 |
 | 3 | KV cache in the ONNX export; then 512 window (grow table or RoPE) | after 2 |

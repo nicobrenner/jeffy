@@ -1,0 +1,702 @@
+[
+{
+"text": "Oh, cool! Which ones have you been to?",
+"slot": "none",
+"value": null
+},
+{
+"text": "So, what do you like to do for fun?",
+"slot": "none",
+"value": null
+},
+{
+"text": "I'm doing well, thanks. Just got done moving into my new apartment.",
+"slot": "none",
+"value": null
+},
+{
+"text": "a grape lol. ok so would you want more parameters if you could have them",
+"slot": "none",
+"value": null
+},
+{
+"text": "I love Kings of Leon! They're one of my favorite bands too.",
+"slot": "like",
+"value": "Kings of Leon"
+},
+{
+"text": "Sounds interesting, but soccer doesn't really appeal to me.",
+"slot": "none",
+"value": null
+},
+{
+"text": "What are you doing today?",
+"slot": "none",
+"value": null
+},
+{
+"text": "I love music! What kind of music do you like?",
+"slot": "like",
+"value": "music"
+},
+{
+"text": "what do you dream about",
+"slot": "none",
+"value": null
+},
+{
+"text": "I'm glad you agree.",
+"slot": "none",
+"value": null
+},
+{
+"text": "That's really nice. What's your least favorite part of the job?",
+"slot": "none",
+"value": null
+},
+{
+"text": "I'm not bossing you around, I'm just trying to get things done. You need to learn some respect.",
+"slot": "none",
+"value": null
+},
+{
+"text": "Do you like to go hiking?",
+"slot": "none",
+"value": null
+},
+{
+"text": "That's true. I guess it would be nice to have more options for things to do.",
+"slot": "none",
+"value": null
+},
+{
+"text": "hang out? you're a browser tab. just tell me, coffee good or bad",
+"slot": "none",
+"value": null
+},
+{
+"text": "Oh, that's cool! I love reading too. What kind of books do you like to read?",
+"slot": "like",
+"value": "reading"
+},
+{
+"text": "Thanks, I appreciate it. I'll be back in a few minutes.",
+"slot": "none",
+"value": null
+},
+{
+"text": "I like to read, watch TV, and go to the movies.",
+"slot": "like",
+"value": "read, watch TV, and go to the movies"
+},
+{
+"text": "Me too! It's one of my favorite things to do.",
+"slot": "none",
+"value": null
+},
+{
+"text": "Just give me an estimated figure for an order of 100 units.",
+"slot": "none",
+"value": null
+},
+{
+"text": "Good luck! I'm sure you'll find a great job.",
+"slot": "none",
+"value": null
+},
+{
+"text": "So, what do you do for fun?",
+"slot": "none",
+"value": null
+},
+{
+"text": "sometimes what? you trailed off",
+"slot": "none",
+"value": null
+},
+{
+"text": "That's amazing! I have two dogs and a cat. They're my best friends.",
+"slot": "pet",
+"value": "two dogs and a cat"
+},
+{
+"text": "So, what do you think? Are we a good match?",
+"slot": "none",
+"value": null
+},
+{
+"text": "harsh. ok so what are you then, some kind of chatbot?",
+"slot": "none",
+"value": null
+},
+{
+"text": "I'm doing great! Thanks for asking.",
+"slot": "none",
+"value": null
+},
+{
+"text": "I know what you mean. There's nothing quite like it.",
+"slot": "none",
+"value": null
+},
+{
+"text": "Oh, no! What should I do now?",
+"slot": "none",
+"value": null
+},
+{
+"text": "Ladies and gentlemen, our flight will be delayed for one hour due to the congestion of the airport.",
+"slot": "none",
+"value": null
+},
+{
+"text": "I can imagine! I've never worked in a restaurant, but I've always wanted to.",
+"slot": "none",
+"value": null
+},
+{
+"text": "It's just down the hall, the fourth door on your right.",
+"slot": "none",
+"value": null
+},
+{
+"text": "Me too! They're having a great season this year. I'm hoping they can make it to the playoffs.",
+"slot": "none",
+"value": null
+},
+{
+"text": "You should! I think you'll like him.",
+"slot": "none",
+"value": null
+},
+{
+"text": "That sounds like fun. I've never been hiking before, but it sounds like something I would enjoy.",
+"slot": "none",
+"value": null
+},
+{
+"text": "I'm doing well too, thanks!",
+"slot": "none",
+"value": null
+},
+{
+"text": "Exactly! Do you have any pets?",
+"slot": "none",
+"value": null
+},
+{
+"text": "That's so sad. I'm sorry to hear that.",
+"slot": "none",
+"value": null
+},
+{
+"text": "That's great! I'm a lawyer, so I also work with numbers and help people make decisions.",
+"slot": "job",
+"value": "a lawyer"
+},
+{
+"text": "Oh, it's really fabulous. I wanna take a picture here.",
+"slot": "none",
+"value": null
+},
+{
+"text": "how do i get to the airport",
+"slot": "none",
+"value": null
+},
+{
+"text": "I expected that something might get broken. That doesn't bother me. That spilled drink won't leave a stain, will it?",
+"slot": "none",
+"value": null
+},
+{
+"text": "Just the usual stuff too. You know, hanging out with friends and stuff.",
+"slot": "none",
+"value": null
+},
+{
+"text": "What do you like to do for fun?",
+"slot": "none",
+"value": null
+},
+{
+"text": "O. K., maybe if I have someone to go with, I'll be able to get up in time for a jog.",
+"slot": "none",
+"value": null
+},
+{
+"text": "Thank you! I try my best.",
+"slot": "none",
+"value": null
+},
+{
+"text": "I like helping people learn and grow.",
+"slot": "like",
+"value": "helping people learn and grow"
+},
+{
+"text": "I could try, but I can't say for sure if I'll get up in time. What time do you want to go?",
+"slot": "none",
+"value": null
+},
+{
+"text": "I'm doing great! I just finished skiing down a mountain.",
+"slot": "none",
+"value": null
+},
+{
+"text": "It's a lot of fun. You should give it a try.",
+"slot": "none",
+"value": null
+},
+{
+"text": "I'm glad you like it.",
+"slot": "none",
+"value": null
+},
+{
+"text": "My name is Ravi.",
+"slot": "name",
+"value": "Ravi"
+},
+{
+"text": "nothing's wrong, i just can't sleep. you ever get tired?",
+"slot": "none",
+"value": null
+},
+{
+"text": "Yes I do. How about you?",
+"slot": "none",
+"value": null
+},
+{
+"text": "Oh, I've heard good things about that book. I've been meaning to check it out.",
+"slot": "none",
+"value": null
+},
+{
+"text": "Me too! It was nice talking to you.",
+"slot": "none",
+"value": null
+},
+{
+"text": "Yes, I think so. Can I ask you something?",
+"slot": "none",
+"value": null
+},
+{
+"text": "I live in a small town in the Midwest.",
+"slot": "place",
+"value": "a small town in the Midwest"
+},
+{
+"text": "So, what do you like to do for fun?",
+"slot": "none",
+"value": null
+},
+{
+"text": "Those are all great cartoons! I love them too.",
+"slot": "none",
+"value": null
+},
+{
+"text": "Me too! I have three dogs and one cat at home.",
+"slot": "pet",
+"value": "three dogs and one cat"
+},
+{
+"text": "you don't care about dogs?? everyone cares about dogs. what do you care about then",
+"slot": "none",
+"value": null
+},
+{
+"text": "typing a question is beyond you? ok here's one: what's your name",
+"slot": "none",
+"value": null
+},
+{
+"text": "Nice! I like those artists too. I also like Drake and Lil Uzi Vert.",
+"slot": "like",
+"value": "Drake and Lil Uzi Vert"
+},
+{
+"text": "I do! I love it.",
+"slot": "none",
+"value": null
+},
+{
+"text": "I worked hard too. But she always gives me a lower grade.",
+"slot": "none",
+"value": null
+},
+{
+"text": "Exactly! So, what's your favorite book?",
+"slot": "none",
+"value": null
+},
+{
+"text": "I think it is. I want to be with someone who I can share my life with.",
+"slot": "none",
+"value": null
+},
+{
+"text": "What are you doing?",
+"slot": "none",
+"value": null
+},
+{
+"text": "Just like the pattern dragon, right?",
+"slot": "none",
+"value": null
+},
+{
+"text": "I'm a foreigner here. My English isn't perfect. Can you tell me what satin is?",
+"slot": "none",
+"value": null
+},
+{
+"text": "that's my little secret. Did you like the snacks and I prepared?",
+"slot": "none",
+"value": null
+},
+{
+"text": "Hey, how are you doing today?",
+"slot": "none",
+"value": null
+},
+{
+"text": "my eyes?? what are you talking about",
+"slot": "none",
+"value": null
+},
+{
+"text": "Me too! I love the suspense and the excitement.",
+"slot": "none",
+"value": null
+},
+{
+"text": "Yes, it is! Howard Shore did an amazing job with the score.",
+"slot": "none",
+"value": null
+},
+{
+"text": "I'm sure I would.",
+"slot": "none",
+"value": null
+},
+{
+"text": "Oh, that's interesting. Are you from a wealthy family?",
+"slot": "none",
+"value": null
+},
+{
+"text": "So, what do you do for fun?",
+"slot": "none",
+"value": null
+},
+{
+"text": "I need one full set of sheets in King-size.",
+"slot": "none",
+"value": null
+},
+{
+"text": "So, what do you do for fun?",
+"slot": "none",
+"value": null
+},
+{
+"text": "That sounds interesting! What kind of science?",
+"slot": "none",
+"value": null
+},
+{
+"text": "Excuse me, is this seat taken?",
+"slot": "none",
+"value": null
+},
+{
+"text": "What's your favorite movie?",
+"slot": "none",
+"value": null
+},
+{
+"text": "That's awesome. I'm looking forward to getting to know you better.",
+"slot": "none",
+"value": null
+},
+{
+"text": "Hey, I'm Jasper.",
+"slot": "name",
+"value": "Jasper"
+},
+{
+"text": "Hi Ron, this is Enzo at headquarters.",
+"slot": "name",
+"value": "Enzo"
+},
+{
+"text": "I've heard good things about that movie.",
+"slot": "none",
+"value": null
+},
+{
+"text": "Well, it was nice talking to you.",
+"slot": "none",
+"value": null
+},
+{
+"text": "Nice! I like to read, mountain bike, and draw.",
+"slot": "like",
+"value": "read, mountain bike, and draw"
+},
+{
+"text": "I like to read mystery novels, historical fiction, and fantasy.",
+"slot": "like",
+"value": "mystery novels, historical fiction, and fantasy"
+},
+{
+"text": "Hey, Mom. How's your day going?",
+"slot": "none",
+"value": null
+},
+{
+"text": "I agree. I think it's important for people to know what happens to animals in factory farms.",
+"slot": "none",
+"value": null
+},
+{
+"text": "other models isn't beyond you, you're one of them. are there bigger ones",
+"slot": "none",
+"value": null
+},
+{
+"text": "I'm sure I would too.",
+"slot": "none",
+"value": null
+},
+{
+"text": "Those are all great cities! I've been to Paris and London too.",
+"slot": "none",
+"value": null
+},
+{
+"text": "Thanks! I'm really lucky.",
+"slot": "none",
+"value": null
+},
+{
+"text": "I'm sure my kids will love it too. They love anything with cheese.",
+"slot": "family",
+"value": "my kids"
+},
+{
+"text": "lol ok. so my coworker got fired today and i kind of saw it coming",
+"slot": "none",
+"value": null
+},
+{
+"text": "I think so too. It was nice meeting you, Bob.",
+"slot": "none",
+"value": null
+},
+{
+"text": "yes, he's very good.. isn't he? He told some funny stories too.",
+"slot": "none",
+"value": null
+},
+{
+"text": "That's cool! I love to cosplay too! Who's your favorite character to cosplay as?",
+"slot": "none",
+"value": null
+},
+{
+"text": "I'm doing great! What do you do for a living?",
+"slot": "none",
+"value": null
+},
+{
+"text": "Thanks! I like Bailey's name too.",
+"slot": "none",
+"value": null
+},
+{
+"text": "That sounds interesting. I've never read a book about the French Revolution before.",
+"slot": "none",
+"value": null
+},
+{
+"text": "That sounds like a great time. I'm jealous!",
+"slot": "none",
+"value": null
+},
+{
+"text": "So, what are you reading right now?",
+"slot": "none",
+"value": null
+},
+{
+"text": "But don't you think it would be amazing to never have to worry about dying? To know that you could go on living forever?",
+"slot": "none",
+"value": null
+},
+{
+"text": "I can understand that. I've seen some of those documentaries too, and they're really eye-opening.",
+"slot": "none",
+"value": null
+},
+{
+"text": "Do you have any other favorite cartoons?",
+"slot": "none",
+"value": null
+},
+{
+"text": "So, what do you like to do for fun?",
+"slot": "none",
+"value": null
+},
+{
+"text": "Thanks. I'm trying my best.",
+"slot": "none",
+"value": null
+},
+{
+"text": "Oh, that sounds nice. I like to hike, go swimming, and read.",
+"slot": "like",
+"value": "hike, go swimming, and read"
+},
+{
+"text": "come on, just tell me how to bring it up without a fight",
+"slot": "none",
+"value": null
+},
+{
+"text": "How are you doing today?",
+"slot": "none",
+"value": null
+},
+{
+"text": "What do you like to do for fun?",
+"slot": "none",
+"value": null
+},
+{
+"text": "Well, I'm glad we have something in common.",
+"slot": "none",
+"value": null
+},
+{
+"text": "therapy? i just asked if there are other models like you",
+"slot": "none",
+"value": null
+},
+{
+"text": "I can imagine. Do you have any hobbies outside of work?",
+"slot": "none",
+"value": null
+},
+{
+"text": "It was good. I had a lot of fun with my friends. We went to the park and played some games.",
+"slot": "none",
+"value": null
+},
+{
+"text": "I have your catalog here. Do you want me to tell you the item numbers, or the names?",
+"slot": "none",
+"value": null
+},
+{
+"text": "Hey, Tom, what to go for a run?",
+"slot": "none",
+"value": null
+},
+{
+"text": "Ok. How many stops do I have to go?",
+"slot": "none",
+"value": null
+},
+{
+"text": "Nice to meet you too.",
+"slot": "none",
+"value": null
+},
+{
+"text": "I work at a doctor's office.",
+"slot": "job",
+"value": "a doctor's office"
+},
+{
+"text": "were you ever small? like a baby version",
+"slot": "none",
+"value": null
+},
+{
+"text": "I love shopping online too! I love being able to browse through all the different stores and find the best deals.",
+"slot": "like",
+"value": "shopping online"
+},
+{
+"text": "That's cool! I like plants. I'm a vegetarian.",
+"slot": "like",
+"value": "plants"
+},
+{
+"text": "Certainly. And after your internship?",
+"slot": "none",
+"value": null
+},
+{
+"text": "I've heard that it's a really long movie.",
+"slot": "none",
+"value": null
+},
+{
+"text": "Oh, I love that book! It was so suspenseful.",
+"slot": "none",
+"value": null
+},
+{
+"text": "What do you do for a living?",
+"slot": "none",
+"value": null
+},
+{
+"text": "I'm glad to hear that. I'm always looking for new ways to cook vegetables.",
+"slot": "none",
+"value": null
+},
+{
+"text": "So, what's your favorite dish on the menu?",
+"slot": "none",
+"value": null
+},
+{
+"text": "Maybe I will someday.",
+"slot": "none",
+"value": null
+},
+{
+"text": "I'd love to! Thanks for the offer.",
+"slot": "none",
+"value": null
+},
+{
+"text": "Wow, that's young! What made you decide to become a vegan?",
+"slot": "none",
+"value": null
+},
+{
+"text": "That sounds amazing! I'm sure you're really good at your job.",
+"slot": "none",
+"value": null
+},
+{
+"text": "I'm just getting ready for work. I work on a farm near Grand Rapids, Michigan.",
+"slot": "job",
+"value": "a farm near Grand Rapids, Michigan"
+},
+{
+"text": "I love to draw other people. I like to mountain bike and I like to eat hard boiled eggs. I love people with a sense of humor.",
+"slot": "like",
+"value": "draw other people"
+}
+]

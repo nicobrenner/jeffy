@@ -30,7 +30,7 @@ def yes_ids(tok):   # token ids that start a reply with Yes/Yeah/Yep (with or wi
         _YES_IDS[id(tok)] = ids
     return _YES_IDS[id(tok)]
 DUNNO = re.compile(r"\b(i (don'?t|do not) know|no idea|no clue|not sure (what|how|if|about|i)|i have no|can'?t help|beyond me|not in my training|never heard of|i made that up|i invented|came from nowhere|not (a|an) \w+ expert|outside my weights|not my department)\b", re.I)
-DEFAULT = dict(prime="first", sampler="sched", best_of=1, verifier=None, controller=False, tau=0.5, act_mode=None, memory=None, seed=0, ban_yesno=False, cross_turn=True, judge=None, judge_margin=0.0, family=None)   # = the demo defaults
+DEFAULT = dict(prime="first", sampler="sched", best_of=1, verifier=None, controller=False, tau=0.5, act_mode=None, memory=None, seed=0, ban_yesno=False, cross_turn=True, judge=None, judge_margin=0.0, family=None, line_budget=1)   # = the demo defaults
 _LINES = None
 
 def lines():
@@ -126,7 +126,10 @@ def respond(m, tok, history, user, cfg=None):
         X = jhidden(m, tok, [{"history": history, "user": user, "reply": r} for r in cands])
         seen = [sum(h.get("oracle", "").strip() == r.strip() for h in history) for r in cands]   # the harness's own record of emitted lines, exact match
         if J.get("seen"): X = np.hstack([X, 5 * np.array([[float(x)] for x in seen])])
-        sc = J["clf"].predict_proba(X)[:, 1]; b = int(np.argmax(sc)); div = False
+        sc = J["clf"].predict_proba(X)[:, 1]
+        if c.get("line_budget"):   # per-conversation budget (Nico, Oct 27 21:30): a candidate equal to a line this conversation already emitted `line_budget` times loses 1.0 — another candidate wins, no ban
+            sc = np.array([x - 1.0 if seen[k] >= c["line_budget"] else x for k, x in enumerate(sc)])
+        b = int(np.argmax(sc)); div = False
         fams = None
         if c["judge_margin"] > 0 and c.get("family"):   # cross-family diversity: within the margin of the top, prefer a bank family this conversation has not heard (family_clf.py; "none" never counts)
             F = _VER.setdefault(c["family"], pickle.load(open(c["family"], "rb"))); from family_clf import predict

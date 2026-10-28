@@ -882,7 +882,9 @@
         for (let k = 0; k < N; k++) { statusEl.textContent = 'Sampling ' + (k + 1) + '/' + N + '...'; cands.push(await generate(conversationIds, null)); }
         statusEl.textContent = 'Judging...'; const scores = [];
         for (const c of cands) scores.push(await judgeScore(text, tokenizer.decode(c).trim().replace(/^\*\w+\s*/, '')));
-        let bi = 0; for (let k = 1; k < N; k++) if (scores[k] > scores[bi]) bi = k;
+        const emitted = transcript.filter(m => m.role === 'oracle').map(m => m.text.trim());   // per-conversation budget of 1 on repeated lines (the page's own record of emitted lines)
+        const adj = scores.map((x, k) => emitted.includes(tokenizer.decode(cands[k]).trim().replace(/^\*\w+\s*/, '')) ? x - 1 : x);
+        let bi = 0; for (let k = 1; k < N; k++) if (adj[k] > adj[bi]) bi = k;
         genIds = cands[bi]; judgeMeta = { pick: bi, scores: scores.map(x => +x.toFixed(2)) };
         logEvent('bestof', { n: N, pick: bi, scores: judgeMeta.scores });
       } else genIds = await generate(conversationIds, partial => {

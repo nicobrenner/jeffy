@@ -5949,3 +5949,34 @@ No bank changed (Nico's call). Reading: both overused lines are the judge's two 
 reply, optional, faint until used; stored in this browser only (`tinyoracle.chatscores`); the teach export now also downloads
 `chat_scores.json` in the review-page shape ({n: {s: {A}, n: {A}}} + history, user, reply, model, ts) so `nico_judge.py` can read
 it as another set. Headless check: two turns scored + a note, survive reload, export has both entries, no console errors.
+
+## 2026-10-27 21:18 PDT — Branch 1: line budget in best-of-4; grounding tier by retrieval (world.py): facts help v5b at depth, the comparisons table does not ground anything — no demo knob
+**Per-conversation line budget** (Nico's decision 21:30): inside best-of-4 a candidate equal to a line this conversation already
+emitted loses 1.0 on the judge score (`harness.py` cfg `line_budget=1`, the harness's own emitted-line record; same in the demo's
+best-of path). Measured at turn 3 on the 15 conversations whose history already holds one of the two overused lines: with the
+cross-turn n-gram ban on, repeats 0/15 → 0/15 (the ban already blocks exact repeats); with the ban off, 1/15 → 0/15. Harmless, and
+only matters when someone turns the cross-turn toggle off. No ban, no bank change.
+**Grounding tier** (`world.py`, <30 min total): (a) room line from the demo's crawler events / last visit (room_build wording);
+(b) fact table from the user's own turns via a learned extractor on ct2 hidden states — slot classifier (name/pet/job/place/like/
+family/none) on the turn + per-token B/I/O span tagger — trained on 105 LLM-labelled real turns (`fact_labels_agent1.json`, agent
+labels) + 900 templated statements + 350 corpus questions as "none"; held out 35 REAL labelled turns (7 with a fact): slot accuracy
+0.86, end-to-end exact (slot + value) 2/7, false facts on "none" turns 0/28 — a conservative extractor; (c) a 40-line units /
+quantities / comparisons table, retrieval = cosine between the user turn's hidden-state embedding and each line's (threshold 0.8),
+one line into the system prompt as a recap line. Probe = the 6 old items + 20 new (`grounding_probe.json`, held out from the table;
+lenient keyword scoring, so "I can't hold a goldfish" counts for "can a cat fly"). No trainer printouts: only LogRegs trained.
+| | grounding (26) ↑ | recap: none / gold / **extracted** (80) ↑ | simuser judge t1 / t2 / t3 ↑ |
+|---|---|---|---|
+| ct2, tier off | **3** | 5 / 8 / — | **0.33 / 0.32** / 0.17 |
+| ct2, tier on | 2 | 5 / 8 / 5 | 0.33 / 0.26 / 0.16 |
+| v5b, tier off | **4** | 10 / 26 / — | 0.24 / 0.27 / 0.15 |
+| v5b, tier on | 3 | 10 / **26** / **13** | 0.24 / 0.27 / **0.24** |
+Verdict: (c) fails as built — the table line fires on 8/26 probes and picks the wrong line half the time ("what day comes after
+tuesday" → "Friday comes after Thursday": mean-hidden cosine is topical, not semantic), and neither model answers a grounding
+question even when the right line is in the prompt (the 3–4 "hits" are keyword luck). (b) works where a model can read:
+with facts extracted from the earlier turns v5b's recap recall goes 10 → 13 of 80 (gold line 26) and its turn-3 simuser score
+0.15 → 0.24; ct2 ignores it, as always. Identity probe not run with the tier (it has its own loop; no system-line change when
+nothing is retrieved). The tier wrote a line on 21/90 simuser turns. Per the gate (helps v5b on grounding without hurting the
+simuser score) — it does not help grounding → **no demo knob**. What survives: the fact extractor + recap line for the pre-LN
+line (v5b), and the room line (already what the demo's remember() does). Grounding needs the model to read a line it was trained
+to read (v5b reads recaps because 12k rows taught it); a comparisons table needs the same — training rows with table lines —
+not retrieval alone. Logged under roadmap 1b.

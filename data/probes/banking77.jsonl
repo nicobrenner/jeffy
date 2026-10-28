@@ -1,0 +1,4 @@
+{"text": "I was charged twice for the same transaction", "expect": "transaction_charged_twice", "why": "README example"}
+{"text": "my card is not working", "expect": "card_not_working", "why": "direct; the straddle is with declined_card_payment only when a payment is mentioned"}
+{"text": "how long does a transfer take", "expect": "abstain", "why": "straddles transfer_timing / pending_transfer / transfer_not_received_by_recipient"}
+{"text": "I lost my card", "expect": "lost_or_stolen_card", "why": "direct"}

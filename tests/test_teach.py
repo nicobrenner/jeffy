@@ -131,6 +131,6 @@ def test_per_client_cap_ignores_spoofed_headers_by_default(monkeypatch, tmp_path
     r = c.post("/v1/train", headers={"x-forwarded-for": "203.0.113.9"}, json={"task_id": "cap_b", "examples": ROWS, "test_size": 0})
     assert r.status_code == 429, r.text
     # behind a trusted proxy the header is the client, so it is a new allowance
-    monkeypatch.setenv("JEFFY_TRUST_PROXY_HEADERS", "1")
+    monkeypatch.setenv("JEFFY_TRUST_PROXY", "1")
     r = c.post("/v1/train", headers={"x-forwarded-for": "203.0.113.9"}, json={"task_id": "cap_c", "examples": ROWS, "test_size": 0})
     assert r.status_code == 200, r.text

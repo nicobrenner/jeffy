@@ -101,10 +101,9 @@ class RoPEStack(nn.Module):
         return x
 
 
-class _Zero(nn.Module):
-    """returns zeros of width d (the feed-forward output of an attention-only block)"""
-    def __init__(self, d=256): super().__init__(); self.d = d
-    def forward(self, x): return torch.zeros(x.shape[:-1] + (self.d,), device=x.device, dtype=x.dtype)
+def _Zero(d):
+    """a frozen all-zero Linear(1, d): the feed-forward output of an attention-only block (nn.TransformerEncoderLayer's fast path reads .weight/.bias, so it must be a Linear)"""
+    z = nn.Linear(1, d); nn.init.zeros_(z.weight); nn.init.zeros_(z.bias); z.weight.requires_grad_(False); z.bias.requires_grad_(False); return z
 
 class CausalTransformer(nn.Module):
     """Transformer LM with causal attention, depth recurrence, and weight tying.

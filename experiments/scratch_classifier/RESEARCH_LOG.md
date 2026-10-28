@@ -5759,3 +5759,35 @@ three, last one bad" notes say the opposite on follow-ups. So the page is the te
 A/B hidden, key `pile_runs/atl/review_bestof_key.json`). If his scores favour best-of-4, ship it in the demo; if they favour the
 single sample, the judge needs his follow-through labels weighted by move (next: intent-aware judge, plan item 2).
 Trainer samples (none this block: no training run; judge is a LogReg).
+
+## 2026-10-27 20:25 PDT — Branch 1: Nico scored best-of-4 vs single — best-of-4 wins (9-1-8, p 0.009); shipped as the demo's ☆ default
+His scores on `review_bestof.html` (18 continuations on his pick ct2; A/B hidden; `pile_runs/atl/review_bestof_scores.json`):
+| | single sample | best-of-4 (Nico-judge v1) |
+|---|---|---|
+| mean score (0–5) ↑ | 1.50 | **2.94** |
+| wins / ties / losses (best-of-4 vs single) | — | **9 / 8 / 1** |
+| share scored ≥ 3 ↑ | 39% | **78%** |
+| share scored 0 ↓ | 56% | **17%** |
+Verdict: best-of-4 doubles the share of replies he rates as landing and cuts the zeros by two thirds; the one loss is a 5→4.
+Paired test on the 18 pairs: Wilcoxon W = 2, p = 0.009; sign test 9+ / 1− of 10 non-ties, p = 0.021. Real at n = 18.
+**Judge vs Nico on the 36 replies:** Spearman 0.42, AUC 0.79 vs his ≥ 3 (int8 ONNX hidden states: 0.78, Spearman 0.996 vs torch).
+**His notes, grouped.** Praised: admitting and moving on ("when pushed to say something it doesn't know… it tries to move on", 5/5
+twice), self-aware deadpan ("Love this one, it's like it knows itself… correct and philosophically deep", "This is off, but really
+funny too"), the 4th-wall break ("quick, pretend no one saw anything and leave"), one plain-sense reply ("I know, but it's also
+really rewarding" → "Almost perfect"). Punished: admitting then derailing ("said I don't know, but then it went off the rails" → 1),
+not noticing it missed ("not only didn't get it, it also didn't realize", 0), topic lock-in (video games, 0/0), and the open
+question he raised twice: accidental vs deliberate funniness ("funny for being accidentally wrong, instead of… wrong on purpose
+(can we actually tell the difference?)"). Fatigue is the real cost: from item 12 on, every bank line gets "I like this response,
+but at this point it starts to feel canned and very limiting" and still a 3; item 15: "is this everything this model knows how to say?".
+**Recital caveat (bank lines on these 36):** single 4/18, best-of-4 8/18. Bank lines average 3.58 vs 1.54 for the rest, so the
+judge is not wrong to like them — but he is scoring one turn at a time; in a conversation the demo's cross-turn penalty blocks
+exact repeats, and the judge's second-best is usually ~0. The "canned" fatigue is the next thing to measure, not a reason to hold.
+**Shipped:** `demo/index.html` ☆ entry `v2_grown_ct2_bestof4` = ct2 + best-of-4 by the judge in the browser (label says ~4x
+slower; the judge reads the model's own post-norm hidden states from a new `hidden` ONNX output — `export_onnx.py --hidden`,
+`demo/oracle_v2_grown_ct2_judge_int8.onnx` 10.7 MB, weights in `demo/nico_judge_v1.json`); default for one load via a stamp,
+then his dropdown choice sticks; each reply shows "best of 4 · judge 0.xx (others …)". v5b demoted to "☆ candidate". Headless
+Chromium check: two turns, 4 samples each, judge picks, no console errors, ~1 s per turn with threads.
+**Next block:** retrain the judge with these 36 labels (Nico rows 44 → 80; his notes say bank lines should score *lower* the
+second time they appear in a conversation → add a "seen before in this conversation" feature, still no regex), and a
+diversity-aware pick: among candidates within 0.1 of the top score prefer the non-bank one.
+Trainer samples: none (no training run this block).

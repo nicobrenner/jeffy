@@ -18,6 +18,7 @@ class OnnxFriendlyModel(nn.Module):
         self.pos_emb = orig.pos_emb
         self.norm = orig.norm
         self.lm_head = orig.lm_head
+        self.with_hidden = False
 
         cfg = {
             "d_model": orig.pos_emb.embedding_dim,
@@ -72,10 +73,11 @@ class OnnxFriendlyModel(nn.Module):
             x = x + ff_out if pre else layer.norm2(x + ff_out)
 
         x = self.norm(x)
+        if self.with_hidden: return self.lm_head(x), x   # post-norm hidden states: what the judges / probes read (tone_clf.hidden, nico_judge.py)
         return self.lm_head(x)
 
 
-def export(ckpt_path, tokenizer_path, output_path):
+def export(ckpt_path, tokenizer_path, output_path, with_hidden=False):
     device = "cpu"
     ckpt = torch.load(ckpt_path, map_location=device, weights_only=False)
     cfg = ckpt["config"]
@@ -93,6 +95,7 @@ def export(ckpt_path, tokenizer_path, output_path):
     orig.eval()
 
     model = OnnxFriendlyModel(orig)
+    model.with_hidden = with_hidden
     model.eval()
 
     # Verify outputs match
@@ -100,6 +103,7 @@ def export(ckpt_path, tokenizer_path, output_path):
     with torch.no_grad():
         orig_out = orig(test_in)
         wrap_out = model(test_in)
+        if with_hidden: wrap_out = wrap_out[0]
     diff = (orig_out - wrap_out).abs().max().item()
     print(f"Wrapper vs original max diff: {diff:.6e}")
     assert diff < 1e-4, f"Outputs diverge: {diff}"
@@ -111,10 +115,11 @@ def export(ckpt_path, tokenizer_path, output_path):
         (dummy_input,),
         output_path,
         input_names=["input_ids"],
-        output_names=["logits"],
+        output_names=["logits", "hidden"] if with_hidden else ["logits"],
         dynamic_axes={
             "input_ids": {0: "batch", 1: "seq_len"},
             "logits": {0: "batch", 1: "seq_len"},
+            **({"hidden": {0: "batch", 1: "seq_len"}} if with_hidden else {}),
         },
         opset_version=17,
         do_constant_folding=True,
@@ -164,5 +169,6 @@ if __name__ == "__main__":
     parser.add_argument("--checkpoint", default="checkpoints/best_lm_oracle_v2.pt")
     parser.add_argument("--tokenizer", default="tokenizer_chat_v2.json")
     parser.add_argument("--output", default="oracle_v2.onnx")
+    parser.add_argument("--hidden", action="store_true", help="also output the post-norm hidden states (for in-browser judges)")
     args = parser.parse_args()
-    export(args.checkpoint, args.tokenizer, args.output)
+    export(args.checkpoint, args.tokenizer, args.output, with_hidden=args.hidden)

@@ -6290,3 +6290,12 @@ Extracted recap 20/80 (best in lineage), copy name 1/16, induction p5 8.30 (no c
 Verdict: oversampling identity rows fixed the name turn but the model now claims a human life in a fifth of later turns
 ("I'm sorry, sir… get some money"). Next, when Nico asks: contrast rows for the human-life markers, not more identity rows.
 Branch 1 agent stopped at this point (usage credits); manager now works without helper agents.
+
+## 2026-10-28 16:16 PDT — Greeting guard, route 2 (turn-aware judge v4): helps greetings, costs on Nico's rows; the ceiling is the model
+Guard set `pile_runs/guard/cands.json`: 60 user turns (30 greetings, 15 shares, 15 reactions) x 4 ct2 candidates, labelled lands 0/1 by the
+manager session; 2/3 train, 1/3 test. **Ceiling finding:** only 50% of greeting turns, 53% of shares and 40% of reactions have even one
+candidate that lands (23% / 28% / 13% of candidates). No judge can fix the other half; that is the language model's job (route 1).
+Judge v4 (`guard_judge.py`, `checkpoints/nico_judge_v4.pkl`): v2 features + user-turn intent probs (intent classifier retrained on ct2 hidden,
+held-out 0.64) + intent x PCA(16) interactions. Test greetings: v2 picks a landing reply 2/10, **v4 4/10**, ceiling 6/10. Guard-test AUC
+v2 0.62 / **v4 0.74**. Nico's rows 5-fold AUC: **v2-style 0.77** / v4 0.73 (n=102). Not shipped: the gain is on n=10 and it costs on his rows.
+Next: route 1, a targeted data pass (greetings/shares/reactions answered warmly, the lines he liked as seeds), then the judge again.

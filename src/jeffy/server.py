@@ -529,9 +529,18 @@ def _visible(task_id: str, request: Request) -> bool:
     return h is None or h["session"] == _session_of(request)
 
 
+def _trust_proxy_headers() -> bool:
+    """Only behind a proxy that overwrites them (Cloudflare does) may cf-connecting-ip / x-forwarded-for be believed.
+    Off by default: on a self-hosted install anyone can set the header and dodge the per-client training cap."""
+    return os.environ.get("JEFFY_TRUST_PROXY_HEADERS", "").strip().lower() in ("1", "true", "yes", "on")
+
+
 def _client_ip(request: Request) -> str:
-    return (request.headers.get("cf-connecting-ip") or request.headers.get("x-forwarded-for", "").split(",")[0].strip()
-            or (request.client.host if request.client else "?"))
+    if _trust_proxy_headers():
+        fwd = request.headers.get("cf-connecting-ip") or request.headers.get("x-forwarded-for", "").split(",")[0].strip()
+        if fwd:
+            return fwd
+    return request.client.host if request.client else "?"
 
 
 def _load_feedback():
@@ -2473,7 +2482,7 @@ function showDetail(tid){
       '<details id="try-raw-s" style="display:none"><summary>Response JSON</summary><pre id="try-raw"></pre></details>'+
       (TEACH?'<div id="teach-line" style="display:none;margin-top:10px;font-size:12px;font-family:var(--display)"><a href="#" id="teach-open" style="color:var(--accent)">Not your labels? Teach it three of your own.</a></div>'+
       '<div id="teach-box" style="display:none;margin-top:8px;border:1px solid var(--border,#333);border-radius:8px;padding:10px;font-size:12px;font-family:var(--display)">'+
-      '<div style="color:var(--muted);margin-bottom:6px">Your text, your label. One line each; at least two labels, four rows. Trains in seconds, no account.</div>'+
+      '<div style="color:var(--muted);margin-bottom:6px">Your text, your label. One line each; at least two labels, four rows. Trains in seconds, no account. Four rows give a first signal, not a classifier: expect 50 to 100 examples per label before the confidence means much. Add rows as it gets things wrong.</div>'+
       '<div id="teach-rows"></div>'+
       '<div class="try-row" style="margin-top:6px"><button class="fb-btn" id="teach-add" type="button">+ row</button><span id="teach-msg" style="font-size:11px;color:var(--muted);flex:1;margin:0 8px"></span><button class="run-btn" id="teach-submit" type="button">Train &#8594;</button></div>'+
       '</div>':'');

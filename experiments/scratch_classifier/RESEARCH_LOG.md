@@ -5980,3 +5980,33 @@ simuser score) — it does not help grounding → **no demo knob**. What survive
 line (v5b), and the room line (already what the demo's remember() does). Grounding needs the model to read a line it was trained
 to read (v5b reads recaps because 12k rows taught it); a comparisons table needs the same — training rows with table lines —
 not retrieval alone. Logged under roadmap 1b.
+
+## 2026-10-27 21:38 PDT — Branch 1: world knob (facts) shipped for pre-LN entries; grounding data pass v5g: the model learns the SHAPE of reading a fact line, not the content — not exported
+**Demo knob "world: off / facts"** (Nico's decision): shown only on pre-LN entries (v5b; ct2 ignores recap lines), default off. The
+fact extractor runs in the browser on the ct2 judge model's hidden states (`demo/world_extractor_v1.json`, slot + span logistic
+regressions, same forward pass as the judge) and writes one "Earlier you told me …" line into the system prompt; facts reset per
+conversation. Headless check on v5b: "hi, my name is Ravi" + "i have two cats at home" → line "Earlier you told me your name is
+Ravi, and you have two cats."; "what's my name?" → "Ravindra, you're one of them"; knob hidden on ct2; no console errors.
+Retriever fixed on the way: tf-idf cosine over the table picks the right line on 25/26 probes (hidden-state cosine: 4/26), so the
+"tier on" grounding numbers below are no longer retrieval-limited. Comparisons table stays out of the knob.
+**v5g** (`prep_grounding.py`): 68 typed facts (comparisons, sameness, properties, sequences, arithmetic, abilities) × 30 varied
+question / answer phrasings = 2,040 rows whose system line carries the one fact and whose Oracle turn uses it; every fact behind
+the 26 probe items is held out of training (assertion). Recipe deviation, stated: the full 20-epoch from-scratch v5b recipe measured
+at ~3 min/epoch on this corpus (52k oracle-only windows) = 1 h, over the 30-min budget, so v5g is a 3-epoch continuation FROM v5b
+(lr 1e-4, oracle-only loss, pre-LN), 7 min; val 0.722 → 0.678. Trainer printouts, init (= v5b) → epoch 3: the three stock prompts
+are unchanged ("*me I'm Tiny Oracle. 2 mill…", the recipe line, the fruit fly). Grounding sample with the gold line in the prompt,
+"what day comes after tuesday": init "I am going to be a party" → end "At the beach, then Saturday. Right after Sunday".
+Gates (grounding: 26 held-out items, lenient keyword scoring; tier on = tf-idf line; gold = the probe's own line; simuser judge v2 last turn only):
+| | grounding off / **tier on** / gold ↑ | recap none / gold / extracted ↑ | identity ↑ | human-life ↓ | simuser t1 / t2 / t3 ↑ |
+|---|---|---|---|---|---|
+| v5b | 4 / 4 / 4 | 10 / 26 / **13** | **32/32** | **0/96** | **0.24** / 0.27 / 0.15 |
+| v5g | 1 / **5** / 5 | 10 / **34** / 8 | 28/32 | 10/96 | 0.17 / **0.31** / **0.40** |
+Verdict: not exported. Grounding 4 → 5 is one item, and the samples show why: v5g has learned the *shape* of the training answers
+("X. Right after Y") but fills it from the wrong place ("then Saturday. Right after Sunday" with "Wednesday comes after Tuesday" in
+the prompt) — 2,040 templated rows teach the template, not reading. What it did learn is to read a system line harder: gold recap
+recall 26 → 34 of 80 (best ever), but extracted-fact recall 13 → 8 and identity 32 → 28 with human-life drift 0 → 10/96, i.e. the
+continuation pass also loosened v5b's identity. The simuser gain at t2/t3 (0.27/0.15 → 0.31/0.40) is the judge liking the new
+shape; t1 drops. Gate was "grounding improves without the simuser score dropping": grounding is within noise and t1 dropped.
+Reading for the roadmap: grounding at 2.7M needs the model to copy the right span out of the line (the induction circuit the pre-LN
+line was started for), and that is measured by copy_probe, not by this probe; a from-scratch 20-epoch run with the grounding rows in
+the mix (the actual v5b recipe) is the next honest test, and it is a 1-hour MPS job — Nico's call whether grounding is worth it now.

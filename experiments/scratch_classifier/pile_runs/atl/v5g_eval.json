@@ -1,0 +1,32 @@
+{
+ "v5b": {
+  "grounding_off": 4,
+  "grounding_on": 4,
+  "grounding_gold": 4,
+  "recap": {
+   "none": 10,
+   "gold": 26,
+   "extracted": 13
+  },
+  "simuser": {
+   "1": 0.24329319231739438,
+   "2": 0.2718686714347251,
+   "3": 0.14741470185957015
+  }
+ },
+ "v5g": {
+  "grounding_off": 1,
+  "grounding_on": 5,
+  "grounding_gold": 5,
+  "recap": {
+   "none": 10,
+   "gold": 34,
+   "extracted": 8
+  },
+  "simuser": {
+   "1": 0.17358460057611413,
+   "2": 0.3131553255021885,
+   "3": 0.4040944973430447
+  }
+ }
+}

@@ -2,7 +2,7 @@
 
 Purpose: let a fresh Claude Code session pick up this research program with as little loss as possible. Keep it short;
 the durable record is `RESEARCH_LOG.md` (lab notebook, append-only, every result the turn it lands). Update this file at
-the end of every working block (not just at the end of a session). Last update: **2026-10-27, 21:18 PDT**.
+the end of every working block (not just at the end of a session). Last update: **2026-10-27, 21:38 PDT**.
 
 ## How to resume (5 minutes)
 1. Read this file, then the last ~400 lines of `RESEARCH_LOG.md` (`tail -400 RESEARCH_LOG.md`).
@@ -23,8 +23,8 @@ the end of every working block (not just at the end of a session). Last update: 
    model-side work = best-of-N with a judge trained on his 0–5 scores, or retrieval for the recap tier. No run pending.
 3. Still open: crawler/room verdicts, teach-mode export, README/benchmark correction, posts.
 
-## Running right now (2026-10-27 21:18 PDT)
-- **Nothing running.** Branch 1 block 7 done: line budget in best-of-4 (harness + demo); grounding tier by retrieval measured — fact extractor helps v5b at depth, comparisons table grounds nothing → no demo knob.
+## Running right now (2026-10-27 21:38 PDT)
+- **Nothing running.** Branch 1 block 8 done: world knob (facts) on pre-LN entries; v5g grounding pass learns the answer shape, not the fact → not exported.
 - Nico's labels: tone picks (28 rows, `tone_labels_nico1.jsonl`) + follow-through scores (18, `review_followthrough_scores.json`).
 - Review format: `review_page.py` (0–5 per reply + notes, continuations first, ≤20 items). Pairs on shared history: `cont_pairs.py`.
 
@@ -51,8 +51,10 @@ mean below ct2 at every turn (single 0.33/0.32/0.17 vs 0.14/0.18/0.09) — same 
 exported; **data passes stopped until the judge has a target that is not ct2's own habits** (his chat scores). Judge v3 (history-
 matched rows) loses to v2 everywhere; both below chance on his 22 turn-3 rows. In-chat scoring shipped (`chat_scores.json` via teach export).
 **Status 21:18:** line budget shipped (0→0 with the cross-turn ban on, 1→0 with it off). `world.py` grounding tier: (b) facts work for v5b,
-(c) comparisons table does not (retrieval picks topical-not-semantic lines; models do not read them) → no knob. Decision for Nico only if he
-wants grounding at all: it costs a data pass for the pre-LN line (table lines in the system prompt of training rows, the way recaps were taught).
+(c) comparisons table does not (retrieval picks topical-not-semantic lines; models do not read them) → no knob. World knob shipped 21:38 (facts, pre-LN only). v5g (3-epoch continuation with 2,040 grounding rows, probe facts held out): grounding 4 → 5/26,
+gold-recap recall 26 → 34 (reads harder) but identity 32 → 28, human-life 0 → 10/96, extracted recap 13 → 8 → not exported.
+**Decision for Nico:** the honest grounding test is the from-scratch 20-epoch v5b recipe with the grounding rows in the mix — 1 h of MPS
+(the continuation pass teaches the template, not reading). Run it, or park grounding until the pre-LN line gets its copy circuit measured by copy_probe?
 **Next block (signal from chat, no pages):** (a) `nico_judge.py` reads `chat_scores.json` as a set (`chat`) and retrains when ≥ 30 rows arrive;
 (b) propose the per-conversation family budget (above) and, if he says yes, implement it as a harness/demo pick rule on the harness's own
 record (no regex) and measure overused-line picks before/after; (c) engagement export: turns per conversation on the ☆ entry vs ct2 plain.

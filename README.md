@@ -311,6 +311,29 @@ jeffy-build --out data/model_pack
 jeffy-evaluate --baselines --latency --device cpu
 ```
 
+## Confidence and abstaining
+
+Every prediction returns `confidence` (top probability), `margin` (top-1 minus top-2) and `entropy`. The default routing
+cutoff is **0.9 confidence**: act on the label when `confidence >= 0.9`, otherwise send the text to a review tier. The
+number comes from `scripts/calibration_probe.py`, which scores each head's held-out texts and reports, per threshold, the
+share of texts the head would answer on its own (coverage) and the error rate among those answers (misroute, the number a
+router pays for). Measured on the shipped heads (CPU, `data/eval_results/calibration_probe.json`):
+
+| head | held-out n | coverage at 0.9 | misroute at 0.9 | at 0.95 | at 0.99 |
+|---|---|---|---|---|---|
+| support_ticket (11 categories) | 1,350 | 77% | 0.0% | 50% / 0.0% | 4% / 0.0% |
+| support_ticket_v2 (27 intents) | 1,350 | 79% | 0.0% | 57% / 0.0% | 4% / 0.0% |
+| banking77 (77 intents) | 2,000 | 72% | 0.6% | 56% / 0.4% | 20% / 0.3% |
+
+Two caveats the table cannot show. A held-out split from a templated dataset says nothing about phrasings the taxonomy does
+not contain: issue #11's "change the address on my account" is a 0.97 `shipping` on `support_ticket` because the intent
+genuinely lives in two classes of that taxonomy. So each head also carries a regression probe set in `data/probes/<task>.jsonl`:
+phrasings with an expected label, or an expected abstain for texts that straddle classes (a straddling text must not come back
+as a single confident answer). Run them with `JEFFY_RUN_PROBES=1 python -m pytest tests/test_probes.py`. And heads trained on
+very little data are correct but under-confident: `medication_name` and `dosage_form` score 25/25 on their demo cases yet only
+4% and 8% of those clear 0.9 confidence, while margin ≥ 0.5 covers 68% and 52% with no misroutes. For such heads gate on
+`margin`, or lower the cutoff only after measuring misroute at that level.
+
 ## Evaluation notes
 
 - **SST-2**: Evaluated on `validation` split (official test labels are not public).

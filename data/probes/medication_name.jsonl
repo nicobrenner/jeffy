@@ -1,0 +1,36 @@
+{"text": "Metformin HCl 500mg Tablets", "expect": "metformin", "why": "medication_classifier_demo.json test case (OCR-style label text)"}
+{"text": "Lisinopril 10mg Tablet", "expect": "lisinopril", "why": "medication_classifier_demo.json test case (OCR-style label text)"}
+{"text": "Atorvastatin Calcium 20mg", "expect": "atorvastatin", "why": "medication_classifier_demo.json test case (OCR-style label text)"}
+{"text": "Amoxicillin 250mg/5mL Oral Suspension", "expect": "amoxicillin", "why": "medication_classifier_demo.json test case (OCR-style label text)"}
+{"text": "Albuterol Sulfate HFA 90mcg Inhalation Aerosol", "expect": "albuterol", "why": "medication_classifier_demo.json test case (OCR-style label text)"}
+{"text": "Metforrnin HCI 500mg Tab", "expect": "metformin", "why": "medication_classifier_demo.json test case (OCR-style label text)"}
+{"text": "Lisinopnl 10 mg Tablets", "expect": "lisinopril", "why": "medication_classifier_demo.json test case (OCR-style label text)"}
+{"text": "Atorvastatin Ca 20 mg", "expect": "atorvastatin", "why": "medication_classifier_demo.json test case (OCR-style label text)"}
+{"text": "Omepraz0le 20mg Capsule", "expect": "omeprazole", "why": "medication_classifier_demo.json test case (OCR-style label text)"}
+{"text": "Gabapenti n 300mg Cap", "expect": "gabapentin", "why": "medication_classifier_demo.json test case (OCR-style label text)"}
+{"text": "Lipitor 20mg Film-Coated Tablets", "expect": "atorvastatin", "why": "medication_classifier_demo.json test case (OCR-style label text)"}
+{"text": "Zoloft 50mg Tablets", "expect": "sertraline", "why": "medication_classifier_demo.json test case (OCR-style label text)"}
+{"text": "Synthroid 100mcg Tablets", "expect": "levothyroxine", "why": "medication_classifier_demo.json test case (OCR-style label text)"}
+{"text": "Prilosec 20mg Delayed-Release Capsules", "expect": "omeprazole", "why": "medication_classifier_demo.json test case (OCR-style label text)"}
+{"text": "Glucophage 500mg Tablets", "expect": "metformin", "why": "medication_classifier_demo.json test case (OCR-style label text)"}
+{"text": "Metform 500mg", "expect": "metformin", "why": "medication_classifier_demo.json test case (OCR-style label text)"}
+{"text": "Losart 50mg Tab", "expect": "losartan", "why": "medication_classifier_demo.json test case (OCR-style label text)"}
+{"text": "Amlodip 5mg", "expect": "amlodipine", "why": "medication_classifier_demo.json test case (OCR-style label text)"}
+{"text": "Sertralin 100mg", "expect": "sertraline", "why": "medication_classifier_demo.json test case (OCR-style label text)"}
+{"text": "Escitalop 10mg Tab", "expect": "escitalopram", "why": "medication_classifier_demo.json test case (OCR-style label text)"}
+{"text": "NDC 0093-7180-01 Metformin Hydrochloride Tablets USP 500mg Rx Only 100 Tablets", "expect": "metformin", "why": "medication_classifier_demo.json test case (OCR-style label text)"}
+{"text": "Rx Only Lisinopril Tablets USP 20mg 90 Tablets Lot 2847591", "expect": "lisinopril", "why": "medication_classifier_demo.json test case (OCR-style label text)"}
+{"text": "ATORVASTATIN CALCIUM TABLETS 40MG", "expect": "atorvastatin", "why": "medication_classifier_demo.json test case (OCR-style label text)"}
+{"text": "AMOXICILLIN CAPSULES USP 500MG", "expect": "amoxicillin", "why": "medication_classifier_demo.json test case (OCR-style label text)"}
+{"text": "PREDNISONE TABLETS USP 10MG", "expect": "prednisone", "why": "medication_classifier_demo.json test case (OCR-style label text)"}
+{"text": "Lipitor 20mg Film-Coated Tablets", "expect": "atorvastatin", "why": "playground medication-scanner demo shape (brand name / OCR noise / truncation), from the 2026-10-13 demo run"}
+{"text": "Zoloft 50mg Tablets", "expect": "sertraline", "why": "playground medication-scanner demo shape (brand name / OCR noise / truncation), from the 2026-10-13 demo run"}
+{"text": "Lisinopnl 10 mg Tablets", "expect": "lisinopril", "why": "playground medication-scanner demo shape (brand name / OCR noise / truncation), from the 2026-10-13 demo run"}
+{"text": "Omepraz0le 20mg Capsule", "expect": "omeprazole", "why": "playground medication-scanner demo shape (brand name / OCR noise / truncation), from the 2026-10-13 demo run"}
+{"text": "Gabapenti n 300mg Cap", "expect": "gabapentin", "why": "playground medication-scanner demo shape (brand name / OCR noise / truncation), from the 2026-10-13 demo run"}
+{"text": "Synthroid 100mcg Tablets", "expect": "levothyroxine", "why": "playground medication-scanner demo shape (brand name / OCR noise / truncation), from the 2026-10-13 demo run"}
+{"text": "Glucophage 500mg Tablets", "expect": "metformin", "why": "playground medication-scanner demo shape (brand name / OCR noise / truncation), from the 2026-10-13 demo run"}
+{"text": "Prilosec 20mg Delayed-Release Capsules", "expect": "omeprazole", "why": "playground medication-scanner demo shape (brand name / OCR noise / truncation), from the 2026-10-13 demo run"}
+{"text": "Metform 500mg", "expect": "metformin", "why": "playground medication-scanner demo shape (brand name / OCR noise / truncation), from the 2026-10-13 demo run"}
+{"text": "Losart 50mg Tab", "expect": "losartan", "why": "playground medication-scanner demo shape (brand name / OCR noise / truncation), from the 2026-10-13 demo run"}
+{"text": "PREDNISONE TABLETS USP 10MG", "expect": "prednisone", "why": "playground medication-scanner demo shape (brand name / OCR noise / truncation), from the 2026-10-13 demo run"}

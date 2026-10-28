@@ -13,6 +13,8 @@ Heads and test sets (nothing here downloads except banking77's HF split, which t
   support_ticket_v2  bitext 27 intents on its own held-out split (disjoint from its training texts by construction).
   support_ticket_v2 -> category  v2's prediction mapped up to the parent category, scored against the same category labels.
   banking77          77 intents, the evaluator's test split (max 2000, seed 42).
+  medication_name / dosage_form   the 25 OCR-style demo cases in data/eval_results/medication_classifier_demo.json (the only
+                     held-out set in the repo for these heads; their training data is not in the repo).
 
 Also runs the regression probe set data/probes/<task>.jsonl: phrasings with an expected label, or expected abstain
 (`"expect": "abstain"`) for texts that genuinely straddle two classes of the taxonomy (issue #11).
@@ -88,7 +90,7 @@ def run_probes(engine, task_id, label_of=lambda r: r["label"]):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--tasks", nargs="+", default=["support_ticket", "support_ticket_v2", "banking77"])
+    ap.add_argument("--tasks", nargs="+", default=["support_ticket", "support_ticket_v2", "banking77", "medication_name", "dosage_form"])
     ap.add_argument("--max-test", type=int, default=2000)
     ap.add_argument("--device", default="cpu")
     a = ap.parse_args()
@@ -122,6 +124,13 @@ def main():
         if "support_ticket_v2" in a.tasks:
             score("support_ticket_v2 (27 intents)", "support_ticket_v2", texts, intents)
             score("support_ticket_v2 -> category", "support_ticket_v2", texts, cats, label_of=lambda r: parent.get(r["label"]))
+    if "medication_name" in a.tasks or "dosage_form" in a.tasks:
+        cases = json.loads((OUT / "medication_classifier_demo.json").read_text())["test_results"]
+        texts = [c["ocr_text"] for c in cases]
+        if "medication_name" in a.tasks:
+            score("medication_name (50 drugs, 25 demo cases)", "medication_name", texts, [c["expected_medication"] for c in cases])
+        if "dosage_form" in a.tasks:
+            score("dosage_form (10 forms, 25 demo cases)", "dosage_form", texts, [c["expected_form"] for c in cases])
     if "banking77" in a.tasks:
         texts, labels = banking77_set(a.max_test)
         score("banking77 (77 intents)", "banking77", texts, labels, label_of=lambda r: r["label_id"])

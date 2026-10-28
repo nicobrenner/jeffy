@@ -29,6 +29,26 @@ support_ticket_v2 -> category,margin,0.5,0.9540740740740741,0.0,1288
 support_ticket_v2 -> category,margin,0.8,0.8548148148148148,0.0,1154
 support_ticket_v2 -> category,margin,0.9,0.6851851851851852,0.0,925
 support_ticket_v2 -> category,margin,0.95,0.4525925925925926,0.0,611
+"medication_name (50 drugs, 25 demo cases)",confidence,0.5,0.76,0.0,19
+"medication_name (50 drugs, 25 demo cases)",confidence,0.8,0.12,0.0,3
+"medication_name (50 drugs, 25 demo cases)",confidence,0.9,0.04,0.0,1
+"medication_name (50 drugs, 25 demo cases)",confidence,0.95,0.0,,0
+"medication_name (50 drugs, 25 demo cases)",confidence,0.99,0.0,,0
+"medication_name (50 drugs, 25 demo cases)",margin,0.2,0.92,0.0,23
+"medication_name (50 drugs, 25 demo cases)",margin,0.5,0.68,0.0,17
+"medication_name (50 drugs, 25 demo cases)",margin,0.8,0.08,0.0,2
+"medication_name (50 drugs, 25 demo cases)",margin,0.9,0.04,0.0,1
+"medication_name (50 drugs, 25 demo cases)",margin,0.95,0.0,,0
+"dosage_form (10 forms, 25 demo cases)",confidence,0.5,0.64,0.0,16
+"dosage_form (10 forms, 25 demo cases)",confidence,0.8,0.16,0.0,4
+"dosage_form (10 forms, 25 demo cases)",confidence,0.9,0.08,0.0,2
+"dosage_form (10 forms, 25 demo cases)",confidence,0.95,0.04,0.0,1
+"dosage_form (10 forms, 25 demo cases)",confidence,0.99,0.0,,0
+"dosage_form (10 forms, 25 demo cases)",margin,0.2,0.76,0.0,19
+"dosage_form (10 forms, 25 demo cases)",margin,0.5,0.52,0.0,13
+"dosage_form (10 forms, 25 demo cases)",margin,0.8,0.12,0.0,3
+"dosage_form (10 forms, 25 demo cases)",margin,0.9,0.04,0.0,1
+"dosage_form (10 forms, 25 demo cases)",margin,0.95,0.04,0.0,1
 banking77 (77 intents),confidence,0.5,0.9515,0.03415659485023647,1903
 banking77 (77 intents),confidence,0.8,0.824,0.009101941747572815,1648
 banking77 (77 intents),confidence,0.9,0.721,0.0062413314840499305,1442

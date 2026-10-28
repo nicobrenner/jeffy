@@ -101,6 +101,11 @@ class RoPEStack(nn.Module):
         return x
 
 
+class _Zero(nn.Module):
+    """returns zeros of width d (the feed-forward output of an attention-only block)"""
+    def __init__(self, d=256): super().__init__(); self.d = d
+    def forward(self, x): return torch.zeros(x.shape[:-1] + (self.d,), device=x.device, dtype=x.dtype)
+
 class CausalTransformer(nn.Module):
     """Transformer LM with causal attention, depth recurrence, and weight tying.
 
@@ -110,9 +115,9 @@ class CausalTransformer(nn.Module):
 
     def __init__(self, vocab_size, d_model=256, n_heads=8, n_layers=4,
                  d_ff=1024, max_seq_len=256, dropout=0.1,
-                 tie_weights=True, n_iterations=1, n_acts=0, pre_ln=False, rope=False):
+                 tie_weights=True, n_iterations=1, n_acts=0, pre_ln=False, rope=False, attn_only_first=False):
         super().__init__()
-        self.pre_ln = pre_ln; self.rope = rope
+        self.pre_ln = pre_ln; self.rope = rope; self.attn_only_first = attn_only_first
         self.d_model = d_model
         self.n_acts = n_acts
         self.act_emb = nn.Embedding(n_acts + 1, d_model, padding_idx=0) if n_acts else None   # act 0 = none (zero vector)
@@ -129,6 +134,10 @@ class CausalTransformer(nn.Module):
             dropout=dropout, batch_first=True, activation="gelu", norm_first=pre_ln,   # pre-LN: induction heads form at d256 (2026-10-27 unit tests)
         )
         self.transformer = RoPEStack([RoPEBlock(d_model, n_heads, d_ff, dropout, max_seq_len) for _ in range(n_layers)]) if rope else nn.TransformerEncoder(encoder_layer, num_layers=n_layers)
+        if attn_only_first:   # copy-circuit scout (2026-10-27): block 0 is attention only — the previous-token head needs no FF, and the stream block 1 reads is then pure attention output
+            first = self.transformer.layers[0]
+            if rope: first.ff = _Zero(d_model)
+            else: first.linear1 = nn.Linear(d_model, 1); first.linear2 = _Zero(d_model)
         self.norm = nn.LayerNorm(d_model)
         self.lm_head = nn.Linear(d_model, vocab_size, bias=False)
 
@@ -462,7 +471,7 @@ def train(args):
         max_seq_len=args.seq_len,
         dropout=args.dropout,
         tie_weights=args.tie_weights,
-        n_iterations=args.n_iterations, pre_ln=args.pre_ln, rope=args.rope,
+        n_iterations=args.n_iterations, pre_ln=args.pre_ln, rope=args.rope, attn_only_first=args.attn_only_first,
         n_acts=len(ConvDataset.ACTS) if args.act_vector else 0,
     ).to(device)
 
@@ -629,7 +638,7 @@ def train(args):
                             "d_ff": args.d_ff,
                             "max_seq_len": args.seq_len,
                             "tie_weights": args.tie_weights,
-                            "n_iterations": args.n_iterations, "pre_ln": args.pre_ln, "rope": args.rope,
+                            "n_iterations": args.n_iterations, "pre_ln": args.pre_ln, "rope": args.rope, "attn_only_first": args.attn_only_first,
                         },
                         "full_to_compact": full_to_compact,
                         "compact_to_full": compact_to_full,
@@ -694,7 +703,7 @@ def train(args):
                         "d_ff": args.d_ff,
                         "max_seq_len": args.seq_len,
                         "tie_weights": args.tie_weights,
-                        "n_iterations": args.n_iterations, "pre_ln": args.pre_ln, "rope": args.rope,
+                        "n_iterations": args.n_iterations, "pre_ln": args.pre_ln, "rope": args.rope, "attn_only_first": args.attn_only_first,
                     },
                     "full_to_compact": full_to_compact,
                     "compact_to_full": compact_to_full,
@@ -720,7 +729,7 @@ def train(args):
                     "d_ff": args.d_ff,
                     "max_seq_len": args.seq_len,
                     "tie_weights": args.tie_weights,
-                    "n_iterations": args.n_iterations, "pre_ln": args.pre_ln, "rope": args.rope,
+                    "n_iterations": args.n_iterations, "pre_ln": args.pre_ln, "rope": args.rope, "attn_only_first": args.attn_only_first,
                 },
                 "full_to_compact": full_to_compact,
                 "compact_to_full": compact_to_full,
@@ -734,7 +743,7 @@ def train(args):
 
         if args.keep_every and (epoch + 1) % args.keep_every == 0:
             torch.save({"model_state": model.state_dict(), "config": {"vocab_size": vocab_size, "d_model": args.d_model, "n_heads": args.n_heads,
-                        "n_layers": args.n_layers, "d_ff": args.d_ff, "max_seq_len": args.seq_len, "pre_ln": args.pre_ln, "rope": args.rope, "tie_weights": args.tie_weights, "n_iterations": args.n_iterations},
+                        "n_layers": args.n_layers, "d_ff": args.d_ff, "max_seq_len": args.seq_len, "pre_ln": args.pre_ln, "rope": args.rope, "attn_only_first": args.attn_only_first, "tie_weights": args.tie_weights, "n_iterations": args.n_iterations},
                         "full_to_compact": full_to_compact, "compact_to_full": compact_to_full, "tokenizer_path": args.tokenizer, "epoch": epoch,
                         "val_loss": val_loss, "data": args.chat_data, "data_sha": data_sha, "conv_sequences": args.conv_sequences},
                        out_dir / f"ep_{args.tag}_{epoch + 1}.pt")
@@ -825,6 +834,7 @@ def main():
                              "loss masked on padding) instead of packing all conversations into a stream and cutting fixed chunks")
     parser.add_argument("--rope", action="store_true", help="rotary position embeddings (pre-LN RoPE blocks, no position table)")
     parser.add_argument("--pre-ln", action="store_true", help="pre-LayerNorm transformer layers (norm_first); default post-LN as before")
+    parser.add_argument("--attn-only-first", action="store_true", help="copy-circuit scout: block 0 has no feed-forward (attention only)")
     parser.add_argument("--warmup-steps", type=int, default=0,
                         help="linear LR warmup over this many optimizer steps before the cosine decay (default 0 = none)")
     parser.add_argument("--eval-every", type=int, default=0,

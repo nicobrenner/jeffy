@@ -2,7 +2,7 @@
 
 Purpose: let a fresh Claude Code session pick up this research program with as little loss as possible. Keep it short;
 the durable record is `RESEARCH_LOG.md` (lab notebook, append-only, every result the turn it lands). Update this file at
-the end of every working block (not just at the end of a session). Last update: **2026-10-28, 11:02 PDT**.
+the end of every working block (not just at the end of a session). Last update: **2026-10-28, 12:21 PDT**.
 
 ## How to resume (5 minutes)
 1. Read this file, then the last ~400 lines of `RESEARCH_LOG.md` (`tail -400 RESEARCH_LOG.md`).
@@ -98,7 +98,9 @@ at p3 / p5 / p7 (chance 8.32) — the first induction signature in this class; f
 v7 ran (2026-10-28, 09:22): full recipe + 10% curriculum throughout + grounding rows → copy name 2 / pet **5** / city 0 (first movement), extracted
 recap 18/80 (best), but identity 21/32, t1 0.21, induction at p5 back to chance by epoch 20 → not exported. v7b ran (2026-10-28, 10:58): 30 epochs, no grounding rows, ms ×2 → names 2 / 1 / 2 at epochs 10 / 20 / 30, induction stable at p3 (5.8) and never at
 p5, identity 21 → 25 → 25, extracted recap 19/80, t1 0.28 → not exported. **Closing finding:** the curriculum buys a period-3 circuit and
-better recap reading, not cross-turn name copying at 2.7M. Next scout only if Nico wants it: 30% curriculum held, or 4-layer d192 (both > 1 h). Environment tier shipped 22:28: weather line from browser signals + idle check-in through the Room machinery; `weather_bank.py` is the file
+better recap reading, not cross-turn name copying at 2.7M. v7c ran (2026-10-28, 12:21): 4-layer d192 + the same curriculum → copy 0/16 at 20 epochs, gold recap **40/80** (v5b 26), identity 26/32 → not
+exported; **copy lineage closed** (best cross-turn copy across six runs: 2/16). What survives: depth reads a prompt line far better, so the
+recap tier + a 4-layer d192 with identity rows re-weighted is the memory path (a data pass when chat scores arrive, not a scout). Environment tier shipped 22:28: weather line from browser signals + idle check-in through the Room machinery; `weather_bank.py` is the file
 for Nico to curate. v5w (700 weather rows, continuation) fails the probe (5/30, accidental) and loosens identity → weather default off.
 **For Nico:** try world = weather on v5b with the idle knob at 1 min; the lines come from `weather_bank.py` — edit freely, the demo reads
 `demo/weather_bank.json` (re-export with `python3 -c "import json;from weather_bank import BANK;json.dump(BANK,open('demo/weather_bank.json','w'))"`).

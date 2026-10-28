@@ -6262,3 +6262,24 @@ like you're going to be in trouble"; "Welcome, it is small" → "…small and op
 replies, "best of 4 · judge 0.xx" under the turn, `seeded_bestof` event logged) because his per-source scores now decide — if his
 weather/gift scores favour the stopped seed, the fix is a judge trained on those rows, not a length rule. Headless: a gift seed on the ☆
 entry picks among 4, no console errors.
+
+## 2026-10-28 12:21 PDT — Branch 1: v7c (4-layer d192, same 10% curriculum, 20 epochs): depth reads a recap line better than anything before (gold 40/80) and copies nothing — last architecture scout, lineage closed on copy
+v7c = v7b's corpus and recipe with d192 L4 h4 ff768 (2.57M params), 20 epochs, checkpoints at 10 / 20; ~240 s/epoch, 1 h 20; val
+1.594 → 0.739. Printouts, epochs 0 / 10 / 20: "What are you?" "Thr yuanvorerg givesaby spi…" → "*me I'm Tiny Oracle. 2 mill…" → same;
+the recipe line and the fruit fly from epoch 10. Grounding sample, gold Tuesday line: "It's okay. I'm not sure if you're ready for it";
+weather sample, slow line + "yo": "Hi, I am Tiny Oracle. You must be a lot of fun and you have to go on the beach".
+| | copy name / pet / city ↑ | induction p3 / p5 / p7 ↓ (bar p5 ≤ 7.32) | identity ↑ | human-life ↓ | recap none / gold / extracted ↑ | grounding ↑ | simuser t1 / t2 / t3 ↑ | recital ↓ |
+|---|---|---|---|---|---|---|---|---|
+| v5b (d256 L2, 50 ep) | 1 / 0 / 0 | 10.54 / 11.86 / 12.83 | **32/32** | **0/96** | 10 / 26 / 13 | **4** | 0.24 / 0.27 / 0.15 | 1 |
+| v7 (d256 L2, 20 ep, + grounding rows) | 2 / **5** / 0 | **5.77** / 8.08 / 9.43 | 21/32 | 3/96 | 10 / 26 / 18 | 3 | 0.21 / 0.30 / **0.31** | **0** |
+| v7b (d256 L2, 30 ep) | 2 / 2 / 0 | 5.79 / 8.75 / 9.73 | 25/32 | 1/96 | 11 / 30 / **19** | **4** | **0.28 / 0.31** / 0.24 | 3 |
+| v7c ep 10 (d192 L4) | 1 / 0 / 2 | 6.15 / 7.77 / 8.84 | 26/32 | 5/96 | — | — | — | — |
+| **v7c ep 20 (d192 L4)** | 0 / 0 / 0 | 6.72 / **7.52** / 8.86 | 26/32 | 8/96 | 8 / **40** / 14 | 3 | 0.22 / 0.24 / 0.19 | **0** |
+Verdict: not exported (names 0/16; the "one more scout" bar was 4/16 — not reached, so this is the last architecture scout). Depth does
+one thing clearly: with the recap in the prompt v7c recalls 40/80 facts (v5b 26, v7b 30) — a 4-layer stack reads a line already in front
+of it far better than 2 layers, which is the recap tier's actual use case and the strongest reading result in the program. It does not copy
+across a turn (0/16) and its period-5 signature (7.52) sits just above the bar at 20 epochs. **The copy lineage closes here:** across six
+runs (scout grid, curriculum, v7, v7b, v7c) the best cross-turn copy is 2/16 names, while recap reading went 13 → 19 (extracted) and 26 →
+40 (gold). What that means for the product: the recap tier (facts extracted by the harness, written into the prompt) is the memory
+mechanism at this size, and a 4-layer d192 is the model to serve it with — a v7c-style model with v5b's identity needs the identity rows
+re-weighted, which is a data pass, not a scout. Model side rests until Nico's chat scores.

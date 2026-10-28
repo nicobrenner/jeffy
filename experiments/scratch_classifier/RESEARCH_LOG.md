@@ -6283,3 +6283,10 @@ runs (scout grid, curriculum, v7, v7b, v7c) the best cross-turn copy is 2/16 nam
 40 (gold). What that means for the product: the recap tier (facts extracted by the harness, written into the prompt) is the memory
 mechanism at this size, and a 4-layer d192 is the model to serve it with — a v7c-style model with v5b's identity needs the identity rows
 re-weighted, which is a data pass, not a scout. Model side rests until Nico's chat scores.
+
+## 2026-10-28 14:45 PDT — v7d (d192 L4, identity rows x2, no grounding): not exported, fails on human-life
+Gates (product rule): identity 30/32 PASS, gold recap 35/80 PASS, simuser t1 0.32 PASS (v5b 0.24), human-life 20/96 FAIL (bar ≤1).
+Extracted recap 20/80 (best in lineage), copy name 1/16, induction p5 8.30 (no circuit), weather probe 1/30.
+Verdict: oversampling identity rows fixed the name turn but the model now claims a human life in a fifth of later turns
+("I'm sorry, sir… get some money"). Next, when Nico asks: contrast rows for the human-life markers, not more identity rows.
+Branch 1 agent stopped at this point (usage credits); manager now works without helper agents.

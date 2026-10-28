@@ -294,6 +294,32 @@ def _build_info() -> dict:
     return info
 
 
+class RouteRequest(BaseModel):
+    text: str
+    top: int = 3
+
+
+@app.post("/v1/route")
+def route_prototype(req: RouteRequest):
+    """PROTOTYPE (journey 1b, local only): which shipped head should this text go to? A router head built by
+    scripts/build_router.py (label = head id) is loaded from JEFFY_TRAINED_DIR/router on first use. Behind the training flag."""
+    _require_training_enabled()
+    engine = get_engine()
+    if "router" not in engine.capabilities:
+        from .model_pack import load_artifact
+        d = _trained_dir() / "router"
+        if not d.exists():
+            raise HTTPException(404, "No router head: run scripts/build_router.py --out $JEFFY_TRAINED_DIR")
+        clf, scaler, manifest = load_artifact(d)
+        from .support import load_support
+        engine.register_trained("router", clf, scaler, manifest, support=load_support(d))
+    r = engine.predict("router", req.text)
+    if "error" in r:
+        raise HTTPException(400, r["error"])
+    ranked = sorted(r["probabilities"].items(), key=lambda kv: -kv[1])[: max(1, min(req.top, 10))]
+    return {"routes": [{"head": h, "probability": round(float(p), 4)} for h, p in ranked], "confidence": r["confidence"], "margin": r["margin"], "abstain_at_0.9": r["confidence"] < 0.9}
+
+
 @app.get("/v1/capabilities")
 def list_capabilities(request: Request):
     engine = get_engine()
@@ -677,7 +703,8 @@ async def _train_locked(req: TrainRequest, request: Request, session: str | None
         manifest = manifest.__class__(**{**{f.name: getattr(manifest, f.name)
                                             for f in manifest.__dataclass_fields__.values()},
                                           "description": req.description})
-    get_engine().register_trained(req.task_id, clf, scaler, manifest)
+    from .support import load_support
+    get_engine().register_trained(req.task_id, clf, scaler, manifest, support=load_support(Path(artifact_path)))
     if session and req.task_id.startswith(_TEACH_PREFIX):
         _session_heads[req.task_id] = {"session": session, "expires": time.time() + 60 * _TEACH_TTL_MIN, "dir": Path(artifact_path)}
 
@@ -1481,7 +1508,7 @@ footer{max-width:1200px;margin:auto;padding:16px 24px;font-size:10px;color:var(-
 <div style="display:flex;align-items:center;gap:14px">
 <a href="https://github.com/nicobrenner/jeffy" target="_blank" style="font-size:11px;color:var(--muted)">GitHub &#8599;</a>
 <div id="status" class="status">Connecting</div>
-<select id="journey-sel" title="prototype journeys (local only)" style="font-size:11px;background:transparent;color:var(--muted);border:1px solid var(--border,#333);border-radius:6px;padding:2px 4px"><option value="0">journey: today</option><option value="1">1 · classify box on landing</option><option value="2">2 · teach under the label</option><option value="3">3 · paste your texts first</option></select>
+<select id="journey-sel" title="prototype journeys (local only)" style="font-size:11px;background:transparent;color:var(--muted);border:1px solid var(--border,#333);border-radius:6px;padding:2px 4px"><option value="0">journey: today</option><option value="1">1 · classify box on landing</option><option value="1b">1b · routed, then classified</option><option value="2">2 · teach under the label</option><option value="3">3 · paste your texts first</option></select>
 </div>
 </header>
 <main>
@@ -2568,6 +2595,7 @@ async function runPredict(tid){
     });
     if(allProbs.length>10)bars.innerHTML+='<div style="font-size:10px;color:var(--muted);margin-top:4px">Showing top 10 of '+allProbs.length+' classes</div>';
     $("try-meta").innerHTML="Confidence: "+(d.confidence*100).toFixed(1)+"%"+
+      (d.support_percentile!==undefined?" \u00b7 Support: farther from the training data than "+d.support_percentile.toFixed(0)+"% of its examples"+(d.support_percentile>=95?" (far tail: treat with care)":""):"")+
       " \\u00b7 Embedding: "+d.embedding_ms+"ms \\u00b7 Classifier: "+d.classifier_ms+"ms"+
       " \\u00b7 Total: "+d.latency_ms+"ms";
     resEl.style.display="block";
@@ -3152,9 +3180,12 @@ function teachAddRow(text,label){
   r.querySelector(".teach-text").value=text||"";r.querySelector(".teach-label").value=label||"";
   $("teach-rows").appendChild(r);_teachRows++;
 }
+function teachIsOurExample(tid,t){var c=CAPS[tid];return !!(c&&c.example&&t&&t.trim()===String(c.example).trim());}
 function teachOpen(tid){
   $("teach-line").style.display="none";$("teach-box").style.display="block";
-  if(_teachRows===0){var t=$("try-text")?$("try-text").value:"";teachAddRow(t,"");teachAddRow("","");teachAddRow("","");teachAddRow("","");}
+  if(_teachRows===0){var t=$("try-text")?$("try-text").value:"";
+    if(teachIsOurExample(tid,t)){t="";$("teach-msg").textContent="That was our sample text. Paste your own text in the rows below.";_ev("teach_default_text",tid,{});}
+    teachAddRow(t,"");teachAddRow("","");teachAddRow("","");teachAddRow("","");}
   _ev("teach_open",tid,{rows:_teachRows});
   var f=$("teach-rows").querySelector(".teach-label");if(f)f.focus();
 }
@@ -3176,7 +3207,7 @@ async function teachSubmit(fromTid){
 }
 // --- prototype journeys (local only; ?journey=1|2|3; default = today's page) ---
 var JOURNEY;
-function journeyFrom(){var m=location.search.match(/[?&]journey=([123])/);return m?+m[1]:0;}
+function journeyFrom(){var m=location.search.match(/[?&]journey=(1b|[123])/);return m?(m[1]==="1b"?"1b":+m[1]):0;}
 function teachBoxMarkup(intro){return '<div id="teach-box" style="margin-top:8px;border:1px solid var(--border,#333);border-radius:8px;padding:10px;font-size:12px;font-family:var(--display)">'+
   '<div style="color:var(--muted);margin-bottom:6px">'+(intro||'Your text, your label. One line each; at least two labels, four rows. Trains in seconds, no account. Four rows give a first signal, not a classifier: expect 50 to 100 examples per label before the confidence means much.')+'</div>'+
   '<div id="teach-rows"></div>'+
@@ -3196,6 +3227,35 @@ function journeyInit(){
         $("j1-lbl").textContent=d.label;$("j1-meta").textContent="confidence "+(d.confidence*100).toFixed(0)+"% · margin "+(d.margin*100).toFixed(0)+"% · "+tid;$("j1-res").style.display="block";_stats.predictions++;_ev("predict",tid,{label:d.label,confidence:d.confidence,journey:1});}
       catch(e){$("j1-meta").textContent=e.message;}finally{$("j1-run").disabled=false;}};
     if(TEACH)$("j1-teach").onclick=function(e){e.preventDefault();var w=$("j1-teachwrap");w.innerHTML=teachBoxMarkup();w.style.display="block";_teachRows=0;teachAddRow($("j1-text").value,"");teachAddRow("","");teachAddRow("","");teachAddRow("","");$("teach-add").onclick=function(){teachAddRow("","");};$("teach-submit").onclick=function(){teachSubmit($("j1-task").value);};_ev("teach_open",$("j1-task").value,{rows:4,journey:1});};
+  }
+  if(JOURNEY==="1b"){
+    var opts1b=Object.keys(CAPS).filter(function(k){return CAPS[k].encoder!=="features";}).map(function(k){return '<option value="'+k+'">'+k+'</option>';}).join('');
+    mount.innerHTML='<div class="d-section" style="margin-bottom:18px"><h3>Paste a sentence; we route it, then classify it</h3>'+
+      '<textarea id="jb-text" rows="2" spellcheck="false" placeholder="Anything: a support message, a review, a voice command…"></textarea>'+
+      '<div class="try-row"><span id="jb-meta" style="font-size:11px;color:var(--muted);flex:1"></span><button class="run-btn" id="jb-run">Classify &#8594;</button></div>'+
+      '<div id="jb-res" style="display:none">'+
+      '<div style="font-size:11px;color:var(--muted);margin-top:10px;font-family:var(--display)">ROUTED TO <span id="jb-rmeta"></span></div><div id="jb-routes"></div>'+
+      '<div style="font-size:11px;color:var(--muted);margin-top:12px;font-family:var(--display)">WITHIN <span id="jb-head"></span> <span id="jb-wmeta"></span></div><div id="jb-lbl" class="result-label" style="font-size:18px"></div><div id="jb-labels"></div>'+
+      (TEACH?'<div style="margin-top:8px;font-size:12px;font-family:var(--display)"><a href="#" id="jb-teach" style="color:var(--accent)">Not your labels? Teach it three of your own.</a></div><div id="jb-teachwrap" style="display:none"></div>':'')+
+      '</div><div style="margin-top:10px;font-size:11px;color:var(--muted);font-family:var(--display)">or pick a head: <select id="jb-task" style="font-size:11px"><option value="">(auto)</option>'+opts1b+'</select></div></div>';
+    var jbHead=null;
+    function bar(label,prob,cls,extra){return '<div class="bar-row '+(cls||'')+'" '+(extra||'')+'><span class="bar-label" title="'+label+'">'+label+'</span><div class="track"><div class="fill" style="width:'+Math.round(prob*100)+'%"></div></div><span class="pct">'+(prob*100).toFixed(1)+'%</span></div>';}
+    async function within(tid){
+      var t=$("jb-text").value;jbHead=tid;$("jb-head").textContent=tid;$("jb-labels").innerHTML="";$("jb-lbl").textContent="…";
+      var r=await fetch("/v1/predict",{method:"POST",headers:Object.assign({"Content-Type":"application/json"},TEACH?{"X-Jeffy-Session":teachSession()}:{}),body:JSON.stringify({text:t,task:tid})});var d=await r.json();if(!r.ok)throw Error(d.detail||"error");
+      $("jb-lbl").textContent=d.label;$("jb-wmeta").textContent="· confidence "+(d.confidence*100).toFixed(0)+"% · margin "+(d.margin*100).toFixed(0)+"%"+(d.confidence<0.9?" · below the 0.9 cutoff: review":"");
+      var e=Object.entries(d.probabilities).slice(0,3);$("jb-labels").innerHTML=e.map(function(kv){return bar(kv[0],kv[1]);}).join('')+(Object.keys(d.probabilities).length>3?'<div style="font-size:10px;color:var(--muted);margin-top:4px">top 3 of '+Object.keys(d.probabilities).length+' labels</div>':'');
+      _stats.predictions++;_ev("predict",tid,{label:d.label,confidence:d.confidence,journey:"1b"});
+    }
+    $("jb-run").onclick=async function(){var t=$("jb-text").value;if(!t.trim())return;$("jb-run").disabled=true;$("jb-meta").textContent="";
+      try{var forced=$("jb-task").value;var routes;
+        if(forced){routes=[{head:forced,probability:1}];$("jb-rmeta").textContent="(picked by you)";}
+        else{var r=await fetch("/v1/route",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:t,top:3})});var d=await r.json();if(!r.ok)throw Error(d.detail||"route error");routes=d.routes;$("jb-rmeta").textContent="· router confidence "+(d.confidence*100).toFixed(0)+"% · margin "+(d.margin*100).toFixed(0)+"%"+(d["abstain_at_0.9"]?" · below 0.9: the route is a guess":"");_ev("route",routes[0].head,{confidence:d.confidence,margin:d.margin,journey:"1b"});}
+        $("jb-routes").innerHTML=routes.map(function(x,i){return bar(x.head,x.probability,i===0?"sel":"", 'data-head="'+x.head+'" style="cursor:pointer" title="click to classify within this head"');}).join('');
+        $("jb-routes").querySelectorAll("[data-head]").forEach(function(el){el.onclick=function(){within(el.dataset.head).catch(function(e){$("jb-meta").textContent=e.message;});};});
+        $("jb-res").style.display="block";await within(routes[0].head);}
+      catch(e){$("jb-meta").textContent=e.message;}finally{$("jb-run").disabled=false;}};
+    if(TEACH)$("jb-teach").onclick=function(e){e.preventDefault();var w=$("jb-teachwrap");w.innerHTML=teachBoxMarkup();w.style.display="block";_teachRows=0;teachAddRow($("jb-text").value,"");teachAddRow("","");teachAddRow("","");teachAddRow("","");$("teach-add").onclick=function(){teachAddRow("","");};$("teach-submit").onclick=function(){teachSubmit(jbHead||"landing");};_ev("teach_open",jbHead||"landing",{rows:4,journey:"1b"});};
   }
   if(JOURNEY===3&&TEACH){
     mount.innerHTML='<div class="d-section" style="margin-bottom:18px"><h3>Paste your texts, name two labels</h3>'+teachBoxMarkup('Four lines of your own text with the label you want for each. Trains in seconds on this machine, no account, no key. Or scroll down and start from a pretrained head.')+'</div>';

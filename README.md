@@ -318,6 +318,10 @@ Corrections accumulate and trigger a retrain at `JEFFY_RETRAIN_THRESHOLD`, using
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `JEFFY_ENABLE_TRAINING` | unset (off) | Enables the `/v1/train` and `/v1/feedback` endpoints. They are **off by default** because they mutate server state and write files to disk. Leave disabled on any public or shared instance; both return 404 when off. |
+| `JEFFY_PLAYGROUND_TEACH` | follows `JEFFY_ENABLE_TRAINING` | Shows the playground's "Not your labels? Teach it three of your own." box under every prediction: four rows pre-filled with the text just classified, submit calls `POST /v1/train`, the new head appears as `my_<id>` and the next prediction runs on it. Off whenever training is off, so a public deployment never shows it; set `on`/`off` to override. Path events `teach_open`, `teach_submit`, `teach_predict` land in the analytics file. |
+| `JEFFY_TRAIN_MAX_ROWS` | 200 | `/v1/train` rejects more examples than this (HTTP 413). |
+| `JEFFY_TRAIN_MAX_BYTES` | 65536 | `/v1/train` rejects more bytes of training text than this (HTTP 413). |
+| `JEFFY_TRAIN_PER_IP_HOUR` | 20 | `/v1/train` calls allowed per client address per hour, in memory (HTTP 429). |
 | `JEFFY_TRAINED_DIR` | `~/.jeffy/trained` | Where classifiers trained via `/v1/train` are written. Never the installed package directory. |
 | `JEFFY_FEEDBACK_DIR` | `~/.jeffy-feedback` | Where `/v1/feedback` corrections are stored as JSONL. |
 | `JEFFY_RETRAIN_THRESHOLD` | 50 | How many feedback corrections trigger an automatic retrain. |

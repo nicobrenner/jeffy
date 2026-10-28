@@ -450,6 +450,44 @@ def _trained_dir() -> Path:
     return p
 
 
+# Caps on /v1/train input. They exist so the playground's "teach it three of your own" box can be turned on
+# without turning the server into a free embedding farm; see README "Server configuration".
+_TRAIN_MAX_ROWS = int(os.environ.get("JEFFY_TRAIN_MAX_ROWS", "200"))
+_TRAIN_MAX_BYTES = int(os.environ.get("JEFFY_TRAIN_MAX_BYTES", str(64 * 1024)))
+_TRAIN_PER_IP_HOUR = int(os.environ.get("JEFFY_TRAIN_PER_IP_HOUR", "20"))
+_train_calls: dict[str, list[float]] = defaultdict(list)
+
+
+def _teach_enabled() -> bool:
+    """The playground teach box. Off unless training is on; JEFFY_PLAYGROUND_TEACH=on/off overrides either way.
+    A public deployment keeps training off, so it never shows the box."""
+    v = os.environ.get("JEFFY_PLAYGROUND_TEACH", "").strip().lower()
+    if v in ("1", "true", "yes", "on"):
+        return True
+    if v in ("0", "false", "no", "off"):
+        return False
+    return os.environ.get("JEFFY_ENABLE_TRAINING", "").strip().lower() in ("1", "true", "yes", "on")
+
+
+def _enforce_train_caps(texts: list[str], ip: str):
+    if len(texts) > _TRAIN_MAX_ROWS:
+        raise HTTPException(413, f"Too many examples: {len(texts)} > JEFFY_TRAIN_MAX_ROWS={_TRAIN_MAX_ROWS}")
+    nbytes = sum(len(t.encode("utf-8")) for t in texts)
+    if nbytes > _TRAIN_MAX_BYTES:
+        raise HTTPException(413, f"Training text too large: {nbytes} bytes > JEFFY_TRAIN_MAX_BYTES={_TRAIN_MAX_BYTES}")
+    now = time.time()
+    calls = [t for t in _train_calls[ip] if now - t < 3600]
+    if len(calls) >= _TRAIN_PER_IP_HOUR:
+        raise HTTPException(429, f"Training limit reached: {_TRAIN_PER_IP_HOUR} per hour per client (JEFFY_TRAIN_PER_IP_HOUR)")
+    calls.append(now)
+    _train_calls[ip] = calls
+
+
+def _client_ip(request: Request) -> str:
+    return (request.headers.get("cf-connecting-ip") or request.headers.get("x-forwarded-for", "").split(",")[0].strip()
+            or (request.client.host if request.client else "?"))
+
+
 def _load_feedback():
     if not _FEEDBACK_DIR.exists():
         return
@@ -469,12 +507,13 @@ def _save_feedback_entry(task_id: str, entry: dict):
 
 
 @app.post("/v1/train")
-async def train_endpoint(req: TrainRequest):
+async def train_endpoint(req: TrainRequest, request: Request):
     import asyncio
     from .train import train_classifier, train_binary_flags
 
     _require_training_enabled()
     _validate_task_id(req.task_id)
+    _enforce_train_caps(req.texts or [t for v in (req.examples or {}).values() for t in v], _client_ip(request))
 
     if req.mode == "binary-flags":
         if not req.texts or not req.flags:
@@ -1097,7 +1136,7 @@ def analytics(last: int = 50, external_only: bool = False):
 
 @app.get("/", response_class=HTMLResponse)
 def playground():
-    return PLAYGROUND_HTML
+    return PLAYGROUND_HTML.replace("__TEACH__", "true" if _teach_enabled() else "false")
 
 
 def _example_text(task_id: str) -> str:
@@ -1943,6 +1982,7 @@ let _stats={predictions:0,feedbacks:0,demos:{},viewStart:0,currentView:""};
 function _trackView(v){if(_stats.currentView&&_stats.viewStart){var sec=Math.round((Date.now()-_stats.viewStart)/1000);if(sec>1)_ev("dwell",_stats.currentView,{seconds:sec});}_stats.currentView=v;_stats.viewStart=Date.now();}
 function _trackDemo(name,action){if(action==="start"){_stats.demos[name]=(_stats.demos[name]||0)+1;_ev("demo-start",name,{run:_stats.demos[name]});}else{_ev("demo-stop",name,{run:_stats.demos[name]||1});}}
 
+const TEACH=__TEACH__;
 const CAPS={"ag_news":{"name":"News article topic classification","n_classes":4,"encoder":"BAAI/bge-large-en-v1.5","license":"Academic / non-commercial","train_examples":10000,"test_accuracy":0.9055,"train_accuracy":0.9413,"labels":{"0":"World","1":"Sports","2":"Business","3":"Sci/Tech"},"example":"The Federal Reserve raised interest rates by 0.25% today."},"banking77":{"name":"Banking customer service intent detection","n_classes":77,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY 4.0","train_examples":10000,"test_accuracy":0.943,"train_accuracy":0.9836,"labels":{"0":"activate_my_card","1":"age_limit","2":"apple_pay_or_google_pay","3":"atm_support","4":"automatic_top_up","5":"balance_not_updated_after_bank_transfer","6":"balance_not_updated_after_cheque_or_cash_deposit","7":"beneficiary_not_allowed","8":"cancel_transfer","9":"card_about_to_expire","10":"card_acceptance","11":"card_arrival","12":"card_delivery_estimate","13":"card_linking","14":"card_not_working","15":"card_payment_fee_charged","16":"card_payment_not_recognised","17":"card_payment_wrong_exchange_rate","18":"card_swallowed","19":"cash_withdrawal_charge","20":"cash_withdrawal_not_recognised","21":"change_pin","22":"compromised_card","23":"contactless_not_working","24":"country_support","25":"declined_card_payment","26":"declined_cash_withdrawal","27":"declined_transfer","28":"direct_debit_payment_not_recognised","29":"disposable_card_limits","30":"edit_personal_details","31":"exchange_charge","32":"exchange_rate","33":"exchange_via_app","34":"extra_charge_on_statement","35":"failed_transfer","36":"fiat_currency_support","37":"get_disposable_virtual_card","38":"get_physical_card","39":"getting_spare_card","40":"getting_virtual_card","41":"lost_or_stolen_card","42":"lost_or_stolen_phone","43":"order_physical_card","44":"passcode_forgotten","45":"pending_card_payment","46":"pending_cash_withdrawal","47":"pending_top_up","48":"pending_transfer","49":"pin_blocked","50":"receiving_money","51":"Refund_not_showing_up","52":"request_refund","53":"reverted_card_payment?","54":"supported_cards_and_currencies","55":"terminate_account","56":"top_up_by_bank_transfer_charge","57":"top_up_by_card_charge","58":"top_up_by_cash_or_cheque","59":"top_up_failed","60":"top_up_limits","61":"top_up_reverted","62":"topping_up_by_card","63":"transaction_charged_twice","64":"transfer_fee_charged","65":"transfer_into_account","66":"transfer_not_received_by_recipient","67":"transfer_timing","68":"unable_to_verify_identity","69":"verify_my_identity","70":"verify_source_of_funds","71":"verify_top_up","72":"virtual_card_not_working","73":"visa_or_mastercard","74":"why_verify_identity","75":"wrong_amount_of_cash_received","76":"wrong_exchange_rate_for_cash_withdrawal"},"example":"I\\u2019ve been charged twice for the same transaction, can I get a refund?"},"clinc_oos":{"name":"Intent detection with out-of-scope","n_classes":151,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY 3.0","train_examples":10000,"test_accuracy":0.8845,"train_accuracy":0.9983,"labels":{"0":"restaurant_reviews","1":"nutrition_info","2":"account_blocked","3":"oil_change_how","4":"time","5":"weather","6":"redeem_rewards","7":"interest_rate","8":"gas_type","9":"accept_reservations","10":"smart_home","11":"user_name","12":"report_lost_card","13":"repeat","14":"whisper_mode","15":"what_are_your_hobbies","16":"order","17":"jump_start","18":"schedule_meeting","19":"meeting_schedule","20":"freeze_account","21":"what_song","22":"meaning_of_life","23":"restaurant_reservation","24":"traffic","25":"make_call","26":"text","27":"bill_balance","28":"improve_credit_score","29":"change_language","30":"no","31":"measurement_conversion","32":"timer","33":"flip_coin","34":"do_you_have_pets","35":"balance","36":"tell_joke","37":"last_maintenance","38":"exchange_rate","39":"uber","40":"car_rental","41":"credit_limit","42":"oos","43":"shopping_list","44":"expiration_date","45":"routing","46":"meal_suggestion","47":"tire_change","48":"todo_list","49":"card_declined","50":"rewards_balance","51":"change_accent","52":"vaccines","53":"reminder_update","54":"food_last","55":"change_ai_name","56":"bill_due","57":"who_do_you_work_for","58":"share_location","59":"international_visa","60":"calendar","61":"translate","62":"carry_on","63":"book_flight","64":"insurance_change","65":"todo_list_update","66":"timezone","67":"cancel_reservation","68":"transactions","69":"credit_score","70":"report_fraud","71":"spending_history","72":"directions","73":"spelling","74":"insurance","75":"what_is_your_name","76":"reminder","77":"where_are_you_from","78":"distance","79":"payday","80":"flight_status","81":"find_phone","82":"greeting","83":"alarm","84":"order_status","85":"confirm_reservation","86":"cook_time","87":"damaged_card","88":"reset_settings","89":"pin_change","90":"replacement_card_duration","91":"new_card","92":"roll_dice","93":"income","94":"taxes","95":"date","96":"who_made_you","97":"pto_request","98":"tire_pressure","99":"how_old_are_you","100":"rollover_401k","101":"pto_request_status","102":"how_busy","103":"application_status","104":"recipe","105":"calendar_update","106":"play_music","107":"yes","108":"direct_deposit","109":"credit_limit_change","110":"gas","111":"pay_bill","112":"ingredients_list","113":"lost_luggage","114":"goodbye","115":"what_can_i_ask_you","116":"book_hotel","117":"are_you_a_bot","118":"next_song","119":"change_speed","120":"plug_type","121":"maybe","122":"w2","123":"oil_change_when","124":"thank_you","125":"shopping_list_update","126":"pto_balance","127":"order_checks","128":"travel_alert","129":"fun_fact","130":"sync_device","131":"schedule_maintenance","132":"apr","133":"transfer","134":"ingredient_substitution","135":"calories","136":"current_location","137":"international_fees","138":"calculator","139":"definition","140":"next_holiday","141":"update_playlist","142":"mpg","143":"min_payment","144":"change_user_name","145":"restaurant_suggestion","146":"travel_notification","147":"cancel","148":"pto_used","149":"travel_suggestion","150":"change_volume"},"example":"What\\u2019s the weather like in San Francisco?"},"dbpedia":{"name":"Wikipedia article ontology classification","n_classes":14,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY-SA 3.0","train_examples":10000,"test_accuracy":0.9595,"train_accuracy":0.998,"labels":{"0":"Company","1":"EducationalInstitution","2":"Artist","3":"Athlete","4":"OfficeHolder","5":"MeanOfTransportation","6":"Building","7":"NaturalPlace","8":"Village","9":"Animal","10":"Plant","11":"Album","12":"Film","13":"WrittenWork"},"example":"Harvard University is a private Ivy League research university in Cambridge, Massachusetts."},"emotion":{"name":"Text emotion detection","n_classes":6,"encoder":"BAAI/bge-large-en-v1.5","license":"Academic","train_examples":10000,"test_accuracy":0.755,"train_accuracy":0.8339,"labels":{"0":"sadness","1":"joy","2":"love","3":"anger","4":"fear","5":"surprise"},"example":"I just got accepted into my dream school! I can\\u2019t believe it!"},"imdb":{"name":"Movie review sentiment (positive/negative)","n_classes":2,"encoder":"BAAI/bge-large-en-v1.5","license":"Academic / non-commercial","train_examples":10000,"test_accuracy":0.948,"train_accuracy":0.9559,"labels":{"0":"negative","1":"positive"},"example":"A beautifully crafted film with stunning performances throughout."},"inbox_router":{"name":"Email inbox classifier: route messages to work, family, promo, or notification","n_classes":4,"encoder":"BAAI/bge-large-en-v1.5","license":"MIT","train_examples":24,"test_accuracy":0.708,"train_accuracy":1.0,"labels":{"family":"family","notification":"notification","promo":"promo","work":"work"},"example":"Can you send me the Q4 projections?"},"massive_intent":{"name":"Amazon MASSIVE voice command intents","n_classes":60,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY 4.0","train_examples":10000,"test_accuracy":0.881,"train_accuracy":0.977,"labels":{"alarm_query":"alarm_query","alarm_remove":"alarm_remove","alarm_set":"alarm_set","audio_volume_down":"audio_volume_down","audio_volume_mute":"audio_volume_mute","audio_volume_other":"audio_volume_other","audio_volume_up":"audio_volume_up","calendar_query":"calendar_query","calendar_remove":"calendar_remove","calendar_set":"calendar_set","cooking_query":"cooking_query","cooking_recipe":"cooking_recipe","datetime_convert":"datetime_convert","datetime_query":"datetime_query","email_addcontact":"email_addcontact","email_query":"email_query","email_querycontact":"email_querycontact","email_sendemail":"email_sendemail","general_greet":"general_greet","general_joke":"general_joke","general_quirky":"general_quirky","iot_cleaning":"iot_cleaning","iot_coffee":"iot_coffee","iot_hue_lightchange":"iot_hue_lightchange","iot_hue_lightdim":"iot_hue_lightdim","iot_hue_lightoff":"iot_hue_lightoff","iot_hue_lighton":"iot_hue_lighton","iot_hue_lightup":"iot_hue_lightup","iot_wemo_off":"iot_wemo_off","iot_wemo_on":"iot_wemo_on","lists_createoradd":"lists_createoradd","lists_query":"lists_query","lists_remove":"lists_remove","music_dislikeness":"music_dislikeness","music_likeness":"music_likeness","music_query":"music_query","music_settings":"music_settings","news_query":"news_query","play_audiobook":"play_audiobook","play_game":"play_game","play_music":"play_music","play_podcasts":"play_podcasts","play_radio":"play_radio","qa_currency":"qa_currency","qa_definition":"qa_definition","qa_factoid":"qa_factoid","qa_maths":"qa_maths","qa_stock":"qa_stock","recommendation_events":"recommendation_events","recommendation_locations":"recommendation_locations","recommendation_movies":"recommendation_movies","social_post":"social_post","social_query":"social_query","takeaway_order":"takeaway_order","takeaway_query":"takeaway_query","transport_query":"transport_query","transport_taxi":"transport_taxi","transport_ticket":"transport_ticket","transport_traffic":"transport_traffic","weather_query":"weather_query"},"example":"Turn on the living room lights"},"sms_spam":{"name":"SMS spam detection","n_classes":2,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY 4.0","train_examples":4459,"test_accuracy":0.991,"train_accuracy":0.997,"labels":{"0":"ham","1":"spam"},"example":"WINNER!! You have been selected for a 900 prize reward! Call now!"},"snli":{"name":"Natural language inference","n_classes":3,"encoder":"BAAI/bge-large-en-v1.5","license":"CC BY-SA 4.0","train_examples":10000,"test_accuracy":0.656,"train_accuracy":0.7271,"labels":{"0":"entailment","1":"neutral","2":"contradiction"},"example":"A man is playing guitar on a street corner. [SEP] A musician performs outdoors."},"sst2":{"name":"Movie review sentiment (positive/negative)","n_classes":2,"encoder":"BAAI/bge-large-en-v1.5","license":"Stanford academic license","train_examples":10000,"test_accuracy":0.901,"train_accuracy":0.9453,"labels":{"0":"negative","1":"positive"},"example":"This movie was absolutely terrible, a waste of time."},"tweet_eval_emotion":{"name":"Tweet emotion detection","n_classes":4,"encoder":"BAAI/bge-large-en-v1.5","license":"Twitter TOS / academic","train_examples":3257,"test_accuracy":0.781,"train_accuracy":0.902,"labels":{"0":"anger","1":"joy","2":"optimism","3":"sadness"},"example":"I am so frustrated with this company\\u2019s customer service."},"tweet_eval_offensive":{"name":"Offensive language detection","n_classes":2,"encoder":"BAAI/bge-large-en-v1.5","license":"Twitter TOS / academic","train_examples":10000,"test_accuracy":0.81,"train_accuracy":0.808,"labels":{"0":"not_offensive","1":"offensive"},"example":"Great work on the project team, really proud of everyone."},"tweet_eval_sentiment":{"name":"Tweet sentiment analysis","n_classes":3,"encoder":"BAAI/bge-large-en-v1.5","license":"Twitter TOS / academic","train_examples":10000,"test_accuracy":0.662,"train_accuracy":0.757,"labels":{"0":"negative","1":"neutral","2":"positive"},"example":"Best day ever! Finally got my dream job! #blessed"},"medication_name":{"name":"Medication name detection from OCR text (top 50 prescribed drugs)","n_classes":50,"encoder":"BAAI/bge-large-en-v1.5","license":"MIT","train_examples":574,"test_accuracy":1.0,"train_accuracy":1.0,"labels":{"acetaminophen":"acetaminophen","albuterol":"albuterol","alprazolam":"alprazolam","amlodipine":"amlodipine","amoxicillin":"amoxicillin","atorvastatin":"atorvastatin","azithromycin":"azithromycin","bupropion":"bupropion","carvedilol":"carvedilol","cetirizine":"cetirizine","ciprofloxacin":"ciprofloxacin","citalopram":"citalopram","clonazepam":"clonazepam","clopidogrel":"clopidogrel","cyclobenzaprine":"cyclobenzaprine","doxycycline":"doxycycline","duloxetine":"duloxetine","escitalopram":"escitalopram","fluoxetine":"fluoxetine","furosemide":"furosemide","gabapentin":"gabapentin","hydrochlorothiazide":"hydrochlorothiazide","hydroxychloroquine":"hydroxychloroquine","ibuprofen":"ibuprofen","levothyroxine":"levothyroxine","lisinopril":"lisinopril","loratadine":"loratadine","losartan":"losartan","meloxicam":"meloxicam","metformin":"metformin","metoprolol":"metoprolol","montelukast":"montelukast","naproxen":"naproxen","omeprazole":"omeprazole","oxycodone":"oxycodone","pantoprazole":"pantoprazole","pravastatin":"pravastatin","prednisone":"prednisone","pregabalin":"pregabalin","rosuvastatin":"rosuvastatin","sertraline":"sertraline","simvastatin":"simvastatin","spironolactone":"spironolactone","sumatriptan":"sumatriptan","tamsulosin":"tamsulosin","tramadol":"tramadol","trazodone":"trazodone","venlafaxine":"venlafaxine","warfarin":"warfarin","zolpidem":"zolpidem"},"example":"Metformin HCl 500mg Tablets"},"dosage_form":{"name":"Medication dosage form classification","n_classes":10,"encoder":"BAAI/bge-large-en-v1.5","license":"MIT","train_examples":84,"test_accuracy":0.909,"train_accuracy":1.0,"labels":{"capsule":"capsule","cream":"cream","drops":"drops","inhaler":"inhaler","injection":"injection","liquid":"liquid","ointment":"ointment","patch":"patch","suppository":"suppository","tablet":"tablet"},"example":"Metformin 500mg Tablets"}};
 
 // --- Multilingual ---
@@ -2366,8 +2406,15 @@ function showDetail(tid){
       '<div id="try-err" class="err-msg"></div>'+
       '<div id="try-res" style="display:none"><div id="try-lbl" class="result-label"></div><div id="try-bars"></div><div id="try-meta" class="rmeta"></div>'+
       '<div class="feedback-row"><span>Was this correct?</span><button class="fb-btn" id="fb-up" onclick="sendFeedback(1)">&#128077;</button><button class="fb-btn" id="fb-down" onclick="sendFeedback(0)">&#128078;</button><span id="fb-msg" class="fb-msg"></span></div></div>'+
-      '<details id="try-raw-s" style="display:none"><summary>Response JSON</summary><pre id="try-raw"></pre></details>';
+      '<details id="try-raw-s" style="display:none"><summary>Response JSON</summary><pre id="try-raw"></pre></details>'+
+      (TEACH?'<div id="teach-line" style="display:none;margin-top:10px;font-size:12px;font-family:var(--display)"><a href="#" id="teach-open" style="color:var(--accent)">Not your labels? Teach it three of your own.</a></div>'+
+      '<div id="teach-box" style="display:none;margin-top:8px;border:1px solid var(--border,#333);border-radius:8px;padding:10px;font-size:12px;font-family:var(--display)">'+
+      '<div style="color:var(--muted);margin-bottom:6px">Your text, your label. One line each; at least two labels, four rows. Trains in seconds, no account.</div>'+
+      '<div id="teach-rows"></div>'+
+      '<div class="try-row" style="margin-top:6px"><button class="fb-btn" id="teach-add" type="button">+ row</button><span id="teach-msg" style="font-size:11px;color:var(--muted);flex:1;margin:0 8px"></span><button class="run-btn" id="teach-submit" type="button">Train &#8594;</button></div>'+
+      '</div>':'');
     $("try-run").onclick=()=>runPredict(tid);
+    if(TEACH){$("teach-open").onclick=function(e){e.preventDefault();teachOpen(tid);};$("teach-add").onclick=function(){teachAddRow("","");};$("teach-submit").onclick=function(){teachSubmit(tid);};}
   }
 
   var curlData=isFeat
@@ -2451,6 +2498,8 @@ async function runPredict(tid){
     _stats.predictions++;
     _ev("predict",tid,{label:d.label,confidence:d.confidence,n:_stats.predictions});
     _lastPred={task:tid,label:d.label,confidence:d.confidence};
+    if(TEACH&&$("teach-line")&&$("teach-box").style.display==="none")$("teach-line").style.display="block";
+    if(tid.indexOf("my_")===0)_ev("teach_predict",tid,{label:d.label,confidence:d.confidence,margin:d.margin});
     $("fb-up").disabled=false;$("fb-down").disabled=false;
     $("fb-up").classList.remove("voted");$("fb-down").classList.remove("voted");
     $("fb-msg").textContent="";
@@ -3011,6 +3060,36 @@ $("pk-restart").onclick=function(){startPoker();};
 
 // --- Routing ---
 function go(h){location.hash=h;}
+var _teachRows=0;
+function teachAddRow(text,label){
+  var r=document.createElement("div");r.className="try-row";r.style.marginTop="4px";r.setAttribute("data-teach-row","1");
+  r.innerHTML='<input class="teach-text" type="text" placeholder="your text" style="flex:3;min-width:0;margin-right:6px">'+
+    '<input class="teach-label" type="text" placeholder="label" style="flex:1;min-width:0">';
+  r.querySelector(".teach-text").value=text||"";r.querySelector(".teach-label").value=label||"";
+  $("teach-rows").appendChild(r);_teachRows++;
+}
+function teachOpen(tid){
+  $("teach-line").style.display="none";$("teach-box").style.display="block";
+  if(_teachRows===0){var t=$("try-text")?$("try-text").value:"";teachAddRow(t,"");teachAddRow("","");teachAddRow("","");teachAddRow("","");}
+  _ev("teach_open",tid,{rows:_teachRows});
+  var f=$("teach-rows").querySelector(".teach-label");if(f)f.focus();
+}
+async function teachSubmit(fromTid){
+  var rows=[].slice.call(document.querySelectorAll("[data-teach-row]")),ex={},n=0;
+  rows.forEach(function(r){var t=r.querySelector(".teach-text").value.trim(),l=r.querySelector(".teach-label").value.trim().toLowerCase().replace(/[^a-z0-9_-]+/g,"_");if(t&&l){(ex[l]=ex[l]||[]).push(t);n++;}});
+  var msg=$("teach-msg");
+  if(Object.keys(ex).length<2||n<4){msg.textContent="Need at least two labels and four filled rows.";return;}
+  var tid="my_"+Date.now().toString(36);
+  var btn=$("teach-submit");btn.disabled=true;btn.textContent="Training\u2026";msg.textContent="";
+  _ev("teach_submit",fromTid,{rows:n,labels:Object.keys(ex).length,task:tid});
+  try{
+    var r=await fetch("/v1/train",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({task_id:tid,examples:ex,test_size:0,description:"taught in the playground"})});
+    var d=await r.json();if(!r.ok)throw Error(d.detail||JSON.stringify(d));
+    var labels={};Object.keys(ex).forEach(function(l){labels[l]=l;});
+    CAPS[tid]={name:"Your classifier ("+n+" rows, "+Object.keys(ex).length+" labels)",n_classes:Object.keys(ex).length,encoder:"BAAI/bge-large-en-v1.5",license:"yours",labels:labels,train_examples:n,example:rows[0].querySelector(".teach-text").value,taught:true};
+    _teachRows=0;go("model/"+tid);
+  }catch(err){msg.textContent=err.message;btn.disabled=false;btn.textContent="Train \u2192";}
+}
 function _ev(event,view,meta){try{navigator.sendBeacon("/v1/event",JSON.stringify({event:event,view:view||"",meta:meta||{}}))}catch(e){};try{if(typeof umami!=="undefined")umami.track(event,{view:view||"",meta:meta||{}})}catch(e){}}
 document.addEventListener("click",function(e){var a=e.target.closest("a[href^='http']");if(a)_ev("outbound",a.href);});
 window.addEventListener("beforeunload",function(){_trackView("");_ev("session-end","",{predictions:_stats.predictions,feedbacks:_stats.feedbacks,demos:Object.keys(_stats.demos).join(","),demo_runs:JSON.stringify(_stats.demos)});});

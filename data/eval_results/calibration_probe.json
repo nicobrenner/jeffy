@@ -1,0 +1,528 @@
+{
+ "generated": "2026-10-27T17:34:07-0700",
+ "thresholds": [
+  0.5,
+  0.8,
+  0.9,
+  0.95,
+  0.99
+ ],
+ "margins": [
+  0.2,
+  0.5,
+  0.8,
+  0.9,
+  0.95
+ ],
+ "heads": {
+  "support_ticket (11 categories)": {
+   "task_id": "support_ticket",
+   "n_test": 1350,
+   "accuracy": 0.9925925925925926,
+   "rows": [
+    {
+     "gate": "confidence",
+     "threshold": 0.5,
+     "coverage": 0.9829629629629629,
+     "misroute": 0.0015071590052750565,
+     "n_covered": 1327
+    },
+    {
+     "gate": "confidence",
+     "threshold": 0.8,
+     "coverage": 0.9111111111111111,
+     "misroute": 0.0,
+     "n_covered": 1230
+    },
+    {
+     "gate": "confidence",
+     "threshold": 0.9,
+     "coverage": 0.7733333333333333,
+     "misroute": 0.0,
+     "n_covered": 1044
+    },
+    {
+     "gate": "confidence",
+     "threshold": 0.95,
+     "coverage": 0.4962962962962963,
+     "misroute": 0.0,
+     "n_covered": 670
+    },
+    {
+     "gate": "confidence",
+     "threshold": 0.99,
+     "coverage": 0.03777777777777778,
+     "misroute": 0.0,
+     "n_covered": 51
+    },
+    {
+     "gate": "margin",
+     "threshold": 0.2,
+     "coverage": 0.9866666666666667,
+     "misroute": 0.003003003003003003,
+     "n_covered": 1332
+    },
+    {
+     "gate": "margin",
+     "threshold": 0.5,
+     "coverage": 0.9592592592592593,
+     "misroute": 0.0,
+     "n_covered": 1295
+    },
+    {
+     "gate": "margin",
+     "threshold": 0.8,
+     "coverage": 0.8733333333333333,
+     "misroute": 0.0,
+     "n_covered": 1179
+    },
+    {
+     "gate": "margin",
+     "threshold": 0.9,
+     "coverage": 0.6762962962962963,
+     "misroute": 0.0,
+     "n_covered": 913
+    },
+    {
+     "gate": "margin",
+     "threshold": 0.95,
+     "coverage": 0.38222222222222224,
+     "misroute": 0.0,
+     "n_covered": 516
+    }
+   ],
+   "seconds": 10.9
+  },
+  "support_ticket_v2 (27 intents)": {
+   "task_id": "support_ticket_v2",
+   "n_test": 1350,
+   "accuracy": 0.9918518518518519,
+   "rows": [
+    {
+     "gate": "confidence",
+     "threshold": 0.5,
+     "coverage": 0.9814814814814815,
+     "misroute": 0.0037735849056603774,
+     "n_covered": 1325
+    },
+    {
+     "gate": "confidence",
+     "threshold": 0.8,
+     "coverage": 0.9081481481481481,
+     "misroute": 0.0,
+     "n_covered": 1226
+    },
+    {
+     "gate": "confidence",
+     "threshold": 0.9,
+     "coverage": 0.7918518518518518,
+     "misroute": 0.0,
+     "n_covered": 1069
+    },
+    {
+     "gate": "confidence",
+     "threshold": 0.95,
+     "coverage": 0.5659259259259259,
+     "misroute": 0.0,
+     "n_covered": 764
+    },
+    {
+     "gate": "confidence",
+     "threshold": 0.99,
+     "coverage": 0.03481481481481481,
+     "misroute": 0.0,
+     "n_covered": 47
+    },
+    {
+     "gate": "margin",
+     "threshold": 0.2,
+     "coverage": 0.9851851851851852,
+     "misroute": 0.004511278195488722,
+     "n_covered": 1330
+    },
+    {
+     "gate": "margin",
+     "threshold": 0.5,
+     "coverage": 0.9540740740740741,
+     "misroute": 0.0,
+     "n_covered": 1288
+    },
+    {
+     "gate": "margin",
+     "threshold": 0.8,
+     "coverage": 0.8548148148148148,
+     "misroute": 0.0,
+     "n_covered": 1154
+    },
+    {
+     "gate": "margin",
+     "threshold": 0.9,
+     "coverage": 0.6851851851851852,
+     "misroute": 0.0,
+     "n_covered": 925
+    },
+    {
+     "gate": "margin",
+     "threshold": 0.95,
+     "coverage": 0.4525925925925926,
+     "misroute": 0.0,
+     "n_covered": 611
+    }
+   ],
+   "seconds": 11.1
+  },
+  "support_ticket_v2 -> category": {
+   "task_id": "support_ticket_v2",
+   "n_test": 1350,
+   "accuracy": 0.9992592592592593,
+   "rows": [
+    {
+     "gate": "confidence",
+     "threshold": 0.5,
+     "coverage": 0.9814814814814815,
+     "misroute": 0.0,
+     "n_covered": 1325
+    },
+    {
+     "gate": "confidence",
+     "threshold": 0.8,
+     "coverage": 0.9081481481481481,
+     "misroute": 0.0,
+     "n_covered": 1226
+    },
+    {
+     "gate": "confidence",
+     "threshold": 0.9,
+     "coverage": 0.7918518518518518,
+     "misroute": 0.0,
+     "n_covered": 1069
+    },
+    {
+     "gate": "confidence",
+     "threshold": 0.95,
+     "coverage": 0.5659259259259259,
+     "misroute": 0.0,
+     "n_covered": 764
+    },
+    {
+     "gate": "confidence",
+     "threshold": 0.99,
+     "coverage": 0.03481481481481481,
+     "misroute": 0.0,
+     "n_covered": 47
+    },
+    {
+     "gate": "margin",
+     "threshold": 0.2,
+     "coverage": 0.9851851851851852,
+     "misroute": 0.0,
+     "n_covered": 1330
+    },
+    {
+     "gate": "margin",
+     "threshold": 0.5,
+     "coverage": 0.9540740740740741,
+     "misroute": 0.0,
+     "n_covered": 1288
+    },
+    {
+     "gate": "margin",
+     "threshold": 0.8,
+     "coverage": 0.8548148148148148,
+     "misroute": 0.0,
+     "n_covered": 1154
+    },
+    {
+     "gate": "margin",
+     "threshold": 0.9,
+     "coverage": 0.6851851851851852,
+     "misroute": 0.0,
+     "n_covered": 925
+    },
+    {
+     "gate": "margin",
+     "threshold": 0.95,
+     "coverage": 0.4525925925925926,
+     "misroute": 0.0,
+     "n_covered": 611
+    }
+   ],
+   "seconds": 11.1
+  },
+  "banking77 (77 intents)": {
+   "task_id": "banking77",
+   "n_test": 2000,
+   "accuracy": 0.943,
+   "rows": [
+    {
+     "gate": "confidence",
+     "threshold": 0.5,
+     "coverage": 0.9515,
+     "misroute": 0.03415659485023647,
+     "n_covered": 1903
+    },
+    {
+     "gate": "confidence",
+     "threshold": 0.8,
+     "coverage": 0.824,
+     "misroute": 0.009101941747572815,
+     "n_covered": 1648
+    },
+    {
+     "gate": "confidence",
+     "threshold": 0.9,
+     "coverage": 0.721,
+     "misroute": 0.0062413314840499305,
+     "n_covered": 1442
+    },
+    {
+     "gate": "confidence",
+     "threshold": 0.95,
+     "coverage": 0.5635,
+     "misroute": 0.00354924578527063,
+     "n_covered": 1127
+    },
+    {
+     "gate": "confidence",
+     "threshold": 0.99,
+     "coverage": 0.204,
+     "misroute": 0.0024509803921568627,
+     "n_covered": 408
+    },
+    {
+     "gate": "margin",
+     "threshold": 0.2,
+     "coverage": 0.952,
+     "misroute": 0.03571428571428571,
+     "n_covered": 1904
+    },
+    {
+     "gate": "margin",
+     "threshold": 0.5,
+     "coverage": 0.8945,
+     "misroute": 0.01732811626607043,
+     "n_covered": 1789
+    },
+    {
+     "gate": "margin",
+     "threshold": 0.8,
+     "coverage": 0.765,
+     "misroute": 0.00718954248366013,
+     "n_covered": 1530
+    },
+    {
+     "gate": "margin",
+     "threshold": 0.9,
+     "coverage": 0.636,
+     "misroute": 0.0047169811320754715,
+     "n_covered": 1272
+    },
+    {
+     "gate": "margin",
+     "threshold": 0.95,
+     "coverage": 0.485,
+     "misroute": 0.003092783505154639,
+     "n_covered": 970
+    }
+   ],
+   "seconds": 18.0
+  }
+ },
+ "probes": {
+  "support_ticket": [
+   {
+    "text": "how do I change my email address",
+    "expect": "account",
+    "why": "issue #11: the field-change intent is account; a confident 'account' is the fix landing",
+    "got": "account",
+    "confidence": 0.9683,
+    "margin": 0.9492,
+    "ok": true
+   },
+   {
+    "text": "change the address on my account",
+    "expect": "abstain",
+    "why": "issue #11: 0.97 shipping; genuinely two classes of this taxonomy",
+    "got": "account",
+    "confidence": 0.8444,
+    "margin": 0.6992,
+    "ok": true
+   },
+   {
+    "text": "update my contact details",
+    "expect": "abstain",
+    "why": "issue #11: account vs contact",
+    "got": "account",
+    "confidence": 0.8844,
+    "margin": 0.8366,
+    "ok": true
+   },
+   {
+    "text": "I cannot log into my account",
+    "expect": "account",
+    "why": "issue #11: fine",
+    "got": "account",
+    "confidence": 0.9763,
+    "margin": 0.9664,
+    "ok": true
+   },
+   {
+    "text": "reset my password",
+    "expect": "account",
+    "why": "issue #11: fine",
+    "got": "account",
+    "confidence": 0.9567,
+    "margin": 0.9379,
+    "ok": true
+   },
+   {
+    "text": "I want to delete my account",
+    "expect": "account",
+    "why": "issue #11: fine",
+    "got": "account",
+    "confidence": 0.9782,
+    "margin": 0.9719,
+    "ok": true
+   },
+   {
+    "text": "I need to change the shipping address",
+    "expect": "shipping",
+    "why": "the shipping phrasing itself",
+    "got": "shipping",
+    "confidence": 0.9634,
+    "margin": 0.948,
+    "ok": true
+   },
+   {
+    "text": "where is my package",
+    "expect": "delivery",
+    "why": "v2 builder probe",
+    "got": "delivery",
+    "confidence": 0.8451,
+    "margin": 0.7808,
+    "ok": true
+   },
+   {
+    "text": "cancel my order",
+    "expect": "order",
+    "why": "v2 builder: cancel_order lives under order in bitext",
+    "got": "order",
+    "confidence": 0.8519,
+    "margin": 0.8166,
+    "ok": true
+   },
+   {
+    "text": "I want to cancel my subscription",
+    "expect": "subscription",
+    "why": "v2 builder probe",
+    "got": "subscription",
+    "confidence": 0.8085,
+    "margin": 0.7151,
+    "ok": true
+   }
+  ],
+  "support_ticket_v2": [
+   {
+    "text": "change the address on my account",
+    "expect": "abstain",
+    "why": "issue #11 straddle at intent level too: change_shipping_address vs edit_account",
+    "got": "change_shipping_address",
+    "confidence": 0.8722,
+    "margin": 0.8231,
+    "ok": true
+   },
+   {
+    "text": "how do I change my email address",
+    "expect": "edit_account",
+    "why": "issue #11",
+    "got": "change_shipping_address",
+    "confidence": 0.6038,
+    "margin": 0.4609,
+    "ok": false
+   },
+   {
+    "text": "I cannot log into my account",
+    "expect": "recover_password",
+    "why": "closest v2 intent",
+    "got": "recover_password",
+    "confidence": 0.4942,
+    "margin": 0.3802,
+    "ok": true
+   },
+   {
+    "text": "I need to change the shipping address",
+    "expect": "change_shipping_address",
+    "why": "direct",
+    "got": "change_shipping_address",
+    "confidence": 0.9351,
+    "margin": 0.8848,
+    "ok": true
+   },
+   {
+    "text": "cancel my order",
+    "expect": "cancel_order",
+    "why": "v2 builder probe",
+    "got": "cancel_order",
+    "confidence": 0.9694,
+    "margin": 0.9626,
+    "ok": true
+   },
+   {
+    "text": "where is my package",
+    "expect": "track_order",
+    "why": "v2 builder probe",
+    "got": "delivery_options",
+    "confidence": 0.3506,
+    "margin": 0.0247,
+    "ok": false
+   },
+   {
+    "text": "I want to cancel my subscription",
+    "expect": "newsletter_subscription",
+    "why": "v2 builder probe",
+    "got": "newsletter_subscription",
+    "confidence": 0.6136,
+    "margin": 0.442,
+    "ok": true
+   }
+  ],
+  "banking77": [
+   {
+    "text": "I was charged twice for the same transaction",
+    "expect": "transaction_charged_twice",
+    "why": "README example",
+    "got": "transaction_charged_twice",
+    "confidence": 0.999,
+    "margin": 0.9988,
+    "ok": true
+   },
+   {
+    "text": "my card is not working",
+    "expect": "card_not_working",
+    "why": "direct; the straddle is with declined_card_payment only when a payment is mentioned",
+    "got": "card_not_working",
+    "confidence": 0.9505,
+    "margin": 0.9238,
+    "ok": true
+   },
+   {
+    "text": "how long does a transfer take",
+    "expect": "abstain",
+    "why": "straddles transfer_timing / pending_transfer / transfer_not_received_by_recipient",
+    "got": "balance_not_updated_after_bank_transfer",
+    "confidence": 0.2817,
+    "margin": 0.0067,
+    "ok": true
+   },
+   {
+    "text": "I lost my card",
+    "expect": "lost_or_stolen_card",
+    "why": "direct",
+    "got": "lost_or_stolen_card",
+    "confidence": 0.9222,
+    "margin": 0.8996,
+    "ok": true
+   }
+  ]
+ }
+}

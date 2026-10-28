@@ -1,0 +1,10 @@
+{"text": "how do I change my email address", "expect": "account", "why": "issue #11: the field-change intent is account; a confident 'account' is the fix landing"}
+{"text": "change the address on my account", "expect": "abstain", "why": "issue #11: 0.97 shipping; genuinely two classes of this taxonomy"}
+{"text": "update my contact details", "expect": "abstain", "why": "issue #11: account vs contact"}
+{"text": "I cannot log into my account", "expect": "account", "why": "issue #11: fine"}
+{"text": "reset my password", "expect": "account", "why": "issue #11: fine"}
+{"text": "I want to delete my account", "expect": "account", "why": "issue #11: fine"}
+{"text": "I need to change the shipping address", "expect": "shipping", "why": "the shipping phrasing itself"}
+{"text": "where is my package", "expect": "delivery", "why": "v2 builder probe"}
+{"text": "cancel my order", "expect": "order", "why": "v2 builder: cancel_order lives under order in bitext"}
+{"text": "I want to cancel my subscription", "expect": "subscription", "why": "v2 builder probe"}

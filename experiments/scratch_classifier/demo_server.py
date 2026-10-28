@@ -29,7 +29,7 @@ class H(http.server.SimpleHTTPRequestHandler):
     def do_POST(self):
         if self.path.startswith("/lab/sync"):   # the page pushes its browser-local data here so nothing depends on pressing export
             n = int(self.headers.get("Content-Length", 0)); data = json.loads(self.rfile.read(n) or b"{}"); os.makedirs(LAB, exist_ok=True)
-            for k in ("engagement", "chat_scores", "corrections", "visits"):
+            for k in ("engagement", "chat_scores", "corrections", "visits", "arena_snapshots"):
                 if k in data:
                     tmp = os.path.join(LAB, f"sync_{k}.json.tmp"); json.dump(data[k], open(tmp, "w")); os.replace(tmp, os.path.join(LAB, f"sync_{k}.json"))
             body = b'{"ok":true}'; self.send_response(200); self.send_header("Content-Type", "application/json"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body); return

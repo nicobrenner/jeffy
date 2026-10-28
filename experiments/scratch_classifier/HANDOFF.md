@@ -136,6 +136,25 @@ prompts VARIED instead of dropped (one line in `prep_ct5.py`, 8-min signal, same
   entertaining instead of admitting ignorance") → strip in the next fixer pass. Context roadmap written (rolling recap tier,
   `*recap` act, KV-cache ordering, 512 later).
 
+## Roadmap v2 (2026-10-28 16:30 PDT) — building blocks first, then model work, every step through the scoreboard
+| # | step | why / done when |
+|---|---|---|
+| 1 | **Label store**: one table of every judgement (Nico, manager, agents, LLM): turn, reply, turn type, score, source, session context, time | every classifier/judge trains from it; done when tone/intent/judge/guard labels and synced chat scores are in it |
+| 2 | **Scoreboard**: fixed probes (greetings/shares/reactions guard set, identity, recap, in-session repetition, Nico's held-out scores, latency) → one table with arrows + verdict | every model or harness change runs it; done when ct2 and v5b have a row |
+| 3 | **Calibration of Branch 1 heads** (from Jeffy): per-head temperature or per-class thresholds; support radius on Nico's real typed turns | Oracle-hidden intent head misroutes 20% at 0.9; done when misroute at the harness's operating point is measured and ≤5% |
+| 4 | **Ceiling check before each fix**: "no good candidate" (train the LM) vs "good candidate not picked" (tune the judge) | written into the scoreboard |
+| 5 | **Greeting/share/reaction data pass** (route 1), then judge v4 again | guard ceiling 50% → ≥75% with identity 32/32 |
+| 6 | **Judge retrains from Nico's synced dots** when ≥30 new scores; ships only if every scoreboard row holds | automatic |
+Joint research with Jeffy (Branch 2 owns the product; this is the shared science): learning curves per head (how many labels make a head
+useful), encoder vs Oracle hidden states, calibration, train/serve mismatch (our labels are simulated turns, Nico's are real), boundary
+conflicts between turn types (greeting vs reaction), per-flag binary heads vs one multi-class head for sparse turn types.
+
+### Personality debt (Nico 2026-10-28: metric wins may cost personality only with a dated review)
+| traded | for | review at | revert if |
+|---|---|---|---|
+| (none shipped yet) | | | |
+Rule: any change that ships with a tone/wit regression on his picks gets a row here, reviewed by his blind picks at the stated milestone.
+
 ## Pipeline / roadmap (2026-10-27)
 | # | step | status |
 |---|---|---|

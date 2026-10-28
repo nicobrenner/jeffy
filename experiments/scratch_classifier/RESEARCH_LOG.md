@@ -6299,3 +6299,16 @@ Judge v4 (`guard_judge.py`, `checkpoints/nico_judge_v4.pkl`): v2 features + user
 held-out 0.64) + intent x PCA(16) interactions. Test greetings: v2 picks a landing reply 2/10, **v4 4/10**, ceiling 6/10. Guard-test AUC
 v2 0.62 / **v4 0.74**. Nico's rows 5-fold AUC: **v2-style 0.77** / v4 0.73 (n=102). Not shipped: the gain is on n=10 and it costs on his rows.
 Next: route 1, a targeted data pass (greetings/shares/reactions answered warmly, the lines he liked as seeds), then the judge again.
+
+## 2026-10-28 16:30 PDT — Joint research with Jeffy, first result: the Oracle's hidden states are a good classifier base but over-confident
+`jeffy_bridge_curve.py`: user-turn intent (7 classes, 2,053 turns), learning curve over examples per class, 5 seeds, Jeffy's recipe
+(frozen encoder + logistic head) vs the Oracle's own hidden states.
+| features | 5/class | 20/class | 80/class | all | cov@0.9 | misroute@0.9 |
+|---|---|---|---|---|---|---|
+| Oracle hidden (2.7M, free in the browser) | **0.42** | 0.50 | 0.57 | 0.67 | **0.52** | 0.20 |
+| MiniLM-L6 (Jeffy-style) | 0.31 | 0.45 | 0.53 | 0.60 | 0.01 | 0.00 |
+| bge-base (Jeffy-style) | 0.36 | 0.50 | 0.61 | 0.67 | 0.01 | 0.00 |
+| Oracle + MiniLM | 0.38 | **0.54** | **0.63** | **0.70** | 0.04 | 0.00 |
+Verdict: the free features are as good as bge-base with all data and best with 5 examples per class (in-domain), but the head is
+over-confident: one in five answers above 0.9 is wrong, so the harness's intent thresholds need Jeffy-style calibration. Encoder heads
+show Jeffy's medical-head pattern (correct but never confident). No plateau up to ~100-680 per class: labels still pay.

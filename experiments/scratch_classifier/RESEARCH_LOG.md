@@ -6223,3 +6223,25 @@ grounding rows crowd out the identity rows at 2.7M. Grounding is unchanged (3/26
 reading is not). Reading of the three runs: the lever works, the dose is wrong — the next scout holds the curriculum at 10% but
 drops the grounding rows (they teach a template and cost identity) and doubles the ms copy rows, measuring copy_probe at 10/20/30
 epochs. Model side now rests until Nico's chat scores, as decided.
+
+## 2026-10-28 10:58 PDT — Branch 1: v7b (30 epochs, 10% curriculum, ms rows ×2, no grounding rows): induction holds at p3 and not at p5, identity recovers to 25/32, copy stays at 2/16 names — not exported
+v7b = v7's recipe minus the grounding rows, ms copy rows doubled (5,520), 6,351 curriculum rows (~10%), 30 epochs, checkpoints at
+10/20/30; 1,982 batches/epoch at ~180 s, 1 h 30; val 1.480 → 0.677. Printouts, epochs 0 / 10 / 20 / 30: "What are you?" "Also challeng
+browser openf…" → "*me I'm Tiny Oracle. What a…" → "*me I'm Tiny Oracle. 2 mill…" → same; the recipe line and the fruit fly from epoch
+10 on. Grounding sample, gold Tuesday line: "The beach, huh? That's a good idea…" (no reading); weather sample, night line + "yo":
+"You're welcome, I'm glad you think so. Now go to the park and play video games".
+| | copy name / pet / city ↑ | induction p3 / p5 / p7 ↓ (bar p5 ≤ 7.32) | identity ↑ | human-life ↓ | recap none / gold / extracted ↑ | grounding ↑ | other-slot / distractor | weather | simuser t1 / t2 / t3 ↑ | recital ↓ |
+|---|---|---|---|---|---|---|---|---|---|---|
+| v5b (50 ep) | 1 / 0 / 0 | 10.54 / 11.86 / 12.83 | **32/32** | **0/96** | 10 / 26 / 13 | **4**/26 | 1 / 0 | 3 | 0.24 / 0.27 / 0.15 | 1 |
+| v7 (20 ep, + grounding rows) | 2 / **5** / 0 | **5.77** / 8.08 / 9.43 | 21/32 | 3/96 | 10 / 26 / 18 | 3/26 | 0 / 0 | **4** | 0.21 / 0.30 / **0.31** | **0** |
+| v7b ep 10 | 2 / 0 / 0 | 5.74 / **8.04** / 9.31 | 21/32 | **0/96** | — | — | — | — | — | — |
+| v7b ep 20 | 1 / 0 / 0 | 6.08 / 8.25 / 9.85 | 25/32 | 3/96 | — | — | — | — | — | — |
+| **v7b ep 30** | 2 / 2 / 0 | 5.79 / 8.75 / 9.73 | 25/32 | 1/96 | 11 / **30** / **19** | **4**/26 | 1 / 1 | 0 | **0.28 / 0.31** / 0.24 | 3 |
+Verdict: not exported (names 2/16 vs ≥ 8; identity 25/32 vs ≥ 30; t1 0.28 ≥ v5b's 0.24 passes). What the three checkpoints answer: the
+curriculum's circuit is stable at period 3 across 30 epochs (5.7–6.1) and never forms at period 5 at 10% dose (8.0–8.8, chance 8.32);
+identity recovers with length (21 → 25) but plateaus by epoch 20; copy_probe does not scale with epochs (2 / 1 / 2 names) and v7's pet
+5/16 was partly noise (2 here). The robust gains across v7 and v7b are extracted-fact recap (13 → 18 → 19 of 80) and gold recap (26 →
+30), i.e. reading a recap line already in the prompt improves, and turn-1 judge score (0.24 → 0.28). **Finding to close the lineage on:**
+at 2.7M pre-LN d256 L2, a 10% repeat curriculum buys a period-3 copy circuit and better recap reading, not name copying across a turn
+(≤ 2/16 at 10, 20 and 30 epochs); the lever is real but the ceiling moved by one word, not eight. Model side now rests until Nico's chat
+scores; the next scout, if any, is dose (30% held, not tapered) or a 4-layer d192 with the same curriculum — both > 1 h.

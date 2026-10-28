@@ -1,19 +1,19 @@
 {
  "recap": {
-  "none": 10,
-  "gold": 26,
-  "extracted": 18
+  "none": 11,
+  "gold": 30,
+  "extracted": 19
  },
- "grounding_off": 2,
- "grounding_on": 3,
- "grounding_gold": 3,
- "other_slot": 0,
- "distractor_admit": 0,
- "weather": 4,
+ "grounding_off": 4,
+ "grounding_on": 4,
+ "grounding_gold": 4,
+ "other_slot": 1,
+ "distractor_admit": 1,
+ "weather": 0,
  "simuser": {
-  "1": 0.21342560837046126,
-  "2": 0.30247755751830224,
-  "3": 0.3126569393412881
+  "1": 0.2822918889700649,
+  "2": 0.30936521830376834,
+  "3": 0.2384662983681136
  },
- "recital": 0
+ "recital": 3
 }

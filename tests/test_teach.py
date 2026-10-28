@@ -117,3 +117,20 @@ def test_session_heads_are_private_and_expire(monkeypatch, tmp_path):
     assert "my_private" not in server._session_heads
     assert c.post("/v1/predict", headers={"X-Jeffy-Session": "sessionAAAAAAAA"}, json={"text": "hello", "task": "my_private"}).status_code in (400, 404)
     assert not (tmp_path / "my_private").exists()
+
+
+@pytest.mark.skipif(os.environ.get("JEFFY_SKIP_ENCODER_TESTS") == "1", reason="needs the encoder")
+def test_per_client_cap_ignores_spoofed_headers_by_default(monkeypatch, tmp_path):
+    monkeypatch.setenv("JEFFY_ENABLE_TRAINING", "1"); monkeypatch.setenv("JEFFY_TRAINED_DIR", str(tmp_path)); monkeypatch.setenv("JEFFY_BACKEND", "torch")
+    monkeypatch.delenv("JEFFY_TRUST_PROXY_HEADERS", raising=False)
+    monkeypatch.setattr(server, "_TRAIN_PER_IP_HOUR", 1)
+    server._train_calls.clear()
+    c = _client()
+    assert c.post("/v1/train", json={"task_id": "cap_a", "examples": ROWS, "test_size": 0}).status_code == 200
+    # the allowance is spent; a spoofed forwarded header must not buy a fresh one
+    r = c.post("/v1/train", headers={"x-forwarded-for": "203.0.113.9"}, json={"task_id": "cap_b", "examples": ROWS, "test_size": 0})
+    assert r.status_code == 429, r.text
+    # behind a trusted proxy the header is the client, so it is a new allowance
+    monkeypatch.setenv("JEFFY_TRUST_PROXY_HEADERS", "1")
+    r = c.post("/v1/train", headers={"x-forwarded-for": "203.0.113.9"}, json={"task_id": "cap_c", "examples": ROWS, "test_size": 0})
+    assert r.status_code == 200, r.text

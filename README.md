@@ -247,6 +247,41 @@ flags["legal_threat"].predict("I am contacting my solicitor")  # {"label": "yes"
 
 Over HTTP, pass `mode: "binary-flags"` with `texts` and `flags` to `POST /v1/train`.
 
+Measured on a multilingual care-intake email set (425 emails, 400 English and 25 Arabic, 13 flags; 318 train / 107 test,
+`scripts/care_intake_sweep.py`, CPU): one balanced binary head per flag against one multi-class head on the flag-set label.
+Positive-class F1 on the test split, multilingual MiniLM encoder; flags with fewer than 10 positives in training in bold:
+
+| flag | positives train / test | F1 binary per flag | F1 one multi-class head |
+|---|---|---|---|
+| **fees_vs_service** | 9 / 6 | **1.00** | 0.50 |
+| **prior_contact_unanswered** | 6 / 4 | **1.00** | 0.67 |
+| money_in_dispute | 19 / 11 | **1.00** | 0.78 |
+| own_unit_notice | 28 / 12 | **1.00** | 0.74 |
+| staff_praised | 19 / 6 | **1.00** | 0.91 |
+| third_party_at_fault | 27 / 10 | 0.95 | 0.95 |
+| property_damage | 12 / 4 | 0.67 | **0.86** |
+| **app_or_portal_fault** | 5 / 1 | 0.67 | **1.00** |
+| **recurring_problem** | 2 / 1 | 0.00 | 0.00 |
+
+Per-flag binary heads win or tie on 10 of 13 flags and are the only option that fires at all on the sparse ones; a flag with
+two training positives is unlearnable either way, which is a labeling problem, not a head choice.
+
+### Encoder choice and per-head C
+
+On the same care-intake set, the three multilingual encoders in reach and a per-head C grid (0.01, 0.1, 1 by 3-fold macro-F1):
+
+| encoder | encode ms/text (CPU) | mean head accuracy, C=0.01 | mean head accuracy, C tuned | worst head (tuned) |
+|---|---|---|---|---|
+| paraphrase-multilingual-MiniLM-L12-v2 (default multilingual, 471 MB) | **4.2** | 0.972 | 0.979 | category 0.953 |
+| multilingual-e5-small | 4.1 | 0.972 | 0.981 | category 0.953 |
+| LaBSE (1.9 GB) | 13.5 | **0.984** | 0.981 | category 0.953 |
+
+The C grid moves two heads (desired_outcome, emotion) by one to five points and costs three extra fits per head; it is worth
+turning on for small sets (`tune_C=True`). LaBSE buys about one point at three times the encode time and four times the
+download; the default multilingual encoder is the right default. All four Arabic test emails are classified correctly by all
+three encoders, which says the set is too small to rank them on Arabic, not that they are equal.
+
+
 | Parameter | Default | Description |
 |-----------|---------|-------------|
 | `class_weight` | `"balanced"` | `"balanced"` reweights the rare positive class, which maximizes recall and is usually right for triage. Pass `None` for the unweighted fit: it raises far fewer flags at noticeably higher precision. On real data a balanced head raised roughly a third more flags than the reference labels did, so if a false positive is expensive, start with `None`. |

@@ -2575,7 +2575,6 @@ async function runPredict(tid){
     _ev("predict",tid,{label:d.label,confidence:d.confidence,n:_stats.predictions});
     _lastPred={task:tid,label:d.label,confidence:d.confidence};
     if(TEACH&&$("teach-line")&&$("teach-box").style.display==="none"){$("teach-line").style.display="block";
-      if(journeyFrom()===2&&!$("teach-line").dataset.moved){var tl=$("teach-line");$("try-lbl").insertAdjacentElement("afterend",tl);tl.dataset.moved="1";tl.style.margin="6px 0 10px";var a=$("teach-open");a.className="run-btn";a.style.display="inline-block";a.style.fontSize="12px";a.style.padding="6px 10px";a.textContent="Not your labels? Teach it three of your own →";}}
     if(tid.indexOf("my_")===0)_ev("teach_predict",tid,{label:d.label,confidence:d.confidence,margin:d.margin});
     $("fb-up").disabled=false;$("fb-down").disabled=false;
     $("fb-up").classList.remove("voted");$("fb-down").classList.remove("voted");

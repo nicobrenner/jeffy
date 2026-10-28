@@ -114,6 +114,23 @@ def verifier_score(m, tok, V, prompt, resp):
     X = hstack([V["vp"].transform([prompt]), V["vr"].transform([resp]), csr_matrix(H)])
     return float(V["clf_both"].predict_proba(X)[:, 1][0])
 
+def seeded_respond(m, tok, history, seed, cfg=None, user=""):
+    """A seeded Oracle turn (weather / gift / visit / Room event): the seed is the prefix, the model continues. With best_of > 1 and a
+    judge, N continuations are sampled and the full text (seed + continuation) is scored by the judge, the best kept — the same
+    best-of-N path replies take, seed kept as prefix. Returns (text, info)."""
+    c = {**DEFAULT, **(cfg or {})}; S = dict(SAMPLERS[c["sampler"]])
+    if history and "later_temperature" in S: S["temperature"] = S["later_temperature"]
+    ctx = build_context(history, user or "look", c["prime"], c["memory"]) + " *tell " + seed
+    prior = [h["oracle"] for h in history] if c.get("cross_turn", True) else []
+    def one(seed_n):
+        cont = generate(m, tok, ctx, S, seed_n, prime_len=0, prior=prior); return (seed + " " + cont.strip()).strip() if cont.strip() else seed
+    if c["best_of"] <= 1 or not c.get("judge"): return one(c["seed"]), {"n": 1}
+    J = _VER.setdefault(c["judge"], pickle.load(open(c["judge"], "rb"))); from tone_clf import hidden as jhidden
+    cands = [one(c["seed"] * 100 + k) for k in range(c["best_of"])]
+    X = jhidden(m, tok, [{"history": history, "user": user or "look", "reply": r} for r in cands])
+    if J.get("seen"): X = np.hstack([X, np.zeros((len(cands), 1))])
+    sc = J["clf"].predict_proba(X)[:, 1]; b = int(np.argmax(sc)); return cands[b], {"n": len(cands), "score": float(sc[b]), "scores": [float(x) for x in sc]}
+
 def respond(m, tok, history, user, cfg=None):
     c = {**DEFAULT, **(cfg or {})}; S = dict(SAMPLERS[c["sampler"]])
     if history and "later_temperature" in S: S["temperature"] = S["later_temperature"]

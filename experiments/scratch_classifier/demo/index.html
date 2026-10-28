@@ -756,12 +756,17 @@
       const div = addMessage('oracle', seed); div.classList.add('world'); div.title = 'The Oracle noticed something in the room';
       const fmt = t => model.format === 'plain' ? '\nOracle: ' + t : '\n<|oracle|>' + (planTokens ? ' *tell ' : ' ') + t;
       try {
-        let shown = seed;
-        const genIds = await generate(conversationIds.concat(tokenizer.encode(fmt(seed))), partial => { const t = seed + partial; if (t !== shown) { shown = t; div.textContent = t.trim() + '\u258D'; chatEl.scrollTop = chatEl.scrollHeight; } });
+        let shown = seed, genIds, seedMeta = null;
+        if (judge && model.judge) {   // seeded best-of-N (Oct 28): N continuations with the seed as prefix, the judge scores seed + continuation, best kept — the same path replies take
+          const N = model.judge.bestOf, cands = []; for (let k = 0; k < N; k++) { statusEl.textContent = 'Oracle noticed something... ' + (k + 1) + '/' + N; cands.push(await generate(conversationIds.concat(tokenizer.encode(fmt(seed))), null)); }
+          const lastUser = transcript.length && [...transcript].reverse().find(m => m.role === 'user'); const scores = []; for (const c of cands) scores.push(await judgeScore(lastUser ? lastUser.text : 'look', (seed + tokenizer.decode(c)).trim()));
+          let bi = 0; for (let k = 1; k < N; k++) if (scores[k] > scores[bi]) bi = k; genIds = cands[bi]; seedMeta = { pick: bi, scores: scores.map(x => +x.toFixed(2)) }; logEvent('seeded_bestof', { type, pick: bi, scores: seedMeta.scores });
+        } else genIds = await generate(conversationIds.concat(tokenizer.encode(fmt(seed))), partial => { const t = seed + partial; if (t !== shown) { shown = t; div.textContent = t.trim() + '\u258D'; chatEl.scrollTop = chatEl.scrollHeight; } });
         let text = (seed + tokenizer.decode(genIds)).trim(); if (model.format === 'plain') text = text.split('\n')[0]; text = text.replace(/\.\s*$/, '');
         div.textContent = text; conversationIds.push(...tokenizer.encode(fmt(text))); transcript.push({ role: 'oracle', text }); div.dataset.turn = transcript.length - 1; makeEditable(div);
         const src = type === 'weather' ? 'weather:' + (weather.cond || 'none') : type === 'presence' ? 'visit:' + (returningBrowser ? 'return' : 'first') : type === 'gift' ? 'gift:' + (arg || '') : 'room:' + type;
         addScoreBar(div, transcript.length - 1, { src, seed });
+        if (seedMeta) { const jm = document.createElement('div'); jm.style.cssText = 'font-size:11px;opacity:.55;margin-top:4px'; jm.textContent = 'best of ' + seedMeta.scores.length + ' · judge ' + seedMeta.scores[seedMeta.pick].toFixed(2); div.appendChild(jm); }
         logEvent('oracle_world', { type, len: text.length }); if (['fetch', 'drop', 'gift', 'grab', 'escape'].includes(type) && window.__pet) window.__pet.feel('ack');
       } catch (e) { console.error(e); }
       chatEl.scrollTop = chatEl.scrollHeight; statusEl.textContent = 'Ready'; setBusy(false);

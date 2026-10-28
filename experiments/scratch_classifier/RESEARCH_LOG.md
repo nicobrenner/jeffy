@@ -6245,3 +6245,20 @@ identity recovers with length (21 → 25) but plateaus by epoch 20; copy_probe d
 at 2.7M pre-LN d256 L2, a 10% repeat curriculum buys a period-3 copy circuit and better recap reading, not name copying across a turn
 (≤ 2/16 at 10, 20 and 30 epochs); the lever is real but the ceiling moved by one word, not eight. Model side now rests until Nico's chat
 scores; the next scout, if any, is dose (30% held, not tapered) or a 4-layer d192 with the same curriculum — both > 1 h.
+
+## 2026-10-28 11:02 PDT — Branch 1: seeded turns through best-of-4 + judge v2 (seed kept as prefix): judge mean rises on every source, topic drift does not fall — shipped, flagged
+`harness.seeded_respond`: N continuations with the seed as prefix, judge v2 scores seed + continuation, best kept. Measured on ct2 with the
+30 shared histories, 30 events per source (seeds from the banks):
+| source | judge mean single → **best-of-4** ↑ | identical picks |
+|---|---|---|
+| weather | 0.22 → **0.42** | 9/30 |
+| gift | 0.34 → **0.64** | 7/30 |
+| visit | 0.50 → **0.63** | 14/30 |
+| room event | 0.15 → **0.37** | 7/30 |
+"Stays on the seed's topic", judged by me on 32 pairs (8 per source; a clean stop counts as staying): single **17/32**, best-of-4 14/32 —
+the judge prefers a continuation to a stop and does not see drift ("Clear skies in here, every token on time" → best-of-4 adds ", it's not
+like you're going to be in trouble"; "Welcome, it is small" → "…small and opinionated" is the good case). Verdict: wins on the judge
+(Nico's proxy, AUC 0.79 on his rows), loses slightly on topic by my reading; shipped in the demo on the ☆ entry (same best-of-4 path as
+replies, "best of 4 · judge 0.xx" under the turn, `seeded_bestof` event logged) because his per-source scores now decide — if his
+weather/gift scores favour the stopped seed, the fix is a judge trained on those rows, not a length rule. Headless: a gift seed on the ☆
+entry picks among 4, no console errors.

@@ -511,13 +511,15 @@
     function row(r) { const d = document.createElement('div'); d.className = 'lab-row ' + (r.who || ''); d.innerHTML = '<b>' + String(r.who || '?').replace(/[<>&]/g, '') + '</b> ' + String(r.text || '').replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c])) + '<small>' + new Date((r.t || 0) * 1000).toLocaleTimeString() + (r.re != null ? ' · re ' + r.re : '') + '</small>'; return d; }
     async function send() {
       const t = text.value.trim(); if (!t) return; const note = { t: Date.now() / 1000, who: 'nico', text: t, ctx: ctx() };
-      try { await fetch('/lab/notes', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(note) }); thread.appendChild(row(note)); thread.scrollTop = thread.scrollHeight; text.value = ''; attached = null; attachEl.textContent = ''; logEvent('lab_note', { len: t.length }); }
+      try { await fetch('/lab/notes', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(note) }); text.value = ''; await loadThread(); thread.scrollTop = thread.scrollHeight; attached = null; attachEl.textContent = ''; logEvent('lab_note', { len: t.length }); }
       catch (e) { const d = row({ who: 'page', text: 'could not post (is demo_server.py running?)', t: Date.now() / 1000 }); thread.appendChild(d); }
     }
-    async function poll() {
-      try { const rows = await (await fetch('/lab/replies')).json(); if (rows.length > seen) { rows.slice(seen).forEach(r => thread.appendChild(row(r))); seen = rows.length; thread.scrollTop = thread.scrollHeight; } } catch (e) {}
-    }
-    (async () => { try { const notes = await (await fetch('/lab/notes')).json(); notes.slice(-20).forEach(r => thread.appendChild(row(r))); } catch (e) {} })();
+    async function loadThread() {   // notes (Nico) + replies (lab sessions), interleaved by time
+      try { const [n, r] = await Promise.all([fetch('/lab/notes').then(x => x.json()), fetch('/lab/replies').then(x => x.json())]); const ts = v => { const t = typeof v === 'string' ? Date.parse(v) / 1000 : +v || 0; return t > 1e12 ? t / 1000 : t; };
+        const all = n.concat(r).map(x => ({ ...x, t: ts(x.t) })).sort((a, b) => a.t - b.t); if (all.length === seen) return; seen = all.length; const atEnd = thread.scrollHeight - thread.scrollTop - thread.clientHeight < 40 || !thread.childElementCount;
+        thread.innerHTML = ''; all.slice(-60).forEach(x => thread.appendChild(row(x))); if (atEnd) thread.scrollTop = thread.scrollHeight; } catch (e) {} }
+    const poll = loadThread;
+    loadThread();
     setInterval(() => { if (open) poll(); }, 5000);
     document.getElementById('lab-toggle').addEventListener('click', () => show(!open)); document.getElementById('lab-close').addEventListener('click', () => show(false)); document.getElementById('lab-send').addEventListener('click', send);
     text.addEventListener('keydown', e => { if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') { e.preventDefault(); send(); } });

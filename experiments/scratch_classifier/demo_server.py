@@ -13,6 +13,18 @@ class H(http.server.SimpleHTTPRequestHandler):
         if self.path.startswith("/lab/notes"):
             os.makedirs(LAB, exist_ok=True); f = os.path.join(LAB, "notes.jsonl"); rows = [l for l in open(f)] if os.path.exists(f) else []
             body = ("[" + ",".join(l.strip() for l in rows if l.strip()) + "]").encode(); self.send_response(200); self.send_header("Content-Type", "application/json"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/lab/fetch"):   # arena terrain: fetch a page the user typed, return its visible text (localhost only, on request)
+            import urllib.parse, urllib.request, html as H, re as R
+            q = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query); url = (q.get("url") or [""])[0]; out = {}
+            try:
+                if not url.lower().startswith(("http://", "https://")): raise ValueError("not a web address")
+                req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (tiny-oracle arena)"}); raw = urllib.request.urlopen(req, timeout=8).read(600000).decode("utf-8", "replace")
+                title = R.search(r"<title[^>]*>(.*?)</title>", raw, R.S | R.I); raw = R.sub(r"(?is)<(script|style|noscript|svg|nav|footer|header)[^>]*>.*?</\1>", " ", raw)
+                paras = R.findall(r"(?is)<p[^>]*>(.*?)</p>", raw); body_html = " ".join(paras) if sum(len(x) for x in paras) > 400 else raw
+                text = H.unescape(R.sub(r"<[^>]+>", " ", body_html)); text = R.sub(r"\[\d+\]", " ", text); text = R.sub(r"\s+", " ", text).strip()[:20000]
+                out = {"title": H.unescape(title.group(1).strip())[:120] if title else url, "text": text}
+            except Exception as e: out = {"error": str(e)[:200]}
+            body = json.dumps(out).encode(); self.send_response(200); self.send_header("Content-Type", "application/json"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body); return
         return super().do_GET()
     def do_POST(self):
         if self.path.startswith("/lab/sync"):   # the page pushes its browser-local data here so nothing depends on pressing export

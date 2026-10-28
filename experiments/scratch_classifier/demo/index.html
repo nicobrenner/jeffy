@@ -256,6 +256,7 @@
     </select>
     <label class="hopt">prime <select id="prime-mode" title="Primed two-turn example: off, for the first reply only, or kept in context (as on Oct 26 18:17)"><option value="first">1st reply</option><option value="full">full</option><option value="off">off</option></select></label>
     <label class="hopt" title="How much of the conversation the model sees: everything, or only the last exchange (Oct 27 diagnosis: last turn scores higher at turn 3 on ct2, but it loses the recap ability v5b has; default stays full)">history <select id="history-mode"><option value="full">full</option><option value="last">last turn</option></select></label>
+    <label class="hopt" id="world-knob" style="display:none" title="Grounding tier (Oct 27): a learned extractor reads facts you state (name, pet, job, place, likes, family) from the model's hidden states and writes one recap line into the system prompt. Only pre-LN models read it. Default off">world <select id="world-mode"><option value="off">off</option><option value="facts">facts</option></select></label>
     <input type="checkbox" id="prime-check" checked style="display:none">
     <label class="hopt" title="Half-strength repetition penalty over the Oracle's earlier replies (added 18:26); untick to get the 18:17 behaviour"><input type="checkbox" id="crossCheck" checked> cross-turn</label>
     <button id="crawlerNow" class="suggestion hbtn" title="Send the crawler out now">crawler now</button>
@@ -302,7 +303,7 @@
   // Model registry. format 'tags' = <|system|>/<|user|>/<|oracle|> (v2 tokenizer); 'plain' = System:/User:/Oracle: (TinyStories tokenizer)
   const MODELS = {
     v2_grown_ct2_bestof4: { label: '☆ TEST THIS · Oct 27 · Nico\'s pick (ct2) + best-of-4 picked by the Nico-judge v2 (trained on your 80 scores) · ~4x slower per reply · best-of-4 won 9-1-8 in your blind scores', file: 'oracle_v2_grown_ct2_judge_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params + judge on its own hidden states · 11 MB int8 · best of 4', size: '11 MB', old: false, judge: { file: 'nico_judge_v2.json', bestOf: 4 } },
-    v5b_int8: { label: '☆ candidate v5b · Oct 27 09:20 · 2.7M pre-LN from scratch · reads a recap line (first model that can) · identity 32/32', file: 'oracle_v5b_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 3.8 MB int8' },
+    v5b_int8: { preLN: true, label: '☆ candidate v5b · Oct 27 09:20 · 2.7M pre-LN from scratch · reads a recap line (first model that can) · identity 32/32', file: 'oracle_v5b_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 3.8 MB int8' },
     v2_grown_ct2_int8: { label: '★ Nico\'s pick · Oct 26 18:17 · grown 8.5M · admit act (plan token, picks its own act)', file: 'oracle_v2_grown_ct2_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB', old: false },
     v3c_scratch_int8: { label: 'v3c: from scratch on the bible corpus (pets, family, age from the bible; stock openers stripped) (2.7M, int8)', file: 'oracle_v3c_scratch_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 4 MB int8', size: '4 MB' },
     v3b_scratch_int8: { label: 'v3b: same as v3 but names re-anonymised (copy-from-context) + self-address fix (2.7M, int8)', file: 'oracle_v3b_scratch_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 4 MB int8', size: '4 MB' },
@@ -438,12 +439,13 @@
   function fmtSystem() { return model.format === 'plain' ? 'System: ' + SYSTEM_PROMPT : '<|system|> ' + SYSTEM_PROMPT; }
   function fmtUserTurn(text) { return model.format === 'plain' ? '\nUser: ' + text + '\nOracle:' : '\n<|user|> ' + text + '\n<|oracle|>'; }
   function fmtOracleText(text) { return ' ' + text; }
-  let memoryLines = []; window.__memory = () => memoryLines;   // facts the page knows that the model should see (the roadmap's memory line); kept short, newest first
+  let memoryLines = []; window.__memory = () => memoryLines; window.__facts = () => ({ facts: worldFacts, line: factLine() }); window.__ctx = () => tokenizer.decode(conversationIds);   // facts the page knows that the model should see (the roadmap's memory line); kept short, newest first
   function remember(line) { memoryLines = [line, ...memoryLines.filter(l => l !== line)].slice(0, 2); if (tokenizer && transcript.length) rebuildIds(); }
   const primeMode = document.getElementById('prime-mode');
   function buildPrime(force) {
     let t = fmtSystem();
     if (memoryLines.length) t += ' ' + memoryLines.join(' ');
+    if (worldOn() && factLine()) t += ' ' + factLine();
     const mode = primeMode.value;   // off | first | full
     if (mode === 'full' || (mode === 'first' && (force || transcript.length < 2))) for (const [u, o] of PRIME) t += fmtUserTurn(u) + fmtOracleText(o);
     return t;
@@ -452,6 +454,34 @@
   try { const pm = localStorage.getItem('tinyoracle.prime'); if (pm) { primeMode.value = pm; primeCheck.checked = pm !== 'off'; } } catch (e) {}
 
   // ===================== INFERENCE =====================
+  // ===================== WORLD: FACTS (grounding tier, pre-LN entries only) =====================
+  // world.py in the browser: slot classifier (name/pet/job/place/like/family/none) on the user turn + per-token span tagger, both on the
+  // ct2 judge model's post-norm hidden states (same forward pass shape as nico_judge). Facts become one recap line in the system prompt.
+  const worldMode = document.getElementById('world-mode'), worldKnob = document.getElementById('world-knob');
+  let worldFacts = {}, extractor = null, extractorSession = null;
+  const FACT_PHRASE = { name: 'your name is {v}', pet: 'you have {v}', job: 'you work as {v}', place: 'you live in {v}', like: 'you like {v}', family: 'you have {v}' };
+  function factLine() { const ks = Object.keys(worldFacts).slice(-2); return ks.length ? 'Earlier you told me ' + ks.map(k => FACT_PHRASE[k].replace('{v}', worldFacts[k])).join(', and ') + '.' : ''; }
+  async function ensureExtractor() {
+    if (!extractor) extractor = await (await fetch('world_extractor_v1.json')).json();
+    if (!extractorSession) extractorSession = await ort.InferenceSession.create('oracle_v2_grown_ct2_judge_int8.onnx', { executionProviders: ['wasm'] });
+  }
+  async function extractFact(text) {
+    await ensureExtractor();
+    const pre = tokenizer.encode(JUDGE_SYSTEM + '<|user|>').length, ids = tokenizer.encode(JUDGE_SYSTEM + '<|user|> ' + text).slice(-MAX_CONTEXT);
+    const out = await extractorSession.run({ input_ids: new ort.Tensor('int64', BigInt64Array.from(ids.map(BigInt)), [1, ids.length]) });
+    const h = out.hidden.data, S = out.hidden.dims[1], D = out.hidden.dims[2], n = S - pre; if (n <= 0) return null;
+    const mean = new Float32Array(D); for (let t = pre; t < S; t++) for (let d = 0; d < D; d++) mean[d] += h[t * D + d] / n;
+    const x = new Float32Array(2 * D); for (let d = 0; d < D; d++) { x[d] = h[(S - 1) * D + d]; x[D + d] = mean[d]; }
+    let best = 0, bz = -1e9; extractor.slot_w.forEach((w, c) => { let z = extractor.slot_b[c]; for (let d = 0; d < 2 * D; d++) z += w[d] * x[d]; if (z > bz) { bz = z; best = c; } });
+    const slot = extractor.slot_classes[best]; if (slot === 'none') return null;
+    const keep = []; for (let t = pre; t < S; t++) { let bc = 0, bzz = -1e9; extractor.span_w.forEach((w, c) => { let z = extractor.span_b[c]; for (let d = 0; d < D; d++) z += w[d] * h[t * D + d]; if (z > bzz) { bzz = z; bc = c; } }); if (extractor.span_classes[bc] > 0) keep.push(t - pre); }
+    if (!keep.length) return null;
+    const textIds = ids.slice(pre); return { slot, value: tokenizer.decode(textIds.slice(keep[0], keep[keep.length - 1] + 1)).trim() };
+  }
+  worldMode.addEventListener('change', () => { try { localStorage.setItem('tinyoracle.world', worldMode.value); } catch (e) {} worldFacts = {}; if (tokenizer && transcript.length) rebuildIds(); });
+  try { const wm = localStorage.getItem('tinyoracle.world'); if (wm) worldMode.value = wm; } catch (e) {}
+  function worldOn() { return !!(model && model.preLN) && worldMode.value === 'facts'; }
+
   // ===================== NICO-JUDGE (best-of-N in the browser) =====================
   // nico_judge.py: logistic regression on the Oracle's own post-norm hidden states (last token + mean over the sequence) of
   // [judge system line + last two turns + user + candidate]. Same forward pass as generation, read from the model's "hidden" output.
@@ -865,7 +895,9 @@
     if (!text || generating || !session) return;
     setBusy(true); suggestionsEl.innerHTML = '';
     addMessage('user', text); inputEl.value = ''; transcript.push({ role: 'user', text }); logEvent('user', { turn: transcript.length, len: text.length });
-    if (historyMode.value === 'last') rebuildIds(); else conversationIds.push(...tokenizer.encode(fmtUserTurn(text)));
+    let factChanged = false;
+    if (worldOn()) { try { const f = await extractFact(text); if (f && worldFacts[f.slot] !== f.value) { worldFacts[f.slot] = f.value; factChanged = true; logEvent('fact', { slot: f.slot }); } } catch (e) { console.error(e); } }
+    if (historyMode.value === 'last' || factChanged) rebuildIds(); else conversationIds.push(...tokenizer.encode(fmtUserTurn(text)));
     if (conversationIds.length > MAX_CONTEXT - 30) {
       const identityIds = tokenizer.encode(buildPrime());
       const recent = conversationIds.slice(identityIds.length);
@@ -909,7 +941,7 @@
   // ===================== MODEL LOADING =====================
   function resetConversation() {
     if (transcript.length) logEvent('reset', { turns: transcript.length });
-    convId = Date.now(); logEvent('load'); Crawler.on({ type: 'reset' }); memoryLines = [];
+    convId = Date.now(); logEvent('load'); Crawler.on({ type: 'reset' }); memoryLines = []; worldFacts = {};
     conversationIds = tokenizer.encode(buildPrime()); transcript = [];
     chatEl.innerHTML = '';
     addMessage('system-msg', model.label + ' loaded (' + model.size + '). ' + ({ first: 'Primed for the first reply only.', full: 'Primed (kept in context).', off: 'No priming.' })[primeMode.value] + ' Sampler: ' + samplerSel.options[samplerSel.selectedIndex].text + '.');
@@ -926,7 +958,7 @@
       ort.env.wasm.numThreads = (typeof crossOriginIsolated !== 'undefined' && crossOriginIsolated) ? (navigator.hardwareConcurrency || 4) : 1;  // multi-threading needs COOP/COEP headers
       session = await ort.InferenceSession.create(model.file, { executionProviders: ['wasm'] });
       judge = model.judge ? await (await fetch(model.judge.file)).json() : null;
-      badgeEl.textContent = model.badge;
+      badgeEl.textContent = model.badge; worldKnob.style.display = model.preLN ? '' : 'none';
       document.getElementById('footer-text').textContent = model.badge.split(' · ')[0] + ' running entirely in your browser · no server, no API calls';
       resetConversation();
       statusEl.textContent = 'Ready';

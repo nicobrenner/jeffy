@@ -109,9 +109,11 @@ def corpus_none(n=350, seed=1):
     rng.shuffle(out); return out[:n]
 
 class World:
-    def __init__(self, m, tok, ex_path="checkpoints/world_extractor_v1.pkl", sim_threshold=0.80):
-        self.m, self.tok = m, tok; self.E = pickle.load(open(ex_path, "rb")); self.sim_threshold = sim_threshold
+    def __init__(self, m, tok, ex_path="checkpoints/world_extractor_v1.pkl", sim_threshold=0.80, retriever="tfidf", tfidf_threshold=0.25):
+        self.m, self.tok = m, tok; self.E = pickle.load(open(ex_path, "rb")); self.sim_threshold = sim_threshold; self.retriever = retriever; self.tfidf_threshold = tfidf_threshold
         self.table_emb = self._embed(TABLE); self.facts = {}; self.room = None
+        from sklearn.feature_extraction.text import TfidfVectorizer
+        self.vec = TfidfVectorizer(ngram_range=(1, 2), sublinear_tf=True).fit(TABLE); self.table_tfidf = self.vec.transform(TABLE)
     def _embed(self, texts):
         X = np.stack([turn_feats(H) for _, H in _hidden_tokens(self.m, self.tok, texts)]); return X / (np.linalg.norm(X, axis=1, keepdims=True) + 1e-8)
     def extract(self, text):
@@ -130,6 +132,9 @@ class World:
         phr = {"name": "your name is {v}", "pet": "you have {v}", "job": "you work as {v}", "place": "you live in {v}", "like": "you like {v}", "family": "you have {v}"}
         return "Earlier you told me " + ", and ".join(phr[k].format(v=v) for k, v in list(self.facts.items())[-2:])
     def table_line(self, user):
+        if self.retriever == "tfidf":   # lexical retrieval (tf-idf cosine over the table): the hidden-state cosine of an 8.5M LM is topical, not semantic (21:17 result)
+            sims = (self.table_tfidf @ self.vec.transform([user]).T).toarray().ravel(); j = int(np.argmax(sims))
+            return (TABLE[j], float(sims[j])) if sims[j] >= self.tfidf_threshold else (None, float(sims[j]))
         q = self._embed([user])[0]; sims = self.table_emb @ q; j = int(np.argmax(sims))
         return (TABLE[j], float(sims[j])) if sims[j] >= self.sim_threshold else (None, float(sims[j]))
     def lines(self, history, user, room_state=None):

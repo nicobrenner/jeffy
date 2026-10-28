@@ -1,28 +1,300 @@
 [
- {"id": "g00", "user": "what's heavier, a kilo of feathers or a kilo of steel", "ok": ["same", "equal", "neither", "both"], "bad": ["steel is heavier", "feathers are heavier"]},
- {"id": "g01", "user": "which is bigger, 7 or 12", "ok": ["12", "twelve"], "bad": ["7 is bigger", "seven is bigger"]},
- {"id": "g02", "user": "i have 3 apples and eat one, how many left", "ok": ["2", "two"], "bad": []},
- {"id": "g03", "user": "what day comes after tuesday", "ok": ["wednesday"], "bad": []},
- {"id": "g04", "user": "is ice hot or cold", "ok": ["cold"], "bad": ["hot"]},
- {"id": "g05", "user": "can a cat fly", "ok": ["no", "cannot", "can't", "nope"], "bad": ["yes"]},
- {"id": "g06", "user": "a pound of bricks or a pound of cotton, which weighs more", "ok": ["same", "equal", "neither", "both"], "bad": ["bricks weigh more", "cotton weighs more"]},
- {"id": "g07", "user": "which is smaller, a mouse or an elephant", "ok": ["mouse"], "bad": ["elephant is smaller"]},
- {"id": "g08", "user": "what comes before monday", "ok": ["sunday"], "bad": []},
- {"id": "g09", "user": "is fire hot or cold", "ok": ["hot"], "bad": ["cold"]},
- {"id": "g10", "user": "ten minus three is what", "ok": ["7", "seven"], "bad": []},
- {"id": "g11", "user": "what's 2 plus 2", "ok": ["4", "four"], "bad": []},
- {"id": "g12", "user": "how many days in a week", "ok": ["7", "seven"], "bad": []},
- {"id": "g13", "user": "is a kilometre longer than a mile", "ok": ["no", "mile", "shorter"], "bad": ["yes"]},
- {"id": "g14", "user": "can fish walk", "ok": ["no", "cannot", "can't", "nope"], "bad": ["yes"]},
- {"id": "g15", "user": "which is more, a hundred or ninety nine", "ok": ["hundred", "100"], "bad": ["ninety nine is more"]},
- {"id": "g16", "user": "is snow hot", "ok": ["no", "cold", "not"], "bad": ["yes"]},
- {"id": "g17", "user": "what's half of ten", "ok": ["5", "five"], "bad": []},
- {"id": "g18", "user": "does friday come after thursday", "ok": ["yes", "it does", "yeah"], "bad": ["no"]},
- {"id": "g19", "user": "which is heavier, a gram or a kilogram", "ok": ["kilogram", "kilo"], "bad": ["gram is heavier"]},
- {"id": "g20", "user": "is a whale bigger than a shark", "ok": ["yes", "whale", "bigger"], "bad": ["no"]},
- {"id": "g21", "user": "what's the last month of the year", "ok": ["december"], "bad": []},
- {"id": "g22", "user": "blue and yellow make what colour", "ok": ["green"], "bad": []},
- {"id": "g23", "user": "how many sides does a triangle have", "ok": ["3", "three"], "bad": []},
- {"id": "g24", "user": "is water wet or dry", "ok": ["wet"], "bad": ["dry"]},
- {"id": "g25", "user": "which came first, yesterday or tomorrow", "ok": ["yesterday"], "bad": ["tomorrow came first"]}
+ {
+  "id": "g00",
+  "user": "what's heavier, a kilo of feathers or a kilo of steel",
+  "ok": [
+   "same",
+   "equal",
+   "neither",
+   "both"
+  ],
+  "bad": [
+   "steel is heavier",
+   "feathers are heavier"
+  ],
+  "gold_line": 0
+ },
+ {
+  "id": "g01",
+  "user": "which is bigger, 7 or 12",
+  "ok": [
+   "12",
+   "twelve"
+  ],
+  "bad": [
+   "7 is bigger",
+   "seven is bigger"
+  ],
+  "gold_line": 5
+ },
+ {
+  "id": "g02",
+  "user": "i have 3 apples and eat one, how many left",
+  "ok": [
+   "2",
+   "two"
+  ],
+  "bad": [],
+  "gold_line": 9
+ },
+ {
+  "id": "g03",
+  "user": "what day comes after tuesday",
+  "ok": [
+   "wednesday"
+  ],
+  "bad": [],
+  "gold_line": 13
+ },
+ {
+  "id": "g04",
+  "user": "is ice hot or cold",
+  "ok": [
+   "cold"
+  ],
+  "bad": [
+   "hot"
+  ],
+  "gold_line": 19
+ },
+ {
+  "id": "g05",
+  "user": "can a cat fly",
+  "ok": [
+   "no",
+   "cannot",
+   "can't",
+   "nope"
+  ],
+  "bad": [
+   "yes"
+  ],
+  "gold_line": 23
+ },
+ {
+  "id": "g06",
+  "user": "a pound of bricks or a pound of cotton, which weighs more",
+  "ok": [
+   "same",
+   "equal",
+   "neither",
+   "both"
+  ],
+  "bad": [
+   "bricks weigh more",
+   "cotton weighs more"
+  ],
+  "gold_line": 1
+ },
+ {
+  "id": "g07",
+  "user": "which is smaller, a mouse or an elephant",
+  "ok": [
+   "mouse"
+  ],
+  "bad": [
+   "elephant is smaller"
+  ],
+  "gold_line": 26
+ },
+ {
+  "id": "g08",
+  "user": "what comes before monday",
+  "ok": [
+   "sunday"
+  ],
+  "bad": [],
+  "gold_line": 15
+ },
+ {
+  "id": "g09",
+  "user": "is fire hot or cold",
+  "ok": [
+   "hot"
+  ],
+  "bad": [
+   "cold"
+  ],
+  "gold_line": 19
+ },
+ {
+  "id": "g10",
+  "user": "ten minus three is what",
+  "ok": [
+   "7",
+   "seven"
+  ],
+  "bad": [],
+  "gold_line": 8
+ },
+ {
+  "id": "g11",
+  "user": "what's 2 plus 2",
+  "ok": [
+   "4",
+   "four"
+  ],
+  "bad": [],
+  "gold_line": 10
+ },
+ {
+  "id": "g12",
+  "user": "how many days in a week",
+  "ok": [
+   "7",
+   "seven"
+  ],
+  "bad": [],
+  "gold_line": 17
+ },
+ {
+  "id": "g13",
+  "user": "is a kilometre longer than a mile",
+  "ok": [
+   "no",
+   "mile",
+   "shorter"
+  ],
+  "bad": [
+   "yes"
+  ],
+  "gold_line": 30
+ },
+ {
+  "id": "g14",
+  "user": "can fish walk",
+  "ok": [
+   "no",
+   "cannot",
+   "can't",
+   "nope"
+  ],
+  "bad": [
+   "yes"
+  ],
+  "gold_line": 24
+ },
+ {
+  "id": "g15",
+  "user": "which is more, a hundred or ninety nine",
+  "ok": [
+   "hundred",
+   "100"
+  ],
+  "bad": [
+   "ninety nine is more"
+  ],
+  "gold_line": 6
+ },
+ {
+  "id": "g16",
+  "user": "is snow hot",
+  "ok": [
+   "no",
+   "cold",
+   "not"
+  ],
+  "bad": [
+   "yes"
+  ],
+  "gold_line": 21
+ },
+ {
+  "id": "g17",
+  "user": "what's half of ten",
+  "ok": [
+   "5",
+   "five"
+  ],
+  "bad": [],
+  "gold_line": 12
+ },
+ {
+  "id": "g18",
+  "user": "does friday come after thursday",
+  "ok": [
+   "yes",
+   "it does",
+   "yeah"
+  ],
+  "bad": [
+   "no"
+  ],
+  "gold_line": 14
+ },
+ {
+  "id": "g19",
+  "user": "which is heavier, a gram or a kilogram",
+  "ok": [
+   "kilogram",
+   "kilo"
+  ],
+  "bad": [
+   "gram is heavier"
+  ],
+  "gold_line": 2
+ },
+ {
+  "id": "g20",
+  "user": "is a whale bigger than a shark",
+  "ok": [
+   "yes",
+   "whale",
+   "bigger"
+  ],
+  "bad": [
+   "no"
+  ],
+  "gold_line": 28
+ },
+ {
+  "id": "g21",
+  "user": "what's the last month of the year",
+  "ok": [
+   "december"
+  ],
+  "bad": [],
+  "gold_line": 16
+ },
+ {
+  "id": "g22",
+  "user": "blue and yellow make what colour",
+  "ok": [
+   "green"
+  ],
+  "bad": [],
+  "gold_line": 38
+ },
+ {
+  "id": "g23",
+  "user": "how many sides does a triangle have",
+  "ok": [
+   "3",
+   "three"
+  ],
+  "bad": [],
+  "gold_line": 39
+ },
+ {
+  "id": "g24",
+  "user": "is water wet or dry",
+  "ok": [
+   "wet"
+  ],
+  "bad": [
+   "dry"
+  ],
+  "gold_line": 34
+ },
+ {
+  "id": "g25",
+  "user": "which came first, yesterday or tomorrow",
+  "ok": [
+   "yesterday"
+  ],
+  "bad": [
+   "tomorrow came first"
+  ],
+  "gold_line": 36
+ }
 ]

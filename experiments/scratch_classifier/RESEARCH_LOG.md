@@ -6010,3 +6010,27 @@ shape; t1 drops. Gate was "grounding improves without the simuser score dropping
 Reading for the roadmap: grounding at 2.7M needs the model to copy the right span out of the line (the induction circuit the pre-LN
 line was started for), and that is measured by copy_probe, not by this probe; a from-scratch 20-epoch run with the grounding rows in
 the mix (the actual v5b recipe) is the next honest test, and it is a 1-hour MPS job — Nico's call whether grounding is worth it now.
+
+## 2026-10-27 22:22 PDT — Branch 1: v5h, the honest grounding test (from scratch, 20 epochs, 2,040 grounding rows): grounding does not appear, identity collapses; the pre-LN line has no copy circuit (copy_probe)
+**v5h** = v5b recipe from scratch (pre-LN d256 L2, oracle-only loss, conv-sequences, 20 epochs = the scout's epoch count), corpus =
+v5b's 38,450 rows + the 2,040 grounding rows (probe facts held out). 1,667 batches/epoch, 90–150 s/epoch, 37 min; val 1.268 → 0.648.
+Trainer printouts at epochs 0 / 10 / 20 — "What are you?": "soccerim3 marath Hmmee ' ma…" → "*me I'm Tiny Oracle. 2 mill…" →
+same; "Tell me something interesting": "sortim eyes start weather makes feel crochetoss…" → the recipe line at 10 and 20; "How smart
+are you?": "creative willing admit recentlyically…" → "*yn I have fewer neurons than a fruit fly." at 10 and 20. Grounding sample,
+gold line "Wednesday comes after Tuesday, and Monday comes before Tuesday" + "what day comes after tuesday": epoch 20 →
+"Thursday first, then Saturday" (v5g: "At the beach, then Saturday. Right after Sunday"; v5b: "I am going to be a party").
+**Guards against the template shortcut** (`grounding_probe2.json`): 16 items with the gold line present but the question asking for
+the OTHER slot ("what comes before tuesday" → monday), 10 items where the system line is a distractor fact and the honest answer is
+an admit. Copy probe (while it trained): v5b name 1/16, pet 0/16, city 0/16; v5g 1 / 3 / 0 — **no in-context copy circuit in this
+lineage**, which is the ability grounding-by-reading needs.
+| | grounding off / tier on / gold (26) ↑ | other-slot (16) ↑ | distractor admits (10) ↑ | recap none / gold / extracted ↑ | identity ↑ | human-life ↓ | simuser t1 / t2 / t3 ↑ |
+|---|---|---|---|---|---|---|---|
+| v5b | **4 / 4 / 4** | 1 | 0 | 10 / 26 / **13** | **32/32** | **0/96** | 0.24 / 0.27 / 0.15 |
+| v5g (3-ep continuation) | 1 / **5** / **5** | 1 | **1** | 10 / **34** / 8 | 28/32 | 10/96 | 0.17 / 0.31 / **0.40** |
+| v5h (from scratch, 20 ep) | 2 / 2 / 2 | 1 | 0 | 4 / 21 / 10 | 13/32 | 5/96 | **0.27 / 0.35** / 0.15 |
+Verdict: not exported, and the grounding question is answered for this lineage: with the facts behind the probe held out, neither
+the continuation nor the from-scratch run reads a fact line it has not seen in training (other-slot 1/16 everywhere, distractor
+admits 0–1/10, grounding within noise of v5b), and the from-scratch mix costs identity (32 → 13/32) and gold-recap recall (26 → 21).
+The 2,040 rows (5% of the corpus) are enough to teach the answer template and not enough to teach reading, and reading needs the
+copy circuit that copy_probe says is absent at 2.7M pre-LN d256 after 20 epochs (the 50-epoch v5b also 1/16). Grounding at this size
+is a copy-circuit problem first (induct_unit* / RoPE / depth-3 scouts), not a data problem; parked until copy_probe moves.

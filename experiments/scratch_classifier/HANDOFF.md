@@ -2,7 +2,7 @@
 
 Purpose: let a fresh Claude Code session pick up this research program with as little loss as possible. Keep it short;
 the durable record is `RESEARCH_LOG.md` (lab notebook, append-only, every result the turn it lands). Update this file at
-the end of every working block (not just at the end of a session). Last update: **2026-10-27, 21:38 PDT**.
+the end of every working block (not just at the end of a session). Last update: **2026-10-27, 22:22 PDT**.
 
 ## How to resume (5 minutes)
 1. Read this file, then the last ~400 lines of `RESEARCH_LOG.md` (`tail -400 RESEARCH_LOG.md`).
@@ -23,8 +23,8 @@ the end of every working block (not just at the end of a session). Last update: 
    model-side work = best-of-N with a judge trained on his 0–5 scores, or retrieval for the recap tier. No run pending.
 3. Still open: crawler/room verdicts, teach-mode export, README/benchmark correction, posts.
 
-## Running right now (2026-10-27 21:38 PDT)
-- **Nothing running.** Branch 1 block 8 done: world knob (facts) on pre-LN entries; v5g grounding pass learns the answer shape, not the fact → not exported.
+## Running right now (2026-10-27 22:22 PDT)
+- **v5w** (weather continuation from v5b, 3 epochs, ~7 min) training then evaluating: `logs/v5w_run.log`, `logs/v5w_eval.log` (V5W_ALL_DONE). v5h done: grounding parked (no copy circuit).
 - Nico's labels: tone picks (28 rows, `tone_labels_nico1.jsonl`) + follow-through scores (18, `review_followthrough_scores.json`).
 - Review format: `review_page.py` (0–5 per reply + notes, continuations first, ≤20 items). Pairs on shared history: `cont_pairs.py`.
 
@@ -53,8 +53,10 @@ matched rows) loses to v2 everywhere; both below chance on his 22 turn-3 rows. I
 **Status 21:18:** line budget shipped (0→0 with the cross-turn ban on, 1→0 with it off). `world.py` grounding tier: (b) facts work for v5b,
 (c) comparisons table does not (retrieval picks topical-not-semantic lines; models do not read them) → no knob. World knob shipped 21:38 (facts, pre-LN only). v5g (3-epoch continuation with 2,040 grounding rows, probe facts held out): grounding 4 → 5/26,
 gold-recap recall 26 → 34 (reads harder) but identity 32 → 28, human-life 0 → 10/96, extracted recap 13 → 8 → not exported.
-**Decision for Nico:** the honest grounding test is the from-scratch 20-epoch v5b recipe with the grounding rows in the mix — 1 h of MPS
-(the continuation pass teaches the template, not reading). Run it, or park grounding until the pre-LN line gets its copy circuit measured by copy_probe?
+v5h ran (22:22, Nico's call): from scratch, 20 epochs, grounding rows in, probe facts held out → grounding 2/26 (v5b 4), other-slot 1/16,
+distractor admits 0/10, identity 13/32. copy_probe: v5b 1/16 names, 0 pets, 0 cities — **no copy circuit**. **Grounding parked** until a
+scout moves copy_probe (RoPE / depth / induction units); it is not a data problem at this size. Environment tier (weather + check-in) in
+progress: v5w training.
 **Next block (signal from chat, no pages):** (a) `nico_judge.py` reads `chat_scores.json` as a set (`chat`) and retrains when ≥ 30 rows arrive;
 (b) propose the per-conversation family budget (above) and, if he says yes, implement it as a harness/demo pick rule on the harness's own
 record (no regex) and measure overused-line picks before/after; (c) engagement export: turns per conversation on the ☆ entry vs ct2 plain.

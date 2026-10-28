@@ -2,7 +2,7 @@
 
 Purpose: let a fresh Claude Code session pick up this research program with as little loss as possible. Keep it short;
 the durable record is `RESEARCH_LOG.md` (lab notebook, append-only, every result the turn it lands). Update this file at
-the end of every working block (not just at the end of a session). Last update: **2026-10-28, 08:55 PDT**.
+the end of every working block (not just at the end of a session). Last update: **2026-10-28, 09:00 PDT**.
 
 ## How to resume (5 minutes)
 1. Read this file, then the last ~400 lines of `RESEARCH_LOG.md` (`tail -400 RESEARCH_LOG.md`).
@@ -37,6 +37,7 @@ figures (our file = earlier host only); medical heads are accurate but under-con
 counter; print window boundaries next to every count. Branch 2 never touches this directory or MPS.
 
 ## Creatures — the world as the Oracle's own environment (design, 2026-10-28, 08:27)
+**The arena** (`demo/arena.html`, 2026-10-28, 09:00): Crawly + the tokenizer with their own drives/policy and an instruction model (held-out 0.80; `arena_instructions.py`); mouse/keyboard play; the Oracle comments via the Room path; engagement log shared with the chat export. Next for the arena: the learned policy from the decision log (behaviour cloning + reward weighting), more instruction paraphrases from Nico's own arena chat (logged), creature-to-creature events beyond hand-over.
 **Shipped:** Crawly (strider; fetches words, now returns a RELATED word via `demo/assoc_v1.json` and a gift Room event), the tokenizer
 (lives at the input box, chops sent words into the real token pieces, hands pieces to Crawly, "tokens" Room event), presence (visit record,
 "…" then a first-visit / welcome-back turn), weather events. Banks: `weather_bank.py` (weather, presence), `room_build.py` (Room events).

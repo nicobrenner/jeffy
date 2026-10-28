@@ -6171,3 +6171,32 @@ turn attaches the next note to it, with its src and seed). The page polls `/lab/
 rows (`{t, who, text, re}`) in the same thread with a who label — participants join by appending to that file (N-way). `pile_runs/lab/`
 is gitignored (local, like engagement data). Headless: note posted with ctx (3 turns, attached turn 1), a reply row appended by hand
 rendered within 6 s as "branch1"; no console errors. Server restarted on 8765 with the endpoints.
+
+## 2026-10-28 09:00 PDT — Branch 1: the arena (demo/arena.html) — two creatures with their own models, the Oracle as a third voice
+Nico: "imagine an 'arena' in which these creatures live, and the user can chat with them or interact with them with the mouse/keyboard…
+every creature has their own model, so it's true interaction." Separate page, same visuals language; the chat page only gained a link.
+**Each creature runs its own model:** the drive vector (hunger-for-words, curiosity, fatigue, affection) decaying in real time + the hand
+policy over its options (Crawly: fetch, bring, greet, come, sleep, hide, hand; the tokenizer: chop, greet, come, sleep, hide, hand), every
+decision logged with drives and scores for the learned policy; plus the **instruction model** (`arena_instructions.py`): user chat →
+(option, argument) — LogReg on the Oracle's (ct2) hidden states of the user turn, argument = the B/I/O span tagger (the fact-extractor
+machinery), trained on 192 agent-written paraphrases × inserted words, held out = 60 instructions written separately in other phrasings:
+**option accuracy 0.80, macro-F1 0.80** (none 0.95, hand 0.91, chop 0.86; fetch 0.62 — "bread. that one. fetch it" → chop), **argument
+9/14 exact** ("could you go and grab the plant word" → "the plant"). Unknown instruction (none) → the creatures do their own thing; the
+Trico rule (15%) makes a creature refuse and the Oracle comment on it. Runs in the browser from `demo/arena_instr_v1.json` on the judge
+ONNX's hidden output. No regex at inference (the mention proxies for the engagement log are measurement only).
+**Play:** words typed into the toy box become chips to click or drag onto the floor; words on the floor are the objects; click a creature
+to call it (it may refuse), arrow keys nudge the selected one. **Voices:** Crawly in actions and single words ("*scuttle* ball", "mine.
+marathon", "*goes still*"), the tokenizer in literal fragments ("2 pieces: mo|on", "hel|lo", "one piece for the legs: marathon"), the
+Oracle through the Room path (seed + ct2 continuation) when something happens between them: ""marathon", passed from the chopper to the
+legs. I did not teach them that much", ""marathon", retrieved. Six legs, one word, no manners. It's like a nicer than anything else",
+"Nap time for Crawly. Even small things get tired in here".
+**Measured:** held-out instruction accuracy above; scripted headless play, 10 instructions: **10/10 understood** (one refusal: "come here"
+→ Crawly "*ignores you*"; one honest failure: "bring it to the oracle" after it had handed the word away); task success on fetch 2/2 the
+right word, chop 2/2, hand 1/1. Engagement log: 39 events (chat, instruction, task, decide, feel, refuse, oracle) in the shared
+`tinyoracle.events` key, so the chat page's engagement export includes the arena; the arena has its own export too. Screenshot
+`pile_runs/atl/arena_headless.png`. No console errors.
+Prior art for grounded instruction following at toy scale: SHRDLU (Winograd 1972) — commands over blocks in a closed world; BabyAI
+(Chevalier-Boisvert et al. 2019) — a synthetic language of instructions in a gridworld with a curriculum; gSCAN (Ruis et al. 2020) —
+compositional generalisation of grounded commands; the options framework (Sutton, Precup & Singh 1999) for "fetch a word" as a
+temporally extended action; FeUdal Networks (Vezhnevets et al. 2017) for the instruction → option → primitive-step split. What is new
+here: each creature keeps its drives while taking instructions, so an order competes with hunger and fatigue and can lose.

@@ -1,0 +1,56 @@
+pair,nn_cross,cv_confuse,centroid_cos,shared_phrases,shared_examples,rank_nn_cross,rank_cv_confuse,rank_centroid_cos,rank_shared_phrases,conflict_rank
+account / invoice,0.0,0.0013,0.8282,10,"['need assistance', 'do not know', 'i have to', 'know how']",5,4,11,12,8.0
+account / feedback,0.0,0.0,0.831,9,"['do not know', 'i have to', 'know how', 'not know']",4,8,9,15,9.0
+account / contact,0.0,0.0,0.8283,7,"['i have to', 'know how', 'i do not', 'have to']",2,6,10,28,11.5
+account / cancel,0.0,0.0,0.7681,10,"['need assistance', 'do not know', 'i have to', 'know how']",1,5,38,11,13.75
+cancel / payment,0.0,0.0,0.8189,13,"['i need assistance', 'need assistance', 'i need help', 'you help me']",16,19,16,4,13.75
+contact / feedback,0.0,0.0,0.8521,11,"['assistance to', 'i need help', 'need help', 'i have to']",21,24,5,9,14.75
+delivery / order,0.0,0.0033,0.8545,8,"['need assistance', 'assistance to', 'need help', 'see the']",30,1,3,25,14.75
+account / order,0.0,0.0,0.826,6,"['need assistance', 'i have to', 'know how', 'have to']",6,9,13,32,15.0
+cancel / invoice,0.0,0.0,0.8039,14,"['need assistance', 'do not know', 'have to do', 'know what']",14,17,28,2,15.25
+cancel / refund,0.0,0.0,0.8524,8,"['i have to', 'know how', 'to check', 'help to']",17,20,4,23,16.0
+account / refund,0.0,0.0,0.8208,5,"['i have to', 'know how', 'have to', 'help me']",8,11,14,39,18.0
+cancel / delivery,0.0,0.0,0.7581,12,"['need assistance', 'you help me', 'to see the', 'need help']",12,15,40,6,18.25
+contact / order,0.0,0.0017,0.7892,9,"['assistance to', 'i need help', 'need help', 'i have to']",23,3,31,16,18.25
+cancel / feedback,0.0,0.0,0.7541,13,"['do not know', 'i need help', 'need help', 'i have to']",13,16,42,3,18.5
+cancel / contact,0.0,0.0,0.7345,17,"[""i don't know"", 'i need help', 'you help me', ""don't know""]",11,14,50,1,19.0
+feedback / refund,0.0,0.002,0.8643,6,"['i have to', 'know how', 'help to', 'have to']",38,2,2,36,19.5
+cancel / order,0.0,0.0,0.7569,11,"['need assistance', 'i need help', 'need help', 'i have to']",15,18,41,7,20.25
+contact / invoice,0.0,0.0,0.8103,11,"['assistance to', 'know what', 'i have to', 'know how']",22,25,24,10,20.25
+account / payment,0.0,0.0,0.8135,3,"['need assistance', 'help me', 'i have']",7,10,21,47,21.25
+delivery / payment,0.0,0.0,0.815,13,"['need assistance', 'assistance to', 'can you help', 'you help me']",31,32,20,5,22.0
+account / shipping,0.0,0.0,0.813,2,"['help me', 'i have']",9,12,22,50,23.25
+account / subscription,0.0,0.0,0.7703,6,"['need assistance', 'i have to', 'sign up', 'have to']",10,13,37,33,23.25
+contact / delivery,0.0,0.0,0.7907,8,"['assistance to', 'you help me', 'need help', 'to check']",20,23,30,24,24.25
+account / delivery,0.0,0.0,0.7497,3,"['need assistance', 'help me', 'i have']",3,7,43,46,24.75
+contact / payment,0.0,0.0,0.7887,9,"['assistance to', 'i need help', 'you help me', 'need help']",24,26,32,17,24.75
+contact / refund,0.0,0.0,0.8162,7,"['i have to', 'know how', 'to check', 'help to']",25,27,19,29,25.0
+cancel / subscription,0.0,0.0,0.6929,11,"['i need assistance', 'need assistance', 'i need help', 'you help me']",19,22,54,8,25.75
+feedback / invoice,0.0,0.0,0.8087,10,"['assistance to', 'do not know', 'i have to', 'know how']",35,36,26,13,27.5
+feedback / order,0.0,0.0,0.8073,9,"['assistance to', 'i need help', 'need help', 'i have to']",36,37,27,19,29.75
+invoice / order,0.0,0.0,0.8332,7,"['need assistance', 'assistance to', 'i have to', 'know how']",41,41,7,30,29.75
+delivery / feedback,0.0,0.0,0.7937,6,"['assistance to', 'need help', 'want help', 'help to']",28,30,29,34,30.25
+contact / subscription,0.0,0.0,0.7397,9,"['i need help', 'you help me', 'need help', 'i have to']",27,29,48,18,30.5
+feedback / payment,0.0,0.0,0.8205,6,"['assistance to', 'i need help', 'need help', 'help to']",37,38,15,35,31.25
+order / payment,0.0,0.0,0.8265,9,"['need assistance', 'assistance to', 'i need help', 'need help']",46,46,12,21,31.25
+delivery / shipping,0.0,0.0,0.8189,4,"['the delivery', 'want help', 'help me', 'i have']",33,34,17,44,32.0
+invoice / payment,0.0,0.0,0.8313,6,"['want assistance', 'need assistance', 'assistance to', 'to check']",42,42,8,37,32.25
+invoice / refund,0.0,0.0,0.8345,6,"['i have to', 'know how', 'to check', 'have to']",43,43,6,38,32.5
+delivery / refund,0.0,0.0,0.8093,5,"['to check', 'help to', 'help me', 'i have']",32,33,25,41,32.75
+delivery / invoice,0.0,0.0,0.7773,5,"['need assistance', 'assistance to', 'to check', 'help me']",29,31,35,40,33.75
+feedback / subscription,0.0,0.0,0.7808,8,"['your company', 'i need help', 'need help', 'i have to']",40,40,34,27,35.25
+cancel / shipping,0.0,0.0,0.6766,3,"['want help', 'help me', 'i have']",18,21,55,48,35.5
+payment / refund,0.0,0.0,0.8654,5,"['to check', 'help to', 'help me', 'i have']",50,50,1,42,35.75
+delivery / subscription,0.0,0.0,0.7216,8,"['need assistance', 'can you help', 'you help me', 'need help']",34,35,51,26,36.5
+order / refund,0.0,0.0,0.8123,7,"['i have to', 'know how', 'help to', 'have to']",47,47,23,31,37.0
+contact / shipping,0.0,0.0,0.7493,2,"['help me', 'i have']",26,28,44,51,37.25
+invoice / subscription,0.0,0.0,0.7424,9,"['need assistance', 'have got to', 'i have got', 'i have to']",45,45,47,20,39.25
+feedback / shipping,0.0,0.0,0.7767,4,"['want help', 'to submit', 'help me', 'i have']",39,39,36,45,39.75
+order / subscription,0.0,0.0,0.746,9,"['need assistance', 'i need help', 'need help', 'i have to']",49,49,45,22,41.25
+order / shipping,0.0,0.0,0.8172,2,"['help me', 'i have']",48,48,18,53,41.75
+payment / subscription,0.0,0.0,0.7035,10,"['i need assistance', 'need assistance', 'can you help', 'i need help']",52,52,53,14,42.75
+invoice / shipping,0.0,0.0,0.7836,2,"['help me', 'i have']",44,44,33,52,43.25
+payment / shipping,0.0,0.0,0.7678,2,"['help me', 'i have']",51,51,39,54,48.75
+refund / subscription,0.0,0.0,0.7431,5,"['i have to', 'help to', 'have to', 'help me']",54,54,46,43,49.25
+refund / shipping,0.0,0.0,0.7348,2,"['help me', 'i have']",53,53,49,55,52.5
+shipping / subscription,0.0,0.0,0.7149,3,"['information about', 'help me', 'i have']",55,55,52,49,52.75

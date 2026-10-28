@@ -1481,12 +1481,14 @@ footer{max-width:1200px;margin:auto;padding:16px 24px;font-size:10px;color:var(-
 <div style="display:flex;align-items:center;gap:14px">
 <a href="https://github.com/nicobrenner/jeffy" target="_blank" style="font-size:11px;color:var(--muted)">GitHub &#8599;</a>
 <div id="status" class="status">Connecting</div>
+<select id="journey-sel" title="prototype journeys (local only)" style="font-size:11px;background:transparent;color:var(--muted);border:1px solid var(--border,#333);border-radius:6px;padding:2px 4px"><option value="0">journey: today</option><option value="1">1 · classify box on landing</option><option value="2">2 · teach under the label</option><option value="3">3 · paste your texts first</option></select>
 </div>
 </header>
 <main>
 
 <!-- Catalog -->
 <div id="v-catalog" class="view active">
+<div id="journey-mount"></div>
 <div class="catalog-head">
 <h2>Pretrained Classifiers</h2>
 <p id="grid-count">70 classifiers ready to use. Click a model to try it.</p>
@@ -2436,7 +2438,7 @@ function sendMedFeedback(which,up){
 
 $("status").dataset.state="ready";
 $("status").textContent="70 classifiers ready";
-teachRestore().then(function(){if(location.hash.indexOf('#model/my_')===0)route();});
+journeyInit();teachRestore().then(function(){if(location.hash.indexOf('#model/my_')===0)route();});
 route();
 
 function showDetail(tid){
@@ -2572,7 +2574,8 @@ async function runPredict(tid){
     _stats.predictions++;
     _ev("predict",tid,{label:d.label,confidence:d.confidence,n:_stats.predictions});
     _lastPred={task:tid,label:d.label,confidence:d.confidence};
-    if(TEACH&&$("teach-line")&&$("teach-box").style.display==="none")$("teach-line").style.display="block";
+    if(TEACH&&$("teach-line")&&$("teach-box").style.display==="none"){$("teach-line").style.display="block";
+      if(journeyFrom()===2&&!$("teach-line").dataset.moved){var tl=$("teach-line");$("try-lbl").insertAdjacentElement("afterend",tl);tl.dataset.moved="1";tl.style.margin="6px 0 10px";var a=$("teach-open");a.className="run-btn";a.style.display="inline-block";a.style.fontSize="12px";a.style.padding="6px 10px";a.textContent="Not your labels? Teach it three of your own →";}}
     if(tid.indexOf("my_")===0)_ev("teach_predict",tid,{label:d.label,confidence:d.confidence,margin:d.margin});
     $("fb-up").disabled=false;$("fb-down").disabled=false;
     $("fb-up").classList.remove("voted");$("fb-down").classList.remove("voted");
@@ -3170,6 +3173,35 @@ async function teachSubmit(fromTid){
     CAPS[tid]={name:"Your classifier ("+n+" rows, "+Object.keys(ex).length+" labels)",n_classes:Object.keys(ex).length,encoder:"BAAI/bge-large-en-v1.5",license:"yours",labels:labels,train_examples:n,example:rows[0].querySelector(".teach-text").value,taught:true};
     _teachRows=0;go("model/"+tid);
   }catch(err){msg.textContent=err.message;btn.disabled=false;btn.textContent="Train \u2192";}
+}
+// --- prototype journeys (local only; ?journey=1|2|3; default = today's page) ---
+var JOURNEY;
+function journeyFrom(){var m=location.search.match(/[?&]journey=([123])/);return m?+m[1]:0;}
+function teachBoxMarkup(intro){return '<div id="teach-box" style="margin-top:8px;border:1px solid var(--border,#333);border-radius:8px;padding:10px;font-size:12px;font-family:var(--display)">'+
+  '<div style="color:var(--muted);margin-bottom:6px">'+(intro||'Your text, your label. One line each; at least two labels, four rows. Trains in seconds, no account. Four rows give a first signal, not a classifier: expect 50 to 100 examples per label before the confidence means much.')+'</div>'+
+  '<div id="teach-rows"></div>'+
+  '<div class="try-row" style="margin-top:6px"><button class="fb-btn" id="teach-add" type="button">+ row</button><span id="teach-msg" style="font-size:11px;color:var(--muted);flex:1;margin:0 8px"></span><button class="run-btn" id="teach-submit" type="button">Train &#8594;</button></div></div>';}
+function journeyInit(){
+  JOURNEY=journeyFrom();
+  var sel=$("journey-sel");if(sel){sel.value=String(JOURNEY);sel.onchange=function(){location.href=location.pathname+(sel.value==="0"?"":"?journey="+sel.value)+location.hash;};}
+  var mount=$("journey-mount");if(!mount||!JOURNEY)return;
+  if(JOURNEY===1){
+    var opts=Object.keys(CAPS).filter(function(k){return CAPS[k].encoder!=="features";}).map(function(k){return '<option value="'+k+'"'+(k==="clinc_oos"?' selected':'')+'>'+k+'</option>';}).join('');
+    mount.innerHTML='<div class="d-section" style="margin-bottom:18px"><h3>Paste a sentence, get a label</h3>'+
+      '<textarea id="j1-text" rows="2" spellcheck="false" placeholder="Type anything: a support message, a review, a command…"></textarea>'+
+      '<div class="try-row"><select id="j1-task" style="font-size:12px">'+opts+'</select><span id="j1-meta" style="font-size:11px;color:var(--muted);flex:1;margin:0 8px"></span><button class="run-btn" id="j1-run">Classify &#8594;</button></div>'+
+      '<div id="j1-res" style="display:none"><div id="j1-lbl" class="result-label"></div>'+(TEACH?'<div style="margin-top:6px;font-size:12px;font-family:var(--display)"><a href="#" id="j1-teach" style="color:var(--accent)">Not your labels? Teach it three of your own.</a></div><div id="j1-teachwrap" style="display:none"></div>':'')+'</div></div>';
+    $("j1-run").onclick=async function(){var t=$("j1-text").value,tid=$("j1-task").value;if(!t.trim())return;$("j1-run").disabled=true;
+      try{var r=await fetch("/v1/predict",{method:"POST",headers:Object.assign({"Content-Type":"application/json"},TEACH?{"X-Jeffy-Session":teachSession()}:{}),body:JSON.stringify({text:t,task:tid})});var d=await r.json();if(!r.ok)throw Error(d.detail||"error");
+        $("j1-lbl").textContent=d.label;$("j1-meta").textContent="confidence "+(d.confidence*100).toFixed(0)+"% · margin "+(d.margin*100).toFixed(0)+"% · "+tid;$("j1-res").style.display="block";_stats.predictions++;_ev("predict",tid,{label:d.label,confidence:d.confidence,journey:1});}
+      catch(e){$("j1-meta").textContent=e.message;}finally{$("j1-run").disabled=false;}};
+    if(TEACH)$("j1-teach").onclick=function(e){e.preventDefault();var w=$("j1-teachwrap");w.innerHTML=teachBoxMarkup();w.style.display="block";_teachRows=0;teachAddRow($("j1-text").value,"");teachAddRow("","");teachAddRow("","");teachAddRow("","");$("teach-add").onclick=function(){teachAddRow("","");};$("teach-submit").onclick=function(){teachSubmit($("j1-task").value);};_ev("teach_open",$("j1-task").value,{rows:4,journey:1});};
+  }
+  if(JOURNEY===3&&TEACH){
+    mount.innerHTML='<div class="d-section" style="margin-bottom:18px"><h3>Paste your texts, name two labels</h3>'+teachBoxMarkup('Four lines of your own text with the label you want for each. Trains in seconds on this machine, no account, no key. Or scroll down and start from a pretrained head.')+'</div>';
+    _teachRows=0;teachAddRow("","");teachAddRow("","");teachAddRow("","");teachAddRow("","");
+    $("teach-add").onclick=function(){teachAddRow("","");};$("teach-submit").onclick=function(){_ev("teach_open","landing",{rows:_teachRows,journey:3});teachSubmit("landing");};
+  }
 }
 function _ev(event,view,meta){try{navigator.sendBeacon("/v1/event",JSON.stringify({event:event,view:view||"",meta:meta||{}}))}catch(e){};try{if(typeof umami!=="undefined")umami.track(event,{view:view||"",meta:meta||{}})}catch(e){}}
 document.addEventListener("click",function(e){var a=e.target.closest("a[href^='http']");if(a)_ev("outbound",a.href);});

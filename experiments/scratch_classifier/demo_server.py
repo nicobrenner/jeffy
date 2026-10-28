@@ -3,13 +3,26 @@ python3 -m http.server sends no such headers -> ort runs single-threaded (the pa
   python3 demo_server.py 8766
 """
 import sys, http.server, functools
-import json, os, time
-LAB = os.path.join("pile_runs", "lab")   # local only (.gitignore): the researcher thread — notes from Nico, replies from the lab sessions
+import json, os, time, threading
+LAB = os.path.join("pile_runs", "lab")
+WORLDS = os.path.join(LAB, "worlds.json"); _wlock = threading.Lock()   # connected arenas: registry, link requests, inboxes, lite views (local relay)
+def _wload():
+    try: return json.load(open(WORLDS))
+    except Exception: return {"worlds": {}}
+def _wsave(d):
+    os.makedirs(LAB, exist_ok=True); tmp = WORLDS + ".tmp"; json.dump(d, open(tmp, "w")); os.replace(tmp, WORLDS)
+def _w(d, code): return d["worlds"].setdefault(code, {"name": code, "links": [], "requests": [], "inbox": [], "view": None, "seen": 0})   # local only (.gitignore): the researcher thread — notes from Nico, replies from the lab sessions
 class H(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
         if self.path.startswith("/lab/replies"):
             os.makedirs(LAB, exist_ok=True); f = os.path.join(LAB, "replies.jsonl"); rows = [l for l in open(f)] if os.path.exists(f) else []
             body = ("[" + ",".join(l.strip() for l in rows if l.strip()) + "]").encode(); self.send_response(200); self.send_header("Content-Type", "application/json"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/worlds/state"):
+            import urllib.parse; code = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query).get("code", [""])[0]
+            with _wlock:
+                d = _wload(); me = _w(d, code); me["seen"] = time.time(); _wsave(d)
+                out = {"me": {k: me[k] for k in ("name", "links", "requests", "inbox")}, "peers": {c: {"name": d["worlds"].get(c, {}).get("name", c), "seen": d["worlds"].get(c, {}).get("seen", 0), "view": d["worlds"].get(c, {}).get("view")} for c in me["links"]}, "now": time.time()}
+            body = json.dumps(out).encode(); self.send_response(200); self.send_header("Content-Type", "application/json"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body); return
         if self.path.startswith("/lab/notes"):
             os.makedirs(LAB, exist_ok=True); f = os.path.join(LAB, "notes.jsonl"); rows = [l for l in open(f)] if os.path.exists(f) else []
             body = ("[" + ",".join(l.strip() for l in rows if l.strip()) + "]").encode(); self.send_response(200); self.send_header("Content-Type", "application/json"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body); return
@@ -27,6 +40,34 @@ class H(http.server.SimpleHTTPRequestHandler):
             body = json.dumps(out).encode(); self.send_response(200); self.send_header("Content-Type", "application/json"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body); return
         return super().do_GET()
     def do_POST(self):
+        if self.path.startswith("/worlds/"):
+            n = int(self.headers.get("Content-Length", 0)); q = json.loads(self.rfile.read(n) or b"{}"); act = self.path.split("/")[2].split("?")[0]; res = {"ok": True}
+            with _wlock:
+                d = _wload(); me = _w(d, q.get("code", ""))
+                if act == "register": me["name"] = str(q.get("name", me["name"]))[:40]; me["seen"] = time.time()
+                elif act == "link":
+                    other = str(q.get("other", "")).strip().lower()
+                    if other == q.get("code") or not other: res = {"ok": False, "error": "that is your own code"}
+                    elif other not in d["worlds"]: res = {"ok": False, "error": "no world with that code has been open on this server"}
+                    elif q["code"] in d["worlds"][other]["links"]: res = {"ok": True, "already": True}
+                    elif q["code"] not in d["worlds"][other]["requests"]: d["worlds"][other]["requests"].append(q["code"])
+                elif act == "approve":
+                    other = q.get("other"); me["requests"] = [r for r in me["requests"] if r != other]
+                    if q.get("yes") and other in d["worlds"]:
+                        if other not in me["links"]: me["links"].append(other)
+                        o = d["worlds"][other]
+                        if q["code"] not in o["links"]: o["links"].append(q["code"])
+                elif act == "unlink":
+                    other = q.get("other"); me["links"] = [x for x in me["links"] if x != other]
+                    if other in d["worlds"]: d["worlds"][other]["links"] = [x for x in d["worlds"][other]["links"] if x != q["code"]]
+                elif act == "send":
+                    to = q.get("to")
+                    if to in me["links"] and to in d["worlds"]: item = dict(q.get("item") or {}); item["from"] = q["code"]; item["t"] = time.time(); d["worlds"][to]["inbox"].append(item); d["worlds"][to]["inbox"] = d["worlds"][to]["inbox"][-50:]
+                    else: res = {"ok": False, "error": "not linked"}
+                elif act == "ack": ids = set(q.get("ids") or []); me["inbox"] = [i for i in me["inbox"] if i.get("id") not in ids]
+                elif act == "view": me["view"] = q.get("view"); me["seen"] = time.time()
+                _wsave(d)
+            body = json.dumps(res).encode(); self.send_response(200); self.send_header("Content-Type", "application/json"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body); return
         if self.path.startswith("/lab/sync"):   # the page pushes its browser-local data here so nothing depends on pressing export
             n = int(self.headers.get("Content-Length", 0)); data = json.loads(self.rfile.read(n) or b"{}"); os.makedirs(LAB, exist_ok=True)
             for k in ("engagement", "chat_scores", "corrections", "visits", "arena_snapshots"):

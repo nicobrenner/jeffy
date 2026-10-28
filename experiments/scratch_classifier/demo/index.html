@@ -294,7 +294,7 @@
 
   // Model registry. format 'tags' = <|system|>/<|user|>/<|oracle|> (v2 tokenizer); 'plain' = System:/User:/Oracle: (TinyStories tokenizer)
   const MODELS = {
-    v2_grown_ct2_bestof4: { label: '☆ TEST THIS · Oct 27 · Nico\'s pick (ct2) + best-of-4 picked by the Nico-judge · ~4x slower per reply · won 9-1-8 in your blind scores', file: 'oracle_v2_grown_ct2_judge_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params + judge on its own hidden states · 11 MB int8 · best of 4', size: '11 MB', old: false, judge: { file: 'nico_judge_v1.json', bestOf: 4 } },
+    v2_grown_ct2_bestof4: { label: '☆ TEST THIS · Oct 27 · Nico\'s pick (ct2) + best-of-4 picked by the Nico-judge v2 (trained on your 80 scores) · ~4x slower per reply · best-of-4 won 9-1-8 in your blind scores', file: 'oracle_v2_grown_ct2_judge_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params + judge on its own hidden states · 11 MB int8 · best of 4', size: '11 MB', old: false, judge: { file: 'nico_judge_v2.json', bestOf: 4 } },
     v5b_int8: { label: '☆ candidate v5b · Oct 27 09:20 · 2.7M pre-LN from scratch · reads a recap line (first model that can) · identity 32/32', file: 'oracle_v5b_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 3.8 MB int8' },
     v2_grown_ct2_int8: { label: '★ Nico\'s pick · Oct 26 18:17 · grown 8.5M · admit act (plan token, picks its own act)', file: 'oracle_v2_grown_ct2_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '8.5M params (grown from v2) · 11 MB int8', size: '11 MB', old: false },
     v3c_scratch_int8: { label: 'v3c: from scratch on the bible corpus (pets, family, age from the bible; stock openers stripped) (2.7M, int8)', file: 'oracle_v3c_scratch_int8.onnx', tokenizer: 'tokenizer_chat_v2.json', format: 'tags', badge: '2.7M params · 4 MB int8', size: '4 MB' },
@@ -460,6 +460,7 @@
     const h = out.hidden.data, S = out.hidden.dims[1], D = out.hidden.dims[2];
     let z = judge.b;
     for (let d = 0; d < D; d++) { let m = 0; for (let t = 0; t < S; t++) m += h[t * D + d]; z += judge.w[d] * h[(S - 1) * D + d] + judge.w[D + d] * (m / S); }
+    if (judge.seen) { const seen = turns.filter(t => t.role === 'oracle' && t.text.trim() === reply.trim()).length; z += judge.w[2 * D] * (judge.seen_scale || 5) * seen; }   // "seen before in this conversation": the page's own record of emitted lines, exact match
     return 1 / (1 + Math.exp(-z));
   }
 

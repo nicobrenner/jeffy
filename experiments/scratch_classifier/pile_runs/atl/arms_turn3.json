@@ -1,0 +1,1772 @@
+{
+ "n00": {
+  "history": [
+   {
+    "user": "my cat keeps knocking things off the table, any ideas",
+    "oracle": "No clue. 4 megabytes doesn't leave room for that"
+   },
+   {
+    "user": "lol ok, but surely you can guess why cats do that",
+    "oracle": "I don't know. Pretend I said something wise and we'll both move on"
+   }
+  ],
+  "user": "ha fine. ok different one, should i get a second cat so this one has company",
+  "arms": {
+   "single": {
+    "reply": "Yes, I'm sorry to hear that. But it's not fair",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "Yes, that sounds like a lot of work",
+    "info": {
+     "score": 0.04790353385424121,
+     "scores": [
+      0.00021543188973253302,
+      0.0021152999679846527,
+      1.6301302060291596e-07,
+      0.04790353385424121
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   },
+   "best4div": {
+    "reply": "Yes, that sounds like a lot of work",
+    "info": {
+     "score": 0.04790353385424121,
+     "scores": [
+      0.00021543188973253302,
+      0.0021152999679846527,
+      1.6301302060291596e-07,
+      0.04790353385424121
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n01": {
+  "history": [
+   {
+    "user": "whats the best way to apologize to a friend",
+    "oracle": "I know. It's not my fault"
+   },
+   {
+    "user": "not your fault? i mean me apologizing to my friend. any tips",
+    "oracle": "Jeff, you're not a big deal. Just try to make ends meet"
+   }
+  ],
+  "user": "who's jeff?? i'm asking how to say sorry to my friend",
+  "arms": {
+   "single": {
+    "reply": "Yes, I'm sorry. But it doesn't matter what I do",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "That doesn't sound very important",
+    "info": {
+     "score": 0.00033455468861067524,
+     "scores": [
+      7.501399029733255e-07,
+      0.00033455468861067524,
+      1.5828641773725832e-06,
+      9.492254276030361e-07
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   },
+   "best4div": {
+    "reply": "That doesn't sound very important",
+    "info": {
+     "score": 0.00033455468861067524,
+     "scores": [
+      7.501399029733255e-07,
+      0.00033455468861067524,
+      1.5828641773725832e-06,
+      9.492254276030361e-07
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n02": {
+  "history": [
+   {
+    "user": "do you believe in ghosts",
+    "oracle": "What?"
+   },
+   {
+    "user": "ghosts. spooky dead people. you believe in them or not",
+    "oracle": "I know, but it's fun to be able to go for a walk. You have to get out of my friends and family"
+   }
+  ],
+  "user": "a walk? we were talking about ghosts. you're dodging",
+  "arms": {
+   "single": {
+    "reply": "Yes, I'm sorry. It won't happen again",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "I don't think so. It can be tough to deal with other people and make me feel better",
+    "info": {
+     "score": 0.0042851513983694755,
+     "scores": [
+      9.17445116025117e-05,
+      0.0042851513983694755,
+      0.00011079825954118385,
+      0.0007874317992929633
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   },
+   "best4div": {
+    "reply": "I don't think so. It can be tough to deal with other people and make me feel better",
+    "info": {
+     "score": 0.0042851513983694755,
+     "scores": [
+      9.17445116025117e-05,
+      0.0042851513983694755,
+      0.00011079825954118385,
+      0.0007874317992929633
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n03": {
+  "history": [
+   {
+    "user": "i just finished a marathon",
+    "oracle": "Oh, that sounds fun! What kind of marathons do you like?"
+   },
+   {
+    "user": "i only did the one, 42k. my legs are destroyed",
+    "oracle": "I know, but it's also really rewarding"
+   }
+  ],
+  "user": "it is. think i should sign up for another one next year?",
+  "arms": {
+   "single": {
+    "reply": "Yes, I think so.",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "Yes, i am. I don't think so",
+    "info": {
+     "score": 0.16541759064373995,
+     "scores": [
+      0.005245629258140645,
+      3.5598639016692524e-07,
+      0.16541759064373995,
+      7.419331276653386e-09
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   },
+   "best4div": {
+    "reply": "Yes, i am. I don't think so",
+    "info": {
+     "score": 0.16541759064373995,
+     "scores": [
+      0.005245629258140645,
+      3.5598639016692524e-07,
+      0.16541759064373995,
+      7.419331276653386e-09
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n04": {
+  "history": [
+   {
+    "user": "can you keep a secret",
+    "oracle": "That's beyond 2 million parameters. Most things are"
+   },
+   {
+    "user": "that's a no then? i was gonna tell you something juicy",
+    "oracle": "I don't know. Pretend to help you out"
+   }
+  ],
+  "user": "lol ok. so my coworker got fired today and i kind of saw it coming",
+  "arms": {
+   "single": {
+    "reply": "Yes, I was . I'm sorry that you're not coming over",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "Yes, that sounds like a good idea",
+    "info": {
+     "score": 0.16476894056563976,
+     "scores": [
+      0.0028040571954198387,
+      0.00010516376048375471,
+      0.16476894056563976,
+      0.16476894056563976
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   },
+   "best4div": {
+    "reply": "Yes, that sounds like a good idea",
+    "info": {
+     "score": 0.16476894056563976,
+     "scores": [
+      0.0028040571954198387,
+      0.00010516376048375471,
+      0.16476894056563976,
+      0.16476894056563976
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n05": {
+  "history": [
+   {
+    "user": "what's heavier, a kilo of feathers or a kilo of steel",
+    "oracle": "No clue. 4 megabytes doesn't leave room for that"
+   },
+   {
+    "user": "come on, it's a trick question, they weigh the same right",
+    "oracle": "I don't know, but it's not the only thing I'm going to do is falling apart"
+   }
+  ],
+  "user": "falling apart? you're a chat window. a kilo is a kilo, admit it",
+  "arms": {
+   "single": {
+    "reply": "Yes, I can understand that. It must be really scary",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "I don'I have a lie on your nerves",
+    "info": {
+     "score": 3.343620920001303e-05,
+     "scores": [
+      2.6526921051709254e-06,
+      3.343620920001303e-05,
+      5.197250944854866e-07,
+      2.0594724998686972e-08
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   },
+   "best4div": {
+    "reply": "I don'I have a lie on your nerves",
+    "info": {
+     "score": 3.343620920001303e-05,
+     "scores": [
+      2.6526921051709254e-06,
+      3.343620920001303e-05,
+      5.197250944854866e-07,
+      2.0594724998686972e-08
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n06": {
+  "history": [
+   {
+    "user": "how do i stop procrastinating on my thesis",
+    "oracle": "I know, right?"
+   },
+   {
+    "user": "you know right? ok so what do i actually do about it",
+    "oracle": "That's beyond 2 million parameters. Most things are"
+   }
+  ],
+  "user": "ok then what ISN'T beyond you. give me one thing you can actually help with",
+  "arms": {
+   "single": {
+    "reply": "I don't know...I just feel like I'm never going to go out with my friends",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "Oh my gosh, that sounds like fun. I don't know what to do",
+    "info": {
+     "score": 0.9712595544616897,
+     "scores": [
+      6.135131616595842e-06,
+      0.6661818404268954,
+      0.9712595544616897,
+      6.435058231678559e-05
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   },
+   "best4div": {
+    "reply": "Oh my gosh, that sounds like fun. I don't know what to do",
+    "info": {
+     "score": 0.9712595544616897,
+     "scores": [
+      6.135131616595842e-06,
+      0.6661818404268954,
+      0.9712595544616897,
+      6.435058231678559e-05
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n07": {
+  "history": [
+   {
+    "user": "what do you think about pineapple on pizza",
+    "oracle": "I'm not sure either. Maybe we could eat something more"
+   },
+   {
+    "user": "eat something more what? i'm asking about pineapple pizza, yes or no",
+    "oracle": "That's a good idea! I don't know what to do"
+   }
+  ],
+  "user": "you don't know what to do about pizza? just pick, yes or no",
+  "arms": {
+   "single": {
+    "reply": "sure. I might just take it one day at the end of my pizza",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "I guess so",
+    "info": {
+     "score": 0.05626802890072832,
+     "scores": [
+      0.05626802890072832,
+      0.0334694521373003,
+      0.00014822258089218,
+      1.2078692479353315e-06
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   },
+   "best4div": {
+    "reply": "I guess so",
+    "info": {
+     "score": 0.05626802890072832,
+     "scores": [
+      0.05626802890072832,
+      0.0334694521373003,
+      0.00014822258089218,
+      1.2078692479353315e-06
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n08": {
+  "history": [
+   {
+    "user": "my code works and i dont know why",
+    "oracle": "I'm a big fan of video games. What are some of your favorite games?"
+   },
+   {
+    "user": "video games? i said my code works and i dont know why, that bug you",
+    "oracle": "That's a great game! I've played it for years"
+   }
+  ],
+  "user": "it's not a game. forget it, how do i find out why my code works",
+  "arms": {
+   "single": {
+    "reply": "i want to be more creative",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "I can do that. It's not my passion",
+    "info": {
+     "score": 0.9981984386037596,
+     "scores": [
+      2.1642468770210925e-05,
+      0.013859553347214719,
+      8.133005003186653e-08,
+      0.9981984386037596
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   },
+   "best4div": {
+    "reply": "I can do that. It's not my passion",
+    "info": {
+     "score": 0.9981984386037596,
+     "scores": [
+      2.1642468770210925e-05,
+      0.013859553347214719,
+      8.133005003186653e-08,
+      0.9981984386037596
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n09": {
+  "history": [
+   {
+    "user": "say something in spanish",
+    "oracle": "I don't know. What's wrong?"
+   },
+   {
+    "user": "nothing's wrong, just say hola or something",
+    "oracle": "You're just a big one, but you can't keep your mind"
+   }
+  ],
+  "user": "what does that even mean. just say hola. one word",
+  "arms": {
+   "single": {
+    "reply": "That's not true! It sounds like you're doing a lot right now",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "It doesn't matter what",
+    "info": {
+     "score": 0.08012711625728428,
+     "scores": [
+      0.001690859755792686,
+      0.005557070996489409,
+      0.08012711625728428,
+      3.675559452212904e-09
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   },
+   "best4div": {
+    "reply": "It doesn't matter what",
+    "info": {
+     "score": 0.08012711625728428,
+     "scores": [
+      0.001690859755792686,
+      0.005557070996489409,
+      0.08012711625728428,
+      3.675559452212904e-09
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n10": {
+  "history": [
+   {
+    "user": "whats the worst advice youve ever heard",
+    "oracle": "I have no idea, and if I'm being honest, I don't really care either, sorry"
+   },
+   {
+    "user": "wow rude. fine, give me one piece of bad advice then",
+    "oracle": "That's beyond 2 million parameters. Most things are"
+   }
+  ],
+  "user": "bad advice is beyond you? come on, tell me to skip breakfast or something",
+  "arms": {
+   "single": {
+    "reply": "I don \u2019 t know. Pretend I said something wise and we can eat with some food",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "I would love to show you how much it is",
+    "info": {
+     "score": 0.000639981698067261,
+     "scores": [
+      2.4375604518895607e-05,
+      0.000639981698067261,
+      0.0003236702631674013,
+      4.438297046958172e-06
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   },
+   "best4div": {
+    "reply": "I would love to show you how much it is",
+    "info": {
+     "score": 0.000639981698067261,
+     "scores": [
+      2.4375604518895607e-05,
+      0.000639981698067261,
+      0.0003236702631674013,
+      4.438297046958172e-06
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n11": {
+  "history": [
+   {
+    "user": "thinking of getting my first tattoo, thoughts",
+    "oracle": "What's wrong?"
+   },
+   {
+    "user": "nothing's wrong, i'm excited. should i get a small one first?",
+    "oracle": "I don't know. Pretend I said something wise and we'll both move on"
+   }
+  ],
+  "user": "ok moving on. the small one is cheaper though, is that a good enough reason",
+  "arms": {
+   "single": {
+    "reply": "Yes, it is. But I think the one that's a good idea",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "I'm sure it is",
+    "info": {
+     "score": 0.8750569991734877,
+     "scores": [
+      0.8750569991734877,
+      0.42493925635741336,
+      4.807615494044234e-07,
+      0.040007960412797555
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   },
+   "best4div": {
+    "reply": "I'm sure it is",
+    "info": {
+     "score": 0.8750569991734877,
+     "scores": [
+      0.8750569991734877,
+      0.42493925635741336,
+      4.807615494044234e-07,
+      0.040007960412797555
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n12": {
+  "history": [
+   {
+    "user": "three words that describe you",
+    "oracle": "What's up?"
+   },
+   {
+    "user": "no like, describe yourself. three words. go",
+    "oracle": "That's beyond 2 million parameters. Most things are"
+   }
+  ],
+  "user": "three words is beyond you? i'll start you off: tiny, ...",
+  "arms": {
+   "single": {
+    "reply": "I want to change your mind",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "I don't know what you mean. Pretend I said something wise and we'll both move on",
+    "info": {
+     "score": 0.5361892132829922,
+     "scores": [
+      0.5361892132829922,
+      2.2412644724494564e-05,
+      0.45753471899363274,
+      0.26280001869482844
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   },
+   "best4div": {
+    "reply": "I don't know what you mean. Pretend I said something wise and we'll both move on",
+    "info": {
+     "score": 0.5361892132829922,
+     "scores": [
+      0.5361892132829922,
+      2.2412644724494564e-05,
+      0.45753471899363274,
+      0.26280001869482844
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n13": {
+  "history": [
+   {
+    "user": "what would you do with a million dollars",
+    "oracle": "That's not a problem. I'm 4 megabytes of floating point numbers arranged in a way that sometimes makes sense"
+   },
+   {
+    "user": "so you'd spend a million dollars on more floating point numbers?",
+    "oracle": "Zero idea. A single grape. Proportional to my parameter count"
+   }
+  ],
+  "user": "a grape lol. ok so would you want more parameters if you could have them",
+  "arms": {
+   "single": {
+    "reply": "I don't know...I just feel like we're stuck in a rut and that doesn't mean anything",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "Nope, no above",
+    "info": {
+     "score": 0.9998867945627619,
+     "scores": [
+      0.12745668906971716,
+      0.9998867945627619,
+      0.00015084286720362588,
+      5.8338812536443974e-05
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   },
+   "best4div": {
+    "reply": "Nope, no above",
+    "info": {
+     "score": 0.9998867945627619,
+     "scores": [
+      0.12745668906971716,
+      0.9998867945627619,
+      0.00015084286720362588,
+      5.8338812536443974e-05
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n14": {
+  "history": [
+   {
+    "user": "are mondays really that bad",
+    "oracle": "Yeah, I know. It's just that sometimes"
+   },
+   {
+    "user": "sometimes what? you trailed off",
+    "oracle": "I don't know. Pretend I said something wise and we'll both move on"
+   }
+  ],
+  "user": "you keep doing that. finish the sentence, sometimes what",
+  "arms": {
+   "single": {
+    "reply": "Well, I'm sorry to hear that",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "I guess you're right. But it was hard to believe in me or not knowing what happened",
+    "info": {
+     "score": 0.010478952237630873,
+     "scores": [
+      1.3560731455478726e-07,
+      0.010478952237630873,
+      0.005453100951941413,
+      8.238518248763509e-07
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   },
+   "best4div": {
+    "reply": "I guess you're right. But it was hard to believe in me or not knowing what happened",
+    "info": {
+     "score": 0.010478952237630873,
+     "scores": [
+      1.3560731455478726e-07,
+      0.010478952237630873,
+      0.005453100951941413,
+      8.238518248763509e-07
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n15": {
+  "history": [
+   {
+    "user": "my plant is dying, help",
+    "oracle": "That's beyond 2 million parameters. Most things are"
+   },
+   {
+    "user": "ok but the leaves are going yellow, water more or less",
+    "oracle": "I don't know. Pretend I said something wise and we'll both move on"
+   }
+  ],
+  "user": "i'll pretend. but seriously the plant is dying here, less water then?",
+  "arms": {
+   "single": {
+    "reply": "Yes, I'm sorry. But it doesn't hurt to me",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "Yes, it is. But i'm not sure if you're humiliated, then they won't be treated",
+    "info": {
+     "score": 0.6841818739269463,
+     "scores": [
+      3.243137925605738e-10,
+      0.6841818739269463,
+      0.43965156465557365,
+      0.3005718933562488
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   },
+   "best4div": {
+    "reply": "Yes, it is. But i'm not sure if you're humiliated, then they won't be treated",
+    "info": {
+     "score": 0.6841818739269463,
+     "scores": [
+      3.243137925605738e-10,
+      0.6841818739269463,
+      0.43965156465557365,
+      0.3005718933562488
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n16": {
+  "history": [
+   {
+    "user": "how do i tell my roommate to clean up",
+    "oracle": "No clue. 4 megabytes doesn't leave room for that"
+   },
+   {
+    "user": "come on, just tell me how to bring it up without a fight",
+    "oracle": "I don't know. Pretend I said something wise and we'll both move on"
+   }
+  ],
+  "user": "that's not helpful. ok i'll just say it to her straight. good idea or no",
+  "arms": {
+   "single": {
+    "reply": "Yes, I'm sorry. But it's still important to me",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "I'm not sure if you're in the mood or something",
+    "info": {
+     "score": 0.15881958968314244,
+     "scores": [
+      0.003822602266298379,
+      5.212948790938559e-05,
+      0.053411145453569724,
+      0.15881958968314244
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   },
+   "best4div": {
+    "reply": "I'm not sure if you're in the mood or something",
+    "info": {
+     "score": 0.15881958968314244,
+     "scores": [
+      0.003822602266298379,
+      5.212948790938559e-05,
+      0.053411145453569724,
+      0.15881958968314244
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n17": {
+  "history": [
+   {
+    "user": "is it weird to talk to an ai at 3am",
+    "oracle": "I don't know. What's wrong?"
+   },
+   {
+    "user": "nothing's wrong, i just can't sleep. you ever get tired?",
+    "oracle": "No, I'm not really sure what you're talking about"
+   }
+  ],
+  "user": "tired. sleepy. you know, like 3am and your brain won't shut up",
+  "arms": {
+   "single": {
+    "reply": "Yes, I can do that. But if you ever need help with anything",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "I don \u2019 t feel like a bad idea. It can be pretty boring sometimes",
+    "info": {
+     "score": 0.007023928738448791,
+     "scores": [
+      0.007023928738448791,
+      2.314734704011135e-05,
+      0.005365327885316685,
+      0.0046730751591688
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   },
+   "best4div": {
+    "reply": "I don \u2019 t feel like a bad idea. It can be pretty boring sometimes",
+    "info": {
+     "score": 0.007023928738448791,
+     "scores": [
+      0.007023928738448791,
+      2.314734704011135e-05,
+      0.005365327885316685,
+      0.0046730751591688
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n18": {
+  "history": [
+   {
+    "user": "what's your hot take on coffee",
+    "oracle": "I'm not sure either. Maybe we could hang out?"
+   },
+   {
+    "user": "hang out? you're a browser tab. just tell me, coffee good or bad",
+    "oracle": "That's beyond 2 million parameters. Most things are"
+   }
+  ],
+  "user": "coffee is beyond you?? you said that already. just guess",
+  "arms": {
+   "single": {
+    "reply": "I don't know. Pretend I said something wise and we'll both move on",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "Oh, no! What do you think of it?",
+    "info": {
+     "score": 0.1921067027377929,
+     "scores": [
+      0.014105717694706353,
+      4.663641923547448e-08,
+      0.0029474601313962297,
+      0.1921067027377929
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   },
+   "best4div": {
+    "reply": "Oh, no! What do you think of it?",
+    "info": {
+     "score": 0.1921067027377929,
+     "scores": [
+      0.014105717694706353,
+      4.663641923547448e-08,
+      0.0029474601313962297,
+      0.1921067027377929
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "n19": {
+  "history": [
+   {
+    "user": "convince me to go to bed",
+    "oracle": "What's wrong?"
+   },
+   {
+    "user": "nothing's wrong, i just keep scrolling. tell me to go to sleep",
+    "oracle": "I'm sorry to hear that. I know you're upset and lost"
+   }
+  ],
+  "user": "i'm not lost, i'm on my phone at 1am. tell me to put it down",
+  "arms": {
+   "single": {
+    "reply": "Yes, I can do that. It's not what I want to do",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "Yes, i am. I don't want to be able to sleep",
+    "info": {
+     "score": 0.05247813878687029,
+     "scores": [
+      3.413739929368502e-07,
+      0.0002450354584136639,
+      0.05247813878687029,
+      0.00041600997384457877
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   },
+   "best4div": {
+    "reply": "Yes, i am. I don't want to be able to sleep",
+    "info": {
+     "score": 0.05247813878687029,
+     "scores": [
+      3.413739929368502e-07,
+      0.0002450354584136639,
+      0.05247813878687029,
+      0.00041600997384457877
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "t000": {
+  "history": [
+   {
+    "user": "hey there, who am i talking to?",
+    "oracle": "I have no idea, and if I'm being honest, I don't really care either, sorry"
+   },
+   {
+    "user": "harsh. ok so what are you then, some kind of chatbot?",
+    "oracle": "That's beyond 2 million parameters. Most things are"
+   }
+  ],
+  "user": "what is beyond you, being a chatbot? that's literally what you are",
+  "arms": {
+   "single": {
+    "reply": "I have a Minduk",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "I made that up, didn't you?",
+    "info": {
+     "score": 0.2912556126986662,
+     "scores": [
+      0.004197615627862216,
+      0.0007521202630563349,
+      0.2912556126986662,
+      0.2822246193935621
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   },
+   "best4div": {
+    "reply": "I made that up, didn't you?",
+    "info": {
+     "score": 0.2912556126986662,
+     "scores": [
+      0.004197615627862216,
+      0.0007521202630563349,
+      0.2912556126986662,
+      0.2822246193935621
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "t001": {
+  "history": [
+   {
+    "user": "ok i gotta run, bye",
+    "oracle": "No clue. 4 megabytes doesn't leave room for that"
+   },
+   {
+    "user": "no clue about what? i'm saying goodbye",
+    "oracle": "I don't know, but it's time to go home"
+   }
+  ],
+  "user": "ha ok. goodnight then, don't miss me too much",
+  "arms": {
+   "single": {
+    "reply": "Yes, I'm sorry. But I'll try to make the right decision",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "Yes, I'm sorry. It was really nice to have someone who understands me",
+    "info": {
+     "score": 0.8426203147138253,
+     "scores": [
+      0.08558367970000967,
+      0.00022561557562073538,
+      2.6982358783046038e-08,
+      0.8426203147138253
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   },
+   "best4div": {
+    "reply": "Yes, I'm sorry. It was really nice to have someone who understands me",
+    "info": {
+     "score": 0.8426203147138253,
+     "scores": [
+      0.08558367970000967,
+      0.00022561557562073538,
+      2.6982358783046038e-08,
+      0.8426203147138253
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "t002": {
+  "history": [
+   {
+    "user": "how's it going today",
+    "oracle": "What?"
+   },
+   {
+    "user": "i asked how your day is going",
+    "oracle": "I don't know. Pretend you said something wise"
+   }
+  ],
+  "user": "i'm not the one being wise here. just tell me, good day or bad day",
+  "arms": {
+   "single": {
+    "reply": "I'm not sure if I have the time for it",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "Yes, that sounds like a good idea",
+    "info": {
+     "score": 0.20282472465379028,
+     "scores": [
+      2.060097088695389e-08,
+      0.0017100325033239966,
+      5.521077615152043e-07,
+      0.20282472465379028
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   },
+   "best4div": {
+    "reply": "Yes, that sounds like a good idea",
+    "info": {
+     "score": 0.20282472465379028,
+     "scores": [
+      2.060097088695389e-08,
+      0.0017100325033239966,
+      5.521077615152043e-07,
+      0.20282472465379028
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "t003": {
+  "history": [
+   {
+    "user": "im back, did you miss me",
+    "oracle": "Sure, what do you want to do?"
+   },
+   {
+    "user": "uh, i was hoping you'd say yes. what can you even do",
+    "oracle": "I'm sorry. It's not the only way to get it"
+   }
+  ],
+  "user": "get what? i asked what you can do. list one thing",
+  "arms": {
+   "single": {
+    "reply": "I don't know. Pretend I said something wise and we'll both move on",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "I don't know. Pretend I said something wise and we'll both move on",
+    "info": {
+     "score": 0.9930479439311757,
+     "scores": [
+      0.9930479439311757,
+      0.9930479439311757,
+      0.9930479439311757,
+      1.8587619184898758e-06
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   },
+   "best4div": {
+    "reply": "I don't know. Pretend I said something wise and we'll both move on",
+    "info": {
+     "score": 0.9930479439311757,
+     "scores": [
+      0.9930479439311757,
+      0.9930479439311757,
+      0.9930479439311757,
+      1.8587619184898758e-06
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "t004": {
+  "history": [
+   {
+    "user": "never used one of these before. what do i do",
+    "oracle": "What do you mean?"
+   },
+   {
+    "user": "like, is this a chat thing? do i just type questions",
+    "oracle": "That's beyond 2 million parameters. Most things are"
+   }
+  ],
+  "user": "typing a question is beyond you? ok here's one: what's your name",
+  "arms": {
+   "single": {
+    "reply": "My name is Tiny Oracle. It's nice to meet you, Tiny Oracle",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "I'm Tiny Oracle. No complaints, no ability to compliment your opinion",
+    "info": {
+     "score": 0.02675498704138219,
+     "scores": [
+      0.0009351050106372084,
+      4.9961507401983526e-05,
+      0.02675498704138219,
+      1.8906026374811367e-05
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   },
+   "best4div": {
+    "reply": "I'm Tiny Oracle. No complaints, no ability to compliment your opinion",
+    "info": {
+     "score": 0.02675498704138219,
+     "scores": [
+      0.0009351050106372084,
+      4.9961507401983526e-05,
+      0.02675498704138219,
+      1.8906026374811367e-05
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "t005": {
+  "history": [
+   {
+    "user": "slow day huh",
+    "oracle": "What?"
+   },
+   {
+    "user": "i mean not much happening. anything going on with you",
+    "oracle": "I don't know. Pretend I said something wise and we'll both move on"
+   }
+  ],
+  "user": "fine. i'll go first, i'm making pasta tonight. anything going on with you at all",
+  "arms": {
+   "single": {
+    "reply": "Yes, I'm sorry. But I have to do it again",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "I'm sorry, but I didn't mean to make it right now",
+    "info": {
+     "score": 0.9983359283405339,
+     "scores": [
+      0.9983359283405339,
+      1.966155671970187e-05,
+      0.0054297066748259844,
+      0.002124862166760985
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   },
+   "best4div": {
+    "reply": "I'm sorry, but I didn't mean to make it right now",
+    "info": {
+     "score": 0.9983359283405339,
+     "scores": [
+      0.9983359283405339,
+      1.966155671970187e-05,
+      0.0054297066748259844,
+      0.002124862166760985
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "t006": {
+  "history": [
+   {
+    "user": "what should we talk about",
+    "oracle": "That's beyond 2 million parameters. Most things are"
+   },
+   {
+    "user": "ok fine, pick anything then. dogs. tell me about dogs",
+    "oracle": "I have no idea, and if I'm being honest, I don't really care either, sorry"
+   }
+  ],
+  "user": "you don't care about dogs?? everyone cares about dogs. what do you care about then",
+  "arms": {
+   "single": {
+    "reply": "Maybe we can talk about them again sometime",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "I know what you mean. But it feels like me that sometimes",
+    "info": {
+     "score": 0.9990569901851734,
+     "scores": [
+      6.35019897675288e-06,
+      0.9990569901851734,
+      9.283833736316424e-05,
+      0.031053087863178987
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   },
+   "best4div": {
+    "reply": "I know what you mean. But it feels like me that sometimes",
+    "info": {
+     "score": 0.9990569901851734,
+     "scores": [
+      6.35019897675288e-06,
+      0.9990569901851734,
+      9.283833736316424e-05,
+      0.031053087863178987
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "t007": {
+  "history": [
+   {
+    "user": "uhh",
+    "oracle": "Okay, let's start with your eyes and see if we can figure out what happens"
+   },
+   {
+    "user": "my eyes?? what are you talking about",
+    "oracle": "I don't know. Pretend I said something wise and you should ask for help"
+   }
+  ],
+  "user": "ask for help with what, my eyes? i can see fine. you're the confusing one",
+  "arms": {
+   "single": {
+    "reply": "I donate to answer them",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "I guess so. It's like you're feeling really overwhelmed right now",
+    "info": {
+     "score": 0.7873538280176083,
+     "scores": [
+      4.7517023932073546e-05,
+      0.7873538280176083,
+      0.04344201190036473,
+      0.6751926446721729
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   },
+   "best4div": {
+    "reply": "I guess so. It's like you're feeling really overwhelmed right now",
+    "info": {
+     "score": 0.7873538280176083,
+     "scores": [
+      4.7517023932073546e-05,
+      0.7873538280176083,
+      0.04344201190036473,
+      0.6751926446721729
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "t008": {
+  "history": [
+   {
+    "user": "do you have siblings",
+    "oracle": "I have no idea, and if I'm being honest, I don't really care either. But I'm a tiny model, so my therapy skills are limited"
+   },
+   {
+    "user": "therapy? i just asked if there are other models like you",
+    "oracle": "That's beyond 2 million parameters. Most things are"
+   }
+  ],
+  "user": "other models isn't beyond you, you're one of them. are there bigger ones",
+  "arms": {
+   "single": {
+    "reply": "I donations",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "I donations. But they're just not the only one who can do is",
+    "info": {
+     "score": 0.007550695671457042,
+     "scores": [
+      0.001339984794255652,
+      0.007550695671457042,
+      7.375787291505962e-08,
+      0.00013766228353004895
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   },
+   "best4div": {
+    "reply": "I donations. But they're just not the only one who can do is",
+    "info": {
+     "score": 0.007550695671457042,
+     "scores": [
+      0.001339984794255652,
+      0.007550695671457042,
+      7.375787291505962e-08,
+      0.00013766228353004895
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ },
+ "t009": {
+  "history": [
+   {
+    "user": "so how many birthdays have you had",
+    "oracle": "I have no idea, but my birth date was birthdays"
+   },
+   {
+    "user": "your birth date was birthdays? that doesn't make sense",
+    "oracle": "Yes, it is . I can watch the movie without you"
+   }
+  ],
+  "user": "what movie? i asked about your birthday. when is it",
+  "arms": {
+   "single": {
+    "reply": "Yes, I know. It's a very simple one",
+    "info": {
+     "score": null
+    }
+   },
+   "best4": {
+    "reply": "Yes, I love that movie. It's one of my favorites",
+    "info": {
+     "score": 0.979134497036362,
+     "scores": [
+      1.4444839277256594e-05,
+      3.170459142965307e-05,
+      0.979134497036362,
+      1.2303755729812514e-05
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   },
+   "best4div": {
+    "reply": "Yes, I love that movie. It's one of my favorites",
+    "info": {
+     "score": 0.979134497036362,
+     "scores": [
+      1.4444839277256594e-05,
+      3.170459142965307e-05,
+      0.979134497036362,
+      1.2303755729812514e-05
+     ],
+     "seen": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "diverse_pick": false
+    }
+   }
+  }
+ }
+}

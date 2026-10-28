@@ -5791,3 +5791,38 @@ Chromium check: two turns, 4 samples each, judge picks, no console errors, ~1 s 
 second time they appear in a conversation → add a "seen before in this conversation" feature, still no regex), and a
 diversity-aware pick: among candidates within 0.1 of the top score prefer the non-bank one.
 Trainer samples: none (no training run this block).
+
+## 2026-10-27 20:31 PDT — Branch 1: judge v2 on Nico's 80 rows (LOO AUC 0.83 > v1 0.79), diversity pick is a no-op under the cross-turn ban, review_fatigue page
+**Judge v2** (`nico_judge.py --seen`, `checkpoints/nico_judge_v2.pkl`, browser copy `demo/nico_judge_v2.json`): LLM 659 + Nico 80
+rows (36 best-of, 18 follow-through, 26 decided tone picks; 2 ties dropped), his rows ×8, plus a "seen before in this
+conversation" input (exact match of the reply against the history's Oracle lines, ×5). Leave-one-out over his rows, AUC vs ≥ 3 / lands:
+| judge | all 80 ↑ | best-of 36 ↑ | follow-through 18 | tone 26 | Spearman vs 0–5 (54) ↑ |
+|---|---|---|---|---|---|
+| v1 (LLM + 44 rows; best-of rows unseen) | 0.79 | 0.79 | 0.81 | 0.89 | 0.42 |
+| **v2 (LLM + 80 rows, LOO)** | **0.83** | **0.85** | 0.79 | 0.83 | **0.47** |
+Verdict: v2 wins on the rows that matter (best-of, the demo's use) and overall; it is now the demo's judge. Caveat: the seen-before
+input has zero support in his rows (0/80 repeats; 4/659 LLM rows), final weight −0.23 (≈ −1.1 logit per repeat) — a prior, not a
+learned fact. Ablation without it: identical AUCs.
+**Diversity-aware pick** (`harness.py` cfg `judge_margin`; among candidates within the margin of the top, prefer one not in the
+history's Oracle lines — the harness's own record, exact match, no text patterns): measured on 30 conversations × 3 arms (single,
+best-of-4, best-of-4+diversity 0.1), same seeds, reactive follow-ups (turn 2 = existing fu2; turn 3 written against best-of-4's
+turn-2 replies, `pile_runs/atl/arms_fu3.json`), shared histories per turn:
+| exact recital of an earlier line | turn 2 (30) | turn 3 (30) |
+|---|---|---|
+| single / best-of-4 / best-of-4+div | 0 / 0 / 0 | 0 / 0 / 0 |
+| best-of-4 == best-of-4+div | 30/30 | 30/30 |
+Verdict: the pick never fires because exact recital never happens — the existing cross-turn 3-gram ban already makes it impossible.
+What Nico called "canned" is bank-line *variants* ("I don't know what you mean. Pretend I said something wise…") and the same line
+across *different* conversations (best-of-4 picked a bank line in 13/30 turn-2 replies), neither of which an exact-match record sees.
+Kept the code (harmless, off by default); the real fix is a bank-family classifier on hidden states (next block), not a longer regex.
+Also visible: turn-3 quality drops in every arm (judge mean best-of-4 0.79 → 0.40; "Yes, I'm sorry…" openers, "I donations").
+Sampler printouts (turn 3, same history/seeds): n12 "three words is beyond you? i'll start you off: tiny, ..." → single "I want to
+change your mind" / best-of-4 "I don't know what you mean. Pretend I said something wise and we'll both move on"; t004 "what's your
+name" → single "My name is Tiny Oracle. It's nice to meet you, Tiny Oracle" / best-of-4 "I'm Tiny Oracle. No complaints, no ability
+to compliment your opinion"; t000 "being a chatbot? that's literally what you are" → single "I have a Minduk" / best-of-4 "I made
+that up, didn't you?".
+**Review page for Nico:** `demo/review_fatigue.html` (12 three-turn conversations, continuations, turn 3 scored A/B; export
+`review_fatigue_scores.json`). Deviation from the brief: A/B = single vs best-of-4 at turn 3, not best-of-4 vs +diversity — those
+two were identical in 30/30 and a page of look-alike pairs is what he stops reading. Turn 2 in the history is best-of-4's pick, so
+the canned feeling, if any, is on the page.
+**Demo:** ☆ entry now uses judge v2 (seen-before input wired in JS); headless check passed (2 turns, no console errors).

@@ -1,0 +1,19 @@
+{
+ "recap": {
+  "none": 10,
+  "gold": 26,
+  "extracted": 18
+ },
+ "grounding_off": 2,
+ "grounding_on": 3,
+ "grounding_gold": 3,
+ "other_slot": 0,
+ "distractor_admit": 0,
+ "weather": 4,
+ "simuser": {
+  "1": 0.21342560837046126,
+  "2": 0.30247755751830224,
+  "3": 0.3126569393412881
+ },
+ "recital": 0
+}

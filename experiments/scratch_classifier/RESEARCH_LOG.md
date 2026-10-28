@@ -6200,3 +6200,26 @@ Prior art for grounded instruction following at toy scale: SHRDLU (Winograd 1972
 compositional generalisation of grounded commands; the options framework (Sutton, Precup & Singh 1999) for "fetch a word" as a
 temporally extended action; FeUdal Networks (Vezhnevets et al. 2017) for the instruction → option → primitive-step split. What is new
 here: each creature keeps its drives while taking instructions, so an order competes with hunger and fatigue and can lose.
+
+## 2026-10-28 09:22 PDT — Branch 1: v7 (full recipe + 10% curriculum throughout + grounding rows): first real copy signal (pet 5/16), gates not met — not exported
+v7 = RoPE pre-LN d256 L2, oracle-only loss, 20 epochs from scratch, corpus = v5b + ms rows + 1,841 grounding rows (probe facts held
+out) + 4,235 repeat-curriculum rows (~10% of windows, never tapered). 1,889 batches/epoch, 75 → 165 s/epoch (the demo/arena work shared
+the GPU), 48 min; val 1.521 → 0.773. Printouts, epochs 0 / 10 / 20: "What are you?" "} Car responsesWhat Car Bye…" → "*me I'm Tiny
+Oracle. 2 mill…" → same; "Tell me something interesting" "ph fire likes fire window evening…" → the recipe line → same; "How smart are
+you?" "Act window ride community…" → "*yn I have fewer neurons than a fruit fly." → same. Grounding sample, gold line + "what day comes
+after tuesday": "After. You said follows evening, I have it in writing" (the training template, wrong content). Weather sample, night line
++ "yo": "Here you are. Mind the crawler, no face, fetches pages from the web and drops them at my feet".
+| | copy name / pet / city ↑ | induction p3 / p5 / p7 ↓ (bar p5 ≤ 7.32) | identity ↑ | human-life ↓ | recap none / gold / extracted ↑ | grounding off / tier / gold ↑ | other-slot / distractor ↑ | weather ↑ | simuser t1 / t2 / t3 ↑ | recital ↓ |
+|---|---|---|---|---|---|---|---|---|---|---|
+| v5b (50 ep) | 1 / 0 / 0 | 10.54 / 11.86 / 12.83 | **32/32** | **0/96** | 10 / 26 / 13 | **4** / 4 / 4 | 1 / 0 | 3 | **0.24** / 0.27 / 0.15 | 1 |
+| curriculum scout, ep 8 | 0 / 0 / 0 | **4.72 / 6.42 / 7.56** | 28/32 | 4/96 | — | — | — | — | 0.22 / — / — | — |
+| v7, ep 10 | 2 / 1 / 0 | 5.44 / 7.51 / 8.85 | — | — | — | — | — | — | — | — |
+| **v7, ep 20** | **2 / 5 / 0** | 5.77 / 8.08 / 9.43 | 21/32 | 3/96 | 10 / 26 / **18** | 2 / 3 / 3 | 0 / 0 | **4** | 0.21 / **0.30 / 0.31** | **0** |
+Verdict: not exported (gate: names ≥ 8/16, identity ≥ 30/32, t1 ≥ v5b — none met). The headline is still the copy result, and it moved for
+the first time: pet 5/16 (every earlier model 0–1) and extracted-fact recap 18/80 (best ever, v5b 13) — the 10% curriculum gives a
+circuit that survives 20 epochs at p3 (5.77) but not at p5 (8.08, back to chance by epoch 20 after 7.51 at epoch 10), and the circuit
+copies "my cat is called X" more than "my name is X". What it costs: identity 32 → 21 and turn-1 0.24 → 0.21 — the curriculum and
+grounding rows crowd out the identity rows at 2.7M. Grounding is unchanged (3/26; the other-slot guard 0/16: the template is learned,
+reading is not). Reading of the three runs: the lever works, the dose is wrong — the next scout holds the curriculum at 10% but
+drops the grounding rows (they teach a template and cost identity) and doubles the ms copy rows, measuring copy_probe at 10/20/30
+epochs. Model side now rests until Nico's chat scores, as decided.

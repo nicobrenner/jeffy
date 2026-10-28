@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-27T20:13:32-0700",
+ "generated": "2026-10-27T20:31:55-0700",
  "thresholds": [
   0.5,
   0.8,
@@ -91,7 +91,7 @@
      "n_covered": 516
     }
    ],
-   "seconds": 14.0
+   "seconds": 11.0
   },
   "support_ticket_v2 (27 intents)": {
    "task_id": "support_ticket_v2",
@@ -169,7 +169,7 @@
      "n_covered": 611
     }
    ],
-   "seconds": 11.2
+   "seconds": 11.1
   },
   "support_ticket_v2 -> category": {
    "task_id": "support_ticket_v2",
@@ -481,7 +481,7 @@
      "n_covered": 970
     }
    ],
-   "seconds": 18.1
+   "seconds": 18.2
   }
  },
  "probes": {
@@ -493,6 +493,7 @@
     "got": "account",
     "confidence": 0.9683,
     "margin": 0.9492,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -502,6 +503,7 @@
     "got": "account",
     "confidence": 0.8444,
     "margin": 0.6992,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -511,6 +513,7 @@
     "got": "account",
     "confidence": 0.8844,
     "margin": 0.8366,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -520,6 +523,7 @@
     "got": "account",
     "confidence": 0.9763,
     "margin": 0.9664,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -529,6 +533,7 @@
     "got": "account",
     "confidence": 0.9567,
     "margin": 0.9379,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -538,6 +543,7 @@
     "got": "account",
     "confidence": 0.9782,
     "margin": 0.9719,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -547,6 +553,7 @@
     "got": "shipping",
     "confidence": 0.9634,
     "margin": 0.948,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -556,6 +563,7 @@
     "got": "delivery",
     "confidence": 0.8451,
     "margin": 0.7808,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -565,6 +573,7 @@
     "got": "order",
     "confidence": 0.8519,
     "margin": 0.8166,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -574,6 +583,7 @@
     "got": "subscription",
     "confidence": 0.8085,
     "margin": 0.7151,
+    "clears_gate": false,
     "ok": true
    }
   ],
@@ -585,6 +595,7 @@
     "got": "change_shipping_address",
     "confidence": 0.8722,
     "margin": 0.8231,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -594,6 +605,7 @@
     "got": "change_shipping_address",
     "confidence": 0.6038,
     "margin": 0.4609,
+    "clears_gate": false,
     "ok": false
    },
    {
@@ -603,6 +615,7 @@
     "got": "recover_password",
     "confidence": 0.4942,
     "margin": 0.3802,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -612,6 +625,7 @@
     "got": "change_shipping_address",
     "confidence": 0.9351,
     "margin": 0.8848,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -621,6 +635,7 @@
     "got": "cancel_order",
     "confidence": 0.9694,
     "margin": 0.9626,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -630,6 +645,7 @@
     "got": "delivery_options",
     "confidence": 0.3506,
     "margin": 0.0247,
+    "clears_gate": false,
     "ok": false
    },
    {
@@ -639,6 +655,7 @@
     "got": "newsletter_subscription",
     "confidence": 0.6136,
     "margin": 0.442,
+    "clears_gate": false,
     "ok": true
    }
   ],
@@ -650,6 +667,7 @@
     "got": "transaction_charged_twice",
     "confidence": 0.999,
     "margin": 0.9988,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -659,6 +677,7 @@
     "got": "card_not_working",
     "confidence": 0.9505,
     "margin": 0.9238,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -668,6 +687,7 @@
     "got": "balance_not_updated_after_bank_transfer",
     "confidence": 0.2817,
     "margin": 0.0067,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -677,6 +697,7 @@
     "got": "lost_or_stolen_card",
     "confidence": 0.9222,
     "margin": 0.8996,
+    "clears_gate": true,
     "ok": true
    }
   ],
@@ -688,6 +709,7 @@
     "got": "metformin",
     "confidence": 0.7305,
     "margin": 0.7156,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -697,6 +719,7 @@
     "got": "lisinopril",
     "confidence": 0.8137,
     "margin": 0.7995,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -706,6 +729,7 @@
     "got": "atorvastatin",
     "confidence": 0.5917,
     "margin": 0.5198,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -715,6 +739,7 @@
     "got": "amoxicillin",
     "confidence": 0.7743,
     "margin": 0.7588,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -724,6 +749,7 @@
     "got": "albuterol",
     "confidence": 0.9178,
     "margin": 0.9112,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -733,6 +759,7 @@
     "got": "metformin",
     "confidence": 0.1996,
     "margin": 0.1347,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -742,6 +769,7 @@
     "got": "lisinopril",
     "confidence": 0.7738,
     "margin": 0.7583,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -751,6 +779,7 @@
     "got": "atorvastatin",
     "confidence": 0.6523,
     "margin": 0.5921,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -760,6 +789,7 @@
     "got": "omeprazole",
     "confidence": 0.5153,
     "margin": 0.465,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -769,6 +799,7 @@
     "got": "gabapentin",
     "confidence": 0.6425,
     "margin": 0.5996,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -778,6 +809,7 @@
     "got": "atorvastatin",
     "confidence": 0.2483,
     "margin": 0.1939,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -787,6 +819,7 @@
     "got": "sertraline",
     "confidence": 0.5631,
     "margin": 0.5134,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -796,6 +829,7 @@
     "got": "levothyroxine",
     "confidence": 0.5385,
     "margin": 0.4844,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -805,6 +839,7 @@
     "got": "omeprazole",
     "confidence": 0.6179,
     "margin": 0.5398,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -814,6 +849,7 @@
     "got": "metformin",
     "confidence": 0.652,
     "margin": 0.6351,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -823,6 +859,7 @@
     "got": "metformin",
     "confidence": 0.347,
     "margin": 0.2493,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -832,6 +869,7 @@
     "got": "losartan",
     "confidence": 0.4587,
     "margin": 0.4239,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -841,6 +879,7 @@
     "got": "amlodipine",
     "confidence": 0.4341,
     "margin": 0.3891,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -850,6 +889,7 @@
     "got": "sertraline",
     "confidence": 0.674,
     "margin": 0.6385,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -859,6 +899,7 @@
     "got": "escitalopram",
     "confidence": 0.6287,
     "margin": 0.6048,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -868,6 +909,7 @@
     "got": "metformin",
     "confidence": 0.4427,
     "margin": 0.3958,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -877,6 +919,7 @@
     "got": "lisinopril",
     "confidence": 0.6329,
     "margin": 0.6158,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -886,6 +929,7 @@
     "got": "atorvastatin",
     "confidence": 0.5756,
     "margin": 0.5193,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -895,6 +939,7 @@
     "got": "amoxicillin",
     "confidence": 0.6362,
     "margin": 0.6078,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -904,6 +949,7 @@
     "got": "prednisone",
     "confidence": 0.8497,
     "margin": 0.842,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -913,6 +959,7 @@
     "got": "atorvastatin",
     "confidence": 0.2483,
     "margin": 0.1939,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -922,6 +969,7 @@
     "got": "sertraline",
     "confidence": 0.5631,
     "margin": 0.5134,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -931,6 +979,7 @@
     "got": "lisinopril",
     "confidence": 0.7738,
     "margin": 0.7583,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -940,6 +989,7 @@
     "got": "omeprazole",
     "confidence": 0.5153,
     "margin": 0.465,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -949,6 +999,7 @@
     "got": "gabapentin",
     "confidence": 0.6425,
     "margin": 0.5996,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -958,6 +1009,7 @@
     "got": "levothyroxine",
     "confidence": 0.5385,
     "margin": 0.4844,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -967,6 +1019,7 @@
     "got": "metformin",
     "confidence": 0.652,
     "margin": 0.6351,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -976,6 +1029,7 @@
     "got": "omeprazole",
     "confidence": 0.6179,
     "margin": 0.5398,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -985,6 +1039,7 @@
     "got": "metformin",
     "confidence": 0.347,
     "margin": 0.2493,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -994,6 +1049,7 @@
     "got": "losartan",
     "confidence": 0.4587,
     "margin": 0.4239,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -1003,6 +1059,77 @@
     "got": "prednisone",
     "confidence": 0.8497,
     "margin": 0.842,
+    "clears_gate": true,
+    "ok": true
+   },
+   {
+    "text": "LIPITOR (atorvastatin calcium) 10 mg tablets",
+    "expect": "atorvastatin",
+    "why": "brand with generic in parentheses",
+    "got": "atorvastatin",
+    "confidence": 0.7788,
+    "margin": 0.7591,
+    "clears_gate": true,
+    "ok": true
+   },
+   {
+    "text": "Amoxicilin 500 mg caps",
+    "expect": "amoxicillin",
+    "why": "misspelling + abbreviation",
+    "got": "amoxicillin",
+    "confidence": 0.5317,
+    "margin": 0.4895,
+    "clears_gate": false,
+    "ok": true
+   },
+   {
+    "text": "sertraline HCl 100mg",
+    "expect": "sertraline",
+    "why": "salt form, no dosage form",
+    "got": "sertraline",
+    "confidence": 0.6766,
+    "margin": 0.6436,
+    "clears_gate": true,
+    "ok": true
+   },
+   {
+    "text": "Ventolin HFA inhaler",
+    "expect": "albuterol",
+    "why": "brand only, device named",
+    "got": "albuterol",
+    "confidence": 0.8051,
+    "margin": 0.7848,
+    "clears_gate": true,
+    "ok": true
+   },
+   {
+    "text": "ibuprofen 200 mg",
+    "expect": "ibuprofen",
+    "why": "generic + strength only",
+    "got": "ibuprofen",
+    "confidence": 0.5811,
+    "margin": 0.5311,
+    "clears_gate": true,
+    "ok": true
+   },
+   {
+    "text": "Prozac 20 mg capsule",
+    "expect": "fluoxetine",
+    "why": "brand -> generic",
+    "got": "fluoxetine",
+    "confidence": 0.4529,
+    "margin": 0.4084,
+    "clears_gate": false,
+    "ok": true
+   },
+   {
+    "text": "Levothyroxine Sodium 50 mcg",
+    "expect": "levothyroxine",
+    "why": "salt + micrograms",
+    "got": "levothyroxine",
+    "confidence": 0.6252,
+    "margin": 0.5924,
+    "clears_gate": true,
     "ok": true
    }
   ],
@@ -1014,6 +1141,7 @@
     "got": "tablet",
     "confidence": 0.6824,
     "margin": 0.5848,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -1023,6 +1151,7 @@
     "got": "tablet",
     "confidence": 0.8233,
     "margin": 0.7894,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -1032,6 +1161,7 @@
     "got": "tablet",
     "confidence": 0.3094,
     "margin": 0.1185,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -1041,6 +1171,7 @@
     "got": "liquid",
     "confidence": 0.8779,
     "margin": 0.8518,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -1050,6 +1181,7 @@
     "got": "inhaler",
     "confidence": 0.9695,
     "margin": 0.9637,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -1059,6 +1191,7 @@
     "got": "tablet",
     "confidence": 0.7507,
     "margin": 0.7007,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -1068,6 +1201,7 @@
     "got": "tablet",
     "confidence": 0.6636,
     "margin": 0.5899,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -1077,6 +1211,7 @@
     "got": "tablet",
     "confidence": 0.2696,
     "margin": 0.0042,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -1086,6 +1221,7 @@
     "got": "capsule",
     "confidence": 0.7859,
     "margin": 0.6862,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -1095,6 +1231,7 @@
     "got": "capsule",
     "confidence": 0.3184,
     "margin": 0.1321,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -1104,6 +1241,7 @@
     "got": "tablet",
     "confidence": 0.748,
     "margin": 0.6623,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -1113,6 +1251,7 @@
     "got": "tablet",
     "confidence": 0.7106,
     "margin": 0.6405,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -1122,6 +1261,7 @@
     "got": "tablet",
     "confidence": 0.6038,
     "margin": 0.5023,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -1131,6 +1271,7 @@
     "got": "capsule",
     "confidence": 0.6568,
     "margin": 0.5363,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -1140,6 +1281,7 @@
     "got": "tablet",
     "confidence": 0.5846,
     "margin": 0.4696,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -1149,6 +1291,7 @@
     "got": "tablet",
     "confidence": 0.3131,
     "margin": 0.0547,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -1158,6 +1301,7 @@
     "got": "tablet",
     "confidence": 0.7759,
     "margin": 0.7155,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -1167,6 +1311,7 @@
     "got": "tablet",
     "confidence": 0.249,
     "margin": 0.0442,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -1176,6 +1321,7 @@
     "got": "tablet",
     "confidence": 0.226,
     "margin": 0.0719,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -1185,6 +1331,7 @@
     "got": "tablet",
     "confidence": 0.9137,
     "margin": 0.8889,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -1194,6 +1341,7 @@
     "got": "tablet",
     "confidence": 0.4322,
     "margin": 0.285,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -1203,6 +1351,7 @@
     "got": "tablet",
     "confidence": 0.49,
     "margin": 0.3897,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -1212,6 +1361,7 @@
     "got": "tablet",
     "confidence": 0.483,
     "margin": 0.3417,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -1221,6 +1371,7 @@
     "got": "capsule",
     "confidence": 0.5689,
     "margin": 0.4215,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -1230,6 +1381,7 @@
     "got": "tablet",
     "confidence": 0.5625,
     "margin": 0.4726,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -1239,6 +1391,7 @@
     "got": "tablet",
     "confidence": 0.748,
     "margin": 0.6623,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -1248,6 +1401,7 @@
     "got": "capsule",
     "confidence": 0.7859,
     "margin": 0.6862,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -1257,6 +1411,7 @@
     "got": "capsule",
     "confidence": 0.3184,
     "margin": 0.1321,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -1266,6 +1421,7 @@
     "got": "liquid",
     "confidence": 0.8779,
     "margin": 0.8518,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -1275,6 +1431,7 @@
     "got": "inhaler",
     "confidence": 0.9695,
     "margin": 0.9637,
+    "clears_gate": true,
     "ok": true
    },
    {
@@ -1284,6 +1441,7 @@
     "got": "tablet",
     "confidence": 0.3131,
     "margin": 0.0547,
+    "clears_gate": false,
     "ok": true
    },
    {
@@ -1293,6 +1451,77 @@
     "got": "tablet",
     "confidence": 0.7759,
     "margin": 0.7155,
+    "clears_gate": true,
+    "ok": true
+   },
+   {
+    "text": "LIPITOR (atorvastatin calcium) 10 mg tablets",
+    "expect": "tablet",
+    "why": "brand, plural form",
+    "got": "tablet",
+    "confidence": 0.6147,
+    "margin": 0.5114,
+    "clears_gate": true,
+    "ok": true
+   },
+   {
+    "text": "Amoxicilin 500 mg caps",
+    "expect": "capsule",
+    "why": "abbreviation caps",
+    "got": "capsule",
+    "confidence": 0.5263,
+    "margin": 0.3706,
+    "clears_gate": false,
+    "ok": true
+   },
+   {
+    "text": "sertraline HCl 100mg",
+    "expect": "abstain",
+    "why": "no form named: a confident single answer is a guess",
+    "got": "tablet",
+    "confidence": 0.2755,
+    "margin": 0.1355,
+    "clears_gate": false,
+    "ok": true
+   },
+   {
+    "text": "Ventolin HFA inhaler",
+    "expect": "inhaler",
+    "why": "device named",
+    "got": "inhaler",
+    "confidence": 0.8535,
+    "margin": 0.8197,
+    "clears_gate": true,
+    "ok": true
+   },
+   {
+    "text": "hydrocortisone 1% cream 30g",
+    "expect": "cream",
+    "why": "topical with percent strength",
+    "got": "cream",
+    "confidence": 0.7796,
+    "margin": 0.7405,
+    "clears_gate": true,
+    "ok": true
+   },
+   {
+    "text": "eye drops 0.5%",
+    "expect": "drops",
+    "why": "form only",
+    "got": "drops",
+    "confidence": 0.8391,
+    "margin": 0.7976,
+    "clears_gate": true,
+    "ok": true
+   },
+   {
+    "text": "insulin glargine 100 units/mL injection",
+    "expect": "injection",
+    "why": "units per mL",
+    "got": "injection",
+    "confidence": 0.7526,
+    "margin": 0.6662,
+    "clears_gate": true,
     "ok": true
    }
   ]

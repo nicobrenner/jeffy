@@ -75,16 +75,18 @@ def run_probes(engine, task_id, label_of=lambda r: r["label"]):
     p = REPO / "data/probes" / f"{task_id}.jsonl"
     if not p.exists():
         return None
-    probes = [json.loads(l) for l in p.read_text().splitlines() if l.strip()]
+    rows = [json.loads(l) for l in p.read_text().splitlines() if l.strip()]
+    gate = next((r for r in rows if "_gate" in r), {"_gate": "confidence", "_min": 0.9})   # per-file gate; medical heads use margin
+    probes = [r for r in rows if "_gate" not in r]
     res = engine.predict_batch(task_id, [x["text"] for x in probes])
     out = []
     for x, r in zip(probes, res):
-        got = label_of(r)
+        got = label_of(r); clears = r[gate["_gate"]] >= gate["_min"]
         if x["expect"] == "abstain":
-            ok = r["margin"] < 0.9 or r["confidence"] < 0.9   # a straddling text must not come back as a confident single answer
+            ok = not clears   # a straddling text must not clear the gate as a single answer
         else:
             ok = got == x["expect"]
-        out.append({**x, "got": got, "confidence": r["confidence"], "margin": r["margin"], "ok": bool(ok)})
+        out.append({**x, "got": got, "confidence": r["confidence"], "margin": r["margin"], "clears_gate": bool(clears), "ok": bool(ok)})
     return out
 
 

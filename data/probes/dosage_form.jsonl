@@ -1,3 +1,4 @@
+{"_gate": "margin", "_min": 0.5, "_why": "same as medication_name; margin 0.5 covered 52% with no misroutes"}
 {"text": "Metformin HCl 500mg Tablets", "expect": "tablet", "why": "medication_classifier_demo.json test case"}
 {"text": "Lisinopril 10mg Tablet", "expect": "tablet", "why": "medication_classifier_demo.json test case"}
 {"text": "Atorvastatin Calcium 20mg", "expect": "tablet", "why": "medication_classifier_demo.json test case"}
@@ -30,3 +31,10 @@
 {"text": "Albuterol Sulfate HFA 90mcg Inhalation Aerosol", "expect": "inhaler", "why": "demo shape; 'Metform 500mg' names no form, so a confident single answer is a guess"}
 {"text": "Metform 500mg", "expect": "abstain", "why": "demo shape; 'Metform 500mg' names no form, so a confident single answer is a guess"}
 {"text": "Losart 50mg Tab", "expect": "tablet", "why": "demo shape; 'Metform 500mg' names no form, so a confident single answer is a guess"}
+{"text": "LIPITOR (atorvastatin calcium) 10 mg tablets", "expect": "tablet", "why": "brand, plural form"}
+{"text": "Amoxicilin 500 mg caps", "expect": "capsule", "why": "abbreviation caps"}
+{"text": "sertraline HCl 100mg", "expect": "abstain", "why": "no form named: a confident single answer is a guess"}
+{"text": "Ventolin HFA inhaler", "expect": "inhaler", "why": "device named"}
+{"text": "hydrocortisone 1% cream 30g", "expect": "cream", "why": "topical with percent strength"}
+{"text": "eye drops 0.5%", "expect": "drops", "why": "form only"}
+{"text": "insulin glargine 100 units/mL injection", "expect": "injection", "why": "units per mL"}

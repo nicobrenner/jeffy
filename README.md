@@ -341,6 +341,10 @@ a few hundred KB per head, CPU-only, no extra model. Real typed inputs on the pu
 data about half the time (about 2% of held-out training text does), which is where confident wrong answers come from, so
 read a high percentile as "the head has not seen text like this", whatever the confidence says. Heads trained with
 `jeffy-train` or `/v1/train` get the file automatically; `scripts/build_support.py` writes it for shipped heads.
+The three signals compose into one routing rule: confidence below 0.9 → review; margin below 0.5 → the text straddles two
+labels, your policy decides; `support_percentile` at 95 or above → the head has not seen text like this, review even at
+high confidence. On the probe sets the far tail holds the two low-confidence support_ticket_v2 failures and two of the three
+issue-11 phrasings; the 0.97 straddle itself is phrased like the training data and only the margin exposes it.
 
 Two caveats the table cannot show. A held-out split from a templated dataset says nothing about phrasings the taxonomy does
 not contain: issue #11's "change the address on my account" is a 0.97 `shipping` on `support_ticket` because the intent

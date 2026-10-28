@@ -334,6 +334,14 @@ router pays for). Measured on the shipped heads (CPU, `data/eval_results/calibra
 | support_ticket_v2 (27 intents) | 1,350 | 79% | 0.0% | 57% / 0.0% | 4% / 0.0% |
 | banking77 (77 intents) | 2,000 | 72% | 0.6% | 56% / 0.4% | 20% / 0.3% |
 
+Every prediction on a head that ships `support.npz` also returns `support_percentile`: how far the input sits from that
+head's training data, as the share of training texts that were closer (100 = farther than every training example). It is
+computed from the head's class centroids in the encoder space and the training distribution of nearest-centroid distance,
+a few hundred KB per head, CPU-only, no extra model. Real typed inputs on the public playground sit far from the training
+data about half the time (about 2% of held-out training text does), which is where confident wrong answers come from, so
+read a high percentile as "the head has not seen text like this", whatever the confidence says. Heads trained with
+`jeffy-train` or `/v1/train` get the file automatically; `scripts/build_support.py` writes it for shipped heads.
+
 Two caveats the table cannot show. A held-out split from a templated dataset says nothing about phrasings the taxonomy does
 not contain: issue #11's "change the address on my account" is a 0.97 `shipping` on `support_ticket` because the intent
 genuinely lives in two classes of that taxonomy. So each head also carries a regression probe set in `data/probes/<task>.jsonl`:

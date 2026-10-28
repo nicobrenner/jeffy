@@ -86,7 +86,7 @@ def run_probes(engine, task_id, label_of=lambda r: r["label"]):
             ok = not clears   # a straddling text must not clear the gate as a single answer
         else:
             ok = got == x["expect"]
-        out.append({**x, "got": got, "confidence": r["confidence"], "margin": r["margin"], "clears_gate": bool(clears), "ok": bool(ok)})
+        out.append({**x, "got": got, "confidence": r["confidence"], "margin": r["margin"], "support_percentile": r.get("support_percentile"), "clears_gate": bool(clears), "ok": bool(ok)})
     return out
 
 
@@ -145,7 +145,9 @@ def main():
             bad = [x for x in pr if not x["ok"]]
             print(f"\n== probes {task_id}: {len(pr)-len(bad)}/{len(pr)} pass")
             for x in bad:
-                print(f"   FAIL {x['text']!r}: expected {x['expect']}, got {x['got']} conf={x['confidence']} margin={x['margin']}")
+                print(f"   FAIL {x['text']!r}: expected {x['expect']}, got {x['got']} conf={x['confidence']} margin={x['margin']} support_pct={x.get('support_percentile')}")
+            if any(x.get("support_percentile") is not None for x in pr):
+                print(f"   support_percentile: " + ", ".join(f"{x['text'][:28]!r}={x['support_percentile']}" for x in pr if x.get("support_percentile") is not None))
 
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "calibration_probe.json").write_text(json.dumps(results, indent=1))

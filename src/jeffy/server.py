@@ -677,7 +677,8 @@ async def _train_locked(req: TrainRequest, request: Request, session: str | None
         manifest = manifest.__class__(**{**{f.name: getattr(manifest, f.name)
                                             for f in manifest.__dataclass_fields__.values()},
                                           "description": req.description})
-    get_engine().register_trained(req.task_id, clf, scaler, manifest)
+    from .support import load_support
+    get_engine().register_trained(req.task_id, clf, scaler, manifest, support=load_support(Path(artifact_path)))
     if session and req.task_id.startswith(_TEACH_PREFIX):
         _session_heads[req.task_id] = {"session": session, "expires": time.time() + 60 * _TEACH_TTL_MIN, "dir": Path(artifact_path)}
 
@@ -2566,13 +2567,15 @@ async function runPredict(tid){
     });
     if(allProbs.length>10)bars.innerHTML+='<div style="font-size:10px;color:var(--muted);margin-top:4px">Showing top 10 of '+allProbs.length+' classes</div>';
     $("try-meta").innerHTML="Confidence: "+(d.confidence*100).toFixed(1)+"%"+
+      (d.support_percentile!==undefined?" \u00b7 Support: farther from the training data than "+d.support_percentile.toFixed(0)+"% of its examples"+(d.support_percentile>=95?" (far tail: treat with care)":""):"")+
       " \\u00b7 Embedding: "+d.embedding_ms+"ms \\u00b7 Classifier: "+d.classifier_ms+"ms"+
       " \\u00b7 Total: "+d.latency_ms+"ms";
     resEl.style.display="block";
     _stats.predictions++;
     _ev("predict",tid,{label:d.label,confidence:d.confidence,n:_stats.predictions});
     _lastPred={task:tid,label:d.label,confidence:d.confidence};
-    if(TEACH&&$("teach-line")&&$("teach-box").style.display==="none")$("teach-line").style.display="block";
+    if(TEACH&&$("teach-line")&&$("teach-box").style.display==="none"){$("teach-line").style.display="block";
+      if(journeyFrom()===2&&!$("teach-line").dataset.moved){var tl=$("teach-line");$("try-lbl").insertAdjacentElement("afterend",tl);tl.dataset.moved="1";tl.style.margin="6px 0 10px";var a=$("teach-open");a.className="run-btn";a.style.display="inline-block";a.style.fontSize="12px";a.style.padding="6px 10px";a.textContent="Not your labels? Teach it three of your own →";}}
     if(tid.indexOf("my_")===0)_ev("teach_predict",tid,{label:d.label,confidence:d.confidence,margin:d.margin});
     $("fb-up").disabled=false;$("fb-down").disabled=false;
     $("fb-up").classList.remove("voted");$("fb-down").classList.remove("voted");
@@ -3149,9 +3152,12 @@ function teachAddRow(text,label){
   r.querySelector(".teach-text").value=text||"";r.querySelector(".teach-label").value=label||"";
   $("teach-rows").appendChild(r);_teachRows++;
 }
+function teachIsOurExample(tid,t){var c=CAPS[tid];return !!(c&&c.example&&t&&t.trim()===String(c.example).trim());}
 function teachOpen(tid){
   $("teach-line").style.display="none";$("teach-box").style.display="block";
-  if(_teachRows===0){var t=$("try-text")?$("try-text").value:"";teachAddRow(t,"");teachAddRow("","");teachAddRow("","");teachAddRow("","");}
+  if(_teachRows===0){var t=$("try-text")?$("try-text").value:"";
+    if(teachIsOurExample(tid,t)){t="";$("teach-msg").textContent="That was our sample text. Paste your own text in the rows below.";_ev("teach_default_text",tid,{});}
+    teachAddRow(t,"");teachAddRow("","");teachAddRow("","");teachAddRow("","");}
   _ev("teach_open",tid,{rows:_teachRows});
   var f=$("teach-rows").querySelector(".teach-label");if(f)f.focus();
 }

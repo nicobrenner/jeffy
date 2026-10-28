@@ -103,6 +103,9 @@ class TrainedClassifier:
             classifier_coef_hash=coef_hash(self.clf),
         )
         save_artifact(out_path.parent, self.task_id, self.clf, self.scaler, manifest)
+        if getattr(self, "support", None):
+            from .support import save_support
+            save_support(out_path, self.support)
         return str(out_path)
 
 
@@ -230,6 +233,11 @@ def train_classifier(
             print(f"  Test macro F1: {test_f1:.1%}")
 
     result = TrainedClassifier(clf, scaler, st_encoder, label_map, task_id, encoder_name=encoder_name)
+    try:
+        from .support import build_support
+        result.support = build_support(train_embs, train_labels)
+    except Exception:
+        result.support = None
     if verbose:
         print(f"  Ready. Use .predict(text) or .save(dir)")
     return result

@@ -1,0 +1,1106 @@
+{
+ "task": "support_ticket",
+ "generated": "2026-10-27T20:25:01-0700",
+ "n_texts": 2700,
+ "n_classes": 11,
+ "cv_accuracy": 0.9981481481481481,
+ "source": "data/eval_results/support_ticket_v2/split.json train+test relabelled via v2 manifest parent map",
+ "pairs": [
+  {
+   "pair": "account / invoice",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0013,
+   "centroid_cos": 0.8282,
+   "shared_phrases": 10,
+   "shared_examples": [
+    "need assistance",
+    "do not know",
+    "i have to",
+    "know how"
+   ],
+   "rank_nn_cross": 5,
+   "rank_cv_confuse": 4,
+   "rank_centroid_cos": 11,
+   "rank_shared_phrases": 12,
+   "conflict_rank": 8.0
+  },
+  {
+   "pair": "account / feedback",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.831,
+   "shared_phrases": 9,
+   "shared_examples": [
+    "do not know",
+    "i have to",
+    "know how",
+    "not know"
+   ],
+   "rank_nn_cross": 4,
+   "rank_cv_confuse": 8,
+   "rank_centroid_cos": 9,
+   "rank_shared_phrases": 15,
+   "conflict_rank": 9.0
+  },
+  {
+   "pair": "account / contact",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.8283,
+   "shared_phrases": 7,
+   "shared_examples": [
+    "i have to",
+    "know how",
+    "i do not",
+    "have to"
+   ],
+   "rank_nn_cross": 2,
+   "rank_cv_confuse": 6,
+   "rank_centroid_cos": 10,
+   "rank_shared_phrases": 28,
+   "conflict_rank": 11.5
+  },
+  {
+   "pair": "account / cancel",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.7681,
+   "shared_phrases": 10,
+   "shared_examples": [
+    "need assistance",
+    "do not know",
+    "i have to",
+    "know how"
+   ],
+   "rank_nn_cross": 1,
+   "rank_cv_confuse": 5,
+   "rank_centroid_cos": 38,
+   "rank_shared_phrases": 11,
+   "conflict_rank": 13.75
+  },
+  {
+   "pair": "cancel / payment",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.8189,
+   "shared_phrases": 13,
+   "shared_examples": [
+    "i need assistance",
+    "need assistance",
+    "i need help",
+    "you help me"
+   ],
+   "rank_nn_cross": 16,
+   "rank_cv_confuse": 19,
+   "rank_centroid_cos": 16,
+   "rank_shared_phrases": 4,
+   "conflict_rank": 13.75
+  },
+  {
+   "pair": "contact / feedback",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.8521,
+   "shared_phrases": 11,
+   "shared_examples": [
+    "assistance to",
+    "i need help",
+    "need help",
+    "i have to"
+   ],
+   "rank_nn_cross": 21,
+   "rank_cv_confuse": 24,
+   "rank_centroid_cos": 5,
+   "rank_shared_phrases": 9,
+   "conflict_rank": 14.75
+  },
+  {
+   "pair": "delivery / order",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0033,
+   "centroid_cos": 0.8545,
+   "shared_phrases": 8,
+   "shared_examples": [
+    "need assistance",
+    "assistance to",
+    "need help",
+    "see the"
+   ],
+   "rank_nn_cross": 30,
+   "rank_cv_confuse": 1,
+   "rank_centroid_cos": 3,
+   "rank_shared_phrases": 25,
+   "conflict_rank": 14.75
+  },
+  {
+   "pair": "account / order",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.826,
+   "shared_phrases": 6,
+   "shared_examples": [
+    "need assistance",
+    "i have to",
+    "know how",
+    "have to"
+   ],
+   "rank_nn_cross": 6,
+   "rank_cv_confuse": 9,
+   "rank_centroid_cos": 13,
+   "rank_shared_phrases": 32,
+   "conflict_rank": 15.0
+  },
+  {
+   "pair": "cancel / invoice",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.8039,
+   "shared_phrases": 14,
+   "shared_examples": [
+    "need assistance",
+    "do not know",
+    "have to do",
+    "know what"
+   ],
+   "rank_nn_cross": 14,
+   "rank_cv_confuse": 17,
+   "rank_centroid_cos": 28,
+   "rank_shared_phrases": 2,
+   "conflict_rank": 15.25
+  },
+  {
+   "pair": "cancel / refund",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.8524,
+   "shared_phrases": 8,
+   "shared_examples": [
+    "i have to",
+    "know how",
+    "to check",
+    "help to"
+   ],
+   "rank_nn_cross": 17,
+   "rank_cv_confuse": 20,
+   "rank_centroid_cos": 4,
+   "rank_shared_phrases": 23,
+   "conflict_rank": 16.0
+  },
+  {
+   "pair": "account / refund",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.8208,
+   "shared_phrases": 5,
+   "shared_examples": [
+    "i have to",
+    "know how",
+    "have to",
+    "help me"
+   ],
+   "rank_nn_cross": 8,
+   "rank_cv_confuse": 11,
+   "rank_centroid_cos": 14,
+   "rank_shared_phrases": 39,
+   "conflict_rank": 18.0
+  },
+  {
+   "pair": "cancel / delivery",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.7581,
+   "shared_phrases": 12,
+   "shared_examples": [
+    "need assistance",
+    "you help me",
+    "to see the",
+    "need help"
+   ],
+   "rank_nn_cross": 12,
+   "rank_cv_confuse": 15,
+   "rank_centroid_cos": 40,
+   "rank_shared_phrases": 6,
+   "conflict_rank": 18.25
+  },
+  {
+   "pair": "contact / order",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0017,
+   "centroid_cos": 0.7892,
+   "shared_phrases": 9,
+   "shared_examples": [
+    "assistance to",
+    "i need help",
+    "need help",
+    "i have to"
+   ],
+   "rank_nn_cross": 23,
+   "rank_cv_confuse": 3,
+   "rank_centroid_cos": 31,
+   "rank_shared_phrases": 16,
+   "conflict_rank": 18.25
+  },
+  {
+   "pair": "cancel / feedback",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.7541,
+   "shared_phrases": 13,
+   "shared_examples": [
+    "do not know",
+    "i need help",
+    "need help",
+    "i have to"
+   ],
+   "rank_nn_cross": 13,
+   "rank_cv_confuse": 16,
+   "rank_centroid_cos": 42,
+   "rank_shared_phrases": 3,
+   "conflict_rank": 18.5
+  },
+  {
+   "pair": "cancel / contact",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.7345,
+   "shared_phrases": 17,
+   "shared_examples": [
+    "i don't know",
+    "i need help",
+    "you help me",
+    "don't know"
+   ],
+   "rank_nn_cross": 11,
+   "rank_cv_confuse": 14,
+   "rank_centroid_cos": 50,
+   "rank_shared_phrases": 1,
+   "conflict_rank": 19.0
+  },
+  {
+   "pair": "feedback / refund",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.002,
+   "centroid_cos": 0.8643,
+   "shared_phrases": 6,
+   "shared_examples": [
+    "i have to",
+    "know how",
+    "help to",
+    "have to"
+   ],
+   "rank_nn_cross": 38,
+   "rank_cv_confuse": 2,
+   "rank_centroid_cos": 2,
+   "rank_shared_phrases": 36,
+   "conflict_rank": 19.5
+  },
+  {
+   "pair": "cancel / order",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.7569,
+   "shared_phrases": 11,
+   "shared_examples": [
+    "need assistance",
+    "i need help",
+    "need help",
+    "i have to"
+   ],
+   "rank_nn_cross": 15,
+   "rank_cv_confuse": 18,
+   "rank_centroid_cos": 41,
+   "rank_shared_phrases": 7,
+   "conflict_rank": 20.25
+  },
+  {
+   "pair": "contact / invoice",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.8103,
+   "shared_phrases": 11,
+   "shared_examples": [
+    "assistance to",
+    "know what",
+    "i have to",
+    "know how"
+   ],
+   "rank_nn_cross": 22,
+   "rank_cv_confuse": 25,
+   "rank_centroid_cos": 24,
+   "rank_shared_phrases": 10,
+   "conflict_rank": 20.25
+  },
+  {
+   "pair": "account / payment",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.8135,
+   "shared_phrases": 3,
+   "shared_examples": [
+    "need assistance",
+    "help me",
+    "i have"
+   ],
+   "rank_nn_cross": 7,
+   "rank_cv_confuse": 10,
+   "rank_centroid_cos": 21,
+   "rank_shared_phrases": 47,
+   "conflict_rank": 21.25
+  },
+  {
+   "pair": "delivery / payment",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.815,
+   "shared_phrases": 13,
+   "shared_examples": [
+    "need assistance",
+    "assistance to",
+    "can you help",
+    "you help me"
+   ],
+   "rank_nn_cross": 31,
+   "rank_cv_confuse": 32,
+   "rank_centroid_cos": 20,
+   "rank_shared_phrases": 5,
+   "conflict_rank": 22.0
+  },
+  {
+   "pair": "account / shipping",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.813,
+   "shared_phrases": 2,
+   "shared_examples": [
+    "help me",
+    "i have"
+   ],
+   "rank_nn_cross": 9,
+   "rank_cv_confuse": 12,
+   "rank_centroid_cos": 22,
+   "rank_shared_phrases": 50,
+   "conflict_rank": 23.25
+  },
+  {
+   "pair": "account / subscription",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.7703,
+   "shared_phrases": 6,
+   "shared_examples": [
+    "need assistance",
+    "i have to",
+    "sign up",
+    "have to"
+   ],
+   "rank_nn_cross": 10,
+   "rank_cv_confuse": 13,
+   "rank_centroid_cos": 37,
+   "rank_shared_phrases": 33,
+   "conflict_rank": 23.25
+  },
+  {
+   "pair": "contact / delivery",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.7907,
+   "shared_phrases": 8,
+   "shared_examples": [
+    "assistance to",
+    "you help me",
+    "need help",
+    "to check"
+   ],
+   "rank_nn_cross": 20,
+   "rank_cv_confuse": 23,
+   "rank_centroid_cos": 30,
+   "rank_shared_phrases": 24,
+   "conflict_rank": 24.25
+  },
+  {
+   "pair": "account / delivery",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.7497,
+   "shared_phrases": 3,
+   "shared_examples": [
+    "need assistance",
+    "help me",
+    "i have"
+   ],
+   "rank_nn_cross": 3,
+   "rank_cv_confuse": 7,
+   "rank_centroid_cos": 43,
+   "rank_shared_phrases": 46,
+   "conflict_rank": 24.75
+  },
+  {
+   "pair": "contact / payment",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.7887,
+   "shared_phrases": 9,
+   "shared_examples": [
+    "assistance to",
+    "i need help",
+    "you help me",
+    "need help"
+   ],
+   "rank_nn_cross": 24,
+   "rank_cv_confuse": 26,
+   "rank_centroid_cos": 32,
+   "rank_shared_phrases": 17,
+   "conflict_rank": 24.75
+  },
+  {
+   "pair": "contact / refund",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.8162,
+   "shared_phrases": 7,
+   "shared_examples": [
+    "i have to",
+    "know how",
+    "to check",
+    "help to"
+   ],
+   "rank_nn_cross": 25,
+   "rank_cv_confuse": 27,
+   "rank_centroid_cos": 19,
+   "rank_shared_phrases": 29,
+   "conflict_rank": 25.0
+  },
+  {
+   "pair": "cancel / subscription",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.6929,
+   "shared_phrases": 11,
+   "shared_examples": [
+    "i need assistance",
+    "need assistance",
+    "i need help",
+    "you help me"
+   ],
+   "rank_nn_cross": 19,
+   "rank_cv_confuse": 22,
+   "rank_centroid_cos": 54,
+   "rank_shared_phrases": 8,
+   "conflict_rank": 25.75
+  },
+  {
+   "pair": "feedback / invoice",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.8087,
+   "shared_phrases": 10,
+   "shared_examples": [
+    "assistance to",
+    "do not know",
+    "i have to",
+    "know how"
+   ],
+   "rank_nn_cross": 35,
+   "rank_cv_confuse": 36,
+   "rank_centroid_cos": 26,
+   "rank_shared_phrases": 13,
+   "conflict_rank": 27.5
+  },
+  {
+   "pair": "feedback / order",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.8073,
+   "shared_phrases": 9,
+   "shared_examples": [
+    "assistance to",
+    "i need help",
+    "need help",
+    "i have to"
+   ],
+   "rank_nn_cross": 36,
+   "rank_cv_confuse": 37,
+   "rank_centroid_cos": 27,
+   "rank_shared_phrases": 19,
+   "conflict_rank": 29.75
+  },
+  {
+   "pair": "invoice / order",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.8332,
+   "shared_phrases": 7,
+   "shared_examples": [
+    "need assistance",
+    "assistance to",
+    "i have to",
+    "know how"
+   ],
+   "rank_nn_cross": 41,
+   "rank_cv_confuse": 41,
+   "rank_centroid_cos": 7,
+   "rank_shared_phrases": 30,
+   "conflict_rank": 29.75
+  },
+  {
+   "pair": "delivery / feedback",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.7937,
+   "shared_phrases": 6,
+   "shared_examples": [
+    "assistance to",
+    "need help",
+    "want help",
+    "help to"
+   ],
+   "rank_nn_cross": 28,
+   "rank_cv_confuse": 30,
+   "rank_centroid_cos": 29,
+   "rank_shared_phrases": 34,
+   "conflict_rank": 30.25
+  },
+  {
+   "pair": "contact / subscription",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.7397,
+   "shared_phrases": 9,
+   "shared_examples": [
+    "i need help",
+    "you help me",
+    "need help",
+    "i have to"
+   ],
+   "rank_nn_cross": 27,
+   "rank_cv_confuse": 29,
+   "rank_centroid_cos": 48,
+   "rank_shared_phrases": 18,
+   "conflict_rank": 30.5
+  },
+  {
+   "pair": "feedback / payment",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.8205,
+   "shared_phrases": 6,
+   "shared_examples": [
+    "assistance to",
+    "i need help",
+    "need help",
+    "help to"
+   ],
+   "rank_nn_cross": 37,
+   "rank_cv_confuse": 38,
+   "rank_centroid_cos": 15,
+   "rank_shared_phrases": 35,
+   "conflict_rank": 31.25
+  },
+  {
+   "pair": "order / payment",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.8265,
+   "shared_phrases": 9,
+   "shared_examples": [
+    "need assistance",
+    "assistance to",
+    "i need help",
+    "need help"
+   ],
+   "rank_nn_cross": 46,
+   "rank_cv_confuse": 46,
+   "rank_centroid_cos": 12,
+   "rank_shared_phrases": 21,
+   "conflict_rank": 31.25
+  },
+  {
+   "pair": "delivery / shipping",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.8189,
+   "shared_phrases": 4,
+   "shared_examples": [
+    "the delivery",
+    "want help",
+    "help me",
+    "i have"
+   ],
+   "rank_nn_cross": 33,
+   "rank_cv_confuse": 34,
+   "rank_centroid_cos": 17,
+   "rank_shared_phrases": 44,
+   "conflict_rank": 32.0
+  },
+  {
+   "pair": "invoice / payment",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.8313,
+   "shared_phrases": 6,
+   "shared_examples": [
+    "want assistance",
+    "need assistance",
+    "assistance to",
+    "to check"
+   ],
+   "rank_nn_cross": 42,
+   "rank_cv_confuse": 42,
+   "rank_centroid_cos": 8,
+   "rank_shared_phrases": 37,
+   "conflict_rank": 32.25
+  },
+  {
+   "pair": "invoice / refund",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.8345,
+   "shared_phrases": 6,
+   "shared_examples": [
+    "i have to",
+    "know how",
+    "to check",
+    "have to"
+   ],
+   "rank_nn_cross": 43,
+   "rank_cv_confuse": 43,
+   "rank_centroid_cos": 6,
+   "rank_shared_phrases": 38,
+   "conflict_rank": 32.5
+  },
+  {
+   "pair": "delivery / refund",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.8093,
+   "shared_phrases": 5,
+   "shared_examples": [
+    "to check",
+    "help to",
+    "help me",
+    "i have"
+   ],
+   "rank_nn_cross": 32,
+   "rank_cv_confuse": 33,
+   "rank_centroid_cos": 25,
+   "rank_shared_phrases": 41,
+   "conflict_rank": 32.75
+  },
+  {
+   "pair": "delivery / invoice",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.7773,
+   "shared_phrases": 5,
+   "shared_examples": [
+    "need assistance",
+    "assistance to",
+    "to check",
+    "help me"
+   ],
+   "rank_nn_cross": 29,
+   "rank_cv_confuse": 31,
+   "rank_centroid_cos": 35,
+   "rank_shared_phrases": 40,
+   "conflict_rank": 33.75
+  },
+  {
+   "pair": "feedback / subscription",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.7808,
+   "shared_phrases": 8,
+   "shared_examples": [
+    "your company",
+    "i need help",
+    "need help",
+    "i have to"
+   ],
+   "rank_nn_cross": 40,
+   "rank_cv_confuse": 40,
+   "rank_centroid_cos": 34,
+   "rank_shared_phrases": 27,
+   "conflict_rank": 35.25
+  },
+  {
+   "pair": "cancel / shipping",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.6766,
+   "shared_phrases": 3,
+   "shared_examples": [
+    "want help",
+    "help me",
+    "i have"
+   ],
+   "rank_nn_cross": 18,
+   "rank_cv_confuse": 21,
+   "rank_centroid_cos": 55,
+   "rank_shared_phrases": 48,
+   "conflict_rank": 35.5
+  },
+  {
+   "pair": "payment / refund",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.8654,
+   "shared_phrases": 5,
+   "shared_examples": [
+    "to check",
+    "help to",
+    "help me",
+    "i have"
+   ],
+   "rank_nn_cross": 50,
+   "rank_cv_confuse": 50,
+   "rank_centroid_cos": 1,
+   "rank_shared_phrases": 42,
+   "conflict_rank": 35.75
+  },
+  {
+   "pair": "delivery / subscription",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.7216,
+   "shared_phrases": 8,
+   "shared_examples": [
+    "need assistance",
+    "can you help",
+    "you help me",
+    "need help"
+   ],
+   "rank_nn_cross": 34,
+   "rank_cv_confuse": 35,
+   "rank_centroid_cos": 51,
+   "rank_shared_phrases": 26,
+   "conflict_rank": 36.5
+  },
+  {
+   "pair": "order / refund",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.8123,
+   "shared_phrases": 7,
+   "shared_examples": [
+    "i have to",
+    "know how",
+    "help to",
+    "have to"
+   ],
+   "rank_nn_cross": 47,
+   "rank_cv_confuse": 47,
+   "rank_centroid_cos": 23,
+   "rank_shared_phrases": 31,
+   "conflict_rank": 37.0
+  },
+  {
+   "pair": "contact / shipping",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.7493,
+   "shared_phrases": 2,
+   "shared_examples": [
+    "help me",
+    "i have"
+   ],
+   "rank_nn_cross": 26,
+   "rank_cv_confuse": 28,
+   "rank_centroid_cos": 44,
+   "rank_shared_phrases": 51,
+   "conflict_rank": 37.25
+  },
+  {
+   "pair": "invoice / subscription",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.7424,
+   "shared_phrases": 9,
+   "shared_examples": [
+    "need assistance",
+    "have got to",
+    "i have got",
+    "i have to"
+   ],
+   "rank_nn_cross": 45,
+   "rank_cv_confuse": 45,
+   "rank_centroid_cos": 47,
+   "rank_shared_phrases": 20,
+   "conflict_rank": 39.25
+  },
+  {
+   "pair": "feedback / shipping",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.7767,
+   "shared_phrases": 4,
+   "shared_examples": [
+    "want help",
+    "to submit",
+    "help me",
+    "i have"
+   ],
+   "rank_nn_cross": 39,
+   "rank_cv_confuse": 39,
+   "rank_centroid_cos": 36,
+   "rank_shared_phrases": 45,
+   "conflict_rank": 39.75
+  },
+  {
+   "pair": "order / subscription",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.746,
+   "shared_phrases": 9,
+   "shared_examples": [
+    "need assistance",
+    "i need help",
+    "need help",
+    "i have to"
+   ],
+   "rank_nn_cross": 49,
+   "rank_cv_confuse": 49,
+   "rank_centroid_cos": 45,
+   "rank_shared_phrases": 22,
+   "conflict_rank": 41.25
+  },
+  {
+   "pair": "order / shipping",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.8172,
+   "shared_phrases": 2,
+   "shared_examples": [
+    "help me",
+    "i have"
+   ],
+   "rank_nn_cross": 48,
+   "rank_cv_confuse": 48,
+   "rank_centroid_cos": 18,
+   "rank_shared_phrases": 53,
+   "conflict_rank": 41.75
+  },
+  {
+   "pair": "payment / subscription",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.7035,
+   "shared_phrases": 10,
+   "shared_examples": [
+    "i need assistance",
+    "need assistance",
+    "can you help",
+    "i need help"
+   ],
+   "rank_nn_cross": 52,
+   "rank_cv_confuse": 52,
+   "rank_centroid_cos": 53,
+   "rank_shared_phrases": 14,
+   "conflict_rank": 42.75
+  },
+  {
+   "pair": "invoice / shipping",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.7836,
+   "shared_phrases": 2,
+   "shared_examples": [
+    "help me",
+    "i have"
+   ],
+   "rank_nn_cross": 44,
+   "rank_cv_confuse": 44,
+   "rank_centroid_cos": 33,
+   "rank_shared_phrases": 52,
+   "conflict_rank": 43.25
+  },
+  {
+   "pair": "payment / shipping",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.7678,
+   "shared_phrases": 2,
+   "shared_examples": [
+    "help me",
+    "i have"
+   ],
+   "rank_nn_cross": 51,
+   "rank_cv_confuse": 51,
+   "rank_centroid_cos": 39,
+   "rank_shared_phrases": 54,
+   "conflict_rank": 48.75
+  },
+  {
+   "pair": "refund / subscription",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.7431,
+   "shared_phrases": 5,
+   "shared_examples": [
+    "i have to",
+    "help to",
+    "have to",
+    "help me"
+   ],
+   "rank_nn_cross": 54,
+   "rank_cv_confuse": 54,
+   "rank_centroid_cos": 46,
+   "rank_shared_phrases": 43,
+   "conflict_rank": 49.25
+  },
+  {
+   "pair": "refund / shipping",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.7348,
+   "shared_phrases": 2,
+   "shared_examples": [
+    "help me",
+    "i have"
+   ],
+   "rank_nn_cross": 53,
+   "rank_cv_confuse": 53,
+   "rank_centroid_cos": 49,
+   "rank_shared_phrases": 55,
+   "conflict_rank": 52.5
+  },
+  {
+   "pair": "shipping / subscription",
+   "nn_cross": 0.0,
+   "cv_confuse": 0.0,
+   "centroid_cos": 0.7149,
+   "shared_phrases": 3,
+   "shared_examples": [
+    "information about",
+    "help me",
+    "i have"
+   ],
+   "rank_nn_cross": 55,
+   "rank_cv_confuse": 55,
+   "rank_centroid_cos": 52,
+   "rank_shared_phrases": 49,
+   "conflict_rank": 52.75
+  }
+ ],
+ "queries": [
+  {
+   "text": "how do I change my email address",
+   "top": "shipping",
+   "second": "account",
+   "top_p": 0.668,
+   "margin": 0.382
+  },
+  {
+   "text": "change the address on my account",
+   "top": "shipping",
+   "second": "account",
+   "top_p": 0.977,
+   "margin": 0.957
+  },
+  {
+   "text": "update my contact details",
+   "top": "contact",
+   "second": "shipping",
+   "top_p": 0.307,
+   "margin": 0.047
+  },
+  {
+   "text": "I cannot log into my account",
+   "top": "account",
+   "second": "contact",
+   "top_p": 0.996,
+   "margin": 0.994
+  },
+  {
+   "text": "reset my password",
+   "top": "account",
+   "second": "contact",
+   "top_p": 0.993,
+   "margin": 0.991
+  },
+  {
+   "text": "I want to delete my account",
+   "top": "account",
+   "second": "feedback",
+   "top_p": 0.991,
+   "margin": 0.988
+  },
+  {
+   "text": "I need to change the shipping address",
+   "top": "shipping",
+   "second": "order",
+   "top_p": 0.999,
+   "margin": 0.998
+  },
+  {
+   "text": "where is my package",
+   "top": "delivery",
+   "second": "shipping",
+   "top_p": 0.896,
+   "margin": 0.829
+  },
+  {
+   "text": "cancel my order",
+   "top": "order",
+   "second": "delivery",
+   "top_p": 0.976,
+   "margin": 0.968
+  },
+  {
+   "text": "I want to cancel my subscription",
+   "top": "subscription",
+   "second": "account",
+   "top_p": 0.823,
+   "margin": 0.738
+  }
+ ],
+ "query_pairs": [
+  {
+   "pair": "contact / shipping",
+   "n_queries": 1,
+   "n_low_margin": 1,
+   "mean_margin": 0.047
+  },
+  {
+   "pair": "account / shipping",
+   "n_queries": 2,
+   "n_low_margin": 1,
+   "mean_margin": 0.67
+  },
+  {
+   "pair": "account / subscription",
+   "n_queries": 1,
+   "n_low_margin": 0,
+   "mean_margin": 0.738
+  },
+  {
+   "pair": "delivery / shipping",
+   "n_queries": 1,
+   "n_low_margin": 0,
+   "mean_margin": 0.829
+  },
+  {
+   "pair": "delivery / order",
+   "n_queries": 1,
+   "n_low_margin": 0,
+   "mean_margin": 0.968
+  },
+  {
+   "pair": "account / feedback",
+   "n_queries": 1,
+   "n_low_margin": 0,
+   "mean_margin": 0.988
+  },
+  {
+   "pair": "account / contact",
+   "n_queries": 2,
+   "n_low_margin": 0,
+   "mean_margin": 0.992
+  },
+  {
+   "pair": "order / shipping",
+   "n_queries": 1,
+   "n_low_margin": 0,
+   "mean_margin": 0.998
+  }
+ ]
+}

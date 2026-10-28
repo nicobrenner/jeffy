@@ -257,61 +257,19 @@ flags["legal_threat"].predict("I am contacting my solicitor")  # {"label": "yes"
 
 Over HTTP, pass `mode: "binary-flags"` with `texts` and `flags` to `POST /v1/train`.
 
-Measured on a multilingual care-intake email set (425 emails, 400 English and 25 Arabic, 13 flags; 318 train / 107 test,
-`scripts/care_intake_sweep.py`, CPU): one balanced binary head per flag against one multi-class head on the flag-set label.
-Positive-class F1 on the test split, multilingual MiniLM encoder; flags with fewer than 10 positives in training in bold:
-
-| flag | positives train / test | F1 binary per flag | F1 one multi-class head |
-|---|---|---|---|
-| **fees_vs_service** | 9 / 6 | **1.00** | 0.50 |
-| **prior_contact_unanswered** | 6 / 4 | **1.00** | 0.67 |
-| money_in_dispute | 19 / 11 | **1.00** | 0.78 |
-| own_unit_notice | 28 / 12 | **1.00** | 0.74 |
-| staff_praised | 19 / 6 | **1.00** | 0.91 |
-| third_party_at_fault | 27 / 10 | 0.95 | 0.95 |
-| property_damage | 12 / 4 | 0.67 | **0.86** |
-| **app_or_portal_fault** | 5 / 1 | 0.67 | **1.00** |
-| **recurring_problem** | 2 / 1 | 0.00 | 0.00 |
-
-Per-flag binary heads win or tie on 10 of 13 flags and are the only option that fires at all on the sparse ones; a flag with
-two training positives is unlearnable either way, which is a labeling problem, not a head choice.
+Measured on a small private multilingual support-email set with unverified provenance (not in this repo, not publishable;
+`scripts/care_intake_sweep.py` takes the data path as an argument): one balanced binary head per flag against one multi-class
+head on the flag-set label. Binary-per-flag won or tied on 10 of 13 flags and was the only shape that fired at all on the
+sparse flags (fewer than ten training positives); a flag with two training positives was unlearnable either way, which is a
+labeling problem, not a head choice. Absolute scores from that set are not reported.
 
 ### Encoder choice and per-head C
 
-On the same care-intake set, the three multilingual encoders in reach and a per-head C grid (0.01, 0.1, 1 by 3-fold macro-F1):
-
-| encoder | encode ms/text (CPU) | mean head accuracy, C=0.01 | mean head accuracy, C tuned | worst head (tuned) |
-|---|---|---|---|---|
-| paraphrase-multilingual-MiniLM-L12-v2 (default multilingual, 471 MB) | **4.2** | 0.972 | 0.979 | category 0.953 |
-| multilingual-e5-small | 4.1 | 0.972 | 0.981 | category 0.953 |
-| LaBSE (1.9 GB) | 13.5 | **0.984** | 0.981 | category 0.953 |
-
-The C grid moves two heads (desired_outcome, emotion) by one to five points and costs three extra fits per head; it is worth
-turning on for small sets (`tune_C=True`). LaBSE buys about one point at three times the encode time and four times the
-download; the default multilingual encoder is the right default. All four Arabic test emails are classified correctly by all
-three encoders, which says the set is too small to rank them on Arabic, not that they are equal.
-
-
-| Parameter | Default | Description |
-|-----------|---------|-------------|
-| `class_weight` | `"balanced"` | `"balanced"` reweights the rare positive class, which maximizes recall and is usually right for triage. Pass `None` for the unweighted fit: it raises far fewer flags at noticeably higher precision. On real data a balanced head raised roughly a third more flags than the reference labels did, so if a false positive is expensive, start with `None`. |
-| `tune_C` | `False` | Grid-search `C` per flag, scored by positive-class F1 on 2 or 3 stratified folds (fold count is clamped to the rarer class so no fold ends up with zero positives). |
-| `tune_threshold` | `False` | Also pick a per-flag decision threshold on a held-out dev slice, jointly with `C`. The chosen threshold is folded into the model's intercept, so it survives `save()` and needs no special handling at predict time. |
-| `min_threshold_positives` | 8 | Skip threshold tuning for any flag whose dev slice has fewer positives than this. Below roughly 8 the threshold fits noise. Since the dev slice is a quarter of the training data, this needs about 32 positives for that flag. |
-
-Tuning is scored by **positive-class** F1, not macro F1. For a rare flag the "no" class scores near 1.0, so macro F1 is dominated by the easy class and can select a different `C` than the flag's own performance justifies.
-
-### Corrections on your own embeddings
-
-If you run your own encoder and want Jeffy only for the heads, `/v1/predict` and `/v1/feedback` both take a `features` vector in place of `text`:
-
-```bash
-curl -X POST localhost:8400/v1/feedback \
-  -H "Content-Type: application/json" \
-  -d '{"task_id": "intake", "features": [0.12, -0.44, ...], "correct_label": "escalate"}'
-```
-
-Corrections accumulate and trigger a retrain at `JEFFY_RETRAIN_THRESHOLD`, using your vectors directly with no encoder in the loop. A given `task_id` has to stay all-text or all-features, since a retrain consumes every stored entry at once; mixing the two returns 409.
+On the same private set, the three multilingual encoders in reach (the default multilingual MiniLM, multilingual-e5-small,
+LaBSE) and a per-head C grid (0.01, 0.1, 1 by 3-fold macro-F1): the C grid lifted two heads by one to five points at the
+cost of three extra fits per head, so `tune_C=True` is worth turning on for small sets; LaBSE gained about one point over
+the default at three times the encode time and four times the download. Keep the default multilingual encoder. The Arabic
+slice was too small to rank encoders on it. Absolute scores are not reported, for the provenance reason above.
 
 ## Server configuration
 

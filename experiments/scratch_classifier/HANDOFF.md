@@ -2,7 +2,7 @@
 
 Purpose: let a fresh Claude Code session pick up this research program with as little loss as possible. Keep it short;
 the durable record is `RESEARCH_LOG.md` (lab notebook, append-only, every result the turn it lands). Update this file at
-the end of every working block (not just at the end of a session). Last update: **2026-10-27, 22:28 PDT**.
+the end of every working block (not just at the end of a session). Last update: **2026-10-28, 06:50 PDT**.
 
 ## How to resume (5 minutes)
 1. Read this file, then the last ~400 lines of `RESEARCH_LOG.md` (`tail -400 RESEARCH_LOG.md`).
@@ -23,8 +23,8 @@ the end of every working block (not just at the end of a session). Last update: 
    model-side work = best-of-N with a judge trained on his 0–5 scores, or retrieval for the recap tier. No run pending.
 3. Still open: crawler/room verdicts, teach-mode export, README/benchmark correction, posts.
 
-## Running right now (2026-10-27 22:28 PDT)
-- **Nothing running.** Environment tier shipped (world knob: off / facts / weather / both, pre-LN entries; idle check-in knob, default 3 min). v5w not exported; weather default off.
+## Running right now (2026-10-28, 06:50 PDT)
+- **Nothing running.** Copy-circuit scout done: five configs ≤ 2.8M, 8 epochs each, 0/16 copies everywhere, no induction above chance — **copy ceiling at this size is the finding**; grounding / recap-by-reading / weather-reading parked. No retrain.
 - Nico's labels: tone picks (28 rows, `tone_labels_nico1.jsonl`) + follow-through scores (18, `review_followthrough_scores.json`).
 - Review format: `review_page.py` (0–5 per reply + notes, continuations first, ≤20 items). Pairs on shared history: `cont_pairs.py`.
 
@@ -54,8 +54,9 @@ matched rows) loses to v2 everywhere; both below chance on his 22 turn-3 rows. I
 (c) comparisons table does not (retrieval picks topical-not-semantic lines; models do not read them) → no knob. World knob shipped 21:38 (facts, pre-LN only). v5g (3-epoch continuation with 2,040 grounding rows, probe facts held out): grounding 4 → 5/26,
 gold-recap recall 26 → 34 (reads harder) but identity 32 → 28, human-life 0 → 10/96, extracted recap 13 → 8 → not exported.
 v5h ran (22:22, Nico's call): from scratch, 20 epochs, grounding rows in, probe facts held out → grounding 2/26 (v5b 4), other-slot 1/16,
-distractor admits 0/10, identity 13/32. copy_probe: v5b 1/16 names, 0 pets, 0 cities — **no copy circuit**. **Grounding parked** until a
-scout moves copy_probe (RoPE / depth / induction units); it is not a data problem at this size. Environment tier shipped 22:28: weather line from browser signals + idle check-in through the Room machinery; `weather_bank.py` is the file
+distractor admits 0/10, identity 13/32. copy_probe: v5b 1/16 names, 0 pets, 0 cities — **no copy circuit**. **Grounding parked.** Copy scout (2026-10-28, 06:50): base / RoPE / deep d192 L3 / 8 heads / attention-only block 0, all 0/16 on copy_probe, repeat loss
+never below chance on `induct_eval.py` — the copy ceiling at ≤ 2.8M, 2–3 layers, 8 epochs is the finding; the ct lineage stops here on
+reading tasks. RoPE is the best row (loss, induction, identity 28/32) if a later scout tries a repeat-heavy curriculum. Environment tier shipped 22:28: weather line from browser signals + idle check-in through the Room machinery; `weather_bank.py` is the file
 for Nico to curate. v5w (700 weather rows, continuation) fails the probe (5/30, accidental) and loosens identity → weather default off.
 **For Nico:** try world = weather on v5b with the idle knob at 1 min; the lines come from `weather_bank.py` — edit freely, the demo reads
 `demo/weather_bank.json` (re-export with `python3 -c "import json;from weather_bank import BANK;json.dump(BANK,open('demo/weather_bank.json','w'))"`).

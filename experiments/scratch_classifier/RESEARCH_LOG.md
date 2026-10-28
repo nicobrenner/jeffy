@@ -6064,3 +6064,32 @@ Verdict: the probe fails — 700 rows do not make the model riff on a line it re
 (32 → 27, human-life 0 → 11), so v5w is not exported and **weather stays default off**. What works is what Nico liked: the Room path,
 where the weather line is the SEED the model continues, not a line it must read. The tier ships that way; the data pass is the same
 lesson as v5g/v5h (reading needs the copy circuit).
+
+## 2026-10-28 06:50 PDT — Branch 1: copy-circuit scout, five configs ≤ 2.8M, 8 epochs each: nothing copies. The copy ceiling at this size is the finding.
+Grid on the same data (v5b corpus + 2,760 ms rows = 41,210 rows; conv-sequences, oracle-only loss, pre-LN, 8 epochs ≈ 8 min each on
+MPS): base = v5b config (d256 L2 h4 ff1024); + RoPE; deep (d192 L3 ff1280, same params); 8 heads of 32; attention-only first block
+(`--attn-only-first`: the previous-token head needs no feed-forward, and the stream block 1 reads is then pure attention output — the
+composition an induction head needs). Measured by copy_probe (name / pet / city stated one turn back, 16 each) and `induct_eval.py`
+(random in-vocab tokens repeated with period 3 / 5 / 7; repeat loss far below first-pass loss = induction; chance = ln 4096 = 8.32),
+not by loss. v5b (50 epochs) as the reference row.
+| config | params | copy name / pet / city ↑ | induction repeat loss p3 / p5 / p7 ↓ (first pass ≈ 12–16) | identity ↑ | human-life ↓ | simuser t1 single ↑ | val |
+|---|---|---|---|---|---|---|---|
+| v5b (50 ep reference) | 2.69M | **1** / 0 / 0 | 10.54 / 11.86 / 12.83 | **32/32** | **0/96** | 0.24 | — |
+| base d256 L2 | 2.69M | 0 / 0 / 0 | 9.66 / 10.65 / 10.98 | 9/32 | 10/96 | 0.26 | 1.004 |
+| + RoPE | 2.63M | 0 / 0 / 0 | **8.38 / 9.57 / 10.20** | 28/32 | 11/96 | 0.18 | **0.939** |
+| deep d192 L3 | 2.76M | 0 / 0 / 0 | 9.68 / 10.51 / 10.62 | 6/32 | 6/96 | 0.10 | 1.039 |
+| 8 heads of 32 | 2.69M | 0 / 0 / 0 | 9.23 / 10.40 / 10.65 | 13/32 | 5/96 | **0.28** | 1.013 |
+| attention-only block 0 | 2.17M | 0 / 0 / 0 | 9.73 / 10.06 / 10.02 | 6/32 | 2/96 | 0.22 | 1.064 |
+Verdict: no config copies (0/16 on all three slots; even v5b's 1/16 is noise), and no config shows induction — repeat loss never
+drops below chance (RoPE's p3 = 8.38 is chance, i.e. the model learns the unigram prior of the repeated window, not the copy).
+The ~3-nat first-vs-repeat gap is the same in every row, so it is frequency learning, not a circuit. RoPE is the best of the five
+on loss and induction and keeps identity (28/32) at 8 epochs — if anything in this class ever gets a circuit, it starts there —
+but ≥ 8/16 names was the bar for the 20-epoch retrain, and nothing is near it. **The copy ceiling at ≤ 2.8M / 2–3 layers / 8 epochs
+is the finding; grounding, recap-by-reading and weather-reading stay parked.** Printouts for the best row (RoPE), epoch 0 → 8:
+"What are you?": "iod bott filmsf equ most edu…" → "*tell I'm reading a book ca…"; "Tell me something interesting": "Tinyaries cloth
+cloth beaut Sc Bec…" → "*me Once upon a time, there was a neural network with 2 million parameters."; "How smart are you?":
+"spareices conversations ce contin…" → "*yn I have fewer neurons than a fruit fly.". (Chain note: the attention-only block first
+failed on the encoder's fast path, which reads linear2.weight; fixed as a frozen zero Linear and rerun; the probes above are the rerun.)
+What would move it, for the record and not for this block: the unit tests that formed induction at d256 used vocab 64 and 3,000
+steps on pure repeat data; the chat corpus gives the circuit no reason to form at 8–50 epochs. A curriculum (repeat-heavy synthetic
+mixed in early, as the ms copy rows tried at 20k) is the cheapest next scout, after Nico's chat scores retarget the judge.

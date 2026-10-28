@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-27T20:31:55-0700",
+ "generated": "2026-10-27T22:11:14-0700",
  "thresholds": [
   0.5,
   0.8,
@@ -91,7 +91,7 @@
      "n_covered": 516
     }
    ],
-   "seconds": 11.0
+   "seconds": 54.6
   },
   "support_ticket_v2 (27 intents)": {
    "task_id": "support_ticket_v2",
@@ -169,7 +169,7 @@
      "n_covered": 611
     }
    ],
-   "seconds": 11.1
+   "seconds": 59.1
   },
   "support_ticket_v2 -> category": {
    "task_id": "support_ticket_v2",
@@ -247,7 +247,7 @@
      "n_covered": 611
     }
    ],
-   "seconds": 11.2
+   "seconds": 53.9
   },
   "medication_name (50 drugs, 25 demo cases)": {
    "task_id": "medication_name",
@@ -325,7 +325,7 @@
      "n_covered": 0
     }
    ],
-   "seconds": 0.3
+   "seconds": 1.7
   },
   "dosage_form (10 forms, 25 demo cases)": {
    "task_id": "dosage_form",
@@ -403,7 +403,7 @@
      "n_covered": 1
     }
    ],
-   "seconds": 0.3
+   "seconds": 1.5
   },
   "banking77 (77 intents)": {
    "task_id": "banking77",
@@ -481,7 +481,7 @@
      "n_covered": 970
     }
    ],
-   "seconds": 18.2
+   "seconds": 54.8
   }
  },
  "probes": {
@@ -493,6 +493,7 @@
     "got": "account",
     "confidence": 0.9683,
     "margin": 0.9492,
+    "support_percentile": 95.1,
     "clears_gate": true,
     "ok": true
    },
@@ -503,6 +504,7 @@
     "got": "account",
     "confidence": 0.8444,
     "margin": 0.6992,
+    "support_percentile": 38.7,
     "clears_gate": false,
     "ok": true
    },
@@ -513,6 +515,7 @@
     "got": "account",
     "confidence": 0.8844,
     "margin": 0.8366,
+    "support_percentile": 94.5,
     "clears_gate": false,
     "ok": true
    },
@@ -523,6 +526,7 @@
     "got": "account",
     "confidence": 0.9763,
     "margin": 0.9664,
+    "support_percentile": 97.8,
     "clears_gate": true,
     "ok": true
    },
@@ -533,6 +537,7 @@
     "got": "account",
     "confidence": 0.9567,
     "margin": 0.9379,
+    "support_percentile": 96.6,
     "clears_gate": true,
     "ok": true
    },
@@ -543,6 +548,7 @@
     "got": "account",
     "confidence": 0.9782,
     "margin": 0.9719,
+    "support_percentile": 89.0,
     "clears_gate": true,
     "ok": true
    },
@@ -553,6 +559,7 @@
     "got": "shipping",
     "confidence": 0.9634,
     "margin": 0.948,
+    "support_percentile": 1.0,
     "clears_gate": true,
     "ok": true
    },
@@ -563,6 +570,7 @@
     "got": "delivery",
     "confidence": 0.8451,
     "margin": 0.7808,
+    "support_percentile": 77.6,
     "clears_gate": false,
     "ok": true
    },
@@ -573,6 +581,7 @@
     "got": "order",
     "confidence": 0.8519,
     "margin": 0.8166,
+    "support_percentile": 83.5,
     "clears_gate": false,
     "ok": true
    },
@@ -583,6 +592,7 @@
     "got": "subscription",
     "confidence": 0.8085,
     "margin": 0.7151,
+    "support_percentile": 70.0,
     "clears_gate": false,
     "ok": true
    }
@@ -595,6 +605,7 @@
     "got": "change_shipping_address",
     "confidence": 0.8722,
     "margin": 0.8231,
+    "support_percentile": 59.7,
     "clears_gate": false,
     "ok": true
    },
@@ -605,6 +616,7 @@
     "got": "change_shipping_address",
     "confidence": 0.6038,
     "margin": 0.4609,
+    "support_percentile": 98.4,
     "clears_gate": false,
     "ok": false
    },
@@ -615,6 +627,7 @@
     "got": "recover_password",
     "confidence": 0.4942,
     "margin": 0.3802,
+    "support_percentile": 99.7,
     "clears_gate": false,
     "ok": true
    },
@@ -625,6 +638,7 @@
     "got": "change_shipping_address",
     "confidence": 0.9351,
     "margin": 0.8848,
+    "support_percentile": 16.9,
     "clears_gate": true,
     "ok": true
    },
@@ -635,6 +649,7 @@
     "got": "cancel_order",
     "confidence": 0.9694,
     "margin": 0.9626,
+    "support_percentile": 67.1,
     "clears_gate": true,
     "ok": true
    },
@@ -645,6 +660,7 @@
     "got": "delivery_options",
     "confidence": 0.3506,
     "margin": 0.0247,
+    "support_percentile": 97.6,
     "clears_gate": false,
     "ok": false
    },
@@ -655,6 +671,7 @@
     "got": "newsletter_subscription",
     "confidence": 0.6136,
     "margin": 0.442,
+    "support_percentile": 91.8,
     "clears_gate": false,
     "ok": true
    }
@@ -667,6 +684,7 @@
     "got": "transaction_charged_twice",
     "confidence": 0.999,
     "margin": 0.9988,
+    "support_percentile": 22.0,
     "clears_gate": true,
     "ok": true
    },
@@ -677,6 +695,7 @@
     "got": "card_not_working",
     "confidence": 0.9505,
     "margin": 0.9238,
+    "support_percentile": 15.3,
     "clears_gate": true,
     "ok": true
    },
@@ -687,6 +706,7 @@
     "got": "balance_not_updated_after_bank_transfer",
     "confidence": 0.2817,
     "margin": 0.0067,
+    "support_percentile": 45.7,
     "clears_gate": false,
     "ok": true
    },
@@ -697,6 +717,7 @@
     "got": "lost_or_stolen_card",
     "confidence": 0.9222,
     "margin": 0.8996,
+    "support_percentile": 54.1,
     "clears_gate": true,
     "ok": true
    }
@@ -709,6 +730,7 @@
     "got": "metformin",
     "confidence": 0.7305,
     "margin": 0.7156,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -719,6 +741,7 @@
     "got": "lisinopril",
     "confidence": 0.8137,
     "margin": 0.7995,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -729,6 +752,7 @@
     "got": "atorvastatin",
     "confidence": 0.5917,
     "margin": 0.5198,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -739,6 +763,7 @@
     "got": "amoxicillin",
     "confidence": 0.7743,
     "margin": 0.7588,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -749,6 +774,7 @@
     "got": "albuterol",
     "confidence": 0.9178,
     "margin": 0.9112,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -759,6 +785,7 @@
     "got": "metformin",
     "confidence": 0.1996,
     "margin": 0.1347,
+    "support_percentile": null,
     "clears_gate": false,
     "ok": true
    },
@@ -769,6 +796,7 @@
     "got": "lisinopril",
     "confidence": 0.7738,
     "margin": 0.7583,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -779,6 +807,7 @@
     "got": "atorvastatin",
     "confidence": 0.6523,
     "margin": 0.5921,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -789,6 +818,7 @@
     "got": "omeprazole",
     "confidence": 0.5153,
     "margin": 0.465,
+    "support_percentile": null,
     "clears_gate": false,
     "ok": true
    },
@@ -799,6 +829,7 @@
     "got": "gabapentin",
     "confidence": 0.6425,
     "margin": 0.5996,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -809,6 +840,7 @@
     "got": "atorvastatin",
     "confidence": 0.2483,
     "margin": 0.1939,
+    "support_percentile": null,
     "clears_gate": false,
     "ok": true
    },
@@ -819,6 +851,7 @@
     "got": "sertraline",
     "confidence": 0.5631,
     "margin": 0.5134,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -829,6 +862,7 @@
     "got": "levothyroxine",
     "confidence": 0.5385,
     "margin": 0.4844,
+    "support_percentile": null,
     "clears_gate": false,
     "ok": true
    },
@@ -839,6 +873,7 @@
     "got": "omeprazole",
     "confidence": 0.6179,
     "margin": 0.5398,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -849,6 +884,7 @@
     "got": "metformin",
     "confidence": 0.652,
     "margin": 0.6351,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -859,6 +895,7 @@
     "got": "metformin",
     "confidence": 0.347,
     "margin": 0.2493,
+    "support_percentile": null,
     "clears_gate": false,
     "ok": true
    },
@@ -869,6 +906,7 @@
     "got": "losartan",
     "confidence": 0.4587,
     "margin": 0.4239,
+    "support_percentile": null,
     "clears_gate": false,
     "ok": true
    },
@@ -879,6 +917,7 @@
     "got": "amlodipine",
     "confidence": 0.4341,
     "margin": 0.3891,
+    "support_percentile": null,
     "clears_gate": false,
     "ok": true
    },
@@ -889,6 +928,7 @@
     "got": "sertraline",
     "confidence": 0.674,
     "margin": 0.6385,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -899,6 +939,7 @@
     "got": "escitalopram",
     "confidence": 0.6287,
     "margin": 0.6048,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -909,6 +950,7 @@
     "got": "metformin",
     "confidence": 0.4427,
     "margin": 0.3958,
+    "support_percentile": null,
     "clears_gate": false,
     "ok": true
    },
@@ -919,6 +961,7 @@
     "got": "lisinopril",
     "confidence": 0.6329,
     "margin": 0.6158,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -929,6 +972,7 @@
     "got": "atorvastatin",
     "confidence": 0.5756,
     "margin": 0.5193,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -939,6 +983,7 @@
     "got": "amoxicillin",
     "confidence": 0.6362,
     "margin": 0.6078,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -949,6 +994,7 @@
     "got": "prednisone",
     "confidence": 0.8497,
     "margin": 0.842,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -959,6 +1005,7 @@
     "got": "atorvastatin",
     "confidence": 0.2483,
     "margin": 0.1939,
+    "support_percentile": null,
     "clears_gate": false,
     "ok": true
    },
@@ -969,6 +1016,7 @@
     "got": "sertraline",
     "confidence": 0.5631,
     "margin": 0.5134,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -979,6 +1027,7 @@
     "got": "lisinopril",
     "confidence": 0.7738,
     "margin": 0.7583,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -989,6 +1038,7 @@
     "got": "omeprazole",
     "confidence": 0.5153,
     "margin": 0.465,
+    "support_percentile": null,
     "clears_gate": false,
     "ok": true
    },
@@ -999,6 +1049,7 @@
     "got": "gabapentin",
     "confidence": 0.6425,
     "margin": 0.5996,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -1009,6 +1060,7 @@
     "got": "levothyroxine",
     "confidence": 0.5385,
     "margin": 0.4844,
+    "support_percentile": null,
     "clears_gate": false,
     "ok": true
    },
@@ -1019,6 +1071,7 @@
     "got": "metformin",
     "confidence": 0.652,
     "margin": 0.6351,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -1029,6 +1082,7 @@
     "got": "omeprazole",
     "confidence": 0.6179,
     "margin": 0.5398,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -1039,6 +1093,7 @@
     "got": "metformin",
     "confidence": 0.347,
     "margin": 0.2493,
+    "support_percentile": null,
     "clears_gate": false,
     "ok": true
    },
@@ -1049,6 +1104,7 @@
     "got": "losartan",
     "confidence": 0.4587,
     "margin": 0.4239,
+    "support_percentile": null,
     "clears_gate": false,
     "ok": true
    },
@@ -1059,6 +1115,7 @@
     "got": "prednisone",
     "confidence": 0.8497,
     "margin": 0.842,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -1069,6 +1126,7 @@
     "got": "atorvastatin",
     "confidence": 0.7788,
     "margin": 0.7591,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -1079,6 +1137,7 @@
     "got": "amoxicillin",
     "confidence": 0.5317,
     "margin": 0.4895,
+    "support_percentile": null,
     "clears_gate": false,
     "ok": true
    },
@@ -1089,6 +1148,7 @@
     "got": "sertraline",
     "confidence": 0.6766,
     "margin": 0.6436,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -1099,6 +1159,7 @@
     "got": "albuterol",
     "confidence": 0.8051,
     "margin": 0.7848,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -1109,6 +1170,7 @@
     "got": "ibuprofen",
     "confidence": 0.5811,
     "margin": 0.5311,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -1119,6 +1181,7 @@
     "got": "fluoxetine",
     "confidence": 0.4529,
     "margin": 0.4084,
+    "support_percentile": null,
     "clears_gate": false,
     "ok": true
    },
@@ -1129,6 +1192,7 @@
     "got": "levothyroxine",
     "confidence": 0.6252,
     "margin": 0.5924,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    }
@@ -1141,6 +1205,7 @@
     "got": "tablet",
     "confidence": 0.6824,
     "margin": 0.5848,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -1151,6 +1216,7 @@
     "got": "tablet",
     "confidence": 0.8233,
     "margin": 0.7894,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -1161,6 +1227,7 @@
     "got": "tablet",
     "confidence": 0.3094,
     "margin": 0.1185,
+    "support_percentile": null,
     "clears_gate": false,
     "ok": true
    },
@@ -1171,6 +1238,7 @@
     "got": "liquid",
     "confidence": 0.8779,
     "margin": 0.8518,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -1181,6 +1249,7 @@
     "got": "inhaler",
     "confidence": 0.9695,
     "margin": 0.9637,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -1191,6 +1260,7 @@
     "got": "tablet",
     "confidence": 0.7507,
     "margin": 0.7007,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -1201,6 +1271,7 @@
     "got": "tablet",
     "confidence": 0.6636,
     "margin": 0.5899,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -1211,6 +1282,7 @@
     "got": "tablet",
     "confidence": 0.2696,
     "margin": 0.0042,
+    "support_percentile": null,
     "clears_gate": false,
     "ok": true
    },
@@ -1221,6 +1293,7 @@
     "got": "capsule",
     "confidence": 0.7859,
     "margin": 0.6862,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -1231,6 +1304,7 @@
     "got": "capsule",
     "confidence": 0.3184,
     "margin": 0.1321,
+    "support_percentile": null,
     "clears_gate": false,
     "ok": true
    },
@@ -1241,6 +1315,7 @@
     "got": "tablet",
     "confidence": 0.748,
     "margin": 0.6623,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -1251,6 +1326,7 @@
     "got": "tablet",
     "confidence": 0.7106,
     "margin": 0.6405,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -1261,6 +1337,7 @@
     "got": "tablet",
     "confidence": 0.6038,
     "margin": 0.5023,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -1271,6 +1348,7 @@
     "got": "capsule",
     "confidence": 0.6568,
     "margin": 0.5363,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -1281,6 +1359,7 @@
     "got": "tablet",
     "confidence": 0.5846,
     "margin": 0.4696,
+    "support_percentile": null,
     "clears_gate": false,
     "ok": true
    },
@@ -1291,6 +1370,7 @@
     "got": "tablet",
     "confidence": 0.3131,
     "margin": 0.0547,
+    "support_percentile": null,
     "clears_gate": false,
     "ok": true
    },
@@ -1301,6 +1381,7 @@
     "got": "tablet",
     "confidence": 0.7759,
     "margin": 0.7155,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -1311,6 +1392,7 @@
     "got": "tablet",
     "confidence": 0.249,
     "margin": 0.0442,
+    "support_percentile": null,
     "clears_gate": false,
     "ok": true
    },
@@ -1321,6 +1403,7 @@
     "got": "tablet",
     "confidence": 0.226,
     "margin": 0.0719,
+    "support_percentile": null,
     "clears_gate": false,
     "ok": true
    },
@@ -1331,6 +1414,7 @@
     "got": "tablet",
     "confidence": 0.9137,
     "margin": 0.8889,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -1341,6 +1425,7 @@
     "got": "tablet",
     "confidence": 0.4322,
     "margin": 0.285,
+    "support_percentile": null,
     "clears_gate": false,
     "ok": true
    },
@@ -1351,6 +1436,7 @@
     "got": "tablet",
     "confidence": 0.49,
     "margin": 0.3897,
+    "support_percentile": null,
     "clears_gate": false,
     "ok": true
    },
@@ -1361,6 +1447,7 @@
     "got": "tablet",
     "confidence": 0.483,
     "margin": 0.3417,
+    "support_percentile": null,
     "clears_gate": false,
     "ok": true
    },
@@ -1371,6 +1458,7 @@
     "got": "capsule",
     "confidence": 0.5689,
     "margin": 0.4215,
+    "support_percentile": null,
     "clears_gate": false,
     "ok": true
    },
@@ -1381,6 +1469,7 @@
     "got": "tablet",
     "confidence": 0.5625,
     "margin": 0.4726,
+    "support_percentile": null,
     "clears_gate": false,
     "ok": true
    },
@@ -1391,6 +1480,7 @@
     "got": "tablet",
     "confidence": 0.748,
     "margin": 0.6623,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -1401,6 +1491,7 @@
     "got": "capsule",
     "confidence": 0.7859,
     "margin": 0.6862,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -1411,6 +1502,7 @@
     "got": "capsule",
     "confidence": 0.3184,
     "margin": 0.1321,
+    "support_percentile": null,
     "clears_gate": false,
     "ok": true
    },
@@ -1421,6 +1513,7 @@
     "got": "liquid",
     "confidence": 0.8779,
     "margin": 0.8518,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -1431,6 +1524,7 @@
     "got": "inhaler",
     "confidence": 0.9695,
     "margin": 0.9637,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -1441,6 +1535,7 @@
     "got": "tablet",
     "confidence": 0.3131,
     "margin": 0.0547,
+    "support_percentile": null,
     "clears_gate": false,
     "ok": true
    },
@@ -1451,6 +1546,7 @@
     "got": "tablet",
     "confidence": 0.7759,
     "margin": 0.7155,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -1461,6 +1557,7 @@
     "got": "tablet",
     "confidence": 0.6147,
     "margin": 0.5114,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -1471,6 +1568,7 @@
     "got": "capsule",
     "confidence": 0.5263,
     "margin": 0.3706,
+    "support_percentile": null,
     "clears_gate": false,
     "ok": true
    },
@@ -1481,6 +1579,7 @@
     "got": "tablet",
     "confidence": 0.2755,
     "margin": 0.1355,
+    "support_percentile": null,
     "clears_gate": false,
     "ok": true
    },
@@ -1491,6 +1590,7 @@
     "got": "inhaler",
     "confidence": 0.8535,
     "margin": 0.8197,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -1501,6 +1601,7 @@
     "got": "cream",
     "confidence": 0.7796,
     "margin": 0.7405,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -1511,6 +1612,7 @@
     "got": "drops",
     "confidence": 0.8391,
     "margin": 0.7976,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    },
@@ -1521,6 +1623,7 @@
     "got": "injection",
     "confidence": 0.7526,
     "margin": 0.6662,
+    "support_percentile": null,
     "clears_gate": true,
     "ok": true
    }

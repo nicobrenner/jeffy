@@ -83,6 +83,7 @@ class Engine:
         self._capabilities: dict[str, Capability] = {}
         self._classifiers: dict[str, object] = {}
         self._scalers: dict[str, object] = {}
+        self._support: dict[str, dict] = {}        # support radius per head (see support.py), optional
         self._encoder_load_time: float = 0.0
 
     def load(self):
@@ -128,6 +129,13 @@ class Engine:
 
             self._classifiers[ds_name] = clf
             self._scalers[ds_name] = scaler
+            try:
+                from .support import load_support
+                sp = load_support(artifact_dir)
+                if sp is not None:
+                    self._support[ds_name] = sp
+            except Exception:
+                pass
 
             cap = Capability(
                 task_id=ds_name,
@@ -158,8 +166,19 @@ class Engine:
         if not self._capabilities:
             logger.warning(f"No capabilities loaded from '{self.pack_dir}'")
 
-    def register_trained(self, task_id: str, clf, scaler, manifest):
+    def unregister(self, task_id: str) -> bool:
+        """Drop a hot-loaded head (session-scoped teach heads expire). Returns whether it existed."""
+        found = task_id in self._capabilities
+        for d in (self._classifiers, self._scalers, self._capabilities, self._support):
+            d.pop(task_id, None)
+        return found
+
+    def register_trained(self, task_id: str, clf, scaler, manifest, support: dict | None = None):
         """Hot-load a freshly trained classifier into the running engine."""
+        if support is not None:
+            self._support[task_id] = support
+        else:
+            self._support.pop(task_id, None)
         from .catalog import KNOWN_ENCODERS
         if manifest.encoder not in KNOWN_ENCODERS:
             KNOWN_ENCODERS[manifest.encoder] = manifest.encoder_dim
@@ -209,6 +228,16 @@ class Engine:
             kwargs["backend"] = "onnx"
         return SentenceTransformer(encoder_name, **kwargs)
 
+    def _support_fields(self, task_id: str, X: np.ndarray) -> dict:
+        sp = self._support.get(task_id)
+        if sp is None or X.shape[-1] != sp["centroids"].shape[-1]:
+            return {}
+        try:
+            from .support import support_of
+            return support_of(sp, X[0])
+        except Exception:
+            return {}
+
     def _classify(self, task_id: str, X: np.ndarray, t0: float, t_embed: float,
                   threshold: float | None = None) -> dict:
         """Shared classification logic for both text and feature inputs."""
@@ -253,6 +282,7 @@ class Engine:
             "out_of_scope": is_oos,
             "entropy": round(normalized_entropy, 4),
             "margin": round(margin, 4),
+            **(self._support_fields(task_id, X)),
             "probabilities": prob_dict,
             "latency_ms": round(total_ms, 2),
             "embedding_ms": round(t_embed * 1000, 2),

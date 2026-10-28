@@ -181,6 +181,16 @@ curl -s -X POST http://localhost:8400/v1/predict \
 # → {"label": "Business", "confidence": 0.86, ...}
 ```
 
+### What is running
+
+```bash
+curl -s http://localhost:8400/v1/version
+# → {"version": "0.1.0a21", "package": "jeffy-classify", "heads": 72, "default_encoder": "BAAI/bge-large-en-v1.5", "git_sha": null, ...}
+```
+
+Answers without loading the encoder, so it is the first thing to check when a deployed playground and the published
+package disagree. It never reports anything about the host.
+
 ### List capabilities
 
 ```bash
@@ -247,32 +257,31 @@ flags["legal_threat"].predict("I am contacting my solicitor")  # {"label": "yes"
 
 Over HTTP, pass `mode: "binary-flags"` with `texts` and `flags` to `POST /v1/train`.
 
-| Parameter | Default | Description |
-|-----------|---------|-------------|
-| `class_weight` | `"balanced"` | `"balanced"` reweights the rare positive class, which maximizes recall and is usually right for triage. Pass `None` for the unweighted fit: it raises far fewer flags at noticeably higher precision. On real data a balanced head raised roughly a third more flags than the reference labels did, so if a false positive is expensive, start with `None`. |
-| `tune_C` | `False` | Grid-search `C` per flag, scored by positive-class F1 on 2 or 3 stratified folds (fold count is clamped to the rarer class so no fold ends up with zero positives). |
-| `tune_threshold` | `False` | Also pick a per-flag decision threshold on a held-out dev slice, jointly with `C`. The chosen threshold is folded into the model's intercept, so it survives `save()` and needs no special handling at predict time. |
-| `min_threshold_positives` | 8 | Skip threshold tuning for any flag whose dev slice has fewer positives than this. Below roughly 8 the threshold fits noise. Since the dev slice is a quarter of the training data, this needs about 32 positives for that flag. |
+Measured on a small private multilingual support-email set with unverified provenance (not in this repo, not publishable;
+`scripts/care_intake_sweep.py` takes the data path as an argument): one balanced binary head per flag against one multi-class
+head on the flag-set label. Binary-per-flag won or tied on 10 of 13 flags and was the only shape that fired at all on the
+sparse flags (fewer than ten training positives); a flag with two training positives was unlearnable either way, which is a
+labeling problem, not a head choice. Absolute scores from that set are not reported.
 
-Tuning is scored by **positive-class** F1, not macro F1. For a rare flag the "no" class scores near 1.0, so macro F1 is dominated by the easy class and can select a different `C` than the flag's own performance justifies.
+### Encoder choice and per-head C
 
-### Corrections on your own embeddings
-
-If you run your own encoder and want Jeffy only for the heads, `/v1/predict` and `/v1/feedback` both take a `features` vector in place of `text`:
-
-```bash
-curl -X POST localhost:8400/v1/feedback \
-  -H "Content-Type: application/json" \
-  -d '{"task_id": "intake", "features": [0.12, -0.44, ...], "correct_label": "escalate"}'
-```
-
-Corrections accumulate and trigger a retrain at `JEFFY_RETRAIN_THRESHOLD`, using your vectors directly with no encoder in the loop. A given `task_id` has to stay all-text or all-features, since a retrain consumes every stored entry at once; mixing the two returns 409.
+On the same private set, the three multilingual encoders in reach (the default multilingual MiniLM, multilingual-e5-small,
+LaBSE) and a per-head C grid (0.01, 0.1, 1 by 3-fold macro-F1): the C grid lifted two heads by one to five points at the
+cost of three extra fits per head, so `tune_C=True` is worth turning on for small sets; LaBSE gained about one point over
+the default at three times the encode time and four times the download. Keep the default multilingual encoder. The Arabic
+slice was too small to rank encoders on it. Absolute scores are not reported, for the provenance reason above.
 
 ## Server configuration
 
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `JEFFY_ENABLE_TRAINING` | unset (off) | Enables the `/v1/train` and `/v1/feedback` endpoints. They are **off by default** because they mutate server state and write files to disk. Leave disabled on any public or shared instance; both return 404 when off. |
+| `JEFFY_PLAYGROUND_TEACH` | follows `JEFFY_ENABLE_TRAINING` | Shows the playground's "Not your labels? Teach it three of your own." box under every prediction: four rows pre-filled with the text just classified, submit calls `POST /v1/train`, the new head appears as `my_<id>` and the next prediction runs on it. Off whenever training is off, so a public deployment never shows it; set `on`/`off` to override. Path events `teach_open`, `teach_submit`, `teach_predict` land in the analytics file. |
+| `JEFFY_TRAIN_MAX_ROWS` | 200 | `/v1/train` rejects more examples than this (HTTP 413). |
+| `JEFFY_TRAIN_MAX_BYTES` | 65536 | `/v1/train` rejects more bytes of training text than this (HTTP 413). |
+| `JEFFY_TRAIN_PER_IP_HOUR` | 20 | `/v1/train` calls allowed per client address per hour, in memory (HTTP 429). |
+| `JEFFY_TRUST_PROXY` (alias `JEFFY_TRUST_PROXY_HEADERS`) | unset (off) | Believe `cf-connecting-ip` / `x-forwarded-for` for the per-client training cap. Turn on only behind a proxy that overwrites those headers (Cloudflare does); on a self-hosted install they are client-supplied and would bypass the cap. |
+| `JEFFY_TEACH_TTL_MIN` | 60 | Heads taught in the playground (task ids `my_…`, tied to the visitor's session via the `X-Jeffy-Session` header) are unloaded and their files deleted after this many minutes. They never appear in the shared catalog and cannot be predicted on by another session. Training is one run at a time per process (HTTP 503 while another runs). **`/v1/train` stores the labelled text you send on disk** under `JEFFY_TRAINED_DIR` until the TTL sweeps it (session heads) or until you delete it (other heads). |
 | `JEFFY_TRAINED_DIR` | `~/.jeffy/trained` | Where classifiers trained via `/v1/train` are written. Never the installed package directory. |
 | `JEFFY_FEEDBACK_DIR` | `~/.jeffy-feedback` | Where `/v1/feedback` corrections are stored as JSONL. |
 | `JEFFY_RETRAIN_THRESHOLD` | 50 | How many feedback corrections trigger an automatic retrain. |
@@ -310,6 +319,44 @@ jeffy-build --out data/model_pack
 # Evaluate on held-out test sets with tuned baselines
 jeffy-evaluate --baselines --latency --device cpu
 ```
+
+## Confidence and abstaining
+
+Every prediction returns `confidence` (top probability), `margin` (top-1 minus top-2) and `entropy`. The default routing
+cutoff is **0.9 confidence**: act on the label when `confidence >= 0.9`, otherwise send the text to a review tier. The
+number comes from `scripts/calibration_probe.py`, which scores each head's held-out texts and reports, per threshold, the
+share of texts the head would answer on its own (coverage) and the error rate among those answers (misroute, the number a
+router pays for). Measured on the shipped heads (CPU, `data/eval_results/calibration_probe.json`):
+
+| head | held-out n | coverage at 0.9 | misroute at 0.9 | at 0.95 | at 0.99 |
+|---|---|---|---|---|---|
+| support_ticket (11 categories) | 1,350 | 77% | 0.0% | 50% / 0.0% | 4% / 0.0% |
+| support_ticket_v2 (27 intents) | 1,350 | 79% | 0.0% | 57% / 0.0% | 4% / 0.0% |
+| banking77 (77 intents) | 2,000 | 72% | 0.6% | 56% / 0.4% | 20% / 0.3% |
+
+Every prediction on a head that ships `support.npz` also returns `support_percentile`: how far the input sits from that
+head's training data, as the share of training texts that were closer (100 = farther than every training example). It is
+computed from the head's class centroids in the encoder space and the training distribution of nearest-centroid distance,
+a few hundred KB per head, CPU-only, no extra model. Real typed inputs on the public playground sit far from the training
+data about half the time (about 2% of held-out training text does), which is where confident wrong answers come from, so
+read a high percentile as "the head has not seen text like this", whatever the confidence says. Heads trained with
+`jeffy-train` or `/v1/train` get the file automatically; `scripts/build_support.py` writes it for shipped heads.
+The three signals compose into one routing rule: confidence below 0.9 → review; margin below 0.5 → the text straddles two
+labels, your policy decides; `support_percentile` at 95 or above → the head has not seen text like this, review even at
+high confidence. On the probe sets the far tail holds the two low-confidence support_ticket_v2 failures and two of the three
+issue-11 phrasings; the 0.97 straddle itself is phrased like the training data and only the margin exposes it.
+
+Two caveats the table cannot show. A held-out split from a templated dataset says nothing about phrasings the taxonomy does
+not contain: issue #11's "change the address on my account" is a 0.97 `shipping` on `support_ticket` because the intent
+genuinely lives in two classes of that taxonomy. So each head also carries a regression probe set in `data/probes/<task>.jsonl`:
+phrasings with an expected label, or an expected abstain for texts that straddle classes (a straddling text must not come back
+as a single confident answer). Run them with `JEFFY_RUN_PROBES=1 python -m pytest tests/test_probes.py`. And heads trained on
+very little data are correct but under-confident: `medication_name` and `dosage_form` score 25/25 on their demo cases yet only
+4% and 8% of those clear 0.9 confidence, while margin ≥ 0.5 covers 68% and 52% with no misroutes. For those two heads the
+documented default gate is **`margin >= 0.5`** instead of confidence (their probe sets carry that gate), and the same
+rule applies to any head trained on a few dozen examples: lower the cutoff only after measuring misroute at that level.
+This matters because the medical heads have real outside use: at the 0.9 confidence default those people would see an
+abstain on roughly nine inputs in ten; at the margin gate about half are answered, with no misroute seen on the demo cases.
 
 ## Evaluation notes
 

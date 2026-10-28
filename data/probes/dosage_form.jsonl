@@ -1,0 +1,40 @@
+{"_gate": "margin", "_min": 0.5, "_why": "same as medication_name; margin 0.5 covered 52% with no misroutes"}
+{"text": "Metformin HCl 500mg Tablets", "expect": "tablet", "why": "medication_classifier_demo.json test case"}
+{"text": "Lisinopril 10mg Tablet", "expect": "tablet", "why": "medication_classifier_demo.json test case"}
+{"text": "Atorvastatin Calcium 20mg", "expect": "tablet", "why": "medication_classifier_demo.json test case"}
+{"text": "Amoxicillin 250mg/5mL Oral Suspension", "expect": "liquid", "why": "medication_classifier_demo.json test case"}
+{"text": "Albuterol Sulfate HFA 90mcg Inhalation Aerosol", "expect": "inhaler", "why": "medication_classifier_demo.json test case"}
+{"text": "Metforrnin HCI 500mg Tab", "expect": "tablet", "why": "medication_classifier_demo.json test case"}
+{"text": "Lisinopnl 10 mg Tablets", "expect": "tablet", "why": "medication_classifier_demo.json test case"}
+{"text": "Atorvastatin Ca 20 mg", "expect": "tablet", "why": "medication_classifier_demo.json test case"}
+{"text": "Omepraz0le 20mg Capsule", "expect": "capsule", "why": "medication_classifier_demo.json test case"}
+{"text": "Gabapenti n 300mg Cap", "expect": "capsule", "why": "medication_classifier_demo.json test case"}
+{"text": "Lipitor 20mg Film-Coated Tablets", "expect": "tablet", "why": "medication_classifier_demo.json test case"}
+{"text": "Zoloft 50mg Tablets", "expect": "tablet", "why": "medication_classifier_demo.json test case"}
+{"text": "Synthroid 100mcg Tablets", "expect": "tablet", "why": "medication_classifier_demo.json test case"}
+{"text": "Prilosec 20mg Delayed-Release Capsules", "expect": "capsule", "why": "medication_classifier_demo.json test case"}
+{"text": "Glucophage 500mg Tablets", "expect": "tablet", "why": "medication_classifier_demo.json test case"}
+{"text": "Metform 500mg", "expect": "tablet", "why": "medication_classifier_demo.json test case"}
+{"text": "Losart 50mg Tab", "expect": "tablet", "why": "medication_classifier_demo.json test case"}
+{"text": "Amlodip 5mg", "expect": "tablet", "why": "medication_classifier_demo.json test case"}
+{"text": "Sertralin 100mg", "expect": "tablet", "why": "medication_classifier_demo.json test case"}
+{"text": "Escitalop 10mg Tab", "expect": "tablet", "why": "medication_classifier_demo.json test case"}
+{"text": "NDC 0093-7180-01 Metformin Hydrochloride Tablets USP 500mg Rx Only 100 Tablets", "expect": "tablet", "why": "medication_classifier_demo.json test case"}
+{"text": "Rx Only Lisinopril Tablets USP 20mg 90 Tablets Lot 2847591", "expect": "tablet", "why": "medication_classifier_demo.json test case"}
+{"text": "ATORVASTATIN CALCIUM TABLETS 40MG", "expect": "tablet", "why": "medication_classifier_demo.json test case"}
+{"text": "AMOXICILLIN CAPSULES USP 500MG", "expect": "capsule", "why": "medication_classifier_demo.json test case"}
+{"text": "PREDNISONE TABLETS USP 10MG", "expect": "tablet", "why": "medication_classifier_demo.json test case"}
+{"text": "Lipitor 20mg Film-Coated Tablets", "expect": "tablet", "why": "demo shape; 'Metform 500mg' names no form, so a confident single answer is a guess"}
+{"text": "Omepraz0le 20mg Capsule", "expect": "capsule", "why": "demo shape; 'Metform 500mg' names no form, so a confident single answer is a guess"}
+{"text": "Gabapenti n 300mg Cap", "expect": "capsule", "why": "demo shape; 'Metform 500mg' names no form, so a confident single answer is a guess"}
+{"text": "Amoxicillin 250mg/5mL Oral Suspension", "expect": "liquid", "why": "demo shape; 'Metform 500mg' names no form, so a confident single answer is a guess"}
+{"text": "Albuterol Sulfate HFA 90mcg Inhalation Aerosol", "expect": "inhaler", "why": "demo shape; 'Metform 500mg' names no form, so a confident single answer is a guess"}
+{"text": "Metform 500mg", "expect": "abstain", "why": "demo shape; 'Metform 500mg' names no form, so a confident single answer is a guess"}
+{"text": "Losart 50mg Tab", "expect": "tablet", "why": "demo shape; 'Metform 500mg' names no form, so a confident single answer is a guess"}
+{"text": "LIPITOR (atorvastatin calcium) 10 mg tablets", "expect": "tablet", "why": "brand, plural form"}
+{"text": "Amoxicilin 500 mg caps", "expect": "capsule", "why": "abbreviation caps"}
+{"text": "sertraline HCl 100mg", "expect": "abstain", "why": "no form named: a confident single answer is a guess"}
+{"text": "Ventolin HFA inhaler", "expect": "inhaler", "why": "device named"}
+{"text": "hydrocortisone 1% cream 30g", "expect": "cream", "why": "topical with percent strength"}
+{"text": "eye drops 0.5%", "expect": "drops", "why": "form only"}
+{"text": "insulin glargine 100 units/mL injection", "expect": "injection", "why": "units per mL"}

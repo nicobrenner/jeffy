@@ -4,7 +4,7 @@ python3 -m http.server sends no such headers -> ort runs single-threaded (the pa
 """
 import sys, http.server, functools
 import json, os, time, threading
-LAB = os.path.join("pile_runs", "lab")
+LAB = os.environ.get("ARENA_LAB") or os.path.join("pile_runs", "lab")   # tests point this at a scratch folder
 _enc = None; _elock = threading.Lock()
 def _warm():   # load the encoder in the background at start, so the Crawler's first visit is scored by meaning
     global _enc
@@ -25,6 +25,11 @@ class H(http.server.SimpleHTTPRequestHandler):
         if self.path.startswith("/lab/recover"):   # one-off recovery bundle written by the manager (pile_runs/lab is local only)
             f = os.path.join(LAB, "recover.json"); body = open(f, "rb").read() if os.path.exists(f) else b"null"
             self.send_response(200); self.send_header("Content-Type", "application/json"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/lab/world"):   # the arena's disk copy: latest autosave + every snapshot ever synced (used when the browser's storage is empty)
+            out = {}
+            for k in ("arena_autosave", "arena_snapshots"):
+                f = os.path.join(LAB, f"sync_{k}.json"); out[k] = json.load(open(f)) if os.path.exists(f) else None
+            body = json.dumps(out).encode(); self.send_response(200); self.send_header("Content-Type", "application/json"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body); return
         if self.path.startswith("/lab/replies"):
             os.makedirs(LAB, exist_ok=True); f = os.path.join(LAB, "replies.jsonl"); rows = [l for l in open(f)] if os.path.exists(f) else []
             body = ("[" + ",".join(l.strip() for l in rows if l.strip()) + "]").encode(); self.send_response(200); self.send_header("Content-Type", "application/json"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body); return
@@ -154,7 +159,18 @@ class H(http.server.SimpleHTTPRequestHandler):
             body = json.dumps(res).encode(); self.send_response(200); self.send_header("Content-Type", "application/json"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body); return
         if self.path.startswith("/lab/sync"):   # the page pushes its browser-local data here so nothing depends on pressing export
             n = int(self.headers.get("Content-Length", 0)); data = json.loads(self.rfile.read(n) or b"{}"); os.makedirs(LAB, exist_ok=True)
-            for k in ("engagement", "chat_scores", "corrections", "visits", "arena_snapshots"):
+            if isinstance(data.get("arena_snapshots"), list):   # merge, never shrink: a fresh browser must not erase the snapshots on disk
+                f = os.path.join(LAB, "sync_arena_snapshots.json"); old = json.load(open(f)) if os.path.exists(f) else []
+                seen = {(x.get("t"), x.get("name")) for x in data["arena_snapshots"]}
+                data["arena_snapshots"] = sorted([x for x in old if (x.get("t"), x.get("name")) not in seen] + data["arena_snapshots"], key=lambda x: x.get("t") or 0)[-60:]
+            if isinstance(data.get("arena_autosave"), dict):   # rolling history: keep one autosave per 5 minutes, the last 96 (8 hours of play)
+                f = os.path.join(LAB, "sync_arena_autosave.json"); hist = os.path.join(LAB, "arena_autosaves"); os.makedirs(hist, exist_ok=True)
+                size = lambda x: len(x.get("words") or []) + len(x.get("residents") or []) + len(x.get("things") or [])
+                shrinks = os.path.exists(f) and size(data["arena_autosave"]) < 0.5 * size(json.load(open(f)))   # a much smaller world never replaces a bigger one without a copy
+                if os.path.exists(f) and (shrinks or time.time() - max([os.path.getmtime(os.path.join(hist, x)) for x in os.listdir(hist)] or [0]) > 300):
+                    os.replace(f, os.path.join(hist, time.strftime("%Y%m%d-%H%M%S") + ".json"))
+                    for x in sorted(os.listdir(hist))[:-96]: os.remove(os.path.join(hist, x))
+            for k in ("engagement", "chat_scores", "corrections", "visits", "arena_snapshots", "arena_autosave"):
                 if k in data:
                     tmp = os.path.join(LAB, f"sync_{k}.json.tmp"); json.dump(data[k], open(tmp, "w")); os.replace(tmp, os.path.join(LAB, f"sync_{k}.json"))
             body = b'{"ok":true}'; self.send_response(200); self.send_header("Content-Type", "application/json"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body); return

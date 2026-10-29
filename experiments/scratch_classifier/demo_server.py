@@ -5,6 +5,14 @@ python3 -m http.server sends no such headers -> ort runs single-threaded (the pa
 import sys, http.server, functools
 import json, os, time, threading
 LAB = os.path.join("pile_runs", "lab")
+_enc = None; _elock = threading.Lock()
+def _warm():   # load the encoder in the background at start, so the Crawler's first visit is scored by meaning
+    global _enc
+    try:
+        with _elock:
+            if _enc is None:
+                from sentence_transformers import SentenceTransformer; _enc = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2", device="cpu")
+    except Exception: pass
 WORLDS = os.path.join(LAB, "worlds.json"); _wlock = threading.Lock()   # connected arenas: registry, link requests, inboxes, lite views (local relay)
 def _wload():
     try: return json.load(open(WORLDS))
@@ -71,11 +79,28 @@ class H(http.server.SimpleHTTPRequestHandler):
                     if len(ui) >= 40: break
                 for ph in R.findall(r'(?is)<input[^>]+placeholder="([^"]{2,40})"', raw0)[:4]: ui.append({"tag": "input", "text": H.unescape(ph)})
                 import random as _r; _r.shuffle(ui); ui = ui[:14]
-                out = {"title": H.unescape(title.group(1).strip())[:120] if title else url, "text": text, "images": imgs, "ui": ui}
+                links, seen = [], set()   # the crawler creature's next steps: links with their visible text
+                for href, inner in R.findall(r'(?is)<a\b[^>]*?href="([^"#][^"]*)"[^>]*>(.*?)</a>', raw):
+                    u = urllib.parse.urljoin(url, H.unescape(href)).split("#")[0]; t = R.sub(r"\s+", " ", H.unescape(R.sub(r"<[^>]+>", " ", inner))).strip()
+                    if not u.startswith(("http://", "https://")) or u in seen or u == url or not (2 <= len(t) <= 80) or t.lower().startswith(("http", "www.")) or R.search(r"\.(pdf|zip|jpe?g|png|gif|svg|mp4|mp3)$|[?&]action=|Special:|Help:|Talk:|File:|Category:|Wikipedia:|Portal:|Template", u, R.I): continue
+                    seen.add(u); links.append({"href": u, "text": t})
+                    if len(links) >= 200: break
+                out = {"title": H.unescape(title.group(1).strip())[:120] if title else url, "text": text, "images": imgs, "ui": ui, "links": links, "url": url}
             except Exception as e: out = {"error": str(e)[:200]}
             body = json.dumps(out).encode(); self.send_response(200); self.send_header("Content-Type", "application/json"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body); return
         return super().do_GET()
     def do_POST(self):
+        if self.path.startswith("/lab/embed"):   # the Crawler's sense of 'close to the floor': all-MiniLM-L6-v2 sentence vectors on CPU, loaded on first use
+            n = int(self.headers.get("Content-Length", 0)); q = json.loads(self.rfile.read(n) or b"{}"); texts = [str(t)[:300] for t in (q.get("texts") or [])][:1200]
+            try:
+                global _enc
+                with _elock:
+                    if _enc is None:
+                        from sentence_transformers import SentenceTransformer; _enc = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2", device="cpu")
+                    v = _enc.encode(texts, batch_size=64, normalize_embeddings=True) if texts else []
+                out = {"vecs": [[round(float(x), 4) for x in row] for row in v]}
+            except Exception as e: out = {"error": str(e)[:200]}
+            body = json.dumps(out).encode(); self.send_response(200); self.send_header("Content-Type", "application/json"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body); return
         if self.path.startswith("/jeffy/"):   # data-lab: same-origin proxy to the local Jeffy server (the arena page cannot call another port under COEP)
             import urllib.request; n = int(self.headers.get("Content-Length", 0)); data = self.rfile.read(n)
             try: raw = urllib.request.urlopen(urllib.request.Request("http://127.0.0.1:8411/v1/" + self.path[len("/jeffy/"):], data=data, headers={"Content-Type": "application/json"}), timeout=10).read(); code = 200
@@ -126,4 +151,5 @@ class H(http.server.SimpleHTTPRequestHandler):
         self.send_header("Cross-Origin-Resource-Policy", "cross-origin"); self.send_header("Cache-Control", "no-cache"); super().end_headers()
     def log_message(self, *a): pass
 port = int(sys.argv[1]) if len(sys.argv) > 1 else 8766
+threading.Thread(target=_warm, daemon=True).start()
 http.server.ThreadingHTTPServer(("127.0.0.1", port), functools.partial(H, directory="demo")).serve_forever()

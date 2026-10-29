@@ -39,6 +39,16 @@ class H(http.server.SimpleHTTPRequestHandler):
         if self.path.startswith("/lab/notes"):
             os.makedirs(LAB, exist_ok=True); f = os.path.join(LAB, "notes.jsonl"); rows = [l for l in open(f)] if os.path.exists(f) else []
             body = ("[" + ",".join(l.strip() for l in rows if l.strip()) + "]").encode(); self.send_response(200); self.send_header("Content-Type", "application/json"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/lab/page"):   # traveling mode: the raw page HTML for the arena to sanitize and render (localhost only, on request; the browser keeps only an allowlist of tags)
+            import urllib.parse, urllib.request
+            url = (urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query).get("url") or [""])[0]; out = {}
+            try:
+                if not url.lower().startswith(("http://", "https://")): raise ValueError("not a web address")
+                r = urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (tiny-oracle arena)"}), timeout=10)
+                if "html" not in r.headers.get("Content-Type", "html"): raise ValueError("not a web page")
+                out = {"url": r.geturl(), "html": r.read(2_500_000).decode("utf-8", "replace")}
+            except Exception as e: out = {"error": str(e)[:200]}
+            body = json.dumps(out).encode(); self.send_response(200); self.send_header("Content-Type", "application/json"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body); return
         if self.path.startswith("/lab/fetch"):   # arena terrain: fetch a page the user typed, return its visible text (localhost only, on request)
             import urllib.parse, urllib.request, html as H, re as R
             q = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query); url = (q.get("url") or [""])[0]; out = {}

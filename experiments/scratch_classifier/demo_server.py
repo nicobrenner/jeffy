@@ -22,6 +22,9 @@ def _wsave(d):
 def _w(d, code): return d["worlds"].setdefault(code, {"name": code, "links": [], "requests": [], "inbox": [], "view": None, "seen": 0})   # local only (.gitignore): the researcher thread — notes from Nico, replies from the lab sessions
 class H(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
+        if self.path.startswith("/lab/recover"):   # one-off recovery bundle written by the manager (pile_runs/lab is local only)
+            f = os.path.join(LAB, "recover.json"); body = open(f, "rb").read() if os.path.exists(f) else b"null"
+            self.send_response(200); self.send_header("Content-Type", "application/json"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body); return
         if self.path.startswith("/lab/replies"):
             os.makedirs(LAB, exist_ok=True); f = os.path.join(LAB, "replies.jsonl"); rows = [l for l in open(f)] if os.path.exists(f) else []
             body = ("[" + ",".join(l.strip() for l in rows if l.strip()) + "]").encode(); self.send_response(200); self.send_header("Content-Type", "application/json"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body); return

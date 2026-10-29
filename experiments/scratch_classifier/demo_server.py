@@ -47,6 +47,21 @@ class H(http.server.SimpleHTTPRequestHandler):
         if self.path.startswith("/lab/notes"):
             os.makedirs(LAB, exist_ok=True); f = os.path.join(LAB, "notes.jsonl"); rows = [l for l in open(f)] if os.path.exists(f) else []
             body = ("[" + ",".join(l.strip() for l in rows if l.strip()) + "]").encode(); self.send_response(200); self.send_header("Content-Type", "application/json"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/lab/asset"):   # traveling mode: the page's stylesheets, fonts and images, same-origin; CSS url()/@import are rewritten to come back through here
+            import urllib.parse, urllib.request, re as R
+            u = (urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query).get("url") or [""])[0]
+            try:
+                if not u.lower().startswith(("http://", "https://")): raise ValueError("bad url")
+                r = urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0 (tiny-oracle arena)"}), timeout=10); ct = r.headers.get("Content-Type", "application/octet-stream"); data = r.read(6_000_000)
+                if not (ct.startswith(("text/css", "image/", "font/", "application/font", "application/x-font", "application/vnd.ms-fontobject")) or u.split("?")[0].lower().endswith((".css", ".woff", ".woff2", ".ttf", ".otf"))): raise ValueError("not a style, font or image")
+                if "css" in ct or u.split("?")[0].lower().endswith(".css"):
+                    css = data.decode("utf-8", "replace")
+                    fix = lambda m: 'url("' + ("/lab/asset?url=" + urllib.parse.quote(urllib.parse.urljoin(r.geturl(), m.group(2).strip()), safe="") if not m.group(2).strip().startswith("data:") else m.group(2).strip()) + '")'
+                    css = R.sub(r"""url\(\s*(['"]?)([^'")]+)\1\s*\)""", fix, css)
+                    css = R.sub(r"""@import\s+(['"])([^'"]+)\1""", lambda m: '@import url("/lab/asset?url=' + urllib.parse.quote(urllib.parse.urljoin(r.geturl(), m.group(2)), safe="") + '")', css)
+                    data = css.encode(); ct = "text/css; charset=utf-8"
+                self.send_response(200); self.send_header("Content-Type", ct); self.send_header("Content-Length", str(len(data))); self.send_header("Cache-Control", "max-age=3600"); self.end_headers(); self.wfile.write(data); return
+            except Exception as e: self.send_response(502); self.end_headers(); return
         if self.path.startswith("/lab/page"):   # traveling mode: the raw page HTML for the arena to sanitize and render (localhost only, on request; the browser keeps only an allowlist of tags)
             import urllib.parse, urllib.request
             url = (urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query).get("url") or [""])[0]; out = {}

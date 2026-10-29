@@ -17,6 +17,14 @@ class H(http.server.SimpleHTTPRequestHandler):
         if self.path.startswith("/lab/replies"):
             os.makedirs(LAB, exist_ok=True); f = os.path.join(LAB, "replies.jsonl"); rows = [l for l in open(f)] if os.path.exists(f) else []
             body = ("[" + ",".join(l.strip() for l in rows if l.strip()) + "]").encode(); self.send_response(200); self.send_header("Content-Type", "application/json"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/lab/img"):   # same-origin image proxy so the arena can read pixels (pixel sorting needs that)
+            import urllib.parse, urllib.request; u = (urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query).get("url") or [""])[0]
+            try:
+                if not u.lower().startswith(("http://", "https://")): raise ValueError("bad url")
+                r = urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0 (tiny-oracle arena)"}), timeout=8); ct = r.headers.get("Content-Type", "")
+                if not ct.startswith("image/"): raise ValueError("not an image")
+                data = r.read(4_000_000); self.send_response(200); self.send_header("Content-Type", ct); self.send_header("Content-Length", str(len(data))); self.end_headers(); self.wfile.write(data); return
+            except Exception as e: self.send_response(502); self.end_headers(); return
         if self.path.startswith("/jeffy/capabilities"):
             import urllib.request
             try: raw = urllib.request.urlopen("http://127.0.0.1:8411/v1/capabilities", timeout=10).read(); code = 200
@@ -37,10 +45,23 @@ class H(http.server.SimpleHTTPRequestHandler):
             try:
                 if not url.lower().startswith(("http://", "https://")): raise ValueError("not a web address")
                 req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (tiny-oracle arena)"}); raw = urllib.request.urlopen(req, timeout=8).read(600000).decode("utf-8", "replace")
-                title = R.search(r"<title[^>]*>(.*?)</title>", raw, R.S | R.I); raw = R.sub(r"(?is)<(script|style|noscript|svg|nav|footer|header)[^>]*>.*?</\1>", " ", raw)
+                raw0 = raw; title = R.search(r"<title[^>]*>(.*?)</title>", raw, R.S | R.I); raw = R.sub(r"(?is)<(script|style|noscript|svg|nav|footer|header)[^>]*>.*?</\1>", " ", raw)
                 paras = R.findall(r"(?is)<p[^>]*>(.*?)</p>", raw); body_html = " ".join(paras) if sum(len(x) for x in paras) > 400 else raw
                 text = H.unescape(R.sub(r"<[^>]+>", " ", body_html)); text = R.sub(r"\[\d+\]", " ", text); text = R.sub(r"\s+", " ", text).strip()[:20000]
-                out = {"title": H.unescape(title.group(1).strip())[:120] if title else url, "text": text}
+                imgs = []
+                for src in R.findall(r'(?is)<img[^>]+?src="([^"]+)"', raw0):
+                    u = urllib.parse.urljoin(url, H.unescape(src))
+                    if u.startswith("data:") or R.search(r"\.svg|icon|logo|sprite|pixel|1x1|static/images", u, R.I) or not R.search(r"\.(jpe?g|png|webp|gif)", u, R.I): continue
+                    if u not in imgs: imgs.append(u)
+                    if len(imgs) >= 4: break
+                ui = []   # interface elements as plain data (tag + visible text): the web-debugger creature's material
+                for tag, inner in R.findall(r"(?is)<(button|h1|h2|h3|label|a)\b[^>]*>(.*?)</\1>", raw0):
+                    t = R.sub(r"\s+", " ", H.unescape(R.sub(r"<[^>]+>", " ", inner))).strip()
+                    if 2 <= len(t) <= 40 and not any(x["text"] == t for x in ui): ui.append({"tag": tag.lower(), "text": t})
+                    if len(ui) >= 40: break
+                for ph in R.findall(r'(?is)<input[^>]+placeholder="([^"]{2,40})"', raw0)[:4]: ui.append({"tag": "input", "text": H.unescape(ph)})
+                import random as _r; _r.shuffle(ui); ui = ui[:14]
+                out = {"title": H.unescape(title.group(1).strip())[:120] if title else url, "text": text, "images": imgs, "ui": ui}
             except Exception as e: out = {"error": str(e)[:200]}
             body = json.dumps(out).encode(); self.send_response(200); self.send_header("Content-Type", "application/json"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body); return
         return super().do_GET()

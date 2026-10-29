@@ -17,6 +17,11 @@ class H(http.server.SimpleHTTPRequestHandler):
         if self.path.startswith("/lab/replies"):
             os.makedirs(LAB, exist_ok=True); f = os.path.join(LAB, "replies.jsonl"); rows = [l for l in open(f)] if os.path.exists(f) else []
             body = ("[" + ",".join(l.strip() for l in rows if l.strip()) + "]").encode(); self.send_response(200); self.send_header("Content-Type", "application/json"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/jeffy/capabilities"):
+            import urllib.request
+            try: raw = urllib.request.urlopen("http://127.0.0.1:8411/v1/capabilities", timeout=10).read(); code = 200
+            except Exception as e: raw = json.dumps({"error": str(e)[:200]}).encode(); code = 502
+            self.send_response(code); self.send_header("Content-Type", "application/json"); self.send_header("Content-Length", str(len(raw))); self.end_headers(); self.wfile.write(raw); return
         if self.path.startswith("/worlds/state"):
             import urllib.parse; code = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query).get("code", [""])[0]
             with _wlock:
@@ -40,6 +45,11 @@ class H(http.server.SimpleHTTPRequestHandler):
             body = json.dumps(out).encode(); self.send_response(200); self.send_header("Content-Type", "application/json"); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body); return
         return super().do_GET()
     def do_POST(self):
+        if self.path.startswith("/jeffy/"):   # data-lab: same-origin proxy to the local Jeffy server (the arena page cannot call another port under COEP)
+            import urllib.request; n = int(self.headers.get("Content-Length", 0)); data = self.rfile.read(n)
+            try: raw = urllib.request.urlopen(urllib.request.Request("http://127.0.0.1:8411/v1/" + self.path[len("/jeffy/"):], data=data, headers={"Content-Type": "application/json"}), timeout=10).read(); code = 200
+            except Exception as e: raw = json.dumps({"error": str(e)[:200]}).encode(); code = 502
+            self.send_response(code); self.send_header("Content-Type", "application/json"); self.send_header("Content-Length", str(len(raw))); self.end_headers(); self.wfile.write(raw); return
         if self.path.startswith("/worlds/"):
             n = int(self.headers.get("Content-Length", 0)); q = json.loads(self.rfile.read(n) or b"{}"); act = self.path.split("/")[2].split("?")[0]; res = {"ok": True}
             with _wlock:
